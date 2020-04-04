@@ -1,0 +1,144 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:OrderManagerNew">
+    <ResourceDictionary.MergedDictionaries>
+        
+    </ResourceDictionary.MergedDictionaries>
+    
+    <!--TitleBar-Start-->
+    <Style TargetType="{x:Type ToggleButton}" x:Key="systemButton_max">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Border BorderThickness="0"  >
+                    <Image Source="ImageSource/MainWindow/Max_normal.bmp" Stretch="Fill"  />
+                </Border>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                      Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" 
+                                      Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                      Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsDefaulted" Value="True"/>
+                            <Trigger Property="IsMouseOver" Value="True"/>
+                            <Trigger Property="IsPressed" Value="True"/>
+                            <Trigger Property="ToggleButton.IsChecked" Value="True"/>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
+                            </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Border  BorderThickness="0" >
+                            <Image Source="ImageSource/MainWindow/Restore_normal.bmp" Stretch="fill" />
+                        </Border>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsChecked" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Border  BorderThickness="0" >
+                            <Image Source="ImageSource/MainWindow/Restore_focus.bmp" Stretch="fill" />
+                        </Border>
+                    </Setter.Value>
+                </Setter>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsChecked" Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Border  BorderThickness="0" >
+                            <Image Source="ImageSource/MainWindow/Max_focus.bmp" Stretch="fill" />
+                        </Border>
+                    </Setter.Value>
+                </Setter>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="systemButton">
+        <Setter Property="Width" Value="35"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"  BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="systemButton_contactInteware" BasedOn="{StaticResource systemButton}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="ImageSource/MainWindow/Customer-service_normal.bmp"/>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="ImageSource/MainWindow/Customer-service_focus.bmp"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="systemButton_mimimize" BasedOn="{StaticResource systemButton}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="ImageSource/MainWindow/Min_normal.bmp"/>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="ImageSource/MainWindow/Min_focus.bmp"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="{x:Type Button}" x:Key="systemButton_close" BasedOn="{StaticResource systemButton}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="ImageSource/MainWindow/Close_normal.bmp"/>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="ImageSource/MainWindow/Close_focus.bmp"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--TitleBar-End-->
+    
+</ResourceDictionary>

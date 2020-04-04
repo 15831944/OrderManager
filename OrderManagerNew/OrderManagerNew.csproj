@@ -67,6 +67,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="StyleDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -93,6 +97,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImageSource\MainWindow\INTEWARE_TITLE_OrderManager.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImageSource\MainWindow\Close_focus.bmp" />
+    <Resource Include="ImageSource\MainWindow\Close_normal.bmp" />
+    <Resource Include="ImageSource\MainWindow\Customer-service_focus.bmp" />
+    <Resource Include="ImageSource\MainWindow\Customer-service_normal.bmp" />
+    <Resource Include="ImageSource\MainWindow\Max_focus.bmp" />
+    <Resource Include="ImageSource\MainWindow\Max_normal.bmp" />
+    <Resource Include="ImageSource\MainWindow\Min_focus.bmp" />
+    <Resource Include="ImageSource\MainWindow\Min_normal.bmp" />
+    <Resource Include="ImageSource\MainWindow\Restore_focus.bmp" />
+    <Resource Include="ImageSource\MainWindow\Restore_normal.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

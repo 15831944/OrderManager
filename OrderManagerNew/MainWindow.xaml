@@ -3,10 +3,42 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:OrderManagerNew"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        xmlns:local="clr-namespace:OrderManagerNew" StateChanged="Window_StateChanged"
+        mc:Ignorable="d" Title="OrderManager" WindowStyle="None" AllowsTransparency="True"
+        Height="768" Width="1280" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary Source="StyleDictionary.xaml"/>
+    </Window.Resources>
+    
+    <Border BorderThickness="0">
+        <DockPanel>
+            <!--TitleBar-Start-->
+            <Border DockPanel.Dock="Top" Height="42" Background="#FFE08A1E" >
+                <Grid>
+                    <Label PreviewMouseDown="TitleBar_MouseDown" PreviewMouseMove="TitleBar_MouseMove" VerticalAlignment="Center" Foreground="White" Margin="0,0,143,0">
+                        <Image Source="ImageSource/MainWindow/INTEWARE_TITLE_OrderManager.bmp" Height="32" Margin="10,0,0,0"/>
+                    </Label>
+                    <Label x:Name="titlebar_OrderManagerVersion" PreviewMouseDown="TitleBar_MouseDown" PreviewMouseMove="TitleBar_MouseMove" Content="v0.1.4.3" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Margin="182,0,0,0"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Background="#FFE08A1E" Panel.ZIndex="1">
+                        <Button Name="systemButton_ContactInteware" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_contactInteware}"/>
+                        <Button Name="systemButton_Minimize" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_mimimize}"/>
+
+                        <ToggleButton Name="systemButton_Maximize" Click="TitleBar_Click_titlebarButtons" Width="35" 
+                                      Height="30" HorizontalAlignment="Right" 
+                                      VerticalAlignment="Top" Style="{StaticResource systemButton_max}"/>
+                        <Button Name="systemButton_Close" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_close}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <!--TitleBar-End-->
+            
+            <!--MainContent-Start-->
+            <Grid>
+                
+            </Grid>
+            <!--MainContent-End-->
+        </DockPanel>
+    </Border>
 </Window>
