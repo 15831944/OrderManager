@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
         xmlns:local="clr-namespace:OrderManagerNew" StateChanged="Window_StateChanged"
-        mc:Ignorable="d" Title="OrderManager" WindowStyle="None" AllowsTransparency="True"
+        mc:Ignorable="d" Title="OrderManager" WindowStyle="None" Background="Transparent"
         Height="768" Width="1280" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
@@ -34,11 +35,70 @@
             </Border>
             <!--TitleBar-End-->
             
-            <!--MainContent-Start-->
+            
             <Grid>
-                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="75"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!--FunctionTable-Start-->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!--softwareFunction-->
+                    <Rectangle Fill="White" Grid.Column="0" Grid.ColumnSpan="2"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Grid>
+                            <Label x:Name="progress_EZCAD" Foreground="#FF493E34" Content="0%" FontSize="18"
+                                   Panel.ZIndex="2" FontWeight="ExtraBold" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                            <ed:Arc HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    x:Name="mask_EZCAD" Panel.ZIndex="1" Fill="White" Opacity="0.9"
+                                    EndAngle="360" ArcThickness="10000" ArcThicknessUnit="Pixel" 
+                                    Stretch="None" StartAngle="0" RenderTransformOrigin="0.5,0.5" 
+                                    Height="84" Width="84">
+                                <ed:Arc.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                                        <SkewTransform AngleY="0" AngleX="0"/>
+                                        <RotateTransform Angle="0"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ed:Arc.RenderTransform>
+                            </ed:Arc>
+                            <Image Source="ImageSource/SoftwareFunction/icon_D.png" Height="64" Width="64"/>
+                        </Grid>
+                        <Grid>
+                            <Label x:Name="progress_Implant" Foreground="#FF493E34" Content="0%" FontSize="18"
+                                   Panel.ZIndex="2" FontWeight="ExtraBold" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                            <ed:Arc HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    x:Name="mask_Implant" Panel.ZIndex="1" Fill="White" Opacity="0.9"
+                                    EndAngle="360" ArcThickness="10000" ArcThicknessUnit="Pixel"
+                                    Stretch="None" StartAngle="0" RenderTransformOrigin="0.5,0.5"
+                                    Height="84" Width="84">
+                                <ed:Arc.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                                        <SkewTransform AngleY="0" AngleX="0"/>
+                                        <RotateTransform Angle="0"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ed:Arc.RenderTransform>
+                            </ed:Arc>
+                            <Image Source="ImageSource/SoftwareFunction/icon_I.png" Height="64" Width="64"/>
+                        </Grid>
+                    </StackPanel>
+                    
+                    <!--ordermanagerFunction-->
+                    
+                </Grid>
+                <!--FunctionTable-End-->
             </Grid>
-            <!--MainContent-End-->
+            
         </DockPanel>
     </Border>
 </Window>

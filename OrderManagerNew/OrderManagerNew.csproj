@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Drawing, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\Microsoft.Expression.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -112,6 +116,14 @@
     <Resource Include="ImageSource\MainWindow\Min_normal.bmp" />
     <Resource Include="ImageSource\MainWindow\Restore_focus.bmp" />
     <Resource Include="ImageSource\MainWindow\Restore_normal.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImageSource\SoftwareFunction\icon_D.png" />
+    <Resource Include="ImageSource\SoftwareFunction\icon_G.png" />
+    <Resource Include="ImageSource\SoftwareFunction\icon_I.png" />
+    <Resource Include="ImageSource\SoftwareFunction\icon_S.png" />
+    <Resource Include="ImageSource\SoftwareFunction\icon_T.png" />
+    <Resource Include="ImageSource\SoftwareFunction\icon_tooth_O.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
