@@ -118,7 +118,8 @@ namespace OrderManagerNew
         #region FunctionTable事件
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            LogRecorder log = new LogRecorder();
+            log.Doit();
         }
         #endregion
     }

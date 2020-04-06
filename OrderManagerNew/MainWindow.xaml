@@ -91,18 +91,10 @@
                     <StackPanel
                       Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
                       Orientation="Horizontal">
-                        <Button Style="{StaticResource FunctionButton}">
-                            <Image Source="ImageSource/FunctionTable/icon_cloud-download.png" />
-                        </Button>
-                        <Button Style="{StaticResource FunctionButton}">
-                            <Image Source="ImageSource/FunctionTable/icon_update.png" />
-                        </Button>
-                        <Button Style="{StaticResource FunctionButton}">
-                            <Image Source="ImageSource/FunctionTable/icon_refresh.png" />
-                        </Button>
-                        <Button Style="{StaticResource FunctionButton}">
-                            <Image Source="ImageSource/FunctionTable/icon_set-up.png" />
-                        </Button>
+                        <Button Style="{StaticResource FunctionButton_refresh}" />
+                        <Button Style="{StaticResource FunctionButton_update}" />
+                        <Button Style="{StaticResource FunctionButton_cloud}" />
+                        <Button Style="{StaticResource FunctionButton_setting}" />
                         <Grid Width="6" />
                     </StackPanel>
                 </Grid>
