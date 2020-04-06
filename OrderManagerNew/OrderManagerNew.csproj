@@ -118,12 +118,20 @@
     <Resource Include="ImageSource\MainWindow\Restore_normal.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageSource\SoftwareFunction\icon_D.png" />
-    <Resource Include="ImageSource\SoftwareFunction\icon_G.png" />
-    <Resource Include="ImageSource\SoftwareFunction\icon_I.png" />
-    <Resource Include="ImageSource\SoftwareFunction\icon_S.png" />
-    <Resource Include="ImageSource\SoftwareFunction\icon_T.png" />
-    <Resource Include="ImageSource\SoftwareFunction\icon_tooth_O.png" />
+    <Resource Include="ImageSource\FunctionTable\icon_D.png" />
+    <Resource Include="ImageSource\FunctionTable\icon_G.png" />
+    <Resource Include="ImageSource\FunctionTable\icon_I.png" />
+    <Resource Include="ImageSource\FunctionTable\icon_S.png" />
+    <Resource Include="ImageSource\FunctionTable\icon_T.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImageSource\FunctionTable\icon_O.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImageSource\FunctionTable\icon_cloud-download.png" />
+    <Resource Include="ImageSource\FunctionTable\icon_refresh.png" />
+    <Resource Include="ImageSource\FunctionTable\icon_update.png" />
+    <Resource Include="ImageSource\FunctionTable\icon_set-up.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,104 +1,114 @@
-﻿<Window x:Class="OrderManagerNew.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
-        xmlns:local="clr-namespace:OrderManagerNew" StateChanged="Window_StateChanged"
-        mc:Ignorable="d" Title="OrderManager" WindowStyle="None" Background="Transparent"
-        Height="768" Width="1280" WindowStartupLocation="CenterScreen">
+﻿<Window
+  x:Class="OrderManagerNew.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" xmlns:local="clr-namespace:OrderManagerNew"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Title="OrderManager" Width="1280"
+  Height="768" Background="Transparent" StateChanged="Window_StateChanged"
+  WindowStartupLocation="CenterScreen" WindowStyle="None" mc:Ignorable="d">
 
     <Window.Resources>
-        <ResourceDictionary Source="StyleDictionary.xaml"/>
+        <ResourceDictionary Source="StyleDictionary.xaml" />
     </Window.Resources>
-    
+
     <Border BorderThickness="0">
         <DockPanel>
-            <!--TitleBar-Start-->
-            <Border DockPanel.Dock="Top" Height="42" Background="#FFE08A1E" >
+            <!--  TitleBar-Start  -->
+            <Border Height="42" Background="#FFE08A1E" DockPanel.Dock="Top">
                 <Grid>
-                    <Label PreviewMouseDown="TitleBar_MouseDown" PreviewMouseMove="TitleBar_MouseMove" VerticalAlignment="Center" Foreground="White" Margin="0,0,143,0">
-                        <Image Source="ImageSource/MainWindow/INTEWARE_TITLE_OrderManager.bmp" Height="32" Margin="10,0,0,0"/>
+                    <Label
+                      Margin="0,0,143,0" VerticalAlignment="Center" Foreground="White"
+                      PreviewMouseDown="TitleBar_MouseDown" PreviewMouseMove="TitleBar_MouseMove">
+                        <Image Height="32" Margin="20,0,0,0" Source="ImageSource/MainWindow/INTEWARE_TITLE_OrderManager.bmp" />
                     </Label>
-                    <Label x:Name="titlebar_OrderManagerVersion" PreviewMouseDown="TitleBar_MouseDown" PreviewMouseMove="TitleBar_MouseMove" Content="v0.1.4.3" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Margin="182,0,0,0"/>
+                    <Label
+                      x:Name="titlebar_OrderManagerVersion" Margin="195,0,0,0" HorizontalAlignment="Left"
+                      VerticalAlignment="Center" Content="v0.1.4.3" Foreground="White"
+                      PreviewMouseDown="TitleBar_MouseDown" PreviewMouseMove="TitleBar_MouseMove" />
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Background="#FFE08A1E" Panel.ZIndex="1">
-                        <Button Name="systemButton_ContactInteware" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_contactInteware}"/>
-                        <Button Name="systemButton_Minimize" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_mimimize}"/>
+                    <StackPanel
+                      HorizontalAlignment="Right" VerticalAlignment="Center" Panel.ZIndex="1"
+                      Background="#FFE08A1E" Orientation="Horizontal">
+                        <Button Name="systemButton_ContactInteware" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_contactInteware}" />
+                        <Button Name="systemButton_Minimize" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_mimimize}" />
 
-                        <ToggleButton Name="systemButton_Maximize" Click="TitleBar_Click_titlebarButtons" Width="35" 
-                                      Height="30" HorizontalAlignment="Right" 
-                                      VerticalAlignment="Top" Style="{StaticResource systemButton_max}"/>
-                        <Button Name="systemButton_Close" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_close}"/>
+                        <ToggleButton
+                          Name="systemButton_Maximize" Width="35" Height="30"
+                          HorizontalAlignment="Right" VerticalAlignment="Top" Click="TitleBar_Click_titlebarButtons"
+                          Style="{StaticResource systemButton_max}" />
+                        <Button Name="systemButton_Close" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_close}" />
                     </StackPanel>
                 </Grid>
             </Border>
-            <!--TitleBar-End-->
-            
-            
+            <!--  TitleBar-End  -->
+
+
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="75"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="75" />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <!--FunctionTable-Start-->
+                <!--  FunctionTable-Start  -->
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    
-                    <!--softwareFunction-->
-                    <Rectangle Fill="White" Grid.Column="0" Grid.ColumnSpan="2"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Rectangle Grid.Column="0" Grid.ColumnSpan="2" Fill="White" />
+
+                    <!--  FunctionTable  -->
+                    <StackPanel
+                      Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                      Orientation="Horizontal">
+                        <Grid Width="12" />
                         <Grid>
-                            <Label x:Name="progress_EZCAD" Foreground="#FF493E34" Content="0%" FontSize="18"
-                                   Panel.ZIndex="2" FontWeight="ExtraBold" HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"/>
-                            <ed:Arc HorizontalAlignment="Center" VerticalAlignment="Center"
-                                    x:Name="mask_EZCAD" Panel.ZIndex="1" Fill="White" Opacity="0.9"
-                                    EndAngle="360" ArcThickness="10000" ArcThicknessUnit="Pixel" 
-                                    Stretch="None" StartAngle="0" RenderTransformOrigin="0.5,0.5" 
-                                    Height="84" Width="84">
-                                <ed:Arc.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleY="1" ScaleX="-1"/>
-                                        <SkewTransform AngleY="0" AngleX="0"/>
-                                        <RotateTransform Angle="0"/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </ed:Arc.RenderTransform>
-                            </ed:Arc>
-                            <Image Source="ImageSource/SoftwareFunction/icon_D.png" Height="64" Width="64"/>
+                            <Label x:Name="progress_EZCAD" Content="0%" Style="{StaticResource progressLabel}" />
+                            <ed:Arc x:Name="mask_EZCAD" Style="{StaticResource progressArc}" />
+                            <Image Source="ImageSource/FunctionTable/icon_D.png" Style="{StaticResource progressImage}" />
                         </Grid>
                         <Grid>
-                            <Label x:Name="progress_Implant" Foreground="#FF493E34" Content="0%" FontSize="18"
-                                   Panel.ZIndex="2" FontWeight="ExtraBold" HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"/>
-                            <ed:Arc HorizontalAlignment="Center" VerticalAlignment="Center"
-                                    x:Name="mask_Implant" Panel.ZIndex="1" Fill="White" Opacity="0.9"
-                                    EndAngle="360" ArcThickness="10000" ArcThicknessUnit="Pixel"
-                                    Stretch="None" StartAngle="0" RenderTransformOrigin="0.5,0.5"
-                                    Height="84" Width="84">
-                                <ed:Arc.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleY="1" ScaleX="-1"/>
-                                        <SkewTransform AngleY="0" AngleX="0"/>
-                                        <RotateTransform Angle="0"/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </ed:Arc.RenderTransform>
-                            </ed:Arc>
-                            <Image Source="ImageSource/SoftwareFunction/icon_I.png" Height="64" Width="64"/>
+                            <Label x:Name="progress_Implant" Content="0%" Style="{StaticResource progressLabel}" />
+                            <ed:Arc x:Name="mask_Implant" Style="{StaticResource progressArc}" />
+                            <Image Source="ImageSource/FunctionTable/icon_I.png" Style="{StaticResource progressImage}" />
                         </Grid>
+                        <Grid>
+                            <Label x:Name="progress_Ortho" Content="0%" Style="{StaticResource progressLabel}" />
+                            <ed:Arc x:Name="mask_Ortho" Style="{StaticResource progressArc}" />
+                            <Image Source="ImageSource/FunctionTable/icon_O.png" Style="{StaticResource progressImage}" />
+                        </Grid>
+                        <Grid>
+                            <Label x:Name="progress_Tray" Content="0%" Style="{StaticResource progressLabel}" />
+                            <ed:Arc x:Name="mask_Tray" Style="{StaticResource progressArc}" />
+                            <Image Source="ImageSource/FunctionTable/icon_T.png" Style="{StaticResource progressImage}" />
+                        </Grid>
+                        <Grid>
+                            <Label x:Name="progress_Splint" Content="0%" Style="{StaticResource progressLabel}" />
+                            <ed:Arc x:Name="mask_Splint" Style="{StaticResource progressArc}" />
+                            <Image Source="ImageSource/FunctionTable/icon_S.png" Style="{StaticResource progressImage}" />
+                        </Grid>
+                        <Button Height="48" Click="Button_Click" Content="Update" />
                     </StackPanel>
-                    
-                    <!--ordermanagerFunction-->
-                    
+
+                    <!--  ordermanagerFunction  -->
+                    <StackPanel
+                      Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
+                      Orientation="Horizontal">
+                        <Button Style="{StaticResource FunctionButton}">
+                            <Image Source="ImageSource/FunctionTable/icon_cloud-download.png" />
+                        </Button>
+                        <Button Style="{StaticResource FunctionButton}">
+                            <Image Source="ImageSource/FunctionTable/icon_update.png" />
+                        </Button>
+                        <Button Style="{StaticResource FunctionButton}">
+                            <Image Source="ImageSource/FunctionTable/icon_refresh.png" />
+                        </Button>
+                        <Button Style="{StaticResource FunctionButton}">
+                            <Image Source="ImageSource/FunctionTable/icon_set-up.png" />
+                        </Button>
+                        <Grid Width="6" />
+                    </StackPanel>
                 </Grid>
-                <!--FunctionTable-End-->
+                <!--  FunctionTable-End  -->
             </Grid>
-            
+
         </DockPanel>
     </Border>
 </Window>

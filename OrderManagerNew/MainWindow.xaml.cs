@@ -31,6 +31,22 @@ namespace OrderManagerNew
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();//TitleBar顯示OrderManager版本
         }
 
+        #region WindowFrame
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                //systemButton_Maximize.ToolTip = WpfOrderManager.TranslationSource.Instance["SBtn_Restore"];
+                this.BorderThickness = new Thickness(0,6,0,0);
+            }
+            else
+            {
+                //systemButton_Maximize.ToolTip = WpfOrderManager.TranslationSource.Instance["SBtn_Max"];
+                this.BorderThickness = new Thickness(0);
+            }
+        }
+        #endregion
+
         #region TitleBar事件
         [DllImport("user32.dll")]
         static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
@@ -99,19 +115,10 @@ namespace OrderManagerNew
         }
         #endregion
 
-        #region WindowFrame
-        private void Window_StateChanged(object sender, EventArgs e)
+        #region FunctionTable事件
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                //systemButton_Maximize.ToolTip = WpfOrderManager.TranslationSource.Instance["SBtn_Restore"];
-                this.BorderThickness = new Thickness(0,6,0,0);
-            }
-            else
-            {
-                //systemButton_Maximize.ToolTip = WpfOrderManager.TranslationSource.Instance["SBtn_Max"];
-                this.BorderThickness = new Thickness(0);
-            }
+            
         }
         #endregion
     }
