@@ -261,4 +261,325 @@
     </Style>
     <!--  FunctionTable-End  -->
 
+    <!--  SortTable-Start  -->
+    <Style x:Key="ExpanderToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Width" Value="172" />
+        <Setter Property="Height" Value="26" />
+        <Setter Property="Background" Value="#FFE08A1E" />
+        <Setter Property="Foreground" Value="#FFFFFFFF" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0,0,0,1" />
+        <Setter Property="Padding" Value="30,0,0,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Canvas
+                      Width="{TemplateBinding Width}"
+                      Height="{TemplateBinding Height}"
+                      Background="{TemplateBinding Background}"
+                      SnapsToDevicePixels="True">
+                        <Canvas
+                          x:Name="canvNormal" Canvas.Right="0"
+                          Width="{TemplateBinding Width}"
+                          Height="{TemplateBinding Height}"
+                          Background="{TemplateBinding Background}"
+                          SnapsToDevicePixels="True" Visibility="Visible">
+                            <Polygon Fill="#FF70450F" Points="0,0 0,26 26,26 26,0 0,0" />
+                            <Line
+                              Stroke="#FFFFFFFF" StrokeThickness="1" X1="8"
+                              X2="18" Y1="13" Y2="13" />
+                            <Line
+                              Stroke="#FFFFFFFF" StrokeThickness="1" X1="13"
+                              X2="13" Y1="8" Y2="18" />
+                        </Canvas>
+                        <Canvas
+                          x:Name="canvChecked" Canvas.Right="0"
+                          Width="{TemplateBinding Width}"
+                          Height="{TemplateBinding Height}"
+                          Background="{TemplateBinding Background}"
+                          SnapsToDevicePixels="True" Visibility="Hidden">
+                            <Polygon Fill="#FF70450F" Points="0,0 0,26 26,26 26,0 0,0" />
+                            <Line
+                              Stroke="#FFFFFFFF" StrokeThickness="1" X1="8"
+                              X2="18" Y1="13" Y2="13" />
+                        </Canvas>
+                        <ContentPresenter
+                          Margin="{TemplateBinding Padding}"
+                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                          RecognizesAccessKey="True"
+                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Canvas>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="#FFDD780B" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="canvChecked" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="canvNormal" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ExpanderStyle" TargetType="{x:Type Expander}">
+        <Setter Property="Foreground" Value="#FFF4E9DC" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="IsExpanded" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <Border
+                      Width="{TemplateBinding Width}"
+                      Background="{TemplateBinding Background}"
+                      BorderBrush="{TemplateBinding BorderBrush}"
+                      BorderThickness="{TemplateBinding BorderThickness}"
+                      CornerRadius="0" SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+
+
+                            <ToggleButton
+                              x:Name="HeaderSite" Grid.Row="0"
+                              Content="{TemplateBinding Header}"
+                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                              Style="{DynamicResource ExpanderToggleButtonStyle}" />
+                            <ContentPresenter
+                              x:Name="ExpandSite" Grid.Row="1"
+                              Margin="{TemplateBinding Padding}"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Content="{TemplateBinding Content}"
+                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Focusable="False" Visibility="Collapsed" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SortTextBox" TargetType="TextBox">
+        <Setter Property="Width" Value="112" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="Background" Value="#FF756550" />
+        <Setter Property="BorderBrush" Value="#FFF4E9DC" />
+        <Setter Property="Foreground" Value="#FFF4E9DC" />
+        <Setter Property="Margin" Value="0,5,5,5" />
+    </Style>
+
+    <Style x:Key="SortRadioButton" TargetType="{x:Type RadioButton}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="Click">
+                            <!--  Value是水波紋大小  -->
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(FrameworkElement.Width)">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="30" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(FrameworkElement.Height)">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="30" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-15" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-15" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <BulletDecorator
+                      Margin="0,1" HorizontalAlignment="Left" Background="#FF756550"
+                      Cursor="Hand">
+                        <BulletDecorator.Bullet>
+                            <Grid Width="11" Height="11">
+                                <!--  Define size of the Bullet  -->
+                                <!--  The two borders  -->
+                                <Border
+                                  Name="RadioOuter" Background="Transparent" BorderBrush="#FFF4E9DC"
+                                  BorderThickness="1" CornerRadius="20" />
+                                <Border
+                                  Name="RadioMark" Margin="3" Background="#FFF6AA00"
+                                  CornerRadius="20" Visibility="Hidden" />
+                                <Canvas
+                                  Width="20" Height="20" HorizontalAlignment="Center"
+                                  VerticalAlignment="Center">
+                                    <Ellipse
+                                      x:Name="InteractionEllipse" Canvas.Left="10" Canvas.Top="10"
+                                      Width="0" Height="0"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Opacity="0" RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform />
+                                                <SkewTransform />
+                                                <RotateTransform />
+                                                <TranslateTransform />
+                                            </TransformGroup>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                </Canvas>
+                            </Grid>
+                        </BulletDecorator.Bullet>
+                        <!--  Text element  -->
+                        <TextBlock
+                          Margin="10,0,0,0" FontFamily="Segoe UI" FontSize="14"
+                          Foreground="#FFF4E9DC">
+                            <ContentPresenter />
+                        </TextBlock>
+                    </BulletDecorator>
+                    <!--  If item is checked, trigger the visibility of the mark  -->
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="ButtonBase.Click">
+                            <BeginStoryboard Storyboard="{StaticResource Click}" />
+                        </EventTrigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <!--  If item is checked, trigger the visibility of the mark and change the color of the selected bullet into a darker gray for better highlighting  -->
+                            <Setter TargetName="RadioMark" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="RadioOuter" Property="BorderBrush" Value="#FFADADAD" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--  SortTable-End  -->
+
+    <!--  CaseTable-Start  -->
+    <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Grid x:Name="Grid">
+                        <Rectangle
+                          Width="Auto" Height="Auto" HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch" Fill="Transparent" />
+                        <Border
+                          x:Name="Rectangle1" Width="20" Height="Auto"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                          Background="{TemplateBinding Background}"
+                          CornerRadius="10" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Tag" Value="Horizontal">
+                            <Setter TargetName="Rectangle1" Property="Width" Value="Auto" />
+                            <Setter TargetName="Rectangle1" Property="Height" Value="7" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="RadiusScrollBar" TargetType="{x:Type ScrollBar}">
+        <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+        <Setter Property="Foreground" Value="#FF756550" />
+        <Setter Property="Background" Value="#FFB3B3B3" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid x:Name="GridRoot">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.00001*" />
+                        </Grid.RowDefinitions>
+                        <Border
+                          x:Name="Rectangle1" Width="8" Height="Auto"
+                          Margin="0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                          Background="{TemplateBinding Background}"
+                          CornerRadius="5" />
+
+                        <Track
+                          x:Name="PART_Track" Grid.Row="0" Focusable="false"
+                          IsDirectionReversed="true">
+                            <Track.Thumb>
+                                <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{DynamicResource ScrollThumbs}" />
+                            </Track.Thumb>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton
+                                  x:Name="PageUp" Command="ScrollBar.PageDownCommand" Focusable="false"
+                                  Opacity="0" />
+                            </Track.IncreaseRepeatButton>
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton
+                                  x:Name="PageDown" Command="ScrollBar.PageUpCommand" Focusable="false"
+                                  Opacity="0" />
+                            </Track.DecreaseRepeatButton>
+                        </Track>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Thumb" Property="Background" Value="{DynamicResource ButtonSelectBrush}" />
+                        </Trigger>
+                        <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                            <Setter TargetName="Thumb" Property="Background" Value="{DynamicResource DarkBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Orientation" Value="Horizontal">
+                            <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Width" Value="Auto" />
+                            <Setter Property="Height" Value="12" />
+                            <Setter TargetName="Thumb" Property="Tag" Value="Horizontal" />
+                            <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand" />
+                            <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--  CaseTable-End  -->
+
 </ResourceDictionary>

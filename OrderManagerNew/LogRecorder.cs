@@ -24,6 +24,9 @@ namespace OrderManagerNew
                 }
                 fs.Close();
             }
+
+            //每次開啟OrderManager就記錄
+            RecordLog("Open_OM","OMVer " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
         /// <summary>

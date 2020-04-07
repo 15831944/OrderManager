@@ -24,12 +24,13 @@ namespace OrderManagerNew
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Point startPos;
+        LogRecorder log;//日誌檔cs
 
         public MainWindow()
         {
             InitializeComponent();
 
+            log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();//TitleBar顯示OrderManager版本
         }
 
@@ -50,6 +51,8 @@ namespace OrderManagerNew
         #endregion
 
         #region TitleBar事件
+        private Point startPos;
+
         [DllImport("user32.dll")]
         static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
         [DllImport("user32.dll")]
@@ -120,9 +123,109 @@ namespace OrderManagerNew
         #region FunctionTable事件
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            LogRecorder log = new LogRecorder();
-            log.RecordLog("TestBlock", "Test");
+            //log.RecordLog("TestBlock", "Test");
+            mask_EZCAD.EndAngle -= 5;
         }
         #endregion
+
+        #region SortTable事件
+        private void SortTable_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chkbox = sender as CheckBox;
+            switch(chkbox.Name)
+            {
+                case "checkboxPatient":
+                    {
+                        break;
+                    }
+                case "checkboxCase":
+                    {
+                        break;
+                    }
+            }
+        }
+
+        private void SortTable_UnChecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chkbox = sender as CheckBox;
+            switch (chkbox.Name)
+            {
+                case "checkboxPatient":
+                    {
+                        break;
+                    }
+                case "checkboxCase":
+                    {
+                        break;
+                    }
+            }
+        }
+
+        private void SortTable_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox txtbox = sender as TextBox;
+            switch(txtbox.Name)
+            {
+                case "textboxPatient":
+                    {
+                        break;
+                    }
+                case "textboxCase":
+                    {
+                        break;
+                    }
+            }
+        }
+
+        private void SortTable_Click_Filter(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioBtn = sender as RadioButton;
+            switch(radioBtn.Name)
+            {
+                case "DateFilterAll":
+                    {
+                        break;
+                    }
+                case "DateFilterToday":
+                    {
+                        break;
+                    }
+                case "DateFilterLW":
+                    {
+                        break;
+                    }
+                case "DateFilterL2W":
+                    {
+                        break;
+                    }
+                case "SoftwareFilterAll":
+                    {
+                        break;
+                    }
+                case "SoftwareFilterCAD":
+                    {
+                        break;
+                    }
+                case "SoftwareFilterImplant":
+                    {
+                        break;
+                    }
+                case "SoftwareFilterOrtho":
+                    {
+                        break;
+                    }
+                case "SoftwareFilterTray":
+                    {
+                        break;
+                    }
+                case "SoftwareFilterSplint":
+                    {
+                        break;
+                    }
+            }
+        }
+        #endregion
+
+        
     }
 }
