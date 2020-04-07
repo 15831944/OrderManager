@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+//Source: https://docs.microsoft.com/zh-tw/dotnet/standard/io/how-to-open-and-append-to-a-log-file
 namespace OrderManagerNew
 {
     /// <summary>
@@ -14,37 +14,50 @@ namespace OrderManagerNew
     {
         public LogRecorder()
         {
-            //每次new LogRecorder()就刪掉之前舊的log檔
-            if (File.Exists("OrderManager.log") == true)
-                File.Delete("OrderManager.log");
-        }
-
-        public void Doit()
-        {
-            using (StreamWriter w = File.AppendText("OrderManager.log"))
+            if(File.Exists("OrderManager.log"))
             {
-                Log("Test1", w);
-                Log("Test2", w);
-            }
-
-            using (StreamReader r = File.OpenText("OrderManager.log"))
-            {
-                DumpLog(r);
+                FileStream fs = new FileStream("OrderManager.log", FileMode.Open, FileAccess.Read);
+                if (fs.Length > Math.Pow(2, 20) * 100)  //超過100M就刪掉重建新的log檔
+                {
+                    fs.Close();
+                    File.Delete("OrderManager.log");
+                }
+                fs.Close();
             }
         }
 
         /// <summary>
-        /// 寫入log
+        /// 寫入log資訊
         /// </summary>
-        /// <param name="logMessage"> 寫入log資訊</param>
+        /// <param name="Block"> 區塊</param>
+        /// <param name="logMessage"> 詳細資訊</param>
         /// <param name="w">log檔路徑</param>
         /// <returns></returns>
-        public void Log(string logMessage, TextWriter w)
+        public void RecordLog(string Block, string logMessage)
+        {
+            using (StreamWriter w = File.AppendText("OrderManager.log"))
+            {
+                Log(Block, logMessage, w);
+            }
+
+            /*using (StreamReader r = File.OpenText("OrderManager.log"))
+            {
+                DumpLog(r);
+            }*/
+        }
+
+        /// <summary>
+        /// 寫入log資訊
+        /// </summary>
+        /// <param name="Block"> 區塊</param>
+        /// <param name="logMessage"> 詳細資訊</param>
+        /// <param name="w">log檔路徑</param>
+        /// <returns></returns>
+        public void Log(string Block, string logMessage, TextWriter w)
         {
             w.Write("\r\nLog Entry : ");
             w.WriteLine($"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
-            w.WriteLine("  :");
-            w.WriteLine($"  :{logMessage}");
+            w.WriteLine($"{Block}:{logMessage}");
             w.WriteLine("-------------------------------");
         }
 

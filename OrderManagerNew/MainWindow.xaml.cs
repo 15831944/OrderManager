@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Reflection;    //取得OrderManager自身軟體版本
 
+//Microsoft.Expression.Drawing.dll如果要用多國語言套件: "C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries"
+
 namespace OrderManagerNew
 {
     /// <summary>
@@ -119,7 +121,7 @@ namespace OrderManagerNew
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             LogRecorder log = new LogRecorder();
-            log.Doit();
+            log.RecordLog("TestBlock", "Test");
         }
         #endregion
     }
