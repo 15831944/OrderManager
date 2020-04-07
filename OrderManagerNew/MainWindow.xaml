@@ -17,10 +17,10 @@
                     <Label
                       Margin="0,0,143,0" VerticalAlignment="Center" Foreground="White"
                       PreviewMouseDown="TitleBar_MouseDown" PreviewMouseMove="TitleBar_MouseMove">
-                        <Image Height="32" Margin="20,0,0,0" Source="ImageSource/MainWindow/INTEWARE_TITLE_OrderManager.bmp" />
+                        <Image Height="42" Margin="20,-5,0,0" Source="{StaticResource INTEWARE_TITLE_OrderManagerDrawingImage}" />
                     </Label>
                     <Label
-                      x:Name="titlebar_OrderManagerVersion" Margin="195,0,0,0" HorizontalAlignment="Left"
+                      x:Name="titlebar_OrderManagerVersion" Margin="250,5,0,0" HorizontalAlignment="Left"
                       VerticalAlignment="Center" Content="v0.1.4.3" Foreground="White"
                       PreviewMouseDown="TitleBar_MouseDown" PreviewMouseMove="TitleBar_MouseMove" />
 
@@ -58,29 +58,24 @@
                     <StackPanel
                       Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
                       Orientation="Horizontal">
-                        <Grid Width="12" />
-                        <Grid>
-                            <Label x:Name="progress_EZCAD" Content="0%" Style="{StaticResource progressLabel}" />
+                        <Grid Width="18" />
+                        <Grid Margin="6,0">
                             <ed:Arc x:Name="mask_EZCAD" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_D.png" Style="{StaticResource progressImage}" />
                         </Grid>
-                        <Grid>
-                            <Label x:Name="progress_Implant" Content="0%" Style="{StaticResource progressLabel}" />
+                        <Grid Margin="6,0">
                             <ed:Arc x:Name="mask_Implant" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_I.png" Style="{StaticResource progressImage}" />
                         </Grid>
-                        <Grid>
-                            <Label x:Name="progress_Ortho" Content="0%" Style="{StaticResource progressLabel}" />
+                        <Grid Margin="6,0">
                             <ed:Arc x:Name="mask_Ortho" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_O.png" Style="{StaticResource progressImage}" />
                         </Grid>
-                        <Grid>
-                            <Label x:Name="progress_Tray" Content="0%" Style="{StaticResource progressLabel}" />
+                        <Grid Margin="6,0">
                             <ed:Arc x:Name="mask_Tray" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_T.png" Style="{StaticResource progressImage}" />
                         </Grid>
-                        <Grid>
-                            <Label x:Name="progress_Splint" Content="0%" Style="{StaticResource progressLabel}" />
+                        <Grid Margin="6,0">
                             <ed:Arc x:Name="mask_Splint" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_S.png" Style="{StaticResource progressImage}" />
                         </Grid>

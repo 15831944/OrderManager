@@ -10,7 +10,7 @@
         <Setter Property="Content">
             <Setter.Value>
                 <Border BorderThickness="0">
-                    <Image Source="ImageSource/MainWindow/Max_normal.bmp" Stretch="Fill" />
+                    <Image Source="{StaticResource Max_normal_06DrawingImage}" Stretch="Fill" />
                 </Border>
             </Setter.Value>
         </Setter>
@@ -44,7 +44,7 @@
                 <Setter Property="Content">
                     <Setter.Value>
                         <Border BorderThickness="0">
-                            <Image Source="ImageSource/MainWindow/Restore_normal.bmp" Stretch="fill" />
+                            <Image Source="{StaticResource Restore_normal_10DrawingImage}" Stretch="fill" />
                         </Border>
                     </Setter.Value>
                 </Setter>
@@ -57,7 +57,7 @@
                 <Setter Property="Content">
                     <Setter.Value>
                         <Border BorderThickness="0">
-                            <Image Source="ImageSource/MainWindow/Restore_focus.bmp" Stretch="fill" />
+                            <Image Source="{StaticResource Restore_focus_09DrawingImage}" Stretch="fill" />
                         </Border>
                     </Setter.Value>
                 </Setter>
@@ -70,7 +70,7 @@
                 <Setter Property="Content">
                     <Setter.Value>
                         <Border BorderThickness="0">
-                            <Image Source="ImageSource/MainWindow/Max_focus.bmp" Stretch="fill" />
+                            <Image Source="{StaticResource Max_focus_05DrawingImage}" Stretch="fill" />
                         </Border>
                     </Setter.Value>
                 </Setter>
@@ -98,14 +98,14 @@
     <Style x:Key="systemButton_contactInteware" BasedOn="{StaticResource systemButton}" TargetType="{x:Type Button}">
         <Setter Property="Background">
             <Setter.Value>
-                <ImageBrush ImageSource="ImageSource/MainWindow/Customer-service_normal.bmp" />
+                <ImageBrush ImageSource="{StaticResource Customer_service_normal_04DrawingImage}" />
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background">
                     <Setter.Value>
-                        <ImageBrush ImageSource="ImageSource/MainWindow/Customer-service_focus.bmp" />
+                        <ImageBrush ImageSource="{StaticResource Customer_service_focus_03DrawingImage}" />
                     </Setter.Value>
                 </Setter>
             </Trigger>
@@ -115,14 +115,14 @@
     <Style x:Key="systemButton_mimimize" BasedOn="{StaticResource systemButton}" TargetType="{x:Type Button}">
         <Setter Property="Background">
             <Setter.Value>
-                <ImageBrush ImageSource="ImageSource/MainWindow/Min_normal.bmp" />
+                <ImageBrush ImageSource="{StaticResource Min_normal_08DrawingImage}" />
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background">
                     <Setter.Value>
-                        <ImageBrush ImageSource="ImageSource/MainWindow/Min_focus.bmp" />
+                        <ImageBrush ImageSource="{StaticResource Min_focus_07DrawingImage}" />
                     </Setter.Value>
                 </Setter>
             </Trigger>
@@ -131,14 +131,14 @@
     <Style x:Key="systemButton_close" BasedOn="{StaticResource systemButton}" TargetType="{x:Type Button}">
         <Setter Property="Background">
             <Setter.Value>
-                <ImageBrush ImageSource="ImageSource/MainWindow/Close_normal.bmp" />
+                <ImageBrush ImageSource="{StaticResource Close_normalDrawingImage}" />
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background">
                     <Setter.Value>
-                        <ImageBrush ImageSource="ImageSource/MainWindow/Close_focus.bmp" />
+                        <ImageBrush ImageSource="{StaticResource Close_focusDrawingImage}" />
                     </Setter.Value>
                 </Setter>
             </Trigger>
@@ -165,8 +165,8 @@
         <Setter Property="StartAngle" Value="0" />
         <Setter Property="EndAngle" Value="360" />
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
-        <Setter Property="Height" Value="84" />
-        <Setter Property="Width" Value="84" />
+        <Setter Property="Height" Value="52" />
+        <Setter Property="Width" Value="52" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="RenderTransform">

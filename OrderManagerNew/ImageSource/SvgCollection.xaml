@@ -10,7 +10,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="72" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="56" />
             <RowDefinition Height="40" />
             <RowDefinition Height="40" />
             <RowDefinition Height="40" />
@@ -86,5 +86,63 @@
                 <Image Source="{StaticResource icon_set_up_clickDrawingImage}" />
             </Viewbox>
         </StackPanel>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal">
+            <Viewbox
+              Width="48" Height="48" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{StaticResource Customer_service_normal_04DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="48" Height="48" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{StaticResource Customer_service_focus_03DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="48" Height="48" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{StaticResource Close_normalDrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="48" Height="48" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{StaticResource Close_focusDrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="48" Height="48" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{StaticResource Max_normal_06DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="48" Height="48" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{StaticResource Max_focus_05DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="48" Height="48" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{StaticResource Restore_normal_10DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="48" Height="48" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{StaticResource Restore_focus_09DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="48" Height="48" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{StaticResource Min_normal_08DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="48" Height="48" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{StaticResource Min_focus_07DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="Auto" Height="48" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{StaticResource INTEWARE_TITLE_OrderManagerDrawingImage}" />
+            </Viewbox>
+        </StackPanel>
+
     </Grid>
 </Window>
