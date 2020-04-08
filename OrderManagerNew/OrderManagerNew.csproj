@@ -78,6 +78,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EnumSummary.cs" />
     <Compile Include="ImageSource\SvgCollection.xaml.cs">
       <DependentUpon>SvgCollection.xaml</DependentUpon>
     </Compile>

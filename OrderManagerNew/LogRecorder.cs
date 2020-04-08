@@ -56,7 +56,7 @@ namespace OrderManagerNew
         /// <param name="logMessage"> 詳細資訊</param>
         /// <param name="w">log檔路徑</param>
         /// <returns></returns>
-        public void Log(string Block, string logMessage, TextWriter w)
+        private void Log(string Block, string logMessage, TextWriter w)
         {
             w.Write("\r\nLog Entry : ");
             w.WriteLine($"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");

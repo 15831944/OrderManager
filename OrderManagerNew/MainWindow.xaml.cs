@@ -57,8 +57,6 @@ namespace OrderManagerNew
         static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
         [DllImport("user32.dll")]
         static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
-        [DllImport("user32.dll")]
-        static extern int TrackPopupMenu(IntPtr hMenu, uint uFlags, int x, int y, int nReserved, IntPtr hWnd, IntPtr prcRect);
 
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -72,14 +70,6 @@ namespace OrderManagerNew
                 {
                     startPos = e.GetPosition(null);
                 }
-            }
-            else if (e.ChangedButton == MouseButton.Right)
-            {
-                var pos = PointToScreen(e.GetPosition(this));
-                IntPtr hWnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
-                IntPtr hMenu = GetSystemMenu(hWnd, false);
-                int cmd = TrackPopupMenu(hMenu, 0x100, (int)pos.X, (int)pos.Y, 0, hWnd, IntPtr.Zero);
-                if (cmd > 0) SendMessage(hWnd, 0x112, (IntPtr)cmd, IntPtr.Zero);
             }
         }
         
@@ -121,10 +111,146 @@ namespace OrderManagerNew
         #endregion
 
         #region FunctionTable事件
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 設定SofttwareTable各Icon顯示
+        /// </summary>
+        /// <param name="currentProgress">(目前進度) 未安裝、下載中、已安裝</param>
+        /// <param name="softwareID">(軟體ID) EZCAD、Implant、Ortho、Tray、Splint</param>
+        /// <returns></returns>
+        void setSoftwareShow(int softwareID, int currentProgress)
         {
-            //log.RecordLog("TestBlock", "Test");
-            process_EZCAD.EndAngle -= 5;
+            switch (softwareID)
+            {
+                case (int)_softwareID.EZCAD:
+                    {
+                        switch (currentProgress)
+                        {
+                            case (int)_softwareTableStatus.NotInstall:
+                                {
+                                    mask_EZCAD.Visibility = Visibility.Visible;
+                                    process_EZCAD.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                            case (int)_softwareTableStatus.Downloading:
+                                {
+                                    mask_EZCAD.Visibility = Visibility.Hidden;
+                                    process_EZCAD.Visibility = Visibility.Visible;
+                                    break;
+                                }
+                            case (int)_softwareTableStatus.Installed:
+                                {
+                                    mask_EZCAD.Visibility = Visibility.Hidden;
+                                    process_EZCAD.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Implant:
+                    {
+                        switch (currentProgress)
+                        {
+                            case (int)_softwareTableStatus.NotInstall:
+                                {
+                                    mask_Implant.Visibility = Visibility.Visible;
+                                    process_Implant.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                            case (int)_softwareTableStatus.Downloading:
+                                {
+                                    mask_Implant.Visibility = Visibility.Hidden;
+                                    process_Implant.Visibility = Visibility.Visible;
+                                    break;
+                                }
+                            case (int)_softwareTableStatus.Installed:
+                                {
+                                    mask_Implant.Visibility = Visibility.Hidden;
+                                    process_Implant.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Ortho:
+                    {
+                        switch (currentProgress)
+                        {
+                            case (int)_softwareTableStatus.NotInstall:
+                                {
+                                    mask_Ortho.Visibility = Visibility.Visible;
+                                    process_Ortho.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                            case (int)_softwareTableStatus.Downloading:
+                                {
+                                    mask_Ortho.Visibility = Visibility.Hidden;
+                                    process_Ortho.Visibility = Visibility.Visible;
+                                    break;
+                                }
+                            case (int)_softwareTableStatus.Installed:
+                                {
+                                    mask_Ortho.Visibility = Visibility.Hidden;
+                                    process_Ortho.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Tray:
+                    {
+                        switch (currentProgress)
+                        {
+                            case (int)_softwareTableStatus.NotInstall:
+                                {
+                                    mask_Tray.Visibility = Visibility.Visible;
+                                    process_Tray.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                            case (int)_softwareTableStatus.Downloading:
+                                {
+                                    mask_Tray.Visibility = Visibility.Hidden;
+                                    process_Tray.Visibility = Visibility.Visible;
+                                    break;
+                                }
+                            case (int)_softwareTableStatus.Installed:
+                                {
+                                    mask_Tray.Visibility = Visibility.Hidden;
+                                    process_Tray.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Splint:
+                    {
+                        switch (currentProgress)
+                        {
+                            case (int)_softwareTableStatus.NotInstall:
+                                {
+                                    mask_Splint.Visibility = Visibility.Visible;
+                                    process_Splint.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                            case (int)_softwareTableStatus.Downloading:
+                                {
+                                    mask_Splint.Visibility = Visibility.Hidden;
+                                    process_Splint.Visibility = Visibility.Visible;
+                                    break;
+                                }
+                            case (int)_softwareTableStatus.Installed:
+                                {
+                                    mask_Splint.Visibility = Visibility.Hidden;
+                                    process_Splint.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+            }
+        }
+        void Button_Click(object sender, RoutedEventArgs e)
+        {
+            setSoftwareShow(0, 2);
         }
         #endregion
 
