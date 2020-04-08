@@ -124,7 +124,7 @@ namespace OrderManagerNew
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //log.RecordLog("TestBlock", "Test");
-            mask_EZCAD.EndAngle -= 5;
+            process_EZCAD.EndAngle -= 5;
         }
         #endregion
 

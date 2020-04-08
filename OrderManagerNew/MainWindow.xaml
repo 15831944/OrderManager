@@ -97,7 +97,7 @@
                         Grid.ColumnSpan="2"
                         Fill="White" />
 
-                    <!--  FunctionTable  -->
+                    <!--  SoftwareTable  -->
                     <StackPanel
                         Grid.Column="0"
                         HorizontalAlignment="Left"
@@ -105,23 +105,48 @@
                         Orientation="Horizontal">
                         <Grid Width="18" />
                         <Grid Margin="6,0">
-                            <ed:Arc x:Name="mask_EZCAD" Style="{StaticResource progressArc}" />
+                            <Rectangle
+                                x:Name="mask_EZCAD"
+                                Panel.ZIndex="1"
+                                Fill="White"
+                                Opacity="0.9" />
+                            <ed:Arc x:Name="process_EZCAD" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_D.png" Style="{StaticResource progressImage}" />
                         </Grid>
                         <Grid Margin="6,0">
-                            <ed:Arc x:Name="mask_Implant" Style="{StaticResource progressArc}" />
+                            <Rectangle
+                                x:Name="mask_Implant"
+                                Panel.ZIndex="1"
+                                Fill="White"
+                                Opacity="0.9" />
+                            <ed:Arc x:Name="process_Implant" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_I.png" Style="{StaticResource progressImage}" />
                         </Grid>
                         <Grid Margin="6,0">
-                            <ed:Arc x:Name="mask_Ortho" Style="{StaticResource progressArc}" />
+                            <Rectangle
+                                x:Name="mask_Ortho"
+                                Panel.ZIndex="1"
+                                Fill="White"
+                                Opacity="0.9" />
+                            <ed:Arc x:Name="process_Ortho" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_O.png" Style="{StaticResource progressImage}" />
                         </Grid>
                         <Grid Margin="6,0">
-                            <ed:Arc x:Name="mask_Tray" Style="{StaticResource progressArc}" />
+                            <Rectangle
+                                x:Name="mask_Tray"
+                                Panel.ZIndex="1"
+                                Fill="White"
+                                Opacity="0.9" />
+                            <ed:Arc x:Name="process_Tray" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_T.png" Style="{StaticResource progressImage}" />
                         </Grid>
                         <Grid Margin="6,0">
-                            <ed:Arc x:Name="mask_Splint" Style="{StaticResource progressArc}" />
+                            <Rectangle
+                                x:Name="mask_Splint"
+                                Panel.ZIndex="1"
+                                Fill="White"
+                                Opacity="0.9" />
+                            <ed:Arc x:Name="process_Splint" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_S.png" Style="{StaticResource progressImage}" />
                         </Grid>
                         <Button
