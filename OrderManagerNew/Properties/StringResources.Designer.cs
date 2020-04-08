@@ -124,6 +124,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Local 的當地語系化字串。
+        /// </summary>
+        internal static string Local {
+            get {
+                return ResourceManager.GetString("Local", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Today 的當地語系化字串。
         /// </summary>
         internal static string Today {

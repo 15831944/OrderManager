@@ -1,9 +1,14 @@
 ﻿<ResourceDictionary
-  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
-  xmlns:local="clr-namespace:OrderManagerNew">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+    xmlns:local="clr-namespace:OrderManagerNew">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ImageSource/SvgSource.xaml" />
     </ResourceDictionary.MergedDictionaries>
+
+    <SolidColorBrush x:Key="Common_DarkBrown" Color="#FF493E34" />
+    <SolidColorBrush x:Key="background_CaseTable" Color="#FFEDEDE2" />
 
     <!--  TitleBar-Start  -->
     <Style x:Key="systemButton_max" TargetType="{x:Type ToggleButton}">
@@ -18,15 +23,16 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <ContentPresenter
-                      x:Name="contentPresenter"
-                      Margin="{TemplateBinding Padding}"
-                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                      Content="{TemplateBinding Content}"
-                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                      Focusable="False" RecognizesAccessKey="True"
-                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        x:Name="contentPresenter"
+                        Margin="{TemplateBinding Padding}"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Content="{TemplateBinding Content}"
+                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        Focusable="False"
+                        RecognizesAccessKey="True"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="Button.IsDefaulted" Value="True" />
                         <Trigger Property="IsMouseOver" Value="True" />
@@ -95,7 +101,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="systemButton_contactInteware" BasedOn="{StaticResource systemButton}" TargetType="{x:Type Button}">
+    <Style
+        x:Key="systemButton_contactInteware"
+        BasedOn="{StaticResource systemButton}"
+        TargetType="{x:Type Button}">
         <Setter Property="Background">
             <Setter.Value>
                 <ImageBrush ImageSource="{StaticResource Customer_service_normal_04DrawingImage}" />
@@ -112,7 +121,10 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="systemButton_mimimize" BasedOn="{StaticResource systemButton}" TargetType="{x:Type Button}">
+    <Style
+        x:Key="systemButton_mimimize"
+        BasedOn="{StaticResource systemButton}"
+        TargetType="{x:Type Button}">
         <Setter Property="Background">
             <Setter.Value>
                 <ImageBrush ImageSource="{StaticResource Min_normal_08DrawingImage}" />
@@ -128,7 +140,10 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <Style x:Key="systemButton_close" BasedOn="{StaticResource systemButton}" TargetType="{x:Type Button}">
+    <Style
+        x:Key="systemButton_close"
+        BasedOn="{StaticResource systemButton}"
+        TargetType="{x:Type Button}">
         <Setter Property="Background">
             <Setter.Value>
                 <ImageBrush ImageSource="{StaticResource Close_normalDrawingImage}" />
@@ -184,14 +199,20 @@
         <Setter Property="Height" Value="64" />
         <Setter Property="Width" Value="64" />
     </Style>
-    <Style x:Key="FunctionButton_Skin" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="{x:Type Button}">
+    <Style
+        x:Key="FunctionButton_Skin"
+        BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+        TargetType="{x:Type Button}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Margin" Value="6,0" />
         <Setter Property="Height" Value="75" />
         <Setter Property="Width" Value="75" />
         <Setter Property="BorderThickness" Value="0" />
     </Style>
-    <Style x:Key="FunctionButton_refresh" BasedOn="{StaticResource FunctionButton_Skin}" TargetType="{x:Type Button}">
+    <Style
+        x:Key="FunctionButton_refresh"
+        BasedOn="{StaticResource FunctionButton_Skin}"
+        TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -208,7 +229,10 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="FunctionButton_update" BasedOn="{StaticResource FunctionButton_Skin}" TargetType="{x:Type Button}">
+    <Style
+        x:Key="FunctionButton_update"
+        BasedOn="{StaticResource FunctionButton_Skin}"
+        TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -225,7 +249,10 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="FunctionButton_cloud" BasedOn="{StaticResource FunctionButton_Skin}" TargetType="{x:Type Button}">
+    <Style
+        x:Key="FunctionButton_cloud"
+        BasedOn="{StaticResource FunctionButton_Skin}"
+        TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -242,7 +269,10 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="FunctionButton_setting" BasedOn="{StaticResource FunctionButton_Skin}" TargetType="{x:Type Button}">
+    <Style
+        x:Key="FunctionButton_setting"
+        BasedOn="{StaticResource FunctionButton_Skin}"
+        TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -277,41 +307,57 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Canvas
-                      Width="{TemplateBinding Width}"
-                      Height="{TemplateBinding Height}"
-                      Background="{TemplateBinding Background}"
-                      SnapsToDevicePixels="True">
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        Background="{TemplateBinding Background}"
+                        SnapsToDevicePixels="True">
                         <Canvas
-                          x:Name="canvNormal" Canvas.Right="0"
-                          Width="{TemplateBinding Width}"
-                          Height="{TemplateBinding Height}"
-                          Background="{TemplateBinding Background}"
-                          SnapsToDevicePixels="True" Visibility="Visible">
+                            x:Name="canvNormal"
+                            Canvas.Right="0"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}"
+                            SnapsToDevicePixels="True"
+                            Visibility="Visible">
                             <Polygon Fill="#FF70450F" Points="0,0 0,26 26,26 26,0 0,0" />
                             <Line
-                              Stroke="#FFFFFFFF" StrokeThickness="1" X1="8"
-                              X2="18" Y1="13" Y2="13" />
+                                Stroke="#FFFFFFFF"
+                                StrokeThickness="1"
+                                X1="8"
+                                X2="18"
+                                Y1="13"
+                                Y2="13" />
                             <Line
-                              Stroke="#FFFFFFFF" StrokeThickness="1" X1="13"
-                              X2="13" Y1="8" Y2="18" />
+                                Stroke="#FFFFFFFF"
+                                StrokeThickness="1"
+                                X1="13"
+                                X2="13"
+                                Y1="8"
+                                Y2="18" />
                         </Canvas>
                         <Canvas
-                          x:Name="canvChecked" Canvas.Right="0"
-                          Width="{TemplateBinding Width}"
-                          Height="{TemplateBinding Height}"
-                          Background="{TemplateBinding Background}"
-                          SnapsToDevicePixels="True" Visibility="Hidden">
+                            x:Name="canvChecked"
+                            Canvas.Right="0"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}"
+                            SnapsToDevicePixels="True"
+                            Visibility="Hidden">
                             <Polygon Fill="#FF70450F" Points="0,0 0,26 26,26 26,0 0,0" />
                             <Line
-                              Stroke="#FFFFFFFF" StrokeThickness="1" X1="8"
-                              X2="18" Y1="13" Y2="13" />
+                                Stroke="#FFFFFFFF"
+                                StrokeThickness="1"
+                                X1="8"
+                                X2="18"
+                                Y1="13"
+                                Y2="13" />
                         </Canvas>
                         <ContentPresenter
-                          Margin="{TemplateBinding Padding}"
-                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                          RecognizesAccessKey="True"
-                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Canvas>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -344,11 +390,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Expander}">
                     <Border
-                      Width="{TemplateBinding Width}"
-                      Background="{TemplateBinding Background}"
-                      BorderBrush="{TemplateBinding BorderBrush}"
-                      BorderThickness="{TemplateBinding BorderThickness}"
-                      CornerRadius="0" SnapsToDevicePixels="True">
+                        Width="{TemplateBinding Width}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="0"
+                        SnapsToDevicePixels="True">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
@@ -357,21 +404,24 @@
 
 
                             <ToggleButton
-                              x:Name="HeaderSite" Grid.Row="0"
-                              Content="{TemplateBinding Header}"
-                              ContentTemplate="{TemplateBinding HeaderTemplate}"
-                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                              Style="{DynamicResource ExpanderToggleButtonStyle}" />
+                                x:Name="HeaderSite"
+                                Grid.Row="0"
+                                Content="{TemplateBinding Header}"
+                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                Style="{DynamicResource ExpanderToggleButtonStyle}" />
                             <ContentPresenter
-                              x:Name="ExpandSite" Grid.Row="1"
-                              Margin="{TemplateBinding Padding}"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              Content="{TemplateBinding Content}"
-                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                              Focusable="False" Visibility="Collapsed" />
+                                x:Name="ExpandSite"
+                                Grid.Row="1"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Content="{TemplateBinding Content}"
+                                ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Focusable="False"
+                                Visibility="Collapsed" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -428,26 +478,40 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <BulletDecorator
-                      Margin="0,1" HorizontalAlignment="Left" Background="#FF756550"
-                      Cursor="Hand">
+                        Margin="0,1"
+                        HorizontalAlignment="Left"
+                        Background="#FF756550"
+                        Cursor="Hand">
                         <BulletDecorator.Bullet>
                             <Grid Width="11" Height="11">
                                 <!--  Define size of the Bullet  -->
                                 <!--  The two borders  -->
                                 <Border
-                                  Name="RadioOuter" Background="Transparent" BorderBrush="#FFF4E9DC"
-                                  BorderThickness="1" CornerRadius="20" />
+                                    Name="RadioOuter"
+                                    Background="Transparent"
+                                    BorderBrush="#FFF4E9DC"
+                                    BorderThickness="1"
+                                    CornerRadius="20" />
                                 <Border
-                                  Name="RadioMark" Margin="3" Background="#FFF6AA00"
-                                  CornerRadius="20" Visibility="Hidden" />
+                                    Name="RadioMark"
+                                    Margin="3"
+                                    Background="#FFF6AA00"
+                                    CornerRadius="20"
+                                    Visibility="Hidden" />
                                 <Canvas
-                                  Width="20" Height="20" HorizontalAlignment="Center"
-                                  VerticalAlignment="Center">
+                                    Width="20"
+                                    Height="20"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
                                     <Ellipse
-                                      x:Name="InteractionEllipse" Canvas.Left="10" Canvas.Top="10"
-                                      Width="0" Height="0"
-                                      Fill="{TemplateBinding Foreground}"
-                                      Opacity="0" RenderTransformOrigin="0.5,0.5">
+                                        x:Name="InteractionEllipse"
+                                        Canvas.Left="10"
+                                        Canvas.Top="10"
+                                        Width="0"
+                                        Height="0"
+                                        Fill="{TemplateBinding Foreground}"
+                                        Opacity="0"
+                                        RenderTransformOrigin="0.5,0.5">
                                         <Ellipse.RenderTransform>
                                             <TransformGroup>
                                                 <ScaleTransform />
@@ -462,8 +526,10 @@
                         </BulletDecorator.Bullet>
                         <!--  Text element  -->
                         <TextBlock
-                          Margin="10,0,0,0" FontFamily="Segoe UI" FontSize="14"
-                          Foreground="#FFF4E9DC">
+                            Margin="10,0,0,0"
+                            FontFamily="Segoe UI"
+                            FontSize="14"
+                            Foreground="#FFF4E9DC">
                             <ContentPresenter />
                         </TextBlock>
                     </BulletDecorator>
@@ -491,13 +557,19 @@
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Grid x:Name="Grid">
                         <Rectangle
-                          Width="Auto" Height="Auto" HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch" Fill="Transparent" />
+                            Width="Auto"
+                            Height="Auto"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Fill="Transparent" />
                         <Border
-                          x:Name="Rectangle1" Width="20" Height="Auto"
-                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                          Background="{TemplateBinding Background}"
-                          CornerRadius="10" />
+                            x:Name="Rectangle1"
+                            Width="20"
+                            Height="Auto"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="10" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Tag" Value="Horizontal">
@@ -510,7 +582,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="RadiusScrollBar" TargetType="{x:Type ScrollBar}">
+    <Style TargetType="{x:Type ScrollBar}">
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
         <Setter Property="Foreground" Value="#FF756550" />
         <Setter Property="Background" Value="#FFB3B3B3" />
@@ -523,26 +595,39 @@
                             <RowDefinition Height="0.00001*" />
                         </Grid.RowDefinitions>
                         <Border
-                          x:Name="Rectangle1" Width="8" Height="Auto"
-                          Margin="0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                          Background="{TemplateBinding Background}"
-                          CornerRadius="5" />
+                            x:Name="Rectangle1"
+                            Width="8"
+                            Height="Auto"
+                            Margin="0,10"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="5" />
 
                         <Track
-                          x:Name="PART_Track" Grid.Row="0" Focusable="false"
-                          IsDirectionReversed="true">
+                            x:Name="PART_Track"
+                            Grid.Row="0"
+                            Focusable="false"
+                            IsDirectionReversed="true">
                             <Track.Thumb>
-                                <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{DynamicResource ScrollThumbs}" />
+                                <Thumb
+                                    x:Name="Thumb"
+                                    Background="{TemplateBinding Foreground}"
+                                    Style="{DynamicResource ScrollThumbs}" />
                             </Track.Thumb>
                             <Track.IncreaseRepeatButton>
                                 <RepeatButton
-                                  x:Name="PageUp" Command="ScrollBar.PageDownCommand" Focusable="false"
-                                  Opacity="0" />
+                                    x:Name="PageUp"
+                                    Command="ScrollBar.PageDownCommand"
+                                    Focusable="false"
+                                    Opacity="0" />
                             </Track.IncreaseRepeatButton>
                             <Track.DecreaseRepeatButton>
                                 <RepeatButton
-                                  x:Name="PageDown" Command="ScrollBar.PageUpCommand" Focusable="false"
-                                  Opacity="0" />
+                                    x:Name="PageDown"
+                                    Command="ScrollBar.PageUpCommand"
+                                    Focusable="false"
+                                    Opacity="0" />
                             </Track.DecreaseRepeatButton>
                         </Track>
                     </Grid>
@@ -580,6 +665,90 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="CaseTabItem" TargetType="{x:Type TabItem}">
+        <Setter Property="Width" Value="200" />
+        <Setter Property="Background" Value="{StaticResource background_CaseTable}" />
+        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{StaticResource Common_DarkBrown}" />
+    </Style>
+
+    <!--<Style x:Key="CaseTabControl" TargetType="{x:Type TabControl}">
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Height" Value="36" />
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="20" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border
+                                        Grid.Column="0"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="#FF353531"
+                                        BorderThickness="1,1,0,1"
+                                        CornerRadius="5,0,0,0" />
+                                    <Rectangle
+                                        Grid.Column="1"
+                                        Margin="0,0,5,0"
+                                        Fill="{TemplateBinding Background}" />
+                                    <Rectangle
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        Height="1"
+                                        VerticalAlignment="Top"
+                                        Fill="#FF353531" />
+                                    <Rectangle
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        Height="1"
+                                        VerticalAlignment="Bottom"
+                                        Panel.ZIndex="2"
+                                        Fill="#FF353531" />
+                                    <ContentPresenter
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        ContentSource="Header" />
+                                    <Border
+                                        Grid.Column="2"
+                                        Width="10"
+                                        Height="{TemplateBinding Height}"
+                                        Margin="-8,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0,1,0,1"
+                                        CornerRadius="0,5,0,0" />
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Trigger.Setters>
+                                            <Setter Property="Background" Value="Beige" />
+                                            <Setter Property="Panel.ZIndex" Value="1" />
+                                        </Trigger.Setters>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Trigger.Setters>
+                                            <Setter Property="Background" Value="LightGray" />
+                                        </Trigger.Setters>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>-->
     <!--  CaseTable-End  -->
 
 </ResourceDictionary>

@@ -141,4 +141,7 @@
   <data name="Today" xml:space="preserve">
     <value>今天</value>
   </data>
+  <data name="Local" xml:space="preserve">
+    <value>本機</value>
+  </data>
 </root>

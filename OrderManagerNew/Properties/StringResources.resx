@@ -146,4 +146,8 @@
     <value>Last two weeks</value>
     <comment>UI</comment>
   </data>
+  <data name="Local" xml:space="preserve">
+    <value>Local</value>
+    <comment>UI</comment>
+  </data>
 </root>

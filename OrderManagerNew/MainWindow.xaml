@@ -1,9 +1,19 @@
 ﻿<Window
-  x:Class="OrderManagerNew.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" xmlns:local="clr-namespace:OrderManagerNew"
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Title="OrderManager" Width="1280"
-  Height="768" Background="#FF353531" StateChanged="Window_StateChanged"
-  WindowStartupLocation="CenterScreen" WindowStyle="None" mc:Ignorable="d">
+    x:Class="OrderManagerNew.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+    xmlns:local="clr-namespace:OrderManagerNew"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="OrderManager"
+    Width="1280"
+    Height="768"
+    Background="#FF353531"
+    StateChanged="Window_StateChanged"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
 
     <Window.Resources>
         <ResourceDictionary Source="StyleDictionary.xaml" />
@@ -12,29 +22,59 @@
     <Border BorderThickness="0">
         <DockPanel>
             <!--  TitleBar-Start  -->
-            <Border Height="42" Background="#FFE08A1E" DockPanel.Dock="Top">
+            <Border
+                Height="42"
+                Background="#FFE08A1E"
+                DockPanel.Dock="Top">
                 <Grid>
                     <Label
-                      Margin="0,0,143,0" VerticalAlignment="Center" Foreground="White"
-                      PreviewMouseDown="TitleBar_MouseDown" PreviewMouseMove="TitleBar_MouseMove">
-                        <Image Height="42" Margin="20,-5,0,0" Source="{StaticResource INTEWARE_TITLE_OrderManagerDrawingImage}" />
+                        Margin="0,0,143,0"
+                        VerticalAlignment="Center"
+                        Foreground="White"
+                        PreviewMouseDown="TitleBar_MouseDown"
+                        PreviewMouseMove="TitleBar_MouseMove">
+                        <Image
+                            Height="42"
+                            Margin="20,-5,0,0"
+                            Source="{StaticResource INTEWARE_TITLE_OrderManagerDrawingImage}" />
                     </Label>
                     <Label
-                      x:Name="titlebar_OrderManagerVersion" Margin="250,5,0,0" HorizontalAlignment="Left"
-                      VerticalAlignment="Center" Content="v0.1.4.3" Foreground="White"
-                      PreviewMouseDown="TitleBar_MouseDown" PreviewMouseMove="TitleBar_MouseMove" />
+                        x:Name="titlebar_OrderManagerVersion"
+                        Margin="250,5,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Content="v0.1.4.3"
+                        Foreground="White"
+                        PreviewMouseDown="TitleBar_MouseDown"
+                        PreviewMouseMove="TitleBar_MouseMove" />
 
                     <StackPanel
-                      HorizontalAlignment="Right" VerticalAlignment="Center" Panel.ZIndex="1"
-                      Background="#FFE08A1E" Orientation="Horizontal">
-                        <Button Name="systemButton_ContactInteware" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_contactInteware}" />
-                        <Button Name="systemButton_Minimize" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_mimimize}" />
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Panel.ZIndex="1"
+                        Background="#FFE08A1E"
+                        Orientation="Horizontal">
+                        <Button
+                            Name="systemButton_ContactInteware"
+                            Click="TitleBar_Click_titlebarButtons"
+                            Style="{StaticResource systemButton_contactInteware}" />
+                        <Button
+                            Name="systemButton_Minimize"
+                            Click="TitleBar_Click_titlebarButtons"
+                            Style="{StaticResource systemButton_mimimize}" />
 
                         <ToggleButton
-                          Name="systemButton_Maximize" Width="35" Height="30"
-                          HorizontalAlignment="Right" VerticalAlignment="Top" Click="TitleBar_Click_titlebarButtons"
-                          Style="{StaticResource systemButton_max}" />
-                        <Button Name="systemButton_Close" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_close}" />
+                            Name="systemButton_Maximize"
+                            Width="35"
+                            Height="30"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Click="TitleBar_Click_titlebarButtons"
+                            Style="{StaticResource systemButton_max}" />
+                        <Button
+                            Name="systemButton_Close"
+                            Click="TitleBar_Click_titlebarButtons"
+                            Style="{StaticResource systemButton_close}" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -52,12 +92,17 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Rectangle Grid.Column="0" Grid.ColumnSpan="2" Fill="White" />
+                    <Rectangle
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Fill="White" />
 
                     <!--  FunctionTable  -->
                     <StackPanel
-                      Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                      Orientation="Horizontal">
+                        Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
                         <Grid Width="18" />
                         <Grid Margin="6,0">
                             <ed:Arc x:Name="mask_EZCAD" Style="{StaticResource progressArc}" />
@@ -79,13 +124,18 @@
                             <ed:Arc x:Name="mask_Splint" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_S.png" Style="{StaticResource progressImage}" />
                         </Grid>
-                        <Button Height="48" Click="Button_Click" Content="Update" />
+                        <Button
+                            Height="48"
+                            Click="Button_Click"
+                            Content="Update" />
                     </StackPanel>
 
                     <!--  ordermanagerFunction  -->
                     <StackPanel
-                      Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
-                      Orientation="Horizontal">
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
                         <Button Style="{StaticResource FunctionButton_refresh}" />
                         <Button Style="{StaticResource FunctionButton_update}" />
                         <Button Style="{StaticResource FunctionButton_cloud}" />
@@ -103,7 +153,11 @@
                     </Grid.ColumnDefinitions>
 
                     <!--  SortTable-Start  -->
-                    <StackPanel Grid.Column="0" Background="#FF756550" Orientation="Vertical">
+                    <StackPanel
+                        Grid.Column="0"
+                        Margin="0,3"
+                        Background="#FF756550"
+                        Orientation="Vertical">
                         <Expander Header="{local:LocExtension ByPatient}" Style="{StaticResource ExpanderStyle}">
                             <Grid Background="#FF756550">
                                 <Grid.ColumnDefinitions>
@@ -111,13 +165,20 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <CheckBox
-                                  x:Name="checkboxPatient" Grid.Column="0" HorizontalAlignment="Right"
-                                  VerticalAlignment="Center" Checked="SortTable_Checked" Unchecked="SortTable_UnChecked" />
+                                    x:Name="checkboxPatient"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Checked="SortTable_Checked"
+                                    Unchecked="SortTable_UnChecked" />
                                 <TextBox
-                                  x:Name="textboxPatient" Grid.Column="1" VerticalAlignment="Center"
-                                  VerticalContentAlignment="Center"
-                                  Style="{StaticResource SortTextBox}"
-                                  Text="" TextChanged="SortTable_TextChanged" />
+                                    x:Name="textboxPatient"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    Style="{StaticResource SortTextBox}"
+                                    Text=""
+                                    TextChanged="SortTable_TextChanged" />
                             </Grid>
                         </Expander>
                         <Expander Header="{local:LocExtension ByCase}" Style="{StaticResource ExpanderStyle}">
@@ -127,38 +188,50 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <CheckBox
-                                  x:Name="checkboxCase" Grid.Column="0" HorizontalAlignment="Right"
-                                  VerticalAlignment="Center" Checked="SortTable_Checked" Unchecked="SortTable_UnChecked" />
+                                    x:Name="checkboxCase"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Checked="SortTable_Checked"
+                                    Unchecked="SortTable_UnChecked" />
                                 <TextBox
-                                  x:Name="textboxCase" Grid.Column="1" VerticalAlignment="Center"
-                                  VerticalContentAlignment="Center"
-                                  Style="{StaticResource SortTextBox}"
-                                  Text="" TextChanged="SortTable_TextChanged" />
+                                    x:Name="textboxCase"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    Style="{StaticResource SortTextBox}"
+                                    Text=""
+                                    TextChanged="SortTable_TextChanged" />
                             </Grid>
                         </Expander>
                         <Expander Header="{local:LocExtension ByDate}" Style="{StaticResource ExpanderStyle}">
                             <Grid Background="#FF756550">
                                 <StackPanel Margin="30,0,0,0" Orientation="Vertical">
                                     <RadioButton
-                                      Name="DateFilterAll" Click="SortTable_Click_Filter"
-                                      Content="{local:LocExtension All}"
-                                      GroupName="SortRadio" IsChecked="True"
-                                      Style="{StaticResource SortRadioButton}" />
+                                        Name="DateFilterAll"
+                                        Click="SortTable_Click_Filter"
+                                        Content="{local:LocExtension All}"
+                                        GroupName="SortRadio"
+                                        IsChecked="True"
+                                        Style="{StaticResource SortRadioButton}" />
                                     <RadioButton
-                                      Name="DateFilterToday" Click="SortTable_Click_Filter"
-                                      Content="{local:LocExtension Today}"
-                                      GroupName="SortRadio"
-                                      Style="{StaticResource SortRadioButton}" />
+                                        Name="DateFilterToday"
+                                        Click="SortTable_Click_Filter"
+                                        Content="{local:LocExtension Today}"
+                                        GroupName="SortRadio"
+                                        Style="{StaticResource SortRadioButton}" />
                                     <RadioButton
-                                      Name="DateFilterLW" Click="SortTable_Click_Filter"
-                                      Content="{local:LocExtension LastWeek}"
-                                      GroupName="SortRadio"
-                                      Style="{StaticResource SortRadioButton}" />
+                                        Name="DateFilterLW"
+                                        Click="SortTable_Click_Filter"
+                                        Content="{local:LocExtension LastWeek}"
+                                        GroupName="SortRadio"
+                                        Style="{StaticResource SortRadioButton}" />
                                     <RadioButton
-                                      Name="DateFilterL2W" Click="SortTable_Click_Filter"
-                                      Content="{local:LocExtension Last2Week}"
-                                      GroupName="SortRadio"
-                                      Style="{StaticResource SortRadioButton}" />
+                                        Name="DateFilterL2W"
+                                        Click="SortTable_Click_Filter"
+                                        Content="{local:LocExtension Last2Week}"
+                                        GroupName="SortRadio"
+                                        Style="{StaticResource SortRadioButton}" />
                                 </StackPanel>
                             </Grid>
                         </Expander>
@@ -166,30 +239,42 @@
                             <Grid Background="#FF756550">
                                 <StackPanel Margin="30,0,0,0" Orientation="Vertical">
                                     <RadioButton
-                                      Name="SoftwareFilterAll" Click="SortTable_Click_Filter"
-                                      Content="{local:LocExtension All}"
-                                      GroupName="SortSoftware" IsChecked="True"
-                                      Style="{StaticResource SortRadioButton}" />
+                                        Name="SoftwareFilterAll"
+                                        Click="SortTable_Click_Filter"
+                                        Content="{local:LocExtension All}"
+                                        GroupName="SortSoftware"
+                                        IsChecked="True"
+                                        Style="{StaticResource SortRadioButton}" />
                                     <RadioButton
-                                      Name="SoftwareFilterCAD" Click="SortTable_Click_Filter" Content="CAD"
-                                      GroupName="SortSoftware"
-                                      Style="{StaticResource SortRadioButton}" />
+                                        Name="SoftwareFilterCAD"
+                                        Click="SortTable_Click_Filter"
+                                        Content="CAD"
+                                        GroupName="SortSoftware"
+                                        Style="{StaticResource SortRadioButton}" />
                                     <RadioButton
-                                      Name="SoftwareFilterImplant" Click="SortTable_Click_Filter" Content="Implant"
-                                      GroupName="SortSoftware"
-                                      Style="{StaticResource SortRadioButton}" />
+                                        Name="SoftwareFilterImplant"
+                                        Click="SortTable_Click_Filter"
+                                        Content="Implant"
+                                        GroupName="SortSoftware"
+                                        Style="{StaticResource SortRadioButton}" />
                                     <RadioButton
-                                      Name="SoftwareFilterOrtho" Click="SortTable_Click_Filter" Content="Ortho"
-                                      GroupName="SortSoftware"
-                                      Style="{StaticResource SortRadioButton}" />
+                                        Name="SoftwareFilterOrtho"
+                                        Click="SortTable_Click_Filter"
+                                        Content="Ortho"
+                                        GroupName="SortSoftware"
+                                        Style="{StaticResource SortRadioButton}" />
                                     <RadioButton
-                                      Name="SoftwareFilterTray" Click="SortTable_Click_Filter" Content="Tray"
-                                      GroupName="SortSoftware"
-                                      Style="{StaticResource SortRadioButton}" />
+                                        Name="SoftwareFilterTray"
+                                        Click="SortTable_Click_Filter"
+                                        Content="Tray"
+                                        GroupName="SortSoftware"
+                                        Style="{StaticResource SortRadioButton}" />
                                     <RadioButton
-                                      Name="SoftwareFilterSplint" Click="SortTable_Click_Filter" Content="Splint"
-                                      GroupName="SortSoftware"
-                                      Style="{StaticResource SortRadioButton}" />
+                                        Name="SoftwareFilterSplint"
+                                        Click="SortTable_Click_Filter"
+                                        Content="Splint"
+                                        GroupName="SortSoftware"
+                                        Style="{StaticResource SortRadioButton}" />
                                 </StackPanel>
                             </Grid>
                         </Expander>
@@ -197,19 +282,35 @@
                     <!--  SortTable-End  -->
 
                     <!--  CaseTable-Start  -->
-                    <TabControl Grid.Column="1" BorderBrush="#FF353531" BorderThickness="1">
-                        <TabItem
-                          Width="100" Background="#FFEDEDE2" FontWeight="Bold"
-                          Foreground="#FF4D4D4D" Header="Local" IsSelected="True"
-                          Visibility="Visible">
+                    <TabControl
+                        Grid.Column="1"
+                        Background="Transparent"
+                        BorderBrush="#FF353531"
+                        BorderThickness="1">
+                        <TabItem Header="{local:LocExtension Local}" Style="{StaticResource CaseTabItem}">
                             <Border Background="#FFEDEDE2">
                                 <ScrollViewer x:Name="scrollbar_local">
                                     <StackPanel x:Name="stk" Orientation="Vertical" />
                                 </ScrollViewer>
                             </Border>
                         </TabItem>
+                        <TabItem Header="Airdental" Style="{StaticResource CaseTabItem}">
+                            <Border Background="#FFEDEDE2">
+                                <ScrollViewer>
+                                    <StackPanel Orientation="Vertical" />
+                                </ScrollViewer>
+                            </Border>
+                        </TabItem>
                     </TabControl>
                     <!--  CaseTable-End  -->
+
+                    <!--  InfoTable-Start  -->
+                    <Frame
+                        Grid.Column="2"
+                        Background="White"
+                        BorderBrush="#FF353531"
+                        BorderThickness="0,3" />
+                    <!--  InfoTable-End  -->
                 </Grid>
             </Grid>
         </DockPanel>
