@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
     xmlns:local="clr-namespace:OrderManagerNew"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="OrderManager"
     Width="1280"
@@ -105,47 +106,40 @@
                         Orientation="Horizontal">
                         <Grid Width="18" />
                         <Grid Margin="6,0">
-                            <Rectangle
-                                x:Name="mask_EZCAD"
-                                Panel.ZIndex="1"
-                                Fill="White"
-                                Opacity="0.9" />
+                            <Rectangle x:Name="mask_EZCAD" Style="{StaticResource maskImage}" />
                             <ed:Arc x:Name="process_EZCAD" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_D.png" Style="{StaticResource progressImage}" />
+                            <materialDesign:PopupBox Style="{StaticResource pupupBoxSoftwareTable}">
+                                <StackPanel>
+                                    <Button ToolTip="open Software">
+                                        open Software
+                                    </Button>
+                                    <Button IsEnabled="False" ToolTip="Two">
+                                        2
+                                    </Button>
+                                    <Button ToolTip="Three">
+                                        3
+                                    </Button>
+                                </StackPanel>
+                            </materialDesign:PopupBox>
                         </Grid>
                         <Grid Margin="6,0">
-                            <Rectangle
-                                x:Name="mask_Implant"
-                                Panel.ZIndex="1"
-                                Fill="White"
-                                Opacity="0.9" />
+                            <Rectangle x:Name="mask_Implant" Style="{StaticResource maskImage}" />
                             <ed:Arc x:Name="process_Implant" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_I.png" Style="{StaticResource progressImage}" />
                         </Grid>
                         <Grid Margin="6,0">
-                            <Rectangle
-                                x:Name="mask_Ortho"
-                                Panel.ZIndex="1"
-                                Fill="White"
-                                Opacity="0.9" />
+                            <Rectangle x:Name="mask_Ortho" Style="{StaticResource maskImage}" />
                             <ed:Arc x:Name="process_Ortho" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_O.png" Style="{StaticResource progressImage}" />
                         </Grid>
                         <Grid Margin="6,0">
-                            <Rectangle
-                                x:Name="mask_Tray"
-                                Panel.ZIndex="1"
-                                Fill="White"
-                                Opacity="0.9" />
+                            <Rectangle x:Name="mask_Tray" Style="{StaticResource maskImage}" />
                             <ed:Arc x:Name="process_Tray" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_T.png" Style="{StaticResource progressImage}" />
                         </Grid>
                         <Grid Margin="6,0">
-                            <Rectangle
-                                x:Name="mask_Splint"
-                                Panel.ZIndex="1"
-                                Fill="White"
-                                Opacity="0.9" />
+                            <Rectangle x:Name="mask_Splint" Style="{StaticResource maskImage}" />
                             <ed:Arc x:Name="process_Splint" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_S.png" Style="{StaticResource progressImage}" />
                         </Grid>

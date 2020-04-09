@@ -2,7 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
-    xmlns:local="clr-namespace:OrderManagerNew">
+    xmlns:local="clr-namespace:OrderManagerNew"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ImageSource/SvgSource.xaml" />
     </ResourceDictionary.MergedDictionaries>
@@ -170,6 +171,12 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
+    <Style x:Key="maskImage" TargetType="{x:Type Rectangle}">
+        <Setter Property="Panel.ZIndex" Value="1" />
+        <Setter Property="Fill" Value="White" />
+        <Setter Property="Opacity" Value="0.9" />
+        <Setter Property="Visibility" Value="Hidden" />
+    </Style>
     <Style x:Key="progressArc" TargetType="{x:Type ed:Arc}">
         <Setter Property="Opacity" Value="0.9" />
         <Setter Property="Panel.ZIndex" Value="1" />
@@ -184,6 +191,7 @@
         <Setter Property="Width" Value="52" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Visibility" Value="Hidden" />
         <Setter Property="RenderTransform">
             <Setter.Value>
                 <TransformGroup>
@@ -198,6 +206,13 @@
     <Style x:Key="progressImage" TargetType="{x:Type Image}">
         <Setter Property="Height" Value="64" />
         <Setter Property="Width" Value="64" />
+    </Style>
+    <Style x:Key="pupupBoxSoftwareTable" TargetType="{x:Type materialDesign:PopupBox}">
+        <Setter Property="Panel.ZIndex" Value="2" />
+        <Setter Property="Width" Value="64" />
+        <Setter Property="Height" Value="64" />
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="PlacementMode" Value="BottomAndAlignCentres" />
     </Style>
     <Style
         x:Key="FunctionButton_Skin"
@@ -437,13 +452,17 @@
         </Setter>
     </Style>
 
-    <Style x:Key="SortTextBox" TargetType="TextBox">
+    <Style
+        x:Key="SortTextBox"
+        BasedOn="{StaticResource MaterialDesignTextBox}"
+        TargetType="TextBox">
         <Setter Property="Width" Value="112" />
         <Setter Property="Height" Value="25" />
         <Setter Property="Background" Value="#FF756550" />
         <Setter Property="BorderBrush" Value="#FFF4E9DC" />
         <Setter Property="Foreground" Value="#FFF4E9DC" />
         <Setter Property="Margin" Value="0,5,5,5" />
+        <Setter Property="BorderThickness" Value="1" />
     </Style>
 
     <Style x:Key="SortRadioButton" TargetType="{x:Type RadioButton}">
