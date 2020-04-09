@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Reflection;    //取得OrderManager自身軟體版本
+using System.Windows.Media.Effects;
 
 //Microsoft.Expression.Drawing.dll如果要用多國語言套件: "C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries"
 
@@ -111,6 +112,124 @@ namespace OrderManagerNew
         #endregion
 
         #region FunctionTable事件
+        private void FunctionTable_Click_Setting(object sender, RoutedEventArgs e)
+        {
+            //主視窗羽化
+            var blur = new BlurEffect();
+            this.Effect = blur;
+
+            Setting DialogSetting = new Setting();
+            DialogSetting.Owner = this;
+            DialogSetting.ShowActivated = true;
+            DialogSetting.ShowDialog();
+
+            //主視窗還原
+            this.Effect = null;
+            this.OpacityMask = null;
+        }
+
+        #endregion
+
+
+        #region SortTable事件
+        private void SortTable_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chkbox = sender as CheckBox;
+            switch (chkbox.Name)
+            {
+                case "checkboxPatient":
+                    {
+                        break;
+                    }
+                case "checkboxCase":
+                    {
+                        break;
+                    }
+            }
+        }
+
+        private void SortTable_UnChecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chkbox = sender as CheckBox;
+            switch (chkbox.Name)
+            {
+                case "checkboxPatient":
+                    {
+                        break;
+                    }
+                case "checkboxCase":
+                    {
+                        break;
+                    }
+            }
+        }
+
+        private void SortTable_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox txtbox = sender as TextBox;
+            switch (txtbox.Name)
+            {
+                case "textboxPatient":
+                    {
+                        break;
+                    }
+                case "textboxCase":
+                    {
+                        break;
+                    }
+            }
+        }
+
+        private void SortTable_Click_Filter(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioBtn = sender as RadioButton;
+            switch (radioBtn.Name)
+            {
+                case "DateFilterAll":
+                    {
+                        break;
+                    }
+                case "DateFilterToday":
+                    {
+                        break;
+                    }
+                case "DateFilterLW":
+                    {
+                        break;
+                    }
+                case "DateFilterL2W":
+                    {
+                        break;
+                    }
+                case "SoftwareFilterAll":
+                    {
+                        break;
+                    }
+                case "SoftwareFilterCAD":
+                    {
+                        break;
+                    }
+                case "SoftwareFilterImplant":
+                    {
+                        break;
+                    }
+                case "SoftwareFilterOrtho":
+                    {
+                        break;
+                    }
+                case "SoftwareFilterTray":
+                    {
+                        break;
+                    }
+                case "SoftwareFilterSplint":
+                    {
+                        break;
+                    }
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// 設定SofttwareTable各Icon顯示
         /// </summary>
@@ -252,105 +371,6 @@ namespace OrderManagerNew
         {
             setSoftwareShow(0, 2);
         }
-        #endregion
 
-        #region SortTable事件
-        private void SortTable_Checked(object sender, RoutedEventArgs e)
-        {
-            CheckBox chkbox = sender as CheckBox;
-            switch(chkbox.Name)
-            {
-                case "checkboxPatient":
-                    {
-                        break;
-                    }
-                case "checkboxCase":
-                    {
-                        break;
-                    }
-            }
-        }
-
-        private void SortTable_UnChecked(object sender, RoutedEventArgs e)
-        {
-            CheckBox chkbox = sender as CheckBox;
-            switch (chkbox.Name)
-            {
-                case "checkboxPatient":
-                    {
-                        break;
-                    }
-                case "checkboxCase":
-                    {
-                        break;
-                    }
-            }
-        }
-
-        private void SortTable_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox txtbox = sender as TextBox;
-            switch(txtbox.Name)
-            {
-                case "textboxPatient":
-                    {
-                        break;
-                    }
-                case "textboxCase":
-                    {
-                        break;
-                    }
-            }
-        }
-
-        private void SortTable_Click_Filter(object sender, RoutedEventArgs e)
-        {
-            RadioButton radioBtn = sender as RadioButton;
-            switch(radioBtn.Name)
-            {
-                case "DateFilterAll":
-                    {
-                        break;
-                    }
-                case "DateFilterToday":
-                    {
-                        break;
-                    }
-                case "DateFilterLW":
-                    {
-                        break;
-                    }
-                case "DateFilterL2W":
-                    {
-                        break;
-                    }
-                case "SoftwareFilterAll":
-                    {
-                        break;
-                    }
-                case "SoftwareFilterCAD":
-                    {
-                        break;
-                    }
-                case "SoftwareFilterImplant":
-                    {
-                        break;
-                    }
-                case "SoftwareFilterOrtho":
-                    {
-                        break;
-                    }
-                case "SoftwareFilterTray":
-                    {
-                        break;
-                    }
-                case "SoftwareFilterSplint":
-                    {
-                        break;
-                    }
-            }
-        }
-
-        #endregion
     }
 }

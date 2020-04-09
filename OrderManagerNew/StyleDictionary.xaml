@@ -10,6 +10,111 @@
 
     <SolidColorBrush x:Key="Common_DarkBrown" Color="#FF493E34" />
     <SolidColorBrush x:Key="background_CaseTable" Color="#FFEDEDE2" />
+    <SolidColorBrush x:Key="background_SettingWindow" Color="#FF30312C" />
+    <Style TargetType="{x:Type Label}">
+        <Setter Property="FontFamily" Value="Arial" />
+    </Style>
+
+    <!--  Setting-Start  -->
+    <Style x:Key="comboboxSetting" TargetType="{x:Type ComboBox}">
+        <Setter Property="Foreground" Value="#F3E8DB" />
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <ToggleButton
+                            Grid.Column="2"
+                            Focusable="false"
+                            IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ToggleButton.Template>
+                                <ControlTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="26" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border
+                                            x:Name="Border"
+                                            Grid.Column="1"
+                                            Background="#353531"
+                                            BorderThickness="0" />
+                                        <Border
+                                            Grid.Column="0"
+                                            Background="#756550"
+                                            BorderThickness="0" />
+                                        <Path
+                                            x:Name="Arrow"
+                                            Grid.Column="1"
+                                            Width="10"
+                                            Height="10"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Data="F1M181.297,177.841L181.205,177.746 181.385,177.563 202.804,156.146 202.804,135.07 178.497,159.373 170.847,167.026 170.666,167.205 163.107,159.653 138.804,135.345 138.804,156.42 160.219,177.841 170.76,188.379 181.297,177.841z"
+                                            Fill="White"
+                                            Stretch="Uniform" />
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="ToggleButton.IsChecked" Value="true">
+                                            <Setter TargetName="Arrow" Property="Data" Value="F1M753.644,-13.0589L753.736,-12.9639 753.557,-12.7816 732.137,8.63641 732.137,29.7119 756.445,5.40851 764.094,-2.24384 764.275,-2.42352 771.834,5.1286 796.137,29.4372 796.137,8.36163 774.722,-13.0589 764.181,-23.5967 753.644,-13.0589z" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <ContentPresenter
+                            Name="ContentSite"
+                            Margin="3,0,26,0"
+                            VerticalAlignment="Center"
+                            Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            IsHitTestVisible="False" />
+                        <TextBox
+                            x:Name="PART_EditableTextBox"
+                            IsReadOnly="{TemplateBinding IsReadOnly}"
+                            Visibility="Hidden" />
+                        <Popup
+                            Name="Popup"
+                            AllowsTransparency="True"
+                            Focusable="False"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            Placement="Bottom"
+                            PopupAnimation="Slide">
+                            <Grid
+                                Name="DropDown"
+                                MinWidth="{TemplateBinding ActualWidth}"
+                                MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                SnapsToDevicePixels="True">
+                                <Border x:Name="DropDownBorder" Background="#756550" />
+                                <ScrollViewer SnapsToDevicePixels="True">
+                                    <StackPanel IsItemsHost="True" />
+                                </ScrollViewer>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border x:Name="Border" Background="#756550">
+                        <ContentPresenter Margin="3" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="#3B3127" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--  Setting-End  -->
 
     <!--  TitleBar-Start  -->
     <Style x:Key="systemButton_max" TargetType="{x:Type ToggleButton}">
@@ -209,6 +314,8 @@
     </Style>
     <Style x:Key="pupupBoxSoftwareTable" TargetType="{x:Type materialDesign:PopupBox}">
         <Setter Property="Panel.ZIndex" Value="2" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Width" Value="64" />
         <Setter Property="Height" Value="64" />
         <Setter Property="Opacity" Value="0" />

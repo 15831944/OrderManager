@@ -1,8 +1,14 @@
 ﻿<Window
-  x:Class="OrderManagerNew.ImageSource.SvgCollection" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OrderManagerNew.ImageSource" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  Title="SvgCollection" Width="1080" Height="8000"
-  mc:Ignorable="d">
+    x:Class="OrderManagerNew.ImageSource.SvgCollection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OrderManagerNew.ImageSource"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="SvgCollection"
+    Width="1080"
+    Height="8000"
+    mc:Ignorable="d">
 
     <Window.Resources>
         <ResourceDictionary Source="SvgSource.xaml" />
@@ -24,125 +30,202 @@
         </Grid.RowDefinitions>
 
         <!--  FunctionTable  -->
-        <StackPanel Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal">
+        <StackPanel
+            Grid.Row="0"
+            HorizontalAlignment="Left"
+            Orientation="Horizontal">
             <Viewbox
-              Width="65" Height="65" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource icon_cloud_downloadDrawingImage}" />
+                Width="65"
+                Height="65"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_cloud_downloadDrawingImage}" />
             </Viewbox>
             <Viewbox
-              Width="65" Height="65" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource icon_cloud_download_mouseDrawingImage}" />
+                Width="65"
+                Height="65"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_cloud_download_mouseDrawingImage}" />
             </Viewbox>
             <Viewbox
-              Width="65" Height="65" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource icon_cloud_download_clickDrawingImage}" />
+                Width="65"
+                Height="65"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_cloud_download_clickDrawingImage}" />
             </Viewbox>
             <Viewbox
-              Width="65" Height="65" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource icon_updateDrawingImage}" />
+                Width="65"
+                Height="65"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_updateDrawingImage}" />
             </Viewbox>
             <Viewbox
-              Width="65" Height="65" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource icon_update_mouseDrawingImage}" />
+                Width="65"
+                Height="65"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_update_mouseDrawingImage}" />
             </Viewbox>
             <Viewbox
-              Width="65" Height="65" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource icon_update_clickDrawingImage}" />
+                Width="65"
+                Height="65"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_update_clickDrawingImage}" />
             </Viewbox>
             <Viewbox
-              Width="65" Height="65" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource icon_refreshDrawingImage}" />
+                Width="65"
+                Height="65"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_refreshDrawingImage}" />
             </Viewbox>
             <Viewbox
-              Width="65" Height="65" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource icon_refresh_mouseDrawingImage}" />
+                Width="65"
+                Height="65"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_refresh_mouseDrawingImage}" />
             </Viewbox>
             <Viewbox
-              Width="65" Height="65" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource icon_refresh_clickDrawingImage}" />
+                Width="65"
+                Height="65"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_refresh_clickDrawingImage}" />
             </Viewbox>
             <Viewbox
-              Width="65" Height="65" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource icon_set_upDrawingImage}" />
+                Width="65"
+                Height="65"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_set_upDrawingImage}" />
             </Viewbox>
             <Viewbox
-              Width="65" Height="65" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource icon_set_up_mouseDrawingImage}" />
+                Width="65"
+                Height="65"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_set_up_mouseDrawingImage}" />
             </Viewbox>
             <Viewbox
-              Width="65" Height="65" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource icon_set_up_clickDrawingImage}" />
-            </Viewbox>
-        </StackPanel>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal">
-            <Viewbox
-              Width="48" Height="48" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource Customer_service_normal_04DrawingImage}" />
-            </Viewbox>
-            <Viewbox
-              Width="48" Height="48" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource Customer_service_focus_03DrawingImage}" />
-            </Viewbox>
-            <Viewbox
-              Width="48" Height="48" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource Close_normalDrawingImage}" />
-            </Viewbox>
-            <Viewbox
-              Width="48" Height="48" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource Close_focusDrawingImage}" />
-            </Viewbox>
-            <Viewbox
-              Width="48" Height="48" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource Max_normal_06DrawingImage}" />
-            </Viewbox>
-            <Viewbox
-              Width="48" Height="48" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource Max_focus_05DrawingImage}" />
-            </Viewbox>
-            <Viewbox
-              Width="48" Height="48" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource Restore_normal_10DrawingImage}" />
-            </Viewbox>
-            <Viewbox
-              Width="48" Height="48" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource Restore_focus_09DrawingImage}" />
-            </Viewbox>
-            <Viewbox
-              Width="48" Height="48" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource Min_normal_08DrawingImage}" />
-            </Viewbox>
-            <Viewbox
-              Width="48" Height="48" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource Min_focus_07DrawingImage}" />
-            </Viewbox>
-            <Viewbox
-              Width="Auto" Height="48" Margin="6,0"
-              Stretch="Fill">
-                <Image Source="{StaticResource INTEWARE_TITLE_OrderManagerDrawingImage}" />
+                Width="65"
+                Height="65"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_set_up_clickDrawingImage}" />
             </Viewbox>
         </StackPanel>
-
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Left"
+            Orientation="Horizontal">
+            <Viewbox
+                Width="48"
+                Height="48"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource Customer_service_normal_04DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+                Width="48"
+                Height="48"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource Customer_service_focus_03DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+                Width="48"
+                Height="48"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource Close_normalDrawingImage}" />
+            </Viewbox>
+            <Viewbox
+                Width="48"
+                Height="48"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource Close_focusDrawingImage}" />
+            </Viewbox>
+            <Viewbox
+                Width="48"
+                Height="48"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource Max_normal_06DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+                Width="48"
+                Height="48"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource Max_focus_05DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+                Width="48"
+                Height="48"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource Restore_normal_10DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+                Width="48"
+                Height="48"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource Restore_focus_09DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+                Width="48"
+                Height="48"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource Min_normal_08DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+                Width="48"
+                Height="48"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource Min_focus_07DrawingImage}" />
+            </Viewbox>
+            <Viewbox
+                Width="Auto"
+                Height="48"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource INTEWARE_TITLE_OrderManagerDrawingImage}" />
+            </Viewbox>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="2"
+            HorizontalAlignment="Left"
+            Orientation="Horizontal">
+            <Viewbox
+                Width="36"
+                Height="36"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_folderDrawingImage}" />
+            </Viewbox>
+            <Viewbox
+                Width="36"
+                Height="36"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_folder_mouseDrawingImage}" />
+            </Viewbox>
+            <Viewbox
+                Width="36"
+                Height="36"
+                Margin="6,0"
+                Stretch="Fill">
+                <Image Source="{DynamicResource icon_folder_clickDrawingImage}" />
+            </Viewbox>
+        </StackPanel>
     </Grid>
 </Window>
