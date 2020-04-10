@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Reflection;    //取得OrderManager自身軟體版本
 using System.Windows.Media.Effects;
+using System.Diagnostics;
 
 //Microsoft.Expression.Drawing.dll如果要用多國語言套件: "C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries"
 
@@ -26,6 +27,8 @@ namespace OrderManagerNew
     public partial class MainWindow : Window
     {
         LogRecorder log;//日誌檔cs
+        bool developerMode = false;//開發者模式
+        string OrderManagerLanguage;//語系
 
         public MainWindow()
         {
@@ -33,6 +36,9 @@ namespace OrderManagerNew
 
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();//TitleBar顯示OrderManager版本
+
+            OrderManagerLanguage = Properties.Settings.Default.sysLanguage;
+            LocalizationService.SetLanguage(OrderManagerLanguage);
         }
 
         #region WindowFrame
@@ -171,6 +177,29 @@ namespace OrderManagerNew
             {
                 case "textboxPatient":
                     {
+                        if(txtbox.Text == "-engineer")
+                        {
+                            var messageQueue = SnackbarMain.MessageQueue;
+                            string message = "";
+                            if (developerMode == false)
+                            {
+                                //開發者模式
+                                developerMode = true;
+                                message ="Developer Mode";
+                                Panel.SetZIndex(Dev_btnGrid, 10);
+                            }
+                            else
+                            {
+                                //使用者模式
+                                developerMode = false;
+                                message = "Customer Mode";
+                                Panel.SetZIndex(Dev_btnGrid, -1);
+                            }
+                            Task.Factory.StartNew(() => messageQueue.Enqueue(message));
+                            txtbox.Text = "";
+                            Keyboard.ClearFocus();
+                        }
+
                         break;
                     }
                 case "textboxCase":
@@ -367,10 +396,10 @@ namespace OrderManagerNew
                     }
             }
         }
-        void Button_Click(object sender, RoutedEventArgs e)
-        {
-            setSoftwareShow(0, 2);
-        }
 
+        private void Dev_Click_Btn(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

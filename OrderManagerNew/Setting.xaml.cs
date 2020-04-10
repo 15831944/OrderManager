@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -34,6 +35,123 @@ namespace OrderManagerNew
                 case "systemButton_Close":              //關閉
                     Close();
                     break;
+            }
+        }
+
+        private void Click_OpenFilePath(object sender, RoutedEventArgs e)
+        {
+            Button Btn = sender as Button;
+            string OriginalPath = "";
+
+            switch (Btn.Name)
+            {
+                case "Btn_EZCADprogram":
+                    {
+                        OriginalPath = textbox_EZCAD.Text;
+                        break;
+                    }
+                case "Btn_Implantprogram":
+                    {
+                        OriginalPath = textbox_Implant.Text;
+                        break;
+                    }
+                case "Btn_Orthoprogram":
+                    {
+                        OriginalPath = textbox_Ortho.Text;
+                        break;
+                    }
+                case "Btn_Trayprogram":
+                    {
+                        OriginalPath = textbox_Tray.Text;
+                        break;
+                    }
+                case "Btn_Splintprogram":
+                    {
+                        OriginalPath = textbox_Splint.Text;
+                        break;
+                    }
+                case "Btn_Guideprogram":
+                    {
+                        OriginalPath = textbox_Guide.Text;
+                        break;
+                    }
+            }
+
+            Microsoft.Win32.OpenFileDialog Dlg = new Microsoft.Win32.OpenFileDialog();
+            Dlg.DefaultExt = ".exe";
+            Dlg.Filter = "Exe File (.exe)|*.exe";
+
+            if(File.Exists(OriginalPath) == true)
+                Dlg.InitialDirectory = System.IO.Path.GetDirectoryName(OriginalPath);
+            else
+                Dlg.InitialDirectory = "c:\\Inteware\\";
+
+            Nullable<bool> result = Dlg.ShowDialog();
+            if (result == true)
+            {
+                switch (Btn.Name)
+                {
+                    case "Btn_EZCADprogram":
+                        {
+                            textbox_EZCAD.Text = Dlg.FileName;
+                            break;
+                        }
+                    case "Btn_Implantprogram":
+                        {
+                            textbox_Implant.Text = Dlg.FileName;
+                            break;
+                        }
+                    case "Btn_Orthoprogram":
+                        {
+                            textbox_Ortho.Text = Dlg.FileName;
+                            break;
+                        }
+                    case "Btn_Trayprogram":
+                        {
+                            textbox_Tray.Text = Dlg.FileName;
+                            break;
+                        }
+                    case "Btn_Splintprogram":
+                        {
+                            textbox_Splint.Text = Dlg.FileName;
+                            break;
+                        }
+                    case "Btn_Guideprogram":
+                        {
+                            textbox_Guide.Text = Dlg.FileName;
+                            break;
+                        }
+                }
+            }
+        }
+
+        private void Click_systemButton(object sender, RoutedEventArgs e)
+        {
+            Button Btn = sender as Button;
+            switch(Btn.Name)
+            {
+                case "sysBtn_Yes":
+                    {
+                        this.DialogResult = true;
+                        break;
+                    }
+                case "sysBtn_Cancel":
+                    {
+                        this.DialogResult = false;
+                        break;
+                    }
+            }
+        }
+
+        private void SelectionChanged_Lang(object sender, SelectionChangedEventArgs e)
+        {
+            if(comboboxLanguage.SelectedIndex == 0)
+            {
+                LocalizationService.SetLanguage("en-US");
+            }
+            else if(comboboxLanguage.SelectedIndex == 1)
+            {
+                LocalizationService.SetLanguage("zh-TW");
             }
         }
     }

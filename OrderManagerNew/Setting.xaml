@@ -1,20 +1,10 @@
 ﻿<Window
-    x:Class="OrderManagerNew.Setting"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:OrderManagerNew"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Setting"
-    Width="500"
-    Height="500"
-    AllowsTransparency="True"
-    Background="#FF30312C"
-    ResizeMode="NoResize"
-    WindowStartupLocation="CenterScreen"
-    WindowStyle="None"
-    mc:Ignorable="d">
+  x:Class="OrderManagerNew.Setting" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OrderManagerNew" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Title="Setting" Width="500"
+  Height="500" AllowsTransparency="True" Background="#FF30312C"
+  ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None"
+  mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,10 +15,7 @@
                 <Setter Property="Height" Value="24" />
                 <Setter Property="BorderThickness" Value="1" />
             </Style>
-            <Style
-                x:Key="btn_folderOpen"
-                BasedOn="{StaticResource FunctionButton_Skin}"
-                TargetType="{x:Type Button}">
+            <Style x:Key="btn_folderOpen" BasedOn="{StaticResource FunctionButton_Skin}" TargetType="{x:Type Button}">
                 <Setter Property="Height" Value="32" />
                 <Setter Property="Width" Value="32" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -55,30 +42,17 @@
     <Border BorderThickness="0">
         <DockPanel>
             <!--  TitleBar-Start  -->
-            <Border
-                Height="42"
-                Background="#FFE08A1E"
-                DockPanel.Dock="Top">
+            <Border Height="42" Background="#FFE08A1E" DockPanel.Dock="Top">
                 <Grid>
                     <Label
-                        Margin="6,0,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Content="Setting"
-                        FontSize="21"
-                        FontWeight="Bold"
-                        Foreground="White" />
+                      Margin="6,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                      Content="{local:LocExtension Setting}"
+                      FontSize="21" FontWeight="Bold" Foreground="White" />
 
                     <StackPanel
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Panel.ZIndex="1"
-                        Background="#FFE08A1E"
-                        Orientation="Horizontal">
-                        <Button
-                            Name="systemButton_Close"
-                            Click="TitleBar_Click_titlebarButtons"
-                            Style="{DynamicResource systemButton_close}" />
+                      HorizontalAlignment="Right" VerticalAlignment="Center" Panel.ZIndex="1"
+                      Background="#FFE08A1E" Orientation="Horizontal">
+                        <Button Name="systemButton_Close" Click="TitleBar_Click_titlebarButtons" Style="{DynamicResource systemButton_close}" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -91,11 +65,9 @@
                     <RowDefinition Height="42" />
                 </Grid.RowDefinitions>
                 <Label
-                    Grid.Row="0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Content="Program Path"
-                    Foreground="White" />
+                  Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                  Content="{local:LocExtension ProgramPath}"
+                  Foreground="White" />
                 <Grid Grid.Row="1" Margin="0,12,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -112,80 +84,60 @@
                     </Grid.ColumnDefinitions>
 
                     <Rectangle
-                        Grid.Row="0"
-                        Grid.RowSpan="6"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        Fill="{DynamicResource background_CaseTable}" />
+                      Grid.Row="0" Grid.RowSpan="6" Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                      Fill="{DynamicResource background_CaseTable}" />
 
                     <Label
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Content="EZCAD" />
+                      Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"
+                      VerticalAlignment="Center" Content="EZCAD" />
                     <Label
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Content="ImplantPlanning" />
+                      Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"
+                      VerticalAlignment="Center" Content="ImplantPlanning" />
                     <Label
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Content="OrthoAnalysis" />
+                      Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left"
+                      VerticalAlignment="Center" Content="OrthoAnalysis" />
                     <Label
-                        Grid.Row="3"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Content="EZCAD.Tray" />
+                      Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left"
+                      VerticalAlignment="Center" Content="EZCAD.Tray" />
                     <Label
-                        Grid.Row="4"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Content="EZCAD.Splint" />
+                      Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left"
+                      VerticalAlignment="Center" Content="EZCAD.Splint" />
                     <Label
-                        Grid.Row="5"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Content="EZCAD.Guide" />
+                      Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left"
+                      VerticalAlignment="Center" Content="EZCAD.Guide" />
 
-                    <TextBox Grid.Row="0" Grid.Column="1" />
-                    <TextBox Grid.Row="1" Grid.Column="1" />
-                    <TextBox Grid.Row="2" Grid.Column="1" />
-                    <TextBox Grid.Row="3" Grid.Column="1" />
-                    <TextBox Grid.Row="4" Grid.Column="1" />
-                    <TextBox Grid.Row="5" Grid.Column="1" />
+                    <TextBox x:Name="textbox_EZCAD" Grid.Row="0" Grid.Column="1" />
+                    <TextBox x:Name="textbox_Implant" Grid.Row="1" Grid.Column="1" />
+                    <TextBox x:Name="textbox_Ortho" Grid.Row="2" Grid.Column="1" />
+                    <TextBox x:Name="textbox_Tray" Grid.Row="3" Grid.Column="1" />
+                    <TextBox x:Name="textbox_Splint" Grid.Row="4" Grid.Column="1" />
+                    <TextBox x:Name="textbox_Guide" Grid.Row="5" Grid.Column="1" />
 
                     <Button
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Style="{DynamicResource btn_folderOpen}" />
+                      x:Name="Btn_EZCADprogram" Grid.Row="0" Grid.Column="2"
+                      Click="Click_OpenFilePath"
+                      Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                        Grid.Row="1"
-                        Grid.Column="2"
-                        Style="{DynamicResource btn_folderOpen}" />
+                      x:Name="Btn_Implantprogram" Grid.Row="1" Grid.Column="2"
+                      Click="Click_OpenFilePath"
+                      Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                        Grid.Row="2"
-                        Grid.Column="2"
-                        Style="{DynamicResource btn_folderOpen}" />
+                      x:Name="Btn_Orthoprogram" Grid.Row="2" Grid.Column="2"
+                      Click="Click_OpenFilePath"
+                      Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                        Grid.Row="3"
-                        Grid.Column="2"
-                        Style="{DynamicResource btn_folderOpen}" />
+                      x:Name="Btn_Trayprogram" Grid.Row="3" Grid.Column="2"
+                      Click="Click_OpenFilePath"
+                      Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                        Grid.Row="4"
-                        Grid.Column="2"
-                        Style="{DynamicResource btn_folderOpen}" />
+                      x:Name="Btn_Splintprogram" Grid.Row="4" Grid.Column="2"
+                      Click="Click_OpenFilePath"
+                      Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                        Grid.Row="5"
-                        Grid.Column="2"
-                        Style="{DynamicResource btn_folderOpen}" />
+                      x:Name="Btn_Guideprogram" Grid.Row="5" Grid.Column="2"
+                      Click="Click_OpenFilePath"
+                      Style="{DynamicResource btn_folderOpen}" />
                 </Grid>
                 <Grid Grid.Row="2" Margin="0,12">
                     <Grid.ColumnDefinitions>
@@ -193,20 +145,12 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Rectangle
-                        Grid.Column="0"
-                        Grid.ColumnSpan="2"
-                        Fill="{DynamicResource background_CaseTable}" />
+                    <Rectangle Grid.Column="0" Grid.ColumnSpan="2" Fill="{DynamicResource background_CaseTable}" />
                     <Label
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Content="Language"
-                        Foreground="{DynamicResource Common_DarkBrown}" />
-                    <ComboBox
-                        Grid.Column="1"
-                        Margin="6,0"
-                        Style="{DynamicResource comboboxSetting}">
+                      Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                      Content="Language"
+                      Foreground="{DynamicResource Common_DarkBrown}" />
+                    <ComboBox x:Name="comboboxLanguage" SelectionChanged="SelectionChanged_Lang" Grid.Column="1" Margin="6,0" Style="{DynamicResource comboboxSetting}">
                         <ComboBoxItem>English</ComboBoxItem>
                         <ComboBoxItem>繁體中文</ComboBoxItem>
                     </ComboBox>
@@ -216,16 +160,14 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Button
-                        Grid.Column="0"
-                        Width="150"
-                        Height="36"
-                        Content="OK" />
-                    <Button
-                        Grid.Column="1"
-                        Width="150"
-                        Height="36"
-                        Content="Cancel" />
+                    <Button x:Name="sysBtn_Yes"
+                      Grid.Column="0" Width="150" Height="36"
+                      Click="Click_systemButton"
+                      Content="{local:LocExtension OK}" />
+                    <Button x:Name="sysBtn_Cancel"
+                      Grid.Column="1" Width="150" Height="36"
+                      Click="Click_systemButton"
+                      Content="{local:LocExtension Cancel}" />
                 </Grid>
             </Grid>
         </DockPanel>

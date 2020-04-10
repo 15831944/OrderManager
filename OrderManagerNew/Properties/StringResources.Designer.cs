@@ -106,6 +106,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Cancel 的當地語系化字串。
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Last two weeks 的當地語系化字串。
         /// </summary>
         internal static string Last2Week {
@@ -129,6 +138,33 @@ namespace OrderManagerNew.Properties {
         internal static string Local {
             get {
                 return ResourceManager.GetString("Local", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 OK 的當地語系化字串。
+        /// </summary>
+        internal static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Program Path 的當地語系化字串。
+        /// </summary>
+        internal static string ProgramPath {
+            get {
+                return ResourceManager.GetString("ProgramPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Setting 的當地語系化字串。
+        /// </summary>
+        internal static string Setting {
+            get {
+                return ResourceManager.GetString("Setting", resourceCulture);
             }
         }
         

@@ -150,4 +150,20 @@
     <value>Local</value>
     <comment>UI</comment>
   </data>
+  <data name="ProgramPath" xml:space="preserve">
+    <value>Program Path</value>
+    <comment>Setting</comment>
+  </data>
+  <data name="Setting" xml:space="preserve">
+    <value>Setting</value>
+    <comment>Setting</comment>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+    <comment>Setting</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>UI</comment>
+  </data>
 </root>

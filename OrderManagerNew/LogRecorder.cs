@@ -26,7 +26,7 @@ namespace OrderManagerNew
             }
 
             //每次開啟OrderManager就記錄
-            RecordLog("Open_OM","OMVer " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            RecordLog("Start" ,"Open_OM","OMVer " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
         /// <summary>
@@ -36,11 +36,12 @@ namespace OrderManagerNew
         /// <param name="logMessage"> 詳細資訊</param>
         /// <param name="w">log檔路徑</param>
         /// <returns></returns>
-        public void RecordLog(string Block, string logMessage)
+        public void RecordLog(string Row,string Block, string logMessage)
         {
             using (StreamWriter w = File.AppendText("OrderManager.log"))
             {
-                Log(Block, logMessage, w);
+                string str = "row_" + Row + " " + Block;
+                Log(str, logMessage, w);
             }
 
             /*using (StreamReader r = File.OpenText("OrderManager.log"))
@@ -69,7 +70,7 @@ namespace OrderManagerNew
         /// </summary>
         /// <param name="r">log檔路徑</param>
         /// <returns></returns>
-        public void DumpLog(StreamReader r)
+        private void DumpLog(StreamReader r)
         {
             string line;
             while ((line = r.ReadLine()) != null)
