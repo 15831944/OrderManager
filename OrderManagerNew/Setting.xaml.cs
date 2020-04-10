@@ -24,6 +24,9 @@ namespace OrderManagerNew
         public Setting()
         {
             InitializeComponent();
+
+            if (Properties.Settings.Default.sysLanguage == "zh-TW")
+                comboboxLanguage.SelectedIndex = 1;
         }
         
         private void TitleBar_Click_titlebarButtons(object sender, RoutedEventArgs e)
@@ -132,6 +135,14 @@ namespace OrderManagerNew
             {
                 case "sysBtn_Yes":
                     {
+                        ComboBoxItem typeItem = (ComboBoxItem)comboboxLanguage.SelectedItem;
+
+                        if (typeItem.Content.ToString() == "繁體中文")
+                            Properties.Settings.Default.sysLanguage = "zh-TW";
+                        else
+                            Properties.Settings.Default.sysLanguage = "en-US";
+
+                        Properties.Settings.Default.Save();
                         this.DialogResult = true;
                         break;
                     }

@@ -65,9 +65,10 @@
                     <RowDefinition Height="42" />
                 </Grid.RowDefinitions>
                 <Label
-                  Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                  Grid.Row="0" Padding="0,-2" HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
                   Content="{local:LocExtension ProgramPath}"
-                  Foreground="White" />
+                  FontSize="14" FontWeight="Bold" Foreground="White" />
                 <Grid Grid.Row="1" Margin="0,12,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -148,9 +149,12 @@
                     <Rectangle Grid.Column="0" Grid.ColumnSpan="2" Fill="{DynamicResource background_CaseTable}" />
                     <Label
                       Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                      Content="Language"
+                      Content="語言/Language"
                       Foreground="{DynamicResource Common_DarkBrown}" />
-                    <ComboBox x:Name="comboboxLanguage" SelectionChanged="SelectionChanged_Lang" Grid.Column="1" Margin="6,0" Style="{DynamicResource comboboxSetting}">
+                    <ComboBox
+                      x:Name="comboboxLanguage" Grid.Column="1" Margin="6,0"
+                      SelectedIndex="0" SelectionChanged="SelectionChanged_Lang"
+                      Style="{DynamicResource comboboxSetting}">
                         <ComboBoxItem>English</ComboBoxItem>
                         <ComboBoxItem>繁體中文</ComboBoxItem>
                     </ComboBox>
@@ -160,13 +164,13 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="sysBtn_Yes"
-                      Grid.Column="0" Width="150" Height="36"
-                      Click="Click_systemButton"
+                    <Button
+                      x:Name="sysBtn_Yes" Grid.Column="0" Width="150"
+                      Height="36" Click="Click_systemButton"
                       Content="{local:LocExtension OK}" />
-                    <Button x:Name="sysBtn_Cancel"
-                      Grid.Column="1" Width="150" Height="36"
-                      Click="Click_systemButton"
+                    <Button
+                      x:Name="sysBtn_Cancel" Grid.Column="1" Width="150"
+                      Height="36" Click="Click_systemButton"
                       Content="{local:LocExtension Cancel}" />
                 </Grid>
             </Grid>

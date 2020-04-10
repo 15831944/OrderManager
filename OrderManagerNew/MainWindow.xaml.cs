@@ -36,7 +36,7 @@ namespace OrderManagerNew
 
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();//TitleBar顯示OrderManager版本
-
+            
             OrderManagerLanguage = Properties.Settings.Default.sysLanguage;
             LocalizationService.SetLanguage(OrderManagerLanguage);
         }
@@ -399,7 +399,8 @@ namespace OrderManagerNew
 
         private void Dev_Click_Btn(object sender, RoutedEventArgs e)
         {
-
+            Properties.Settings.Default.sysLanguage = "";
+            Properties.Settings.Default.Save();
         }
     }
 }
