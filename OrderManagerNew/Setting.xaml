@@ -11,30 +11,22 @@
                 <ResourceDictionary Source="StyleDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="Arial" />
+                <Setter Property="Foreground" Value="{DynamicResource Common_DarkBrown}" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
             <Style TargetType="{x:Type TextBox}">
                 <Setter Property="Height" Value="24" />
                 <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Padding" Value="0,-3" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
-            <Style x:Key="btn_folderOpen" BasedOn="{StaticResource FunctionButton_Skin}" TargetType="{x:Type Button}">
-                <Setter Property="Height" Value="32" />
-                <Setter Property="Width" Value="32" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Image Name="BtnBG_refresh" Source="{StaticResource icon_folderDrawingImage}" />
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="BtnBG_refresh" Property="Source" Value="{StaticResource icon_folder_mouseDrawingImage}" />
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="BtnBG_refresh" Property="Source" Value="{StaticResource icon_folder_clickDrawingImage}" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
+            <Style x:Key="Setting_sysBtn" BasedOn="{StaticResource MaterialDesignRaisedButton}" TargetType="{x:Type Button}">
+                <Setter Property="Width" Value="150" />
+                <Setter Property="Height" Value="36" />
+                <Setter Property="FontFamily" Value="Arial" />
             </Style>
         </ResourceDictionary>
     </Window.Resources>
@@ -66,7 +58,7 @@
                 </Grid.RowDefinitions>
                 <Label
                   Grid.Row="0" Padding="0,-2" HorizontalAlignment="Left"
-                  VerticalAlignment="Center"
+                  VerticalAlignment="Bottom"
                   Content="{local:LocExtension ProgramPath}"
                   FontSize="14" FontWeight="Bold" Foreground="White" />
                 <Grid Grid.Row="1" Margin="0,12,0,0">
@@ -79,7 +71,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="110" />
                         <ColumnDefinition />
                         <ColumnDefinition Width="52" />
                     </Grid.ColumnDefinitions>
@@ -89,70 +81,57 @@
                       Grid.ColumnSpan="3"
                       Fill="{DynamicResource background_CaseTable}" />
 
-                    <Label
-                      Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"
-                      VerticalAlignment="Center" Content="EZCAD" />
-                    <Label
-                      Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"
-                      VerticalAlignment="Center" Content="ImplantPlanning" />
-                    <Label
-                      Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left"
-                      VerticalAlignment="Center" Content="OrthoAnalysis" />
-                    <Label
-                      Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left"
-                      VerticalAlignment="Center" Content="EZCAD.Tray" />
-                    <Label
-                      Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left"
-                      VerticalAlignment="Center" Content="EZCAD.Splint" />
-                    <Label
-                      Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left"
-                      VerticalAlignment="Center" Content="EZCAD.Guide" />
+                    <Label Grid.Row="0" Grid.Column="0" Content="EZCAD" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="ImplantPlanning" />
+                    <Label Grid.Row="2" Grid.Column="0" Content="OrthoAnalysis" />
+                    <Label Grid.Row="3" Grid.Column="0" Content="EZCAD.Tray" />
+                    <Label Grid.Row="4" Grid.Column="0" Content="EZCAD.Splint" />
+                    <Label Grid.Row="5" Grid.Column="0" Content="EZCAD.Guide" />
 
-                    <TextBox x:Name="textbox_EZCAD" Grid.Row="0" Grid.Column="1" />
-                    <TextBox x:Name="textbox_Implant" Grid.Row="1" Grid.Column="1" />
-                    <TextBox x:Name="textbox_Ortho" Grid.Row="2" Grid.Column="1" />
-                    <TextBox x:Name="textbox_Tray" Grid.Row="3" Grid.Column="1" />
-                    <TextBox x:Name="textbox_Splint" Grid.Row="4" Grid.Column="1" />
-                    <TextBox x:Name="textbox_Guide" Grid.Row="5" Grid.Column="1" />
+                    <TextBox
+                      Grid.Row="0" Grid.Column="1" x:Name="textbox_EZCAD"
+                      Text="C:\InteWare\EZCAD\Bin\EZCAD.exe" />
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="textbox_Implant" />
+                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="textbox_Ortho" />
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="textbox_Tray" />
+                    <TextBox Grid.Row="4" Grid.Column="1" x:Name="textbox_Splint" />
+                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="textbox_Guide" />
 
                     <Button
-                      x:Name="Btn_EZCADprogram" Grid.Row="0" Grid.Column="2"
+                      Grid.Row="0" Grid.Column="2" x:Name="Btn_EZCADprogram"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                      x:Name="Btn_Implantprogram" Grid.Row="1" Grid.Column="2"
+                      Grid.Row="1" Grid.Column="2" x:Name="Btn_Implantprogram"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                      x:Name="Btn_Orthoprogram" Grid.Row="2" Grid.Column="2"
+                      Grid.Row="2" Grid.Column="2" x:Name="Btn_Orthoprogram"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                      x:Name="Btn_Trayprogram" Grid.Row="3" Grid.Column="2"
+                      Grid.Row="3" Grid.Column="2" x:Name="Btn_Trayprogram"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                      x:Name="Btn_Splintprogram" Grid.Row="4" Grid.Column="2"
+                      Grid.Row="4" Grid.Column="2" x:Name="Btn_Splintprogram"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                      x:Name="Btn_Guideprogram" Grid.Row="5" Grid.Column="2"
+                      Grid.Row="5" Grid.Column="2" x:Name="Btn_Guideprogram"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                 </Grid>
                 <Grid Grid.Row="2" Margin="0,12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="197" />
                     </Grid.ColumnDefinitions>
 
                     <Rectangle Grid.Column="0" Grid.ColumnSpan="2" Fill="{DynamicResource background_CaseTable}" />
-                    <Label
-                      Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                      Content="語言/Language"
-                      Foreground="{DynamicResource Common_DarkBrown}" />
+                    <Label Grid.Column="0" Content="語言/Language" />
                     <ComboBox
-                      x:Name="comboboxLanguage" Grid.Column="1" Margin="6,0"
+                      Grid.Column="1" x:Name="comboboxLanguage" Margin="2,0,10,0"
                       SelectedIndex="0" SelectionChanged="SelectionChanged_Lang"
                       Style="{DynamicResource comboboxSetting}">
                         <ComboBoxItem>English</ComboBoxItem>
@@ -165,13 +144,13 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Button
-                      x:Name="sysBtn_Yes" Grid.Column="0" Width="150"
-                      Height="36" Click="Click_systemButton"
-                      Content="{local:LocExtension OK}" />
+                      Grid.Column="0" x:Name="sysBtn_Yes" Click="Click_systemButton"
+                      Content="{local:LocExtension OK}"
+                      Style="{DynamicResource Setting_sysBtn}" />
                     <Button
-                      x:Name="sysBtn_Cancel" Grid.Column="1" Width="150"
-                      Height="36" Click="Click_systemButton"
-                      Content="{local:LocExtension Cancel}" />
+                      Grid.Column="1" x:Name="sysBtn_Cancel" Click="Click_systemButton"
+                      Content="{local:LocExtension Cancel}"
+                      Style="{DynamicResource Setting_sysBtn}" />
                 </Grid>
             </Grid>
         </DockPanel>

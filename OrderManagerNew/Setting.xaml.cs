@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace OrderManagerNew
 {
@@ -24,6 +25,13 @@ namespace OrderManagerNew
         public Setting()
         {
             InitializeComponent();
+
+            textbox_EZCAD.Text = Properties.Settings.Default.path_EZCAD;
+            textbox_Implant.Text = Properties.Settings.Default.path_Implant;
+            textbox_Ortho.Text = Properties.Settings.Default.path_Ortho;
+            textbox_Tray.Text = Properties.Settings.Default.path_Tray;
+            textbox_Splint.Text = Properties.Settings.Default.path_Splint;
+            textbox_Guide.Text = Properties.Settings.Default.path_Guide;
 
             if (Properties.Settings.Default.sysLanguage == "zh-TW")
                 comboboxLanguage.SelectedIndex = 1;
@@ -135,6 +143,20 @@ namespace OrderManagerNew
             {
                 case "sysBtn_Yes":
                     {
+                        if (File.Exists(textbox_EZCAD.Text) == true)
+                            Properties.Settings.Default.path_EZCAD = Path.GetFullPath(textbox_EZCAD.Text);
+                        if (File.Exists(textbox_Implant.Text) == true)
+                            Properties.Settings.Default.path_Implant = Path.GetFullPath(textbox_Implant.Text);
+                        if (File.Exists(textbox_Ortho.Text) == true)
+                            Properties.Settings.Default.path_Ortho = Path.GetFullPath(textbox_Ortho.Text);
+                        if (File.Exists(textbox_Tray.Text) == true)
+                            Properties.Settings.Default.path_Tray = Path.GetFullPath(textbox_Tray.Text);
+                        if (File.Exists(textbox_Splint.Text) == true)
+                            Properties.Settings.Default.path_Splint = Path.GetFullPath(textbox_Splint.Text);
+                        if (File.Exists(textbox_Guide.Text) == true)
+                            Properties.Settings.Default.path_Guide = Path.GetFullPath(textbox_Guide.Text);
+                        
+                        //多國語系
                         ComboBoxItem typeItem = (ComboBoxItem)comboboxLanguage.SelectedItem;
 
                         if (typeItem.Content.ToString() == "繁體中文")

@@ -12,85 +12,6 @@
         <Setter Property="FontFamily" Value="Arial" />
     </Style>
 
-    <!--  Setting-Start  -->
-    <Style x:Key="comboboxSetting" TargetType="{x:Type ComboBox}">
-        <Setter Property="Foreground" Value="#F3E8DB" />
-        <Setter Property="Height" Value="24" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ComboBox">
-                    <Grid>
-                        <ToggleButton Grid.Column="2" Focusable="false" IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
-                            <ToggleButton.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition Width="26" />
-                                        </Grid.ColumnDefinitions>
-                                        <Border
-                                          x:Name="Border" Grid.Column="1" Background="#353531"
-                                          BorderThickness="0" />
-                                        <Border Grid.Column="0" Background="#756550" BorderThickness="0" />
-                                        <Path
-                                          x:Name="Arrow" Grid.Column="1" Width="10"
-                                          Height="10" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                          Data="F1M181.297,177.841L181.205,177.746 181.385,177.563 202.804,156.146 202.804,135.07 178.497,159.373 170.847,167.026 170.666,167.205 163.107,159.653 138.804,135.345 138.804,156.42 160.219,177.841 170.76,188.379 181.297,177.841z" Fill="White" Stretch="Uniform" />
-                                    </Grid>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="ToggleButton.IsChecked" Value="true">
-                                            <Setter TargetName="Arrow" Property="Data" Value="F1M753.644,-13.0589L753.736,-12.9639 753.557,-12.7816 732.137,8.63641 732.137,29.7119 756.445,5.40851 764.094,-2.24384 764.275,-2.42352 771.834,5.1286 796.137,29.4372 796.137,8.36163 774.722,-13.0589 764.181,-23.5967 753.644,-13.0589z" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </ToggleButton.Template>
-                        </ToggleButton>
-                        <ContentPresenter
-                          Name="ContentSite" Margin="3,0,26,0" VerticalAlignment="Center"
-                          Content="{TemplateBinding SelectionBoxItem}"
-                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                          IsHitTestVisible="False" />
-                        <TextBox x:Name="PART_EditableTextBox" IsReadOnly="{TemplateBinding IsReadOnly}" Visibility="Hidden" />
-                        <Popup
-                          Name="Popup" AllowsTransparency="True" Focusable="False"
-                          IsOpen="{TemplateBinding IsDropDownOpen}"
-                          Placement="Bottom" PopupAnimation="Slide">
-                            <Grid
-                              Name="DropDown"
-                              MinWidth="{TemplateBinding ActualWidth}"
-                              MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                              SnapsToDevicePixels="True">
-                                <Border x:Name="DropDownBorder" Background="#756550" />
-                                <ScrollViewer SnapsToDevicePixels="True">
-                                    <StackPanel IsItemsHost="True" />
-                                </ScrollViewer>
-                            </Grid>
-                        </Popup>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style TargetType="{x:Type ComboBoxItem}">
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-                    <Border x:Name="Border" Background="#756550">
-                        <ContentPresenter Margin="3" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="#3B3127" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <!--  Setting-End  -->
-
     <!--  TitleBar-Start  -->
     <Style x:Key="systemButton_max" TargetType="{x:Type ToggleButton}">
         <Setter Property="Content">
@@ -384,7 +305,7 @@
                       Background="{TemplateBinding Background}"
                       SnapsToDevicePixels="True">
                         <Canvas
-                          x:Name="canvNormal" Canvas.Right="0"
+                          Canvas.Right="0" x:Name="canvNormal"
                           Width="{TemplateBinding Width}"
                           Height="{TemplateBinding Height}"
                           Background="{TemplateBinding Background}"
@@ -398,7 +319,7 @@
                               X2="13" Y1="8" Y2="18" />
                         </Canvas>
                         <Canvas
-                          x:Name="canvChecked" Canvas.Right="0"
+                          Canvas.Right="0" x:Name="canvChecked"
                           Width="{TemplateBinding Width}"
                           Height="{TemplateBinding Height}"
                           Background="{TemplateBinding Background}"
@@ -459,14 +380,14 @@
 
 
                             <ToggleButton
-                              x:Name="HeaderSite" Grid.Row="0"
+                              Grid.Row="0" x:Name="HeaderSite"
                               Content="{TemplateBinding Header}"
                               ContentTemplate="{TemplateBinding HeaderTemplate}"
                               ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                               IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                               Style="{DynamicResource ExpanderToggleButtonStyle}" />
                             <ContentPresenter
-                              x:Name="ExpandSite" Grid.Row="1"
+                              Grid.Row="1" x:Name="ExpandSite"
                               Margin="{TemplateBinding Padding}"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -550,7 +471,7 @@
                                   Width="20" Height="20" HorizontalAlignment="Center"
                                   VerticalAlignment="Center">
                                     <Ellipse
-                                      x:Name="InteractionEllipse" Canvas.Left="10" Canvas.Top="10"
+                                      Canvas.Left="10" Canvas.Top="10" x:Name="InteractionEllipse"
                                       Width="0" Height="0"
                                       Fill="{TemplateBinding Foreground}"
                                       Opacity="0" RenderTransformOrigin="0.5,0.5">
@@ -635,7 +556,7 @@
                           CornerRadius="5" />
 
                         <Track
-                          x:Name="PART_Track" Grid.Row="0" Focusable="false"
+                          Grid.Row="0" x:Name="PART_Track" Focusable="false"
                           IsDirectionReversed="true">
                             <Track.Thumb>
                                 <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{DynamicResource ScrollThumbs}" />
@@ -771,5 +692,108 @@
         </Setter>
     </Style>-->
     <!--  CaseTable-End  -->
+
+    <!--  Setting-Start  -->
+    <Style x:Key="comboboxSetting" TargetType="{x:Type ComboBox}">
+        <Setter Property="Foreground" Value="#F3E8DB" />
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <ToggleButton Grid.Column="2" Focusable="false" IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ToggleButton.Template>
+                                <ControlTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="26" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border
+                                          Grid.Column="1" x:Name="Border" Background="#353531"
+                                          BorderThickness="0" />
+                                        <Border Grid.Column="0" Background="#756550" BorderThickness="0" />
+                                        <Path
+                                          Grid.Column="1" x:Name="Arrow" Width="10"
+                                          Height="10" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                          Data="F1M181.297,177.841L181.205,177.746 181.385,177.563 202.804,156.146 202.804,135.07 178.497,159.373 170.847,167.026 170.666,167.205 163.107,159.653 138.804,135.345 138.804,156.42 160.219,177.841 170.76,188.379 181.297,177.841z" Fill="White" Stretch="Uniform" />
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="ToggleButton.IsChecked" Value="true">
+                                            <Setter TargetName="Arrow" Property="Data" Value="F1M753.644,-13.0589L753.736,-12.9639 753.557,-12.7816 732.137,8.63641 732.137,29.7119 756.445,5.40851 764.094,-2.24384 764.275,-2.42352 771.834,5.1286 796.137,29.4372 796.137,8.36163 774.722,-13.0589 764.181,-23.5967 753.644,-13.0589z" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <ContentPresenter
+                          Name="ContentSite" Margin="3,0,26,0" VerticalAlignment="Center"
+                          Content="{TemplateBinding SelectionBoxItem}"
+                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                          IsHitTestVisible="False" />
+                        <TextBox x:Name="PART_EditableTextBox" IsReadOnly="{TemplateBinding IsReadOnly}" Visibility="Hidden" />
+                        <Popup
+                          Name="Popup" AllowsTransparency="True" Focusable="False"
+                          IsOpen="{TemplateBinding IsDropDownOpen}"
+                          Placement="Bottom" PopupAnimation="Slide">
+                            <Grid
+                              Name="DropDown"
+                              MinWidth="{TemplateBinding ActualWidth}"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                              SnapsToDevicePixels="True">
+                                <Border x:Name="DropDownBorder" Background="#756550" />
+                                <ScrollViewer SnapsToDevicePixels="True">
+                                    <StackPanel IsItemsHost="True" />
+                                </ScrollViewer>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border x:Name="Border" Background="#756550">
+                        <ContentPresenter Margin="3" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="#3B3127" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="btn_folderOpen" BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="{x:Type Button}">
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Margin" Value="6,0" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Image Name="BtnBG_refresh" Source="{StaticResource icon_folderDrawingImage}" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BtnBG_refresh" Property="Source" Value="{StaticResource icon_folder_mouseDrawingImage}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="BtnBG_refresh" Property="Source" Value="{StaticResource icon_folder_clickDrawingImage}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--  Setting-End  -->
 
 </ResourceDictionary>

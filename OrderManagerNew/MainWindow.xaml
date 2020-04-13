@@ -4,7 +4,7 @@
   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Title="OrderManager"
   Width="1280" Height="768" MinWidth="1280"
   MinHeight="768" Background="#FF353531" StateChanged="Window_StateChanged"
-  WindowStartupLocation="CenterScreen" WindowStyle="None" mc:Ignorable="d">
+  WindowStartupLocation="CenterScreen" WindowStyle="None" mc:Ignorable="d" Closing="Closing_MainWindow">
 
     <Window.Resources>
         <ResourceDictionary Source="StyleDictionary.xaml" />

@@ -26,7 +26,8 @@ namespace OrderManagerNew
             }
 
             //每次開啟OrderManager就記錄
-            RecordLog("Start" ,"Open_OM","OMVer " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            //RecordLog("Start" ,"Open_OM","OMVer " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            RecordConfigLog("OM Startup", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
         /// <summary>
@@ -48,6 +49,38 @@ namespace OrderManagerNew
             {
                 DumpLog(r);
             }*/
+        }
+
+        public void RecordConfigLog(string Row, string Block, string logMessage)
+        {
+            using (StreamWriter w = File.AppendText("OrderManager.log"))
+            {
+                string str = "row_" + Row + " " + Block;
+                ConfigLog(str, logMessage, w);
+            }
+        }
+
+        public void RecordConfigLog(string Block, string logMessage)
+        {
+            using (StreamWriter w = File.AppendText("OrderManager.log"))
+            {
+                ConfigLog(Block, logMessage, w);
+            }
+        }
+
+        private void ConfigLog(string Block, string logMessage, TextWriter w)
+        {
+            w.Write("\r\nLog Entry : ");
+            w.WriteLine($"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
+            w.WriteLine($"{Block}:{logMessage}");
+            w.WriteLine("-------------------------------");
+            w.WriteLine($"path_EZCAD:{Properties.Settings.Default.path_EZCAD}");
+            w.WriteLine($"path_Implant:{Properties.Settings.Default.path_Implant}");
+            w.WriteLine($"path_Ortho:{Properties.Settings.Default.path_Ortho}");
+            w.WriteLine($"path_Tray:{Properties.Settings.Default.path_Tray}");
+            w.WriteLine($"path_Splint:{Properties.Settings.Default.path_Splint}");
+            w.WriteLine($"path_Guide:{Properties.Settings.Default.path_Guide}");
+            w.WriteLine($"UserLanguage:{Properties.Settings.Default.sysLanguage}");
         }
 
         /// <summary>

@@ -18,6 +18,7 @@ using System.Windows.Media.Effects;
 using System.Diagnostics;
 
 //Microsoft.Expression.Drawing.dll如果要用多國語言套件: "C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries"
+//抓取程式碼行數: new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString()
 
 namespace OrderManagerNew
 {
@@ -128,6 +129,8 @@ namespace OrderManagerNew
             DialogSetting.Owner = this;
             DialogSetting.ShowActivated = true;
             DialogSetting.ShowDialog();
+            if(DialogSetting.DialogResult == true)
+                log.RecordConfigLog("Config changed", new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString());
 
             //主視窗還原
             this.Effect = null;
@@ -399,8 +402,19 @@ namespace OrderManagerNew
 
         private void Dev_Click_Btn(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.path_EZCAD = "";
+            Properties.Settings.Default.path_Implant = "";
+            Properties.Settings.Default.path_Ortho = "";
+            Properties.Settings.Default.path_Tray = "";
+            Properties.Settings.Default.path_Splint = "";
+            Properties.Settings.Default.path_Guide = "";
             Properties.Settings.Default.sysLanguage = "";
             Properties.Settings.Default.Save();
+        }
+
+        private void Closing_MainWindow(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Closing OM", "Manual Shutdown.");
         }
     }
 }
