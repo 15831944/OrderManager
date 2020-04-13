@@ -24,10 +24,6 @@ namespace OrderManagerNew
                 }
                 fs.Close();
             }
-
-            //每次開啟OrderManager就記錄
-            //RecordLog("Start" ,"Open_OM","OMVer " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            RecordConfigLog("OM Startup", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
         /// <summary>
@@ -49,6 +45,15 @@ namespace OrderManagerNew
             {
                 DumpLog(r);
             }*/
+        }
+
+        public void RecordLogContinue(string Row, string Block, string logMessage)
+        {
+            using (StreamWriter w = File.AppendText("OrderManager.log"))
+            {
+                string str = "row_" + Row + " " + Block;
+                shortLog(str, logMessage, w);
+            }
         }
 
         public void RecordConfigLog(string Row, string Block, string logMessage)
@@ -94,8 +99,21 @@ namespace OrderManagerNew
         {
             w.Write("\r\nLog Entry : ");
             w.WriteLine($"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
-            w.WriteLine($"{Block}:{logMessage}");
             w.WriteLine("-------------------------------");
+            w.WriteLine($"{Block}:{logMessage}");
+        }
+
+        /// <summary>
+        /// 寫入log資訊(去除前面空行)
+        /// </summary>
+        /// <param name="Block"> 區塊</param>
+        /// <param name="logMessage"> 詳細資訊</param>
+        /// <param name="w">log檔路徑</param>
+        /// <returns></returns>
+        private void shortLog(string Block, string logMessage, TextWriter w)
+        {
+            w.WriteLine("");
+            w.WriteLine($"{Block}:{logMessage}");
         }
 
         /// <summary>

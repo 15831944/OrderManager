@@ -166,4 +166,8 @@
     <value>Cancel</value>
     <comment>UI</comment>
   </data>
+  <data name="OMAlreadyRunning" xml:space="preserve">
+    <value>Order Manager is already running, do you want to restart Order Manager?</value>
+    <comment>Message</comment>
+  </data>
 </root>

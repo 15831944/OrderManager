@@ -151,6 +151,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Order Manager is already running, do you want to restart Order Manager? 的當地語系化字串。
+        /// </summary>
+        internal static string OMAlreadyRunning {
+            get {
+                return ResourceManager.GetString("OMAlreadyRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Program Path 的當地語系化字串。
         /// </summary>
         internal static string ProgramPath {

@@ -35,9 +35,30 @@ namespace OrderManagerNew
         {
             InitializeComponent();
 
+            //OrderManager不能多開
+            Process[] MyProcess = Process.GetProcessesByName("OrderManager");
+            if (MyProcess.Length > 1)
+            {
+                this.Hide();
+
+                if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["OMAlreadyRunning"], "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        MyProcess[0].Kill(); //關閉執行中的程式
+                    }
+                    catch { }
+                }
+                else
+                {
+                    this.Close();
+                }
+            }
+
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();//TitleBar顯示OrderManager版本
-            
+            log.RecordConfigLog("OM Startup", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+
             OrderManagerLanguage = Properties.Settings.Default.sysLanguage;
             LocalizationService.SetLanguage(OrderManagerLanguage);
         }
@@ -276,19 +297,19 @@ namespace OrderManagerNew
                     {
                         switch (currentProgress)
                         {
-                            case (int)_softwareTableStatus.NotInstall:
+                            case (int)_softwareStatus.NotInstall:
                                 {
                                     mask_EZCAD.Visibility = Visibility.Visible;
                                     process_EZCAD.Visibility = Visibility.Hidden;
                                     break;
                                 }
-                            case (int)_softwareTableStatus.Downloading:
+                            case (int)_softwareStatus.Downloading:
                                 {
                                     mask_EZCAD.Visibility = Visibility.Hidden;
                                     process_EZCAD.Visibility = Visibility.Visible;
                                     break;
                                 }
-                            case (int)_softwareTableStatus.Installed:
+                            case (int)_softwareStatus.Installed:
                                 {
                                     mask_EZCAD.Visibility = Visibility.Hidden;
                                     process_EZCAD.Visibility = Visibility.Hidden;
@@ -301,19 +322,19 @@ namespace OrderManagerNew
                     {
                         switch (currentProgress)
                         {
-                            case (int)_softwareTableStatus.NotInstall:
+                            case (int)_softwareStatus.NotInstall:
                                 {
                                     mask_Implant.Visibility = Visibility.Visible;
                                     process_Implant.Visibility = Visibility.Hidden;
                                     break;
                                 }
-                            case (int)_softwareTableStatus.Downloading:
+                            case (int)_softwareStatus.Downloading:
                                 {
                                     mask_Implant.Visibility = Visibility.Hidden;
                                     process_Implant.Visibility = Visibility.Visible;
                                     break;
                                 }
-                            case (int)_softwareTableStatus.Installed:
+                            case (int)_softwareStatus.Installed:
                                 {
                                     mask_Implant.Visibility = Visibility.Hidden;
                                     process_Implant.Visibility = Visibility.Hidden;
@@ -326,19 +347,19 @@ namespace OrderManagerNew
                     {
                         switch (currentProgress)
                         {
-                            case (int)_softwareTableStatus.NotInstall:
+                            case (int)_softwareStatus.NotInstall:
                                 {
                                     mask_Ortho.Visibility = Visibility.Visible;
                                     process_Ortho.Visibility = Visibility.Hidden;
                                     break;
                                 }
-                            case (int)_softwareTableStatus.Downloading:
+                            case (int)_softwareStatus.Downloading:
                                 {
                                     mask_Ortho.Visibility = Visibility.Hidden;
                                     process_Ortho.Visibility = Visibility.Visible;
                                     break;
                                 }
-                            case (int)_softwareTableStatus.Installed:
+                            case (int)_softwareStatus.Installed:
                                 {
                                     mask_Ortho.Visibility = Visibility.Hidden;
                                     process_Ortho.Visibility = Visibility.Hidden;
@@ -351,19 +372,19 @@ namespace OrderManagerNew
                     {
                         switch (currentProgress)
                         {
-                            case (int)_softwareTableStatus.NotInstall:
+                            case (int)_softwareStatus.NotInstall:
                                 {
                                     mask_Tray.Visibility = Visibility.Visible;
                                     process_Tray.Visibility = Visibility.Hidden;
                                     break;
                                 }
-                            case (int)_softwareTableStatus.Downloading:
+                            case (int)_softwareStatus.Downloading:
                                 {
                                     mask_Tray.Visibility = Visibility.Hidden;
                                     process_Tray.Visibility = Visibility.Visible;
                                     break;
                                 }
-                            case (int)_softwareTableStatus.Installed:
+                            case (int)_softwareStatus.Installed:
                                 {
                                     mask_Tray.Visibility = Visibility.Hidden;
                                     process_Tray.Visibility = Visibility.Hidden;
@@ -376,19 +397,19 @@ namespace OrderManagerNew
                     {
                         switch (currentProgress)
                         {
-                            case (int)_softwareTableStatus.NotInstall:
+                            case (int)_softwareStatus.NotInstall:
                                 {
                                     mask_Splint.Visibility = Visibility.Visible;
                                     process_Splint.Visibility = Visibility.Hidden;
                                     break;
                                 }
-                            case (int)_softwareTableStatus.Downloading:
+                            case (int)_softwareStatus.Downloading:
                                 {
                                     mask_Splint.Visibility = Visibility.Hidden;
                                     process_Splint.Visibility = Visibility.Visible;
                                     break;
                                 }
-                            case (int)_softwareTableStatus.Installed:
+                            case (int)_softwareStatus.Installed:
                                 {
                                     mask_Splint.Visibility = Visibility.Hidden;
                                     process_Splint.Visibility = Visibility.Hidden;

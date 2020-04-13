@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace OrderManagerNew
 {
-    public enum _softwareTableStatus : int
+    public enum _softwareStatus : int
     {
         NotInstall = 0,
         Downloading,
-        Installed
+        Installed,
+        Cloud
     }
 
     public enum _softwareID : int
@@ -21,5 +22,11 @@ namespace OrderManagerNew
         Tray,
         Splint,
         Guide = 5
+    }
+
+    public enum _softwareLic : int
+    {
+        License = 0,
+        Dongle = 1
     }
 }
