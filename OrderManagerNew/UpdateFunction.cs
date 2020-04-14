@@ -12,7 +12,7 @@ using System.Xml.Linq;
 
 namespace OrderManagerNew
 {
-    class UpdateFunction
+    public class UpdateFunction
     {
         LogRecorder log;//日誌檔cs
         string HLXMLlink = @"https://inteware.com.tw/updateXML/HL.xml";//HL.xml網址
@@ -52,22 +52,21 @@ namespace OrderManagerNew
         {
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs", "Initial Start");
             CloudSoftwareTotal = new List<SoftwareInfo>();
-
-            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-
-            
         }
 
         /// <summary>
         /// 讀取HL.xml的詳細更新資訊
         /// </summary>
-        private void loadHLXml()
+        public void loadHLXml()
         {
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+
             XDocument xDoc;
             try
             {
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs", "load HL.xml Start");
+                HLXMLlink = "C:\\InteWare\\HL.xml";    //單機測試
                 xDoc = XDocument.Load(HLXMLlink);
 
                 var SoftwareHL_Dongle = from q in xDoc.Descendants("Software").Descendants("Dongle").Descendants("Item")
@@ -125,19 +124,39 @@ namespace OrderManagerNew
                     softDongle.softwareSize = float.Parse(item.SSize);
                     softDongle.softwareVersion = item.SVersion;
                     softDongle.softwareDownloadLink = item.SHyperlink;
+
+                    CloudSoftwareTotal.Add(softDongle);
                 }
 
-                /*foreach (var item in SoftwareHL_License)
+                foreach (var item in SoftwareHL_License)
                 {
-                    SoftwareInfo tmpSHL = new SoftwareInfo();
-                    tmpSHL.SoftwareName = item.SName;
-                    tmpSHL.SoftwareVersion = item.SVersion;
-                    tmpSHL.SoftwareType = 0;
-                    tmpSHL.SoftwareHyperLink = item.SHyperlink.Replace("\n ", "").Replace("\r ", "").Replace(" ", "");
-                    tmpSHL.SoftwareDescription = item.SDescription;
-                    tmpSHL.SoftwareSize = float.Parse(item.SSize);
-                    TotalSHL.Add(tmpSHL);
-                }*/
+                    SoftwareInfo softLicense = new SoftwareInfo();
+                    if (item.SName.ToLower().IndexOf("ortho") != -1)
+                        softLicense.softwareID = (int)_softwareID.Ortho;
+                    else if (item.SName.ToLower().IndexOf("implant") != -1)
+                        softLicense.softwareID = (int)_softwareID.Implant;
+                    else if (item.SName.ToLower().IndexOf("tray") != -1)
+                        softLicense.softwareID = (int)_softwareID.Tray;
+                    else if (item.SName.ToLower().IndexOf("splint") != -1)
+                        softLicense.softwareID = (int)_softwareID.Splint;
+                    else if (item.SName.ToLower().IndexOf("guide") != -1)
+                        softLicense.softwareID = (int)_softwareID.Guide;
+                    else if (item.SName.ToLower().IndexOf("cad") != -1)
+                        softLicense.softwareID = (int)_softwareID.EZCAD;
+                    else
+                        break;
+
+                    softLicense.softwareInstalled = (int)_softwareStatus.Cloud;
+                    softLicense.softwareLicense = (int)_softwareLic.License;
+                    softLicense.softwareName = item.SName;
+                    softLicense.softwareSize = float.Parse(item.SSize);
+                    softLicense.softwareVersion = item.SVersion;
+                    softLicense.softwareDownloadLink = item.SHyperlink;
+
+                    CloudSoftwareTotal.Add(softLicense);
+                }
+
+                SoftwareInfoLog(CloudSoftwareTotal, "CloudSoftwareTotal");
             }
             catch (Exception ex)
             {
@@ -160,5 +179,20 @@ namespace OrderManagerNew
 
         }
 
+        private void SoftwareInfoLog(List<SoftwareInfo> outputInfo, string InfoName)
+        {
+            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs SoftwareInfoLog()", InfoName + " Total:" + outputInfo.Count);
+            for(int i=0; i<outputInfo.Count; i++)
+            {
+                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "SoftwareID", outputInfo[i].softwareID.ToString());
+                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareInstalled", outputInfo[i].softwareInstalled.ToString());
+                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareLicense", outputInfo[i].softwareLicense.ToString());
+                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareName", outputInfo[i].softwareName);
+                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareSize", outputInfo[i].softwareSize.ToString());
+                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareVersion", outputInfo[i].softwareVersion);
+                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareDownloadLink", outputInfo[i].softwareDownloadLink);
+                log.RecordLogSaperate();
+            }
+        }
     }
 }

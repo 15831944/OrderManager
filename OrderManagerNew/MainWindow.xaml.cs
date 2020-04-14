@@ -27,9 +27,10 @@ namespace OrderManagerNew
     /// </summary>
     public partial class MainWindow : Window
     {
-        LogRecorder log;//日誌檔cs
-        bool developerMode = false;//開發者模式
-        string OrderManagerLanguage;//語系
+        LogRecorder log;                //日誌檔cs
+        UpdateFunction UpdateFunc;      //軟體更新cs
+        bool developerMode = false;     //開發者模式
+        string OrderManagerLanguage;    //語系
 
         public MainWindow()
         {
@@ -56,8 +57,11 @@ namespace OrderManagerNew
             }
 
             log = new LogRecorder();
-            titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();//TitleBar顯示OrderManager版本
+            titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
             log.RecordConfigLog("OM Startup", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            
+
+
 
             OrderManagerLanguage = Properties.Settings.Default.sysLanguage;
             LocalizationService.SetLanguage(OrderManagerLanguage);
@@ -210,14 +214,20 @@ namespace OrderManagerNew
                                 //開發者模式
                                 developerMode = true;
                                 message ="Developer Mode";
-                                Panel.SetZIndex(Dev_btnGrid, 10);
+                                //Panel.SetZIndex(Dev_btnGrid, 10);
+                                Thickness Custommargin = Dev_btnGrid.Margin;
+                                Custommargin.Bottom = 40;
+                                Dev_btnGrid.Margin = Custommargin;
                             }
                             else
                             {
                                 //使用者模式
                                 developerMode = false;
                                 message = "Customer Mode";
-                                Panel.SetZIndex(Dev_btnGrid, -1);
+                                //Panel.SetZIndex(Dev_btnGrid, -1);
+                                Thickness Custommargin = Dev_btnGrid.Margin;
+                                Custommargin.Bottom = -120;
+                                Dev_btnGrid.Margin = Custommargin;
                             }
                             Task.Factory.StartNew(() => messageQueue.Enqueue(message));
                             txtbox.Text = "";
@@ -423,14 +433,28 @@ namespace OrderManagerNew
 
         private void Dev_Click_Btn(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.path_EZCAD = "";
-            Properties.Settings.Default.path_Implant = "";
-            Properties.Settings.Default.path_Ortho = "";
-            Properties.Settings.Default.path_Tray = "";
-            Properties.Settings.Default.path_Splint = "";
-            Properties.Settings.Default.path_Guide = "";
-            Properties.Settings.Default.sysLanguage = "";
-            Properties.Settings.Default.Save();
+            Button Btn = sender as Button;
+            switch(Btn.Name)
+            {
+                case "DevBtn1":
+                    {
+                        Properties.Settings.Default.path_EZCAD = "";
+                        Properties.Settings.Default.path_Implant = "";
+                        Properties.Settings.Default.path_Ortho = "";
+                        Properties.Settings.Default.path_Tray = "";
+                        Properties.Settings.Default.path_Splint = "";
+                        Properties.Settings.Default.path_Guide = "";
+                        Properties.Settings.Default.sysLanguage = "";
+                        Properties.Settings.Default.Save();
+                        break;
+                    }
+                case "DevBtn2":
+                    {
+                        UpdateFunc = new UpdateFunction();
+                        UpdateFunc.loadHLXml();
+                        break;
+                    }
+            }
         }
 
         private void Closing_MainWindow(object sender, System.ComponentModel.CancelEventArgs e)

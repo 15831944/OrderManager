@@ -10,7 +10,7 @@ namespace OrderManagerNew
     /// <summary>
     /// 日誌檔讀寫
     /// </summary>
-    class LogRecorder
+    public class LogRecorder
     {
         public LogRecorder()
         {
@@ -29,9 +29,9 @@ namespace OrderManagerNew
         /// <summary>
         /// 寫入log資訊
         /// </summary>
+        /// <param name="Row"> 第幾行</param>
         /// <param name="Block"> 區塊</param>
         /// <param name="logMessage"> 詳細資訊</param>
-        /// <param name="w">log檔路徑</param>
         /// <returns></returns>
         public void RecordLog(string Row,string Block, string logMessage)
         {
@@ -40,13 +40,15 @@ namespace OrderManagerNew
                 string str = "row_" + Row + " " + Block;
                 Log(str, logMessage, w);
             }
-
-            /*using (StreamReader r = File.OpenText("OrderManager.log"))
-            {
-                DumpLog(r);
-            }*/
         }
 
+        /// <summary>
+        /// 寫入log資訊(去除前面空行)
+        /// </summary>
+        /// <param name="Row"> 第幾行</param>
+        /// <param name="Block"> 區塊</param>
+        /// <param name="logMessage"> 詳細資訊</param>
+        /// <returns></returns>
         public void RecordLogContinue(string Row, string Block, string logMessage)
         {
             using (StreamWriter w = File.AppendText("OrderManager.log"))
@@ -56,20 +58,28 @@ namespace OrderManagerNew
             }
         }
 
-        public void RecordConfigLog(string Row, string Block, string logMessage)
-        {
-            using (StreamWriter w = File.AppendText("OrderManager.log"))
-            {
-                string str = "row_" + Row + " " + Block;
-                ConfigLog(str, logMessage, w);
-            }
-        }
-
+        /// <summary>
+        /// 寫入log資訊(設定檔)
+        /// </summary>
+        /// <param name="Block"> 區塊</param>
+        /// <param name="logMessage"> 詳細資訊</param>
+        /// <returns></returns>
         public void RecordConfigLog(string Block, string logMessage)
         {
             using (StreamWriter w = File.AppendText("OrderManager.log"))
             {
                 ConfigLog(Block, logMessage, w);
+            }
+        }
+
+        /// <summary>
+        /// log分段
+        /// </summary>
+        public void RecordLogSaperate()
+        {
+            using (StreamWriter w = File.AppendText("OrderManager.log"))
+            {
+                seprateLog(w);
             }
         }
 
@@ -87,14 +97,13 @@ namespace OrderManagerNew
             w.WriteLine($"path_Guide:{Properties.Settings.Default.path_Guide}");
             w.WriteLine($"UserLanguage:{Properties.Settings.Default.sysLanguage}");
         }
-
-        /// <summary>
-        /// 寫入log資訊
-        /// </summary>
-        /// <param name="Block"> 區塊</param>
-        /// <param name="logMessage"> 詳細資訊</param>
-        /// <param name="w">log檔路徑</param>
-        /// <returns></returns>
+        
+        private void seprateLog( TextWriter w)
+        {
+            w.WriteLine("-------------------------------");
+            w.WriteLine("");
+        }
+        
         private void Log(string Block, string logMessage, TextWriter w)
         {
             w.Write("\r\nLog Entry : ");
@@ -103,13 +112,7 @@ namespace OrderManagerNew
             w.WriteLine($"{Block}:{logMessage}");
         }
 
-        /// <summary>
-        /// 寫入log資訊(去除前面空行)
-        /// </summary>
-        /// <param name="Block"> 區塊</param>
-        /// <param name="logMessage"> 詳細資訊</param>
-        /// <param name="w">log檔路徑</param>
-        /// <returns></returns>
+        
         private void shortLog(string Block, string logMessage, TextWriter w)
         {
             w.WriteLine("");
