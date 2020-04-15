@@ -16,6 +16,11 @@ namespace OrderManagerNew
     {
         LogRecorder log;//日誌檔cs
         string HLXMLlink = @"https://inteware.com.tw/updateXML/HL.xml";//HL.xml網址
+
+        //委派到MainWindow.xaml.cs裡面的setSoftwareShow()
+        public delegate void softwareLogoShowEventHandler(int softwareID, int currentProgress);
+        public event softwareLogoShowEventHandler softwareLogoShowEvent;
+
         List<SoftwareInfo> UserSoftwareTotal;
         List<SoftwareInfo> CloudSoftwareTotal;
 
@@ -50,6 +55,7 @@ namespace OrderManagerNew
 
         public UpdateFunction()
         {
+            log = new LogRecorder();
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs", "Initial Start");
             CloudSoftwareTotal = new List<SoftwareInfo>();
         }
@@ -66,6 +72,7 @@ namespace OrderManagerNew
             try
             {
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs", "load HL.xml Start");
+                CloudSoftwareTotal = new List<SoftwareInfo>();
                 HLXMLlink = "C:\\InteWare\\HL.xml";    //單機測試
                 xDoc = XDocument.Load(HLXMLlink);
 
@@ -156,7 +163,8 @@ namespace OrderManagerNew
                     CloudSoftwareTotal.Add(softLicense);
                 }
 
-                SoftwareInfoLog(CloudSoftwareTotal, "CloudSoftwareTotal");
+                if(Properties.Settings.Default.engineerMode == true)
+                    SoftwareInfoLog(CloudSoftwareTotal, "CloudSoftwareTotal");
             }
             catch (Exception ex)
             {
@@ -174,9 +182,48 @@ namespace OrderManagerNew
 
             if (File.Exists(Properties.Settings.Default.path_EZCAD) == true)
             {
-
+                softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed);
+            }
+            else
+            {
+                softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall);
             }
 
+            if (File.Exists(Properties.Settings.Default.path_Implant) == true)
+            {
+                softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed);
+            }
+            else
+            {
+                softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall);
+            }
+
+            if (File.Exists(Properties.Settings.Default.path_Ortho) == true)
+            {
+                softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed);
+            }
+            else
+            {
+                softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall);
+            }
+
+            if (File.Exists(Properties.Settings.Default.path_Tray) == true)
+            {
+                softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed);
+            }
+            else
+            {
+                softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall);
+            }
+
+            if (File.Exists(Properties.Settings.Default.path_Splint) == true)
+            {
+                softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed);
+            }
+            else
+            {
+                softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall);
+            }
         }
 
         private void SoftwareInfoLog(List<SoftwareInfo> outputInfo, string InfoName)
@@ -184,9 +231,9 @@ namespace OrderManagerNew
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs SoftwareInfoLog()", InfoName + " Total:" + outputInfo.Count);
             for(int i=0; i<outputInfo.Count; i++)
             {
-                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "SoftwareID", outputInfo[i].softwareID.ToString());
-                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareInstalled", outputInfo[i].softwareInstalled.ToString());
-                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareLicense", outputInfo[i].softwareLicense.ToString());
+                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "SoftwareID", "\"" + Enum.GetName(typeof(_softwareID), outputInfo[i].softwareID) + "\" " + outputInfo[i].softwareID.ToString());
+                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareInstalled", "\"" + Enum.GetName(typeof(_softwareStatus), outputInfo[i].softwareInstalled) + "\" " + outputInfo[i].softwareInstalled.ToString());
+                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareLicense", "\"" + Enum.GetName(typeof(_softwareLic), outputInfo[i].softwareLicense) + "\" " + outputInfo[i].softwareLicense.ToString());
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareName", outputInfo[i].softwareName);
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareSize", outputInfo[i].softwareSize.ToString());
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareVersion", outputInfo[i].softwareVersion);

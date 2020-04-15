@@ -122,18 +122,19 @@
                     </Grid.ColumnDefinitions>
 
                     <materialDesign:Snackbar
-                      Grid.Column="0" Grid.ColumnSpan="3" x:Name="SnackbarMain"
+                      x:Name="SnackbarMain" Grid.Column="0" Grid.ColumnSpan="3"
                       HorizontalAlignment="Stretch" Panel.ZIndex="10"
                       MessageQueue="{materialDesign:MessageQueue}" />
 
                     <Grid
-                      Grid.Column="0" Grid.ColumnSpan="3" x:Name="Dev_btnGrid"
+                      x:Name="Dev_btnGrid" Grid.Column="0" Grid.ColumnSpan="3"
                       Width="1000" Height="100" Margin="0,0,0,-120"
                       VerticalAlignment="Bottom" Panel.ZIndex="10">
                         <Grid.Resources>
                             <Style BasedOn="{StaticResource MaterialDesignRaisedButton}" TargetType="Button">
                                 <Setter Property="Margin" Value="3,0" />
                                 <Setter Property="FontSize" Value="8" />
+                                <Setter Property="Focusable" Value="False" />
                             </Style>
                         </Grid.Resources>
                         <Grid.RowDefinitions>
@@ -154,64 +155,64 @@
                         </Grid.ColumnDefinitions>
 
                         <Button
-                          Grid.Row="0" Grid.Column="0" x:Name="DevBtn1"
+                          x:Name="DevBtn1" Grid.Row="0" Grid.Column="0"
                           Click="Dev_Click_Btn" Content="Reset Properties" />
                         <Button
-                          Grid.Row="0" Grid.Column="1" x:Name="DevBtn2"
+                          x:Name="DevBtn2" Grid.Row="0" Grid.Column="1"
                           Click="Dev_Click_Btn" Content="Load HL.xml" />
                         <Button
-                          Grid.Row="0" Grid.Column="2" x:Name="DevBtn3"
+                          x:Name="DevBtn3" Grid.Row="0" Grid.Column="2"
+                          Click="Dev_Click_Btn" Content="Delete Log" />
+                        <Button
+                          x:Name="DevBtn4" Grid.Row="0" Grid.Column="3"
+                          Click="Dev_Click_Btn" Content="Show Log" />
+                        <Button
+                          x:Name="DevBtn5" Grid.Row="0" Grid.Column="4"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="0" Grid.Column="3" x:Name="DevBtn4"
+                          x:Name="DevBtn6" Grid.Row="0" Grid.Column="5"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="0" Grid.Column="4" x:Name="DevBtn5"
+                          x:Name="DevBtn7" Grid.Row="0" Grid.Column="6"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="0" Grid.Column="5" x:Name="DevBtn6"
+                          x:Name="DevBtn8" Grid.Row="0" Grid.Column="7"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="0" Grid.Column="6" x:Name="DevBtn7"
+                          x:Name="DevBtn9" Grid.Row="0" Grid.Column="8"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="0" Grid.Column="7" x:Name="DevBtn8"
+                          x:Name="DevBtn10" Grid.Row="0" Grid.Column="9"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="0" Grid.Column="8" x:Name="DevBtn9"
+                          x:Name="DevBtn11" Grid.Row="1" Grid.Column="0"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="0" Grid.Column="9" x:Name="DevBtn10"
+                          x:Name="DevBtn12" Grid.Row="1" Grid.Column="1"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="1" Grid.Column="0" x:Name="DevBtn11"
+                          x:Name="DevBtn13" Grid.Row="1" Grid.Column="2"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="1" Grid.Column="1" x:Name="DevBtn12"
+                          x:Name="DevBtn14" Grid.Row="1" Grid.Column="3"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="1" Grid.Column="2" x:Name="DevBtn13"
+                          x:Name="DevBtn15" Grid.Row="1" Grid.Column="4"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="1" Grid.Column="3" x:Name="DevBtn14"
+                          x:Name="DevBtn16" Grid.Row="1" Grid.Column="5"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="1" Grid.Column="4" x:Name="DevBtn15"
+                          x:Name="DevBtn17" Grid.Row="1" Grid.Column="6"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="1" Grid.Column="5" x:Name="DevBtn16"
+                          x:Name="DevBtn18" Grid.Row="1" Grid.Column="7"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="1" Grid.Column="6" x:Name="DevBtn17"
+                          x:Name="DevBtn19" Grid.Row="1" Grid.Column="8"
                           Click="Dev_Click_Btn" />
                         <Button
-                          Grid.Row="1" Grid.Column="7" x:Name="DevBtn18"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          Grid.Row="1" Grid.Column="8" x:Name="DevBtn19"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          Grid.Row="1" Grid.Column="9" x:Name="DevBtn20"
+                          x:Name="DevBtn20" Grid.Row="1" Grid.Column="9"
                           Click="Dev_Click_Btn" />
                     </Grid>
 
@@ -226,10 +227,10 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <CheckBox
-                                  Grid.Column="0" x:Name="checkboxPatient" HorizontalAlignment="Right"
+                                  x:Name="checkboxPatient" Grid.Column="0" HorizontalAlignment="Right"
                                   VerticalAlignment="Center" Checked="SortTable_Checked" Unchecked="SortTable_UnChecked" />
                                 <TextBox
-                                  Grid.Column="1" x:Name="textboxPatient"
+                                  x:Name="textboxPatient" Grid.Column="1"
                                   Style="{StaticResource SortTextBox}"
                                   Text="" TextChanged="SortTable_TextChanged" />
                             </Grid>
@@ -241,10 +242,10 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <CheckBox
-                                  Grid.Column="0" x:Name="checkboxCase" HorizontalAlignment="Right"
+                                  x:Name="checkboxCase" Grid.Column="0" HorizontalAlignment="Right"
                                   VerticalAlignment="Center" Checked="SortTable_Checked" Unchecked="SortTable_UnChecked" />
                                 <TextBox
-                                  Grid.Column="1" x:Name="textboxCase"
+                                  x:Name="textboxCase" Grid.Column="1"
                                   Style="{StaticResource SortTextBox}"
                                   Text="" TextChanged="SortTable_TextChanged" />
                             </Grid>

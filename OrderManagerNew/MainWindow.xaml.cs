@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Reflection;    //取得OrderManager自身軟體版本
 using System.Windows.Media.Effects;
 using System.Diagnostics;
+using System.IO;
 
 //Microsoft.Expression.Drawing.dll如果要用多國語言套件: "C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries"
 //抓取程式碼行數: new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString()
@@ -59,12 +60,17 @@ namespace OrderManagerNew
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
             log.RecordConfigLog("OM Startup", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            
 
-
+            var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
+            SnackbarMain.MessageQueue = myMessageQueue;
 
             OrderManagerLanguage = Properties.Settings.Default.sysLanguage;
             LocalizationService.SetLanguage(OrderManagerLanguage);
+
+            //檢查有安裝哪些軟體
+            UpdateFunc = new UpdateFunction();
+            UpdateFunc.softwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(setSoftwareShow);
+            UpdateFunc.checkExistSoftware();
         }
 
         #region WindowFrame
@@ -163,8 +169,7 @@ namespace OrderManagerNew
         }
 
         #endregion
-
-
+        
         #region SortTable事件
         private void SortTable_Checked(object sender, RoutedEventArgs e)
         {
@@ -198,6 +203,17 @@ namespace OrderManagerNew
             }
         }
 
+        /// <summary>
+        /// 跳出Snackbar訊息
+        /// </summary>
+        /// <param name="Message"> 要顯示的訊息</param>
+        /// <returns></returns>
+        private void SnackBarShow(string Message)
+        {
+            var messageQueue = SnackbarMain.MessageQueue;
+            Task.Factory.StartNew(() => messageQueue.Enqueue(Message));
+        }
+
         private void SortTable_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox txtbox = sender as TextBox;
@@ -207,7 +223,6 @@ namespace OrderManagerNew
                     {
                         if(txtbox.Text == "-engineer")
                         {
-                            var messageQueue = SnackbarMain.MessageQueue;
                             string message = "";
                             if (developerMode == false)
                             {
@@ -218,6 +233,7 @@ namespace OrderManagerNew
                                 Thickness Custommargin = Dev_btnGrid.Margin;
                                 Custommargin.Bottom = 40;
                                 Dev_btnGrid.Margin = Custommargin;
+                                Properties.Settings.Default.engineerMode = true;
                             }
                             else
                             {
@@ -228,8 +244,9 @@ namespace OrderManagerNew
                                 Thickness Custommargin = Dev_btnGrid.Margin;
                                 Custommargin.Bottom = -120;
                                 Dev_btnGrid.Margin = Custommargin;
+                                Properties.Settings.Default.engineerMode = false;
                             }
-                            Task.Factory.StartNew(() => messageQueue.Enqueue(message));
+                            SnackBarShow(message);
                             txtbox.Text = "";
                             Keyboard.ClearFocus();
                         }
@@ -434,7 +451,7 @@ namespace OrderManagerNew
         private void Dev_Click_Btn(object sender, RoutedEventArgs e)
         {
             Button Btn = sender as Button;
-            switch(Btn.Name)
+            switch (Btn.Name)
             {
                 case "DevBtn1":
                     {
@@ -450,8 +467,38 @@ namespace OrderManagerNew
                     }
                 case "DevBtn2":
                     {
-                        UpdateFunc = new UpdateFunction();
                         UpdateFunc.loadHLXml();
+                        if (File.Exists("OrderManager.log") == true)
+                        {
+                            Process OpenLog = new Process();
+                            OpenLog.StartInfo.FileName = "OrderManager.log";
+                            OpenLog.Start();
+                        }
+                        break;
+                    }
+                case "DevBtn3":
+                    {
+                        if (File.Exists("OrderManager.log") == true)
+                        {
+                            File.Delete("OrderManager.log");
+                            SnackBarShow("Log delete success.");
+                        }
+                        else
+                            SnackBarShow("Log not found.");
+
+                        break;
+                    }
+                case "DevBtn4":
+                    {
+                        if(File.Exists("OrderManager.log") == true)
+                        {
+                            Process OpenLog = new Process();
+                            OpenLog.StartInfo.FileName = "OrderManager.log";
+                            OpenLog.Start();
+                        }
+                        else
+                            SnackBarShow("Log not found.");
+                        
                         break;
                     }
             }
