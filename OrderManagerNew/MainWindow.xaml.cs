@@ -70,7 +70,7 @@ namespace OrderManagerNew
             //檢查有安裝哪些軟體
             UpdateFunc = new UpdateFunction();
             UpdateFunc.softwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(setSoftwareShow);
-            UpdateFunc.checkExistSoftware();
+            UpdateFunc.checkExistSoftware(true);
         }
 
         #region WindowFrame
@@ -85,6 +85,56 @@ namespace OrderManagerNew
             {
                 //systemButton_Maximize.ToolTip = WpfOrderManager.TranslationSource.Instance["SBtn_Max"];
                 this.BorderThickness = new Thickness(0);
+            }
+        }
+
+        private void Closing_MainWindow(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Closing OM", "Manual Shutdown.");
+        }
+
+        private void Dev_Click_Btn(object sender, RoutedEventArgs e)
+        {
+            Button Btn = sender as Button;
+            switch (Btn.Name)
+            {
+                case "DevBtn1":
+                    {
+                        Properties.Settings.Default.path_EZCAD = "";
+                        Properties.Settings.Default.path_Implant = "";
+                        Properties.Settings.Default.path_Ortho = "";
+                        Properties.Settings.Default.path_Tray = "";
+                        Properties.Settings.Default.path_Splint = "";
+                        Properties.Settings.Default.path_Guide = "";
+                        Properties.Settings.Default.sysLanguage = "";
+                        Properties.Settings.Default.Save();
+
+                        UpdateFunc.checkExistSoftware(false);
+                        break;
+                    }
+                case "DevBtn2":
+                    {
+                        UpdateFunc.loadHLXml();
+                        showLog();
+                        break;
+                    }
+                case "DevBtn3":
+                    {
+                        if (File.Exists("OrderManager.log") == true)
+                        {
+                            File.Delete("OrderManager.log");
+                            SnackBarShow("Log delete success.");
+                        }
+                        else
+                            SnackBarShow("Log not found.");
+
+                        break;
+                    }
+                case "DevBtn4":
+                    {
+                        showLog();
+                        break;
+                    }
             }
         }
         #endregion
@@ -161,15 +211,156 @@ namespace OrderManagerNew
             DialogSetting.ShowActivated = true;
             DialogSetting.ShowDialog();
             if(DialogSetting.DialogResult == true)
-                log.RecordConfigLog("Config changed", new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString());
+            {
+                UpdateFunc.checkExistSoftware(true);
+                log.RecordConfigLog("FunctionTable_Click_Setting()", "Config changed");
+            }
+                
 
             //主視窗還原
             this.Effect = null;
             this.OpacityMask = null;
         }
 
+        /// <summary>
+        /// 設定SofttwareTable各Icon顯示狀態
+        /// </summary>
+        /// <param name="currentProgress">(目前進度) 未安裝、下載中、已安裝</param>
+        /// <param name="softwareID">(軟體ID) EZCAD、Implant、Ortho、Tray、Splint</param>
+        /// <returns></returns>
+        void setSoftwareShow(int softwareID, int currentProgress)
+        {
+            switch (softwareID)
+            {
+                case (int)_softwareID.EZCAD:
+                    {
+                        switch (currentProgress)
+                        {
+                            case (int)_softwareStatus.NotInstall:
+                                {
+                                    mask_EZCAD.Visibility = Visibility.Visible;
+                                    process_EZCAD.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                            case (int)_softwareStatus.Downloading:
+                                {
+                                    mask_EZCAD.Visibility = Visibility.Hidden;
+                                    process_EZCAD.Visibility = Visibility.Visible;
+                                    break;
+                                }
+                            case (int)_softwareStatus.Installed:
+                                {
+                                    mask_EZCAD.Visibility = Visibility.Hidden;
+                                    process_EZCAD.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Implant:
+                    {
+                        switch (currentProgress)
+                        {
+                            case (int)_softwareStatus.NotInstall:
+                                {
+                                    mask_Implant.Visibility = Visibility.Visible;
+                                    process_Implant.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                            case (int)_softwareStatus.Downloading:
+                                {
+                                    mask_Implant.Visibility = Visibility.Hidden;
+                                    process_Implant.Visibility = Visibility.Visible;
+                                    break;
+                                }
+                            case (int)_softwareStatus.Installed:
+                                {
+                                    mask_Implant.Visibility = Visibility.Hidden;
+                                    process_Implant.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Ortho:
+                    {
+                        switch (currentProgress)
+                        {
+                            case (int)_softwareStatus.NotInstall:
+                                {
+                                    mask_Ortho.Visibility = Visibility.Visible;
+                                    process_Ortho.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                            case (int)_softwareStatus.Downloading:
+                                {
+                                    mask_Ortho.Visibility = Visibility.Hidden;
+                                    process_Ortho.Visibility = Visibility.Visible;
+                                    break;
+                                }
+                            case (int)_softwareStatus.Installed:
+                                {
+                                    mask_Ortho.Visibility = Visibility.Hidden;
+                                    process_Ortho.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Tray:
+                    {
+                        switch (currentProgress)
+                        {
+                            case (int)_softwareStatus.NotInstall:
+                                {
+                                    mask_Tray.Visibility = Visibility.Visible;
+                                    process_Tray.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                            case (int)_softwareStatus.Downloading:
+                                {
+                                    mask_Tray.Visibility = Visibility.Hidden;
+                                    process_Tray.Visibility = Visibility.Visible;
+                                    break;
+                                }
+                            case (int)_softwareStatus.Installed:
+                                {
+                                    mask_Tray.Visibility = Visibility.Hidden;
+                                    process_Tray.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Splint:
+                    {
+                        switch (currentProgress)
+                        {
+                            case (int)_softwareStatus.NotInstall:
+                                {
+                                    mask_Splint.Visibility = Visibility.Visible;
+                                    process_Splint.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                            case (int)_softwareStatus.Downloading:
+                                {
+                                    mask_Splint.Visibility = Visibility.Hidden;
+                                    process_Splint.Visibility = Visibility.Visible;
+                                    break;
+                                }
+                            case (int)_softwareStatus.Installed:
+                                {
+                                    mask_Splint.Visibility = Visibility.Hidden;
+                                    process_Splint.Visibility = Visibility.Hidden;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+            }
+        }
         #endregion
-        
+
         #region SortTable事件
         private void SortTable_Checked(object sender, RoutedEventArgs e)
         {
@@ -309,204 +500,20 @@ namespace OrderManagerNew
         }
 
         #endregion
-
+        
         /// <summary>
-        /// 設定SofttwareTable各Icon顯示
+        /// 記事本開啟Log檔
         /// </summary>
-        /// <param name="currentProgress">(目前進度) 未安裝、下載中、已安裝</param>
-        /// <param name="softwareID">(軟體ID) EZCAD、Implant、Ortho、Tray、Splint</param>
-        /// <returns></returns>
-        void setSoftwareShow(int softwareID, int currentProgress)
+        private void showLog()
         {
-            switch (softwareID)
+            if (File.Exists("OrderManager.log") == true)
             {
-                case (int)_softwareID.EZCAD:
-                    {
-                        switch (currentProgress)
-                        {
-                            case (int)_softwareStatus.NotInstall:
-                                {
-                                    mask_EZCAD.Visibility = Visibility.Visible;
-                                    process_EZCAD.Visibility = Visibility.Hidden;
-                                    break;
-                                }
-                            case (int)_softwareStatus.Downloading:
-                                {
-                                    mask_EZCAD.Visibility = Visibility.Hidden;
-                                    process_EZCAD.Visibility = Visibility.Visible;
-                                    break;
-                                }
-                            case (int)_softwareStatus.Installed:
-                                {
-                                    mask_EZCAD.Visibility = Visibility.Hidden;
-                                    process_EZCAD.Visibility = Visibility.Hidden;
-                                    break;
-                                }
-                        }
-                        break;
-                    }
-                case (int)_softwareID.Implant:
-                    {
-                        switch (currentProgress)
-                        {
-                            case (int)_softwareStatus.NotInstall:
-                                {
-                                    mask_Implant.Visibility = Visibility.Visible;
-                                    process_Implant.Visibility = Visibility.Hidden;
-                                    break;
-                                }
-                            case (int)_softwareStatus.Downloading:
-                                {
-                                    mask_Implant.Visibility = Visibility.Hidden;
-                                    process_Implant.Visibility = Visibility.Visible;
-                                    break;
-                                }
-                            case (int)_softwareStatus.Installed:
-                                {
-                                    mask_Implant.Visibility = Visibility.Hidden;
-                                    process_Implant.Visibility = Visibility.Hidden;
-                                    break;
-                                }
-                        }
-                        break;
-                    }
-                case (int)_softwareID.Ortho:
-                    {
-                        switch (currentProgress)
-                        {
-                            case (int)_softwareStatus.NotInstall:
-                                {
-                                    mask_Ortho.Visibility = Visibility.Visible;
-                                    process_Ortho.Visibility = Visibility.Hidden;
-                                    break;
-                                }
-                            case (int)_softwareStatus.Downloading:
-                                {
-                                    mask_Ortho.Visibility = Visibility.Hidden;
-                                    process_Ortho.Visibility = Visibility.Visible;
-                                    break;
-                                }
-                            case (int)_softwareStatus.Installed:
-                                {
-                                    mask_Ortho.Visibility = Visibility.Hidden;
-                                    process_Ortho.Visibility = Visibility.Hidden;
-                                    break;
-                                }
-                        }
-                        break;
-                    }
-                case (int)_softwareID.Tray:
-                    {
-                        switch (currentProgress)
-                        {
-                            case (int)_softwareStatus.NotInstall:
-                                {
-                                    mask_Tray.Visibility = Visibility.Visible;
-                                    process_Tray.Visibility = Visibility.Hidden;
-                                    break;
-                                }
-                            case (int)_softwareStatus.Downloading:
-                                {
-                                    mask_Tray.Visibility = Visibility.Hidden;
-                                    process_Tray.Visibility = Visibility.Visible;
-                                    break;
-                                }
-                            case (int)_softwareStatus.Installed:
-                                {
-                                    mask_Tray.Visibility = Visibility.Hidden;
-                                    process_Tray.Visibility = Visibility.Hidden;
-                                    break;
-                                }
-                        }
-                        break;
-                    }
-                case (int)_softwareID.Splint:
-                    {
-                        switch (currentProgress)
-                        {
-                            case (int)_softwareStatus.NotInstall:
-                                {
-                                    mask_Splint.Visibility = Visibility.Visible;
-                                    process_Splint.Visibility = Visibility.Hidden;
-                                    break;
-                                }
-                            case (int)_softwareStatus.Downloading:
-                                {
-                                    mask_Splint.Visibility = Visibility.Hidden;
-                                    process_Splint.Visibility = Visibility.Visible;
-                                    break;
-                                }
-                            case (int)_softwareStatus.Installed:
-                                {
-                                    mask_Splint.Visibility = Visibility.Hidden;
-                                    process_Splint.Visibility = Visibility.Hidden;
-                                    break;
-                                }
-                        }
-                        break;
-                    }
+                Process OpenLog = new Process();
+                OpenLog.StartInfo.FileName = "OrderManager.log";
+                OpenLog.Start();
             }
-        }
-
-        private void Dev_Click_Btn(object sender, RoutedEventArgs e)
-        {
-            Button Btn = sender as Button;
-            switch (Btn.Name)
-            {
-                case "DevBtn1":
-                    {
-                        Properties.Settings.Default.path_EZCAD = "";
-                        Properties.Settings.Default.path_Implant = "";
-                        Properties.Settings.Default.path_Ortho = "";
-                        Properties.Settings.Default.path_Tray = "";
-                        Properties.Settings.Default.path_Splint = "";
-                        Properties.Settings.Default.path_Guide = "";
-                        Properties.Settings.Default.sysLanguage = "";
-                        Properties.Settings.Default.Save();
-                        break;
-                    }
-                case "DevBtn2":
-                    {
-                        UpdateFunc.loadHLXml();
-                        if (File.Exists("OrderManager.log") == true)
-                        {
-                            Process OpenLog = new Process();
-                            OpenLog.StartInfo.FileName = "OrderManager.log";
-                            OpenLog.Start();
-                        }
-                        break;
-                    }
-                case "DevBtn3":
-                    {
-                        if (File.Exists("OrderManager.log") == true)
-                        {
-                            File.Delete("OrderManager.log");
-                            SnackBarShow("Log delete success.");
-                        }
-                        else
-                            SnackBarShow("Log not found.");
-
-                        break;
-                    }
-                case "DevBtn4":
-                    {
-                        if(File.Exists("OrderManager.log") == true)
-                        {
-                            Process OpenLog = new Process();
-                            OpenLog.StartInfo.FileName = "OrderManager.log";
-                            OpenLog.Start();
-                        }
-                        else
-                            SnackBarShow("Log not found.");
-                        
-                        break;
-                    }
-            }
-        }
-
-        private void Closing_MainWindow(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Closing OM", "Manual Shutdown.");
+            else
+                SnackBarShow("Log not found.");
         }
     }
 }

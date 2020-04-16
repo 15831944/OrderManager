@@ -170,4 +170,8 @@
     <value>Order Manager is already running, do you want to restart Order Manager?</value>
     <comment>Message</comment>
   </data>
+  <data name="AutoDetect" xml:space="preserve">
+    <value>Auto Detect</value>
+    <comment>UI</comment>
+  </data>
 </root>

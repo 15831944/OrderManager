@@ -27,6 +27,7 @@ namespace OrderManagerNew
     public enum _softwareLic : int
     {
         License = 0,
-        Dongle = 1
+        Dongle = 1,
+        NotSure = 2
     }
 }

@@ -159,4 +159,7 @@
   <data name="OMAlreadyRunning" xml:space="preserve">
     <value>另一個Order Manager執行個體已在執行中。請問您是否要重新開啟Order Manager?</value>
   </data>
+  <data name="AutoDetect" xml:space="preserve">
+    <value>自動偵測</value>
+  </data>
 </root>

@@ -173,6 +173,28 @@ namespace OrderManagerNew
                         this.DialogResult = false;
                         break;
                     }
+                case "sysBtn_AutoDetect":
+                    {
+                        if (File.Exists(@"C:\InteWare\EZCAD\Bin\EZCAD.exe") == true)
+                            textbox_EZCAD.Text = @"C:\InteWare\EZCAD\Bin\EZCAD.exe";
+
+                        if (File.Exists(@"C:\InteWare\ImplantPlanning\ImplantPlanning.exe") == true)
+                            textbox_Implant.Text = @"C:\InteWare\ImplantPlanning\ImplantPlanning.exe";
+
+                        if (File.Exists(@"C:\InteWare\OrthoAnalysis\OrthoAnalysis.exe") == true)
+                            textbox_Ortho.Text = @"C:\InteWare\OrthoAnalysis\OrthoAnalysis.exe";
+
+                        if (File.Exists(@"C:\InteWare\EZCAD tray\Bin\EZCAD.tray.exe") == true)
+                            textbox_Tray.Text = @"C:\InteWare\EZCAD tray\Bin\EZCAD.tray.exe";
+
+                        if (File.Exists(@"C:\InteWare\EZCAD splint\Bin\EZCAD.splint.exe") == true)
+                            textbox_Splint.Text = @"C:\InteWare\EZCAD splint\Bin\EZCAD.splint.exe";
+
+                        if (File.Exists(@"C:\InteWare\EZCAD guide\Bin\EZCAD.guide.exe") == true)
+                            textbox_Guide.Text = @"C:\InteWare\EZCAD guide\Bin\EZCAD.guide.exe";
+
+                        break;
+                    }
             }
         }
 

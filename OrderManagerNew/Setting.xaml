@@ -89,36 +89,36 @@
                     <Label Grid.Row="5" Grid.Column="0" Content="EZCAD.Guide" />
 
                     <TextBox
-                      Grid.Row="0" Grid.Column="1" x:Name="textbox_EZCAD"
+                      x:Name="textbox_EZCAD" Grid.Row="0" Grid.Column="1"
                       Text="C:\InteWare\EZCAD\Bin\EZCAD.exe" />
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="textbox_Implant" />
-                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="textbox_Ortho" />
-                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="textbox_Tray" />
-                    <TextBox Grid.Row="4" Grid.Column="1" x:Name="textbox_Splint" />
-                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="textbox_Guide" />
+                    <TextBox x:Name="textbox_Implant" Grid.Row="1" Grid.Column="1" />
+                    <TextBox x:Name="textbox_Ortho" Grid.Row="2" Grid.Column="1" />
+                    <TextBox x:Name="textbox_Tray" Grid.Row="3" Grid.Column="1" />
+                    <TextBox x:Name="textbox_Splint" Grid.Row="4" Grid.Column="1" />
+                    <TextBox x:Name="textbox_Guide" Grid.Row="5" Grid.Column="1" />
 
                     <Button
-                      Grid.Row="0" Grid.Column="2" x:Name="Btn_EZCADprogram"
+                      x:Name="Btn_EZCADprogram" Grid.Row="0" Grid.Column="2"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                      Grid.Row="1" Grid.Column="2" x:Name="Btn_Implantprogram"
+                      x:Name="Btn_Implantprogram" Grid.Row="1" Grid.Column="2"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                      Grid.Row="2" Grid.Column="2" x:Name="Btn_Orthoprogram"
+                      x:Name="Btn_Orthoprogram" Grid.Row="2" Grid.Column="2"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                      Grid.Row="3" Grid.Column="2" x:Name="Btn_Trayprogram"
+                      x:Name="Btn_Trayprogram" Grid.Row="3" Grid.Column="2"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                      Grid.Row="4" Grid.Column="2" x:Name="Btn_Splintprogram"
+                      x:Name="Btn_Splintprogram" Grid.Row="4" Grid.Column="2"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                     <Button
-                      Grid.Row="5" Grid.Column="2" x:Name="Btn_Guideprogram"
+                      x:Name="Btn_Guideprogram" Grid.Row="5" Grid.Column="2"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                 </Grid>
@@ -131,7 +131,7 @@
                     <Rectangle Grid.Column="0" Grid.ColumnSpan="2" Fill="{DynamicResource background_CaseTable}" />
                     <Label Grid.Column="0" Content="語言/Language" />
                     <ComboBox
-                      Grid.Column="1" x:Name="comboboxLanguage" Margin="2,0,10,0"
+                      x:Name="comboboxLanguage" Grid.Column="1" Margin="2,0,10,0"
                       SelectedIndex="0" SelectionChanged="SelectionChanged_Lang"
                       Style="{DynamicResource comboboxSetting}">
                         <ComboBoxItem>English</ComboBoxItem>
@@ -142,13 +142,19 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Button
-                      Grid.Column="0" x:Name="sysBtn_Yes" Click="Click_systemButton"
+                      x:Name="sysBtn_AutoDetect" Grid.Column="0" Width="120"
+                      HorizontalAlignment="Left" Click="Click_systemButton"
+                      Content="{local:LocExtension AutoDetect}"
+                      Style="{DynamicResource Setting_sysBtn}" />
+                    <Button
+                      x:Name="sysBtn_Yes" Grid.Column="1" Click="Click_systemButton"
                       Content="{local:LocExtension OK}"
                       Style="{DynamicResource Setting_sysBtn}" />
                     <Button
-                      Grid.Column="1" x:Name="sysBtn_Cancel" Click="Click_systemButton"
+                      x:Name="sysBtn_Cancel" Grid.Column="2" Click="Click_systemButton"
                       Content="{local:LocExtension Cancel}"
                       Style="{DynamicResource Setting_sysBtn}" />
                 </Grid>

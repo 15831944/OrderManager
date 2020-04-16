@@ -70,6 +70,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Auto Detect 的當地語系化字串。
+        /// </summary>
+        internal static string AutoDetect {
+            get {
+                return ResourceManager.GetString("AutoDetect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 By Case 的當地語系化字串。
         /// </summary>
         internal static string ByCase {
