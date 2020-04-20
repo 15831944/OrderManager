@@ -162,4 +162,55 @@
   <data name="AutoDetect" xml:space="preserve">
     <value>自動偵測</value>
   </data>
+  <data name="SelectPath" xml:space="preserve">
+    <value>選擇執行檔路徑</value>
+  </data>
+  <data name="DownloadSoftware" xml:space="preserve">
+    <value>下載軟體</value>
+  </data>
+  <data name="SoftwareWeb" xml:space="preserve">
+    <value>介紹網頁</value>
+  </data>
+  <data name="Contect" xml:space="preserve">
+    <value>聯絡客服</value>
+  </data>
+  <data name="Maximize" xml:space="preserve">
+    <value>最大化</value>
+  </data>
+  <data name="Minimize" xml:space="preserve">
+    <value>最小化</value>
+  </data>
+  <data name="Restore_titlebar" xml:space="preserve">
+    <value>向下還原</value>
+  </data>
+  <data name="Close_titlebar" xml:space="preserve">
+    <value>關閉程式</value>
+  </data>
+  <data name="CreateOrder" xml:space="preserve">
+    <value>建新工單</value>
+  </data>
+  <data name="Open_EZCAD" xml:space="preserve">
+    <value>開啟 EZCAD</value>
+  </data>
+  <data name="Open_Ortho" xml:space="preserve">
+    <value>開啟 OrthoAnalysis</value>
+  </data>
+  <data name="Open_Tray" xml:space="preserve">
+    <value>開啟 EZCAD.Tray</value>
+  </data>
+  <data name="Open_Splint" xml:space="preserve">
+    <value>開啟 EZCAD.Splint</value>
+  </data>
+  <data name="DemoCase" xml:space="preserve">
+    <value>範例Case</value>
+  </data>
+  <data name="TroubleShooting" xml:space="preserve">
+    <value>疑難排解</value>
+  </data>
+  <data name="BuyLic" xml:space="preserve">
+    <value>購買License</value>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>解除安裝</value>
+  </data>
 </root>

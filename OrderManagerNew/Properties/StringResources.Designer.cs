@@ -79,6 +79,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Buy License 的當地語系化字串。
+        /// </summary>
+        internal static string BuyLic {
+            get {
+                return ResourceManager.GetString("BuyLic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 By Case 的當地語系化字串。
         /// </summary>
         internal static string ByCase {
@@ -124,6 +133,51 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Close 的當地語系化字串。
+        /// </summary>
+        internal static string Close_titlebar {
+            get {
+                return ResourceManager.GetString("Close_titlebar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Contect Inteware 的當地語系化字串。
+        /// </summary>
+        internal static string Contect {
+            get {
+                return ResourceManager.GetString("Contect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Create Order 的當地語系化字串。
+        /// </summary>
+        internal static string CreateOrder {
+            get {
+                return ResourceManager.GetString("CreateOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Demo Case 的當地語系化字串。
+        /// </summary>
+        internal static string DemoCase {
+            get {
+                return ResourceManager.GetString("DemoCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Download Software 的當地語系化字串。
+        /// </summary>
+        internal static string DownloadSoftware {
+            get {
+                return ResourceManager.GetString("DownloadSoftware", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Last two weeks 的當地語系化字串。
         /// </summary>
         internal static string Last2Week {
@@ -151,6 +205,24 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Maximize 的當地語系化字串。
+        /// </summary>
+        internal static string Maximize {
+            get {
+                return ResourceManager.GetString("Maximize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Minimize 的當地語系化字串。
+        /// </summary>
+        internal static string Minimize {
+            get {
+                return ResourceManager.GetString("Minimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 OK 的當地語系化字串。
         /// </summary>
         internal static string OK {
@@ -169,11 +241,65 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Open EZCAD 的當地語系化字串。
+        /// </summary>
+        internal static string Open_EZCAD {
+            get {
+                return ResourceManager.GetString("Open_EZCAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Open OrthoAnalysis 的當地語系化字串。
+        /// </summary>
+        internal static string Open_Ortho {
+            get {
+                return ResourceManager.GetString("Open_Ortho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Open EZCAD.Splint 的當地語系化字串。
+        /// </summary>
+        internal static string Open_Splint {
+            get {
+                return ResourceManager.GetString("Open_Splint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Open EZCAD.Tray 的當地語系化字串。
+        /// </summary>
+        internal static string Open_Tray {
+            get {
+                return ResourceManager.GetString("Open_Tray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Program Path 的當地語系化字串。
         /// </summary>
         internal static string ProgramPath {
             get {
                 return ResourceManager.GetString("ProgramPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Restore 的當地語系化字串。
+        /// </summary>
+        internal static string Restore_titlebar {
+            get {
+                return ResourceManager.GetString("Restore_titlebar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Select .exe path 的當地語系化字串。
+        /// </summary>
+        internal static string SelectPath {
+            get {
+                return ResourceManager.GetString("SelectPath", resourceCulture);
             }
         }
         
@@ -187,11 +313,38 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Introduction Website 的當地語系化字串。
+        /// </summary>
+        internal static string SoftwareWeb {
+            get {
+                return ResourceManager.GetString("SoftwareWeb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Today 的當地語系化字串。
         /// </summary>
         internal static string Today {
             get {
                 return ResourceManager.GetString("Today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 TroubleShooting 的當地語系化字串。
+        /// </summary>
+        internal static string TroubleShooting {
+            get {
+                return ResourceManager.GetString("TroubleShooting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Uninstall 的當地語系化字串。
+        /// </summary>
+        internal static string Uninstall {
+            get {
+                return ResourceManager.GetString("Uninstall", resourceCulture);
             }
         }
     }

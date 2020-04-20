@@ -65,17 +65,17 @@
                             <Rectangle x:Name="mask_EZCAD" Style="{StaticResource maskImage}" />
                             <ed:Arc x:Name="process_EZCAD" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_D.png" Style="{StaticResource progressImage}" />
-                            <materialDesign:PopupBox Style="{StaticResource pupupBoxSoftwareTable}">
+                            <materialDesign:PopupBox x:Name="popupbox_EZCAD" Style="{StaticResource pupupBoxSoftwareTable}">
                                 <StackPanel>
-                                    <Button ToolTip="open Software">
-                                        open Software
-                                    </Button>
-                                    <Button IsEnabled="False" ToolTip="Two">
-                                        2
-                                    </Button>
-                                    <Button ToolTip="Three">
-                                        3
-                                    </Button>
+                                    <Button x:Name="cad_selectPath" Click="SoftwareTable_Click" Content="{local:LocExtension SelectPath}" />
+                                    <Button x:Name="cad_download" Click="SoftwareTable_Click" Content="{local:LocExtension DownloadSoftware}" />
+                                    <Button x:Name="cad_open" Click="SoftwareTable_Click" Content="{local:LocExtension Open_EZCAD}" />
+                                    <Button x:Name="cad_webIntro" Click="SoftwareTable_Click" Content="{local:LocExtension SoftwareWeb}" />
+                                    <Button x:Name="cad_demo" Click="SoftwareTable_Click" Content="{local:LocExtension DemoCase}" />
+                                    <Button x:Name="cad_troubleShooting" Click="SoftwareTable_Click" Content="{local:LocExtension TroubleShooting}" />
+                                    <Button x:Name="cad_buyLic" Click="SoftwareTable_Click" Content="{local:LocExtension BuyLic}" />
+                                    <Button x:Name="cad_unInstall" Click="SoftwareTable_Click" Content="{local:LocExtension Uninstall}" />
+                                    <Button Click="TitleBar_Click_titlebarButtons" Content="{local:LocExtension Contect}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
                         </Grid>
@@ -83,21 +83,76 @@
                             <Rectangle x:Name="mask_Implant" Style="{StaticResource maskImage}" />
                             <ed:Arc x:Name="process_Implant" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_I.png" Style="{StaticResource progressImage}" />
+                            <materialDesign:PopupBox x:Name="popupbox_Implant" Style="{StaticResource pupupBoxSoftwareTable}">
+                                <StackPanel>
+                                    <Button x:Name="implant_selectPath" Click="SoftwareTable_Click" Content="{local:LocExtension SelectPath}" />
+                                    <Button x:Name="implant_download" Click="SoftwareTable_Click" Content="{local:LocExtension DownloadSoftware}" />
+                                    <Button x:Name="implant_create" Click="SoftwareTable_Click" Content="{local:LocExtension CreateOrder}" />
+                                    <Button x:Name="implant_webIntro" Click="SoftwareTable_Click" Content="{local:LocExtension SoftwareWeb}" />
+                                    <Button x:Name="implant_demo" Click="SoftwareTable_Click" Content="{local:LocExtension DemoCase}" />
+                                    <Button x:Name="implant_troubleShooting" Click="SoftwareTable_Click" Content="{local:LocExtension TroubleShooting}" />
+                                    <Button x:Name="implant_buyLic" Click="SoftwareTable_Click" Content="{local:LocExtension BuyLic}" />
+                                    <Button x:Name="implant_unInstall" Click="SoftwareTable_Click" Content="{local:LocExtension Uninstall}" />
+                                    <Button Click="TitleBar_Click_titlebarButtons" Content="{local:LocExtension Contect}" />
+                                </StackPanel>
+                            </materialDesign:PopupBox>
                         </Grid>
                         <Grid Margin="6,0">
                             <Rectangle x:Name="mask_Ortho" Style="{StaticResource maskImage}" />
                             <ed:Arc x:Name="process_Ortho" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_O.png" Style="{StaticResource progressImage}" />
+                            <materialDesign:PopupBox x:Name="popupbox_Ortho" Style="{StaticResource pupupBoxSoftwareTable}">
+                                <StackPanel>
+                                    <Button x:Name="ortho_selectPath" Click="SoftwareTable_Click" Content="{local:LocExtension SelectPath}" />
+                                    <Button x:Name="ortho_download" Click="SoftwareTable_Click" Content="{local:LocExtension DownloadSoftware}" />
+                                    <Button x:Name="ortho_open" Click="SoftwareTable_Click" Content="{local:LocExtension Open_Ortho}" />
+                                    <Button x:Name="ortho_webIntro" Click="SoftwareTable_Click" Content="{local:LocExtension SoftwareWeb}" />
+                                    <Button x:Name="ortho_demo" Click="SoftwareTable_Click" Content="{local:LocExtension DemoCase}" />
+                                    <Button x:Name="ortho_troubleShooting" Click="SoftwareTable_Click" Content="{local:LocExtension TroubleShooting}" />
+                                    <Button x:Name="ortho_buyLic" Click="SoftwareTable_Click" Content="{local:LocExtension BuyLic}" />
+                                    <Button x:Name="ortho_unInstall" Click="SoftwareTable_Click" Content="{local:LocExtension Uninstall}" />
+                                    <Button Click="TitleBar_Click_titlebarButtons" Content="{local:LocExtension Contect}" />
+                                </StackPanel>
+                            </materialDesign:PopupBox>
                         </Grid>
                         <Grid Margin="6,0">
                             <Rectangle x:Name="mask_Tray" Style="{StaticResource maskImage}" />
                             <ed:Arc x:Name="process_Tray" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_T.png" Style="{StaticResource progressImage}" />
+                            <materialDesign:PopupBox x:Name="popupbox_Tray" Style="{StaticResource pupupBoxSoftwareTable}">
+                                <StackPanel>
+                                    <Button x:Name="tray_selectPath" Click="SoftwareTable_Click" Content="{local:LocExtension SelectPath}" />
+                                    <Button x:Name="tray_download" Click="SoftwareTable_Click" Content="{local:LocExtension DownloadSoftware}" />
+                                    <Button x:Name="tray_open" Click="SoftwareTable_Click" Content="{local:LocExtension Open_Ortho}" />
+                                    <Button x:Name="tray_webIntro" Click="SoftwareTable_Click" Content="{local:LocExtension SoftwareWeb}" />
+                                    <Button x:Name="tray_demo" Click="SoftwareTable_Click" Content="{local:LocExtension DemoCase}" />
+                                    <Button x:Name="tray_troubleShooting" Click="SoftwareTable_Click" Content="{local:LocExtension TroubleShooting}" />
+                                    <Button x:Name="tray_buyLic" Click="SoftwareTable_Click" Content="{local:LocExtension BuyLic}" />
+                                    <Button x:Name="tray_unInstall" Click="SoftwareTable_Click" Content="{local:LocExtension Uninstall}" />
+                                    <Button Click="TitleBar_Click_titlebarButtons" Content="{local:LocExtension Contect}" />
+                                </StackPanel>
+                            </materialDesign:PopupBox>
                         </Grid>
                         <Grid Margin="6,0">
                             <Rectangle x:Name="mask_Splint" Style="{StaticResource maskImage}" />
                             <ed:Arc x:Name="process_Splint" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_S.png" Style="{StaticResource progressImage}" />
+                            <materialDesign:PopupBox x:Name="popupbox_Splint" Style="{StaticResource pupupBoxSoftwareTable}">
+                                <StackPanel>
+                                    <Button x:Name="splint_selectPath" Click="SoftwareTable_Click" Content="{local:LocExtension SelectPath}" />
+                                    <Button x:Name="splint_download" Click="SoftwareTable_Click" Content="{local:LocExtension DownloadSoftware}" />
+                                    <Button x:Name="splint_open" Click="SoftwareTable_Click" Content="{local:LocExtension Open_Ortho}" />
+                                    <Button x:Name="splint_webIntro" Click="SoftwareTable_Click" Content="{local:LocExtension SoftwareWeb}" />
+                                    <Button x:Name="splint_demo" Click="SoftwareTable_Click" Content="{local:LocExtension DemoCase}" />
+                                    <Button x:Name="splint_troubleShooting" Click="SoftwareTable_Click" Content="{local:LocExtension TroubleShooting}" />
+                                    <Button x:Name="splint_buyLic" Click="SoftwareTable_Click" Content="{local:LocExtension BuyLic}" />
+                                    <Button x:Name="splint_unInstall" Click="SoftwareTable_Click" Content="{local:LocExtension Uninstall}" />
+                                    <Button Click="TitleBar_Click_titlebarButtons" Content="{local:LocExtension Contect}" />
+                                </StackPanel>
+                            </materialDesign:PopupBox>
+                        </Grid>
+                        <Grid Margin="6,0">
+                            <Image Source="ImageSource/FunctionTable/icon_update.png" Style="{StaticResource progressImage}" />
                         </Grid>
                     </StackPanel>
 
@@ -106,7 +161,6 @@
                       Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
                       Orientation="Horizontal">
                         <Button Style="{StaticResource FunctionButton_refresh}" />
-                        <Button Style="{StaticResource FunctionButton_update}" />
                         <Button Style="{StaticResource FunctionButton_cloud}" />
                         <Button Click="FunctionTable_Click_Setting" Style="{StaticResource FunctionButton_setting}" />
                         <Grid Width="6" />

@@ -202,24 +202,7 @@ namespace OrderManagerNew
         #region FunctionTable事件
         private void FunctionTable_Click_Setting(object sender, RoutedEventArgs e)
         {
-            //主視窗羽化
-            var blur = new BlurEffect();
-            this.Effect = blur;
-
-            Setting DialogSetting = new Setting();
-            DialogSetting.Owner = this;
-            DialogSetting.ShowActivated = true;
-            DialogSetting.ShowDialog();
-            if(DialogSetting.DialogResult == true)
-            {
-                UpdateFunc.checkExistSoftware(true);
-                log.RecordConfigLog("FunctionTable_Click_Setting()", "Config changed");
-            }
-                
-
-            //主視窗還原
-            this.Effect = null;
-            this.OpacityMask = null;
+            GoToSetting("");
         }
 
         /// <summary>
@@ -240,18 +223,35 @@ namespace OrderManagerNew
                                 {
                                     mask_EZCAD.Visibility = Visibility.Visible;
                                     process_EZCAD.Visibility = Visibility.Hidden;
+                                    popupbox_EZCAD.IsEnabled = true;
+                                    cad_selectPath.Visibility = Visibility.Visible;
+                                    cad_download.Visibility = Visibility.Visible;
+                                    cad_open.Visibility = Visibility.Collapsed;
+                                    cad_demo.Visibility = Visibility.Collapsed;
+                                    cad_troubleShooting.Visibility = Visibility.Collapsed;
+                                    cad_buyLic.Visibility = Visibility.Collapsed;
+                                    cad_unInstall.Visibility = Visibility.Collapsed;
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
                                 {
                                     mask_EZCAD.Visibility = Visibility.Hidden;
                                     process_EZCAD.Visibility = Visibility.Visible;
+                                    popupbox_EZCAD.IsEnabled = false;
                                     break;
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
                                     mask_EZCAD.Visibility = Visibility.Hidden;
                                     process_EZCAD.Visibility = Visibility.Hidden;
+                                    popupbox_EZCAD.IsEnabled = true;
+                                    cad_selectPath.Visibility = Visibility.Collapsed;
+                                    cad_download.Visibility = Visibility.Collapsed;
+                                    cad_open.Visibility = Visibility.Visible;
+                                    cad_demo.Visibility = Visibility.Visible;
+                                    cad_troubleShooting.Visibility = Visibility.Visible;
+                                    cad_buyLic.Visibility = Visibility.Visible;
+                                    cad_unInstall.Visibility = Visibility.Visible;
                                     break;
                                 }
                         }
@@ -265,18 +265,35 @@ namespace OrderManagerNew
                                 {
                                     mask_Implant.Visibility = Visibility.Visible;
                                     process_Implant.Visibility = Visibility.Hidden;
+                                    popupbox_Implant.IsEnabled = true;
+                                    implant_selectPath.Visibility = Visibility.Visible;
+                                    implant_download.Visibility = Visibility.Visible;
+                                    implant_create.Visibility = Visibility.Collapsed;
+                                    implant_demo.Visibility = Visibility.Collapsed;
+                                    implant_troubleShooting.Visibility = Visibility.Collapsed;
+                                    implant_buyLic.Visibility = Visibility.Collapsed;
+                                    implant_unInstall.Visibility = Visibility.Collapsed;
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
                                 {
                                     mask_Implant.Visibility = Visibility.Hidden;
                                     process_Implant.Visibility = Visibility.Visible;
+                                    popupbox_Implant.IsEnabled = false;
                                     break;
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
                                     mask_Implant.Visibility = Visibility.Hidden;
                                     process_Implant.Visibility = Visibility.Hidden;
+                                    popupbox_Implant.IsEnabled = true;
+                                    implant_selectPath.Visibility = Visibility.Collapsed;
+                                    implant_download.Visibility = Visibility.Collapsed;
+                                    implant_create.Visibility = Visibility.Visible;
+                                    implant_demo.Visibility = Visibility.Visible;
+                                    implant_troubleShooting.Visibility = Visibility.Visible;
+                                    implant_buyLic.Visibility = Visibility.Visible;
+                                    implant_unInstall.Visibility = Visibility.Visible;
                                     break;
                                 }
                         }
@@ -290,18 +307,35 @@ namespace OrderManagerNew
                                 {
                                     mask_Ortho.Visibility = Visibility.Visible;
                                     process_Ortho.Visibility = Visibility.Hidden;
+                                    popupbox_Ortho.IsEnabled = true;
+                                    ortho_selectPath.Visibility = Visibility.Visible;
+                                    ortho_download.Visibility = Visibility.Visible;
+                                    ortho_open.Visibility = Visibility.Collapsed;
+                                    ortho_demo.Visibility = Visibility.Collapsed;
+                                    ortho_troubleShooting.Visibility = Visibility.Collapsed;
+                                    ortho_buyLic.Visibility = Visibility.Collapsed;
+                                    ortho_unInstall.Visibility = Visibility.Collapsed;
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
                                 {
                                     mask_Ortho.Visibility = Visibility.Hidden;
                                     process_Ortho.Visibility = Visibility.Visible;
+                                    popupbox_Ortho.IsEnabled = false;
                                     break;
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
                                     mask_Ortho.Visibility = Visibility.Hidden;
                                     process_Ortho.Visibility = Visibility.Hidden;
+                                    popupbox_Ortho.IsEnabled = true;
+                                    ortho_selectPath.Visibility = Visibility.Collapsed;
+                                    ortho_download.Visibility = Visibility.Collapsed;
+                                    ortho_open.Visibility = Visibility.Visible;
+                                    ortho_demo.Visibility = Visibility.Visible;
+                                    ortho_troubleShooting.Visibility = Visibility.Visible;
+                                    ortho_buyLic.Visibility = Visibility.Visible;
+                                    ortho_unInstall.Visibility = Visibility.Visible;
                                     break;
                                 }
                         }
@@ -315,18 +349,35 @@ namespace OrderManagerNew
                                 {
                                     mask_Tray.Visibility = Visibility.Visible;
                                     process_Tray.Visibility = Visibility.Hidden;
+                                    popupbox_Tray.IsEnabled = true;
+                                    tray_selectPath.Visibility = Visibility.Visible;
+                                    tray_download.Visibility = Visibility.Visible;
+                                    tray_open.Visibility = Visibility.Collapsed;
+                                    tray_demo.Visibility = Visibility.Collapsed;
+                                    tray_troubleShooting.Visibility = Visibility.Collapsed;
+                                    tray_buyLic.Visibility = Visibility.Collapsed;
+                                    tray_unInstall.Visibility = Visibility.Collapsed;
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
                                 {
                                     mask_Tray.Visibility = Visibility.Hidden;
                                     process_Tray.Visibility = Visibility.Visible;
+                                    popupbox_Tray.IsEnabled = false;
                                     break;
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
                                     mask_Tray.Visibility = Visibility.Hidden;
                                     process_Tray.Visibility = Visibility.Hidden;
+                                    popupbox_Tray.IsEnabled = true;
+                                    tray_selectPath.Visibility = Visibility.Collapsed;
+                                    tray_download.Visibility = Visibility.Collapsed;
+                                    tray_open.Visibility = Visibility.Visible;
+                                    tray_demo.Visibility = Visibility.Visible;
+                                    tray_troubleShooting.Visibility = Visibility.Visible;
+                                    tray_buyLic.Visibility = Visibility.Visible;
+                                    tray_unInstall.Visibility = Visibility.Visible;
                                     break;
                                 }
                         }
@@ -340,23 +391,215 @@ namespace OrderManagerNew
                                 {
                                     mask_Splint.Visibility = Visibility.Visible;
                                     process_Splint.Visibility = Visibility.Hidden;
+                                    popupbox_Splint.IsEnabled = true;
+                                    splint_selectPath.Visibility = Visibility.Visible;
+                                    splint_download.Visibility = Visibility.Visible;
+                                    splint_open.Visibility = Visibility.Collapsed;
+                                    splint_demo.Visibility = Visibility.Collapsed;
+                                    splint_troubleShooting.Visibility = Visibility.Collapsed;
+                                    splint_buyLic.Visibility = Visibility.Collapsed;
+                                    splint_unInstall.Visibility = Visibility.Collapsed;
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
                                 {
                                     mask_Splint.Visibility = Visibility.Hidden;
                                     process_Splint.Visibility = Visibility.Visible;
+                                    popupbox_Splint.IsEnabled = false;
                                     break;
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
                                     mask_Splint.Visibility = Visibility.Hidden;
                                     process_Splint.Visibility = Visibility.Hidden;
+                                    popupbox_Splint.IsEnabled = true;
+                                    splint_selectPath.Visibility = Visibility.Collapsed;
+                                    splint_download.Visibility = Visibility.Collapsed;
+                                    splint_open.Visibility = Visibility.Visible;
+                                    splint_demo.Visibility = Visibility.Visible;
+                                    splint_troubleShooting.Visibility = Visibility.Visible;
+                                    splint_buyLic.Visibility = Visibility.Visible;
+                                    splint_unInstall.Visibility = Visibility.Visible;
                                     break;
                                 }
                         }
                         break;
                     }
+            }
+        }
+
+        /// <summary>
+        /// 設定SofttwareTable的PopupBox事件
+        /// </summary>
+        private void SoftwareTable_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            switch (btn.Name)
+            {
+                case "buyLic":
+                    {
+                        break;
+                    }
+
+                #region EZCAD
+                case "cad_selectPath":
+                    {
+                        GoToSetting("Btn_EZCADprogram");
+                        break;
+                    }
+                case "cad_download":
+                    {
+                        break;
+                    }
+                case "cad_open":
+                    {
+                        break;
+                    }
+                case "cad_webIntro":
+                    {
+                        break;
+                    }
+                case "cad_demo":
+                    {
+                        break;
+                    }
+                case "cad_troubleShooting":
+                    {
+                        break;
+                    }
+                case "cad_unInstall":
+                    {
+                        break;
+                    }
+                #endregion
+
+                #region Implant
+                case "implant_selectPath":
+                    {
+                        GoToSetting("Btn_Implantprogram");
+                        break;
+                    }
+                case "implant_download":
+                    {
+                        break;
+                    }
+                case "implant_create":
+                    {
+                        break;
+                    }
+                case "implant_webIntro":
+                    {
+                        break;
+                    }
+                case "implant_demo":
+                    {
+                        break;
+                    }
+                case "implant_troubleShooting":
+                    {
+                        break;
+                    }
+                case "implant_unInstall":
+                    {
+                        break;
+                    }
+                #endregion
+
+                #region Ortho
+                case "ortho_selectPath":
+                    {
+                        GoToSetting("Btn_Orthoprogram");
+                        break;
+                    }
+                case "ortho_download":
+                    {
+                        break;
+                    }
+                case "ortho_open":
+                    {
+                        break;
+                    }
+                case "ortho_webIntro":
+                    {
+                        break;
+                    }
+                case "ortho_demo":
+                    {
+                        break;
+                    }
+                case "ortho_troubleShooting":
+                    {
+                        break;
+                    }
+                case "ortho_unInstall":
+                    {
+                        break;
+                    }
+                #endregion
+
+                #region Tray
+                case "tray_selectPath":
+                    {
+                        GoToSetting("Btn_Trayprogram");
+                        break;
+                    }
+                case "tray_download":
+                    {
+                        break;
+                    }
+                case "tray_open":
+                    {
+                        break;
+                    }
+                case "tray_webIntro":
+                    {
+                        break;
+                    }
+                case "tray_demo":
+                    {
+                        break;
+                    }
+                case "tray_troubleShooting":
+                    {
+                        break;
+                    }
+                case "tray_unInstall":
+                    {
+                        break;
+                    }
+                #endregion
+
+                #region Splint
+                case "splint_selectPath":
+                    {
+                        GoToSetting("Btn_Splintprogram");
+                        break;
+                    }
+                case "splint_download":
+                    {
+                        break;
+                    }
+                case "splint_open":
+                    {
+                        break;
+                    }
+                case "splint_webIntro":
+                    {
+                        break;
+                    }
+                case "splint_demo":
+                    {
+                        break;
+                    }
+                case "splint_troubleShooting":
+                    {
+                        break;
+                    }
+                case "splint_unInstall":
+                    {
+                        break;
+                    }
+                    #endregion
             }
         }
         #endregion
@@ -514,6 +757,32 @@ namespace OrderManagerNew
             }
             else
                 SnackBarShow("Log not found.");
+        }
+        
+
+        private void GoToSetting(string softwareName)
+        {
+            //主視窗羽化
+            var blur = new BlurEffect();
+            this.Effect = blur;
+
+            Setting DialogSetting = new Setting();
+            DialogSetting.Owner = this;
+            DialogSetting.ShowActivated = true;
+
+            if (softwareName != "")
+                DialogSetting.SearchEXE("", softwareName);
+
+            DialogSetting.ShowDialog();
+            if (DialogSetting.DialogResult == true)
+            {
+                UpdateFunc.checkExistSoftware(true);
+                log.RecordConfigLog("FunctionTable_Click_Setting()", "Config changed");
+            }
+
+            //主視窗還原
+            this.Effect = null;
+            this.OpacityMask = null;
         }
     }
 }

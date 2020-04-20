@@ -174,4 +174,72 @@
     <value>Auto Detect</value>
     <comment>UI</comment>
   </data>
+  <data name="SelectPath" xml:space="preserve">
+    <value>Select .exe path</value>
+    <comment>TableFunction</comment>
+  </data>
+  <data name="DownloadSoftware" xml:space="preserve">
+    <value>Download Software</value>
+    <comment>TableFunction</comment>
+  </data>
+  <data name="SoftwareWeb" xml:space="preserve">
+    <value>Introduction Website</value>
+    <comment>TableFunction</comment>
+  </data>
+  <data name="Contect" xml:space="preserve">
+    <value>Contect Inteware</value>
+    <comment>TitleBar</comment>
+  </data>
+  <data name="Maximize" xml:space="preserve">
+    <value>Maximize</value>
+    <comment>TitleBar</comment>
+  </data>
+  <data name="Minimize" xml:space="preserve">
+    <value>Minimize</value>
+    <comment>TitleBar</comment>
+  </data>
+  <data name="Restore_titlebar" xml:space="preserve">
+    <value>Restore</value>
+    <comment>TitleBar</comment>
+  </data>
+  <data name="Close_titlebar" xml:space="preserve">
+    <value>Close</value>
+    <comment>TitleBar</comment>
+  </data>
+  <data name="CreateOrder" xml:space="preserve">
+    <value>Create Order</value>
+    <comment>TableFunction</comment>
+  </data>
+  <data name="Open_EZCAD" xml:space="preserve">
+    <value>Open EZCAD</value>
+    <comment>TableFunction</comment>
+  </data>
+  <data name="Open_Ortho" xml:space="preserve">
+    <value>Open OrthoAnalysis</value>
+    <comment>TableFunction</comment>
+  </data>
+  <data name="Open_Tray" xml:space="preserve">
+    <value>Open EZCAD.Tray</value>
+    <comment>TableFunction</comment>
+  </data>
+  <data name="Open_Splint" xml:space="preserve">
+    <value>Open EZCAD.Splint</value>
+    <comment>TableFunction</comment>
+  </data>
+  <data name="DemoCase" xml:space="preserve">
+    <value>Demo Case</value>
+    <comment>TableFunction</comment>
+  </data>
+  <data name="TroubleShooting" xml:space="preserve">
+    <value>TroubleShooting</value>
+    <comment>TableFunction</comment>
+  </data>
+  <data name="BuyLic" xml:space="preserve">
+    <value>Buy License</value>
+    <comment>TableFunction</comment>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>Uninstall</value>
+    <comment>TableFunction</comment>
+  </data>
 </root>
