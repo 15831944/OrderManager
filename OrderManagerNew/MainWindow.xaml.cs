@@ -784,5 +784,12 @@ namespace OrderManagerNew
             this.Effect = null;
             this.OpacityMask = null;
         }
+
+        private void FunctionTable_Click_User(object sender, RoutedEventArgs e)
+        {
+            AirdentalLogin DialogLogin = new AirdentalLogin();
+            DialogLogin.Owner = this;
+            DialogLogin.ShowDialog();
+        }
     }
 }

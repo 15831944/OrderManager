@@ -1,0 +1,183 @@
+﻿<Window
+  x:Class="OrderManagerNew.AirdentalLogin" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OrderManagerNew" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Title="AirdentalLogin" Width="400"
+  Height="400" AllowsTransparency="True" Background="#FF353631"
+  ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None"
+  mc:Ignorable="d">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="StyleDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="AllLabel" TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="Arial" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+            <Style x:Key="forgotLabel" BasedOn="{StaticResource AllLabel}" TargetType="{x:Type Label}">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="#FFFFB14A" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="LabelwithTextbox" BasedOn="{StaticResource AllLabel}" TargetType="Label">
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="FontFamily" Value="Arial" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="Height" Value="Auto" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Padding" Value="6,0" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+            <Style x:Key="Setting_sysBtn" BasedOn="{StaticResource MaterialDesignRaisedButton}" TargetType="{x:Type Button}">
+                <Setter Property="Width" Value="150" />
+                <Setter Property="Height" Value="36" />
+                <Setter Property="FontFamily" Value="Arial" />
+            </Style>
+            <Style x:Key="OkButton" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#FF756450" />
+                <Setter Property="Foreground" Value="#FFF4E9DC" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#FFFFB14A" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="SeePWD" TargetType="{x:Type ToggleButton}">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Border BorderThickness="0">
+                            <Image Source="{DynamicResource icon_showDrawingImage}" Stretch="Fill" />
+                        </Border>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ToolTip" Value="{local:LocExtension ViewPWD}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ButtonBase}">
+                            <ContentPresenter
+                              x:Name="contentPresenter"
+                              Margin="{TemplateBinding Padding}"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Content="{TemplateBinding Content}"
+                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Focusable="False" RecognizesAccessKey="True"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Button.IsDefaulted" Value="True" />
+                                <Trigger Property="IsMouseOver" Value="True" />
+                                <Trigger Property="IsPressed" Value="True" />
+                                <Trigger Property="ToggleButton.IsChecked" Value="True" />
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="#FF838383" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Content">
+                            <Setter.Value>
+                                <Border BorderThickness="0">
+                                    <Image Source="{DynamicResource icon_hideDrawingImage}" Stretch="fill" />
+                                </Border>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="ToolTip" Value="{local:LocExtension HidePWD}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Border BorderThickness="0">
+        <DockPanel>
+            <!--  TitleBar-Start  -->
+            <Border Height="42" Background="#FFE08A1E" DockPanel.Dock="Top">
+                <Grid>
+                    <Label
+                      Margin="6,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                      Content="{local:LocExtension Login}"
+                      FontSize="21" FontWeight="Bold" Foreground="White" />
+
+                    <StackPanel
+                      HorizontalAlignment="Right" VerticalAlignment="Center" Panel.ZIndex="1"
+                      Background="#FFE08A1E" Orientation="Horizontal">
+                        <Button Name="systemButton_Close" Click="TitleBar_Click_titlebarButtons" Style="{DynamicResource systemButton_close}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <!--  TitleBar-End  -->
+            <Grid Margin="48,18">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition Height="48" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Content="Account" Style="{DynamicResource LabelwithTextbox}" />
+                    <TextBox x:Name="textbox_Account" Grid.Row="1" Text="Brian" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Content="Password" Style="{DynamicResource LabelwithTextbox}" />
+                    <PasswordBox
+                      x:Name="passwordbox_PWD" Grid.Row="1" VerticalContentAlignment="Center"
+                      Panel.ZIndex="1" Background="White" BorderBrush="White"
+                      BorderThickness="1"
+                      Foreground="{DynamicResource Common_DarkBrown}"
+                      KeyUp="Keyup_PWD" />
+                    <ToggleButton
+                      Grid.Row="1" Width="32" Height="32"
+                      HorizontalAlignment="Right" VerticalAlignment="Center" Panel.ZIndex="2"
+                      Checked="Checked_ShowPWD"
+                      Style="{DynamicResource SeePWD}"
+                      Unchecked="Unchecked_PWD" />
+                    <TextBox x:Name="textbox_PWD" Grid.Row="1" Text="BrianPWD" />
+                </Grid>
+                <Label Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Hyperlink Foreground="Transparent">
+                        <Label Content="Forgot your password?" Style="{DynamicResource forgotLabel}" />
+                    </Hyperlink>
+                </Label>
+                <Button
+                  Grid.Row="3" Height="40" Click="Click_OK"
+                  Content="OK"
+                  Style="{DynamicResource OkButton}" />
+            </Grid>
+        </DockPanel>
+    </Border>
+</Window>

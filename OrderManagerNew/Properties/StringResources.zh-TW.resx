@@ -184,7 +184,7 @@
     <value>向下還原</value>
   </data>
   <data name="Close_titlebar" xml:space="preserve">
-    <value>關閉程式</value>
+    <value>關閉</value>
   </data>
   <data name="CreateOrder" xml:space="preserve">
     <value>建新工單</value>
@@ -212,5 +212,14 @@
   </data>
   <data name="Uninstall" xml:space="preserve">
     <value>解除安裝</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>登入</value>
+  </data>
+  <data name="ViewPWD" xml:space="preserve">
+    <value>顯示密碼</value>
+  </data>
+  <data name="HidePWD" xml:space="preserve">
+    <value>隱藏密碼</value>
   </data>
 </root>

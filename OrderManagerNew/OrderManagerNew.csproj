@@ -80,10 +80,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AirdentalLogin.xaml.cs">
+      <DependentUpon>AirdentalLogin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Setting.xaml.cs">
       <DependentUpon>Setting.xaml</DependentUpon>
     </Compile>
     <Compile Include="UpdateFunction.cs" />
+    <Page Include="AirdentalLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ImageSource\SvgCollection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

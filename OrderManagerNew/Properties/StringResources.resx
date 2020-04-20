@@ -242,4 +242,16 @@
     <value>Uninstall</value>
     <comment>TableFunction</comment>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Log in</value>
+    <comment>Login</comment>
+  </data>
+  <data name="ViewPWD" xml:space="preserve">
+    <value>Show password</value>
+    <comment>Login</comment>
+  </data>
+  <data name="HidePWD" xml:space="preserve">
+    <value>Hide password</value>
+    <comment>Login</comment>
+  </data>
 </root>

@@ -144,6 +144,31 @@
               Stretch="Fill">
                 <Image Source="{DynamicResource icon_folder_clickDrawingImage}" />
             </Viewbox>
+            <Viewbox
+              Width="36" Height="36" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{DynamicResource icon_showDrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="36" Height="36" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{DynamicResource icon_hideDrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="36" Height="36" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{DynamicResource icon_userDrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="36" Height="36" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{DynamicResource icon_user_mouseDrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="36" Height="36" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{DynamicResource icon_user_clickDrawingImage}" />
+            </Viewbox>
         </StackPanel>
     </Grid>
 </Window>

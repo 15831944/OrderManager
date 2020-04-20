@@ -178,6 +178,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Hide password 的當地語系化字串。
+        /// </summary>
+        internal static string HidePWD {
+            get {
+                return ResourceManager.GetString("HidePWD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Last two weeks 的當地語系化字串。
         /// </summary>
         internal static string Last2Week {
@@ -201,6 +210,15 @@ namespace OrderManagerNew.Properties {
         internal static string Local {
             get {
                 return ResourceManager.GetString("Local", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Log in 的當地語系化字串。
+        /// </summary>
+        internal static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
             }
         }
         
@@ -345,6 +363,15 @@ namespace OrderManagerNew.Properties {
         internal static string Uninstall {
             get {
                 return ResourceManager.GetString("Uninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Show password 的當地語系化字串。
+        /// </summary>
+        internal static string ViewPWD {
+            get {
+                return ResourceManager.GetString("ViewPWD", resourceCulture);
             }
         }
     }

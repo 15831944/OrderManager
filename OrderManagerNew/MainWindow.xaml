@@ -163,6 +163,7 @@
                         <Button Style="{StaticResource FunctionButton_refresh}" />
                         <Button Style="{StaticResource FunctionButton_cloud}" />
                         <Button Click="FunctionTable_Click_Setting" Style="{StaticResource FunctionButton_setting}" />
+                        <Button Click="FunctionTable_Click_User" Style="{StaticResource FunctionButton_User}" />
                         <Grid Width="6" />
                     </StackPanel>
                 </Grid>
