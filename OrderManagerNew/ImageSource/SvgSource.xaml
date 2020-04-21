@@ -562,7 +562,7 @@
                     <GeometryDrawing Brush="#FFB3B3B3" Geometry="F1 M28.35,28.35z M0,0z M14.17,21.17A13.16,13.16,0,0,1,2.7,14.42A0.53,0.53,0,0,1,2.7,13.93A13.11,13.11,0,0,1,25.64,13.93A0.48,0.48,0,0,1,25.64,14.42A13.13,13.13,0,0,1,14.17,21.17z M3.72,14.17A12.11,12.11,0,0,0,24.63,14.17A12.11,12.11,0,0,0,3.72,14.17z" />
                     <GeometryDrawing Brush="#FFB3B3B3">
                         <GeometryDrawing.Geometry>
-                            <EllipseGeometry RadiusX="5.2" RadiusY="5.2" Center="14.17,14.17" />
+                            <EllipseGeometry Center="14.17,14.17" RadiusX="5.2" RadiusY="5.2" />
                         </GeometryDrawing.Geometry>
                     </GeometryDrawing>
                 </DrawingGroup>
@@ -591,7 +591,7 @@
                     </DrawingGroup.ClipGeometry>
                     <GeometryDrawing Brush="#FF493E34">
                         <GeometryDrawing.Geometry>
-                            <EllipseGeometry RadiusX="8.85" RadiusY="8.85" Center="32.63,23.5" />
+                            <EllipseGeometry Center="32.63,23.5" RadiusX="8.85" RadiusY="8.85" />
                         </GeometryDrawing.Geometry>
                     </GeometryDrawing>
                     <GeometryDrawing Brush="#FF493E34" Geometry="F1 M65,65z M0,0z M48.09,50.35A15.59,15.59,0,0,0,16.91,49.84z" />
@@ -609,7 +609,7 @@
                 </GeometryDrawing>
                 <GeometryDrawing Brush="#FF493E34">
                     <GeometryDrawing.Geometry>
-                        <EllipseGeometry RadiusX="8.85" RadiusY="8.85" Center="32.63,23.5" />
+                        <EllipseGeometry Center="32.63,23.5" RadiusX="8.85" RadiusY="8.85" />
                     </GeometryDrawing.Geometry>
                 </GeometryDrawing>
                 <GeometryDrawing Brush="#FF493E34" Geometry="F1 M65,65z M0,0z M48.09,50.35A15.59,15.59,0,0,0,16.91,49.84z" />
@@ -626,10 +626,39 @@
                 </GeometryDrawing>
                 <GeometryDrawing Brush="#FFFFFFFF">
                     <GeometryDrawing.Geometry>
-                        <EllipseGeometry RadiusX="8.85" RadiusY="8.85" Center="32.63,23.5" />
+                        <EllipseGeometry Center="32.63,23.5" RadiusX="8.85" RadiusY="8.85" />
                     </GeometryDrawing.Geometry>
                 </GeometryDrawing>
                 <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M65,65z M0,0z M48.09,50.35A15.59,15.59,0,0,0,16.91,49.84z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    <DrawingImage x:Key="icon_pointsDrawingImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V41.18 H41.19 V0 H0 Z">
+                <GeometryDrawing Brush="#FF493E34">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry RadiusX="18.43" RadiusY="18.43" Rect="0.75,0.75,39.69,39.69" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing>
+                    <GeometryDrawing.Brush>
+                        <LinearGradientBrush MappingMode="Absolute" Opacity="1" SpreadMethod="Pad" StartPoint="20.59,8.54" EndPoint="20.59,32.64">
+                            <GradientStop Offset="0" Color="#FFF7B52C" />
+                            <GradientStop Offset="0.46" Color="#FFF7B52C" />
+                            <GradientStop Offset="0.55" Color="#FFF3AE29" />
+                            <GradientStop Offset="0.7" Color="#FFE69A22" />
+                            <GradientStop Offset="0.87" Color="#FFD27B16" />
+                            <GradientStop Offset="0.99" Color="#FFC05E0B" />
+                            <GradientStop Offset="1" Color="#FFC05E0B" />
+                        </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="20.59,20.59" RadiusX="12.05" RadiusY="12.05" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M41.19,41.18z M0,0z M15.57,27.15L15.57,14 19.82,14A15.7,15.7,0,0,1,22.97,14.19A3.42,3.42,0,0,1,24.85,15.48A4,4,0,0,1,25.61,18.03A4.29,4.29,0,0,1,25.18,20.03A3.64,3.64,0,0,1,24.06,21.32A3.89,3.89,0,0,1,22.69,21.94A14.67,14.67,0,0,1,19.94,22.13L18.22,22.13 18.22,27.08z M18.22,16.25L18.22,20 19.67,20A6.7,6.7,0,0,0,21.76,19.79A1.71,1.71,0,0,0,22.89,18.13A1.69,1.69,0,0,0,22.47,16.95A1.81,1.81,0,0,0,21.4,16.36A12.55,12.55,0,0,0,19.5,16.27z" />
+                <GeometryDrawing Brush="#FFF7B52C" Geometry="F1 M41.19,41.18z M0,0z M20.59,41.18A20.59,20.59,0,1,1,41.19,20.59A20.61,20.61,0,0,1,20.59,41.18z M20.59,1.5A19.09,19.09,0,1,0,39.69,20.59A19.11,19.11,0,0,0,20.59,1.5z" />
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
