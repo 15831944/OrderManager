@@ -17,6 +17,7 @@ using System.Reflection;    //取得OrderManager自身軟體版本
 using System.Windows.Media.Effects;
 using System.Diagnostics;
 using System.IO;
+using System.Windows.Media.Animation;
 
 //Microsoft.Expression.Drawing.dll如果要用多國語言套件: "C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries"
 //抓取程式碼行數: new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString()
@@ -32,10 +33,13 @@ namespace OrderManagerNew
         UpdateFunction UpdateFunc;      //軟體更新cs
         bool developerMode = false;     //開發者模式
         string OrderManagerLanguage;    //語系
+        bool loginStatus = false;       //是否登入了
 
         public MainWindow()
         {
             InitializeComponent();
+
+            //MediaTimeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(60));
 
             //OrderManager不能多開
             Process[] MyProcess = Process.GetProcessesByName("OrderManager");
@@ -133,6 +137,34 @@ namespace OrderManagerNew
                 case "DevBtn4":
                     {
                         showLog();
+                        break;
+                    }
+                case "DevBtn5":
+                    {
+                        if(loginStatus == true)
+                        {
+                            Storyboard sb = (Storyboard)TryFindResource("UserDetailClose");
+                            foreach (var animation in sb.Children)
+                            {
+                                Storyboard.SetTargetName(animation, "usercontrolUserDetail");
+                                Storyboard.SetTarget(animation, this.usercontrolUserDetail);
+                            }
+                            sb.Begin();
+                            loginStatus = false;
+                            SnackBarShow("loginStatus = false");
+                        }
+                        else
+                        {
+                            Storyboard sb = (Storyboard)TryFindResource("UserDetailOpen");
+                            foreach (var animation in sb.Children)
+                            {
+                                Storyboard.SetTargetName(animation, "usercontrolUserDetail");
+                                Storyboard.SetTarget(animation, this.usercontrolUserDetail);
+                            }
+                            sb.Begin();
+                            loginStatus = true;
+                            SnackBarShow("loginStatus = true");
+                        }
                         break;
                     }
             }
@@ -787,9 +819,23 @@ namespace OrderManagerNew
 
         private void FunctionTable_Click_User(object sender, RoutedEventArgs e)
         {
-            AirdentalLogin DialogLogin = new AirdentalLogin();
-            DialogLogin.Owner = this;
-            DialogLogin.ShowDialog();
+            if(loginStatus == false)
+            {
+                AirdentalLogin DialogLogin = new AirdentalLogin();
+                DialogLogin.Owner = this;
+                DialogLogin.ShowDialog();
+                loginStatus = true;
+            }
+            else
+            {
+                Storyboard sb = (Storyboard)TryFindResource("UserDetailOpen");
+                foreach (var animation in sb.Children)
+                {
+                    Storyboard.SetTargetName(animation, "usercontrolUserDetail");
+                    Storyboard.SetTarget(animation, this.usercontrolUserDetail);
+                }
+                sb.Begin();
+            }
         }
     }
 }

@@ -8,13 +8,30 @@
   WindowStyle="None" mc:Ignorable="d">
 
     <Window.Resources>
-        <ResourceDictionary Source="StyleDictionary.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="StyleDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Storyboard x:Key="UserDetailOpen">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="3" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="UserDetailClose">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-350" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </ResourceDictionary>
     </Window.Resources>
 
     <Border BorderThickness="0">
         <DockPanel>
             <!--  TitleBar-Start  -->
-            <Border Height="42" Background="#FFE08A1E" DockPanel.Dock="Top">
+            <Border
+              Height="42" Panel.ZIndex="10" Background="#FFE08A1E"
+              DockPanel.Dock="Top">
                 <Grid>
                     <Label
                       Margin="0,0,143,0" VerticalAlignment="Center" Foreground="White"
@@ -42,14 +59,13 @@
             </Border>
             <!--  TitleBar-End  -->
 
-
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="75" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <!--  FunctionTable-Start  -->
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" Panel.ZIndex="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -59,7 +75,7 @@
                     <!--  SoftwareTable  -->
                     <StackPanel
                       Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                      Orientation="Horizontal">
+                      Panel.ZIndex="2" Orientation="Horizontal">
                         <Grid Width="18" />
                         <Grid Margin="6,0">
                             <Rectangle x:Name="mask_EZCAD" Style="{StaticResource maskImage}" />
@@ -159,7 +175,7 @@
                     <!--  ordermanagerFunction  -->
                     <StackPanel
                       Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
-                      Orientation="Horizontal">
+                      Panel.ZIndex="2" Orientation="Horizontal">
                         <Button Style="{StaticResource FunctionButton_refresh}" />
                         <Button Style="{StaticResource FunctionButton_cloud}" />
                         <Button Click="FunctionTable_Click_Setting" Style="{StaticResource FunctionButton_setting}" />
@@ -176,9 +192,19 @@
                         <ColumnDefinition Width="300" />
                     </Grid.ColumnDefinitions>
 
-                    <uc:AirdentalUserDetail userName="Alex Bai" userMail="bai123456@inteware.com.tw" userPoints="987654" 
-                      Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Right"
-                      Panel.ZIndex="1" />
+                    <uc:AirdentalUserDetail
+                      x:Name="usercontrolUserDetail" Grid.Column="2" HorizontalAlignment="Right"
+                      VerticalAlignment="Top" Panel.ZIndex="1" userMail="bai123456@inteware.com.tw"
+                      userName="Alex Bai" userPoints="987654">
+                        <uc:AirdentalUserDetail.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform />
+                                <SkewTransform />
+                                <RotateTransform />
+                                <TranslateTransform Y="-350" />
+                            </TransformGroup>
+                        </uc:AirdentalUserDetail.RenderTransform>
+                    </uc:AirdentalUserDetail>
 
                     <materialDesign:Snackbar
                       x:Name="SnackbarMain" Grid.Column="0" Grid.ColumnSpan="3"
@@ -227,7 +253,7 @@
                           Click="Dev_Click_Btn" Content="Show Log" />
                         <Button
                           x:Name="DevBtn5" Grid.Row="0" Grid.Column="4"
-                          Click="Dev_Click_Btn" />
+                          Click="Dev_Click_Btn" Content="LoginStatus" />
                         <Button
                           x:Name="DevBtn6" Grid.Row="0" Grid.Column="5"
                           Click="Dev_Click_Btn" />
