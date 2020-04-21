@@ -254,4 +254,8 @@
     <value>Hide password</value>
     <comment>Login</comment>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Log out</value>
+    <comment>Login</comment>
+  </data>
 </root>

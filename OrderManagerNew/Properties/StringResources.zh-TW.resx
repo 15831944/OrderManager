@@ -222,4 +222,7 @@
   <data name="HidePWD" xml:space="preserve">
     <value>隱藏密碼</value>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>登出</value>
+  </data>
 </root>

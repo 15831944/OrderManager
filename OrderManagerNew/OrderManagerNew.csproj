@@ -87,6 +87,9 @@
       <DependentUpon>Setting.xaml</DependentUpon>
     </Compile>
     <Compile Include="UpdateFunction.cs" />
+    <Compile Include="UserControls\AirdentalUserDetail.xaml.cs">
+      <DependentUpon>AirdentalUserDetail.xaml</DependentUpon>
+    </Compile>
     <Page Include="AirdentalLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -122,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StyleDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AirdentalUserDetail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

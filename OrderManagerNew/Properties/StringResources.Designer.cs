@@ -223,6 +223,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Log out 的當地語系化字串。
+        /// </summary>
+        internal static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Maximize 的當地語系化字串。
         /// </summary>
         internal static string Maximize {

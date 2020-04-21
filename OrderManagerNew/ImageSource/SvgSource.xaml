@@ -662,4 +662,26 @@
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
+    <DrawingImage x:Key="icon_name_boxDrawingImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V93 H93 V0 H0 Z">
+                <GeometryDrawing>
+                    <GeometryDrawing.Brush>
+                        <LinearGradientBrush MappingMode="Absolute" Opacity="1" SpreadMethod="Pad" StartPoint="46.5,0" EndPoint="46.5,93">
+                            <GradientStop Offset="0" Color="#FFF7B52C" />
+                            <GradientStop Offset="0.46" Color="#FFF7B52C" />
+                            <GradientStop Offset="0.55" Color="#FFF3AE29" />
+                            <GradientStop Offset="0.7" Color="#FFE69A22" />
+                            <GradientStop Offset="0.87" Color="#FFD27B16" />
+                            <GradientStop Offset="0.99" Color="#FFC05E0B" />
+                            <GradientStop Offset="1" Color="#FFC05E0B" />
+                        </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="46.5,46.5" RadiusX="46.5" RadiusY="46.5" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
 </ResourceDictionary>
