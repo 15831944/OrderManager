@@ -115,7 +115,6 @@ namespace OrderManagerNew
         
         private void shortLog(string Block, string logMessage, TextWriter w)
         {
-            w.WriteLine("");
             w.WriteLine($"{Block}:{logMessage}");
         }
 

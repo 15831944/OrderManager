@@ -133,7 +133,7 @@ namespace OrderManagerNew
                     softDongle.softwareName = item.SName;
                     softDongle.softwareSize = float.Parse(item.SSize);
                     softDongle.softwareVersion = item.SVersion;
-                    softDongle.softwareDownloadLink = item.SHyperlink;
+                    softDongle.softwareDownloadLink = item.SHyperlink.Replace("\n ", "").Replace("\r ", "").Replace(" ", "");
 
                     CloudSoftwareTotal.Add(softDongle);
                 }
@@ -161,7 +161,7 @@ namespace OrderManagerNew
                     softLicense.softwareName = item.SName;
                     softLicense.softwareSize = float.Parse(item.SSize);
                     softLicense.softwareVersion = item.SVersion;
-                    softLicense.softwareDownloadLink = item.SHyperlink;
+                    softLicense.softwareDownloadLink = item.SHyperlink.Replace("\n ", "").Replace("\r ", "").Replace(" ", "");
 
                     CloudSoftwareTotal.Add(softLicense);
                 }

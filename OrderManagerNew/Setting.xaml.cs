@@ -32,6 +32,7 @@ namespace OrderManagerNew
             textbox_Tray.Text = Properties.Settings.Default.path_Tray;
             textbox_Splint.Text = Properties.Settings.Default.path_Splint;
             textbox_Guide.Text = Properties.Settings.Default.path_Guide;
+            textbox_Download.Text = Properties.Settings.Default.DownloadFolder;
 
             if (Properties.Settings.Default.sysLanguage == "zh-TW")
                 comboboxLanguage.SelectedIndex = 1;

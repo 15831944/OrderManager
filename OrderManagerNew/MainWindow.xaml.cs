@@ -26,9 +26,6 @@ using System.Windows.Media.Animation;
 
 namespace OrderManagerNew
 {
-    /// <summary>
-    /// MainWindow.xaml 的互動邏輯
-    /// </summary>
     public partial class MainWindow : Window
     {
         LogRecorder log;                //日誌檔cs
@@ -77,6 +74,27 @@ namespace OrderManagerNew
             UpdateFunc = new UpdateFunction();
             UpdateFunc.softwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(setSoftwareShow);
             UpdateFunc.checkExistSoftware(true);
+
+            string message = "";
+            if (developerMode == true)
+            {
+                //開發者模式
+                message = "Developer Mode";
+                Thickness Custommargin = Dev_btnGrid.Margin;
+                Custommargin.Bottom = 40;
+                Dev_btnGrid.Margin = Custommargin;
+                Properties.Settings.Default.engineerMode = true;
+            }
+            else
+            {
+                //使用者模式
+                message = "Customer Mode";
+                Thickness Custommargin = Dev_btnGrid.Margin;
+                Custommargin.Bottom = -120;
+                Dev_btnGrid.Margin = Custommargin;
+                Properties.Settings.Default.engineerMode = false;
+            }
+            SnackBarShow(message);
         }
 
         #region WindowFrame
@@ -784,7 +802,6 @@ namespace OrderManagerNew
                                 //開發者模式
                                 developerMode = true;
                                 message ="Developer Mode";
-                                //Panel.SetZIndex(Dev_btnGrid, 10);
                                 Thickness Custommargin = Dev_btnGrid.Margin;
                                 Custommargin.Bottom = 40;
                                 Dev_btnGrid.Margin = Custommargin;
@@ -795,7 +812,6 @@ namespace OrderManagerNew
                                 //使用者模式
                                 developerMode = false;
                                 message = "Customer Mode";
-                                //Panel.SetZIndex(Dev_btnGrid, -1);
                                 Thickness Custommargin = Dev_btnGrid.Margin;
                                 Custommargin.Bottom = -120;
                                 Dev_btnGrid.Margin = Custommargin;
