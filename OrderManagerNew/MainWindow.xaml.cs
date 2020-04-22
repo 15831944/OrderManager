@@ -22,6 +22,8 @@ using System.Windows.Media.Animation;
 //Microsoft.Expression.Drawing.dll如果要用多國語言套件: "C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries"
 //抓取程式碼行數: new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString()
 
+//Detect which rectangle has been clicked in Canvas WPF: https://stackoverflow.com/questions/29669169/detect-which-rectangle-has-been-clicked-in-canvas-wpf
+
 namespace OrderManagerNew
 {
     /// <summary>
@@ -31,16 +33,14 @@ namespace OrderManagerNew
     {
         LogRecorder log;                //日誌檔cs
         UpdateFunction UpdateFunc;      //軟體更新cs
-        bool developerMode = false;     //開發者模式
-        string OrderManagerLanguage;    //語系
+        bool developerMode = true;     //開發者模式
         bool loginStatus = false;       //是否登入了
+        bool showUserDetail = false;    //是否正在顯示UserDetail
 
         public MainWindow()
         {
             InitializeComponent();
-
-            //MediaTimeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(60));
-
+            
             //OrderManager不能多開
             Process[] MyProcess = Process.GetProcessesByName("OrderManager");
             if (MyProcess.Length > 1)
@@ -61,15 +61,17 @@ namespace OrderManagerNew
                 }
             }
 
+            //初始化LogRecorder
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
             log.RecordConfigLog("OM Startup", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
-            var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
+            //設定Snackbar顯示時間
+            var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(240));
             SnackbarMain.MessageQueue = myMessageQueue;
 
-            OrderManagerLanguage = Properties.Settings.Default.sysLanguage;
-            LocalizationService.SetLanguage(OrderManagerLanguage);
+            MediaTimeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(1000));    //設定動畫流暢度
+            LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
 
             //檢查有安裝哪些軟體
             UpdateFunc = new UpdateFunction();
@@ -119,7 +121,6 @@ namespace OrderManagerNew
                 case "DevBtn2":
                     {
                         UpdateFunc.loadHLXml();
-                        showLog();
                         break;
                     }
                 case "DevBtn3":
@@ -136,37 +137,45 @@ namespace OrderManagerNew
                     }
                 case "DevBtn4":
                     {
-                        showLog();
+                        if (File.Exists("OrderManager.log") == true)
+                        {
+                            Process OpenLog = new Process();
+                            OpenLog.StartInfo.FileName = "OrderManager.log";
+                            OpenLog.Start();
+                        }
+                        else
+                            SnackBarShow("Log not found.");
                         break;
                     }
                 case "DevBtn5":
                     {
                         if(loginStatus == true)
                         {
-                            Storyboard sb = (Storyboard)TryFindResource("UserDetailClose");
-                            foreach (var animation in sb.Children)
-                            {
-                                Storyboard.SetTargetName(animation, "usercontrolUserDetail");
-                                Storyboard.SetTarget(animation, this.usercontrolUserDetail);
-                            }
-                            sb.Begin();
                             loginStatus = false;
                             SnackBarShow("loginStatus = false");
                         }
                         else
                         {
-                            Storyboard sb = (Storyboard)TryFindResource("UserDetailOpen");
-                            foreach (var animation in sb.Children)
-                            {
-                                Storyboard.SetTargetName(animation, "usercontrolUserDetail");
-                                Storyboard.SetTarget(animation, this.usercontrolUserDetail);
-                            }
-                            sb.Begin();
                             loginStatus = true;
                             SnackBarShow("loginStatus = true");
                         }
                         break;
                     }
+            }
+        }
+
+        private void PMouseDown_Main(object sender, MouseButtonEventArgs e)
+        {
+            //點擊UserDetail以外的地方就收回
+            var mouseWasDownOnUserDetail = e.Source as UserControls.AirdentalUserDetail;
+            var mouseWasDownOnomFunction_User = e.Source as Button;
+            if (loginStatus == true)
+            {
+                if (mouseWasDownOnomFunction_User != null && mouseWasDownOnomFunction_User.Name == "omFunction_User")
+                    return;
+
+                if (mouseWasDownOnUserDetail == null)
+                    UserDetailshow(false);
             }
         }
         #endregion
@@ -634,6 +643,86 @@ namespace OrderManagerNew
                     #endregion
             }
         }
+
+        private void FunctionTable_Click_User(object sender, RoutedEventArgs e)
+        {
+            if (loginStatus == false)
+            {
+                AirdentalLogin DialogLogin = new AirdentalLogin();
+                DialogLogin.Owner = this;
+                DialogLogin.ShowDialog();
+            }
+            else
+            {
+                if (showUserDetail == false)
+                    UserDetailshow(true);
+                else
+                    UserDetailshow(false);
+            }
+        }
+        
+        private void UserDetail_Click_Logout(object sender, RoutedEventArgs e)
+        {
+            UserDetailshow(false);
+            loginStatus = false;
+            SnackBarShow("Logout");
+        }
+
+        private void GoToSetting(string softwareName)
+        {
+            //主視窗羽化
+            var blur = new BlurEffect();
+            this.Effect = blur;
+
+            Setting DialogSetting = new Setting();
+            DialogSetting.Owner = this;
+            DialogSetting.ShowActivated = true;
+
+            if (softwareName != "")
+                DialogSetting.SearchEXE("", softwareName);
+
+            DialogSetting.ShowDialog();
+            if (DialogSetting.DialogResult == true)
+            {
+                UpdateFunc.checkExistSoftware(true);
+                log.RecordConfigLog("FunctionTable_Click_Setting()", "Config changed");
+            }
+
+            //主視窗還原
+            this.Effect = null;
+            this.OpacityMask = null;
+        }
+
+        /// <summary>
+        /// 是否顯示UserDetail
+        /// </summary>
+        /// <param name="show"> 是否顯示</param>
+        /// <returns></returns>
+        private void UserDetailshow(bool show)
+        {
+            if (show == true)
+            {
+                Storyboard sb = (Storyboard)TryFindResource("UserDetailOpen");
+                foreach (var animation in sb.Children)
+                {
+                    Storyboard.SetTargetName(animation, "usercontrolUserDetail");
+                    Storyboard.SetTarget(animation, this.usercontrolUserDetail);
+                }
+                sb.Begin();
+                showUserDetail = true;
+            }
+            else
+            {
+                Storyboard sb = (Storyboard)TryFindResource("UserDetailClose");
+                foreach (var animation in sb.Children)
+                {
+                    Storyboard.SetTargetName(animation, "usercontrolUserDetail");
+                    Storyboard.SetTarget(animation, this.usercontrolUserDetail);
+                }
+                sb.Begin();
+                showUserDetail = false;
+            }
+        }
         #endregion
 
         #region SortTable事件
@@ -776,66 +865,6 @@ namespace OrderManagerNew
 
         #endregion
         
-        /// <summary>
-        /// 記事本開啟Log檔
-        /// </summary>
-        private void showLog()
-        {
-            if (File.Exists("OrderManager.log") == true)
-            {
-                Process OpenLog = new Process();
-                OpenLog.StartInfo.FileName = "OrderManager.log";
-                OpenLog.Start();
-            }
-            else
-                SnackBarShow("Log not found.");
-        }
         
-
-        private void GoToSetting(string softwareName)
-        {
-            //主視窗羽化
-            var blur = new BlurEffect();
-            this.Effect = blur;
-
-            Setting DialogSetting = new Setting();
-            DialogSetting.Owner = this;
-            DialogSetting.ShowActivated = true;
-
-            if (softwareName != "")
-                DialogSetting.SearchEXE("", softwareName);
-
-            DialogSetting.ShowDialog();
-            if (DialogSetting.DialogResult == true)
-            {
-                UpdateFunc.checkExistSoftware(true);
-                log.RecordConfigLog("FunctionTable_Click_Setting()", "Config changed");
-            }
-
-            //主視窗還原
-            this.Effect = null;
-            this.OpacityMask = null;
-        }
-
-        private void FunctionTable_Click_User(object sender, RoutedEventArgs e)
-        {
-            if(loginStatus == false)
-            {
-                AirdentalLogin DialogLogin = new AirdentalLogin();
-                DialogLogin.Owner = this;
-                DialogLogin.ShowDialog();
-                loginStatus = true;
-            }
-            else
-            {
-                Storyboard sb = (Storyboard)TryFindResource("UserDetailOpen");
-                foreach (var animation in sb.Children)
-                {
-                    Storyboard.SetTargetName(animation, "usercontrolUserDetail");
-                    Storyboard.SetTarget(animation, this.usercontrolUserDetail);
-                }
-                sb.Begin();
-            }
-        }
     }
 }

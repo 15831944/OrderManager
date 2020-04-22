@@ -258,4 +258,8 @@
     <value>Log out</value>
     <comment>Login</comment>
   </data>
+  <data name="Downloadpath" xml:space="preserve">
+    <value>Download Directory</value>
+    <comment>Setting</comment>
+  </data>
 </root>

@@ -20,14 +20,14 @@
             </Storyboard>
             <Storyboard x:Key="UserDetailClose">
                 <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
-                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-350" />
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-500" />
                 </DoubleAnimationUsingKeyFrames>
             </Storyboard>
         </ResourceDictionary>
     </Window.Resources>
 
     <Border BorderThickness="0">
-        <DockPanel>
+        <DockPanel PreviewMouseDown="PMouseDown_Main">
             <!--  TitleBar-Start  -->
             <Border
               Height="42" Panel.ZIndex="10" Background="#FFE08A1E"
@@ -179,7 +179,7 @@
                         <Button Style="{StaticResource FunctionButton_refresh}" />
                         <Button Style="{StaticResource FunctionButton_cloud}" />
                         <Button Click="FunctionTable_Click_Setting" Style="{StaticResource FunctionButton_setting}" />
-                        <Button Click="FunctionTable_Click_User" Style="{StaticResource FunctionButton_User}" />
+                        <Button x:Name="omFunction_User" Click="FunctionTable_Click_User" Style="{StaticResource FunctionButton_User}" />
                         <Grid Width="6" />
                     </StackPanel>
                 </Grid>
@@ -194,14 +194,14 @@
 
                     <uc:AirdentalUserDetail
                       x:Name="usercontrolUserDetail" Grid.Column="2" HorizontalAlignment="Right"
-                      VerticalAlignment="Top" Panel.ZIndex="1" userMail="bai123456@inteware.com.tw"
-                      userName="Alex Bai" userPoints="987654">
+                      VerticalAlignment="Top" Panel.ZIndex="1" LogoutClick="UserDetail_Click_Logout"
+                      userMail="bai123456@inteware.com.tw" userName="Alex Bai" userPoints="987654">
                         <uc:AirdentalUserDetail.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform />
                                 <SkewTransform />
                                 <RotateTransform />
-                                <TranslateTransform Y="-350" />
+                                <TranslateTransform Y="-500" />
                             </TransformGroup>
                         </uc:AirdentalUserDetail.RenderTransform>
                     </uc:AirdentalUserDetail>

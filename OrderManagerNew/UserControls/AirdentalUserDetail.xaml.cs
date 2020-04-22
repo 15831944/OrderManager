@@ -14,9 +14,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+//Handling user control events in WPF: https://www.codeproject.com/Questions/424498/Handling-user-control-events-in-WPF
+
 namespace OrderManagerNew.UserControls
 {
-
     [ValueConversion(typeof(string), typeof(string))]
     public class CapitalNameConverter : IValueConverter
     {
@@ -41,6 +42,8 @@ namespace OrderManagerNew.UserControls
     /// </summary>
     public partial class AirdentalUserDetail : UserControl
     {
+        public event RoutedEventHandler LogoutClick;
+
         public AirdentalUserDetail()
         {
             InitializeComponent();
@@ -51,5 +54,13 @@ namespace OrderManagerNew.UserControls
         public string userPicName { get; set; }
         public string userMail { get; set; }
         public string userPoints { get; set; }
+
+        private void BtnClick_Logout(object sender, RoutedEventArgs e)
+        {
+            if(LogoutClick != null)
+            {
+                LogoutClick(this, new RoutedEventArgs());
+            }
+        }
     }
 }

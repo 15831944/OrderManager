@@ -97,6 +97,7 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="110" />
@@ -105,7 +106,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Rectangle
-                      Grid.Row="0" Grid.RowSpan="6" Grid.Column="0"
+                      Grid.Row="0" Grid.RowSpan="7" Grid.Column="0"
                       Grid.ColumnSpan="3"
                       Fill="{DynamicResource background_CaseTable}" />
 
@@ -115,6 +116,7 @@
                     <Label Grid.Row="3" Grid.Column="0" Content="EZCAD.Tray" />
                     <Label Grid.Row="4" Grid.Column="0" Content="EZCAD.Splint" />
                     <Label Grid.Row="5" Grid.Column="0" Content="EZCAD.Guide" />
+                    <Label Grid.Row="6" Grid.Column="0" Content="{local:LocExtension Downloadpath}" />
 
                     <TextBox
                       x:Name="textbox_EZCAD" Grid.Row="0" Grid.Column="1"
@@ -124,6 +126,7 @@
                     <TextBox x:Name="textbox_Tray" Grid.Row="3" Grid.Column="1" />
                     <TextBox x:Name="textbox_Splint" Grid.Row="4" Grid.Column="1" />
                     <TextBox x:Name="textbox_Guide" Grid.Row="5" Grid.Column="1" />
+                    <TextBox x:Name="textbox_Download" Grid.Row="6" Grid.Column="1" />
 
                     <Button
                       x:Name="Btn_EZCADprogram" Grid.Row="0" Grid.Column="2"
@@ -147,6 +150,10 @@
                       Style="{DynamicResource btn_folderOpen}" />
                     <Button
                       x:Name="Btn_Guideprogram" Grid.Row="5" Grid.Column="2"
+                      Click="Click_OpenFilePath"
+                      Style="{DynamicResource btn_folderOpen}" />
+                    <Button
+                      x:Name="Btn_Downloadpath" Grid.Row="6" Grid.Column="2"
                       Click="Click_OpenFilePath"
                       Style="{DynamicResource btn_folderOpen}" />
                 </Grid>

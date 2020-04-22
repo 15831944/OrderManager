@@ -86,6 +86,19 @@ namespace OrderManagerNew
                         OriginalPath = textbox_Guide.Text;
                         break;
                     }
+                case "Btn_Downloadpath":
+                    {
+                        using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+                        {
+                            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                            if(result == System.Windows.Forms.DialogResult.OK)
+                            {
+                                textbox_Download.Text = dialog.SelectedPath;
+                                textbox_Download.Focus();
+                            }
+                        }
+                        return;
+                    }
             }
 
             SearchEXE(OriginalPath, Btn.Name);
@@ -185,6 +198,18 @@ namespace OrderManagerNew
                         else
                             Properties.Settings.Default.path_Guide = "";
 
+                        if (Directory.Exists(textbox_Download.Text) == true)
+                            Properties.Settings.Default.DownloadFolder = Path.GetDirectoryName(textbox_Download.Text);
+                        else
+                        {
+                            Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + "IntewareTempFile\\";
+
+                            /*if (Directory.Exists(System.IO.Path.GetTempPath() + "IntewareTempFile\\") == false)
+                            {
+                                System.IO.Directory.CreateDirectory(System.IO.Path.GetTempPath() + "IntewareTempFile\\");
+                            }*/
+                        }
+                            
                         //多國語系
                         ComboBoxItem typeItem = (ComboBoxItem)comboboxLanguage.SelectedItem;
 

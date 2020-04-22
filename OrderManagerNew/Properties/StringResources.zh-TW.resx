@@ -225,4 +225,7 @@
   <data name="Logout" xml:space="preserve">
     <value>登出</value>
   </data>
+  <data name="Downloadpath" xml:space="preserve">
+    <value>下載資料夾</value>
+  </data>
 </root>

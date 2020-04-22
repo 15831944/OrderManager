@@ -169,6 +169,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Download Directory 的當地語系化字串。
+        /// </summary>
+        internal static string Downloadpath {
+            get {
+                return ResourceManager.GetString("Downloadpath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Download Software 的當地語系化字串。
         /// </summary>
         internal static string DownloadSoftware {
