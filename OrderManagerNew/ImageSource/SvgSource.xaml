@@ -130,7 +130,7 @@
     <DrawingImage x:Key="Customer_service_normal_04DrawingImage">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V40 H46 V0 H0 Z">
-                <GeometryDrawing Brush="#FFE08A1E">
+                <GeometryDrawing Brush="{DynamicResource Common_OrangeTitleBar}">
                     <GeometryDrawing.Geometry>
                         <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,46,40" />
                     </GeometryDrawing.Geometry>
@@ -198,7 +198,7 @@
     <DrawingImage x:Key="Close_normalDrawingImage">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V40 H46 V0 H0 Z">
-                <GeometryDrawing Brush="#FFE08A1E">
+                <GeometryDrawing Brush="{DynamicResource Common_OrangeTitleBar}">
                     <GeometryDrawing.Geometry>
                         <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,46,40" />
                     </GeometryDrawing.Geometry>
@@ -229,7 +229,7 @@
     <DrawingImage x:Key="Max_normal_06DrawingImage">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V40 H46 V0 H0 Z">
-                <GeometryDrawing Brush="#FFE08A1E">
+                <GeometryDrawing Brush="{DynamicResource Common_OrangeTitleBar}">
                     <GeometryDrawing.Geometry>
                         <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,46,40" />
                     </GeometryDrawing.Geometry>
@@ -291,7 +291,7 @@
     <DrawingImage x:Key="Restore_normal_10DrawingImage">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V40 H46 V0 H0 Z">
-                <GeometryDrawing Brush="#FFE08A1E">
+                <GeometryDrawing Brush="{DynamicResource Common_OrangeTitleBar}">
                     <GeometryDrawing.Geometry>
                         <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,46,40" />
                     </GeometryDrawing.Geometry>
@@ -347,7 +347,7 @@
     <DrawingImage x:Key="Min_normal_08DrawingImage">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V40 H46 V0 H0 Z">
-                <GeometryDrawing Brush="#FFE08A1E">
+                <GeometryDrawing Brush="{DynamicResource Common_OrangeTitleBar}">
                     <GeometryDrawing.Geometry>
                         <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,46,40" />
                     </GeometryDrawing.Geometry>
@@ -423,7 +423,7 @@
     <DrawingImage x:Key="INTEWARE_TITLE_OrderManagerDrawingImage">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V40 H208 V0 H0 Z">
-                <GeometryDrawing Brush="#FFE08A1E">
+                <GeometryDrawing Brush="{DynamicResource Common_OrangeTitleBar}">
                     <GeometryDrawing.Geometry>
                         <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,208,40" />
                     </GeometryDrawing.Geometry>

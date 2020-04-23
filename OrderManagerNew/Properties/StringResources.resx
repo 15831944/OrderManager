@@ -262,4 +262,24 @@
     <value>Download Directory</value>
     <comment>Setting</comment>
   </data>
+  <data name="Install" xml:space="preserve">
+    <value>Install</value>
+    <comment>BeforeDownload</comment>
+  </data>
+  <data name="SpaceRequired" xml:space="preserve">
+    <value>Disk space required:</value>
+    <comment>BeforeDownload</comment>
+  </data>
+  <data name="SpaceAvailable" xml:space="preserve">
+    <value>Disk space available:</value>
+    <comment>BeforeDownload</comment>
+  </data>
+  <data name="ChooseLocationToInstall" xml:space="preserve">
+    <value>Choose location for install:</value>
+    <comment>BeforeDownload</comment>
+  </data>
+  <data name="AboutToInstall" xml:space="preserve">
+    <value>You are about to install </value>
+    <comment>BeforeDownload</comment>
+  </data>
 </root>

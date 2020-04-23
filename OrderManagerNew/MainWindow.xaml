@@ -30,7 +30,8 @@
         <DockPanel PreviewMouseDown="PMouseDown_Main">
             <!--  TitleBar-Start  -->
             <Border
-              Height="42" Panel.ZIndex="10" Background="#FFE08A1E"
+              Height="42" Panel.ZIndex="10"
+              Background="{DynamicResource Common_OrangeTitleBar}"
               DockPanel.Dock="Top">
                 <Grid>
                     <Label
@@ -45,7 +46,8 @@
 
                     <StackPanel
                       HorizontalAlignment="Right" VerticalAlignment="Center" Panel.ZIndex="1"
-                      Background="#FFE08A1E" Orientation="Horizontal">
+                      Background="{DynamicResource Common_OrangeTitleBar}"
+                      Orientation="Horizontal">
                         <Button Name="systemButton_ContactInteware" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_contactInteware}" />
                         <Button Name="systemButton_Minimize" Click="TitleBar_Click_titlebarButtons" Style="{StaticResource systemButton_mimimize}" />
 

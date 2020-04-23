@@ -61,6 +61,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 You are about to install  的當地語系化字串。
+        /// </summary>
+        internal static string AboutToInstall {
+            get {
+                return ResourceManager.GetString("AboutToInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 ALL 的當地語系化字串。
         /// </summary>
         internal static string All {
@@ -133,6 +142,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Choose location for install: 的當地語系化字串。
+        /// </summary>
+        internal static string ChooseLocationToInstall {
+            get {
+                return ResourceManager.GetString("ChooseLocationToInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Close 的當地語系化字串。
         /// </summary>
         internal static string Close_titlebar {
@@ -192,6 +210,15 @@ namespace OrderManagerNew.Properties {
         internal static string HidePWD {
             get {
                 return ResourceManager.GetString("HidePWD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Install 的當地語系化字串。
+        /// </summary>
+        internal static string Install {
+            get {
+                return ResourceManager.GetString("Install", resourceCulture);
             }
         }
         
@@ -354,6 +381,24 @@ namespace OrderManagerNew.Properties {
         internal static string SoftwareWeb {
             get {
                 return ResourceManager.GetString("SoftwareWeb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Disk space available: 的當地語系化字串。
+        /// </summary>
+        internal static string SpaceAvailable {
+            get {
+                return ResourceManager.GetString("SpaceAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Disk space required: 的當地語系化字串。
+        /// </summary>
+        internal static string SpaceRequired {
+            get {
+                return ResourceManager.GetString("SpaceRequired", resourceCulture);
             }
         }
         

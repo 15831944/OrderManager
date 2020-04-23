@@ -228,4 +228,19 @@
   <data name="Downloadpath" xml:space="preserve">
     <value>下載資料夾</value>
   </data>
+  <data name="Install" xml:space="preserve">
+    <value>安裝</value>
+  </data>
+  <data name="ChooseLocationToInstall" xml:space="preserve">
+    <value>選擇安裝位置:</value>
+  </data>
+  <data name="SpaceRequired" xml:space="preserve">
+    <value>所需磁碟空間:</value>
+  </data>
+  <data name="SpaceAvailable" xml:space="preserve">
+    <value>可用磁碟空間:</value>
+  </data>
+  <data name="AboutToInstall" xml:space="preserve">
+    <value>您即將安裝 </value>
+  </data>
 </root>

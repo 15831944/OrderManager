@@ -84,6 +84,9 @@
     <Compile Include="AirdentalLogin.xaml.cs">
       <DependentUpon>AirdentalLogin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BeforeDownload.xaml.cs">
+      <DependentUpon>BeforeDownload.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Setting.xaml.cs">
       <DependentUpon>Setting.xaml</DependentUpon>
     </Compile>
@@ -92,6 +95,10 @@
       <DependentUpon>AirdentalUserDetail.xaml</DependentUpon>
     </Compile>
     <Page Include="AirdentalLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BeforeDownload.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

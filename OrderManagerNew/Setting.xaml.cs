@@ -104,69 +104,7 @@ namespace OrderManagerNew
 
             SearchEXE(OriginalPath, Btn.Name);
         }
-
-        /// <summary>
-        /// 使用OpenFileDialog去找執行檔位置
-        /// </summary>
-        /// <param name="originPah">若之前有設定過就從之前exe檔路徑做預設</param>
-        /// <param name="softwareName">軟體名稱(名稱是Btn_xxxprogram)</param>
-        /// <returns></returns>
-        public void SearchEXE(string originPah, string softwareName)
-        {
-            Microsoft.Win32.OpenFileDialog Dlg = new Microsoft.Win32.OpenFileDialog();
-            Dlg.DefaultExt = ".exe";
-            Dlg.Filter = "Exe File (.exe)|*.exe";
-
-            if (File.Exists(originPah) == true)
-                Dlg.InitialDirectory = System.IO.Path.GetDirectoryName(originPah);
-            else if(Directory.Exists("C:\\Inteware\\") == true)
-                Dlg.InitialDirectory = "C:\\Inteware\\";
-
-            Nullable<bool> result = Dlg.ShowDialog();
-            if (result == true)
-            {
-                switch (softwareName)
-                {
-                    case "Btn_EZCADprogram":
-                        {
-                            textbox_EZCAD.Text = Dlg.FileName;
-                            textbox_EZCAD.Focus();
-                            break;
-                        }
-                    case "Btn_Implantprogram":
-                        {
-                            textbox_Implant.Text = Dlg.FileName;
-                            textbox_Implant.Focus();
-                            break;
-                        }
-                    case "Btn_Orthoprogram":
-                        {
-                            textbox_Ortho.Text = Dlg.FileName;
-                            textbox_Ortho.Focus();
-                            break;
-                        }
-                    case "Btn_Trayprogram":
-                        {
-                            textbox_Tray.Text = Dlg.FileName;
-                            textbox_Tray.Focus();
-                            break;
-                        }
-                    case "Btn_Splintprogram":
-                        {
-                            textbox_Splint.Text = Dlg.FileName;
-                            textbox_Splint.Focus();
-                            break;
-                        }
-                    case "Btn_Guideprogram":
-                        {
-                            textbox_Guide.Text = Dlg.FileName;
-                            textbox_Guide.Focus();
-                            break;
-                        }
-                }
-            }
-        }
-
+        
         private void Click_systemButton(object sender, RoutedEventArgs e)
         {
             Button Btn = sender as Button;
@@ -262,6 +200,68 @@ namespace OrderManagerNew
             else if(comboboxLanguage.SelectedIndex == 1)
             {
                 LocalizationService.SetLanguage("zh-TW");
+            }
+        }
+
+        /// <summary>
+        /// 使用OpenFileDialog去找執行檔位置
+        /// </summary>
+        /// <param name="originPah">若之前有設定過就從之前exe檔路徑做預設</param>
+        /// <param name="softwareName">軟體名稱(名稱是Btn_xxxprogram)</param>
+        /// <returns></returns>
+        public void SearchEXE(string originPah, string softwareName)
+        {
+            Microsoft.Win32.OpenFileDialog Dlg = new Microsoft.Win32.OpenFileDialog();
+            Dlg.DefaultExt = ".exe";
+            Dlg.Filter = "Exe File (.exe)|*.exe";
+
+            if (File.Exists(originPah) == true)
+                Dlg.InitialDirectory = System.IO.Path.GetDirectoryName(originPah);
+            else if (Directory.Exists("C:\\Inteware\\") == true)
+                Dlg.InitialDirectory = "C:\\Inteware\\";
+
+            Nullable<bool> result = Dlg.ShowDialog();
+            if (result == true)
+            {
+                switch (softwareName)
+                {
+                    case "Btn_EZCADprogram":
+                        {
+                            textbox_EZCAD.Text = Dlg.FileName;
+                            textbox_EZCAD.Focus();
+                            break;
+                        }
+                    case "Btn_Implantprogram":
+                        {
+                            textbox_Implant.Text = Dlg.FileName;
+                            textbox_Implant.Focus();
+                            break;
+                        }
+                    case "Btn_Orthoprogram":
+                        {
+                            textbox_Ortho.Text = Dlg.FileName;
+                            textbox_Ortho.Focus();
+                            break;
+                        }
+                    case "Btn_Trayprogram":
+                        {
+                            textbox_Tray.Text = Dlg.FileName;
+                            textbox_Tray.Focus();
+                            break;
+                        }
+                    case "Btn_Splintprogram":
+                        {
+                            textbox_Splint.Text = Dlg.FileName;
+                            textbox_Splint.Focus();
+                            break;
+                        }
+                    case "Btn_Guideprogram":
+                        {
+                            textbox_Guide.Text = Dlg.FileName;
+                            textbox_Guide.Focus();
+                            break;
+                        }
+                }
             }
         }
     }

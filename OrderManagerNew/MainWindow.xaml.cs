@@ -508,6 +508,7 @@ namespace OrderManagerNew
                     }
                 case "cad_download":
                     {
+                        
                         break;
                     }
                 case "cad_open":
@@ -636,6 +637,21 @@ namespace OrderManagerNew
                     }
                 case "splint_download":
                     {
+                        BeforeDownload DialogBeforeDownload = new BeforeDownload();
+                        if(DialogBeforeDownload.SetInformation(@"https://www.dropbox.com/s/dj6p305a3ckkjxz/EZCAD.Splint_1.0.20214.0.exe?dl=1", (int)_softwareID.Splint) == true)
+                        {
+                            //主視窗羽化
+                            var blur = new BlurEffect();
+                            this.Effect = blur;
+
+                            DialogBeforeDownload.Owner = this;
+                            DialogBeforeDownload.ShowActivated = true;
+                            DialogBeforeDownload.ShowDialog();
+
+                            //主視窗還原
+                            this.Effect = null;
+                            this.OpacityMask = null;
+                        }
                         break;
                     }
                 case "splint_open":

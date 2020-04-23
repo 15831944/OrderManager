@@ -1,0 +1,109 @@
+﻿<Window
+  x:Class="OrderManagerNew.BeforeDownload" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OrderManagerNew" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Title="BeforeDownload" Width="450"
+  Height="360" AllowsTransparency="True"
+  Background="{DynamicResource Common_DarkBackGround}"
+  WindowStartupLocation="CenterScreen" WindowStyle="None" mc:Ignorable="d">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="StyleDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="Arial" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Border BorderThickness="0">
+        <DockPanel>
+            <!--  TitleBar-Start  -->
+            <Border Height="42" Background="{DynamicResource Common_OrangeTitleBar}" DockPanel.Dock="Top">
+                <Grid>
+                    <Label
+                      x:Name="label_TitleBar" Margin="6,0,0,0" HorizontalAlignment="Left"
+                      VerticalAlignment="Center"
+                      Content="{local:LocExtension Install}"
+                      FontSize="21" FontWeight="Bold" Foreground="White" />
+
+                    <StackPanel
+                      HorizontalAlignment="Right" VerticalAlignment="Center" Panel.ZIndex="1"
+                      Background="{DynamicResource Common_OrangeTitleBar}"
+                      Orientation="Horizontal">
+                        <Button Name="systemButton_Close" Click="TitleBar_Click_titlebarButtons" Style="{DynamicResource systemButton_close}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <!--  TitleBar-End  -->
+
+            <Grid Margin="12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="64" />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition Height="48" />
+                    <RowDefinition Height="52" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="42" />
+                </Grid.ColumnDefinitions>
+
+                <Label
+                  x:Name="label_Header" Grid.Row="0" Grid.Column="0"
+                  Grid.ColumnSpan="3"
+                  Content="{local:LocExtension AboutToInstall}"
+                  FontSize="24" />
+
+                <Label Grid.Row="1" Grid.Column="0" Content="{local:LocExtension SpaceRequired}" />
+                <Label
+                  x:Name="label_RequireSpace" Grid.Row="1" Grid.Column="1"
+                  Grid.ColumnSpan="2" Content="101.1MB" />
+
+                <Label Grid.Row="2" Grid.Column="0" Content="{local:LocExtension SpaceAvailable}" />
+                <Label
+                  x:Name="label_AvailableSpace" Grid.Row="2" Grid.Column="1"
+                  Grid.ColumnSpan="2" Content="99999999.9MB" />
+
+                <Label
+                  Grid.Row="3" Grid.Column="0" VerticalAlignment="Bottom"
+                  Content="{local:LocExtension ChooseLocationToInstall}" />
+
+                <TextBox
+                  x:Name="textbox_InstallPath" Grid.Row="4" Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  Style="{DynamicResource Setting_textbox}"
+                  Text="C:\InteWare\SoftwareName" />
+                <Button
+                  x:Name="Btn_Downloadpath" Grid.Row="4" Grid.Column="3"
+                  Margin="0" HorizontalAlignment="Right" Click="Click_OpenFilePath"
+                  Style="{DynamicResource btn_folderOpen}" />
+
+                <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                      x:Name="sysBtn_Yes" Grid.Column="0" HorizontalAlignment="Left"
+                      Click="Click_systemButton"
+                      Content="{local:LocExtension Install}"
+                      Style="{DynamicResource Setting_sysBtn}" />
+                    <Button
+                      x:Name="sysBtn_Cancel" Grid.Column="1" HorizontalAlignment="Right"
+                      Click="Click_systemButton"
+                      Content="{local:LocExtension Cancel}"
+                      Style="{DynamicResource Setting_sysBtn}" />
+                </Grid>
+            </Grid>
+        </DockPanel>
+    </Border>
+</Window>
