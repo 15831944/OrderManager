@@ -258,7 +258,7 @@
                           Click="Dev_Click_Btn" Content="LoginStatus" />
                         <Button
                           x:Name="DevBtn6" Grid.Row="0" Grid.Column="5"
-                          Click="Dev_Click_Btn" />
+                          Click="Dev_Click_Btn" Content="Splint Download" />
                         <Button
                           x:Name="DevBtn7" Grid.Row="0" Grid.Column="6"
                           Click="Dev_Click_Btn" />

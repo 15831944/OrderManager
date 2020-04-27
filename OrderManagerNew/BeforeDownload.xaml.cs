@@ -17,25 +17,39 @@ using Path = System.IO.Path;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.ComponentModel;
+using System.Timers;  // 名稱空間是 Timers 而不是 Threading
 
 namespace OrderManagerNew
 {
     public partial class BeforeDownload : Window
     {
+        //委派到MainWindow.xaml.cs裡面的setSoftwareShow()
+        public delegate void beforedownloadEventHandler();
+        public event beforedownloadEventHandler SetHttpResponseOK;
+        //委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
+        public delegate void beforedownloadEventHandler_snackbar(string message);
+        public event beforedownloadEventHandler_snackbar Handler_snackbarShow;
+
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {   // 總是接受  
             return true;
         }
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetDiskFreeSpaceEx(string lpDirectoryName,
-        out ulong lpFreeBytesAvailable,
-        out ulong lpTotalNumberOfBytes,
-        out ulong lpTotalNumberOfFreeBytes);
+        static extern bool GetDiskFreeSpaceEx(string lpDirectoryName, out ulong lpFreeBytesAvailable, out ulong lpTotalNumberOfBytes, out ulong lpTotalNumberOfFreeBytes);
+
+        private BackgroundWorker m_BackgroundWorker;//申明後臺物件
+        HttpWebResponse httpResponse;               //共用同一個WebResponse以便清除內部殘留資料
+        string http_url;                            //下載網址
+        Timer tmr;                                  //計時器(用在GetResponse)
+        int currentSoftwareID;                      //軟體ID
 
         public BeforeDownload()
         {
             InitializeComponent();
+            http_url = "";
+            currentSoftwareID = -1;
         }
 
         private void TitleBar_Click_titlebarButtons(object sender, RoutedEventArgs e)
@@ -130,59 +144,73 @@ namespace OrderManagerNew
 
             return OutputString;
         }
-        
+
         /// <summary>
         /// 設定UI所顯示的資訊
         /// </summary>
-        /// <param name="http_url">下載檔網址</param>
-        /// <param name="SoftwareID">軟體ID(參考EnumSummary的_softwareID)</param>
-        /// <returns></returns>
-        public bool SetInformation(string http_url, int SoftwareID)
+        public bool SetInformation()
         {
-            string softwareName = "";
-            switch (SoftwareID)
+            if (currentSoftwareID == -1 || http_url == "")
             {
-                case (int)_softwareID.EZCAD:
-                    {
-                        softwareName = "EZCAD";
-                        break;
-                    }
-                case (int)_softwareID.Implant:
-                    {
-                        softwareName = "ImplantPlanning";
-                        break;
-                    }
-                case (int)_softwareID.Ortho:
-                    {
-                        softwareName = "OrthoAnalysis";
-                        break;
-                    }
-                case (int)_softwareID.Tray:
-                    {
-                        softwareName = "EZCAD Tray";
-                        break;
-                    }
-                case (int)_softwareID.Splint:
-                    {
-                        softwareName = "EZCAD Splint";
-                        break;
-                    }
-                case (int)_softwareID.Guide:
-                    {
-                        softwareName = "EZCAD Guide";
-                        break;
-                    }
+                MessageBox.Show("SoftwareID is -1");
+                return false;
             }
+                
+            string[] SoftwareNameArray = new string[6] {"EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD Tray", "EZCAD Splint", "EZCAD Guide"};
 
-            label_TitleBar.Content = OrderManagerNew.TranslationSource.Instance["Install"] + "-" + softwareName.Replace(" ", ".");
-            label_Header.Content = OrderManagerNew.TranslationSource.Instance["AboutToInstall"] + " " + softwareName.Replace(" ", ".");
-            textbox_InstallPath.Text = @"C:\InteWare\" + softwareName;
+            label_TitleBar.Content = OrderManagerNew.TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
+            label_Header.Content = OrderManagerNew.TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
+            textbox_InstallPath.Text = @"C:\InteWare\" + SoftwareNameArray[currentSoftwareID];
+            
+            try
+            {
+                if (((HttpWebResponse)httpResponse).StatusDescription == "OK" && httpResponse.ContentLength > 1)
+                {
+                    // 取得下載的檔名
+                    Uri uri = new Uri(http_url);
+                    string downloadfileRealName = System.IO.Path.GetFileName(uri.LocalPath);
+                    
+                    if (RemainingSpace(textbox_InstallPath.Text) == true)  //客戶電腦剩餘空間
+                        label_RequireSpace.Content = convertDiskUnit(Convert.ToUInt64(httpResponse.ContentLength));
+                    else
+                    {
+                        MessageBox.Show("Can't get user remaining space");//無法獲取客戶電腦剩餘空間 //TODO 多國語系
+                        httpResponse.Close();
+                        return false;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Network error");   //網路連線異常or載點掛掉 //TODO 多國語系
+                httpResponse.Close();
+                return false;
+            }
+            httpResponse.Close();
+            return true;
+        }
+
+        void DoWork(object sender, DoWorkEventArgs e)
+        {
+
+            //倒數計時3秒
+            tmr = new Timer();
+            if(Properties.Settings.Default.PingTime != 0)
+                tmr.Interval = Properties.Settings.Default.PingTime * 1000;
+            else
+            {
+                tmr.Interval = 5000;
+                Properties.Settings.Default.PingTime = 5;
+                Properties.Settings.Default.Save();
+            }
+                
+
+            tmr.Elapsed += tmr_Elapsed;  // 使用事件代替委託
+            tmr.Start();          // 重啟定時器
 
             //跳過https檢測 & Win7 相容
             System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-
-            /* 檢查User電腦空間 ************************************/
 
             //Request資料
             HttpWebRequest httpRequest;
@@ -193,27 +221,63 @@ namespace OrderManagerNew
 
             try
             {
-                HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-
-                if (((HttpWebResponse)httpResponse).StatusDescription == "OK" && httpResponse.ContentLength > 1)
-                {
-                    // 取得下載的檔名
-                    Uri uri = new Uri(http_url);
-                    string downloadfileRealName = System.IO.Path.GetFileName(uri.LocalPath);
-                    
-                    if (RemainingSpace(textbox_InstallPath.Text) == true)  //客戶電腦剩餘空間
-                        label_RequireSpace.Content = convertDiskUnit(Convert.ToUInt64(httpResponse.ContentLength));
-                    else
-                        return false;
-                }
+                Handler_snackbarShow("Get httpRequest Response Start..."); //開始取得資料 //TODO 多國語系
+                httpResponse = (HttpWebResponse)httpRequest.GetResponse();
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Network error");   //網路連線異常or載點掛掉 //TODO 多國語系
-                return false;
+                MessageBox.Show(ex.Message, "Network error");   //網路連線異常or載點掛掉 //TODO 多國語系
+                e.Cancel = true;
             }
+        }
 
-            return true;
+        void tmr_Elapsed(object sender, EventArgs e)
+        {
+            httpResponse.Close();
+            tmr.Dispose();
+            Handler_snackbarShow("can't get network response, please restart ordermanager and try again"); //超過5秒回應時間 //TODO 多國語系
+            DialogResult = false;
+        }
+
+        void CompletedWork(object sender, RunWorkerCompletedEventArgs e)
+        {
+            SetHttpResponseOK();
+            if (e.Error != null)
+            {
+                tmr.Dispose();
+                MessageBox.Show("Error");   //錯誤 //TODO 多國語系
+            }
+            else if (e.Cancelled)
+            {
+                tmr.Dispose();
+                MessageBox.Show("Canceled");    //取消 //TODO 多國語系
+            }
+            else
+            {
+                tmr.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// 用多執行緒去取得httpResponse
+        /// </summary>
+        /// <param name="http_url">下載網址</param>
+        /// <param name="SoftwareID">軟體ID(參考EnumSummary的_softwareID)</param>
+        /// <returns></returns>
+        public void GethttpResoponse(string Import_http_url, int SoftwareID)
+        {
+            http_url = Import_http_url;
+            currentSoftwareID = SoftwareID;
+
+            m_BackgroundWorker = new BackgroundWorker(); // 例項化後臺物件
+
+            m_BackgroundWorker.WorkerReportsProgress = false; // 設定可以通告進度
+            m_BackgroundWorker.WorkerSupportsCancellation = true; // 設定可以取消
+
+            m_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork);
+            m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork);
+
+            m_BackgroundWorker.RunWorkerAsync(this);
         }
     }
 }

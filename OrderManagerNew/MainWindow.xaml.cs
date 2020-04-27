@@ -23,16 +23,19 @@ using System.Windows.Media.Animation;
 //抓取程式碼行數: new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString()
 
 //Detect which rectangle has been clicked in Canvas WPF: https://stackoverflow.com/questions/29669169/detect-which-rectangle-has-been-clicked-in-canvas-wpf
+//C#的BackgroundWorker--啟動後臺執行緒: https://www.itread01.com/content/1550455929.html
 
 namespace OrderManagerNew
 {
     public partial class MainWindow : Window
     {
-        LogRecorder log;                //日誌檔cs
-        UpdateFunction UpdateFunc;      //軟體更新cs
-        bool developerMode = true;     //開發者模式
-        bool loginStatus = false;       //是否登入了
-        bool showUserDetail = false;    //是否正在顯示UserDetail
+        LogRecorder log;                        //日誌檔cs
+        UpdateFunction UpdateFunc;              //軟體更新cs
+        BeforeDownload DialogBeforeDownload;    //下載前置畫面
+        bool developerMode = true;              //開發者模式
+        bool loginStatus = false;               //是否登入了
+        bool showUserDetail = false;            //是否正在顯示UserDetail
+        MaterialDesignThemes.Wpf.SnackbarMessageQueue MainsnackbarMessageQueue;
 
         public MainWindow()
         {
@@ -64,17 +67,18 @@ namespace OrderManagerNew
             log.RecordConfigLog("OM Startup", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             //設定Snackbar顯示時間
-            var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(240));
+            var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
             SnackbarMain.MessageQueue = myMessageQueue;
+            MainsnackbarMessageQueue = SnackbarMain.MessageQueue;
 
             MediaTimeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(1000));    //設定動畫流暢度
             LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
 
             //檢查有安裝哪些軟體
             UpdateFunc = new UpdateFunction();
-            UpdateFunc.softwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(setSoftwareShow);
+            UpdateFunc.softwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
             UpdateFunc.checkExistSoftware(true);
-
+            
             string message = "";
             if (developerMode == true)
             {
@@ -179,6 +183,16 @@ namespace OrderManagerNew
                         }
                         break;
                     }
+                case "DevBtn6":
+                    {
+                        splint_download.IsEnabled = false;
+                        DialogBeforeDownload = new BeforeDownload();
+                        DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                        DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                        DialogBeforeDownload.GethttpResoponse(@"https://www.dropbox.com/s/dj6p305a3ckkjxz/EZCAD.Splint_1.0.20214.0.exe?dl=1", (int)_softwareID.Splint);
+
+                        break;
+                    }
             }
         }
 
@@ -270,7 +284,7 @@ namespace OrderManagerNew
         /// <param name="currentProgress">(目前進度) 未安裝、下載中、已安裝</param>
         /// <param name="softwareID">(軟體ID) EZCAD、Implant、Ortho、Tray、Splint</param>
         /// <returns></returns>
-        void setSoftwareShow(int softwareID, int currentProgress)
+        void Handler_setSoftwareShow(int softwareID, int currentProgress)
         {
             switch (softwareID)
             {
@@ -637,21 +651,12 @@ namespace OrderManagerNew
                     }
                 case "splint_download":
                     {
-                        BeforeDownload DialogBeforeDownload = new BeforeDownload();
-                        if(DialogBeforeDownload.SetInformation(@"https://www.dropbox.com/s/dj6p305a3ckkjxz/EZCAD.Splint_1.0.20214.0.exe?dl=1", (int)_softwareID.Splint) == true)
-                        {
-                            //主視窗羽化
-                            var blur = new BlurEffect();
-                            this.Effect = blur;
-
-                            DialogBeforeDownload.Owner = this;
-                            DialogBeforeDownload.ShowActivated = true;
-                            DialogBeforeDownload.ShowDialog();
-
-                            //主視窗還原
-                            this.Effect = null;
-                            this.OpacityMask = null;
-                        }
+                        splint_download.IsEnabled = false;
+                        DialogBeforeDownload = new BeforeDownload();
+                        DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                        DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                        DialogBeforeDownload.GethttpResoponse(@"https://www.dropbox.com/s/dj6p305a3ckkjxz/EZCAD.Splint_1.0.20214.0.exe?dl=1" , (int)_softwareID.Splint);
+                        
                         break;
                     }
                 case "splint_open":
@@ -675,6 +680,28 @@ namespace OrderManagerNew
                         break;
                     }
                     #endregion
+            }
+        }
+
+        /// <summary>
+        /// 從網上獲取下載資料成功就顯示BeforeDownload頁面
+        /// </summary>
+        void Handler_ShowBeforeDownload()
+        {
+            splint_download.IsEnabled = true;
+            if (DialogBeforeDownload.SetInformation() == true)
+            {
+                //主視窗羽化
+                var blur = new BlurEffect();
+                this.Effect = blur;
+
+                DialogBeforeDownload.Owner = this;
+                DialogBeforeDownload.ShowActivated = true;
+                DialogBeforeDownload.ShowDialog();
+
+                //主視窗還原
+                this.Effect = null;
+                this.OpacityMask = null;
             }
         }
 
@@ -799,8 +826,7 @@ namespace OrderManagerNew
         /// <returns></returns>
         private void SnackBarShow(string Message)
         {
-            var messageQueue = SnackbarMain.MessageQueue;
-            Task.Factory.StartNew(() => messageQueue.Enqueue(Message));
+            Task.Factory.StartNew(() => MainsnackbarMessageQueue.Enqueue(Message));
         }
 
         private void SortTable_TextChanged(object sender, TextChangedEventArgs e)

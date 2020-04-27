@@ -4,7 +4,8 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Title="BeforeDownload" Width="450"
   Height="360" AllowsTransparency="True"
   Background="{DynamicResource Common_DarkBackGround}"
-  WindowStartupLocation="CenterScreen" WindowStyle="None" mc:Ignorable="d">
+  ShowInTaskbar="False" WindowStartupLocation="CenterScreen" WindowStyle="None"
+  mc:Ignorable="d">
 
     <Window.Resources>
         <ResourceDictionary>
