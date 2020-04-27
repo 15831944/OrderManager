@@ -175,7 +175,8 @@ namespace OrderManagerNew
                     else
                     {
                         MessageBox.Show("Can't get user remaining space");//無法獲取客戶電腦剩餘空間 //TODO 多國語系
-                        httpResponse.Close();
+                        if (httpResponse != null)
+                            httpResponse.Close();
                         return false;
                     }
                 }
@@ -183,10 +184,12 @@ namespace OrderManagerNew
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Network error");   //網路連線異常or載點掛掉 //TODO 多國語系
-                httpResponse.Close();
+                if(httpResponse != null)
+                    httpResponse.Close();
                 return false;
             }
-            httpResponse.Close();
+            if (httpResponse != null)
+                httpResponse.Close();
             return true;
         }
 
@@ -233,35 +236,34 @@ namespace OrderManagerNew
 
         void tmr_Elapsed(object sender, EventArgs e)
         {
-            httpResponse.Close();
-            tmr.Dispose();
             Handler_snackbarShow("can't get network response, please restart ordermanager and try again"); //超過5秒回應時間 //TODO 多國語系
-            DialogResult = false;
+            tmr.Stop();
         }
 
         void CompletedWork(object sender, RunWorkerCompletedEventArgs e)
         {
-            SetHttpResponseOK();
+            
             if (e.Error != null)
             {
-                tmr.Dispose();
+                tmr.Stop();
                 MessageBox.Show("Error");   //錯誤 //TODO 多國語系
             }
             else if (e.Cancelled)
             {
-                tmr.Dispose();
+                tmr.Stop();
                 MessageBox.Show("Canceled");    //取消 //TODO 多國語系
             }
             else
             {
-                tmr.Dispose();
+                tmr.Stop();
+                SetHttpResponseOK();
             }
         }
 
         /// <summary>
         /// 用多執行緒去取得httpResponse
         /// </summary>
-        /// <param name="http_url">下載網址</param>
+        /// <param name="Import_http_url">下載網址</param>
         /// <param name="SoftwareID">軟體ID(參考EnumSummary的_softwareID)</param>
         /// <returns></returns>
         public void GethttpResoponse(string Import_http_url, int SoftwareID)
