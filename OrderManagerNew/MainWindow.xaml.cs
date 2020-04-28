@@ -29,14 +29,16 @@ namespace OrderManagerNew
 {
     public partial class MainWindow : Window
     {
-        LogRecorder log;                        //日誌檔cs
-        UpdateFunction UpdateFunc;              //軟體更新cs
-        BeforeDownload DialogBeforeDownload;    //下載前置畫面
-        bool developerMode = true;              //開發者模式
-        bool loginStatus = false;               //是否登入了
-        bool showUserDetail = false;            //是否正在顯示UserDetail
-        MaterialDesignThemes.Wpf.SnackbarMessageQueue MainsnackbarMessageQueue;
-
+        #region 變數宣告
+        LogRecorder log;                            //日誌檔cs
+        UpdateFunction UpdateFunc;                  //軟體更新cs
+        BeforeDownload DialogBeforeDownload;        //下載前置畫面
+        bool developerMode = true;                  //開發者模式
+        bool loginStatus = false;                   //是否登入了
+        bool showUserDetail = false;                //是否正在顯示UserDetail
+        MaterialDesignThemes.Wpf.SnackbarMessageQueue MainsnackbarMessageQueue; //Snackbar
+        #endregion
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -74,31 +76,33 @@ namespace OrderManagerNew
             MediaTimeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(1000));    //設定動畫流暢度
             LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
 
-            //檢查有安裝哪些軟體
+            
             UpdateFunc = new UpdateFunction();
             UpdateFunc.softwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
-            UpdateFunc.checkExistSoftware(true);
-            
-            string message = "";
+            UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
+            UpdateFunc.checkExistSoftware(true);    //檢查有安裝哪些軟體
+            UpdateFunc.loadHLXml();                 //截取線上HL.xml內的資料
+
+            //工程師模式切換
             if (developerMode == true)
             {
                 //開發者模式
-                message = "Developer Mode";
+                string message = "Developer Mode";
                 Thickness Custommargin = Dev_btnGrid.Margin;
                 Custommargin.Bottom = 40;
                 Dev_btnGrid.Margin = Custommargin;
                 Properties.Settings.Default.engineerMode = true;
+                SnackBarShow(message);
             }
             else
             {
                 //使用者模式
-                message = "Customer Mode";
                 Thickness Custommargin = Dev_btnGrid.Margin;
                 Custommargin.Bottom = -120;
                 Dev_btnGrid.Margin = Custommargin;
                 Properties.Settings.Default.engineerMode = false;
             }
-            SnackBarShow(message);
+            
         }
 
         #region WindowFrame
@@ -128,6 +132,7 @@ namespace OrderManagerNew
             {
                 case "DevBtn1":
                     {
+                        //Reset Properties
                         Properties.Settings.Default.path_EZCAD = "";
                         Properties.Settings.Default.path_Implant = "";
                         Properties.Settings.Default.path_Ortho = "";
@@ -135,18 +140,23 @@ namespace OrderManagerNew
                         Properties.Settings.Default.path_Splint = "";
                         Properties.Settings.Default.path_Guide = "";
                         Properties.Settings.Default.sysLanguage = "";
+                        Properties.Settings.Default.DownloadFolder = "";
+                        Properties.Settings.Default.engineerMode = false;
+                        Properties.Settings.Default.PingTime = 5;
                         Properties.Settings.Default.Save();
-
                         UpdateFunc.checkExistSoftware(false);
+                        SnackBarShow("Reset Properties Success");
                         break;
                     }
                 case "DevBtn2":
                     {
+                        //Load HL.xml
                         UpdateFunc.loadHLXml();
                         break;
                     }
                 case "DevBtn3":
                     {
+                        //Delete Log
                         if (File.Exists("OrderManager.log") == true)
                         {
                             File.Delete("OrderManager.log");
@@ -159,6 +169,7 @@ namespace OrderManagerNew
                     }
                 case "DevBtn4":
                     {
+                        //Show Log
                         if (File.Exists("OrderManager.log") == true)
                         {
                             Process OpenLog = new Process();
@@ -171,6 +182,7 @@ namespace OrderManagerNew
                     }
                 case "DevBtn5":
                     {
+                        //LoginStatus
                         if(loginStatus == true)
                         {
                             loginStatus = false;
@@ -185,7 +197,8 @@ namespace OrderManagerNew
                     }
                 case "DevBtn6":
                     {
-                        splint_download.IsEnabled = false;
+                        //Splint Download
+                        SetAllSoftwareTableDownloadisEnable(false);
                         DialogBeforeDownload = new BeforeDownload();
                         DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
                         DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
@@ -283,8 +296,9 @@ namespace OrderManagerNew
         /// </summary>
         /// <param name="currentProgress">(目前進度) 未安裝、下載中、已安裝</param>
         /// <param name="softwareID">(軟體ID) EZCAD、Implant、Ortho、Tray、Splint</param>
+        /// <param name="downloadPercent">(下載百分比) 100%的值為1.00</param>
         /// <returns></returns>
-        void Handler_setSoftwareShow(int softwareID, int currentProgress)
+        void Handler_setSoftwareShow(int softwareID, int currentProgress, double downloadPercent)
         {
             switch (softwareID)
             {
@@ -310,6 +324,7 @@ namespace OrderManagerNew
                                 {
                                     mask_EZCAD.Visibility = Visibility.Hidden;
                                     process_EZCAD.Visibility = Visibility.Visible;
+                                    process_EZCAD.EndAngle = 360 - 360 * downloadPercent;
                                     popupbox_EZCAD.IsEnabled = false;
                                     break;
                                 }
@@ -352,6 +367,7 @@ namespace OrderManagerNew
                                 {
                                     mask_Implant.Visibility = Visibility.Hidden;
                                     process_Implant.Visibility = Visibility.Visible;
+                                    process_Implant.EndAngle = 360 - 360 * downloadPercent;
                                     popupbox_Implant.IsEnabled = false;
                                     break;
                                 }
@@ -394,6 +410,7 @@ namespace OrderManagerNew
                                 {
                                     mask_Ortho.Visibility = Visibility.Hidden;
                                     process_Ortho.Visibility = Visibility.Visible;
+                                    process_Ortho.EndAngle = 360 - 360 * downloadPercent;
                                     popupbox_Ortho.IsEnabled = false;
                                     break;
                                 }
@@ -436,6 +453,7 @@ namespace OrderManagerNew
                                 {
                                     mask_Tray.Visibility = Visibility.Hidden;
                                     process_Tray.Visibility = Visibility.Visible;
+                                    process_Tray.EndAngle = 360 - 360 * downloadPercent;
                                     popupbox_Tray.IsEnabled = false;
                                     break;
                                 }
@@ -478,6 +496,7 @@ namespace OrderManagerNew
                                 {
                                     mask_Splint.Visibility = Visibility.Hidden;
                                     process_Splint.Visibility = Visibility.Visible;
+                                    process_Splint.EndAngle = 360 - 360 * downloadPercent;
                                     popupbox_Splint.IsEnabled = false;
                                     break;
                                 }
@@ -651,7 +670,8 @@ namespace OrderManagerNew
                     }
                 case "splint_download":
                     {
-                        splint_download.IsEnabled = false;
+                        UpdateFunc.readyInstallSoftwareID = (int)_softwareID.Splint;
+                        SetAllSoftwareTableDownloadisEnable(false);
                         DialogBeforeDownload = new BeforeDownload();
                         DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
                         DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
@@ -683,12 +703,22 @@ namespace OrderManagerNew
             }
         }
 
+        void SetAllSoftwareTableDownloadisEnable(bool enable)
+        {
+            cad_download.IsEnabled = enable;
+            implant_download.IsEnabled = enable;
+            ortho_download.IsEnabled = enable;
+            tray_download.IsEnabled = enable;
+            splint_download.IsEnabled = enable;
+        }
+
         /// <summary>
-        /// 從網上獲取下載資料成功就顯示BeforeDownload頁面
-        /// </summary>
+            /// 從網上獲取下載資料成功就顯示BeforeDownload頁面
+            /// </summary>
         void Handler_ShowBeforeDownload()
         {
-            splint_download.IsEnabled = true;
+            bool DownloadStart = false;
+            SetAllSoftwareTableDownloadisEnable(true);
             if (DialogBeforeDownload.SetInformation() == true)
             {
                 //主視窗羽化
@@ -698,13 +728,22 @@ namespace OrderManagerNew
                 DialogBeforeDownload.Owner = this;
                 DialogBeforeDownload.ShowActivated = true;
                 DialogBeforeDownload.ShowDialog();
+                if(DialogBeforeDownload.DialogResult == true)
+                {
+                    SetAllSoftwareTableDownloadisEnable(false);
+                    SnackBarShow("Start Download"); //開始下載 //TODO 多國語系
+                    DownloadStart = true;
+                }
 
                 //主視窗還原
                 this.Effect = null;
                 this.OpacityMask = null;
             }
-        }
 
+            if (DownloadStart == true)
+                UpdateFunc.StartDownloadSoftware();
+        }
+        
         private void FunctionTable_Click_User(object sender, RoutedEventArgs e)
         {
             if (loginStatus == false)

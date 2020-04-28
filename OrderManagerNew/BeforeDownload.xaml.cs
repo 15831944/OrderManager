@@ -39,7 +39,7 @@ namespace OrderManagerNew
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool GetDiskFreeSpaceEx(string lpDirectoryName, out ulong lpFreeBytesAvailable, out ulong lpTotalNumberOfBytes, out ulong lpTotalNumberOfFreeBytes);
 
-        private BackgroundWorker m_BackgroundWorker;//申明後臺物件
+        BackgroundWorker m_BackgroundWorker;        //申明後臺物件
         HttpWebResponse httpResponse;               //共用同一個WebResponse以便清除內部殘留資料
         string http_url;                            //下載網址
         Timer tmr;                                  //計時器(用在GetResponse)
@@ -85,7 +85,62 @@ namespace OrderManagerNew
             {
                 case "sysBtn_Yes":
                     {
-                        this.DialogResult = true;
+                        //檢查客戶端容量是否比軟體檔案所需空間大超過3倍，如果沒有就Messagebox警告
+                        if(label_AvailableSpace.Foreground == Brushes.Orange)
+                        {
+                            if(MessageBox.Show("磁碟空間可能不足以安裝軟體", "Waring", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
+                            {
+                                //磁碟空間可能不足以安裝軟體 //TODO 多國語系
+                                this.DialogResult = true;
+                            }
+                            else
+                            {
+                                this.DialogResult = false;
+                            }
+                        }
+                        else if(label_AvailableSpace.Foreground == Brushes.Orange)
+                        {
+                            MessageBox.Show("磁碟空間不足以安裝軟體，請空出更多磁碟空間");//磁碟空間不足以安裝軟體 //TODO 多國語系
+                            this.DialogResult = false;
+                        }
+                        else
+                        {
+                            switch(currentSoftwareID)
+                            {
+                                case (int)_softwareID.EZCAD:
+                                    {
+                                        Properties.Settings.Default.path_EZCAD = textbox_InstallPath.Text;
+                                        break;
+                                    }
+                                case (int)_softwareID.Implant:
+                                    {
+                                        Properties.Settings.Default.path_Implant = textbox_InstallPath.Text;
+                                        break;
+                                    }
+                                case (int)_softwareID.Ortho:
+                                    {
+                                        Properties.Settings.Default.path_Ortho = textbox_InstallPath.Text;
+                                        break;
+                                    }
+                                case (int)_softwareID.Tray:
+                                    {
+                                        Properties.Settings.Default.path_Tray = textbox_InstallPath.Text;
+                                        break;
+                                    }
+                                case (int)_softwareID.Splint:
+                                    {
+                                        Properties.Settings.Default.path_Splint = textbox_InstallPath.Text;
+                                        break;
+                                    }
+                                case (int)_softwareID.Guide:
+                                    {
+                                        Properties.Settings.Default.path_Guide = textbox_InstallPath.Text;
+                                        break;
+                                    }
+                            }
+                            Properties.Settings.Default.Save();
+                            this.DialogResult = true;
+                        }
                         break;
                     }
                 case "sysBtn_Cancel":
@@ -103,25 +158,33 @@ namespace OrderManagerNew
         /// <returns></returns>
         bool RemainingSpace(string Drive)
         {
-            if (Directory.Exists(Drive) == false)
+            try
             {
-                System.IO.Directory.CreateDirectory(Drive);
+                if (Directory.Exists(Drive) == false)
+                {
+                    System.IO.Directory.CreateDirectory(Drive);
+                }
+
+                ulong FreeBytesAvailable;
+                ulong TotalNumberOfBytes;
+                ulong TotalNumberOfFreeBytes;
+                string str = Path.GetPathRoot(Drive);
+                bool success = GetDiskFreeSpaceEx(Path.GetPathRoot(Drive), out FreeBytesAvailable, out TotalNumberOfBytes, out TotalNumberOfFreeBytes);
+
+                if (!success)
+                {
+                    MessageBox.Show("Can't get space! try use adnim mode"); //TODO 多國語系
+                    return false;
+                }
+
+                label_AvailableSpace.Tag = TotalNumberOfFreeBytes;
+                label_AvailableSpace.Content = convertDiskUnit(TotalNumberOfFreeBytes);
+                return true;
             }
-
-            ulong FreeBytesAvailable;
-            ulong TotalNumberOfBytes;
-            ulong TotalNumberOfFreeBytes;
-            string str = Path.GetPathRoot(Drive);
-            bool success = GetDiskFreeSpaceEx(Path.GetPathRoot(Drive), out FreeBytesAvailable, out TotalNumberOfBytes, out TotalNumberOfFreeBytes);
-
-            if (!success)
+            catch(Exception ex)
             {
-                MessageBox.Show("Can't get space! try use adnim mode"); //TODO 多國語系
                 return false;
             }
-
-            label_AvailableSpace.Content = convertDiskUnit(TotalNumberOfFreeBytes);
-            return true;
         }
 
         /// <summary>
@@ -171,7 +234,26 @@ namespace OrderManagerNew
                     string downloadfileRealName = System.IO.Path.GetFileName(uri.LocalPath);
                     
                     if (RemainingSpace(textbox_InstallPath.Text) == true)  //客戶電腦剩餘空間
+                    {
+                        label_RequireSpace.Tag = Convert.ToUInt64(httpResponse.ContentLength);
                         label_RequireSpace.Content = convertDiskUnit(Convert.ToUInt64(httpResponse.ContentLength));
+
+                        if((ulong)label_AvailableSpace.Tag < (ulong)label_RequireSpace.Tag)
+                        {
+                            label_AvailableSpace.Foreground = Brushes.Orange;
+                            label_AvailableSpace.ToolTip = "磁碟空間不足以安裝軟體";//磁碟空間不足以安裝軟體 //TODO 多國語系
+                        }
+                        else if((ulong)label_AvailableSpace.Tag < (ulong)label_RequireSpace.Tag * 3)
+                        {
+                            label_AvailableSpace.Foreground = Brushes.Orange;
+                            label_AvailableSpace.ToolTip = "磁碟空間可能不足以安裝軟體";//磁碟空間可能不足以安裝軟體 //TODO 多國語系
+                        }
+                        else
+                        {
+                            label_AvailableSpace.Foreground = Brushes.White;
+                            label_AvailableSpace.ToolTip = "";
+                        }
+                    }
                     else
                     {
                         MessageBox.Show("Can't get user remaining space");//無法獲取客戶電腦剩餘空間 //TODO 多國語系
@@ -193,9 +275,9 @@ namespace OrderManagerNew
             return true;
         }
 
+        #region 多執行緒處理接收網路下載資料內容
         void DoWork(object sender, DoWorkEventArgs e)
         {
-
             //倒數計時3秒
             tmr = new Timer();
             if(Properties.Settings.Default.PingTime != 0)
@@ -207,7 +289,6 @@ namespace OrderManagerNew
                 Properties.Settings.Default.Save();
             }
                 
-
             tmr.Elapsed += tmr_Elapsed;  // 使用事件代替委託
             tmr.Start();          // 重啟定時器
 
@@ -233,13 +314,7 @@ namespace OrderManagerNew
                 e.Cancel = true;
             }
         }
-
-        void tmr_Elapsed(object sender, EventArgs e)
-        {
-            Handler_snackbarShow("can't get network response, please restart ordermanager and try again"); //超過5秒回應時間 //TODO 多國語系
-            tmr.Stop();
-        }
-
+        
         void CompletedWork(object sender, RunWorkerCompletedEventArgs e)
         {
             
@@ -258,6 +333,16 @@ namespace OrderManagerNew
                 tmr.Stop();
                 SetHttpResponseOK();
             }
+        }
+        #endregion
+
+        /// <summary>
+        /// 計時器結束事件
+        /// </summary>
+        void tmr_Elapsed(object sender, EventArgs e)
+        {
+            Handler_snackbarShow("can't get network response, please restart ordermanager and try again"); //超過5秒回應時間 //TODO 多國語系
+            tmr.Stop();
         }
 
         /// <summary>

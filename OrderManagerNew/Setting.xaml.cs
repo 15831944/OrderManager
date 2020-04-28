@@ -32,7 +32,12 @@ namespace OrderManagerNew
             textbox_Tray.Text = Properties.Settings.Default.path_Tray;
             textbox_Splint.Text = Properties.Settings.Default.path_Splint;
             textbox_Guide.Text = Properties.Settings.Default.path_Guide;
-            textbox_Download.Text = Properties.Settings.Default.DownloadFolder;
+
+
+            if (Properties.Settings.Default.DownloadFolder == "")
+                textbox_Download.Text = Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + @"IntewareTempFile\";
+            else
+                textbox_Download.Text = Properties.Settings.Default.DownloadFolder;
 
             if (Properties.Settings.Default.sysLanguage == "zh-TW")
                 comboboxLanguage.SelectedIndex = 1;
@@ -138,7 +143,7 @@ namespace OrderManagerNew
                             Properties.Settings.Default.path_Guide = "";
 
                         if (Directory.Exists(textbox_Download.Text) == true)
-                            Properties.Settings.Default.DownloadFolder = Path.GetDirectoryName(textbox_Download.Text);
+                            Properties.Settings.Default.DownloadFolder = textbox_Download.Text;
                         else
                         {
                             Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + "IntewareTempFile\\";

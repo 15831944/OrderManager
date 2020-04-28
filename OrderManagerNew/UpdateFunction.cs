@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;                                  //XDocument用
@@ -14,16 +15,23 @@ namespace OrderManagerNew
 {
     public class UpdateFunction
     {
-        LogRecorder log;//日誌檔cs
+        #region 變數宣告
         string HLXMLlink = @"https://inteware.com.tw/updateXML/HL.xml";//HL.xml網址
+        string downloadfilepath;
+        LogRecorder log;    //日誌檔cs
+        BackgroundWorker bgWorker_Download;        //申明後臺物件
+        public int readyInstallSoftwareID { get; set; } //將要安裝的軟體ID
 
         //委派到MainWindow.xaml.cs裡面的setSoftwareShow()
-        public delegate void softwareLogoShowEventHandler(int softwareID, int currentProgress);
+        public delegate void softwareLogoShowEventHandler(int softwareID, int currentProgress, double downloadPercent);
         public event softwareLogoShowEventHandler softwareLogoShowEvent;
+        //委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
+        public delegate void updatefuncEventHandler_snackbar(string message);
+        public event updatefuncEventHandler_snackbar Handler_snackbarShow;
 
-        List<SoftwareInfo> UserSoftwareTotal;
-        List<SoftwareInfo> CloudSoftwareTotal;
-
+        List<SoftwareInfo> UserSoftwareTotal;   //客戶已安裝軟體清單
+        List<SoftwareInfo> CloudSoftwareTotal;  //軟體最新版清單
+        #endregion
         public class SoftwareInfo
         {
             public int softwareID;              //參考EnumSummary的_softwareID
@@ -58,202 +66,10 @@ namespace OrderManagerNew
             log = new LogRecorder();
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs", "Initial Start");
             CloudSoftwareTotal = new List<SoftwareInfo>();
+            readyInstallSoftwareID = -1;
+            downloadfilepath = "";
         }
-
-        /// <summary>
-        /// 讀取HL.xml的詳細更新資訊
-        /// </summary>
-        public void loadHLXml()
-        {
-            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-
-            XDocument xDoc;
-            try
-            {
-                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs", "load HL.xml Start");
-                CloudSoftwareTotal = new List<SoftwareInfo>();
-                HLXMLlink = "C:\\InteWare\\HL.xml";    //單機測試
-                using (StreamReader oReader = new StreamReader(HLXMLlink, Encoding.GetEncoding("utf-8")))
-                {
-                    xDoc = XDocument.Load(oReader);
-                }
-
-                var SoftwareHL_Dongle = from q in xDoc.Descendants("Software").Descendants("Dongle").Descendants("Item")
-                                   select new
-                                   {
-                                       SName = q.Descendants("SoftwareName").First().Value,
-                                       SVersion = q.Descendants("LatestVersion").First().Value,
-                                       SHyperlink = q.Descendants("HyperLink").First().Value,
-                                       SDescription = q.Descendants("Description").First().Value,
-                                       SSize = q.Descendants("Size").First().Value,
-                                   };
-
-                var SoftwareHL_License = from q in xDoc.Descendants("Software").Descendants("License").Descendants("Item")
-                                   select new
-                                   {
-                                       SName = q.Descendants("SoftwareName").First().Value,
-                                       SVersion = q.Descendants("LatestVersion").First().Value,
-                                       SHyperlink = q.Descendants("HyperLink").First().Value,
-                                       SDescription = q.Descendants("Description").First().Value,
-                                       SSize = q.Descendants("Size").First().Value,
-                                   };
-
-                var OthersHL = from q in xDoc.Descendants("Others").Descendants("Item")
-                               select new
-                               {
-                                   OSupportSoftwareName = q.Descendants("SupportSoftware").First().Value,
-                                   OProduct = q.Descendants("product").First().Value,
-                                   OVersion = q.Descendants("LatestVersion").First().Value,
-                                   OHyperlink = q.Descendants("HyperLink").First().Value,
-                                   ODescription = q.Descendants("Description").First().Value,
-                                   OSize = q.Descendants("Size").First().Value
-                               };
-
-                foreach (var item in SoftwareHL_Dongle)
-                {
-                    SoftwareInfo softDongle = new SoftwareInfo();
-                    if (item.SName.ToLower().IndexOf("ortho") != -1)
-                        softDongle.softwareID = (int)_softwareID.Ortho;
-                    else if (item.SName.ToLower().IndexOf("implant") != -1)
-                        softDongle.softwareID = (int)_softwareID.Implant;
-                    else if (item.SName.ToLower().IndexOf("tray") != -1)
-                        softDongle.softwareID = (int)_softwareID.Tray;
-                    else if (item.SName.ToLower().IndexOf("splint") != -1)
-                        softDongle.softwareID = (int)_softwareID.Splint;
-                    else if (item.SName.ToLower().IndexOf("guide") != -1)
-                        softDongle.softwareID = (int)_softwareID.Guide;
-                    else if (item.SName.ToLower().IndexOf("cad") != -1)
-                        softDongle.softwareID = (int)_softwareID.EZCAD;
-                    else
-                        break;
-
-                    softDongle.softwareInstalled = (int)_softwareStatus.Cloud;
-                    softDongle.softwareLicense = (int)_softwareLic.Dongle;
-                    softDongle.softwareName = item.SName;
-                    softDongle.softwareSize = float.Parse(item.SSize);
-                    softDongle.softwareVersion = item.SVersion;
-                    softDongle.softwareDownloadLink = item.SHyperlink.Replace("\n ", "").Replace("\r ", "").Replace(" ", "");
-
-                    CloudSoftwareTotal.Add(softDongle);
-                }
-
-                foreach (var item in SoftwareHL_License)
-                {
-                    SoftwareInfo softLicense = new SoftwareInfo();
-                    if (item.SName.ToLower().IndexOf("ortho") != -1)
-                        softLicense.softwareID = (int)_softwareID.Ortho;
-                    else if (item.SName.ToLower().IndexOf("implant") != -1)
-                        softLicense.softwareID = (int)_softwareID.Implant;
-                    else if (item.SName.ToLower().IndexOf("tray") != -1)
-                        softLicense.softwareID = (int)_softwareID.Tray;
-                    else if (item.SName.ToLower().IndexOf("splint") != -1)
-                        softLicense.softwareID = (int)_softwareID.Splint;
-                    else if (item.SName.ToLower().IndexOf("guide") != -1)
-                        softLicense.softwareID = (int)_softwareID.Guide;
-                    else if (item.SName.ToLower().IndexOf("cad") != -1)
-                        softLicense.softwareID = (int)_softwareID.EZCAD;
-                    else
-                        break;
-
-                    softLicense.softwareInstalled = (int)_softwareStatus.Cloud;
-                    softLicense.softwareLicense = (int)_softwareLic.License;
-                    softLicense.softwareName = item.SName;
-                    softLicense.softwareSize = float.Parse(item.SSize);
-                    softLicense.softwareVersion = item.SVersion;
-                    softLicense.softwareDownloadLink = item.SHyperlink.Replace("\n ", "").Replace("\r ", "").Replace(" ", "");
-
-                    CloudSoftwareTotal.Add(softLicense);
-                }
-
-                if(Properties.Settings.Default.engineerMode == true)
-                    SoftwareInfoLog(CloudSoftwareTotal, "CloudSoftwareTotal");
-            }
-            catch (Exception ex)
-            {
-                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs Initial exception", ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 檢查使用者安裝哪些軟體
-        /// </summary>
-        /// <param name="generateVersionXml">是否重建Version.xml並讀取</param>
-        /// <returns></returns>
-        public void checkExistSoftware(bool generateVersionXml)
-        {
-            UserSoftwareTotal = new List<SoftwareInfo>();
-
-            if (File.Exists(Properties.Settings.Default.path_EZCAD) == true)
-            {
-                softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed);
-
-                if(generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.path_EZCAD);
-            }
-            else
-            {
-                softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall);
-            }
-
-            if (File.Exists(Properties.Settings.Default.path_Implant) == true)
-            {
-                softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed);
-
-                if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.path_Implant);
-            }
-            else
-            {
-                softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall);
-            }
-
-            if (File.Exists(Properties.Settings.Default.path_Ortho) == true)
-            {
-                softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed);
-
-                if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.path_Ortho);
-            }
-            else
-            {
-                softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall);
-            }
-
-            if (File.Exists(Properties.Settings.Default.path_Tray) == true)
-            {
-                softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed);
-
-                if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.path_Tray);
-            }
-            else
-            {
-                softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall);
-            }
-
-            if (File.Exists(Properties.Settings.Default.path_Splint) == true)
-            {
-                softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed);
-
-                if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.path_Splint);
-            }
-            else
-            {
-                softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall);
-            }
-
-            if (File.Exists(Properties.Settings.Default.path_Guide) == true)
-            {
-                if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.path_Guide);
-            }
-
-            if (generateVersionXml == true)
-                SoftwareInfoLog(UserSoftwareTotal, "UserSoftwareTotal");
-        }
-
+        
         /// <summary>
         /// 重新輸出Version.xml
         /// </summary>
@@ -423,7 +239,7 @@ namespace OrderManagerNew
             else
             {
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RebuildVersionXML()", softwarePath + " not old version but can't generate Version.xml");
-                //給1秒等待軟體生出Version.xml
+                //TODO 給1秒等待軟體生出Version.xml
             }
         }
 
@@ -514,6 +330,304 @@ namespace OrderManagerNew
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareDownloadLink", outputInfo[i].softwareDownloadLink);
                 log.RecordLogSaperate();
             }
+        }
+
+        #region 多執行緒處理下載軟體
+        public void StartDownloadSoftware()
+        {
+            if (readyInstallSoftwareID == -1)
+            {
+                Handler_snackbarShow("No SoftwareID");    //NoSoftwareID停止下載//TODO多國語系
+                return;
+            }
+
+            //開始下載多執行緒
+            bgWorker_Download = new BackgroundWorker();
+            bgWorker_Download.DoWork += new DoWorkEventHandler(DownloadSoftware_DoWork);
+            bgWorker_Download.ProgressChanged += new ProgressChangedEventHandler(DownloadSoftware_UpdateProgress);
+            bgWorker_Download.RunWorkerCompleted += new RunWorkerCompletedEventHandler(DownloadSoftware_CompletedWork);
+            bgWorker_Download.WorkerReportsProgress = true;
+            bgWorker_Download.WorkerSupportsCancellation = true;
+            bgWorker_Download.RunWorkerAsync(this);
+        }
+
+        void DownloadSoftware_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker bw = sender as BackgroundWorker;
+            string downloadUrl = "";
+
+            //跳過https檢測 & Win7 相容
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+
+            for(int i=0; i< CloudSoftwareTotal.Count; i++)
+            {
+                if ((int)CloudSoftwareTotal[i].softwareID == (int)readyInstallSoftwareID && (int)CloudSoftwareTotal[i].softwareLicense == (int)_softwareLic.License)    //TODO 之後沒有分Lic
+                    downloadUrl = CloudSoftwareTotal[i].softwareDownloadLink;
+            }
+
+            //Request資料
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(downloadUrl);
+            httpRequest.Credentials = CredentialCache.DefaultCredentials;
+            httpRequest.UserAgent = ".NET Framework Example Client";
+            httpRequest.Method = "GET";
+
+            Handler_snackbarShow("Get httpRequest Response Start..."); //開始取得資料 //TODO 多國語系
+            HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+
+            try
+            {
+                if (((HttpWebResponse)httpResponse).StatusDescription == "OK" && httpResponse.ContentLength > 1)
+                {
+                    if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == false)
+                    {
+                        Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + "IntewareTempFile\\";
+                        Properties.Settings.Default.Save();
+                        System.IO.Directory.CreateDirectory(Properties.Settings.Default.DownloadFolder);
+                    }
+                        
+                    // 取得下載的檔名
+                    Uri uri = new Uri(downloadUrl);
+                    downloadfilepath = Properties.Settings.Default.DownloadFolder + @"\" + System.IO.Path.GetFileName(uri.LocalPath);
+                    Stream netStream = httpResponse.GetResponseStream();
+                    Stream fileStream = new FileStream(downloadfilepath, FileMode.Create);
+                    byte[] read = new byte[1024];
+                    long progressBarValue = 0;
+                    int realReadLen = netStream.Read(read, 0, read.Length);
+
+                    while (realReadLen > 0)
+                    {
+                        fileStream.Write(read, 0, realReadLen);
+                        //realReadLen 是一個封包大小，progressBarValue會一直累加
+                        progressBarValue += realReadLen;
+                        double percent = (double)progressBarValue / (double)httpResponse.ContentLength;
+                        bw.ReportProgress(Convert.ToInt32(percent*100));
+                        realReadLen = netStream.Read(read, 0, read.Length);
+                    }
+                    netStream.Close();
+                    fileStream.Close();
+                }
+                else
+                {
+
+                }
+                httpResponse.Close();
+            }
+            catch (Exception ex)
+            {
+                Handler_snackbarShow(ex.Message);   //網路連線異常or載點掛掉 //TODO 多國語系
+                e.Cancel = true;
+            }
+        }
+
+        void DownloadSoftware_UpdateProgress(object sender, ProgressChangedEventArgs e)
+        {
+            int progress = e.ProgressPercentage;
+            softwareLogoShowEvent(readyInstallSoftwareID, (int)_softwareStatus.Downloading, (double)(progress));
+        }
+
+        void DownloadSoftware_CompletedWork(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Handler_snackbarShow("下載完成");   //下載完成  //TODO 多國語系
+            /*Process processer = new Process();
+            processer.StartInfo.FileName = OrthoProgramPath;
+            processer.StartInfo.Arguments = arguments;
+            processer.Start();*/
+        }
+        #endregion
+
+        /// <summary>
+        /// 讀取HL.xml的詳細更新資訊
+        /// </summary>
+        public void loadHLXml()
+        {
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+
+            XDocument xDoc;
+            try
+            {
+                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs", "load HL.xml Start");
+                CloudSoftwareTotal = new List<SoftwareInfo>();
+                HLXMLlink = "C:\\InteWare\\HL.xml";    //單機測試
+                using (StreamReader oReader = new StreamReader(HLXMLlink, Encoding.GetEncoding("utf-8")))
+                {
+                    xDoc = XDocument.Load(oReader);
+                }
+
+                var SoftwareHL_Dongle = from q in xDoc.Descendants("Software").Descendants("Dongle").Descendants("Item")
+                                        select new
+                                        {
+                                            SName = q.Descendants("SoftwareName").First().Value,
+                                            SVersion = q.Descendants("LatestVersion").First().Value,
+                                            SHyperlink = q.Descendants("HyperLink").First().Value,
+                                            SDescription = q.Descendants("Description").First().Value,
+                                            SSize = q.Descendants("Size").First().Value,
+                                        };
+
+                var SoftwareHL_License = from q in xDoc.Descendants("Software").Descendants("License").Descendants("Item")
+                                         select new
+                                         {
+                                             SName = q.Descendants("SoftwareName").First().Value,
+                                             SVersion = q.Descendants("LatestVersion").First().Value,
+                                             SHyperlink = q.Descendants("HyperLink").First().Value,
+                                             SDescription = q.Descendants("Description").First().Value,
+                                             SSize = q.Descendants("Size").First().Value,
+                                         };
+
+                var OthersHL = from q in xDoc.Descendants("Others").Descendants("Item")
+                               select new
+                               {
+                                   OSupportSoftwareName = q.Descendants("SupportSoftware").First().Value,
+                                   OProduct = q.Descendants("product").First().Value,
+                                   OVersion = q.Descendants("LatestVersion").First().Value,
+                                   OHyperlink = q.Descendants("HyperLink").First().Value,
+                                   ODescription = q.Descendants("Description").First().Value,
+                                   OSize = q.Descendants("Size").First().Value
+                               };
+
+                foreach (var item in SoftwareHL_Dongle)
+                {
+                    SoftwareInfo softDongle = new SoftwareInfo();
+                    if (item.SName.ToLower().IndexOf("ortho") != -1)
+                        softDongle.softwareID = (int)_softwareID.Ortho;
+                    else if (item.SName.ToLower().IndexOf("implant") != -1)
+                        softDongle.softwareID = (int)_softwareID.Implant;
+                    else if (item.SName.ToLower().IndexOf("tray") != -1)
+                        softDongle.softwareID = (int)_softwareID.Tray;
+                    else if (item.SName.ToLower().IndexOf("splint") != -1)
+                        softDongle.softwareID = (int)_softwareID.Splint;
+                    else if (item.SName.ToLower().IndexOf("guide") != -1)
+                        softDongle.softwareID = (int)_softwareID.Guide;
+                    else if (item.SName.ToLower().IndexOf("cad") != -1)
+                        softDongle.softwareID = (int)_softwareID.EZCAD;
+                    else
+                        break;
+
+                    softDongle.softwareInstalled = (int)_softwareStatus.Cloud;
+                    softDongle.softwareLicense = (int)_softwareLic.Dongle;
+                    softDongle.softwareName = item.SName;
+                    softDongle.softwareSize = float.Parse(item.SSize);
+                    softDongle.softwareVersion = item.SVersion;
+                    softDongle.softwareDownloadLink = item.SHyperlink.Replace("\n ", "").Replace("\r ", "").Replace(" ", "");
+
+                    CloudSoftwareTotal.Add(softDongle);
+                }
+
+                foreach (var item in SoftwareHL_License)
+                {
+                    SoftwareInfo softLicense = new SoftwareInfo();
+                    if (item.SName.ToLower().IndexOf("ortho") != -1)
+                        softLicense.softwareID = (int)_softwareID.Ortho;
+                    else if (item.SName.ToLower().IndexOf("implant") != -1)
+                        softLicense.softwareID = (int)_softwareID.Implant;
+                    else if (item.SName.ToLower().IndexOf("tray") != -1)
+                        softLicense.softwareID = (int)_softwareID.Tray;
+                    else if (item.SName.ToLower().IndexOf("splint") != -1)
+                        softLicense.softwareID = (int)_softwareID.Splint;
+                    else if (item.SName.ToLower().IndexOf("guide") != -1)
+                        softLicense.softwareID = (int)_softwareID.Guide;
+                    else if (item.SName.ToLower().IndexOf("cad") != -1)
+                        softLicense.softwareID = (int)_softwareID.EZCAD;
+                    else
+                        break;
+
+                    softLicense.softwareInstalled = (int)_softwareStatus.Cloud;
+                    softLicense.softwareLicense = (int)_softwareLic.License;
+                    softLicense.softwareName = item.SName;
+                    softLicense.softwareSize = float.Parse(item.SSize);
+                    softLicense.softwareVersion = item.SVersion;
+                    softLicense.softwareDownloadLink = item.SHyperlink.Replace("\n ", "").Replace("\r ", "").Replace(" ", "");
+
+                    CloudSoftwareTotal.Add(softLicense);
+                }
+
+                if (Properties.Settings.Default.engineerMode == true)
+                    SoftwareInfoLog(CloudSoftwareTotal, "CloudSoftwareTotal");
+            }
+            catch (Exception ex)
+            {
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs Initial exception", ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 檢查使用者安裝哪些軟體
+        /// </summary>
+        /// <param name="generateVersionXml">是否重建Version.xml並讀取</param>
+        /// <returns></returns>
+        public void checkExistSoftware(bool generateVersionXml)
+        {
+            UserSoftwareTotal = new List<SoftwareInfo>();
+
+            if (File.Exists(Properties.Settings.Default.path_EZCAD) == true)
+            {
+                softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
+
+                if (generateVersionXml == true)
+                    RebuildVersionXML(Properties.Settings.Default.path_EZCAD);
+            }
+            else
+            {
+                softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0);
+            }
+
+            if (File.Exists(Properties.Settings.Default.path_Implant) == true)
+            {
+                softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0);
+
+                if (generateVersionXml == true)
+                    RebuildVersionXML(Properties.Settings.Default.path_Implant);
+            }
+            else
+            {
+                softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0);
+            }
+
+            if (File.Exists(Properties.Settings.Default.path_Ortho) == true)
+            {
+                softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0);
+
+                if (generateVersionXml == true)
+                    RebuildVersionXML(Properties.Settings.Default.path_Ortho);
+            }
+            else
+            {
+                softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0);
+            }
+
+            if (File.Exists(Properties.Settings.Default.path_Tray) == true)
+            {
+                softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0);
+
+                if (generateVersionXml == true)
+                    RebuildVersionXML(Properties.Settings.Default.path_Tray);
+            }
+            else
+            {
+                softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0);
+            }
+
+            if (File.Exists(Properties.Settings.Default.path_Splint) == true)
+            {
+                softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0);
+
+                if (generateVersionXml == true)
+                    RebuildVersionXML(Properties.Settings.Default.path_Splint);
+            }
+            else
+            {
+                softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0);
+            }
+
+            if (File.Exists(Properties.Settings.Default.path_Guide) == true)
+            {
+                if (generateVersionXml == true)
+                    RebuildVersionXML(Properties.Settings.Default.path_Guide);
+            }
+
+            if (generateVersionXml == true)
+                SoftwareInfoLog(UserSoftwareTotal, "UserSoftwareTotal");
         }
     }
 }
