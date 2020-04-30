@@ -66,13 +66,13 @@
 
                 <Label Grid.Row="1" Grid.Column="0" Content="{local:LocExtension SpaceRequired}" />
                 <Label
-                  x:Name="label_RequireSpace" Grid.Row="1" Grid.Column="1"
-                  Grid.ColumnSpan="2" Content="101.1MB" />
+                  x:Name="label_RequireSpace" Grid.Row="1" Grid.Column="0"
+                  Grid.ColumnSpan="2" HorizontalAlignment="Right" Content="101.1MB" />
 
                 <Label Grid.Row="2" Grid.Column="0" Content="{local:LocExtension SpaceAvailable}" />
                 <Label
-                  x:Name="label_AvailableSpace" Grid.Row="2" Grid.Column="1"
-                  Grid.ColumnSpan="2" Content="99999999.9MB" />
+                  x:Name="label_AvailableSpace" Grid.Row="2" Grid.Column="0"
+                  Grid.ColumnSpan="2" HorizontalAlignment="Right" Content="99999999.9MB" />
 
                 <Label
                   Grid.Row="3" Grid.Column="0" VerticalAlignment="Bottom"

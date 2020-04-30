@@ -96,6 +96,8 @@
                                     <Button Click="TitleBar_Click_titlebarButtons" Content="{local:LocExtension Contect}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
+                            <Rectangle x:Name="mask2_EZCAD_Installing" Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_EZCAD_Installing" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0">
                             <Rectangle x:Name="mask_Implant" Style="{StaticResource maskImage}" />
@@ -114,6 +116,8 @@
                                     <Button Click="TitleBar_Click_titlebarButtons" Content="{local:LocExtension Contect}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
+                            <Rectangle x:Name="mask2_Implant_Installing" Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_Implant_Installing" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0">
                             <Rectangle x:Name="mask_Ortho" Style="{StaticResource maskImage}" />
@@ -132,6 +136,8 @@
                                     <Button Click="TitleBar_Click_titlebarButtons" Content="{local:LocExtension Contect}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
+                            <Rectangle x:Name="mask2_Ortho_Installing" Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_Ortho_Installing" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0">
                             <Rectangle x:Name="mask_Tray" Style="{StaticResource maskImage}" />
@@ -150,6 +156,8 @@
                                     <Button Click="TitleBar_Click_titlebarButtons" Content="{local:LocExtension Contect}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
+                            <Rectangle x:Name="mask2_Tray_Installing" Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_Tray_Installing" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0">
                             <Rectangle x:Name="mask_Splint" Style="{StaticResource maskImage}" />
@@ -168,6 +176,8 @@
                                     <Button Click="TitleBar_Click_titlebarButtons" Content="{local:LocExtension Contect}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
+                            <Rectangle x:Name="mask2_Splint_Installing" Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_Splint_Installing" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0">
                             <Image Source="ImageSource/FunctionTable/icon_update.png" Style="{StaticResource progressImage}" />

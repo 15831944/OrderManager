@@ -16,11 +16,12 @@ namespace OrderManagerNew
     public class UpdateFunction
     {
         #region 變數宣告
-        string HLXMLlink = @"https://inteware.com.tw/updateXML/HL.xml";//HL.xml網址
+        //string HLXMLlink = @"https://inteware.com.tw/updateXML/HL.xml";//HL.xml網址
+        string HLXMLlink = "C:\\InteWare\\HL.xml";    //單機測試//TODO之後要換到網上
         string downloadfilepath;
         LogRecorder log;    //日誌檔cs
         BackgroundWorker bgWorker_Download;        //申明後臺物件
-        public int readyInstallSoftwareID { get; set; } //將要安裝的軟體ID
+        public SoftwareInfo readyInstallSoftwareInfo;//準備要安裝的軟體Info
 
         //委派到MainWindow.xaml.cs裡面的setSoftwareShow()
         public delegate void softwareLogoShowEventHandler(int softwareID, int currentProgress, double downloadPercent);
@@ -30,14 +31,14 @@ namespace OrderManagerNew
         public event updatefuncEventHandler_snackbar Handler_snackbarShow;
 
         List<SoftwareInfo> UserSoftwareTotal;   //客戶已安裝軟體清單
-        List<SoftwareInfo> CloudSoftwareTotal;  //軟體最新版清單
+        public List<SoftwareInfo> CloudSoftwareTotal { get; set; }  //軟體最新版清單
         #endregion
         public class SoftwareInfo
         {
             public int softwareID;              //參考EnumSummary的_softwareID
             public int softwareInstalled;       //參考EnumSummary的_softwareStatus
             public int softwareLicense;         //參考EnumSummary的_softwareLic
-            public float softwareSize;          //軟體大小
+            public double softwareSize;          //軟體大小(以MB計算)
             public string softwareName;         //軟體名稱
             public string softwareVersion;      //軟體版本
             public string softwarePath;         //軟體路徑
@@ -51,7 +52,7 @@ namespace OrderManagerNew
                 softwareName = "";
                 softwareVersion = "";
                 softwarePath = "";
-                softwareSize = 0f;
+                softwareSize = 0;
                 softwareDownloadLink = "";
             }
         }
@@ -66,7 +67,7 @@ namespace OrderManagerNew
             log = new LogRecorder();
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs", "Initial Start");
             CloudSoftwareTotal = new List<SoftwareInfo>();
-            readyInstallSoftwareID = -1;
+            readyInstallSoftwareInfo = new SoftwareInfo();
             downloadfilepath = "";
         }
         
@@ -335,7 +336,7 @@ namespace OrderManagerNew
         #region 多執行緒處理下載軟體
         public void StartDownloadSoftware()
         {
-            if (readyInstallSoftwareID == -1)
+            if (readyInstallSoftwareInfo.softwareID == -1)
             {
                 Handler_snackbarShow("No SoftwareID");    //NoSoftwareID停止下載//TODO多國語系
                 return;
@@ -354,20 +355,13 @@ namespace OrderManagerNew
         void DownloadSoftware_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker bw = sender as BackgroundWorker;
-            string downloadUrl = "";
 
             //跳過https檢測 & Win7 相容
             System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-
-            for(int i=0; i< CloudSoftwareTotal.Count; i++)
-            {
-                if ((int)CloudSoftwareTotal[i].softwareID == (int)readyInstallSoftwareID && (int)CloudSoftwareTotal[i].softwareLicense == (int)_softwareLic.License)    //TODO 之後沒有分Lic
-                    downloadUrl = CloudSoftwareTotal[i].softwareDownloadLink;
-            }
-
+            
             //Request資料
-            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(downloadUrl);
+            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(readyInstallSoftwareInfo.softwareDownloadLink);
             httpRequest.Credentials = CredentialCache.DefaultCredentials;
             httpRequest.UserAgent = ".NET Framework Example Client";
             httpRequest.Method = "GET";
@@ -379,6 +373,9 @@ namespace OrderManagerNew
             {
                 if (((HttpWebResponse)httpResponse).StatusDescription == "OK" && httpResponse.ContentLength > 1)
                 {
+                    //覆蓋軟體大小，以直接抓檔案內容最準
+                    readyInstallSoftwareInfo.softwareSize = Convert.ToDouble(Math.Round(((double)(Int64)httpResponse.ContentLength / 1024.0 / 1024.0), 1));
+                    
                     if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == false)
                     {
                         Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + "IntewareTempFile\\";
@@ -387,7 +384,7 @@ namespace OrderManagerNew
                     }
                         
                     // 取得下載的檔名
-                    Uri uri = new Uri(downloadUrl);
+                    Uri uri = new Uri(readyInstallSoftwareInfo.softwareDownloadLink);
                     downloadfilepath = Properties.Settings.Default.DownloadFolder + @"\" + System.IO.Path.GetFileName(uri.LocalPath);
                     Stream netStream = httpResponse.GetResponseStream();
                     Stream fileStream = new FileStream(downloadfilepath, FileMode.Create);
@@ -423,18 +420,59 @@ namespace OrderManagerNew
         void DownloadSoftware_UpdateProgress(object sender, ProgressChangedEventArgs e)
         {
             int progress = e.ProgressPercentage;
-            softwareLogoShowEvent(readyInstallSoftwareID, (int)_softwareStatus.Downloading, (double)(progress));
+            softwareLogoShowEvent(readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Downloading, (double)(progress/100.0));
         }
 
         void DownloadSoftware_CompletedWork(object sender, RunWorkerCompletedEventArgs e)
         {
-            Handler_snackbarShow("下載完成");   //下載完成  //TODO 多國語系
-            /*Process processer = new Process();
-            processer.StartInfo.FileName = OrthoProgramPath;
-            processer.StartInfo.Arguments = arguments;
-            processer.Start();*/
+            if (e.Error != null)
+            {
+                Handler_snackbarShow("Error");   //錯誤 //TODO 多國語系
+            }
+            else if (e.Cancelled)
+            {
+                Handler_snackbarShow("Canceled");    //取消 //TODO 多國語系
+            }
+            else
+            {
+                Handler_snackbarShow("下載完成");   //下載完成  //TODO 多國語系
+                softwareLogoShowEvent(readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installing, 0);
+                string downloadPath = GetSoftwarePath(readyInstallSoftwareInfo.softwareID);
+
+                Process processer = new Process();
+                processer.StartInfo.FileName = downloadfilepath;
+                string param = "/quiet APPDIR=\"" + downloadPath + "\"";
+                processer.StartInfo.Arguments = param;
+                processer.Start();
+            }
         }
         #endregion
+
+        /// <summary>
+        /// 回傳軟體路徑
+        /// </summary>
+        /// <param name="SoftwareID">軟體ID</param>
+        /// <returns></returns>
+        public string GetSoftwarePath(int SoftwareID)
+        {
+            switch (SoftwareID)
+            {
+                case (int)_softwareID.EZCAD:
+                    return Properties.Settings.Default.path_EZCAD;
+                case (int)_softwareID.Implant:
+                    return Properties.Settings.Default.path_Implant;
+                case (int)_softwareID.Ortho:
+                    return Properties.Settings.Default.path_Implant;
+                case (int)_softwareID.Tray:
+                    return Properties.Settings.Default.path_Tray;
+                case (int)_softwareID.Splint:
+                    return Properties.Settings.Default.path_Splint;
+                case (int)_softwareID.Guide:
+                    return Properties.Settings.Default.path_Guide;
+                default:
+                    return "";
+            }
+        }
 
         /// <summary>
         /// 讀取HL.xml的詳細更新資訊
@@ -449,12 +487,12 @@ namespace OrderManagerNew
             {
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs", "load HL.xml Start");
                 CloudSoftwareTotal = new List<SoftwareInfo>();
-                HLXMLlink = "C:\\InteWare\\HL.xml";    //單機測試
+                /*HLXMLlink = "C:\\InteWare\\HL.xml";    //單機測試
                 using (StreamReader oReader = new StreamReader(HLXMLlink, Encoding.GetEncoding("utf-8")))
                 {
-                    xDoc = XDocument.Load(oReader);
-                }
-
+                    xDoc = XDocument.Load(HLXMLlink);
+                }*/
+                xDoc = XDocument.Load(HLXMLlink);
                 var SoftwareHL_Dongle = from q in xDoc.Descendants("Software").Descendants("Dongle").Descendants("Item")
                                         select new
                                         {
@@ -507,7 +545,7 @@ namespace OrderManagerNew
                     softDongle.softwareInstalled = (int)_softwareStatus.Cloud;
                     softDongle.softwareLicense = (int)_softwareLic.Dongle;
                     softDongle.softwareName = item.SName;
-                    softDongle.softwareSize = float.Parse(item.SSize);
+                    softDongle.softwareSize = double.Parse(item.SSize);
                     softDongle.softwareVersion = item.SVersion;
                     softDongle.softwareDownloadLink = item.SHyperlink.Replace("\n ", "").Replace("\r ", "").Replace(" ", "");
 
@@ -535,7 +573,7 @@ namespace OrderManagerNew
                     softLicense.softwareInstalled = (int)_softwareStatus.Cloud;
                     softLicense.softwareLicense = (int)_softwareLic.License;
                     softLicense.softwareName = item.SName;
-                    softLicense.softwareSize = float.Parse(item.SSize);
+                    softLicense.softwareSize = double.Parse(item.SSize);
                     softLicense.softwareVersion = item.SVersion;
                     softLicense.softwareDownloadLink = item.SHyperlink.Replace("\n ", "").Replace("\r ", "").Replace(" ", "");
 

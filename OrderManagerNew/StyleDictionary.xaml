@@ -175,6 +175,23 @@
         <Setter Property="Opacity" Value="0.9" />
         <Setter Property="Visibility" Value="Hidden" />
     </Style>
+    <Style x:Key="maskImageInstalling" TargetType="{x:Type Rectangle}">
+        <Setter Property="Panel.ZIndex" Value="3" />
+        <Setter Property="Fill" Value="{StaticResource Common_DarkBrown}" />
+        <Setter Property="Opacity" Value="0.8" />
+        <Setter Property="Visibility" Value="Visible" />
+        <Setter Property="Width" Value="Auto" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Margin" Value="5" />
+    </Style>
+    <Style x:Key="progressbarInstalling" BasedOn="{StaticResource MaterialDesignCircularProgressBar}" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Panel.ZIndex" Value="4" />
+        <Setter Property="IsIndeterminate" Value="True" />
+        <Setter Property="Width" Value="Auto" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="Visibility" Value="Visible" />
+    </Style>
     <Style x:Key="progressArc" TargetType="{x:Type ed:Arc}">
         <Setter Property="Opacity" Value="0.9" />
         <Setter Property="Panel.ZIndex" Value="1" />

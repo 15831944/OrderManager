@@ -18,6 +18,7 @@ using System.Windows.Media.Effects;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Media.Animation;
+using Path = System.IO.Path;
 
 //Microsoft.Expression.Drawing.dll如果要針對多國語言版本: "C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries"
 //抓取程式碼行數: new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString()
@@ -36,13 +37,14 @@ namespace OrderManagerNew
         bool developerMode = true;                  //開發者模式
         bool loginStatus = false;                   //是否登入了
         bool showUserDetail = false;                //是否正在顯示UserDetail
+        bool haveEXE = false;                       //判斷安裝時是否有執行檔了
         MaterialDesignThemes.Wpf.SnackbarMessageQueue MainsnackbarMessageQueue; //Snackbar
         #endregion
         
         public MainWindow()
         {
             InitializeComponent();
-            
+
             //OrderManager不能多開
             Process[] MyProcess = Process.GetProcessesByName("OrderManager");
             if (MyProcess.Length > 1)
@@ -294,7 +296,7 @@ namespace OrderManagerNew
         /// <summary>
         /// 設定SofttwareTable各Icon顯示狀態
         /// </summary>
-        /// <param name="currentProgress">(目前進度) 未安裝、下載中、已安裝</param>
+        /// <param name="currentProgress">(目前進度) 未安裝、下載中、安裝中、已安裝</param>
         /// <param name="softwareID">(軟體ID) EZCAD、Implant、Ortho、Tray、Splint</param>
         /// <param name="downloadPercent">(下載百分比) 100%的值為1.00</param>
         /// <returns></returns>
@@ -308,6 +310,8 @@ namespace OrderManagerNew
                         {
                             case (int)_softwareStatus.NotInstall:
                                 {
+                                    mask2_EZCAD_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_EZCAD_Installing.Visibility = Visibility.Hidden;
                                     mask_EZCAD.Visibility = Visibility.Visible;
                                     process_EZCAD.Visibility = Visibility.Hidden;
                                     popupbox_EZCAD.IsEnabled = true;
@@ -330,6 +334,8 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
+                                    mask2_EZCAD_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_EZCAD_Installing.Visibility = Visibility.Hidden;
                                     mask_EZCAD.Visibility = Visibility.Hidden;
                                     process_EZCAD.Visibility = Visibility.Hidden;
                                     popupbox_EZCAD.IsEnabled = true;
@@ -342,6 +348,14 @@ namespace OrderManagerNew
                                     cad_unInstall.Visibility = Visibility.Visible;
                                     break;
                                 }
+                            case (int)_softwareStatus.Installing:
+                                {
+                                    mask2_EZCAD_Installing.Visibility = Visibility.Visible;
+                                    progressbar_EZCAD_Installing.Visibility = Visibility.Visible;
+                                    mask_EZCAD.Visibility = Visibility.Hidden;
+                                    process_EZCAD.Visibility = Visibility.Hidden;
+                                    break;
+                                }
                         }
                         break;
                     }
@@ -351,6 +365,8 @@ namespace OrderManagerNew
                         {
                             case (int)_softwareStatus.NotInstall:
                                 {
+                                    mask2_Implant_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_Implant_Installing.Visibility = Visibility.Hidden;
                                     mask_Implant.Visibility = Visibility.Visible;
                                     process_Implant.Visibility = Visibility.Hidden;
                                     popupbox_Implant.IsEnabled = true;
@@ -373,6 +389,8 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
+                                    mask2_Implant_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_Implant_Installing.Visibility = Visibility.Hidden;
                                     mask_Implant.Visibility = Visibility.Hidden;
                                     process_Implant.Visibility = Visibility.Hidden;
                                     popupbox_Implant.IsEnabled = true;
@@ -385,6 +403,14 @@ namespace OrderManagerNew
                                     implant_unInstall.Visibility = Visibility.Visible;
                                     break;
                                 }
+                            case (int)_softwareStatus.Installing:
+                                {
+                                    mask2_Implant_Installing.Visibility = Visibility.Visible;
+                                    progressbar_Implant_Installing.Visibility = Visibility.Visible;
+                                    mask_Implant.Visibility = Visibility.Hidden;
+                                    process_Implant.Visibility = Visibility.Hidden;
+                                    break;
+                                }
                         }
                         break;
                     }
@@ -394,6 +420,8 @@ namespace OrderManagerNew
                         {
                             case (int)_softwareStatus.NotInstall:
                                 {
+                                    mask2_Ortho_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_Ortho_Installing.Visibility = Visibility.Hidden;
                                     mask_Ortho.Visibility = Visibility.Visible;
                                     process_Ortho.Visibility = Visibility.Hidden;
                                     popupbox_Ortho.IsEnabled = true;
@@ -416,6 +444,8 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
+                                    mask2_Ortho_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_Ortho_Installing.Visibility = Visibility.Hidden;
                                     mask_Ortho.Visibility = Visibility.Hidden;
                                     process_Ortho.Visibility = Visibility.Hidden;
                                     popupbox_Ortho.IsEnabled = true;
@@ -428,6 +458,14 @@ namespace OrderManagerNew
                                     ortho_unInstall.Visibility = Visibility.Visible;
                                     break;
                                 }
+                            case (int)_softwareStatus.Installing:
+                                {
+                                    mask2_Ortho_Installing.Visibility = Visibility.Visible;
+                                    progressbar_Ortho_Installing.Visibility = Visibility.Visible;
+                                    mask_Ortho.Visibility = Visibility.Hidden;
+                                    process_Ortho.Visibility = Visibility.Hidden;
+                                    break;
+                                }
                         }
                         break;
                     }
@@ -437,6 +475,8 @@ namespace OrderManagerNew
                         {
                             case (int)_softwareStatus.NotInstall:
                                 {
+                                    mask2_Tray_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_Tray_Installing.Visibility = Visibility.Hidden;
                                     mask_Tray.Visibility = Visibility.Visible;
                                     process_Tray.Visibility = Visibility.Hidden;
                                     popupbox_Tray.IsEnabled = true;
@@ -459,6 +499,8 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
+                                    mask2_Tray_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_Tray_Installing.Visibility = Visibility.Hidden;
                                     mask_Tray.Visibility = Visibility.Hidden;
                                     process_Tray.Visibility = Visibility.Hidden;
                                     popupbox_Tray.IsEnabled = true;
@@ -471,6 +513,15 @@ namespace OrderManagerNew
                                     tray_unInstall.Visibility = Visibility.Visible;
                                     break;
                                 }
+                            case (int)_softwareStatus.Installing:
+                                {
+                                    mask2_Tray_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_Tray_Installing.Visibility = Visibility.Hidden;
+                                    mask_Tray.Visibility = Visibility.Hidden;
+                                    process_Tray.Visibility = Visibility.Hidden;
+
+                                    break;
+                                }
                         }
                         break;
                     }
@@ -480,6 +531,9 @@ namespace OrderManagerNew
                         {
                             case (int)_softwareStatus.NotInstall:
                                 {
+                                    mask2_Splint_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_Splint_Installing.Visibility = Visibility.Hidden;
+
                                     mask_Splint.Visibility = Visibility.Visible;
                                     process_Splint.Visibility = Visibility.Hidden;
                                     popupbox_Splint.IsEnabled = true;
@@ -496,12 +550,15 @@ namespace OrderManagerNew
                                 {
                                     mask_Splint.Visibility = Visibility.Hidden;
                                     process_Splint.Visibility = Visibility.Visible;
-                                    process_Splint.EndAngle = 360 - 360 * downloadPercent;
+                                    process_Splint.EndAngle = 360.0 - 360.0 * downloadPercent;
                                     popupbox_Splint.IsEnabled = false;
                                     break;
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
+                                    mask2_Splint_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_Splint_Installing.Visibility = Visibility.Hidden;
+
                                     mask_Splint.Visibility = Visibility.Hidden;
                                     process_Splint.Visibility = Visibility.Hidden;
                                     popupbox_Splint.IsEnabled = true;
@@ -514,10 +571,107 @@ namespace OrderManagerNew
                                     splint_unInstall.Visibility = Visibility.Visible;
                                     break;
                                 }
+                            case (int)_softwareStatus.Installing:
+                                {
+                                    mask2_Splint_Installing.Visibility = Visibility.Visible;
+                                    progressbar_Splint_Installing.Visibility = Visibility.Visible;
+                                    mask_Splint.Visibility = Visibility.Hidden;
+                                    process_Splint.Visibility = Visibility.Hidden;
+                                    Watcher_Installing((int)_watcherCommand.Installing, -1);
+                                    break;
+                                }
                         }
                         break;
                     }
             }
+        }
+
+        /// <summary>
+        /// 安裝軟體中監看軟體資料夾
+        /// </summary>
+        /// <param name="watcherCommand">Installing、Delete 參考EnumSummary的_watcherCommand</param>
+        /// <param name="SoftwareID">軟體ID</param>
+        void Watcher_Installing(int watcherCommand, int SoftwareID)
+        {
+            if(watcherCommand == (int)_watcherCommand.Installing)
+            {
+                FileSystemWatcher watcher = new FileSystemWatcher();
+                watcher.Path = UpdateFunc.GetSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID);
+
+                watcher.NotifyFilter = NotifyFilters.Size;
+                //設定是否監控子資料夾
+                watcher.IncludeSubdirectories = true;
+                //設定是否啟動元件，此部分必須要設定為 true，不然事件是不會被觸發的
+                watcher.EnableRaisingEvents = true;
+                watcher.Created += new FileSystemEventHandler(Watcher_Installing_Changed);
+                watcher.Changed += new FileSystemEventHandler(Watcher_Installing_Changed);
+                //watcher.Deleted += new FileSystemEventHandler(Watcher_Installing_Changed);
+            }
+            else if(watcherCommand == (int)_watcherCommand.Delete)
+            {
+                if (SoftwareID == -1)
+                    return;
+
+                FileSystemWatcher watcher = new FileSystemWatcher();
+                //softwarePath是執行檔路徑，所以要抓資料夾用Path.GetDirectoryName()
+                watcher.Path = Path.GetDirectoryName(UpdateFunc.GetSoftwarePath(SoftwareID));
+
+                watcher.NotifyFilter = NotifyFilters.FileName;
+                //TODO待修
+            }
+        }
+
+        /// <summary>
+        /// 如果資料夾內容大於封裝包就變成"已安裝"
+        /// </summary>
+        private void Watcher_Installing_Changed(object sender, FileSystemEventArgs e)
+        {
+            FileSystemWatcher watcher = sender as FileSystemWatcher;
+            //DirectoryInfo info = new DirectoryInfo(watcher.Path);
+            double dirSize = (double)DirSize(new DirectoryInfo(watcher.Path));
+            double LimitSize = UpdateFunc.readyInstallSoftwareInfo.softwareSize;
+            
+            if(Path.GetExtension(e.FullPath) == ".exe" && (
+               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("cad") != -1 ||
+               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("implant") != -1 ||
+               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("ortho") != -1))
+            {
+                DialogBeforeDownload.SetPropertiesSoftewarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
+                haveEXE = true;
+            }
+
+            if (dirSize >= LimitSize && haveEXE == true)
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    haveEXE = false;
+                    watcher = new FileSystemWatcher();
+                    Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
+                }));
+            } 
+        }
+
+        /// <summary>
+        /// 資料夾容量大小
+        /// </summary>
+        /// <param name="d">創建用 new DirectoryInfo("路徑")</param>
+        /// <returns></returns>
+        long DirSize(DirectoryInfo d)
+        {
+            long size = 0;
+            // Add file sizes.
+            FileInfo[] fis = d.GetFiles();
+            foreach (FileInfo fi in fis)
+            {
+                size += fi.Length;
+            }
+            // Add subdirectory sizes.
+            DirectoryInfo[] dis = d.GetDirectories();
+            foreach (DirectoryInfo di in dis)
+            {
+                size += DirSize(di);
+            }
+            return size;
         }
 
         /// <summary>
@@ -670,13 +824,21 @@ namespace OrderManagerNew
                     }
                 case "splint_download":
                     {
-                        UpdateFunc.readyInstallSoftwareID = (int)_softwareID.Splint;
+                        for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                        {
+                            //TODO 之後不會分Dongle和License
+                            if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Splint && UpdateFunc.CloudSoftwareTotal[i].softwareLicense == (int)_softwareLic.License)
+                            {
+                                UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                break;
+                            }
+                        }
+                        
                         SetAllSoftwareTableDownloadisEnable(false);
                         DialogBeforeDownload = new BeforeDownload();
                         DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
                         DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                        DialogBeforeDownload.GethttpResoponse(@"https://www.dropbox.com/s/dj6p305a3ckkjxz/EZCAD.Splint_1.0.20214.0.exe?dl=1" , (int)_softwareID.Splint);
-                        
+                        DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                         break;
                     }
                 case "splint_open":
@@ -697,12 +859,27 @@ namespace OrderManagerNew
                     }
                 case "splint_unInstall":
                     {
+                        if(Path.GetExtension(Properties.Settings.Default.path_Splint) == ".exe")
+                        {
+                            string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.path_Splint) + @"\Uninstall";
+                            if(File.Exists(uninstallPath) == true)
+                            {
+                                Process processer = new Process();
+                                processer.StartInfo.FileName = uninstallPath;
+                                processer.Start();
+                            }
+                        }
+
                         break;
                     }
                     #endregion
             }
         }
 
+        /// <summary>
+        /// 設定各軟體Popupbox內"下載軟體"的isEnable屬性
+        /// </summary>
+        /// <param name="enable">isEnable屬性</param>
         void SetAllSoftwareTableDownloadisEnable(bool enable)
         {
             cad_download.IsEnabled = enable;
@@ -717,6 +894,7 @@ namespace OrderManagerNew
             /// </summary>
         void Handler_ShowBeforeDownload()
         {
+            haveEXE = false;
             bool DownloadStart = false;
             SetAllSoftwareTableDownloadisEnable(true);
             if (DialogBeforeDownload.SetInformation() == true)

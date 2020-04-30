@@ -71,7 +71,7 @@ namespace OrderManagerNew
                 System.Windows.Forms.DialogResult result = dialog.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
-                    textbox_InstallPath.Text = dialog.SelectedPath;
+                    textbox_InstallPath.Text = dialog.SelectedPath + @"\";
 
                     RemainingSpace(dialog.SelectedPath);
                 }
@@ -91,6 +91,7 @@ namespace OrderManagerNew
                             if(MessageBox.Show("磁碟空間可能不足以安裝軟體", "Waring", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
                             {
                                 //磁碟空間可能不足以安裝軟體 //TODO 多國語系
+                                SetPropertiesSoftewarePath(currentSoftwareID, textbox_InstallPath.Text);
                                 this.DialogResult = true;
                             }
                             else
@@ -105,40 +106,7 @@ namespace OrderManagerNew
                         }
                         else
                         {
-                            switch(currentSoftwareID)
-                            {
-                                case (int)_softwareID.EZCAD:
-                                    {
-                                        Properties.Settings.Default.path_EZCAD = textbox_InstallPath.Text;
-                                        break;
-                                    }
-                                case (int)_softwareID.Implant:
-                                    {
-                                        Properties.Settings.Default.path_Implant = textbox_InstallPath.Text;
-                                        break;
-                                    }
-                                case (int)_softwareID.Ortho:
-                                    {
-                                        Properties.Settings.Default.path_Ortho = textbox_InstallPath.Text;
-                                        break;
-                                    }
-                                case (int)_softwareID.Tray:
-                                    {
-                                        Properties.Settings.Default.path_Tray = textbox_InstallPath.Text;
-                                        break;
-                                    }
-                                case (int)_softwareID.Splint:
-                                    {
-                                        Properties.Settings.Default.path_Splint = textbox_InstallPath.Text;
-                                        break;
-                                    }
-                                case (int)_softwareID.Guide:
-                                    {
-                                        Properties.Settings.Default.path_Guide = textbox_InstallPath.Text;
-                                        break;
-                                    }
-                            }
-                            Properties.Settings.Default.Save();
+                            SetPropertiesSoftewarePath(currentSoftwareID, textbox_InstallPath.Text);
                             this.DialogResult = true;
                         }
                         break;
@@ -178,11 +146,12 @@ namespace OrderManagerNew
                 }
 
                 label_AvailableSpace.Tag = TotalNumberOfFreeBytes;
-                label_AvailableSpace.Content = convertDiskUnit(TotalNumberOfFreeBytes);
+                label_AvailableSpace.Content = convertDiskUnit(TotalNumberOfFreeBytes, (int)_diskUnit.MB);
                 return true;
             }
             catch(Exception ex)
             {
+                MessageBox.Show(ex.Message);
                 return false;
             }
         }
@@ -191,90 +160,48 @@ namespace OrderManagerNew
         /// 轉換容量單位
         /// </summary>
         /// <param name="InputBytes">單位是Bytes 使用ulong</param>
+        /// <param name="DiskUnit">要顯示哪種單位(參考EnumSummary的_diskUnit)</param>
         /// <returns></returns>
-        string convertDiskUnit(ulong InputBytes)
+        string convertDiskUnit(ulong InputBytes, int DiskUnit)
         {
             string OutputString = "";
 
-            if (((double)(Int64)InputBytes / 1024.0 / 1024.0) < 1.0)//低於1MB就用KB
+            switch(DiskUnit)
+            {
+                case (int)_diskUnit.KB:
+                    {
+                        OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0), 1)).ToString() + "KB";
+                        break;
+                    }
+                case (int)_diskUnit.MB:
+                    {
+                        OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0 / 1024.0), 1)).ToString() + "MB";
+                        break;
+                    }
+                case (int)_diskUnit.GB:
+                    {
+                        OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0 / 1024.0 / 1024.0), 1)).ToString() + "GB";
+                        break;
+                    }
+                case (int)_diskUnit.TB:
+                    {
+                        OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0 / 1024.0 / 1024.0 / 1024.0), 1)).ToString() + "TB";
+                        break;
+                    }
+            }
+
+            /*if (((double)(Int64)InputBytes / 1024.0 / 1024.0) < 1.0)//低於1MB就用KB
                 OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0), 1)).ToString() + "KB";
             else if (((double)(Int64)InputBytes / 1024.0 / 1024.0 / 1024.0) < 1.0)//低於1GB就用MB
                 OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0 / 1024.0), 1)).ToString() + "MB";
             else if (((double)(Int64)InputBytes / 1024.0 / 1024.0 / 1024.0 / 1024.0) < 1.0)//低於1TB就用GB
                 OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0 / 1024.0 / 1024.0), 1)).ToString() + "GB";
             else
-                OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0 / 1024.0 / 1024.0 / 1024.0), 1)).ToString() + "TB";
+                OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0 / 1024.0 / 1024.0 / 1024.0), 1)).ToString() + "TB";*/
 
             return OutputString;
         }
-
-        /// <summary>
-        /// 設定UI所顯示的資訊
-        /// </summary>
-        public bool SetInformation()
-        {
-            if (currentSoftwareID == -1 || http_url == "")
-            {
-                MessageBox.Show("SoftwareID is -1");
-                return false;
-            }
-                
-            string[] SoftwareNameArray = new string[6] {"EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD Tray", "EZCAD Splint", "EZCAD Guide"};
-
-            label_TitleBar.Content = OrderManagerNew.TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
-            label_Header.Content = OrderManagerNew.TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
-            textbox_InstallPath.Text = @"C:\InteWare\" + SoftwareNameArray[currentSoftwareID];
-            
-            try
-            {
-                if (((HttpWebResponse)httpResponse).StatusDescription == "OK" && httpResponse.ContentLength > 1)
-                {
-                    // 取得下載的檔名
-                    Uri uri = new Uri(http_url);
-                    string downloadfileRealName = System.IO.Path.GetFileName(uri.LocalPath);
-                    
-                    if (RemainingSpace(textbox_InstallPath.Text) == true)  //客戶電腦剩餘空間
-                    {
-                        label_RequireSpace.Tag = Convert.ToUInt64(httpResponse.ContentLength);
-                        label_RequireSpace.Content = convertDiskUnit(Convert.ToUInt64(httpResponse.ContentLength));
-
-                        if((ulong)label_AvailableSpace.Tag < (ulong)label_RequireSpace.Tag)
-                        {
-                            label_AvailableSpace.Foreground = Brushes.Orange;
-                            label_AvailableSpace.ToolTip = "磁碟空間不足以安裝軟體";//磁碟空間不足以安裝軟體 //TODO 多國語系
-                        }
-                        else if((ulong)label_AvailableSpace.Tag < (ulong)label_RequireSpace.Tag * 3)
-                        {
-                            label_AvailableSpace.Foreground = Brushes.Orange;
-                            label_AvailableSpace.ToolTip = "磁碟空間可能不足以安裝軟體";//磁碟空間可能不足以安裝軟體 //TODO 多國語系
-                        }
-                        else
-                        {
-                            label_AvailableSpace.Foreground = Brushes.White;
-                            label_AvailableSpace.ToolTip = "";
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Can't get user remaining space");//無法獲取客戶電腦剩餘空間 //TODO 多國語系
-                        if (httpResponse != null)
-                            httpResponse.Close();
-                        return false;
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Network error");   //網路連線異常or載點掛掉 //TODO 多國語系
-                if(httpResponse != null)
-                    httpResponse.Close();
-                return false;
-            }
-            if (httpResponse != null)
-                httpResponse.Close();
-            return true;
-        }
-
+        
         #region 多執行緒處理接收網路下載資料內容
         void DoWork(object sender, DoWorkEventArgs e)
         {
@@ -346,6 +273,73 @@ namespace OrderManagerNew
         }
 
         /// <summary>
+        /// 設定UI所顯示的資訊
+        /// </summary>
+        public bool SetInformation()
+        {
+            if (currentSoftwareID == -1 || http_url == "")
+            {
+                MessageBox.Show("SoftwareID is -1");
+                return false;
+            }
+
+            string[] SoftwareNameArray = new string[6] { "EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD tray", "EZCAD splint", "EZCAD guide" };
+
+            label_TitleBar.Content = OrderManagerNew.TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
+            label_Header.Content = OrderManagerNew.TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
+            textbox_InstallPath.Text = @"C:\InteWare\" + SoftwareNameArray[currentSoftwareID] + @"\";
+
+            try
+            {
+                if (((HttpWebResponse)httpResponse).StatusDescription == "OK" && httpResponse.ContentLength > 1)
+                {
+                    // 取得下載的檔名
+                    Uri uri = new Uri(http_url);
+                    string downloadfileRealName = System.IO.Path.GetFileName(uri.LocalPath);
+
+                    if (RemainingSpace(textbox_InstallPath.Text) == true)  //客戶電腦剩餘空間
+                    {
+                        label_RequireSpace.Tag = Convert.ToUInt64(httpResponse.ContentLength);
+                        label_RequireSpace.Content = convertDiskUnit(Convert.ToUInt64(httpResponse.ContentLength), (int)_diskUnit.MB);
+
+                        if ((ulong)label_AvailableSpace.Tag < (ulong)label_RequireSpace.Tag)
+                        {
+                            label_AvailableSpace.Foreground = Brushes.Orange;
+                            label_AvailableSpace.ToolTip = "磁碟空間不足以安裝軟體";//磁碟空間不足以安裝軟體 //TODO 多國語系
+                        }
+                        else if ((ulong)label_AvailableSpace.Tag < (ulong)label_RequireSpace.Tag * 3)
+                        {
+                            label_AvailableSpace.Foreground = Brushes.Orange;
+                            label_AvailableSpace.ToolTip = "磁碟空間可能不足以安裝軟體";//磁碟空間可能不足以安裝軟體 //TODO 多國語系
+                        }
+                        else
+                        {
+                            label_AvailableSpace.Foreground = Brushes.White;
+                            label_AvailableSpace.ToolTip = null;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Can't get user remaining space");//無法獲取客戶電腦剩餘空間 //TODO 多國語系
+                        if (httpResponse != null)
+                            httpResponse.Close();
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Network error");   //網路連線異常or載點掛掉 //TODO 多國語系
+                if (httpResponse != null)
+                    httpResponse.Close();
+                return false;
+            }
+            if (httpResponse != null)
+                httpResponse.Close();
+            return true;
+        }
+
+        /// <summary>
         /// 用多執行緒去取得httpResponse
         /// </summary>
         /// <param name="Import_http_url">下載網址</param>
@@ -365,6 +359,49 @@ namespace OrderManagerNew
             m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork);
 
             m_BackgroundWorker.RunWorkerAsync(this);
+        }
+
+        /// <summary>
+        /// 設定Properties內各軟體路徑
+        /// </summary>
+        /// <param name="SoftwareID">軟體ID</param>
+        /// <param name="softwarePath">路徑</param>
+        public void SetPropertiesSoftewarePath(int SoftwareID, string softwarePath)
+        {
+            switch (SoftwareID)
+            {
+                case (int)_softwareID.EZCAD:
+                    {
+                        Properties.Settings.Default.path_EZCAD = softwarePath;
+                        break;
+                    }
+                case (int)_softwareID.Implant:
+                    {
+                        Properties.Settings.Default.path_Implant = softwarePath;
+                        break;
+                    }
+                case (int)_softwareID.Ortho:
+                    {
+                        Properties.Settings.Default.path_Ortho = softwarePath;
+                        break;
+                    }
+                case (int)_softwareID.Tray:
+                    {
+                        Properties.Settings.Default.path_Tray = softwarePath;
+                        break;
+                    }
+                case (int)_softwareID.Splint:
+                    {
+                        Properties.Settings.Default.path_Splint = softwarePath;
+                        break;
+                    }
+                case (int)_softwareID.Guide:
+                    {
+                        Properties.Settings.Default.path_Guide = softwarePath;
+                        break;
+                    }
+            }
+            Properties.Settings.Default.Save();
         }
     }
 }

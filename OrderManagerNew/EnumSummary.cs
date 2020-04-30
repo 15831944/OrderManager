@@ -10,6 +10,7 @@ namespace OrderManagerNew
     {
         NotInstall = 0,
         Downloading,
+        Installing,
         Installed,
         Cloud
     }
@@ -27,7 +28,21 @@ namespace OrderManagerNew
     public enum _softwareLic : int
     {
         License = 0,
-        Dongle = 1,
-        NotSure = 2
+        Dongle,
+        NotSure,
+    }
+
+    public enum _diskUnit : int
+    {
+        KB = 0,
+        MB,
+        GB,
+        TB
+    }
+
+    public enum _watcherCommand : int
+    {
+        Installing = 0,
+        Delete,
     }
 }
