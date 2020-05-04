@@ -12,6 +12,7 @@ namespace OrderManagerNew
         Downloading,
         Installing,
         Installed,
+        Uninstalling,
         Cloud
     }
 

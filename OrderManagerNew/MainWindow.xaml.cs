@@ -25,6 +25,7 @@ using Path = System.IO.Path;
 
 //Detect which rectangle has been clicked in Canvas WPF: https://stackoverflow.com/questions/29669169/detect-which-rectangle-has-been-clicked-in-canvas-wpf
 //C#的BackgroundWorker--啟動後臺執行緒: https://www.itread01.com/content/1550455929.html
+//C#程序以管理員權限運行: https://www.itread01.com/content/1501935602.html
 
 namespace OrderManagerNew
 {
@@ -38,12 +39,14 @@ namespace OrderManagerNew
         bool loginStatus = false;                   //是否登入了
         bool showUserDetail = false;                //是否正在顯示UserDetail
         bool haveEXE = false;                       //判斷安裝時是否有執行檔了
+        int CheckedSoftwareID;                      //記錄使用者按下哪個軟體的SoftwareTable
         MaterialDesignThemes.Wpf.SnackbarMessageQueue MainsnackbarMessageQueue; //Snackbar
         #endregion
         
         public MainWindow()
         {
             InitializeComponent();
+            CheckedSoftwareID = -1;
 
             //OrderManager不能多開
             Process[] MyProcess = Process.GetProcessesByName("OrderManager");
@@ -296,12 +299,13 @@ namespace OrderManagerNew
         /// <summary>
         /// 設定SofttwareTable各Icon顯示狀態
         /// </summary>
-        /// <param name="currentProgress">(目前進度) 未安裝、下載中、安裝中、已安裝</param>
         /// <param name="softwareID">(軟體ID) EZCAD、Implant、Ortho、Tray、Splint</param>
+        /// <param name="currentProgress">(目前進度) 未安裝、下載中... 請參考_SoftwareStatus</param>
         /// <param name="downloadPercent">(下載百分比) 100%的值為1.00</param>
         /// <returns></returns>
         void Handler_setSoftwareShow(int softwareID, int currentProgress, double downloadPercent)
         {
+            CheckedSoftwareID = softwareID;
             switch (softwareID)
             {
                 case (int)_softwareID.EZCAD:
@@ -569,6 +573,7 @@ namespace OrderManagerNew
                                     splint_troubleShooting.Visibility = Visibility.Visible;
                                     splint_buyLic.Visibility = Visibility.Visible;
                                     splint_unInstall.Visibility = Visibility.Visible;
+                                    SetAllSoftwareTableDownloadisEnable(true);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -577,7 +582,16 @@ namespace OrderManagerNew
                                     progressbar_Splint_Installing.Visibility = Visibility.Visible;
                                     mask_Splint.Visibility = Visibility.Hidden;
                                     process_Splint.Visibility = Visibility.Hidden;
-                                    Watcher_Installing((int)_watcherCommand.Installing, -1);
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Installing, -1);
+                                    break;
+                                }
+                            case (int)_softwareStatus.Uninstalling:
+                                {
+                                    mask2_Splint_Installing.Visibility = Visibility.Visible;
+                                    progressbar_Splint_Installing.Visibility = Visibility.Visible;
+                                    mask_Splint.Visibility = Visibility.Hidden;
+                                    process_Splint.Visibility = Visibility.Hidden;
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Splint);
                                     break;
                                 }
                         }
@@ -587,13 +601,13 @@ namespace OrderManagerNew
         }
 
         /// <summary>
-        /// 安裝軟體中監看軟體資料夾
+        /// 安裝軟體時或是刪除軟體時監看軟體資料夾
         /// </summary>
         /// <param name="watcherCommand">Installing、Delete 參考EnumSummary的_watcherCommand</param>
         /// <param name="SoftwareID">軟體ID</param>
-        void Watcher_Installing(int watcherCommand, int SoftwareID)
+        void Watcher_SoftwareInstall(int watcherCommand, int SoftwareID)
         {
-            if(watcherCommand == (int)_watcherCommand.Installing)
+            if(watcherCommand == (int)_watcherCommand.Installing)   //安裝中
             {
                 FileSystemWatcher watcher = new FileSystemWatcher();
                 watcher.Path = UpdateFunc.GetSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID);
@@ -605,7 +619,6 @@ namespace OrderManagerNew
                 watcher.EnableRaisingEvents = true;
                 watcher.Created += new FileSystemEventHandler(Watcher_Installing_Changed);
                 watcher.Changed += new FileSystemEventHandler(Watcher_Installing_Changed);
-                //watcher.Deleted += new FileSystemEventHandler(Watcher_Installing_Changed);
             }
             else if(watcherCommand == (int)_watcherCommand.Delete)
             {
@@ -617,7 +630,10 @@ namespace OrderManagerNew
                 watcher.Path = Path.GetDirectoryName(UpdateFunc.GetSoftwarePath(SoftwareID));
 
                 watcher.NotifyFilter = NotifyFilters.FileName;
-                //TODO待修
+
+                watcher.IncludeSubdirectories = true;
+                watcher.EnableRaisingEvents = true;
+                watcher.Deleted += new FileSystemEventHandler(Watcher_Deleting_Changed);
             }
         }
 
@@ -649,6 +665,28 @@ namespace OrderManagerNew
                     Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
                 }));
             } 
+        }
+
+        /// <summary>
+        /// 監看資料夾內容是否被清除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Watcher_Deleting_Changed(object sender, FileSystemEventArgs e)
+        {
+            if (Path.GetExtension(e.FullPath) == ".exe" && (
+               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("cad") != -1 ||
+               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("implant") != -1 ||
+               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("ortho") != -1))
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    Console.WriteLine(e.FullPath);
+                    SetAllSoftwareTableDownloadisEnable(true);
+                    Handler_setSoftwareShow(CheckedSoftwareID, (int)_softwareStatus.NotInstall, 0);
+                }));
+            }
+
         }
 
         /// <summary>
@@ -859,17 +897,27 @@ namespace OrderManagerNew
                     }
                 case "splint_unInstall":
                     {
-                        if(Path.GetExtension(Properties.Settings.Default.path_Splint) == ".exe")
+                        //TODO要再詢問一次是否真的要解除安裝
+                        if(MessageBox.Show("確定要解除安裝Splint?","解除安裝", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                         {
-                            string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.path_Splint) + @"\Uninstall";
-                            if(File.Exists(uninstallPath) == true)
+                            if (Path.GetExtension(Properties.Settings.Default.path_Splint) == ".exe")
                             {
-                                Process processer = new Process();
-                                processer.StartInfo.FileName = uninstallPath;
-                                processer.Start();
+                                string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.path_Splint) + @"\Uninstall.lnk";
+                                if (File.Exists(uninstallPath) == true)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Uninstalling, 0);
+                                    SetAllSoftwareTableDownloadisEnable(false);
+                                    Process processer = new Process();
+                                    processer.StartInfo.FileName = uninstallPath;
+                                    processer.StartInfo.Arguments = "/quiet";
+                                    processer.Start();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("can't find Uninstall.lnk");    //TODO多國語系
+                                }
                             }
                         }
-
                         break;
                     }
                     #endregion
@@ -887,6 +935,12 @@ namespace OrderManagerNew
             ortho_download.IsEnabled = enable;
             tray_download.IsEnabled = enable;
             splint_download.IsEnabled = enable;
+
+            cad_unInstall.IsEnabled = enable;
+            implant_unInstall.IsEnabled = enable;
+            ortho_unInstall.IsEnabled = enable;
+            tray_unInstall.IsEnabled = enable;
+            splint_unInstall.IsEnabled = enable;
         }
 
         /// <summary>
