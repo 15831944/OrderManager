@@ -70,6 +70,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Account 的當地語系化字串。
+        /// </summary>
+        internal static string Account {
+            get {
+                return ResourceManager.GetString("Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 ALL 的當地語系化字串。
         /// </summary>
         internal static string All {
@@ -336,6 +345,15 @@ namespace OrderManagerNew.Properties {
         internal static string Open_Tray {
             get {
                 return ResourceManager.GetString("Open_Tray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Password 的當地語系化字串。
+        /// </summary>
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         

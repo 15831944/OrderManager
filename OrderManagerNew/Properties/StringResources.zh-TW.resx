@@ -243,4 +243,10 @@
   <data name="AboutToInstall" xml:space="preserve">
     <value>您即將安裝 </value>
   </data>
+  <data name="Account" xml:space="preserve">
+    <value>帳號</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密碼</value>
+  </data>
 </root>

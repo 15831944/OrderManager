@@ -147,7 +147,7 @@
                                 <StackPanel>
                                     <Button x:Name="tray_selectPath" Click="SoftwareTable_Click" Content="{local:LocExtension SelectPath}" />
                                     <Button x:Name="tray_download" Click="SoftwareTable_Click" Content="{local:LocExtension DownloadSoftware}" />
-                                    <Button x:Name="tray_open" Click="SoftwareTable_Click" Content="{local:LocExtension Open_Ortho}" />
+                                    <Button x:Name="tray_open" Click="SoftwareTable_Click" Content="{local:LocExtension Open_Tray}" />
                                     <Button x:Name="tray_webIntro" Click="SoftwareTable_Click" Content="{local:LocExtension SoftwareWeb}" />
                                     <Button x:Name="tray_demo" Click="SoftwareTable_Click" Content="{local:LocExtension DemoCase}" />
                                     <Button x:Name="tray_troubleShooting" Click="SoftwareTable_Click" Content="{local:LocExtension TroubleShooting}" />
@@ -167,7 +167,7 @@
                                 <StackPanel>
                                     <Button x:Name="splint_selectPath" Click="SoftwareTable_Click" Content="{local:LocExtension SelectPath}" />
                                     <Button x:Name="splint_download" Click="SoftwareTable_Click" Content="{local:LocExtension DownloadSoftware}" />
-                                    <Button x:Name="splint_open" Click="SoftwareTable_Click" Content="{local:LocExtension Open_Ortho}" />
+                                    <Button x:Name="splint_open" Click="SoftwareTable_Click" Content="{local:LocExtension Open_Splint}" />
                                     <Button x:Name="splint_webIntro" Click="SoftwareTable_Click" Content="{local:LocExtension SoftwareWeb}" />
                                     <Button x:Name="splint_demo" Click="SoftwareTable_Click" Content="{local:LocExtension DemoCase}" />
                                     <Button x:Name="splint_troubleShooting" Click="SoftwareTable_Click" Content="{local:LocExtension TroubleShooting}" />

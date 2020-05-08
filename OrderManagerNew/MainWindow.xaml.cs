@@ -20,6 +20,32 @@ using System.IO;
 using System.Windows.Media.Animation;
 using Path = System.IO.Path;
 
+//
+//                       _oo0oo_
+//                      o8888888o
+//                      88" . "88
+//                      (| -_- |)
+//                      0\  =  /0
+//                    ___/`---'\___
+//                  .' \\|     |// '.
+//                 / \\|||  :  |||// \
+//                / _||||| -:- |||||- \
+//               |   | \\\  -  /// |   |
+//               | \_|  ''\---/''  |_/ |
+//               \  .-\__  '-'  ___/-. /
+//             ___'. .'  /--.--\  `. .'___
+//          ."" '<  `.___\_<|>_/___.' >' "".
+//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+//         \  \ `_.   \_ __\ /__ _/   .-` /  /
+//     =====`-.____`.___ \_____/___.-`___.-'=====
+//                       `=---='
+//
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~          
+//               
+//               佛祖保佑         永無bug
+//
+//*****************************************************
+
 //Microsoft.Expression.Drawing.dll如果要針對多國語言版本: "C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries"
 //抓取程式碼行數: new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString()
 
@@ -277,7 +303,7 @@ namespace OrderManagerNew
                 switch (titleButton.Name)
                 {
                     case "systemButton_ContactInteware":    //聯絡客服
-
+                        ContactInteware();
                         break;
                     case "systemButton_Minimize":           //最小化
                         this.WindowState = WindowState.Minimized;
@@ -287,6 +313,14 @@ namespace OrderManagerNew
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        /// 聯絡客服事件
+        /// </summary>
+        void ContactInteware()
+        {
+            UpdateFunc.RunCommandLine(Properties.HyperLink.Default.ContactInteware, "");
         }
         #endregion
 
@@ -907,10 +941,7 @@ namespace OrderManagerNew
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Uninstalling, 0);
                                     SetAllSoftwareTableDownloadisEnable(false);
-                                    Process processer = new Process();
-                                    processer.StartInfo.FileName = uninstallPath;
-                                    processer.StartInfo.Arguments = "/quiet";
-                                    processer.Start();
+                                    UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
                                 }
                                 else
                                 {

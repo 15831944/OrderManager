@@ -145,8 +145,10 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" Content="Account" Style="{DynamicResource LabelwithTextbox}" />
-                    <TextBox x:Name="textbox_Account" Grid.Row="1" Text="Brian" />
+                    <Label Grid.Row="0" Content="{local:LocExtension Account}" Style="{DynamicResource LabelwithTextbox}" />
+                    <TextBox
+                      x:Name="textbox_Account" Grid.Row="1" Text="Brian"
+                      TextChanged="textchanged_Account" />
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
@@ -154,7 +156,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" Content="Password" Style="{DynamicResource LabelwithTextbox}" />
+                    <Label Grid.Row="0" Content="{local:LocExtension Password}" Style="{DynamicResource LabelwithTextbox}" />
                     <PasswordBox
                       x:Name="passwordbox_PWD" Grid.Row="1" VerticalContentAlignment="Center"
                       Panel.ZIndex="1" Background="White" BorderBrush="White"
@@ -167,9 +169,14 @@
                       Checked="Checked_ShowPWD"
                       Style="{DynamicResource SeePWD}"
                       Unchecked="Unchecked_PWD" />
-                    <TextBox x:Name="textbox_PWD" Grid.Row="1" Text="BrianPWD" />
+                    <TextBox
+                      x:Name="textbox_PWD" Grid.Row="1" KeyUp="KeyUp_textboxPWD"
+                      Text="BrianPWD" />
                 </Grid>
-                <Label Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Label
+                  x:Name="label_forgotPWD" Grid.Row="2" Height="24"
+                  Padding="-10" HorizontalAlignment="Right" VerticalAlignment="Top"
+                  MouseLeftButtonUp="mouseLeftButtonUp_ForgotPWD">
                     <Hyperlink Foreground="Transparent">
                         <Label Content="Forgot your password?" Style="{DynamicResource forgotLabel}" />
                     </Hyperlink>

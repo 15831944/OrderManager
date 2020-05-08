@@ -90,6 +90,11 @@
     <Compile Include="BeforeDownload.xaml.cs">
       <DependentUpon>BeforeDownload.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\HyperLink.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>HyperLink.settings</DependentUpon>
+    </Compile>
     <Compile Include="Setting.xaml.cs">
       <DependentUpon>Setting.xaml</DependentUpon>
     </Compile>
@@ -165,6 +170,10 @@
     <EmbeddedResource Include="Properties\StringResources.zh-TW.resx" />
     <None Include="app.manifest" />
     <None Include="packages.config" />
+    <None Include="Properties\HyperLink.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>HyperLink.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

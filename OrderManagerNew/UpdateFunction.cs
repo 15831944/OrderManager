@@ -17,16 +17,24 @@ namespace OrderManagerNew
     {
         #region 變數宣告
         //string HLXMLlink = @"https://inteware.com.tw/updateXML/HL.xml";//HL.xml網址
-        string HLXMLlink = "C:\\InteWare\\HL.xml";    //單機測試//TODO之後要換到網上
+        string HLXMLlink = "D:\\Inteware\\HLnewOM.xml";    //單機測試//TODO之後要換到網上
         string downloadfilepath;
         LogRecorder log;    //日誌檔cs
         BackgroundWorker bgWorker_Download;        //申明後臺物件
         public SoftwareInfo readyInstallSoftwareInfo;//準備要安裝的軟體Info
 
-        //委派到MainWindow.xaml.cs裡面的setSoftwareShow()
+        /// <summary>
+        /// 委派到MainWindow.xaml.cs裡面的setSoftwareShow()
+        /// </summary>
+        /// <param name="softwareID">(軟體ID) EZCAD、Implant、Ortho、Tray、Splint</param>
+        /// <param name="currentProgress">(目前進度) 未安裝、下載中... 請參考_SoftwareStatus</param>
+        /// <param name="downloadPercent">(下載百分比) 100%的值為1.00</param>
         public delegate void softwareLogoShowEventHandler(int softwareID, int currentProgress, double downloadPercent);
         public event softwareLogoShowEventHandler softwareLogoShowEvent;
-        //委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
+        /// <summary>
+        /// 委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
+        /// </summary>
+        /// <param name="message">顯示訊息</param>
         public delegate void updatefuncEventHandler_snackbar(string message);
         public event updatefuncEventHandler_snackbar Handler_snackbarShow;
 
@@ -90,70 +98,40 @@ namespace OrderManagerNew
 
             //cmdLine生出Version.xml
             FileVersionInfo myFileVersionInfo;
-            string arguments = "-v";
-            Process processer;
 
             if (softwarePath.ToLower().IndexOf("ortho") != -1)  //Ortho
             {
                 myFileVersionInfo = FileVersionInfo.GetVersionInfo(softwarePath);
                 if (haveNewVersion(myFileVersionInfo.FileVersion, "3.1.20325.0") == false)
-                {
-                    processer = new Process();
-                    processer.StartInfo.FileName = softwarePath;
-                    processer.StartInfo.Arguments = arguments;
-                    processer.Start();
-                }
+                    RunCommandLine(softwarePath, "-v");
                 else
-                {
                     log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RebuildVersionXML()", "Ortho is Old version, can't output version.xml");
-                }
             }
             else if(softwarePath.ToLower().IndexOf("implant") != -1)    //ImplantPlanning
             {
                 myFileVersionInfo = FileVersionInfo.GetVersionInfo(softwarePath);
                 if (haveNewVersion(myFileVersionInfo.FileVersion, "2.1.2.0") == false)
-                { 
-                    processer = new Process();
-                    processer.StartInfo.FileName = softwarePath;
-                    processer.StartInfo.Arguments = arguments;
-                    processer.Start();
-                }
+                    RunCommandLine(softwarePath, "-v");
                 else
-                {
                     log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RebuildVersionXML()", "ImplantPlanning is Old version, can't output version.xml");
-                }
             }
             else if (softwarePath.ToLower().IndexOf("tray") != -1 || softwarePath.ToLower().IndexOf("splint") != -1)
             {
                 //Tray、Splint版本號一樣
                 myFileVersionInfo = FileVersionInfo.GetVersionInfo(softwarePath);
                 if (haveNewVersion(myFileVersionInfo.FileVersion, "1.0.20325.0") == false)
-                {
-                    processer = new Process();
-                    processer.StartInfo.FileName = softwarePath;
-                    processer.StartInfo.Arguments = arguments;
-                    processer.Start();
-                }
+                    RunCommandLine(softwarePath, "-v");
                 else
-                {
                     log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RebuildVersionXML()", Path.GetFileNameWithoutExtension(softwarePath) + " is Old version, can't output version.xml");
-                }
             }
             else if(softwarePath.ToLower().IndexOf("cad") != -1 || softwarePath.ToLower().IndexOf("guide") != -1)
             {
                 //EZCAD、Guide版本號一樣
                 myFileVersionInfo = FileVersionInfo.GetVersionInfo(softwarePath);
                 if (haveNewVersion(myFileVersionInfo.FileVersion, "2.1.20325.0") == false)
-                {
-                    processer = new Process();
-                    processer.StartInfo.FileName = softwarePath;
-                    processer.StartInfo.Arguments = arguments;
-                    processer.Start();
-                }
+                    RunCommandLine(softwarePath, "-v");
                 else
-                {
                     log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RebuildVersionXML()", Path.GetFileNameWithoutExtension(softwarePath) + " is Old version, can't output version.xml");
-                }
             }
             else
             {
@@ -439,11 +417,8 @@ namespace OrderManagerNew
                 softwareLogoShowEvent(readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installing, 0);
                 string downloadPath = GetSoftwarePath(readyInstallSoftwareInfo.softwareID);
 
-                Process processer = new Process();
-                processer.StartInfo.FileName = downloadfilepath;
                 string param = "/quiet APPDIR=\"" + downloadPath + "\"";
-                processer.StartInfo.Arguments = param;
-                processer.Start();
+                RunCommandLine(downloadfilepath, param);
             }
         }
         #endregion
@@ -666,6 +641,28 @@ namespace OrderManagerNew
 
             if (generateVersionXml == true)
                 SoftwareInfoLog(UserSoftwareTotal, "UserSoftwareTotal");
+        }
+
+        /// <summary>
+        /// CommandLine(命令提示字元)
+        /// </summary>
+        /// <param name="fileName">要開啟的檔案</param>
+        /// <param name="arguments">要傳進去的參數</param>
+        public void RunCommandLine(string fileName, string arguments)
+        {
+            try
+            {
+                Process processer = new Process();
+                processer.StartInfo.FileName = fileName;
+                if(arguments != "")
+                    processer.StartInfo.Arguments = arguments;
+                processer.Start();
+            }
+            catch(Exception ex)
+            {
+                Handler_snackbarShow(ex.Message);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RunCommandLine exception", ex.Message);
+            }
         }
     }
 }

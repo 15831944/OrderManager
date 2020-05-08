@@ -282,4 +282,12 @@
     <value>You are about to install </value>
     <comment>BeforeDownload</comment>
   </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+    <comment>Login</comment>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+    <comment>Login</comment>
+  </data>
 </root>

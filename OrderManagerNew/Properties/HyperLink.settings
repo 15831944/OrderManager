@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OrderManagerNew.Properties" GeneratedClassName="HyperLink">
+  <Profiles />
+  <Settings>
+    <Setting Name="ContactInteware" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://www.facebook.com/messages/t/191158537741700</Value>
+    </Setting>
+    <Setting Name="ForgetAirdentalPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://airdental.inteware.com.tw/findyouraccount/search</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

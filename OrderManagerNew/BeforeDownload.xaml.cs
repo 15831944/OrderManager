@@ -261,8 +261,7 @@ namespace OrderManagerNew
                 SetHttpResponseOK();
             }
         }
-        #endregion
-
+        
         /// <summary>
         /// 計時器結束事件
         /// </summary>
@@ -271,6 +270,7 @@ namespace OrderManagerNew
             Handler_snackbarShow("can't get network response, please restart ordermanager and try again"); //超過5秒回應時間 //TODO 多國語系
             tmr.Stop();
         }
+        #endregion
 
         /// <summary>
         /// 設定UI所顯示的資訊
