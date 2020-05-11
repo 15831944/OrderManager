@@ -752,7 +752,7 @@
                             <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="true">
-                            <Setter TargetName="border" Property="BorderBrush" Value="Red" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="Gray" />
                             <Setter TargetName="border" Property="BorderThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>

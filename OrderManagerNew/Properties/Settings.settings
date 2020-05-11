@@ -5,22 +5,22 @@
     <Setting Name="sysLanguage" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="path_EZCAD" Type="System.String" Scope="User">
+    <Setting Name="cad_exePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="path_Implant" Type="System.String" Scope="User">
+    <Setting Name="implant_exePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="path_Ortho" Type="System.String" Scope="User">
+    <Setting Name="ortho_exePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="path_Tray" Type="System.String" Scope="User">
+    <Setting Name="tray_exePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="path_Splint" Type="System.String" Scope="User">
+    <Setting Name="splint_exePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="path_Guide" Type="System.String" Scope="User">
+    <Setting Name="guide_exePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="engineerMode" Type="System.Boolean" Scope="User">
@@ -31,6 +31,24 @@
     </Setting>
     <Setting Name="PingTime" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="cad_projectPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="implant_projectPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ortho_projectPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="tray_projectPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="splint_projectPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="systemDisk" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

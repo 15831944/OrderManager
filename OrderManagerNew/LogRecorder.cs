@@ -89,12 +89,12 @@ namespace OrderManagerNew
             w.WriteLine($"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
             w.WriteLine($"{Block}:{logMessage}");
             w.WriteLine("-------------------------------");
-            w.WriteLine($"path_EZCAD:{Properties.Settings.Default.path_EZCAD}");
-            w.WriteLine($"path_Implant:{Properties.Settings.Default.path_Implant}");
-            w.WriteLine($"path_Ortho:{Properties.Settings.Default.path_Ortho}");
-            w.WriteLine($"path_Tray:{Properties.Settings.Default.path_Tray}");
-            w.WriteLine($"path_Splint:{Properties.Settings.Default.path_Splint}");
-            w.WriteLine($"path_Guide:{Properties.Settings.Default.path_Guide}");
+            w.WriteLine($"path_EZCAD:{Properties.Settings.Default.cad_exePath}");
+            w.WriteLine($"path_Implant:{Properties.Settings.Default.implant_exePath}");
+            w.WriteLine($"path_Ortho:{Properties.Settings.Default.ortho_exePath}");
+            w.WriteLine($"path_Tray:{Properties.Settings.Default.tray_exePath}");
+            w.WriteLine($"path_Splint:{Properties.Settings.Default.splint_exePath}");
+            w.WriteLine($"path_Guide:{Properties.Settings.Default.guide_exePath}");
             w.WriteLine($"UserLanguage:{Properties.Settings.Default.sysLanguage}");
         }
         

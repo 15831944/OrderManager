@@ -61,6 +61,7 @@ namespace OrderManagerNew
         LogRecorder log;                            //日誌檔cs
         UpdateFunction UpdateFunc;                  //軟體更新cs
         BeforeDownload DialogBeforeDownload;        //下載前置畫面
+        OrderManagerFunctions OrderManagerFunc;     //OrderManager的函式
         bool developerMode = true;                  //開發者模式
         bool loginStatus = false;                   //是否登入了
         bool showUserDetail = false;                //是否正在顯示UserDetail
@@ -114,6 +115,7 @@ namespace OrderManagerNew
             UpdateFunc.checkExistSoftware(true);    //檢查有安裝哪些軟體
             UpdateFunc.loadHLXml();                 //截取線上HL.xml內的資料
 
+            OrderManagerFunc = new OrderManagerFunctions();
             //工程師模式切換
             if (developerMode == true)
             {
@@ -164,12 +166,12 @@ namespace OrderManagerNew
                 case "DevBtn1":
                     {
                         //Reset Properties
-                        Properties.Settings.Default.path_EZCAD = "";
-                        Properties.Settings.Default.path_Implant = "";
-                        Properties.Settings.Default.path_Ortho = "";
-                        Properties.Settings.Default.path_Tray = "";
-                        Properties.Settings.Default.path_Splint = "";
-                        Properties.Settings.Default.path_Guide = "";
+                        Properties.Settings.Default.cad_exePath = "";
+                        Properties.Settings.Default.implant_exePath = "";
+                        Properties.Settings.Default.ortho_exePath = "";
+                        Properties.Settings.Default.tray_exePath = "";
+                        Properties.Settings.Default.splint_exePath = "";
+                        Properties.Settings.Default.guide_exePath = "";
                         Properties.Settings.Default.sysLanguage = "";
                         Properties.Settings.Default.DownloadFolder = "";
                         Properties.Settings.Default.engineerMode = false;
@@ -235,6 +237,12 @@ namespace OrderManagerNew
                         DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
                         DialogBeforeDownload.GethttpResoponse(@"https://www.dropbox.com/s/dj6p305a3ckkjxz/EZCAD.Splint_1.0.20214.0.exe?dl=1", (int)_softwareID.Splint);
 
+                        break;
+                    }
+                case "DevBtn7":
+                    {
+                        Setting DialogSetting = new Setting();
+                        DialogSetting.AutoDetectEXE();
                         break;
                     }
             }
@@ -678,7 +686,7 @@ namespace OrderManagerNew
         {
             FileSystemWatcher watcher = sender as FileSystemWatcher;
             //DirectoryInfo info = new DirectoryInfo(watcher.Path);
-            double dirSize = (double)DirSize(new DirectoryInfo(watcher.Path));
+            double dirSize = (double)OrderManagerFunc.DirSize(new DirectoryInfo(watcher.Path));
             double LimitSize = UpdateFunc.readyInstallSoftwareInfo.softwareSize;
             
             if(Path.GetExtension(e.FullPath) == ".exe" && (
@@ -722,30 +730,7 @@ namespace OrderManagerNew
             }
 
         }
-
-        /// <summary>
-        /// 資料夾容量大小
-        /// </summary>
-        /// <param name="d">創建用 new DirectoryInfo("路徑")</param>
-        /// <returns></returns>
-        long DirSize(DirectoryInfo d)
-        {
-            long size = 0;
-            // Add file sizes.
-            FileInfo[] fis = d.GetFiles();
-            foreach (FileInfo fi in fis)
-            {
-                size += fi.Length;
-            }
-            // Add subdirectory sizes.
-            DirectoryInfo[] dis = d.GetDirectories();
-            foreach (DirectoryInfo di in dis)
-            {
-                size += DirSize(di);
-            }
-            return size;
-        }
-
+        
         /// <summary>
         /// 設定SofttwareTable的PopupBox事件
         /// </summary>
@@ -934,9 +919,9 @@ namespace OrderManagerNew
                         //TODO要再詢問一次是否真的要解除安裝
                         if(MessageBox.Show("確定要解除安裝Splint?","解除安裝", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                         {
-                            if (Path.GetExtension(Properties.Settings.Default.path_Splint) == ".exe")
+                            if (Path.GetExtension(Properties.Settings.Default.splint_exePath) == ".exe")
                             {
-                                string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.path_Splint) + @"\Uninstall.lnk";
+                                string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.splint_exePath) + @"\Uninstall.lnk";
                                 if (File.Exists(uninstallPath) == true)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Uninstalling, 0);

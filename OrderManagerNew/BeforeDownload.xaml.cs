@@ -372,32 +372,32 @@ namespace OrderManagerNew
             {
                 case (int)_softwareID.EZCAD:
                     {
-                        Properties.Settings.Default.path_EZCAD = softwarePath;
+                        Properties.Settings.Default.cad_exePath = softwarePath;
                         break;
                     }
                 case (int)_softwareID.Implant:
                     {
-                        Properties.Settings.Default.path_Implant = softwarePath;
+                        Properties.Settings.Default.implant_exePath = softwarePath;
                         break;
                     }
                 case (int)_softwareID.Ortho:
                     {
-                        Properties.Settings.Default.path_Ortho = softwarePath;
+                        Properties.Settings.Default.ortho_exePath = softwarePath;
                         break;
                     }
                 case (int)_softwareID.Tray:
                     {
-                        Properties.Settings.Default.path_Tray = softwarePath;
+                        Properties.Settings.Default.tray_exePath = softwarePath;
                         break;
                     }
                 case (int)_softwareID.Splint:
                     {
-                        Properties.Settings.Default.path_Splint = softwarePath;
+                        Properties.Settings.Default.splint_exePath = softwarePath;
                         break;
                     }
                 case (int)_softwareID.Guide:
                     {
-                        Properties.Settings.Default.path_Guide = softwarePath;
+                        Properties.Settings.Default.guide_exePath = softwarePath;
                         break;
                     }
             }

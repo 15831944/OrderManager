@@ -18,6 +18,12 @@
                 <Setter Property="HorizontalAlignment" Value="Left" />
                 <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
+            <Style x:Key="folderOpen" BasedOn="{StaticResource btn_folderOpen}" TargetType="{x:Type Button}">
+                <EventSetter Event="Click" Handler="Click_OpenFilePath" />
+            </Style>
+            <Style x:Key="SettingsysBtn" BasedOn="{StaticResource Setting_sysBtn}" TargetType="{x:Type Button}">
+                <EventSetter Event="Click" Handler="Click_systemButton" />
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -106,32 +112,25 @@
 
                     <Button
                       x:Name="Btn_EZCADprogram" Grid.Row="0" Grid.Column="2"
-                      Click="Click_OpenFilePath"
-                      Style="{DynamicResource btn_folderOpen}" />
+                      Style="{DynamicResource folderOpen}" />
                     <Button
                       x:Name="Btn_Implantprogram" Grid.Row="1" Grid.Column="2"
-                      Click="Click_OpenFilePath"
-                      Style="{DynamicResource btn_folderOpen}" />
+                      Style="{DynamicResource folderOpen}" />
                     <Button
                       x:Name="Btn_Orthoprogram" Grid.Row="2" Grid.Column="2"
-                      Click="Click_OpenFilePath"
-                      Style="{DynamicResource btn_folderOpen}" />
+                      Style="{DynamicResource folderOpen}" />
                     <Button
                       x:Name="Btn_Trayprogram" Grid.Row="3" Grid.Column="2"
-                      Click="Click_OpenFilePath"
-                      Style="{DynamicResource btn_folderOpen}" />
+                      Style="{DynamicResource folderOpen}" />
                     <Button
                       x:Name="Btn_Splintprogram" Grid.Row="4" Grid.Column="2"
-                      Click="Click_OpenFilePath"
-                      Style="{DynamicResource btn_folderOpen}" />
+                      Style="{DynamicResource folderOpen}" />
                     <Button
                       x:Name="Btn_Guideprogram" Grid.Row="5" Grid.Column="2"
-                      Click="Click_OpenFilePath"
-                      Style="{DynamicResource btn_folderOpen}" />
+                      Style="{DynamicResource folderOpen}" />
                     <Button
                       x:Name="Btn_Downloadpath" Grid.Row="6" Grid.Column="2"
-                      Click="Click_OpenFilePath"
-                      Style="{DynamicResource btn_folderOpen}" />
+                      Style="{DynamicResource folderOpen}" />
                 </Grid>
                 <Grid Grid.Row="2" Margin="0,12">
                     <Grid.ColumnDefinitions>
@@ -157,17 +156,17 @@
                     </Grid.ColumnDefinitions>
                     <Button
                       x:Name="sysBtn_AutoDetect" Grid.Column="0" Width="120"
-                      HorizontalAlignment="Left" Click="Click_systemButton"
+                      HorizontalAlignment="Left"
                       Content="{local:LocExtension AutoDetect}"
-                      Style="{DynamicResource Setting_sysBtn}" />
+                      Style="{DynamicResource SettingsysBtn}" />
                     <Button
-                      x:Name="sysBtn_Yes" Grid.Column="1" Click="Click_systemButton"
+                      x:Name="sysBtn_Yes" Grid.Column="1"
                       Content="{local:LocExtension OK}"
-                      Style="{DynamicResource Setting_sysBtn}" />
+                      Style="{DynamicResource SettingsysBtn}" />
                     <Button
-                      x:Name="sysBtn_Cancel" Grid.Column="2" Click="Click_systemButton"
+                      x:Name="sysBtn_Cancel" Grid.Column="2"
                       Content="{local:LocExtension Cancel}"
-                      Style="{DynamicResource Setting_sysBtn}" />
+                      Style="{DynamicResource SettingsysBtn}" />
                 </Grid>
             </Grid>
         </DockPanel>

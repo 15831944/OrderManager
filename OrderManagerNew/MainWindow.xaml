@@ -232,6 +232,7 @@
                                 <Setter Property="Margin" Value="3,0" />
                                 <Setter Property="FontSize" Value="8" />
                                 <Setter Property="Focusable" Value="False" />
+                                <EventSetter Event="Click" Handler="Dev_Click_Btn" />
                             </Style>
                         </Grid.Resources>
                         <Grid.RowDefinitions>
@@ -253,64 +254,36 @@
 
                         <Button
                           x:Name="DevBtn1" Grid.Row="0" Grid.Column="0"
-                          Click="Dev_Click_Btn" Content="Reset Properties" />
+                          Content="Reset Properties" />
                         <Button
                           x:Name="DevBtn2" Grid.Row="0" Grid.Column="1"
-                          Click="Dev_Click_Btn" Content="Load HL.xml" />
+                          Content="Load HL.xml" />
                         <Button
                           x:Name="DevBtn3" Grid.Row="0" Grid.Column="2"
-                          Click="Dev_Click_Btn" Content="Delete Log" />
+                          Content="Delete Log" />
                         <Button
                           x:Name="DevBtn4" Grid.Row="0" Grid.Column="3"
-                          Click="Dev_Click_Btn" Content="Show Log" />
+                          Content="Show Log" />
                         <Button
                           x:Name="DevBtn5" Grid.Row="0" Grid.Column="4"
-                          Click="Dev_Click_Btn" Content="LoginStatus" />
+                          Content="LoginStatus" />
                         <Button
                           x:Name="DevBtn6" Grid.Row="0" Grid.Column="5"
-                          Click="Dev_Click_Btn" Content="Splint Download" />
-                        <Button
-                          x:Name="DevBtn7" Grid.Row="0" Grid.Column="6"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn8" Grid.Row="0" Grid.Column="7"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn9" Grid.Row="0" Grid.Column="8"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn10" Grid.Row="0" Grid.Column="9"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn11" Grid.Row="1" Grid.Column="0"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn12" Grid.Row="1" Grid.Column="1"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn13" Grid.Row="1" Grid.Column="2"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn14" Grid.Row="1" Grid.Column="3"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn15" Grid.Row="1" Grid.Column="4"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn16" Grid.Row="1" Grid.Column="5"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn17" Grid.Row="1" Grid.Column="6"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn18" Grid.Row="1" Grid.Column="7"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn19" Grid.Row="1" Grid.Column="8"
-                          Click="Dev_Click_Btn" />
-                        <Button
-                          x:Name="DevBtn20" Grid.Row="1" Grid.Column="9"
-                          Click="Dev_Click_Btn" />
+                          Content="Splint Download" />
+                        <Button x:Name="DevBtn7" Grid.Row="0" Grid.Column="6" />
+                        <Button x:Name="DevBtn8" Grid.Row="0" Grid.Column="7" />
+                        <Button x:Name="DevBtn9" Grid.Row="0" Grid.Column="8" />
+                        <Button x:Name="DevBtn10" Grid.Row="0" Grid.Column="9" />
+                        <Button x:Name="DevBtn11" Grid.Row="1" Grid.Column="0" />
+                        <Button x:Name="DevBtn12" Grid.Row="1" Grid.Column="1" />
+                        <Button x:Name="DevBtn13" Grid.Row="1" Grid.Column="2" />
+                        <Button x:Name="DevBtn14" Grid.Row="1" Grid.Column="3" />
+                        <Button x:Name="DevBtn15" Grid.Row="1" Grid.Column="4" />
+                        <Button x:Name="DevBtn16" Grid.Row="1" Grid.Column="5" />
+                        <Button x:Name="DevBtn17" Grid.Row="1" Grid.Column="6" />
+                        <Button x:Name="DevBtn18" Grid.Row="1" Grid.Column="7" />
+                        <Button x:Name="DevBtn19" Grid.Row="1" Grid.Column="8" />
+                        <Button x:Name="DevBtn20" Grid.Row="1" Grid.Column="9" />
                     </Grid>
 
                     <!--  SortTable-Start  -->
@@ -349,58 +322,35 @@
                         </Expander>
                         <Expander Header="{local:LocExtension ByDate}" Style="{StaticResource ExpanderStyle}">
                             <Grid Background="#FF756550">
+                                <Grid.Resources>
+                                    <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
+                                        <EventSetter Event="Click" Handler="SortTable_Click_Filter" />
+                                        <Setter Property="GroupName" Value="SortRadio" />
+                                    </Style>
+                                </Grid.Resources>
                                 <StackPanel Margin="30,0,0,0" Orientation="Vertical">
-                                    <RadioButton
-                                      Name="DateFilterAll" Click="SortTable_Click_Filter"
-                                      Content="{local:LocExtension All}"
-                                      GroupName="SortRadio" IsChecked="True"
-                                      Style="{StaticResource SortRadioButton}" />
-                                    <RadioButton
-                                      Name="DateFilterToday" Click="SortTable_Click_Filter"
-                                      Content="{local:LocExtension Today}"
-                                      GroupName="SortRadio"
-                                      Style="{StaticResource SortRadioButton}" />
-                                    <RadioButton
-                                      Name="DateFilterLW" Click="SortTable_Click_Filter"
-                                      Content="{local:LocExtension LastWeek}"
-                                      GroupName="SortRadio"
-                                      Style="{StaticResource SortRadioButton}" />
-                                    <RadioButton
-                                      Name="DateFilterL2W" Click="SortTable_Click_Filter"
-                                      Content="{local:LocExtension Last2Week}"
-                                      GroupName="SortRadio"
-                                      Style="{StaticResource SortRadioButton}" />
+                                    <RadioButton Name="DateFilterAll" Content="{local:LocExtension All}" IsChecked="True" />
+                                    <RadioButton Name="DateFilterToday" Content="{local:LocExtension Today}" />
+                                    <RadioButton Name="DateFilterLW" Content="{local:LocExtension LastWeek}" />
+                                    <RadioButton Name="DateFilterL2W" Content="{local:LocExtension Last2Week}" />
                                 </StackPanel>
                             </Grid>
                         </Expander>
                         <Expander Header="{local:LocExtension BySoftware}" Style="{StaticResource ExpanderStyle}">
                             <Grid Background="#FF756550">
+                                <Grid.Resources>
+                                    <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
+                                        <Setter Property="GroupName" Value="SortSoftware" />
+                                        <EventSetter Event="Click" Handler="SortTable_Click_Filter" />
+                                    </Style>
+                                </Grid.Resources>
                                 <StackPanel Margin="30,0,0,0" Orientation="Vertical">
-                                    <RadioButton
-                                      Name="SoftwareFilterAll" Click="SortTable_Click_Filter"
-                                      Content="{local:LocExtension All}"
-                                      GroupName="SortSoftware" IsChecked="True"
-                                      Style="{StaticResource SortRadioButton}" />
-                                    <RadioButton
-                                      Name="SoftwareFilterCAD" Click="SortTable_Click_Filter" Content="CAD"
-                                      GroupName="SortSoftware"
-                                      Style="{StaticResource SortRadioButton}" />
-                                    <RadioButton
-                                      Name="SoftwareFilterImplant" Click="SortTable_Click_Filter" Content="Implant"
-                                      GroupName="SortSoftware"
-                                      Style="{StaticResource SortRadioButton}" />
-                                    <RadioButton
-                                      Name="SoftwareFilterOrtho" Click="SortTable_Click_Filter" Content="Ortho"
-                                      GroupName="SortSoftware"
-                                      Style="{StaticResource SortRadioButton}" />
-                                    <RadioButton
-                                      Name="SoftwareFilterTray" Click="SortTable_Click_Filter" Content="Tray"
-                                      GroupName="SortSoftware"
-                                      Style="{StaticResource SortRadioButton}" />
-                                    <RadioButton
-                                      Name="SoftwareFilterSplint" Click="SortTable_Click_Filter" Content="Splint"
-                                      GroupName="SortSoftware"
-                                      Style="{StaticResource SortRadioButton}" />
+                                    <RadioButton Name="SoftwareFilterAll" Content="{local:LocExtension All}" IsChecked="True" />
+                                    <RadioButton Name="SoftwareFilterCAD" Content="EZCAD" />
+                                    <RadioButton Name="SoftwareFilterImplant" Content="ImplantPlanning" />
+                                    <RadioButton Name="SoftwareFilterOrtho" Content="OrthoAnalysis" />
+                                    <RadioButton Name="SoftwareFilterTray" Content="EZCAD.tray" />
+                                    <RadioButton Name="SoftwareFilterSplint" Content="EZCAD.splint" />
                                 </StackPanel>
                             </Grid>
                         </Expander>

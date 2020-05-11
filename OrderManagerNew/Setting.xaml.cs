@@ -22,16 +22,28 @@ namespace OrderManagerNew
     /// </summary>
     public partial class Setting : Window
     {
+        class diskSoftwareNum
+        {
+            public string diskName { get; set; }
+            public int softwareCount { get; set; }
+
+            public diskSoftwareNum()
+            {
+                diskName = "";
+                softwareCount = 0;
+            }
+        }
+
         public Setting()
         {
             InitializeComponent();
 
-            textbox_EZCAD.Text = Properties.Settings.Default.path_EZCAD;
-            textbox_Implant.Text = Properties.Settings.Default.path_Implant;
-            textbox_Ortho.Text = Properties.Settings.Default.path_Ortho;
-            textbox_Tray.Text = Properties.Settings.Default.path_Tray;
-            textbox_Splint.Text = Properties.Settings.Default.path_Splint;
-            textbox_Guide.Text = Properties.Settings.Default.path_Guide;
+            textbox_EZCAD.Text = Properties.Settings.Default.cad_exePath;
+            textbox_Implant.Text = Properties.Settings.Default.implant_exePath;
+            textbox_Ortho.Text = Properties.Settings.Default.ortho_exePath;
+            textbox_Tray.Text = Properties.Settings.Default.tray_exePath;
+            textbox_Splint.Text = Properties.Settings.Default.splint_exePath;
+            textbox_Guide.Text = Properties.Settings.Default.guide_exePath;
 
 
             if (Properties.Settings.Default.DownloadFolder == "")
@@ -118,29 +130,29 @@ namespace OrderManagerNew
                 case "sysBtn_Yes":
                     {
                         if (File.Exists(textbox_EZCAD.Text) == true)
-                            Properties.Settings.Default.path_EZCAD = Path.GetFullPath(textbox_EZCAD.Text);
+                            Properties.Settings.Default.cad_exePath = Path.GetFullPath(textbox_EZCAD.Text);
                         else
-                            Properties.Settings.Default.path_EZCAD = "";
+                            Properties.Settings.Default.cad_exePath = "";
                         if (File.Exists(textbox_Implant.Text) == true)
-                            Properties.Settings.Default.path_Implant = Path.GetFullPath(textbox_Implant.Text);
+                            Properties.Settings.Default.implant_exePath = Path.GetFullPath(textbox_Implant.Text);
                         else
-                            Properties.Settings.Default.path_Implant = "";
+                            Properties.Settings.Default.implant_exePath = "";
                         if (File.Exists(textbox_Ortho.Text) == true)
-                            Properties.Settings.Default.path_Ortho = Path.GetFullPath(textbox_Ortho.Text);
+                            Properties.Settings.Default.ortho_exePath = Path.GetFullPath(textbox_Ortho.Text);
                         else
-                            Properties.Settings.Default.path_Ortho = "";
+                            Properties.Settings.Default.ortho_exePath = "";
                         if (File.Exists(textbox_Tray.Text) == true)
-                            Properties.Settings.Default.path_Tray = Path.GetFullPath(textbox_Tray.Text);
+                            Properties.Settings.Default.tray_exePath = Path.GetFullPath(textbox_Tray.Text);
                         else
-                            Properties.Settings.Default.path_Tray = "";
+                            Properties.Settings.Default.tray_exePath = "";
                         if (File.Exists(textbox_Splint.Text) == true)
-                            Properties.Settings.Default.path_Splint = Path.GetFullPath(textbox_Splint.Text);
+                            Properties.Settings.Default.splint_exePath = Path.GetFullPath(textbox_Splint.Text);
                         else
-                            Properties.Settings.Default.path_Splint = "";
+                            Properties.Settings.Default.splint_exePath = "";
                         if (File.Exists(textbox_Guide.Text) == true)
-                            Properties.Settings.Default.path_Guide = Path.GetFullPath(textbox_Guide.Text);
+                            Properties.Settings.Default.guide_exePath = Path.GetFullPath(textbox_Guide.Text);
                         else
-                            Properties.Settings.Default.path_Guide = "";
+                            Properties.Settings.Default.guide_exePath = "";
 
                         if (Directory.Exists(textbox_Download.Text) == true)
                             Properties.Settings.Default.DownloadFolder = textbox_Download.Text;
@@ -173,24 +185,7 @@ namespace OrderManagerNew
                     }
                 case "sysBtn_AutoDetect":
                     {
-                        if (File.Exists(@"C:\InteWare\EZCAD\Bin\EZCAD.exe") == true)
-                            textbox_EZCAD.Text = @"C:\InteWare\EZCAD\Bin\EZCAD.exe";
-
-                        if (File.Exists(@"C:\InteWare\ImplantPlanning\ImplantPlanning.exe") == true)
-                            textbox_Implant.Text = @"C:\InteWare\ImplantPlanning\ImplantPlanning.exe";
-
-                        if (File.Exists(@"C:\InteWare\OrthoAnalysis\OrthoAnalysis.exe") == true)
-                            textbox_Ortho.Text = @"C:\InteWare\OrthoAnalysis\OrthoAnalysis.exe";
-
-                        if (File.Exists(@"C:\InteWare\EZCAD tray\Bin\EZCAD.tray.exe") == true)
-                            textbox_Tray.Text = @"C:\InteWare\EZCAD tray\Bin\EZCAD.tray.exe";
-
-                        if (File.Exists(@"C:\InteWare\EZCAD splint\Bin\EZCAD.splint.exe") == true)
-                            textbox_Splint.Text = @"C:\InteWare\EZCAD splint\Bin\EZCAD.splint.exe";
-
-                        if (File.Exists(@"C:\InteWare\EZCAD guide\Bin\EZCAD.guide.exe") == true)
-                            textbox_Guide.Text = @"C:\InteWare\EZCAD guide\Bin\EZCAD.guide.exe";
-
+                        AutoDetectEXE();
                         break;
                     }
             }
@@ -206,6 +201,99 @@ namespace OrderManagerNew
             {
                 LocalizationService.SetLanguage("zh-TW");
             }
+        }
+
+        /// <summary>
+        /// 自動檢測軟體執行檔路徑並把最常用的磁碟存入 Properties.Settings.Default.systemDisk
+        /// </summary>
+        public void AutoDetectEXE()
+        {
+            DriveInfo[] allDrives = DriveInfo.GetDrives();
+            List<diskSoftwareNum> diskWithSoftware = new List<diskSoftwareNum>();
+
+            foreach (DriveInfo d in allDrives)  //檢查客戶所有磁碟
+            {
+                diskSoftwareNum diskInfo = new diskSoftwareNum();
+                diskInfo.diskName = d.Name;
+
+                if (File.Exists(d.Name + @"InteWare\EZCAD\Bin\EZCAD.exe") == true)
+                {
+                    textbox_EZCAD.Text = d.Name + @"InteWare\EZCAD\Bin\EZCAD.exe";
+                    diskInfo.softwareCount++;
+                }
+
+                if (File.Exists(d.Name + @"InteWare\ImplantPlanning\ImplantPlanning.exe") == true)
+                {
+                    textbox_Implant.Text = d.Name + @"InteWare\ImplantPlanning\ImplantPlanning.exe";
+                    diskInfo.softwareCount++;
+                }
+
+                if (File.Exists(d.Name + @"InteWare\OrthoAnalysis\OrthoAnalysis.exe") == true)
+                {
+                    textbox_Ortho.Text = d.Name + @"InteWare\OrthoAnalysis\OrthoAnalysis.exe";
+                    diskInfo.softwareCount++;
+                }
+
+                if (File.Exists(d.Name + @"InteWare\EZCAD tray\Bin\EZCAD.tray.exe") == true)
+                {
+                    textbox_Tray.Text = d.Name + @"InteWare\EZCAD tray\Bin\EZCAD.tray.exe";
+                    diskInfo.softwareCount++;
+                }
+
+                if (File.Exists(d.Name + @"InteWare\EZCAD splint\Bin\EZCAD.splint.exe") == true)
+                {
+                    textbox_Splint.Text = d.Name + @"InteWare\EZCAD splint\Bin\EZCAD.splint.exe";
+                    diskInfo.softwareCount++;
+                }
+
+                if (File.Exists(d.Name + @"InteWare\EZCAD guide\Bin\EZCAD.guide.exe") == true)
+                {
+                    textbox_Guide.Text = d.Name + @"InteWare\EZCAD guide\Bin\EZCAD.guide.exe";
+                    diskInfo.softwareCount++;
+                }
+
+                diskWithSoftware.Add(diskInfo);
+            }
+
+            diskSoftwareNum disk_most = new diskSoftwareNum();//存最多軟體的磁碟
+            for (int i = 0; i < diskWithSoftware.Count; i++)    //開始各磁碟比較，比看哪個磁碟存比較多軟體
+            {
+                if (i >= 1)
+                {
+                    if (diskWithSoftware[i].softwareCount > disk_most.softwareCount)
+                        disk_most = diskWithSoftware[i];
+                }
+                else
+                    disk_most = diskWithSoftware[i];
+            }
+
+            if (disk_most.softwareCount != 0)
+                Properties.Settings.Default.systemDisk = disk_most.diskName;
+            else
+            {
+                bool chosen = false;//是否已選中
+                foreach(diskSoftwareNum disk in diskWithSoftware)   //一個軟體都沒安裝預設C碟，C碟沒有就D碟，兩個都沒有就用陣列第一筆磁碟
+                {
+                    if (disk.diskName == @"C:\")
+                    {
+                        Properties.Settings.Default.systemDisk = @"C:\";
+                        chosen = true;
+                        break;
+                    }
+                    if (disk.diskName == @"D:\")
+                    {
+                        Properties.Settings.Default.systemDisk = @"D:\";
+                        chosen = true;
+                        break;
+                    }
+                }
+
+                if (chosen == false)
+                    Properties.Settings.Default.systemDisk = diskWithSoftware[0].diskName;
+
+            }
+
+            Properties.Settings.Default.Save();
         }
 
         /// <summary>

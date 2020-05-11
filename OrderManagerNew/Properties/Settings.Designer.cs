@@ -38,72 +38,72 @@ namespace OrderManagerNew.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string path_EZCAD {
+        public string cad_exePath {
             get {
-                return ((string)(this["path_EZCAD"]));
+                return ((string)(this["cad_exePath"]));
             }
             set {
-                this["path_EZCAD"] = value;
+                this["cad_exePath"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string path_Implant {
+        public string implant_exePath {
             get {
-                return ((string)(this["path_Implant"]));
+                return ((string)(this["implant_exePath"]));
             }
             set {
-                this["path_Implant"] = value;
+                this["implant_exePath"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string path_Ortho {
+        public string ortho_exePath {
             get {
-                return ((string)(this["path_Ortho"]));
+                return ((string)(this["ortho_exePath"]));
             }
             set {
-                this["path_Ortho"] = value;
+                this["ortho_exePath"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string path_Tray {
+        public string tray_exePath {
             get {
-                return ((string)(this["path_Tray"]));
+                return ((string)(this["tray_exePath"]));
             }
             set {
-                this["path_Tray"] = value;
+                this["tray_exePath"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string path_Splint {
+        public string splint_exePath {
             get {
-                return ((string)(this["path_Splint"]));
+                return ((string)(this["splint_exePath"]));
             }
             set {
-                this["path_Splint"] = value;
+                this["splint_exePath"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string path_Guide {
+        public string guide_exePath {
             get {
-                return ((string)(this["path_Guide"]));
+                return ((string)(this["guide_exePath"]));
             }
             set {
-                this["path_Guide"] = value;
+                this["guide_exePath"] = value;
             }
         }
         
@@ -140,6 +140,78 @@ namespace OrderManagerNew.Properties {
             }
             set {
                 this["PingTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string cad_projectPath {
+            get {
+                return ((string)(this["cad_projectPath"]));
+            }
+            set {
+                this["cad_projectPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string implant_projectPath {
+            get {
+                return ((string)(this["implant_projectPath"]));
+            }
+            set {
+                this["implant_projectPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ortho_projectPath {
+            get {
+                return ((string)(this["ortho_projectPath"]));
+            }
+            set {
+                this["ortho_projectPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string tray_projectPath {
+            get {
+                return ((string)(this["tray_projectPath"]));
+            }
+            set {
+                this["tray_projectPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string splint_projectPath {
+            get {
+                return ((string)(this["splint_projectPath"]));
+            }
+            set {
+                this["splint_projectPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string systemDisk {
+            get {
+                return ((string)(this["systemDisk"]));
+            }
+            set {
+                this["systemDisk"] = value;
             }
         }
     }

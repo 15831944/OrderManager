@@ -90,6 +90,7 @@
     <Compile Include="BeforeDownload.xaml.cs">
       <DependentUpon>BeforeDownload.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OrderManagerFunctions.cs" />
     <Compile Include="Properties\HyperLink.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

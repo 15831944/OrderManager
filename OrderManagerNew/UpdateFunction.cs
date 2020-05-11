@@ -322,15 +322,15 @@ namespace OrderManagerNew
 
             //開始下載多執行緒
             bgWorker_Download = new BackgroundWorker();
-            bgWorker_Download.DoWork += new DoWorkEventHandler(DownloadSoftware_DoWork);
-            bgWorker_Download.ProgressChanged += new ProgressChangedEventHandler(DownloadSoftware_UpdateProgress);
-            bgWorker_Download.RunWorkerCompleted += new RunWorkerCompletedEventHandler(DownloadSoftware_CompletedWork);
+            bgWorker_Download.DoWork += new DoWorkEventHandler(DoWork_DownloadSoftware);
+            bgWorker_Download.ProgressChanged += new ProgressChangedEventHandler(UpdateProgress_DownloadSoftware);
+            bgWorker_Download.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_DownloadSoftware);
             bgWorker_Download.WorkerReportsProgress = true;
             bgWorker_Download.WorkerSupportsCancellation = true;
             bgWorker_Download.RunWorkerAsync(this);
         }
 
-        void DownloadSoftware_DoWork(object sender, DoWorkEventArgs e)
+        void DoWork_DownloadSoftware(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker bw = sender as BackgroundWorker;
 
@@ -395,13 +395,13 @@ namespace OrderManagerNew
             }
         }
 
-        void DownloadSoftware_UpdateProgress(object sender, ProgressChangedEventArgs e)
+        void UpdateProgress_DownloadSoftware(object sender, ProgressChangedEventArgs e)
         {
             int progress = e.ProgressPercentage;
             softwareLogoShowEvent(readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Downloading, (double)(progress/100.0));
         }
 
-        void DownloadSoftware_CompletedWork(object sender, RunWorkerCompletedEventArgs e)
+        void CompletedWork_DownloadSoftware(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Error != null)
             {
@@ -433,17 +433,17 @@ namespace OrderManagerNew
             switch (SoftwareID)
             {
                 case (int)_softwareID.EZCAD:
-                    return Properties.Settings.Default.path_EZCAD;
+                    return Properties.Settings.Default.cad_exePath;
                 case (int)_softwareID.Implant:
-                    return Properties.Settings.Default.path_Implant;
+                    return Properties.Settings.Default.implant_exePath;
                 case (int)_softwareID.Ortho:
-                    return Properties.Settings.Default.path_Implant;
+                    return Properties.Settings.Default.implant_exePath;
                 case (int)_softwareID.Tray:
-                    return Properties.Settings.Default.path_Tray;
+                    return Properties.Settings.Default.tray_exePath;
                 case (int)_softwareID.Splint:
-                    return Properties.Settings.Default.path_Splint;
+                    return Properties.Settings.Default.splint_exePath;
                 case (int)_softwareID.Guide:
-                    return Properties.Settings.Default.path_Guide;
+                    return Properties.Settings.Default.guide_exePath;
                 default:
                     return "";
             }
@@ -573,70 +573,70 @@ namespace OrderManagerNew
         {
             UserSoftwareTotal = new List<SoftwareInfo>();
 
-            if (File.Exists(Properties.Settings.Default.path_EZCAD) == true)
+            if (File.Exists(Properties.Settings.Default.cad_exePath) == true)
             {
                 softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
 
                 if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.path_EZCAD);
+                    RebuildVersionXML(Properties.Settings.Default.cad_exePath);
             }
             else
             {
                 softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0);
             }
 
-            if (File.Exists(Properties.Settings.Default.path_Implant) == true)
+            if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
             {
                 softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0);
 
                 if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.path_Implant);
+                    RebuildVersionXML(Properties.Settings.Default.implant_exePath);
             }
             else
             {
                 softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0);
             }
 
-            if (File.Exists(Properties.Settings.Default.path_Ortho) == true)
+            if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
             {
                 softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0);
 
                 if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.path_Ortho);
+                    RebuildVersionXML(Properties.Settings.Default.ortho_exePath);
             }
             else
             {
                 softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0);
             }
 
-            if (File.Exists(Properties.Settings.Default.path_Tray) == true)
+            if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
             {
                 softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0);
 
                 if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.path_Tray);
+                    RebuildVersionXML(Properties.Settings.Default.tray_exePath);
             }
             else
             {
                 softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0);
             }
 
-            if (File.Exists(Properties.Settings.Default.path_Splint) == true)
+            if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
             {
                 softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0);
 
                 if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.path_Splint);
+                    RebuildVersionXML(Properties.Settings.Default.splint_exePath);
             }
             else
             {
                 softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0);
             }
 
-            if (File.Exists(Properties.Settings.Default.path_Guide) == true)
+            if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
             {
                 if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.path_Guide);
+                    RebuildVersionXML(Properties.Settings.Default.guide_exePath);
             }
 
             if (generateVersionXml == true)
