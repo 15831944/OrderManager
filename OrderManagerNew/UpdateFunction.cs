@@ -26,7 +26,7 @@ namespace OrderManagerNew
         /// <summary>
         /// 委派到MainWindow.xaml.cs裡面的setSoftwareShow()
         /// </summary>
-        /// <param name="softwareID">(軟體ID) EZCAD、Implant、Ortho、Tray、Splint</param>
+        /// <param name="softwareID">(軟體ID) 請參考_softwareID</param>
         /// <param name="currentProgress">(目前進度) 未安裝、下載中... 請參考_SoftwareStatus</param>
         /// <param name="downloadPercent">(下載百分比) 100%的值為1.00</param>
         public delegate void softwareLogoShowEventHandler(int softwareID, int currentProgress, double downloadPercent);

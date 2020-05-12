@@ -615,6 +615,7 @@ namespace OrderManagerNew
                                     splint_troubleShooting.Visibility = Visibility.Visible;
                                     splint_buyLic.Visibility = Visibility.Visible;
                                     splint_unInstall.Visibility = Visibility.Visible;
+                                    OrderManagerFunc.DetectSoftwareProjectPath();
                                     SetAllSoftwareTableDownloadisEnable(true);
                                     break;
                                 }
@@ -936,7 +937,72 @@ namespace OrderManagerNew
                         }
                         break;
                     }
-                    #endregion
+                #endregion
+
+                #region Guide
+                case "guide_selectPath":
+                    {
+                        GoToSetting("Btn_Splintprogram");
+                        break;
+                    }
+                case "guide_download":
+                    {
+                        for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                        {
+                            //TODO 之後不會分Dongle和License
+                            if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Guide && UpdateFunc.CloudSoftwareTotal[i].softwareLicense == (int)_softwareLic.License)
+                            {
+                                UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                break;
+                            }
+                        }
+                        
+                        SetAllSoftwareTableDownloadisEnable(false);
+                        DialogBeforeDownload = new BeforeDownload();
+                        DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                        DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                        DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                        break;
+                    }
+                case "guide_open":
+                    {
+                        break;
+                    }
+                case "guide_webIntro":
+                    {
+                        break;
+                    }
+                case "guide_demo":
+                    {
+                        break;
+                    }
+                case "guide_troubleShooting":
+                    {
+                        break;
+                    }
+                case "guide_unInstall":
+                    {
+                        //TODO要再詢問一次是否真的要解除安裝
+                        if(MessageBox.Show("確定要解除安裝Splint?","解除安裝", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                        {
+                            if (Path.GetExtension(Properties.Settings.Default.guide_exePath) == ".exe")
+                            {
+                                string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.guide_exePath) + @"\Uninstall.lnk";
+                                if (File.Exists(uninstallPath) == true)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Uninstalling, 0);
+                                    SetAllSoftwareTableDownloadisEnable(false);
+                                    UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("can't find Uninstall.lnk");    //TODO多國語系
+                                }
+                            }
+                        }
+                        break;
+                    }
+                #endregion
             }
         }
 

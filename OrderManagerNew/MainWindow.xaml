@@ -180,6 +180,26 @@
                             <ProgressBar x:Name="progressbar_Splint_Installing" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0">
+                            <Rectangle x:Name="mask_Guide" Style="{StaticResource maskImage}" />
+                            <ed:Arc x:Name="process_Guide" Style="{StaticResource progressArc}" />
+                            <Image Source="ImageSource/FunctionTable/icon_G.png" Style="{StaticResource progressImage}" />
+                            <materialDesign:PopupBox x:Name="popupbox_Guide" Style="{StaticResource pupupBoxSoftwareTable}">
+                                <StackPanel>
+                                    <Button x:Name="guide_selectPath" Click="SoftwareTable_Click" Content="{local:LocExtension SelectPath}" />
+                                    <Button x:Name="guide_download" Click="SoftwareTable_Click" Content="{local:LocExtension DownloadSoftware}" />
+                                    <Button x:Name="guide_open" Click="SoftwareTable_Click" Content="{local:LocExtension Open_Splint}" />
+                                    <Button x:Name="guide_webIntro" Click="SoftwareTable_Click" Content="{local:LocExtension SoftwareWeb}" />
+                                    <Button x:Name="guide_demo" Click="SoftwareTable_Click" Content="{local:LocExtension DemoCase}" />
+                                    <Button x:Name="guide_troubleShooting" Click="SoftwareTable_Click" Content="{local:LocExtension TroubleShooting}" />
+                                    <Button x:Name="guide_buyLic" Click="SoftwareTable_Click" Content="{local:LocExtension BuyLic}" />
+                                    <Button x:Name="guide_unInstall" Click="SoftwareTable_Click" Content="{local:LocExtension Uninstall}" />
+                                    <Button Click="TitleBar_Click_titlebarButtons" Content="{local:LocExtension Contect}" />
+                                </StackPanel>
+                            </materialDesign:PopupBox>
+                            <Rectangle x:Name="mask2_Guide_Installing" Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_Guide_Installing" Style="{StaticResource progressbarInstalling}" />
+                        </Grid>
+                        <Grid Margin="6,0">
                             <Image Source="ImageSource/FunctionTable/icon_update.png" Style="{StaticResource progressImage}" />
                         </Grid>
                     </StackPanel>

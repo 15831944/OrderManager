@@ -46,4 +46,10 @@ namespace OrderManagerNew
         Installing = 0,
         Delete,
     }
+
+    public enum _classFrom : int
+    {
+        MainWindow = 0,
+        Setting,
+    }
 }
