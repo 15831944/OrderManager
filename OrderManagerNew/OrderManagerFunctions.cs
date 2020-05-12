@@ -138,7 +138,7 @@ namespace OrderManagerNew
                     diskSoftwareInfo dInfo = new diskSoftwareInfo();
                     dInfo.diskName = Path.GetPathRoot(cad_exePath);
                     dInfo.softwareCount++;
-                    calcDiskwithSoftware.Add(dInfo);
+                    calcDiskwithSoftware2.Add(dInfo);
 
                     if (classfrom == (int)_classFrom.MainWindow)
                         softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
@@ -148,7 +148,7 @@ namespace OrderManagerNew
                     diskSoftwareInfo dInfo = new diskSoftwareInfo();
                     dInfo.diskName = Path.GetPathRoot(implant_exePath);
                     dInfo.softwareCount++;
-                    calcDiskwithSoftware.Add(dInfo);
+                    calcDiskwithSoftware2.Add(dInfo);
 
                     if (classfrom == (int)_classFrom.MainWindow)
                         softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
@@ -158,7 +158,7 @@ namespace OrderManagerNew
                     diskSoftwareInfo dInfo = new diskSoftwareInfo();
                     dInfo.diskName = Path.GetPathRoot(ortho_exePath);
                     dInfo.softwareCount++;
-                    calcDiskwithSoftware.Add(dInfo);
+                    calcDiskwithSoftware2.Add(dInfo);
 
                     if (classfrom == (int)_classFrom.MainWindow)
                         softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
@@ -168,7 +168,7 @@ namespace OrderManagerNew
                     diskSoftwareInfo dInfo = new diskSoftwareInfo();
                     dInfo.diskName = Path.GetPathRoot(tray_exePath);
                     dInfo.softwareCount++;
-                    calcDiskwithSoftware.Add(dInfo);
+                    calcDiskwithSoftware2.Add(dInfo);
 
                     if (classfrom == (int)_classFrom.MainWindow)
                         softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
@@ -178,7 +178,7 @@ namespace OrderManagerNew
                     diskSoftwareInfo dInfo = new diskSoftwareInfo();
                     dInfo.diskName = Path.GetPathRoot(splint_exePath);
                     dInfo.softwareCount++;
-                    calcDiskwithSoftware.Add(dInfo);
+                    calcDiskwithSoftware2.Add(dInfo);
 
                     if (classfrom == (int)_classFrom.MainWindow)
                         softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
@@ -188,7 +188,7 @@ namespace OrderManagerNew
                     diskSoftwareInfo dInfo = new diskSoftwareInfo();
                     dInfo.diskName = Path.GetPathRoot(guide_exePath);
                     dInfo.softwareCount++;
-                    calcDiskwithSoftware.Add(dInfo);
+                    calcDiskwithSoftware2.Add(dInfo);
 
                     if (classfrom == (int)_classFrom.MainWindow)
                         softwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
