@@ -88,6 +88,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Are you sure to uninstall  的當地語系化字串。
+        /// </summary>
+        internal static string AreyousureUninstall {
+            get {
+                return ResourceManager.GetString("AreyousureUninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Auto Detect 的當地語系化字串。
         /// </summary>
         internal static string AutoDetect {
@@ -210,6 +219,24 @@ namespace OrderManagerNew.Properties {
         internal static string DownloadSoftware {
             get {
                 return ResourceManager.GetString("DownloadSoftware", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 exePath conflict 的當地語系化字串。
+        /// </summary>
+        internal static string exePathConflict {
+            get {
+                return ResourceManager.GetString("exePathConflict", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 exePath conflict, do you want to replace your exePath? 的當地語系化字串。
+        /// </summary>
+        internal static string exePathConflictDescription {
+            get {
+                return ResourceManager.GetString("exePathConflictDescription", resourceCulture);
             }
         }
         

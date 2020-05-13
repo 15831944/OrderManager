@@ -107,15 +107,14 @@ namespace OrderManagerNew
 
             MediaTimeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(1000));    //設定動畫流暢度
             LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
-
             
+            OrderManagerFunc = new OrderManagerFunctions();
+            OrderManagerFunc.softwareLogoShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler(Handler_setSoftwareShow);
+
             UpdateFunc = new UpdateFunction();
             UpdateFunc.softwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
             UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
-            UpdateFunc.checkExistSoftware(true);    //檢查有安裝哪些軟體
             UpdateFunc.loadHLXml();                 //截取線上HL.xml內的資料
-
-            OrderManagerFunc = new OrderManagerFunctions();
             //工程師模式切換
             if (developerMode == true)
             {
@@ -172,12 +171,23 @@ namespace OrderManagerNew
                         Properties.Settings.Default.tray_exePath = "";
                         Properties.Settings.Default.splint_exePath = "";
                         Properties.Settings.Default.guide_exePath = "";
+                        Properties.Settings.Default.cad_projectPath = "";
+                        Properties.Settings.Default.implant_projectPath = "";
+                        Properties.Settings.Default.ortho_projectPath = "";
+                        Properties.Settings.Default.tray_projectPath = "";
+                        Properties.Settings.Default.splint_projectPath = "";
                         Properties.Settings.Default.sysLanguage = "";
                         Properties.Settings.Default.DownloadFolder = "";
                         Properties.Settings.Default.engineerMode = false;
                         Properties.Settings.Default.PingTime = 5;
                         Properties.Settings.Default.Save();
-                        UpdateFunc.checkExistSoftware(false);
+                        Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
+                        Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
+                        Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0.0);
+                        Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0.0);
+                        Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0.0);
+                        Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
+
                         SnackBarShow("Reset Properties Success");
                         break;
                     }
@@ -241,8 +251,7 @@ namespace OrderManagerNew
                     }
                 case "DevBtn7":
                     {
-                        Setting DialogSetting = new Setting();
-                        DialogSetting.AutoDetectEXE();
+                        OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
                         break;
                     }
             }
@@ -335,7 +344,7 @@ namespace OrderManagerNew
         #region FunctionTable事件
         private void FunctionTable_Click_Setting(object sender, RoutedEventArgs e)
         {
-            GoToSetting("");
+            GoToSetting(-1);
         }
 
         /// <summary>
@@ -392,6 +401,7 @@ namespace OrderManagerNew
                                     cad_troubleShooting.Visibility = Visibility.Visible;
                                     cad_buyLic.Visibility = Visibility.Visible;
                                     cad_unInstall.Visibility = Visibility.Visible;
+                                    SetAllSoftwareTableDownloadisEnable(true);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -400,6 +410,16 @@ namespace OrderManagerNew
                                     progressbar_EZCAD_Installing.Visibility = Visibility.Visible;
                                     mask_EZCAD.Visibility = Visibility.Hidden;
                                     process_EZCAD.Visibility = Visibility.Hidden;
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Installing, -1);
+                                    break;
+                                }
+                            case (int)_softwareStatus.Uninstalling:
+                                {
+                                    mask2_EZCAD_Installing.Visibility = Visibility.Visible;
+                                    progressbar_EZCAD_Installing.Visibility = Visibility.Visible;
+                                    mask_EZCAD.Visibility = Visibility.Hidden;
+                                    process_EZCAD.Visibility = Visibility.Hidden;
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.EZCAD);
                                     break;
                                 }
                         }
@@ -447,6 +467,7 @@ namespace OrderManagerNew
                                     implant_troubleShooting.Visibility = Visibility.Visible;
                                     implant_buyLic.Visibility = Visibility.Visible;
                                     implant_unInstall.Visibility = Visibility.Visible;
+                                    SetAllSoftwareTableDownloadisEnable(true);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -455,6 +476,16 @@ namespace OrderManagerNew
                                     progressbar_Implant_Installing.Visibility = Visibility.Visible;
                                     mask_Implant.Visibility = Visibility.Hidden;
                                     process_Implant.Visibility = Visibility.Hidden;
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Installing, -1);
+                                    break;
+                                }
+                            case (int)_softwareStatus.Uninstalling:
+                                {
+                                    mask2_Implant_Installing.Visibility = Visibility.Visible;
+                                    progressbar_Implant_Installing.Visibility = Visibility.Visible;
+                                    mask_Implant.Visibility = Visibility.Hidden;
+                                    process_Implant.Visibility = Visibility.Hidden;
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Implant);
                                     break;
                                 }
                         }
@@ -502,6 +533,7 @@ namespace OrderManagerNew
                                     ortho_troubleShooting.Visibility = Visibility.Visible;
                                     ortho_buyLic.Visibility = Visibility.Visible;
                                     ortho_unInstall.Visibility = Visibility.Visible;
+                                    SetAllSoftwareTableDownloadisEnable(true);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -510,6 +542,16 @@ namespace OrderManagerNew
                                     progressbar_Ortho_Installing.Visibility = Visibility.Visible;
                                     mask_Ortho.Visibility = Visibility.Hidden;
                                     process_Ortho.Visibility = Visibility.Hidden;
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Installing, -1);
+                                    break;
+                                }
+                            case (int)_softwareStatus.Uninstalling:
+                                {
+                                    mask2_Ortho_Installing.Visibility = Visibility.Visible;
+                                    progressbar_Ortho_Installing.Visibility = Visibility.Visible;
+                                    mask_Ortho.Visibility = Visibility.Hidden;
+                                    process_Ortho.Visibility = Visibility.Hidden;
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Ortho);
                                     break;
                                 }
                         }
@@ -557,15 +599,25 @@ namespace OrderManagerNew
                                     tray_troubleShooting.Visibility = Visibility.Visible;
                                     tray_buyLic.Visibility = Visibility.Visible;
                                     tray_unInstall.Visibility = Visibility.Visible;
+                                    SetAllSoftwareTableDownloadisEnable(true);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
                                 {
-                                    mask2_Tray_Installing.Visibility = Visibility.Hidden;
-                                    progressbar_Tray_Installing.Visibility = Visibility.Hidden;
+                                    mask2_Tray_Installing.Visibility = Visibility.Visible;
+                                    progressbar_Tray_Installing.Visibility = Visibility.Visible;
                                     mask_Tray.Visibility = Visibility.Hidden;
                                     process_Tray.Visibility = Visibility.Hidden;
-
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Installing, -1);
+                                    break;
+                                }
+                            case (int)_softwareStatus.Uninstalling:
+                                {
+                                    mask2_Tray_Installing.Visibility = Visibility.Visible;
+                                    progressbar_Tray_Installing.Visibility = Visibility.Visible;
+                                    mask_Tray.Visibility = Visibility.Hidden;
+                                    process_Tray.Visibility = Visibility.Hidden;
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Tray);
                                     break;
                                 }
                         }
@@ -579,7 +631,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Splint_Installing.Visibility = Visibility.Hidden;
                                     progressbar_Splint_Installing.Visibility = Visibility.Hidden;
-
                                     mask_Splint.Visibility = Visibility.Visible;
                                     process_Splint.Visibility = Visibility.Hidden;
                                     popupbox_Splint.IsEnabled = true;
@@ -604,7 +655,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Splint_Installing.Visibility = Visibility.Hidden;
                                     progressbar_Splint_Installing.Visibility = Visibility.Hidden;
-
                                     mask_Splint.Visibility = Visibility.Hidden;
                                     process_Splint.Visibility = Visibility.Hidden;
                                     popupbox_Splint.IsEnabled = true;
@@ -615,7 +665,6 @@ namespace OrderManagerNew
                                     splint_troubleShooting.Visibility = Visibility.Visible;
                                     splint_buyLic.Visibility = Visibility.Visible;
                                     splint_unInstall.Visibility = Visibility.Visible;
-                                    OrderManagerFunc.DetectSoftwareProjectPath();
                                     SetAllSoftwareTableDownloadisEnable(true);
                                     break;
                                 }
@@ -635,6 +684,72 @@ namespace OrderManagerNew
                                     mask_Splint.Visibility = Visibility.Hidden;
                                     process_Splint.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Splint);
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Guide:
+                    {
+                        switch (currentProgress)
+                        {
+                            case (int)_softwareStatus.NotInstall:
+                                {
+                                    mask2_Guide_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_Guide_Installing.Visibility = Visibility.Hidden;
+                                    mask_Guide.Visibility = Visibility.Visible;
+                                    process_Guide.Visibility = Visibility.Hidden;
+                                    popupbox_Guide.IsEnabled = true;
+                                    guide_selectPath.Visibility = Visibility.Visible;
+                                    guide_download.Visibility = Visibility.Visible;
+                                    guide_open.Visibility = Visibility.Collapsed;
+                                    guide_demo.Visibility = Visibility.Collapsed;
+                                    guide_troubleShooting.Visibility = Visibility.Collapsed;
+                                    guide_buyLic.Visibility = Visibility.Collapsed;
+                                    guide_unInstall.Visibility = Visibility.Collapsed;
+                                    break;
+                                }
+                            case (int)_softwareStatus.Downloading:
+                                {
+                                    mask_Guide.Visibility = Visibility.Hidden;
+                                    process_Guide.Visibility = Visibility.Visible;
+                                    process_Guide.EndAngle = 360.0 - 360.0 * downloadPercent;
+                                    popupbox_Guide.IsEnabled = false;
+                                    break;
+                                }
+                            case (int)_softwareStatus.Installed:
+                                {
+                                    mask2_Guide_Installing.Visibility = Visibility.Hidden;
+                                    progressbar_Guide_Installing.Visibility = Visibility.Hidden;
+                                    mask_Guide.Visibility = Visibility.Hidden;
+                                    process_Guide.Visibility = Visibility.Hidden;
+                                    popupbox_Guide.IsEnabled = true;
+                                    guide_selectPath.Visibility = Visibility.Collapsed;
+                                    guide_download.Visibility = Visibility.Collapsed;
+                                    guide_open.Visibility = Visibility.Visible;
+                                    guide_demo.Visibility = Visibility.Visible;
+                                    guide_troubleShooting.Visibility = Visibility.Visible;
+                                    guide_buyLic.Visibility = Visibility.Visible;
+                                    guide_unInstall.Visibility = Visibility.Visible;
+                                    SetAllSoftwareTableDownloadisEnable(true);
+                                    break;
+                                }
+                            case (int)_softwareStatus.Installing:
+                                {
+                                    mask2_Guide_Installing.Visibility = Visibility.Visible;
+                                    progressbar_Guide_Installing.Visibility = Visibility.Visible;
+                                    mask_Guide.Visibility = Visibility.Hidden;
+                                    process_Guide.Visibility = Visibility.Hidden;
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Installing, -1);
+                                    break;
+                                }
+                            case (int)_softwareStatus.Uninstalling:
+                                {
+                                    mask2_Guide_Installing.Visibility = Visibility.Visible;
+                                    progressbar_Guide_Installing.Visibility = Visibility.Visible;
+                                    mask_Guide.Visibility = Visibility.Hidden;
+                                    process_Guide.Visibility = Visibility.Hidden;
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Guide);
                                     break;
                                 }
                         }
@@ -706,6 +821,8 @@ namespace OrderManagerNew
                     haveEXE = false;
                     watcher = new FileSystemWatcher();
                     Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
+                    System.Threading.Thread.Sleep(1000);
+                    OrderManagerFunc.AutoDetectSoftwareProjectPath();
                 }));
             } 
         }
@@ -727,6 +844,7 @@ namespace OrderManagerNew
                     Console.WriteLine(e.FullPath);
                     SetAllSoftwareTableDownloadisEnable(true);
                     Handler_setSoftwareShow(CheckedSoftwareID, (int)_softwareStatus.NotInstall, 0);
+                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
                 }));
             }
 
@@ -748,12 +866,25 @@ namespace OrderManagerNew
                 #region EZCAD
                 case "cad_selectPath":
                     {
-                        GoToSetting("Btn_EZCADprogram");
+                        GoToSetting((int)_softwareID.EZCAD);
                         break;
                     }
                 case "cad_download":
                     {
-                        
+                        for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                        {
+                            if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.EZCAD)
+                            {
+                                UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                break;
+                            }
+                        }
+
+                        SetAllSoftwareTableDownloadisEnable(false);
+                        DialogBeforeDownload = new BeforeDownload();
+                        DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                        DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                        DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                         break;
                     }
                 case "cad_open":
@@ -774,6 +905,24 @@ namespace OrderManagerNew
                     }
                 case "cad_unInstall":
                     {
+                        //TODO要再詢問一次是否真的要解除安裝
+                        if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "EZCAD?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                        {
+                            if (Path.GetExtension(Properties.Settings.Default.cad_exePath) == ".exe")
+                            {
+                                string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.cad_exePath) + @"\Uninstall.lnk";
+                                if (File.Exists(uninstallPath) == true)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Uninstalling, 0);
+                                    SetAllSoftwareTableDownloadisEnable(false);
+                                    UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("can't find Uninstall.lnk");    //TODO多國語系
+                                }
+                            }
+                        }
                         break;
                     }
                 #endregion
@@ -781,11 +930,25 @@ namespace OrderManagerNew
                 #region Implant
                 case "implant_selectPath":
                     {
-                        GoToSetting("Btn_Implantprogram");
+                        GoToSetting((int)_softwareID.Implant);
                         break;
                     }
                 case "implant_download":
                     {
+                        for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                        {
+                            if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Implant)
+                            {
+                                UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                break;
+                            }
+                        }
+
+                        SetAllSoftwareTableDownloadisEnable(false);
+                        DialogBeforeDownload = new BeforeDownload();
+                        DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                        DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                        DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                         break;
                     }
                 case "implant_create":
@@ -806,6 +969,23 @@ namespace OrderManagerNew
                     }
                 case "implant_unInstall":
                     {
+                        if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "ImplantPlanning?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                        {
+                            if (Path.GetExtension(Properties.Settings.Default.implant_exePath) == ".exe")
+                            {
+                                string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.implant_exePath) + @"\Uninstall.lnk";
+                                if (File.Exists(uninstallPath) == true)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Uninstalling, 0);
+                                    SetAllSoftwareTableDownloadisEnable(false);
+                                    UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("can't find Uninstall.lnk");    //TODO多國語系
+                                }
+                            }
+                        }
                         break;
                     }
                 #endregion
@@ -813,11 +993,25 @@ namespace OrderManagerNew
                 #region Ortho
                 case "ortho_selectPath":
                     {
-                        GoToSetting("Btn_Orthoprogram");
+                        GoToSetting((int)_softwareID.Ortho);
                         break;
                     }
                 case "ortho_download":
                     {
+                        for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                        {
+                            if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Ortho)
+                            {
+                                UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                break;
+                            }
+                        }
+
+                        SetAllSoftwareTableDownloadisEnable(false);
+                        DialogBeforeDownload = new BeforeDownload();
+                        DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                        DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                        DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                         break;
                     }
                 case "ortho_open":
@@ -838,6 +1032,23 @@ namespace OrderManagerNew
                     }
                 case "ortho_unInstall":
                     {
+                        if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "OrthoAnalysis?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                        {
+                            if (Path.GetExtension(Properties.Settings.Default.ortho_exePath) == ".exe")
+                            {
+                                string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.ortho_exePath) + @"\Uninstall.lnk";
+                                if (File.Exists(uninstallPath) == true)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Uninstalling, 0);
+                                    SetAllSoftwareTableDownloadisEnable(false);
+                                    UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("can't find Uninstall.lnk");    //TODO多國語系
+                                }
+                            }
+                        }
                         break;
                     }
                 #endregion
@@ -845,11 +1056,25 @@ namespace OrderManagerNew
                 #region Tray
                 case "tray_selectPath":
                     {
-                        GoToSetting("Btn_Trayprogram");
+                        GoToSetting((int)_softwareID.Tray);
                         break;
                     }
                 case "tray_download":
                     {
+                        for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                        {
+                            if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Tray)
+                            {
+                                UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                break;
+                            }
+                        }
+
+                        SetAllSoftwareTableDownloadisEnable(false);
+                        DialogBeforeDownload = new BeforeDownload();
+                        DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                        DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                        DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                         break;
                     }
                 case "tray_open":
@@ -870,6 +1095,23 @@ namespace OrderManagerNew
                     }
                 case "tray_unInstall":
                     {
+                        if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.tray?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                        {
+                            if (Path.GetExtension(Properties.Settings.Default.tray_exePath) == ".exe")
+                            {
+                                string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.tray_exePath) + @"\Uninstall.lnk";
+                                if (File.Exists(uninstallPath) == true)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Uninstalling, 0);
+                                    SetAllSoftwareTableDownloadisEnable(false);
+                                    UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("can't find Uninstall.lnk");    //TODO多國語系
+                                }
+                            }
+                        }
                         break;
                     }
                 #endregion
@@ -877,15 +1119,14 @@ namespace OrderManagerNew
                 #region Splint
                 case "splint_selectPath":
                     {
-                        GoToSetting("Btn_Splintprogram");
+                        GoToSetting((int)_softwareID.Splint);
                         break;
                     }
                 case "splint_download":
                     {
                         for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
                         {
-                            //TODO 之後不會分Dongle和License
-                            if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Splint && UpdateFunc.CloudSoftwareTotal[i].softwareLicense == (int)_softwareLic.License)
+                            if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Splint)
                             {
                                 UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
                                 break;
@@ -917,8 +1158,7 @@ namespace OrderManagerNew
                     }
                 case "splint_unInstall":
                     {
-                        //TODO要再詢問一次是否真的要解除安裝
-                        if(MessageBox.Show("確定要解除安裝Splint?","解除安裝", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                        if(MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.splint?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                         {
                             if (Path.GetExtension(Properties.Settings.Default.splint_exePath) == ".exe")
                             {
@@ -942,7 +1182,7 @@ namespace OrderManagerNew
                 #region Guide
                 case "guide_selectPath":
                     {
-                        GoToSetting("Btn_Splintprogram");
+                        GoToSetting((int)_softwareID.Guide);
                         break;
                     }
                 case "guide_download":
@@ -950,7 +1190,7 @@ namespace OrderManagerNew
                         for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
                         {
                             //TODO 之後不會分Dongle和License
-                            if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Guide && UpdateFunc.CloudSoftwareTotal[i].softwareLicense == (int)_softwareLic.License)
+                            if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Guide)
                             {
                                 UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
                                 break;
@@ -982,15 +1222,14 @@ namespace OrderManagerNew
                     }
                 case "guide_unInstall":
                     {
-                        //TODO要再詢問一次是否真的要解除安裝
-                        if(MessageBox.Show("確定要解除安裝Splint?","解除安裝", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                        if(MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.guide?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                         {
                             if (Path.GetExtension(Properties.Settings.Default.guide_exePath) == ".exe")
                             {
                                 string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.guide_exePath) + @"\Uninstall.lnk";
                                 if (File.Exists(uninstallPath) == true)
                                 {
-                                    Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Uninstalling, 0);
+                                    Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Uninstalling, 0);
                                     SetAllSoftwareTableDownloadisEnable(false);
                                     UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
                                 }
@@ -1017,12 +1256,14 @@ namespace OrderManagerNew
             ortho_download.IsEnabled = enable;
             tray_download.IsEnabled = enable;
             splint_download.IsEnabled = enable;
+            guide_download.IsEnabled = enable;
 
             cad_unInstall.IsEnabled = enable;
             implant_unInstall.IsEnabled = enable;
             ortho_unInstall.IsEnabled = enable;
             tray_unInstall.IsEnabled = enable;
             splint_unInstall.IsEnabled = enable;
+            guide_unInstall.IsEnabled = enable;
         }
 
         /// <summary>
@@ -1082,7 +1323,7 @@ namespace OrderManagerNew
             SnackBarShow("Logout");
         }
 
-        private void GoToSetting(string softwareName)
+        private void GoToSetting(int softwareID)
         {
             //主視窗羽化
             var blur = new BlurEffect();
@@ -1092,13 +1333,13 @@ namespace OrderManagerNew
             DialogSetting.Owner = this;
             DialogSetting.ShowActivated = true;
 
-            if (softwareName != "")
-                DialogSetting.SearchEXE("", softwareName);
+            if (softwareID != -1)
+                DialogSetting.SearchEXE("", softwareID);
 
             DialogSetting.ShowDialog();
             if (DialogSetting.DialogResult == true)
             {
-                UpdateFunc.checkExistSoftware(true);
+                //OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
                 log.RecordConfigLog("FunctionTable_Click_Setting()", "Config changed");
             }
 
@@ -1274,8 +1515,12 @@ namespace OrderManagerNew
             }
         }
 
+
         #endregion
-        
-        
+
+        private void Loaded_MainWindow(object sender, RoutedEventArgs e)
+        {
+            OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);//檢查有安裝哪些軟體
+        }
     }
 }

@@ -26,13 +26,6 @@ namespace OrderManagerNew
         Guide = 5
     }
 
-    public enum _softwareLic : int
-    {
-        License = 0,
-        Dongle,
-        NotSure,
-    }
-
     public enum _diskUnit : int
     {
         KB = 0,

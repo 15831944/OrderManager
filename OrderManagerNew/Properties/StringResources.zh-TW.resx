@@ -249,4 +249,13 @@
   <data name="Password" xml:space="preserve">
     <value>密碼</value>
   </data>
+  <data name="exePathConflict" xml:space="preserve">
+    <value>執行檔路徑衝突</value>
+  </data>
+  <data name="exePathConflictDescription" xml:space="preserve">
+    <value>執行檔路徑衝突，你希望取代您原先設定的路徑嗎?</value>
+  </data>
+  <data name="AreyousureUninstall" xml:space="preserve">
+    <value>確定要解除安裝 </value>
+  </data>
 </root>

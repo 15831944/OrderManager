@@ -70,6 +70,7 @@ namespace OrderManagerNew
         private void Click_OpenFilePath(object sender, RoutedEventArgs e)
         {
             Button Btn = sender as Button;
+            int softwareID = -1;
             string OriginalPath = "";
 
             switch (Btn.Name)
@@ -77,31 +78,37 @@ namespace OrderManagerNew
                 case "Btn_EZCADprogram":
                     {
                         OriginalPath = textbox_EZCAD.Text;
+                        softwareID = (int)_softwareID.EZCAD;
                         break;
                     }
                 case "Btn_Implantprogram":
                     {
                         OriginalPath = textbox_Implant.Text;
+                        softwareID = (int)_softwareID.Implant;
                         break;
                     }
                 case "Btn_Orthoprogram":
                     {
                         OriginalPath = textbox_Ortho.Text;
+                        softwareID = (int)_softwareID.Ortho;
                         break;
                     }
                 case "Btn_Trayprogram":
                     {
                         OriginalPath = textbox_Tray.Text;
+                        softwareID = (int)_softwareID.Tray;
                         break;
                     }
                 case "Btn_Splintprogram":
                     {
                         OriginalPath = textbox_Splint.Text;
+                        softwareID = (int)_softwareID.Splint;
                         break;
                     }
                 case "Btn_Guideprogram":
                     {
                         OriginalPath = textbox_Guide.Text;
+                        softwareID = (int)_softwareID.Guide;
                         break;
                     }
                 case "Btn_Downloadpath":
@@ -119,7 +126,7 @@ namespace OrderManagerNew
                     }
             }
 
-            SearchEXE(OriginalPath, Btn.Name);
+            SearchEXE(OriginalPath, softwareID);
         }
         
         private void Click_systemButton(object sender, RoutedEventArgs e)
@@ -185,7 +192,15 @@ namespace OrderManagerNew
                     }
                 case "sysBtn_AutoDetect":
                     {
-                        AutoDetectEXE();
+                        OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                        omFunc.AutoDetectEXE((int)_classFrom.Setting);//TODO如果原本properties全部都沒有，AutoDetect偵測到並寫入textbox，再按取消,則properties會寫入(bug)
+
+                        textbox_EZCAD.Text = Properties.Settings.Default.cad_exePath;
+                        textbox_Implant.Text = Properties.Settings.Default.implant_exePath;
+                        textbox_Ortho.Text = Properties.Settings.Default.ortho_exePath;
+                        textbox_Tray.Text = Properties.Settings.Default.tray_exePath;
+                        textbox_Splint.Text = Properties.Settings.Default.splint_exePath;
+                        textbox_Guide.Text = Properties.Settings.Default.guide_exePath;
                         break;
                     }
             }
@@ -202,107 +217,14 @@ namespace OrderManagerNew
                 LocalizationService.SetLanguage("zh-TW");
             }
         }
-
-        /// <summary>
-        /// 自動檢測軟體執行檔路徑並把最常用的磁碟存入 Properties.Settings.Default.systemDisk
-        /// </summary>
-        public void AutoDetectEXE()
-        {
-            DriveInfo[] allDrives = DriveInfo.GetDrives();
-            List<diskSoftwareNum> diskWithSoftware = new List<diskSoftwareNum>();
-
-            foreach (DriveInfo d in allDrives)  //檢查客戶所有磁碟
-            {
-                diskSoftwareNum diskInfo = new diskSoftwareNum();
-                diskInfo.diskName = d.Name;
-
-                if (File.Exists(d.Name + @"InteWare\EZCAD\Bin\EZCAD.exe") == true)
-                {
-                    textbox_EZCAD.Text = d.Name + @"InteWare\EZCAD\Bin\EZCAD.exe";
-                    diskInfo.softwareCount++;
-                }
-
-                if (File.Exists(d.Name + @"InteWare\ImplantPlanning\ImplantPlanning.exe") == true)
-                {
-                    textbox_Implant.Text = d.Name + @"InteWare\ImplantPlanning\ImplantPlanning.exe";
-                    diskInfo.softwareCount++;
-                }
-
-                if (File.Exists(d.Name + @"InteWare\OrthoAnalysis\OrthoAnalysis.exe") == true)
-                {
-                    textbox_Ortho.Text = d.Name + @"InteWare\OrthoAnalysis\OrthoAnalysis.exe";
-                    diskInfo.softwareCount++;
-                }
-
-                if (File.Exists(d.Name + @"InteWare\EZCAD tray\Bin\EZCAD.tray.exe") == true)
-                {
-                    textbox_Tray.Text = d.Name + @"InteWare\EZCAD tray\Bin\EZCAD.tray.exe";
-                    diskInfo.softwareCount++;
-                }
-
-                if (File.Exists(d.Name + @"InteWare\EZCAD splint\Bin\EZCAD.splint.exe") == true)
-                {
-                    textbox_Splint.Text = d.Name + @"InteWare\EZCAD splint\Bin\EZCAD.splint.exe";
-                    diskInfo.softwareCount++;
-                }
-
-                if (File.Exists(d.Name + @"InteWare\EZCAD guide\Bin\EZCAD.guide.exe") == true)
-                {
-                    textbox_Guide.Text = d.Name + @"InteWare\EZCAD guide\Bin\EZCAD.guide.exe";
-                    diskInfo.softwareCount++;
-                }
-
-                diskWithSoftware.Add(diskInfo);
-            }
-
-            diskSoftwareNum disk_most = new diskSoftwareNum();//存最多軟體的磁碟
-            for (int i = 0; i < diskWithSoftware.Count; i++)    //開始各磁碟比較，比看哪個磁碟存比較多軟體
-            {
-                if (i >= 1)
-                {
-                    if (diskWithSoftware[i].softwareCount > disk_most.softwareCount)
-                        disk_most = diskWithSoftware[i];
-                }
-                else
-                    disk_most = diskWithSoftware[i];
-            }
-
-            if (disk_most.softwareCount != 0)
-                Properties.Settings.Default.systemDisk = disk_most.diskName;
-            else
-            {
-                bool chosen = false;//是否已選中
-                foreach(diskSoftwareNum disk in diskWithSoftware)   //一個軟體都沒安裝預設C碟，C碟沒有就D碟，兩個都沒有就用陣列第一筆磁碟
-                {
-                    if (disk.diskName == @"C:\")
-                    {
-                        Properties.Settings.Default.systemDisk = @"C:\";
-                        chosen = true;
-                        break;
-                    }
-                    if (disk.diskName == @"D:\")
-                    {
-                        Properties.Settings.Default.systemDisk = @"D:\";
-                        chosen = true;
-                        break;
-                    }
-                }
-
-                if (chosen == false)
-                    Properties.Settings.Default.systemDisk = diskWithSoftware[0].diskName;
-
-            }
-
-            Properties.Settings.Default.Save();
-        }
-
+        
         /// <summary>
         /// 使用OpenFileDialog去找執行檔位置
         /// </summary>
         /// <param name="originPah">若之前有設定過就從之前exe檔路徑做預設</param>
-        /// <param name="softwareName">軟體名稱(名稱是Btn_xxxprogram)</param>
+        /// <param name="softwareID">軟體名稱 參考_softwareID</param>
         /// <returns></returns>
-        public void SearchEXE(string originPah, string softwareName)
+        public void SearchEXE(string originPah, int softwareID)
         {
             Microsoft.Win32.OpenFileDialog Dlg = new Microsoft.Win32.OpenFileDialog();
             Dlg.DefaultExt = ".exe";
@@ -310,45 +232,45 @@ namespace OrderManagerNew
 
             if (File.Exists(originPah) == true)
                 Dlg.InitialDirectory = System.IO.Path.GetDirectoryName(originPah);
-            else if (Directory.Exists("C:\\Inteware\\") == true)
-                Dlg.InitialDirectory = "C:\\Inteware\\";
+            else if (Directory.Exists(Properties.Settings.Default.systemDisk + @"Inteware\") == true)
+                Dlg.InitialDirectory = Properties.Settings.Default.systemDisk + @"Inteware\";
 
             Nullable<bool> result = Dlg.ShowDialog();
             if (result == true)
             {
-                switch (softwareName)
+                switch (softwareID)
                 {
-                    case "Btn_EZCADprogram":
+                    case (int)_softwareID.EZCAD:
                         {
                             textbox_EZCAD.Text = Dlg.FileName;
                             textbox_EZCAD.Focus();
                             break;
                         }
-                    case "Btn_Implantprogram":
+                    case (int)_softwareID.Implant:
                         {
                             textbox_Implant.Text = Dlg.FileName;
                             textbox_Implant.Focus();
                             break;
                         }
-                    case "Btn_Orthoprogram":
+                    case (int)_softwareID.Ortho:
                         {
                             textbox_Ortho.Text = Dlg.FileName;
                             textbox_Ortho.Focus();
                             break;
                         }
-                    case "Btn_Trayprogram":
+                    case (int)_softwareID.Tray:
                         {
                             textbox_Tray.Text = Dlg.FileName;
                             textbox_Tray.Focus();
                             break;
                         }
-                    case "Btn_Splintprogram":
+                    case (int)_softwareID.Splint:
                         {
                             textbox_Splint.Text = Dlg.FileName;
                             textbox_Splint.Focus();
                             break;
                         }
-                    case "Btn_Guideprogram":
+                    case (int)_softwareID.Guide:
                         {
                             textbox_Guide.Text = Dlg.FileName;
                             textbox_Guide.Focus();

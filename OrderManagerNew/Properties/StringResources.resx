@@ -290,4 +290,16 @@
     <value>Password</value>
     <comment>Login</comment>
   </data>
+  <data name="exePathConflict" xml:space="preserve">
+    <value>exePath conflict</value>
+    <comment>Setting</comment>
+  </data>
+  <data name="exePathConflictDescription" xml:space="preserve">
+    <value>exePath conflict, do you want to replace your exePath?</value>
+    <comment>Setting</comment>
+  </data>
+  <data name="AreyousureUninstall" xml:space="preserve">
+    <value>Are you sure to uninstall </value>
+    <comment>Message</comment>
+  </data>
 </root>

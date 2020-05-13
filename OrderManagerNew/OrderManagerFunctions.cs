@@ -68,6 +68,8 @@ namespace OrderManagerNew
         /// <param name="classfrom">哪個class呼叫的，參考 _classFrom</param>
         public void AutoDetectEXE(int classfrom)
         {
+            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs AutoDetectEXE()", "IntoFunction");
+
             string cad_exePath = Properties.Settings.Default.cad_exePath;
             string implant_exePath = Properties.Settings.Default.implant_exePath;
             string ortho_exePath = Properties.Settings.Default.ortho_exePath;
@@ -120,7 +122,6 @@ namespace OrderManagerNew
                 }
 
                 Properties.Settings.Default.systemDisk = disk_most.diskName;
-                Properties.Settings.Default.Save();
 
                 //已經有systemDisk資料
                 if (classfrom == (int)_classFrom.MainWindow)
@@ -143,6 +144,11 @@ namespace OrderManagerNew
                     if (classfrom == (int)_classFrom.MainWindow)
                         softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
                 }
+                else
+                {
+                    Properties.Settings.Default.cad_exePath = "";
+                    Properties.Settings.Default.cad_projectPath = "";
+                }
                 if (File.Exists(implant_exePath) == true)
                 {
                     diskSoftwareInfo dInfo = new diskSoftwareInfo();
@@ -152,6 +158,11 @@ namespace OrderManagerNew
 
                     if (classfrom == (int)_classFrom.MainWindow)
                         softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
+                }
+                else
+                {
+                    Properties.Settings.Default.implant_exePath = "";
+                    Properties.Settings.Default.implant_projectPath = "";
                 }
                 if (File.Exists(ortho_exePath) == true)
                 {
@@ -163,6 +174,11 @@ namespace OrderManagerNew
                     if (classfrom == (int)_classFrom.MainWindow)
                         softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
                 }
+                else
+                {
+                    Properties.Settings.Default.ortho_exePath = "";
+                    Properties.Settings.Default.ortho_projectPath = "";
+                }
                 if (File.Exists(tray_exePath) == true)
                 {
                     diskSoftwareInfo dInfo = new diskSoftwareInfo();
@@ -172,6 +188,11 @@ namespace OrderManagerNew
 
                     if (classfrom == (int)_classFrom.MainWindow)
                         softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
+                }
+                else
+                {
+                    Properties.Settings.Default.tray_exePath = "";
+                    Properties.Settings.Default.tray_projectPath = "";
                 }
                 if (File.Exists(splint_exePath) == true)
                 {
@@ -183,6 +204,11 @@ namespace OrderManagerNew
                     if (classfrom == (int)_classFrom.MainWindow)
                         softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
                 }
+                else
+                {
+                    Properties.Settings.Default.splint_exePath = "";
+                    Properties.Settings.Default.splint_projectPath = "";
+                }
                 if (File.Exists(guide_exePath) == true)
                 {
                     diskSoftwareInfo dInfo = new diskSoftwareInfo();
@@ -193,69 +219,78 @@ namespace OrderManagerNew
                     if (classfrom == (int)_classFrom.MainWindow)
                         softwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
                 }
-                
+                else
+                    Properties.Settings.Default.guide_exePath = "";
+
                 DriveInfo[] allDrives = DriveInfo.GetDrives();
                 foreach (DriveInfo d in allDrives)  //檢查客戶所有磁碟
                 {
-                    diskSoftwareInfo diskInfo = new diskSoftwareInfo();
-                    diskInfo.diskName = d.Name;
-                    
-                    if (File.Exists(cad_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD\Bin\EZCAD.exe") == true)
+                    try
                     {
-                        if (Properties.Settings.Default.cad_exePath == "")
-                            Properties.Settings.Default.cad_exePath = d.Name + @"InteWare\EZCAD\Bin\EZCAD.exe";
+                        diskSoftwareInfo diskInfo = new diskSoftwareInfo();
+                        diskInfo.diskName = d.Name;
 
-                        if (classfrom == (int)_classFrom.MainWindow)
-                            softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
-                        diskInfo.softwareCount++;
+                        if (File.Exists(cad_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD\Bin\EZCAD.exe") == true)
+                        {
+                            if (Properties.Settings.Default.cad_exePath == "")
+                                Properties.Settings.Default.cad_exePath = d.Name + @"InteWare\EZCAD\Bin\EZCAD.exe";
+
+                            if (classfrom == (int)_classFrom.MainWindow)
+                                softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
+                            diskInfo.softwareCount++;
+                        }
+                        if (File.Exists(implant_exePath) == false && File.Exists(d.Name + @"InteWare\ImplantPlanning\ImplantPlanning.exe") == true)
+                        {
+                            if (Properties.Settings.Default.implant_exePath == "")
+                                Properties.Settings.Default.implant_exePath = d.Name + @"InteWare\ImplantPlanning\ImplantPlanning.exe";
+
+                            if (classfrom == (int)_classFrom.MainWindow)
+                                softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
+                            diskInfo.softwareCount++;
+                        }
+                        if (File.Exists(ortho_exePath) == false && File.Exists(d.Name + @"InteWare\OrthoAnalysis\OrthoAnalysis.exe") == true)
+                        {
+                            if (Properties.Settings.Default.ortho_exePath == "")
+                                Properties.Settings.Default.ortho_exePath = d.Name + @"InteWare\OrthoAnalysis\OrthoAnalysis.exe";
+
+                            if (classfrom == (int)_classFrom.MainWindow)
+                                softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
+                            diskInfo.softwareCount++;
+                        }
+                        if (File.Exists(tray_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD tray\Bin\EZCAD.tray.exe") == true)
+                        {
+                            if (Properties.Settings.Default.tray_exePath == "")
+                                Properties.Settings.Default.tray_exePath = d.Name + @"InteWare\EZCAD tray\Bin\EZCAD.tray.exe";
+
+                            if (classfrom == (int)_classFrom.MainWindow)
+                                softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
+                            diskInfo.softwareCount++;
+                        }
+                        if (File.Exists(splint_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD splint\Bin\EZCAD.splint.exe") == true)
+                        {
+                            if (Properties.Settings.Default.splint_exePath == "")
+                                Properties.Settings.Default.splint_exePath = d.Name + @"InteWare\EZCAD splint\Bin\EZCAD.splint.exe";
+
+                            if (classfrom == (int)_classFrom.MainWindow)
+                                softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
+                            diskInfo.softwareCount++;
+                        }
+                        if (File.Exists(guide_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD guide\Bin\EZCAD.guide.exe") == true)
+                        {
+                            if (Properties.Settings.Default.guide_exePath == "")
+                                Properties.Settings.Default.guide_exePath = d.Name + @"InteWare\EZCAD guide\Bin\EZCAD.guide.exe";
+
+                            if (classfrom == (int)_classFrom.MainWindow)
+                                softwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
+                            diskInfo.softwareCount++;
+                        }
+
+                        calcDiskwithSoftware2.Add(diskInfo);
                     }
-                    if (File.Exists(implant_exePath) == false && File.Exists(d.Name + @"InteWare\ImplantPlanning\ImplantPlanning.exe") == true)
+                    catch(Exception ex)
                     {
-                        if (Properties.Settings.Default.implant_exePath == "")
-                            Properties.Settings.Default.implant_exePath = d.Name + @"InteWare\ImplantPlanning\ImplantPlanning.exe";
-
-                        if (classfrom == (int)_classFrom.MainWindow)
-                            softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
-                        diskInfo.softwareCount++;
+                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foreach to check every Disk exception", ex.Message);
                     }
-                    if (File.Exists(ortho_exePath) == false && File.Exists(d.Name + @"InteWare\OrthoAnalysis\OrthoAnalysis.exe") == true)
-                    {
-                        if (Properties.Settings.Default.ortho_exePath == "")
-                            Properties.Settings.Default.ortho_exePath = d.Name + @"InteWare\OrthoAnalysis\OrthoAnalysis.exe";
-
-                        if (classfrom == (int)_classFrom.MainWindow)
-                            softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
-                        diskInfo.softwareCount++;
-                    }
-                    if (File.Exists(tray_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD tray\Bin\EZCAD.tray.exe") == true)
-                    {
-                        if (Properties.Settings.Default.tray_exePath == "")
-                            Properties.Settings.Default.tray_exePath = d.Name + @"InteWare\EZCAD tray\Bin\EZCAD.tray.exe";
-
-                        if (classfrom == (int)_classFrom.MainWindow)
-                            softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
-                        diskInfo.softwareCount++;
-                    }
-                    if (File.Exists(splint_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD splint\Bin\EZCAD.splint.exe") == true)
-                    {
-                        if (Properties.Settings.Default.splint_exePath == "")
-                            Properties.Settings.Default.splint_exePath = d.Name + @"InteWare\EZCAD splint\Bin\EZCAD.splint.exe";
-
-                        if (classfrom == (int)_classFrom.MainWindow)
-                            softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
-                        diskInfo.softwareCount++;
-                    }
-                    if (File.Exists(guide_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD guide\Bin\EZCAD.guide.exe") == true)
-                    {
-                        if (Properties.Settings.Default.guide_exePath == "")
-                            Properties.Settings.Default.guide_exePath = d.Name + @"InteWare\EZCAD guide\Bin\EZCAD.guide.exe";
-
-                        if (classfrom == (int)_classFrom.MainWindow)
-                            softwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
-                        diskInfo.softwareCount++;
-                    }
-
-                    calcDiskwithSoftware2.Add(diskInfo);
                 }
 
                 //分類list內資料並整理成sortedInfoList
@@ -318,16 +353,47 @@ namespace OrderManagerNew
                     if (chosen == false)
                         Properties.Settings.Default.systemDisk = sortedInfoList[0].diskName;
                 }
-
-                Properties.Settings.Default.Save();
             }
+            //沒安裝的軟體Logo變灰
+            if(classfrom == (int)_classFrom.MainWindow)
+            {
+                if (cad_exePath == "")
+                    softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
+                if (implant_exePath == "")
+                    softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
+                if (ortho_exePath == "")
+                    softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0.0);
+                if (tray_exePath == "")
+                    softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0.0);
+                if (splint_exePath == "")
+                    softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0.0);
+                if (guide_exePath == "")
+                    softwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
+            }
+
+            Properties.Settings.Default.Save();
+
+            //記錄到log檔內
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "cad_exePath", "\t\"" + Properties.Settings.Default.cad_exePath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "imp_exePath", "\t\"" + Properties.Settings.Default.implant_exePath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ortho_exePath", "\t\"" + Properties.Settings.Default.ortho_exePath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "tray_exePath", "\t\"" + Properties.Settings.Default.tray_exePath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "splint_exePath", "\t\"" + Properties.Settings.Default.splint_exePath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "guide_exePath", "\t\"" + Properties.Settings.Default.guide_exePath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "systemDisk", "\t\"" + Properties.Settings.Default.systemDisk + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs AutoDetectEXE()", "Detect finish.");
+            log.RecordLogSaperate();
+
+            AutoDetectSoftwareProjectPath();
         }
 
         /// <summary>
         /// 自動偵測各軟體專案檔路徑
         /// </summary>
-        public void DetectSoftwareProjectPath()
+        public void AutoDetectSoftwareProjectPath()
         {
+            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs AutoDetectSoftwareProjectPath()", "IntoFunction");
+
             XDocument xmlDoc = new XDocument();
 
             if (Properties.Settings.Default.cad_exePath != "")
@@ -357,10 +423,9 @@ namespace OrderManagerNew
                 }
                 catch (Exception ex)
                 {
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "DetectSoftwareProjectPath()_CAD", ex.Message);
+                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_CAD", ex.Message);
                 }
             }
-
             if (Properties.Settings.Default.tray_exePath != "")
             {
                 try
@@ -388,10 +453,9 @@ namespace OrderManagerNew
                 }
                 catch (Exception ex)
                 {
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "DetectSoftwareProjectPath()_tray", ex.Message);
+                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_tray", ex.Message);
                 }
             }
-
             if (Properties.Settings.Default.splint_exePath != "")
             {
                 try
@@ -419,10 +483,9 @@ namespace OrderManagerNew
                 }
                 catch (Exception ex)
                 {
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "DetectSoftwareProjectPath()_splint", ex.Message);
+                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_splint", ex.Message);
                 }
             }
-
             if (Properties.Settings.Default.ortho_exePath != "")
             {
                 try
@@ -450,11 +513,111 @@ namespace OrderManagerNew
                 }
                 catch (Exception ex)
                 {
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "DetectSoftwareProjectPath()_ortho", ex.Message);
+                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_ortho", ex.Message);
                 }
             }
+            if(Properties.Settings.Default.implant_exePath != "")
+            {
+                //Implant比較特殊，舊版Implant的專案檔路徑是OrderManager給的
+                try
+                {
+                    bool foundImplantPath = false;
+                    DriveInfo[] allDrives = DriveInfo.GetDrives();
+                    foreach (DriveInfo d in allDrives)  //檢查客戶所有磁碟
+                    {
+                        try
+                        {
+                            if(Directory.Exists(d.Name + @"DicomData\") == true)
+                            {
+                                Properties.Settings.Default.implant_projectPath = d.Name + @"DicomData\";
+                                foundImplantPath = true;
+                                break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foreach to check every Disk exception", ex.Message);
+                        }
+                    }
 
+                    if(foundImplantPath == false)
+                    {
+                        try
+                        {
+                            if (Properties.Settings.Default.systemDisk != "")
+                            {
+                                Directory.CreateDirectory(Properties.Settings.Default.systemDisk + @"DicomData\");
+                                Properties.Settings.Default.implant_projectPath = Properties.Settings.Default.systemDisk + @"DicomData\";
+                                goto createtosysDirectorySuccess;
+                            }
+                            else
+                                goto createtosysDirectoryFailed;
+                        }
+                        catch (Exception ex)
+                        {
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foundImplantPath=false_1 exception", ex.Message);
+                            goto createtosysDirectoryFailed;
+                        }
+
+                        createtosysDirectoryFailed:
+                        bool chosen = false;    //是否已選中
+                        foreach (DriveInfo d in allDrives)  //檢查客戶所有磁碟
+                        {
+                            try
+                            {
+                                if (d.Name == @"C:\")
+                                {
+                                    Properties.Settings.Default.implant_projectPath = d.Name + @"DicomData\";
+                                    chosen = true;
+                                    break;
+                                }
+                                if (d.Name == @"D:\")
+                                {
+                                    Properties.Settings.Default.implant_projectPath = d.Name + @"DicomData\";
+                                    chosen = true;
+                                    break;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foundImplantPath=false_2 exception", ex.Message);
+                            }
+                        }
+
+                        if (chosen == false)
+                        {
+                            foreach (DriveInfo d in allDrives)
+                            {
+                                try
+                                {
+                                    Directory.CreateDirectory(d.Name + @"DicomData\");
+                                    Properties.Settings.Default.implant_projectPath = d.Name + @"DicomData\";
+                                    break;
+                                }
+                                catch (Exception ex)
+                                {
+                                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foundImplantPath=false_3 exception", ex.Message);
+                                }
+                            }
+                        }
+                        createtosysDirectorySuccess:;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_ortho", ex.Message);
+                }
+            }
             Properties.Settings.Default.Save();
+
+            //記錄到log檔內
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "cad_projectPath", "\t\"" + Properties.Settings.Default.cad_projectPath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "implant_projectPath", "\t\"" + Properties.Settings.Default.implant_projectPath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ortho_projectPath", "\t\"" + Properties.Settings.Default.ortho_projectPath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "tray_projectPath", "\t\"" + Properties.Settings.Default.tray_projectPath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "splint_projectPath", "\t\"" + Properties.Settings.Default.splint_projectPath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs AutoDetectSoftwareProjectPath()", "Detect finish.");
+            log.RecordLogSaperate();
         }
     }
 }

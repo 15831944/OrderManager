@@ -16,12 +16,15 @@ namespace OrderManagerNew
     public class UpdateFunction
     {
         #region 變數宣告
-        //string HLXMLlink = @"https://inteware.com.tw/updateXML/HL.xml";//HL.xml網址
-        string HLXMLlink = "D:\\Inteware\\HLnewOM.xml";    //單機測試//TODO之後要換到網上
+        //string HLXMLlink = @"https://inteware.com.tw/updateXML/HLnoLic.xml";//HL.xml網址
+        string HLXMLlink = "D:\\Inteware\\HLnoLic.xml";    //單機測試//TODO之後要換到網上
         string downloadfilepath;
         LogRecorder log;    //日誌檔cs
         BackgroundWorker bgWorker_Download;        //申明後臺物件
-        public SoftwareInfo readyInstallSoftwareInfo;//準備要安裝的軟體Info
+        /// <summary>
+        /// 準備要安裝的軟體Info
+        /// </summary>
+        public SoftwareInfo readyInstallSoftwareInfo;
 
         /// <summary>
         /// 委派到MainWindow.xaml.cs裡面的setSoftwareShow()
@@ -37,8 +40,7 @@ namespace OrderManagerNew
         /// <param name="message">顯示訊息</param>
         public delegate void updatefuncEventHandler_snackbar(string message);
         public event updatefuncEventHandler_snackbar Handler_snackbarShow;
-
-        List<SoftwareInfo> UserSoftwareTotal;   //客戶已安裝軟體清單
+        
         public List<SoftwareInfo> CloudSoftwareTotal { get; set; }  //軟體最新版清單
         #endregion
         public class SoftwareInfo
@@ -79,149 +81,6 @@ namespace OrderManagerNew
             downloadfilepath = "";
         }
         
-        /// <summary>
-        /// 重新輸出Version.xml
-        /// </summary>
-        /// <param name="softwarePath">軟體執行檔路徑</param>
-        /// <returns></returns>
-        private void RebuildVersionXML(string softwarePath)
-        {
-            if (softwarePath == "")
-                return;
-
-            //先刪除原先的Version.xml檔
-            if (File.Exists(Path.GetDirectoryName(softwarePath) + "Version.xml") == true)
-            {
-                File.Delete(Path.GetDirectoryName(softwarePath) + @"\Version.xml");
-                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RebuildVersionXML()", Path.GetDirectoryName(softwarePath) + "Version.xml deleted.");
-            }
-
-            //cmdLine生出Version.xml
-            FileVersionInfo myFileVersionInfo;
-
-            if (softwarePath.ToLower().IndexOf("ortho") != -1)  //Ortho
-            {
-                myFileVersionInfo = FileVersionInfo.GetVersionInfo(softwarePath);
-                if (haveNewVersion(myFileVersionInfo.FileVersion, "3.1.20325.0") == false)
-                    RunCommandLine(softwarePath, "-v");
-                else
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RebuildVersionXML()", "Ortho is Old version, can't output version.xml");
-            }
-            else if(softwarePath.ToLower().IndexOf("implant") != -1)    //ImplantPlanning
-            {
-                myFileVersionInfo = FileVersionInfo.GetVersionInfo(softwarePath);
-                if (haveNewVersion(myFileVersionInfo.FileVersion, "2.1.2.0") == false)
-                    RunCommandLine(softwarePath, "-v");
-                else
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RebuildVersionXML()", "ImplantPlanning is Old version, can't output version.xml");
-            }
-            else if (softwarePath.ToLower().IndexOf("tray") != -1 || softwarePath.ToLower().IndexOf("splint") != -1)
-            {
-                //Tray、Splint版本號一樣
-                myFileVersionInfo = FileVersionInfo.GetVersionInfo(softwarePath);
-                if (haveNewVersion(myFileVersionInfo.FileVersion, "1.0.20325.0") == false)
-                    RunCommandLine(softwarePath, "-v");
-                else
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RebuildVersionXML()", Path.GetFileNameWithoutExtension(softwarePath) + " is Old version, can't output version.xml");
-            }
-            else if(softwarePath.ToLower().IndexOf("cad") != -1 || softwarePath.ToLower().IndexOf("guide") != -1)
-            {
-                //EZCAD、Guide版本號一樣
-                myFileVersionInfo = FileVersionInfo.GetVersionInfo(softwarePath);
-                if (haveNewVersion(myFileVersionInfo.FileVersion, "2.1.20325.0") == false)
-                    RunCommandLine(softwarePath, "-v");
-                else
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RebuildVersionXML()", Path.GetFileNameWithoutExtension(softwarePath) + " is Old version, can't output version.xml");
-            }
-            else
-            {
-                //舊版
-                SoftwareInfo installedSoftwareInfo = new SoftwareInfo();
-                if (softwarePath.ToLower().IndexOf("ortho") != -1)
-                    installedSoftwareInfo.softwareID = (int)_softwareID.Ortho;
-                else if (softwarePath.ToLower().IndexOf("implant") != -1)
-                    installedSoftwareInfo.softwareID = (int)_softwareID.Implant;
-                else if (softwarePath.ToLower().IndexOf("tray") != -1)
-                    installedSoftwareInfo.softwareID = (int)_softwareID.Tray;
-                else if (softwarePath.ToLower().IndexOf("splint") != -1)
-                    installedSoftwareInfo.softwareID = (int)_softwareID.Splint;
-                else if (softwarePath.ToLower().IndexOf("guide") != -1)
-                    installedSoftwareInfo.softwareID = (int)_softwareID.Guide;
-                else if (softwarePath.ToLower().IndexOf("cad") != -1)
-                    installedSoftwareInfo.softwareID = (int)_softwareID.EZCAD;
-                else
-                    return;
-
-                installedSoftwareInfo.softwareInstalled = (int)_softwareStatus.Installed;
-                installedSoftwareInfo.softwareName = Path.GetFileNameWithoutExtension(softwarePath);
-                myFileVersionInfo = FileVersionInfo.GetVersionInfo(softwarePath);
-                installedSoftwareInfo.softwareVersion = myFileVersionInfo.FileVersion;
-                installedSoftwareInfo.softwareLicense = (int)_softwareLic.NotSure;
-
-                UserSoftwareTotal.Add(installedSoftwareInfo);
-                return;
-            }
-
-            //取得Version.xml內容
-            if(File.Exists(Path.GetDirectoryName(softwarePath) + @"\Version.xml") == true)
-            {
-                try
-                {
-                    XDocument xDoc;
-                    using (StreamReader oReader = new StreamReader(Path.GetDirectoryName(softwarePath) + @"\Version.xml", Encoding.GetEncoding("utf-8")))
-                    {
-                        xDoc = XDocument.Load(oReader);
-                    }
-
-                    var installedSoftwareInfoCollection = from q in xDoc.Descendants("SoftwareInfo")
-                             select new
-                             {
-                                 SName = q.Descendants("Name").First().Value,
-                                 SVersion = q.Descendants("Version").First().Value,
-                                 SType = q.Descendants("Type").First().Value
-                             };
-
-                    foreach (var item in installedSoftwareInfoCollection)
-                    {
-                        SoftwareInfo installedSoftwareInfo = new SoftwareInfo();
-                        if (item.SName.ToLower().IndexOf("ortho") != -1)
-                            installedSoftwareInfo.softwareID = (int)_softwareID.Ortho;
-                        else if (item.SName.ToLower().IndexOf("implant") != -1)
-                            installedSoftwareInfo.softwareID = (int)_softwareID.Implant;
-                        else if (item.SName.ToLower().IndexOf("tray") != -1)
-                            installedSoftwareInfo.softwareID = (int)_softwareID.Tray;
-                        else if (item.SName.ToLower().IndexOf("splint") != -1)
-                            installedSoftwareInfo.softwareID = (int)_softwareID.Splint;
-                        else if (item.SName.ToLower().IndexOf("guide") != -1)
-                            installedSoftwareInfo.softwareID = (int)_softwareID.Guide;
-                        else if (item.SName.ToLower().IndexOf("cad") != -1)
-                            installedSoftwareInfo.softwareID = (int)_softwareID.EZCAD;
-                        else
-                            break;
-
-                        installedSoftwareInfo.softwareInstalled = (int)_softwareStatus.Installed;
-                        installedSoftwareInfo.softwareName = item.SName;
-                        installedSoftwareInfo.softwareVersion = item.SVersion;
-                        if (item.SType.ToLower() == "license")
-                            installedSoftwareInfo.softwareLicense = (int)_softwareLic.License;
-                        else if (item.SType.ToLower() == "dongle")
-                            installedSoftwareInfo.softwareLicense = (int)_softwareLic.Dongle;
-
-                        UserSoftwareTotal.Add(installedSoftwareInfo);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "GetVersion.xml_Exception", ex.Message);
-                }
-            }
-            else
-            {
-                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RebuildVersionXML()", softwarePath + " not old version but can't generate Version.xml");
-                //TODO 給1秒等待軟體生出Version.xml
-            }
-        }
-
         /// <summary>
         /// 有新版本回傳True
         /// </summary>
@@ -302,7 +161,6 @@ namespace OrderManagerNew
             {
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "SoftwareID", "\"" + Enum.GetName(typeof(_softwareID), outputInfo[i].softwareID) + "\" " + outputInfo[i].softwareID.ToString());
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareInstalled", "\"" + Enum.GetName(typeof(_softwareStatus), outputInfo[i].softwareInstalled) + "\" " + outputInfo[i].softwareInstalled.ToString());
-                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareLicense", "\"" + Enum.GetName(typeof(_softwareLic), outputInfo[i].softwareLicense) + "\" " + outputInfo[i].softwareLicense.ToString());
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareName", outputInfo[i].softwareName);
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareSize", outputInfo[i].softwareSize.ToString());
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareVersion", outputInfo[i].softwareVersion);
@@ -437,7 +295,7 @@ namespace OrderManagerNew
                 case (int)_softwareID.Implant:
                     return Properties.Settings.Default.implant_exePath;
                 case (int)_softwareID.Ortho:
-                    return Properties.Settings.Default.implant_exePath;
+                    return Properties.Settings.Default.ortho_exePath;
                 case (int)_softwareID.Tray:
                     return Properties.Settings.Default.tray_exePath;
                 case (int)_softwareID.Splint:
@@ -462,31 +320,16 @@ namespace OrderManagerNew
             {
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs", "load HL.xml Start");
                 CloudSoftwareTotal = new List<SoftwareInfo>();
-                /*HLXMLlink = "C:\\InteWare\\HL.xml";    //單機測試
-                using (StreamReader oReader = new StreamReader(HLXMLlink, Encoding.GetEncoding("utf-8")))
-                {
-                    xDoc = XDocument.Load(HLXMLlink);
-                }*/
                 xDoc = XDocument.Load(HLXMLlink);
-                var SoftwareHL_Dongle = from q in xDoc.Descendants("Software").Descendants("Dongle").Descendants("Item")
-                                        select new
-                                        {
-                                            SName = q.Descendants("SoftwareName").First().Value,
-                                            SVersion = q.Descendants("LatestVersion").First().Value,
-                                            SHyperlink = q.Descendants("HyperLink").First().Value,
-                                            SDescription = q.Descendants("Description").First().Value,
-                                            SSize = q.Descendants("Size").First().Value,
-                                        };
 
-                var SoftwareHL_License = from q in xDoc.Descendants("Software").Descendants("License").Descendants("Item")
-                                         select new
-                                         {
-                                             SName = q.Descendants("SoftwareName").First().Value,
-                                             SVersion = q.Descendants("LatestVersion").First().Value,
-                                             SHyperlink = q.Descendants("HyperLink").First().Value,
-                                             SDescription = q.Descendants("Description").First().Value,
-                                             SSize = q.Descendants("Size").First().Value,
-                                         };
+                var SoftwareHL = from q in xDoc.Descendants("Software").Descendants("Item")
+                                   select new
+                                   {
+                                       SName = q.Descendants("SoftwareName").First().Value,
+                                       SVersion = q.Descendants("LatestVersion").First().Value,
+                                       SHyperlink = q.Descendants("HyperLink").First().Value,
+                                       SDescription = q.Descendants("Description").First().Value,
+                                   };
 
                 var OthersHL = from q in xDoc.Descendants("Others").Descendants("Item")
                                select new
@@ -499,35 +342,7 @@ namespace OrderManagerNew
                                    OSize = q.Descendants("Size").First().Value
                                };
 
-                foreach (var item in SoftwareHL_Dongle)
-                {
-                    SoftwareInfo softDongle = new SoftwareInfo();
-                    if (item.SName.ToLower().IndexOf("ortho") != -1)
-                        softDongle.softwareID = (int)_softwareID.Ortho;
-                    else if (item.SName.ToLower().IndexOf("implant") != -1)
-                        softDongle.softwareID = (int)_softwareID.Implant;
-                    else if (item.SName.ToLower().IndexOf("tray") != -1)
-                        softDongle.softwareID = (int)_softwareID.Tray;
-                    else if (item.SName.ToLower().IndexOf("splint") != -1)
-                        softDongle.softwareID = (int)_softwareID.Splint;
-                    else if (item.SName.ToLower().IndexOf("guide") != -1)
-                        softDongle.softwareID = (int)_softwareID.Guide;
-                    else if (item.SName.ToLower().IndexOf("cad") != -1)
-                        softDongle.softwareID = (int)_softwareID.EZCAD;
-                    else
-                        break;
-
-                    softDongle.softwareInstalled = (int)_softwareStatus.Cloud;
-                    softDongle.softwareLicense = (int)_softwareLic.Dongle;
-                    softDongle.softwareName = item.SName;
-                    softDongle.softwareSize = double.Parse(item.SSize);
-                    softDongle.softwareVersion = item.SVersion;
-                    softDongle.softwareDownloadLink = item.SHyperlink.Replace("\n ", "").Replace("\r ", "").Replace(" ", "");
-
-                    CloudSoftwareTotal.Add(softDongle);
-                }
-
-                foreach (var item in SoftwareHL_License)
+                foreach (var item in SoftwareHL)
                 {
                     SoftwareInfo softLicense = new SoftwareInfo();
                     if (item.SName.ToLower().IndexOf("ortho") != -1)
@@ -546,9 +361,7 @@ namespace OrderManagerNew
                         break;
 
                     softLicense.softwareInstalled = (int)_softwareStatus.Cloud;
-                    softLicense.softwareLicense = (int)_softwareLic.License;
                     softLicense.softwareName = item.SName;
-                    softLicense.softwareSize = double.Parse(item.SSize);
                     softLicense.softwareVersion = item.SVersion;
                     softLicense.softwareDownloadLink = item.SHyperlink.Replace("\n ", "").Replace("\r ", "").Replace(" ", "");
 
@@ -563,86 +376,7 @@ namespace OrderManagerNew
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs Initial exception", ex.Message);
             }
         }
-
-        /// <summary>
-        /// 檢查使用者安裝哪些軟體
-        /// </summary>
-        /// <param name="generateVersionXml">是否重建Version.xml並讀取</param>
-        /// <returns></returns>
-        public void checkExistSoftware(bool generateVersionXml)
-        {
-            UserSoftwareTotal = new List<SoftwareInfo>();
-
-            if (File.Exists(Properties.Settings.Default.cad_exePath) == true)
-            {
-                softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
-
-                if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.cad_exePath);
-            }
-            else
-            {
-                softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0);
-            }
-
-            if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
-            {
-                softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0);
-
-                if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.implant_exePath);
-            }
-            else
-            {
-                softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0);
-            }
-
-            if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
-            {
-                softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0);
-
-                if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.ortho_exePath);
-            }
-            else
-            {
-                softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0);
-            }
-
-            if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
-            {
-                softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0);
-
-                if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.tray_exePath);
-            }
-            else
-            {
-                softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0);
-            }
-
-            if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
-            {
-                softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0);
-
-                if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.splint_exePath);
-            }
-            else
-            {
-                softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0);
-            }
-
-            if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
-            {
-                if (generateVersionXml == true)
-                    RebuildVersionXML(Properties.Settings.Default.guide_exePath);
-            }
-
-            if (generateVersionXml == true)
-                SoftwareInfoLog(UserSoftwareTotal, "UserSoftwareTotal");
-        }
-
+        
         /// <summary>
         /// CommandLine(命令提示字元)
         /// </summary>
