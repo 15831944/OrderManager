@@ -22,6 +22,8 @@ namespace OrderManagerNew
     /// </summary>
     public partial class Setting : Window
     {
+        settingAllSet OriginalSet;
+
         class diskSoftwareNum
         {
             public string diskName { get; set; }
@@ -34,25 +36,65 @@ namespace OrderManagerNew
             }
         }
 
+        class settingAllSet
+        {
+            public string cad_exePath { get; set; }
+            public string implant_exePath { get; set; }
+            public string ortho_exePath { get; set; }
+            public string tray_exePath { get; set; }
+            public string splint_exePath { get; set; }
+            public string guide_exePath { get; set; }
+            public string DownloadFolder { get; set; }
+            public int language { get; set; }
+            public settingAllSet()
+            {
+                cad_exePath = "";
+                implant_exePath = "";
+                ortho_exePath = "";
+                tray_exePath = "";
+                splint_exePath = "";
+                guide_exePath = "";
+                DownloadFolder = "";
+                language = -1;
+            }
+        }
+
         public Setting()
         {
             InitializeComponent();
+            OriginalSet = new settingAllSet();
 
-            textbox_EZCAD.Text = Properties.Settings.Default.cad_exePath;
-            textbox_Implant.Text = Properties.Settings.Default.implant_exePath;
-            textbox_Ortho.Text = Properties.Settings.Default.ortho_exePath;
-            textbox_Tray.Text = Properties.Settings.Default.tray_exePath;
-            textbox_Splint.Text = Properties.Settings.Default.splint_exePath;
-            textbox_Guide.Text = Properties.Settings.Default.guide_exePath;
-
-
-            if (Properties.Settings.Default.DownloadFolder == "")
-                textbox_Download.Text = Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + @"IntewareTempFile\";
+            if(File.Exists(Properties.Settings.Default.cad_exePath) == true)
+                OriginalSet.cad_exePath = Properties.Settings.Default.cad_exePath;
+            if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
+                OriginalSet.implant_exePath = Properties.Settings.Default.implant_exePath;
+            if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
+                OriginalSet.ortho_exePath = Properties.Settings.Default.ortho_exePath;
+            if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
+                OriginalSet.tray_exePath = Properties.Settings.Default.tray_exePath;
+            if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
+                OriginalSet.tray_exePath = Properties.Settings.Default.cad_exePath;
+            if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
+                OriginalSet.splint_exePath = Properties.Settings.Default.splint_exePath;
+            if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
+                OriginalSet.guide_exePath = Properties.Settings.Default.guide_exePath;
+            if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == true)
+                OriginalSet.DownloadFolder = Properties.Settings.Default.DownloadFolder;
             else
-                textbox_Download.Text = Properties.Settings.Default.DownloadFolder;
-
+                OriginalSet.DownloadFolder = Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + @"IntewareTempFile\";
             if (Properties.Settings.Default.sysLanguage == "zh-TW")
-                comboboxLanguage.SelectedIndex = 1;
+                OriginalSet.language = (int)_langSupport.zhTW;
+            else
+                OriginalSet.language = (int)_langSupport.English;
+
+            textbox_EZCAD.Text = OriginalSet.cad_exePath;
+            textbox_Implant.Text = OriginalSet.implant_exePath;
+            textbox_Ortho.Text = OriginalSet.ortho_exePath;
+            textbox_Tray.Text = OriginalSet.tray_exePath;
+            textbox_Splint.Text = OriginalSet.splint_exePath;
+            textbox_Guide.Text = OriginalSet.guide_exePath;
+            textbox_Download.Text = OriginalSet.DownloadFolder;
+            comboboxLanguage.SelectedIndex = OriginalSet.language;
         }
         
         private void TitleBar_Click_titlebarButtons(object sender, RoutedEventArgs e)
@@ -187,6 +229,15 @@ namespace OrderManagerNew
                     }
                 case "sysBtn_Cancel":
                     {
+                        //還原
+                        Properties.Settings.Default.cad_exePath = OriginalSet.cad_exePath;
+                        Properties.Settings.Default.implant_exePath = OriginalSet.implant_exePath;
+                        Properties.Settings.Default.ortho_exePath = OriginalSet.ortho_exePath;
+                        Properties.Settings.Default.tray_exePath = OriginalSet.tray_exePath;
+                        Properties.Settings.Default.splint_exePath = OriginalSet.splint_exePath;
+                        Properties.Settings.Default.guide_exePath = OriginalSet.guide_exePath;
+                        Properties.Settings.Default.DownloadFolder = OriginalSet.DownloadFolder;
+                        
                         this.DialogResult = false;
                         break;
                     }

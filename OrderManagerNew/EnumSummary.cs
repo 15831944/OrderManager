@@ -45,4 +45,10 @@ namespace OrderManagerNew
         MainWindow = 0,
         Setting,
     }
+
+    public enum _langSupport : int
+    {
+        English = 0,
+        zhTW,
+    }
 }

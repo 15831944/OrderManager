@@ -348,6 +348,37 @@ namespace OrderManagerNew
         }
 
         /// <summary>
+        /// 讀取Properties內的值並顯示已安裝的SoftwareLogo
+        /// </summary>
+        void Handler_SoftwareLogoStatusChange()
+        {
+            if (File.Exists(Properties.Settings.Default.cad_exePath) == true)
+                Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
+            else
+                Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
+            if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
+                Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
+            else
+                Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
+            if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
+                Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
+            else
+                Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0.0);
+            if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
+                Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
+            else
+                Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0.0);
+            if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
+                Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
+            else
+                Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0.0);
+            if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
+                Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
+            else
+                Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
+        }
+
+        /// <summary>
         /// 設定SofttwareTable各Icon顯示狀態
         /// </summary>
         /// <param name="softwareID">(軟體ID) EZCAD、Implant、Ortho、Tray、Splint</param>
@@ -1339,7 +1370,7 @@ namespace OrderManagerNew
             DialogSetting.ShowDialog();
             if (DialogSetting.DialogResult == true)
             {
-                //OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                Handler_SoftwareLogoStatusChange();
                 log.RecordConfigLog("FunctionTable_Click_Setting()", "Config changed");
             }
 
@@ -1520,7 +1551,7 @@ namespace OrderManagerNew
 
         private void Loaded_MainWindow(object sender, RoutedEventArgs e)
         {
-            OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);//檢查有安裝哪些軟體
+            Handler_SoftwareLogoStatusChange();
         }
     }
 }
