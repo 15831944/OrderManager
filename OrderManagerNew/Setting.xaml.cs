@@ -237,7 +237,12 @@ namespace OrderManagerNew
                         Properties.Settings.Default.splint_exePath = OriginalSet.splint_exePath;
                         Properties.Settings.Default.guide_exePath = OriginalSet.guide_exePath;
                         Properties.Settings.Default.DownloadFolder = OriginalSet.DownloadFolder;
-                        
+
+                        if(OriginalSet.language == (int)_langSupport.zhTW)
+                            LocalizationService.SetLanguage("zh-TW");
+                        else
+                            LocalizationService.SetLanguage("en-US");
+
                         this.DialogResult = false;
                         break;
                     }
