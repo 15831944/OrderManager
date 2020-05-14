@@ -985,8 +985,8 @@ namespace OrderManagerNew
                 case "implant_create":
                     {
                         QueryProductState qPS = new QueryProductState();
-                        if (qPS.HaveInstallVc((int)_softwareID.Implant) == false)
-                            MessageBox.Show("error");
+                        if (qPS.HaveInstallVc((int)_softwareID.Implant) == true)
+                            UpdateFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");
                         break;
                     }
                 case "implant_webIntro":
