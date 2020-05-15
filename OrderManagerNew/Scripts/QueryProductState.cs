@@ -16,17 +16,81 @@ namespace OrderManagerNew
             Visual C++ 2005 SP1 MFC Security Update Redistributable Package(x86):
             {710F4C1C-CC18-4C49-8CBF-51240C89A1A2}
 
+            Visual C++ 2008 SP1 MFC Security Update Redistributable Package (x86):
+            {9BE518E6-ECC6-35A9-88E4-87755C07200F}
+
             Visual C++ 2010 SP1 Redistributable Package (x86):
             {F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}
+
+            Visual C++ 2013 Redistributable (x86):
+            {35B83883-40FA-423C-AE73-2AFF7E1EA820}
+
+            Visual C++ 2015 Redistributable (x86):
+            {462F63A8-6347-4894-A1B3-DBFE3A4C981D}
+
+            用法:
+            if (MsiQueryProductState("{710F4C1C-CC18-4C49-8CBF-51240C89A1A2}") == INSTALLSTATE.INSTALLSTATE_DEFAULT)
+                return true;//代表有裝
         **/
 
-        public enum RedistributablePack : int
+        enum _RedistPackID : int
         {
-            VC2005SP1MFC = 0,
-            VC2010SP1,
+            VC2005 = 0,
+            VC2008,
+            VC2010,
+            VC2013,
+            VC2015,
         }
+        
+        class RedistributablePackage
+        {
+            class RedistributableInfo
+            {
+                public string RedistributableName { get; set; }
+                public string RedistributableGUID { get; set; }
 
-        string[] RedistributableName = { "Visual C++ 2005 SP1 MFC Security Update Redistributable Package (x86)", "Visual C++ 2010 SP1 Redistributable Package (x86)" };
+                public RedistributableInfo()
+                {
+                    RedistributableName = "";
+                    RedistributableGUID = "";
+                }
+            }
+
+            List<RedistributableInfo> redistPack { get; set; }
+            public RedistributablePackage()
+            {
+                redistPack = new List<RedistributableInfo>();
+                RedistributableInfo VCPack = new RedistributableInfo();
+                VCPack.RedistributableName = "Visual C++ 2005 SP1 MFC Security Update Redistributable Package(x86)";
+                VCPack.RedistributableGUID = "{710F4C1C-CC18-4C49-8CBF-51240C89A1A2}";
+                redistPack.Add(VCPack);
+                VCPack.RedistributableName = "Visual C++ 2008 SP1 MFC Security Update Redistributable Package (x86)";
+                VCPack.RedistributableGUID = "{9BE518E6-ECC6-35A9-88E4-87755C07200F}";
+                redistPack.Add(VCPack);
+                VCPack.RedistributableName = "Visual C++ 2010 SP1 Redistributable Package (x86)";
+                VCPack.RedistributableGUID = "{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}";
+                redistPack.Add(VCPack);
+                VCPack.RedistributableName = "Visual C++ 2013 Redistributable (x86)";
+                VCPack.RedistributableGUID = "{35B83883-40FA-423C-AE73-2AFF7E1EA820}";
+                redistPack.Add(VCPack);
+                VCPack.RedistributableName = "Visual C++ 2015 Redistributable (x86)";
+                VCPack.RedistributableGUID = "{462F63A8-6347-4894-A1B3-DBFE3A4C981D}";
+                redistPack.Add(VCPack);
+            }
+
+            public bool checkHaveInstallVC(int RedistPackID)
+            {
+                if (MsiQueryProductState(redistPack[RedistPackID].RedistributableGUID) == INSTALLSTATE.INSTALLSTATE_DEFAULT)
+                    return true;
+
+                return false;
+            }
+
+            public string GetVCname(int RedistPackID)
+            {
+                return redistPack[RedistPackID].RedistributableName.ToString();
+            }
+        }
 
         public enum INSTALLSTATE
         {
@@ -54,27 +118,49 @@ namespace OrderManagerNew
             return state;
         }
 
-        public bool HaveInstallVc(int softwareID)
+        public bool checkSoftwareVC(int softwareID)
         {
-            List<int> redistributableNeed = new List<int>();
+            RedistributablePackage redistPackage = new RedistributablePackage();
 
-            if(softwareID == (int)_softwareID.Implant)
+            if (softwareID == (int)_softwareID.EZCAD)
             {
-                //Visual C++ 2010 Redistributable Package(x86)
-                if (MsiQueryProductState("{710F4C1C-CC18-4C49-8CBF-51240C89A1A2}") == INSTALLSTATE.INSTALLSTATE_DEFAULT && MsiQueryProductState("{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}") == INSTALLSTATE.INSTALLSTATE_DEFAULT)
-                    return true;
-                else
+                //EZCAD:vc2013
+            }
+
+            if (softwareID == (int)_softwareID.Implant)
+            {
+                //Implant:vc2005 vc2010
+                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2005) == false || redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2010) == false)
                 {
-                    if (MsiQueryProductState("{710F4C1C-CC18-4C49-8CBF-51240C89A1A2}") != INSTALLSTATE.INSTALLSTATE_DEFAULT && MsiQueryProductState("{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}") != INSTALLSTATE.INSTALLSTATE_DEFAULT)
-                        MessageBox.Show("缺少以下運行庫:\n" + RedistributableName[0] + "\n" + RedistributableName[1]);
-                    else
-                    {
-                        if (MsiQueryProductState("{710F4C1C-CC18-4C49-8CBF-51240C89A1A2}") != INSTALLSTATE.INSTALLSTATE_DEFAULT)
-                            MessageBox.Show("缺少以下運行庫:\n" + RedistributableName[0]);
-                        if (MsiQueryProductState("{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}") != INSTALLSTATE.INSTALLSTATE_DEFAULT)
-                            MessageBox.Show("缺少以下運行庫:\n" + RedistributableName[1]);
-                    }
+                    string ErrMessage = "您缺少運行庫:\n";
+                    if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2005) == false)
+                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2005) + "/n";
+                    if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2010) == false)
+                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2010) + "/n";
+                    MessageBox.Show(ErrMessage);
                 }
+                else
+                    return true;
+            }
+
+            if (softwareID == (int)_softwareID.Ortho)
+            {
+                //Ortho: vc2008 vc2010 vc2013 vc2015
+            }
+
+            if (softwareID == (int)_softwareID.Tray)
+            {
+                //Tray:vc2013
+            }
+
+            if (softwareID == (int)_softwareID.Splint)
+            {
+                //Splint:vc2013
+            }
+
+            if (softwareID == (int)_softwareID.Guide)
+            {
+                //Guide:vc2013
             }
             return false;
         }
