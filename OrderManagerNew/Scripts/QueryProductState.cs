@@ -23,10 +23,14 @@ namespace OrderManagerNew
             {F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}
 
             Visual C++ 2013 Redistributable (x86):
+            {13A4EE12-23EA-3371-91EE-EFB36DDFFF3E}
             {35B83883-40FA-423C-AE73-2AFF7E1EA820}
 
             Visual C++ 2015 Redistributable (x86):
             {462F63A8-6347-4894-A1B3-DBFE3A4C981D}
+            {74d0e5db-b326-4dae-a6b2-445b9de1836e}
+            {BE960C1C-7BAD-3DE6-8B1A-2616FE532845}
+            {A2563E55-3BEC-3828-8D67-E5E8B9E8B675}
 
             Microsoft Visual C++ 2015-2019 Redistributable (x86):
             {65e650ff-30be-469d-b63a-418d71ea1765}
@@ -42,7 +46,11 @@ namespace OrderManagerNew
             VC2008,
             VC2010,
             VC2013,
+            VC2013_2,
             VC2015,
+            VC2015_2,
+            VC2015_3,
+            VC2015_4,
             VC2015TO2019,
         }
 
@@ -95,16 +103,32 @@ namespace OrderManagerNew
                 VCPack.RedistributableGUID = "{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}";
                 redistPack.Add(VCPack);
                 VCPack = new RedistributableInfo();
-                VCPack.RedistributableName = "Visual C++ 2013 Redistributable (x86)";
+                VCPack.RedistributableName = "Visual C++ 2013 Redistributable Update 5 (x86)";
                 VCPack.RedistributableGUID = "{35B83883-40FA-423C-AE73-2AFF7E1EA820}";
                 redistPack.Add(VCPack);
                 VCPack = new RedistributableInfo();
-                VCPack.RedistributableName = "Visual C++ 2015 Redistributable (x86)";
+                VCPack.RedistributableName = "Visual C++ 2013 Redistributable Update 5 (x86)";
+                VCPack.RedistributableGUID = "{13A4EE12-23EA-3371-91EE-EFB36DDFFF3E}";
+                redistPack.Add(VCPack);
+                VCPack = new RedistributableInfo();
+                VCPack.RedistributableName = "Visual C++ 2015 Redistributable Update 3 (x86)";
                 VCPack.RedistributableGUID = "{462F63A8-6347-4894-A1B3-DBFE3A4C981D}";
                 redistPack.Add(VCPack);
                 VCPack = new RedistributableInfo();
+                VCPack.RedistributableName = "Visual C++ 2015 Redistributable Update 3 (x86)";
+                VCPack.RedistributableGUID = "{F899BAD3-98ED-308E-A905-56B5338963FF}";
+                redistPack.Add(VCPack);
+                VCPack = new RedistributableInfo();
+                VCPack.RedistributableName = "Visual C++ 2015 Redistributable Update 3 (x86)";
+                VCPack.RedistributableGUID = "{BE960C1C-7BAD-3DE6-8B1A-2616FE532845}";
+                redistPack.Add(VCPack);
+                VCPack = new RedistributableInfo();
+                VCPack.RedistributableName = "Visual C++ 2015 Redistributable Update 3 (x86)";
+                VCPack.RedistributableGUID = "{A2563E55-3BEC-3828-8D67-E5E8B9E8B675}";
+                redistPack.Add(VCPack);
+                VCPack = new RedistributableInfo();
                 VCPack.RedistributableName = "Microsoft Visual C++ 2015-2019 Redistributable (x86)";
-                VCPack.RedistributableGUID = "{65e650ff-30be-469d-b63a-418d71ea1765}";
+                VCPack.RedistributableGUID = "{65E650FF-30BE-469D-B63A-418D71EA1765}";
                 redistPack.Add(VCPack);
             }
 
@@ -139,7 +163,7 @@ namespace OrderManagerNew
                 //EZCAD:vc2013
                 if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false )
                 {
-                    string ErrMessage = "您缺少運行庫:\n";
+                    string ErrMessage = "您缺少運行庫:\n";//TODO多國語系
                     if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false)
                         ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2013) + "\n";
                     MessageBox.Show(ErrMessage);
@@ -167,16 +191,27 @@ namespace OrderManagerNew
             if (softwareID == (int)_softwareID.Ortho)
             {
                 //Ortho: vc2008 vc2010 vc2013 vc2015
-                string ErrMessage = "您缺少運行庫:\n";
-                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2008) == false)
-                    ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2008) + "\n";
-                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2010) == false)
-                    ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2010) + "\n";
-                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false)
-                    ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2013) + "\n";
-                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015) == false && redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015TO2019))
-                    ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2015) + "\n";
-                MessageBox.Show(ErrMessage);
+                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2008) == false || redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2010) == false ||
+                    (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false && redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013_2) == false) ||
+                    (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015) == false && redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015_2) == false
+                        && redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015_3) == false && redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015_4) == false
+                        && redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015TO2019) == false))
+                {
+                    string ErrMessage = "您缺少運行庫:\n";
+                    if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2008) == false)
+                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2008) + "\n";
+                    if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2010) == false)
+                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2010) + "\n";
+                    if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false && redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013_2) == false)
+                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2013) + "\n";
+                    if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015) == false && redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015_2) == false
+                        && redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015_3) == false && redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015_4) == false
+                        && redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015TO2019) == false)
+                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2015) + "\n";
+                    MessageBox.Show(ErrMessage);
+                }
+                else
+                    return true;
             }
 
             if (softwareID == (int)_softwareID.Tray)

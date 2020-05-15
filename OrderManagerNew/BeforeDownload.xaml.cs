@@ -224,14 +224,14 @@ namespace OrderManagerNew
             System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
 
             //Request資料
-            HttpWebRequest httpRequest;
-            httpRequest = (HttpWebRequest)WebRequest.Create(http_url);
-            httpRequest.Credentials = CredentialCache.DefaultCredentials;
-            httpRequest.UserAgent = ".NET Framework Example Client";
-            httpRequest.Method = "GET";
-
             try
             {
+                HttpWebRequest httpRequest;
+                httpRequest = (HttpWebRequest)WebRequest.Create(http_url);
+                httpRequest.Credentials = CredentialCache.DefaultCredentials;
+                httpRequest.UserAgent = ".NET Framework Example Client";
+                httpRequest.Method = "GET";
+
                 Handler_snackbarShow("Get httpRequest Response Start..."); //開始取得資料 //TODO 多國語系
                 httpResponse = (HttpWebResponse)httpRequest.GetResponse();
             }
