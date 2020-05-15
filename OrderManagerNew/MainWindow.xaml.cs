@@ -920,6 +920,9 @@ namespace OrderManagerNew
                     }
                 case "cad_open":
                     {
+                        QueryProductState qPS = new QueryProductState();
+                        if (qPS.checkSoftwareVC((int)_softwareID.EZCAD) == true)
+                            UpdateFunc.RunCommandLine(Properties.Settings.Default.cad_exePath, "");
                         break;
                     }
                 case "cad_webIntro":
@@ -1050,6 +1053,9 @@ namespace OrderManagerNew
                     }
                 case "ortho_open":
                     {
+                        QueryProductState qPS = new QueryProductState();
+                        if (qPS.checkSoftwareVC((int)_softwareID.Ortho) == true)
+                            UpdateFunc.RunCommandLine(Properties.Settings.Default.ortho_exePath, "");
                         break;
                     }
                 case "ortho_webIntro":
@@ -1113,6 +1119,9 @@ namespace OrderManagerNew
                     }
                 case "tray_open":
                     {
+                        QueryProductState qPS = new QueryProductState();
+                        if (qPS.checkSoftwareVC((int)_softwareID.Tray) == true)
+                            UpdateFunc.RunCommandLine(Properties.Settings.Default.tray_exePath, "");
                         break;
                     }
                 case "tray_webIntro":
@@ -1176,6 +1185,9 @@ namespace OrderManagerNew
                     }
                 case "splint_open":
                     {
+                        QueryProductState qPS = new QueryProductState();
+                        if (qPS.checkSoftwareVC((int)_softwareID.Splint) == true)
+                            UpdateFunc.RunCommandLine(Properties.Settings.Default.splint_exePath, "");
                         break;
                     }
                 case "splint_webIntro":
@@ -1240,6 +1252,9 @@ namespace OrderManagerNew
                     }
                 case "guide_open":
                     {
+                        QueryProductState qPS = new QueryProductState();
+                        if (qPS.checkSoftwareVC((int)_softwareID.Guide) == true)
+                            UpdateFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "");
                         break;
                     }
                 case "guide_webIntro":

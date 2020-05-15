@@ -167,6 +167,16 @@ namespace OrderManagerNew
             if (softwareID == (int)_softwareID.Ortho)
             {
                 //Ortho: vc2008 vc2010 vc2013 vc2015
+                string ErrMessage = "您缺少運行庫:\n";
+                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2008) == false)
+                    ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2008) + "\n";
+                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2010) == false)
+                    ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2010) + "\n";
+                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false)
+                    ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2013) + "\n";
+                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015) == false && redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2015TO2019))
+                    ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2015) + "\n";
+                MessageBox.Show(ErrMessage);
             }
 
             if (softwareID == (int)_softwareID.Tray)
