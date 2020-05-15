@@ -28,6 +28,9 @@ namespace OrderManagerNew
             Visual C++ 2015 Redistributable (x86):
             {462F63A8-6347-4894-A1B3-DBFE3A4C981D}
 
+            Microsoft Visual C++ 2015-2019 Redistributable (x86):
+            {65e650ff-30be-469d-b63a-418d71ea1765}
+
             用法:
             if (MsiQueryProductState("{710F4C1C-CC18-4C49-8CBF-51240C89A1A2}") == INSTALLSTATE.INSTALLSTATE_DEFAULT)
                 return true;//代表有裝
@@ -40,8 +43,27 @@ namespace OrderManagerNew
             VC2010,
             VC2013,
             VC2015,
+            VC2015TO2019,
         }
-        
+
+        enum INSTALLSTATE
+        {
+            INSTALLSTATE_NOTUSED = -7,  // component disabled
+            INSTALLSTATE_BADCONFIG = -6,  // configuration data corrupt
+            INSTALLSTATE_INCOMPLETE = -5,  // installation suspended or in progress
+            INSTALLSTATE_SOURCEABSENT = -4,  // run from source, source is unavailable
+            INSTALLSTATE_MOREDATA = -3,  // return buffer overflow
+            INSTALLSTATE_INVALIDARG = -2,  // invalid function argument
+            INSTALLSTATE_UNKNOWN = -1,  // unrecognized product or feature
+            INSTALLSTATE_BROKEN = 0,  // broken
+            INSTALLSTATE_ADVERTISED = 1,  // advertised feature
+            INSTALLSTATE_REMOVED = 1,  // component being removed (action state, not settable)
+            INSTALLSTATE_ABSENT = 2,  // uninstalled (or action state absent but clients remain)
+            INSTALLSTATE_LOCAL = 3,  // installed on local drive
+            INSTALLSTATE_SOURCE = 4,  // run from source, CD or net
+            INSTALLSTATE_DEFAULT = 5,  // use default, local or source
+        }
+
         class RedistributablePackage
         {
             class RedistributableInfo
@@ -64,17 +86,25 @@ namespace OrderManagerNew
                 VCPack.RedistributableName = "Visual C++ 2005 SP1 MFC Security Update Redistributable Package(x86)";
                 VCPack.RedistributableGUID = "{710F4C1C-CC18-4C49-8CBF-51240C89A1A2}";
                 redistPack.Add(VCPack);
+                VCPack = new RedistributableInfo();
                 VCPack.RedistributableName = "Visual C++ 2008 SP1 MFC Security Update Redistributable Package (x86)";
                 VCPack.RedistributableGUID = "{9BE518E6-ECC6-35A9-88E4-87755C07200F}";
                 redistPack.Add(VCPack);
+                VCPack = new RedistributableInfo();
                 VCPack.RedistributableName = "Visual C++ 2010 SP1 Redistributable Package (x86)";
                 VCPack.RedistributableGUID = "{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}";
                 redistPack.Add(VCPack);
+                VCPack = new RedistributableInfo();
                 VCPack.RedistributableName = "Visual C++ 2013 Redistributable (x86)";
                 VCPack.RedistributableGUID = "{35B83883-40FA-423C-AE73-2AFF7E1EA820}";
                 redistPack.Add(VCPack);
+                VCPack = new RedistributableInfo();
                 VCPack.RedistributableName = "Visual C++ 2015 Redistributable (x86)";
                 VCPack.RedistributableGUID = "{462F63A8-6347-4894-A1B3-DBFE3A4C981D}";
+                redistPack.Add(VCPack);
+                VCPack = new RedistributableInfo();
+                VCPack.RedistributableName = "Microsoft Visual C++ 2015-2019 Redistributable (x86)";
+                VCPack.RedistributableGUID = "{65e650ff-30be-469d-b63a-418d71ea1765}";
                 redistPack.Add(VCPack);
             }
 
@@ -92,27 +122,9 @@ namespace OrderManagerNew
             }
         }
 
-        public enum INSTALLSTATE
-        {
-            INSTALLSTATE_NOTUSED = -7,  // component disabled
-            INSTALLSTATE_BADCONFIG = -6,  // configuration data corrupt
-            INSTALLSTATE_INCOMPLETE = -5,  // installation suspended or in progress
-            INSTALLSTATE_SOURCEABSENT = -4,  // run from source, source is unavailable
-            INSTALLSTATE_MOREDATA = -3,  // return buffer overflow
-            INSTALLSTATE_INVALIDARG = -2,  // invalid function argument
-            INSTALLSTATE_UNKNOWN = -1,  // unrecognized product or feature
-            INSTALLSTATE_BROKEN = 0,  // broken
-            INSTALLSTATE_ADVERTISED = 1,  // advertised feature
-            INSTALLSTATE_REMOVED = 1,  // component being removed (action state, not settable)
-            INSTALLSTATE_ABSENT = 2,  // uninstalled (or action state absent but clients remain)
-            INSTALLSTATE_LOCAL = 3,  // installed on local drive
-            INSTALLSTATE_SOURCE = 4,  // run from source, CD or net
-            INSTALLSTATE_DEFAULT = 5,  // use default, local or source
-        }
-
         [DllImport("msi.dll")]
         private static extern INSTALLSTATE MsiQueryProductState(string product);
-        public static INSTALLSTATE GetProcuct(string product)
+        static INSTALLSTATE GetProcuct(string product)
         {
             INSTALLSTATE state = MsiQueryProductState(product);
             return state;
@@ -125,6 +137,15 @@ namespace OrderManagerNew
             if (softwareID == (int)_softwareID.EZCAD)
             {
                 //EZCAD:vc2013
+                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false )
+                {
+                    string ErrMessage = "您缺少運行庫:\n";
+                    if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false)
+                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2013) + "\n";
+                    MessageBox.Show(ErrMessage);
+                }
+                else
+                    return true;
             }
 
             if (softwareID == (int)_softwareID.Implant)
@@ -134,9 +155,9 @@ namespace OrderManagerNew
                 {
                     string ErrMessage = "您缺少運行庫:\n";
                     if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2005) == false)
-                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2005) + "/n";
+                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2005) + "\n";
                     if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2010) == false)
-                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2010) + "/n";
+                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2010) + "\n";
                     MessageBox.Show(ErrMessage);
                 }
                 else
@@ -151,16 +172,43 @@ namespace OrderManagerNew
             if (softwareID == (int)_softwareID.Tray)
             {
                 //Tray:vc2013
+                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false)
+                {
+                    string ErrMessage = "您缺少運行庫:\n";
+                    if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false)
+                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2013) + "\n";
+                    MessageBox.Show(ErrMessage);
+                }
+                else
+                    return true;
             }
 
             if (softwareID == (int)_softwareID.Splint)
             {
                 //Splint:vc2013
+                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false)
+                {
+                    string ErrMessage = "您缺少運行庫:\n";
+                    if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false)
+                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2013) + "\n";
+                    MessageBox.Show(ErrMessage);
+                }
+                else
+                    return true;
             }
 
             if (softwareID == (int)_softwareID.Guide)
             {
                 //Guide:vc2013
+                if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false)
+                {
+                    string ErrMessage = "您缺少運行庫:\n";
+                    if (redistPackage.checkHaveInstallVC((int)_RedistPackID.VC2013) == false)
+                        ErrMessage += redistPackage.GetVCname((int)_RedistPackID.VC2013) + "\n";
+                    MessageBox.Show(ErrMessage);
+                }
+                else
+                    return true;
             }
             return false;
         }
