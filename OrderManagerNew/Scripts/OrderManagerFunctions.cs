@@ -20,22 +20,29 @@ namespace OrderManagerNew
         /// <param name="currentProgress">(目前進度) 未安裝、下載中... 請參考_softwareStatus</param>
         /// <param name="downloadPercent">(下載百分比) 100%的值為1.00</param>
         public delegate void softwareLogoShowEventHandler(int softwareID, int currentProgress, double downloadPercent);
-        public event softwareLogoShowEventHandler softwareLogoShowEvent;
+        public event softwareLogoShowEventHandler SoftwareLogoShowEvent;
+
+        /// <summary>
+        /// 委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
+        /// </summary>
+        /// <param name="message">顯示訊息</param>
+        public delegate void updatefuncEventHandler_snackbar(string message);
+        public event updatefuncEventHandler_snackbar Handler_snackbarShow;
 
         public OrderManagerFunctions()
         {
             log = new LogRecorder();
         }
 
-        class diskSoftwareInfo
+        class DiskSoftwareInfo
         {
-            public string diskName { get; set; }
-            public int softwareCount { get; set; }
+            public string DiskName { get; set; }
+            public int SoftwareCount { get; set; }
 
-            public diskSoftwareInfo()
+            public DiskSoftwareInfo()
             {
-                diskName = "";
-                softwareCount = 0;
+                DiskName = "";
+                SoftwareCount = 0;
             }
         }
 
@@ -78,18 +85,20 @@ namespace OrderManagerNew
             string guide_exePath = Properties.Settings.Default.guide_exePath;
             string systemDisk = Properties.Settings.Default.systemDisk;
             string[] array_exePath = { cad_exePath, implant_exePath, ortho_exePath, tray_exePath, splint_exePath, guide_exePath };
-            diskSoftwareInfo disk_most = new diskSoftwareInfo();//存最多軟體的磁碟
+            DiskSoftwareInfo disk_most = new DiskSoftwareInfo();//存最多軟體的磁碟
 
             //全部軟體都有安裝
             if (File.Exists(cad_exePath) == true && File.Exists(implant_exePath) == true && File.Exists(ortho_exePath) == true
                 && File.Exists(tray_exePath) == true && File.Exists(splint_exePath) == true && File.Exists(guide_exePath) == true)
             {
-                List<diskSoftwareInfo> calcDiskwithSoftware = new List<diskSoftwareInfo>();
+                List<DiskSoftwareInfo> calcDiskwithSoftware = new List<DiskSoftwareInfo>();
                 for(int i=0; i < array_exePath.Count(); i++)
                 {
-                    diskSoftwareInfo dInfo = new diskSoftwareInfo();
-                    dInfo.diskName = Path.GetPathRoot(array_exePath[i]);
-                    dInfo.softwareCount++;
+                    DiskSoftwareInfo dInfo = new DiskSoftwareInfo
+                    {
+                        DiskName = Path.GetPathRoot(array_exePath[i])
+                    };
+                    dInfo.SoftwareCount++;
 
                     if (i == 0)
                         calcDiskwithSoftware.Add(dInfo);
@@ -98,9 +107,9 @@ namespace OrderManagerNew
                         bool SameDisk = false;
                         for(int j=0; j<calcDiskwithSoftware.Count; j++)
                         {
-                            if (calcDiskwithSoftware[j].diskName == dInfo.diskName)
+                            if (calcDiskwithSoftware[j].DiskName == dInfo.DiskName)
                             {
-                                calcDiskwithSoftware[j].softwareCount++;
+                                calcDiskwithSoftware[j].SoftwareCount++;
                                 SameDisk = true;
                             }
                         }
@@ -114,35 +123,37 @@ namespace OrderManagerNew
                 {
                     if (i >= 1)
                     {
-                        if (calcDiskwithSoftware[i].softwareCount > disk_most.softwareCount)
+                        if (calcDiskwithSoftware[i].SoftwareCount > disk_most.SoftwareCount)
                             disk_most = calcDiskwithSoftware[i];
                     }
                     else
                         disk_most = calcDiskwithSoftware[i];
                 }
 
-                Properties.Settings.Default.systemDisk = disk_most.diskName;
+                Properties.Settings.Default.systemDisk = disk_most.DiskName;
 
                 //已經有systemDisk資料
                 if (classfrom == (int)_classFrom.MainWindow)
                 {
                     for (int i = 0; i < array_exePath.Count(); i++)
-                        softwareLogoShowEvent(i, (int)_softwareStatus.Installed, 0.0);
+                        SoftwareLogoShowEvent(i, (int)_softwareStatus.Installed, 0.0);
                 }
             }
             else
             {
                 //先找已儲存到Properties內的exePath
-                List<diskSoftwareInfo> calcDiskwithSoftware2 = new List<diskSoftwareInfo>();
+                List<DiskSoftwareInfo> calcDiskwithSoftware2 = new List<DiskSoftwareInfo>();
                 if (File.Exists(cad_exePath) == true)
                 {
-                    diskSoftwareInfo dInfo = new diskSoftwareInfo();
-                    dInfo.diskName = Path.GetPathRoot(cad_exePath);
-                    dInfo.softwareCount++;
+                    DiskSoftwareInfo dInfo = new DiskSoftwareInfo
+                    {
+                        DiskName = Path.GetPathRoot(cad_exePath)
+                    };
+                    dInfo.SoftwareCount++;
                     calcDiskwithSoftware2.Add(dInfo);
 
                     if (classfrom == (int)_classFrom.MainWindow)
-                        softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
+                        SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
                 }
                 else
                 {
@@ -151,13 +162,15 @@ namespace OrderManagerNew
                 }
                 if (File.Exists(implant_exePath) == true)
                 {
-                    diskSoftwareInfo dInfo = new diskSoftwareInfo();
-                    dInfo.diskName = Path.GetPathRoot(implant_exePath);
-                    dInfo.softwareCount++;
+                    DiskSoftwareInfo dInfo = new DiskSoftwareInfo
+                    {
+                        DiskName = Path.GetPathRoot(implant_exePath)
+                    };
+                    dInfo.SoftwareCount++;
                     calcDiskwithSoftware2.Add(dInfo);
 
                     if (classfrom == (int)_classFrom.MainWindow)
-                        softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
+                        SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
                 }
                 else
                 {
@@ -166,13 +179,15 @@ namespace OrderManagerNew
                 }
                 if (File.Exists(ortho_exePath) == true)
                 {
-                    diskSoftwareInfo dInfo = new diskSoftwareInfo();
-                    dInfo.diskName = Path.GetPathRoot(ortho_exePath);
-                    dInfo.softwareCount++;
+                    DiskSoftwareInfo dInfo = new DiskSoftwareInfo
+                    {
+                        DiskName = Path.GetPathRoot(ortho_exePath)
+                    };
+                    dInfo.SoftwareCount++;
                     calcDiskwithSoftware2.Add(dInfo);
 
                     if (classfrom == (int)_classFrom.MainWindow)
-                        softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
+                        SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
                 }
                 else
                 {
@@ -181,13 +196,15 @@ namespace OrderManagerNew
                 }
                 if (File.Exists(tray_exePath) == true)
                 {
-                    diskSoftwareInfo dInfo = new diskSoftwareInfo();
-                    dInfo.diskName = Path.GetPathRoot(tray_exePath);
-                    dInfo.softwareCount++;
+                    DiskSoftwareInfo dInfo = new DiskSoftwareInfo
+                    {
+                        DiskName = Path.GetPathRoot(tray_exePath)
+                    };
+                    dInfo.SoftwareCount++;
                     calcDiskwithSoftware2.Add(dInfo);
 
                     if (classfrom == (int)_classFrom.MainWindow)
-                        softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
+                        SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
                 }
                 else
                 {
@@ -196,13 +213,15 @@ namespace OrderManagerNew
                 }
                 if (File.Exists(splint_exePath) == true)
                 {
-                    diskSoftwareInfo dInfo = new diskSoftwareInfo();
-                    dInfo.diskName = Path.GetPathRoot(splint_exePath);
-                    dInfo.softwareCount++;
+                    DiskSoftwareInfo dInfo = new DiskSoftwareInfo
+                    {
+                        DiskName = Path.GetPathRoot(splint_exePath)
+                    };
+                    dInfo.SoftwareCount++;
                     calcDiskwithSoftware2.Add(dInfo);
 
                     if (classfrom == (int)_classFrom.MainWindow)
-                        softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
+                        SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
                 }
                 else
                 {
@@ -211,13 +230,15 @@ namespace OrderManagerNew
                 }
                 if (File.Exists(guide_exePath) == true)
                 {
-                    diskSoftwareInfo dInfo = new diskSoftwareInfo();
-                    dInfo.diskName = Path.GetPathRoot(guide_exePath);
-                    dInfo.softwareCount++;
+                    DiskSoftwareInfo dInfo = new DiskSoftwareInfo
+                    {
+                        DiskName = Path.GetPathRoot(guide_exePath)
+                    };
+                    dInfo.SoftwareCount++;
                     calcDiskwithSoftware2.Add(dInfo);
 
                     if (classfrom == (int)_classFrom.MainWindow)
-                        softwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
+                        SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
                 }
                 else
                     Properties.Settings.Default.guide_exePath = "";
@@ -227,8 +248,10 @@ namespace OrderManagerNew
                 {
                     try
                     {
-                        diskSoftwareInfo diskInfo = new diskSoftwareInfo();
-                        diskInfo.diskName = d.Name;
+                        DiskSoftwareInfo diskInfo = new DiskSoftwareInfo
+                        {
+                            DiskName = d.Name
+                        };
 
                         if (File.Exists(cad_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD\Bin\EZCAD.exe") == true)
                         {
@@ -236,8 +259,8 @@ namespace OrderManagerNew
                                 Properties.Settings.Default.cad_exePath = d.Name + @"InteWare\EZCAD\Bin\EZCAD.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
-                                softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
-                            diskInfo.softwareCount++;
+                                SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
+                            diskInfo.SoftwareCount++;
                         }
                         if (File.Exists(implant_exePath) == false && File.Exists(d.Name + @"InteWare\ImplantPlanning\ImplantPlanning.exe") == true)
                         {
@@ -245,8 +268,8 @@ namespace OrderManagerNew
                                 Properties.Settings.Default.implant_exePath = d.Name + @"InteWare\ImplantPlanning\ImplantPlanning.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
-                                softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
-                            diskInfo.softwareCount++;
+                                SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
+                            diskInfo.SoftwareCount++;
                         }
                         if (File.Exists(ortho_exePath) == false && File.Exists(d.Name + @"InteWare\OrthoAnalysis\OrthoAnalysis.exe") == true)
                         {
@@ -254,8 +277,8 @@ namespace OrderManagerNew
                                 Properties.Settings.Default.ortho_exePath = d.Name + @"InteWare\OrthoAnalysis\OrthoAnalysis.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
-                                softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
-                            diskInfo.softwareCount++;
+                                SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
+                            diskInfo.SoftwareCount++;
                         }
                         if (File.Exists(tray_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD tray\Bin\EZCAD.tray.exe") == true)
                         {
@@ -263,8 +286,8 @@ namespace OrderManagerNew
                                 Properties.Settings.Default.tray_exePath = d.Name + @"InteWare\EZCAD tray\Bin\EZCAD.tray.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
-                                softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
-                            diskInfo.softwareCount++;
+                                SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
+                            diskInfo.SoftwareCount++;
                         }
                         if (File.Exists(splint_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD splint\Bin\EZCAD.splint.exe") == true)
                         {
@@ -272,8 +295,8 @@ namespace OrderManagerNew
                                 Properties.Settings.Default.splint_exePath = d.Name + @"InteWare\EZCAD splint\Bin\EZCAD.splint.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
-                                softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
-                            diskInfo.softwareCount++;
+                                SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
+                            diskInfo.SoftwareCount++;
                         }
                         if (File.Exists(guide_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD guide\Bin\EZCAD.guide.exe") == true)
                         {
@@ -281,8 +304,8 @@ namespace OrderManagerNew
                                 Properties.Settings.Default.guide_exePath = d.Name + @"InteWare\EZCAD guide\Bin\EZCAD.guide.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
-                                softwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
-                            diskInfo.softwareCount++;
+                                SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
+                            diskInfo.SoftwareCount++;
                         }
 
                         calcDiskwithSoftware2.Add(diskInfo);
@@ -294,7 +317,7 @@ namespace OrderManagerNew
                 }
 
                 //分類list內資料並整理成sortedInfoList
-                List<diskSoftwareInfo> sortedInfoList = new List<diskSoftwareInfo>();
+                List<DiskSoftwareInfo> sortedInfoList = new List<DiskSoftwareInfo>();
                 for (int i=0; i< calcDiskwithSoftware2.Count; i++)
                 {
                     if(i == 0)
@@ -304,9 +327,9 @@ namespace OrderManagerNew
                         bool SameDisk = false;
                         for (int j = 0; j < sortedInfoList.Count; j++)
                         {
-                            if (calcDiskwithSoftware2[i].diskName == sortedInfoList[j].diskName)
+                            if (calcDiskwithSoftware2[i].DiskName == sortedInfoList[j].DiskName)
                             {
-                                sortedInfoList[j].softwareCount++;
+                                sortedInfoList[j].SoftwareCount++;
                                 SameDisk = true;
                             }
                         }
@@ -321,28 +344,28 @@ namespace OrderManagerNew
                 {
                     if (i >= 1)
                     {
-                        if (sortedInfoList[i].softwareCount > disk_most.softwareCount)
+                        if (sortedInfoList[i].SoftwareCount > disk_most.SoftwareCount)
                             disk_most = sortedInfoList[i];
                     }
                     else
                         disk_most = sortedInfoList[i];
                 }
 
-                if (disk_most.softwareCount != 0)
-                    Properties.Settings.Default.systemDisk = disk_most.diskName;
+                if (disk_most.SoftwareCount != 0)
+                    Properties.Settings.Default.systemDisk = disk_most.DiskName;
                 else
                 {
                     //一個軟體都沒安裝預設C碟，C碟沒有就D碟，兩個都沒有就用陣列第一筆磁碟
                     bool chosen = false;    //是否已選中
-                    foreach (diskSoftwareInfo disk in sortedInfoList)
+                    foreach (DiskSoftwareInfo disk in sortedInfoList)
                     {
-                        if (disk.diskName == @"C:\")
+                        if (disk.DiskName == @"C:\")
                         {
                             Properties.Settings.Default.systemDisk = @"C:\";
                             chosen = true;
                             break;
                         }
-                        if (disk.diskName == @"D:\")
+                        if (disk.DiskName == @"D:\")
                         {
                             Properties.Settings.Default.systemDisk = @"D:\";
                             chosen = true;
@@ -351,24 +374,24 @@ namespace OrderManagerNew
                     }
 
                     if (chosen == false)
-                        Properties.Settings.Default.systemDisk = sortedInfoList[0].diskName;
+                        Properties.Settings.Default.systemDisk = sortedInfoList[0].DiskName;
                 }
             }
             //沒安裝的軟體Logo變灰
             if(classfrom == (int)_classFrom.MainWindow)
             {
                 if (cad_exePath == "")
-                    softwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
+                    SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
                 if (implant_exePath == "")
-                    softwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
+                    SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
                 if (ortho_exePath == "")
-                    softwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0.0);
+                    SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0.0);
                 if (tray_exePath == "")
-                    softwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0.0);
+                    SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0.0);
                 if (splint_exePath == "")
-                    softwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0.0);
+                    SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0.0);
                 if (guide_exePath == "")
-                    softwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
+                    SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
             }
 
             Properties.Settings.Default.Save();
@@ -618,6 +641,28 @@ namespace OrderManagerNew
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "splint_projectPath", "\t\"" + Properties.Settings.Default.splint_projectPath + "\"");
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs AutoDetectSoftwareProjectPath()", "Detect finish.");
             log.RecordLogSaperate();
+        }
+
+        /// <summary>
+        /// CommandLine(命令提示字元)
+        /// </summary>
+        /// <param name="fileName">要開啟的檔案</param>
+        /// <param name="arguments">要傳進去的參數</param>
+        public void RunCommandLine(string fileName, string arguments)
+        {
+            try
+            {
+                Process processer = new Process();
+                processer.StartInfo.FileName = fileName;
+                if (arguments != "")
+                    processer.StartInfo.Arguments = arguments;
+                processer.Start();
+            }
+            catch (Exception ex)
+            {
+                Handler_snackbarShow(ex.Message);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RunCommandLine exception", ex.Message);
+            }
         }
     }
 }

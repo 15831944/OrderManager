@@ -22,79 +22,79 @@ namespace OrderManagerNew
     /// </summary>
     public partial class Setting : Window
     {
-        settingAllSet OriginalSet;
+        SettingAllSet OriginalSet;
 
-        class diskSoftwareNum
+        class DiskSoftwareNum
         {
-            public string diskName { get; set; }
-            public int softwareCount { get; set; }
+            public string DiskName { get; set; }
+            public int SoftwareCount { get; set; }
 
-            public diskSoftwareNum()
+            public DiskSoftwareNum()
             {
-                diskName = "";
-                softwareCount = 0;
+                DiskName = "";
+                SoftwareCount = 0;
             }
         }
 
-        class settingAllSet
+        class SettingAllSet
         {
-            public string cad_exePath { get; set; }
-            public string implant_exePath { get; set; }
-            public string ortho_exePath { get; set; }
-            public string tray_exePath { get; set; }
-            public string splint_exePath { get; set; }
-            public string guide_exePath { get; set; }
+            public string Cad_exePath { get; set; }
+            public string Implant_exePath { get; set; }
+            public string Ortho_exePath { get; set; }
+            public string Tray_exePath { get; set; }
+            public string Splint_exePath { get; set; }
+            public string Guide_exePath { get; set; }
             public string DownloadFolder { get; set; }
-            public int language { get; set; }
-            public settingAllSet()
+            public int Language { get; set; }
+            public SettingAllSet()
             {
-                cad_exePath = "";
-                implant_exePath = "";
-                ortho_exePath = "";
-                tray_exePath = "";
-                splint_exePath = "";
-                guide_exePath = "";
+                Cad_exePath = "";
+                Implant_exePath = "";
+                Ortho_exePath = "";
+                Tray_exePath = "";
+                Splint_exePath = "";
+                Guide_exePath = "";
                 DownloadFolder = "";
-                language = -1;
+                Language = -1;
             }
         }
 
         public Setting()
         {
             InitializeComponent();
-            OriginalSet = new settingAllSet();
+            OriginalSet = new SettingAllSet();
 
             if(File.Exists(Properties.Settings.Default.cad_exePath) == true)
-                OriginalSet.cad_exePath = Properties.Settings.Default.cad_exePath;
+                OriginalSet.Cad_exePath = Properties.Settings.Default.cad_exePath;
             if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
-                OriginalSet.implant_exePath = Properties.Settings.Default.implant_exePath;
+                OriginalSet.Implant_exePath = Properties.Settings.Default.implant_exePath;
             if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
-                OriginalSet.ortho_exePath = Properties.Settings.Default.ortho_exePath;
+                OriginalSet.Ortho_exePath = Properties.Settings.Default.ortho_exePath;
             if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
-                OriginalSet.tray_exePath = Properties.Settings.Default.tray_exePath;
+                OriginalSet.Tray_exePath = Properties.Settings.Default.tray_exePath;
             if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
-                OriginalSet.tray_exePath = Properties.Settings.Default.cad_exePath;
+                OriginalSet.Tray_exePath = Properties.Settings.Default.cad_exePath;
             if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
-                OriginalSet.splint_exePath = Properties.Settings.Default.splint_exePath;
+                OriginalSet.Splint_exePath = Properties.Settings.Default.splint_exePath;
             if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
-                OriginalSet.guide_exePath = Properties.Settings.Default.guide_exePath;
+                OriginalSet.Guide_exePath = Properties.Settings.Default.guide_exePath;
             if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == true)
                 OriginalSet.DownloadFolder = Properties.Settings.Default.DownloadFolder;
             else
                 OriginalSet.DownloadFolder = Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + @"IntewareTempFile\";
             if (Properties.Settings.Default.sysLanguage == "zh-TW")
-                OriginalSet.language = (int)_langSupport.zhTW;
+                OriginalSet.Language = (int)_langSupport.zhTW;
             else
-                OriginalSet.language = (int)_langSupport.English;
+                OriginalSet.Language = (int)_langSupport.English;
 
-            textbox_EZCAD.Text = OriginalSet.cad_exePath;
-            textbox_Implant.Text = OriginalSet.implant_exePath;
-            textbox_Ortho.Text = OriginalSet.ortho_exePath;
-            textbox_Tray.Text = OriginalSet.tray_exePath;
-            textbox_Splint.Text = OriginalSet.splint_exePath;
-            textbox_Guide.Text = OriginalSet.guide_exePath;
+            textbox_EZCAD.Text = OriginalSet.Cad_exePath;
+            textbox_Implant.Text = OriginalSet.Implant_exePath;
+            textbox_Ortho.Text = OriginalSet.Ortho_exePath;
+            textbox_Tray.Text = OriginalSet.Tray_exePath;
+            textbox_Splint.Text = OriginalSet.Splint_exePath;
+            textbox_Guide.Text = OriginalSet.Guide_exePath;
             textbox_Download.Text = OriginalSet.DownloadFolder;
-            comboboxLanguage.SelectedIndex = OriginalSet.language;
+            comboboxLanguage.SelectedIndex = OriginalSet.Language;
         }
         
         private void TitleBar_Click_titlebarButtons(object sender, RoutedEventArgs e)
@@ -230,15 +230,15 @@ namespace OrderManagerNew
                 case "sysBtn_Cancel":
                     {
                         //還原
-                        Properties.Settings.Default.cad_exePath = OriginalSet.cad_exePath;
-                        Properties.Settings.Default.implant_exePath = OriginalSet.implant_exePath;
-                        Properties.Settings.Default.ortho_exePath = OriginalSet.ortho_exePath;
-                        Properties.Settings.Default.tray_exePath = OriginalSet.tray_exePath;
-                        Properties.Settings.Default.splint_exePath = OriginalSet.splint_exePath;
-                        Properties.Settings.Default.guide_exePath = OriginalSet.guide_exePath;
+                        Properties.Settings.Default.cad_exePath = OriginalSet.Cad_exePath;
+                        Properties.Settings.Default.implant_exePath = OriginalSet.Implant_exePath;
+                        Properties.Settings.Default.ortho_exePath = OriginalSet.Ortho_exePath;
+                        Properties.Settings.Default.tray_exePath = OriginalSet.Tray_exePath;
+                        Properties.Settings.Default.splint_exePath = OriginalSet.Splint_exePath;
+                        Properties.Settings.Default.guide_exePath = OriginalSet.Guide_exePath;
                         Properties.Settings.Default.DownloadFolder = OriginalSet.DownloadFolder;
 
-                        if(OriginalSet.language == (int)_langSupport.zhTW)
+                        if(OriginalSet.Language == (int)_langSupport.zhTW)
                             LocalizationService.SetLanguage("zh-TW");
                         else
                             LocalizationService.SetLanguage("en-US");
@@ -282,9 +282,11 @@ namespace OrderManagerNew
         /// <returns></returns>
         public void SearchEXE(string originPah, int softwareID)
         {
-            Microsoft.Win32.OpenFileDialog Dlg = new Microsoft.Win32.OpenFileDialog();
-            Dlg.DefaultExt = ".exe";
-            Dlg.Filter = "Exe File (.exe)|*.exe";
+            Microsoft.Win32.OpenFileDialog Dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".exe",
+                Filter = "Exe File (.exe)|*.exe"
+            };
 
             if (File.Exists(originPah) == true)
                 Dlg.InitialDirectory = System.IO.Path.GetDirectoryName(originPah);

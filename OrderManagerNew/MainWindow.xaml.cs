@@ -109,12 +109,12 @@ namespace OrderManagerNew
             LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
             
             OrderManagerFunc = new OrderManagerFunctions();
-            OrderManagerFunc.softwareLogoShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler(Handler_setSoftwareShow);
+            OrderManagerFunc.SoftwareLogoShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler(Handler_setSoftwareShow);
 
             UpdateFunc = new UpdateFunction();
-            UpdateFunc.softwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
+            UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
             UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
-            UpdateFunc.loadHLXml();                 //截取線上HL.xml內的資料
+            UpdateFunc.LoadHLXml();                 //截取線上HL.xml內的資料
             //工程師模式切換
             if (developerMode == true)
             {
@@ -194,7 +194,7 @@ namespace OrderManagerNew
                 case "DevBtn2":
                     {
                         //Load HL.xml
-                        UpdateFunc.loadHLXml();
+                        UpdateFunc.LoadHLXml();
                         break;
                     }
                 case "DevBtn3":
@@ -308,16 +308,9 @@ namespace OrderManagerNew
 
         private void TitleBar_Click_titlebarButtons(object sender, RoutedEventArgs e)
         {
-            Button titleButton = sender as Button;
-
-            if (titleButton == null)
+            if(sender is Button)
             {
-                //是ToggleButton，按鈕是"向下還原"或"最大化"
-                this.WindowState = (this.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
-            }
-            else
-            {
-                switch (titleButton.Name)
+                switch (((Button)sender).Name)
                 {
                     case "systemButton_ContactInteware":    //聯絡客服
                         ContactInteware();
@@ -330,6 +323,11 @@ namespace OrderManagerNew
                         break;
                 }
             }
+            else
+            {
+                //是ToggleButton，按鈕是"向下還原"或"最大化"
+                this.WindowState = (this.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
+            }
         }
 
         /// <summary>
@@ -337,7 +335,7 @@ namespace OrderManagerNew
         /// </summary>
         void ContactInteware()
         {
-            UpdateFunc.RunCommandLine(Properties.HyperLink.Default.ContactInteware, "");
+            OrderManagerFunc.RunCommandLine(Properties.HyperLink.Default.ContactInteware, "");
         }
         #endregion
 
@@ -798,14 +796,16 @@ namespace OrderManagerNew
         {
             if(watcherCommand == (int)_watcherCommand.Installing)   //安裝中
             {
-                FileSystemWatcher watcher = new FileSystemWatcher();
-                watcher.Path = UpdateFunc.GetSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                FileSystemWatcher watcher = new FileSystemWatcher
+                {
+                    Path = UpdateFunc.GetSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID),
 
-                watcher.NotifyFilter = NotifyFilters.Size;
-                //設定是否監控子資料夾
-                watcher.IncludeSubdirectories = true;
-                //設定是否啟動元件，此部分必須要設定為 true，不然事件是不會被觸發的
-                watcher.EnableRaisingEvents = true;
+                    NotifyFilter = NotifyFilters.Size,
+                    //設定是否監控子資料夾
+                    IncludeSubdirectories = true,
+                    //設定是否啟動元件，此部分必須要設定為 true，不然事件是不會被觸發的
+                    EnableRaisingEvents = true
+                };
                 watcher.Created += new FileSystemEventHandler(Watcher_Installing_Changed);
                 watcher.Changed += new FileSystemEventHandler(Watcher_Installing_Changed);
             }
@@ -814,14 +814,16 @@ namespace OrderManagerNew
                 if (SoftwareID == -1)
                     return;
 
-                FileSystemWatcher watcher = new FileSystemWatcher();
-                //softwarePath是執行檔路徑，所以要抓資料夾用Path.GetDirectoryName()
-                watcher.Path = Path.GetDirectoryName(UpdateFunc.GetSoftwarePath(SoftwareID));
+                FileSystemWatcher watcher = new FileSystemWatcher
+                {
+                    //softwarePath是執行檔路徑，所以要抓資料夾用Path.GetDirectoryName()
+                    Path = Path.GetDirectoryName(UpdateFunc.GetSoftwarePath(SoftwareID)),
 
-                watcher.NotifyFilter = NotifyFilters.FileName;
+                    NotifyFilter = NotifyFilters.FileName,
 
-                watcher.IncludeSubdirectories = true;
-                watcher.EnableRaisingEvents = true;
+                    IncludeSubdirectories = true,
+                    EnableRaisingEvents = true
+                };
                 watcher.Deleted += new FileSystemEventHandler(Watcher_Deleting_Changed);
             }
         }
@@ -922,7 +924,7 @@ namespace OrderManagerNew
                     {
                         QueryProductState qPS = new QueryProductState();
                         if (qPS.checkSoftwareVC((int)_softwareID.EZCAD) == true)
-                            UpdateFunc.RunCommandLine(Properties.Settings.Default.cad_exePath, "");
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.cad_exePath, "");
                         break;
                     }
                 case "cad_webIntro":
@@ -949,7 +951,7 @@ namespace OrderManagerNew
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Uninstalling, 0);
                                     SetAllSoftwareTableDownloadisEnable(false);
-                                    UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
+                                    OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
                                 }
                                 else
                                 {
@@ -989,7 +991,7 @@ namespace OrderManagerNew
                     {
                         QueryProductState qPS = new QueryProductState();
                         if (qPS.checkSoftwareVC((int)_softwareID.Implant) == true)
-                            UpdateFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");
                         break;
                     }
                 case "implant_webIntro":
@@ -1015,7 +1017,7 @@ namespace OrderManagerNew
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Uninstalling, 0);
                                     SetAllSoftwareTableDownloadisEnable(false);
-                                    UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
+                                    OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
                                 }
                                 else
                                 {
@@ -1055,7 +1057,7 @@ namespace OrderManagerNew
                     {
                         QueryProductState qPS = new QueryProductState();
                         if (qPS.checkSoftwareVC((int)_softwareID.Ortho) == true)
-                            UpdateFunc.RunCommandLine(Properties.Settings.Default.ortho_exePath, "");
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.ortho_exePath, "");
                         break;
                     }
                 case "ortho_webIntro":
@@ -1081,7 +1083,7 @@ namespace OrderManagerNew
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Uninstalling, 0);
                                     SetAllSoftwareTableDownloadisEnable(false);
-                                    UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
+                                    OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
                                 }
                                 else
                                 {
@@ -1121,7 +1123,7 @@ namespace OrderManagerNew
                     {
                         QueryProductState qPS = new QueryProductState();
                         if (qPS.checkSoftwareVC((int)_softwareID.Tray) == true)
-                            UpdateFunc.RunCommandLine(Properties.Settings.Default.tray_exePath, "");
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.tray_exePath, "");
                         break;
                     }
                 case "tray_webIntro":
@@ -1147,7 +1149,7 @@ namespace OrderManagerNew
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Uninstalling, 0);
                                     SetAllSoftwareTableDownloadisEnable(false);
-                                    UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
+                                    OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
                                 }
                                 else
                                 {
@@ -1187,7 +1189,7 @@ namespace OrderManagerNew
                     {
                         QueryProductState qPS = new QueryProductState();
                         if (qPS.checkSoftwareVC((int)_softwareID.Splint) == true)
-                            UpdateFunc.RunCommandLine(Properties.Settings.Default.splint_exePath, "");
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.splint_exePath, "");
                         break;
                     }
                 case "splint_webIntro":
@@ -1213,7 +1215,7 @@ namespace OrderManagerNew
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Uninstalling, 0);
                                     SetAllSoftwareTableDownloadisEnable(false);
-                                    UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
+                                    OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
                                 }
                                 else
                                 {
@@ -1254,7 +1256,7 @@ namespace OrderManagerNew
                     {
                         QueryProductState qPS = new QueryProductState();
                         if (qPS.checkSoftwareVC((int)_softwareID.Guide) == true)
-                            UpdateFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "");
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "");
                         break;
                     }
                 case "guide_webIntro":
@@ -1280,7 +1282,7 @@ namespace OrderManagerNew
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Uninstalling, 0);
                                     SetAllSoftwareTableDownloadisEnable(false);
-                                    UpdateFunc.RunCommandLine(uninstallPath, "/quiet");
+                                    OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
                                 }
                                 else
                                 {
@@ -1352,8 +1354,10 @@ namespace OrderManagerNew
         {
             if (loginStatus == false)
             {
-                AirdentalLogin DialogLogin = new AirdentalLogin();
-                DialogLogin.Owner = this;
+                AirdentalLogin DialogLogin = new AirdentalLogin
+                {
+                    Owner = this
+                };
                 DialogLogin.ShowDialog();
             }
             else
@@ -1378,9 +1382,11 @@ namespace OrderManagerNew
             var blur = new BlurEffect();
             this.Effect = blur;
 
-            Setting DialogSetting = new Setting();
-            DialogSetting.Owner = this;
-            DialogSetting.ShowActivated = true;
+            Setting DialogSetting = new Setting
+            {
+                Owner = this,
+                ShowActivated = true
+            };
 
             if (softwareID != -1)
                 DialogSetting.SearchEXE("", softwareID);

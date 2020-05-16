@@ -16,7 +16,7 @@ namespace OrderManagerNew
     public class UpdateFunction
     {
         #region 變數宣告
-        string HLXMLlink = @"https://inteware.com.tw/updateXML/HLnoLic.xml";//HL.xml網址
+        readonly string HLXMLlink = @"https://inteware.com.tw/updateXML/HLnoLic.xml";//HL.xml網址
         //string HLXMLlink = "D:\\Inteware\\HLnoLic.xml";    //單機測試//TODO之後要換到網上
         string downloadfilepath;
         LogRecorder log;    //日誌檔cs
@@ -33,7 +33,7 @@ namespace OrderManagerNew
         /// <param name="currentProgress">(目前進度) 未安裝、下載中... 請參考_SoftwareStatus</param>
         /// <param name="downloadPercent">(下載百分比) 100%的值為1.00</param>
         public delegate void softwareLogoShowEventHandler(int softwareID, int currentProgress, double downloadPercent);
-        public event softwareLogoShowEventHandler softwareLogoShowEvent;
+        public event softwareLogoShowEventHandler SoftwareLogoShowEvent;
         /// <summary>
         /// 委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
         /// </summary>
@@ -87,7 +87,7 @@ namespace OrderManagerNew
         /// <param name="CurrentVersion">現有版本</param>
         /// <param name="latestVersion">最新版本</param>
         /// <returns></returns>
-        private bool haveNewVersion(string currentVersion, string latestVersion)
+        private bool HaveNewVersion(string currentVersion, string latestVersion)
         {
             if (currentVersion == "")
                 return true;
@@ -256,7 +256,7 @@ namespace OrderManagerNew
         void UpdateProgress_DownloadSoftware(object sender, ProgressChangedEventArgs e)
         {
             int progress = e.ProgressPercentage;
-            softwareLogoShowEvent(readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Downloading, (double)(progress/100.0));
+            SoftwareLogoShowEvent(readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Downloading, (double)(progress/100.0));
         }
 
         void CompletedWork_DownloadSoftware(object sender, RunWorkerCompletedEventArgs e)
@@ -272,11 +272,12 @@ namespace OrderManagerNew
             else
             {
                 Handler_snackbarShow("下載完成");   //下載完成  //TODO 多國語系
-                softwareLogoShowEvent(readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installing, 0);
+                SoftwareLogoShowEvent(readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installing, 0);
                 string downloadPath = GetSoftwarePath(readyInstallSoftwareInfo.softwareID);
 
                 string param = "/quiet APPDIR=\"" + downloadPath + "\"";
-                RunCommandLine(downloadfilepath, param);
+                OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                omFunc.RunCommandLine(downloadfilepath, param);
             }
         }
         #endregion
@@ -310,7 +311,7 @@ namespace OrderManagerNew
         /// <summary>
         /// 讀取HL.xml的詳細更新資訊
         /// </summary>
-        public void loadHLXml()
+        public void LoadHLXml()
         {
             System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
@@ -374,28 +375,6 @@ namespace OrderManagerNew
             catch (Exception ex)
             {
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs Initial exception", ex.Message);
-            }
-        }
-        
-        /// <summary>
-        /// CommandLine(命令提示字元)
-        /// </summary>
-        /// <param name="fileName">要開啟的檔案</param>
-        /// <param name="arguments">要傳進去的參數</param>
-        public void RunCommandLine(string fileName, string arguments)
-        {
-            try
-            {
-                Process processer = new Process();
-                processer.StartInfo.FileName = fileName;
-                if(arguments != "")
-                    processer.StartInfo.Arguments = arguments;
-                processer.Start();
-            }
-            catch(Exception ex)
-            {
-                Handler_snackbarShow(ex.Message);
-                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RunCommandLine exception", ex.Message);
             }
         }
     }

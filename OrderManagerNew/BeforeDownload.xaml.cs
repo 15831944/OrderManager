@@ -133,11 +133,8 @@ namespace OrderManagerNew
                     System.IO.Directory.CreateDirectory(Drive);
                 }
 
-                ulong FreeBytesAvailable;
-                ulong TotalNumberOfBytes;
-                ulong TotalNumberOfFreeBytes;
                 string str = Path.GetPathRoot(Drive);
-                bool success = GetDiskFreeSpaceEx(Path.GetPathRoot(Drive), out FreeBytesAvailable, out TotalNumberOfBytes, out TotalNumberOfFreeBytes);
+                bool success = GetDiskFreeSpaceEx(Path.GetPathRoot(Drive), out ulong FreeBytesAvailable, out ulong TotalNumberOfBytes, out ulong TotalNumberOfFreeBytes);
 
                 if (!success)
                 {
@@ -146,7 +143,7 @@ namespace OrderManagerNew
                 }
 
                 label_AvailableSpace.Tag = TotalNumberOfFreeBytes;
-                label_AvailableSpace.Content = convertDiskUnit(TotalNumberOfFreeBytes, (int)_diskUnit.MB);
+                label_AvailableSpace.Content = ConvertDiskUnit(TotalNumberOfFreeBytes, (int)_diskUnit.MB);
                 return true;
             }
             catch(Exception ex)
@@ -162,7 +159,7 @@ namespace OrderManagerNew
         /// <param name="InputBytes">單位是Bytes 使用ulong</param>
         /// <param name="DiskUnit">要顯示哪種單位(參考EnumSummary的_diskUnit)</param>
         /// <returns></returns>
-        string convertDiskUnit(ulong InputBytes, int DiskUnit)
+        string ConvertDiskUnit(ulong InputBytes, int DiskUnit)
         {
             string OutputString = "";
 
@@ -216,7 +213,7 @@ namespace OrderManagerNew
                 Properties.Settings.Default.Save();
             }
                 
-            tmr.Elapsed += tmr_Elapsed;  // 使用事件代替委託
+            tmr.Elapsed += Tmr_Elapsed;  // 使用事件代替委託
             tmr.Start();          // 重啟定時器
 
             //跳過https檢測 & Win7 相容
@@ -265,7 +262,7 @@ namespace OrderManagerNew
         /// <summary>
         /// 計時器結束事件
         /// </summary>
-        void tmr_Elapsed(object sender, EventArgs e)
+        void Tmr_Elapsed(object sender, EventArgs e)
         {
             Handler_snackbarShow("can't get network response, please restart ordermanager and try again"); //超過5秒回應時間 //TODO 多國語系
             tmr.Stop();
@@ -300,7 +297,7 @@ namespace OrderManagerNew
                     if (RemainingSpace(textbox_InstallPath.Text) == true)  //客戶電腦剩餘空間
                     {
                         label_RequireSpace.Tag = Convert.ToUInt64(httpResponse.ContentLength);
-                        label_RequireSpace.Content = convertDiskUnit(Convert.ToUInt64(httpResponse.ContentLength), (int)_diskUnit.MB);
+                        label_RequireSpace.Content = ConvertDiskUnit(Convert.ToUInt64(httpResponse.ContentLength), (int)_diskUnit.MB);
 
                         if ((ulong)label_AvailableSpace.Tag < (ulong)label_RequireSpace.Tag)
                         {
@@ -350,10 +347,11 @@ namespace OrderManagerNew
             http_url = Import_http_url;
             currentSoftwareID = SoftwareID;
 
-            m_BackgroundWorker = new BackgroundWorker(); // 例項化後臺物件
-
-            m_BackgroundWorker.WorkerReportsProgress = false; // 設定可以通告進度
-            m_BackgroundWorker.WorkerSupportsCancellation = true; // 設定可以取消
+            m_BackgroundWorker = new BackgroundWorker
+            {
+                WorkerReportsProgress = false, // 設定可以通告進度
+                WorkerSupportsCancellation = true // 設定可以取消
+            }; // 例項化後臺物件
 
             m_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork);
             m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork);
