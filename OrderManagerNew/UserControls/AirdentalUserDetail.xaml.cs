@@ -50,17 +50,14 @@ namespace OrderManagerNew.UserControls
             this.DataContext = this;
         }
 
-        public string userName { get; set; }
-        public string userPicName { get; set; }
-        public string userMail { get; set; }
-        public string userPoints { get; set; }
+        public string UserName { get; set; }
+        public string UserPicName { get; set; }
+        public string UserMail { get; set; }
+        public string UserPoints { get; set; }
 
         private void BtnClick_Logout(object sender, RoutedEventArgs e)
         {
-            if(LogoutClick != null)
-            {
-                LogoutClick(this, new RoutedEventArgs());
-            }
+            LogoutClick?.Invoke(this, new RoutedEventArgs());
         }
     }
 }

@@ -70,7 +70,7 @@ namespace OrderManagerNew
         }
 
         /// <summary>
-        /// 自動檢測軟體執行檔路徑並把最常用的磁碟存入 Properties.Settings.Default.systemDisk
+        /// 自動檢測軟體執行檔路徑並把最常用的磁碟存入 Properties.Settings.Default.mostsoftwareDisk
         /// </summary>
         /// <param name="classfrom">哪個class呼叫的，參考 _classFrom</param>
         public void AutoDetectEXE(int classfrom)
@@ -83,7 +83,7 @@ namespace OrderManagerNew
             string tray_exePath = Properties.Settings.Default.tray_exePath;
             string splint_exePath = Properties.Settings.Default.splint_exePath;
             string guide_exePath = Properties.Settings.Default.guide_exePath;
-            string systemDisk = Properties.Settings.Default.systemDisk;
+            string mostsoftwareDisk = Properties.Settings.Default.mostsoftwareDisk;
             string[] array_exePath = { cad_exePath, implant_exePath, ortho_exePath, tray_exePath, splint_exePath, guide_exePath };
             DiskSoftwareInfo disk_most = new DiskSoftwareInfo();//存最多軟體的磁碟
 
@@ -118,7 +118,7 @@ namespace OrderManagerNew
                             calcDiskwithSoftware.Add(dInfo);
                     }
                 }
-                //統整出systemDisk
+                //統整出mostsoftwareDisk
                 for(int i=0; i<calcDiskwithSoftware.Count; i++)
                 {
                     if (i >= 1)
@@ -130,9 +130,9 @@ namespace OrderManagerNew
                         disk_most = calcDiskwithSoftware[i];
                 }
 
-                Properties.Settings.Default.systemDisk = disk_most.DiskName;
+                Properties.Settings.Default.mostsoftwareDisk = disk_most.DiskName;
 
-                //已經有systemDisk資料
+                //已經有mostsoftwareDisk資料
                 if (classfrom == (int)_classFrom.MainWindow)
                 {
                     for (int i = 0; i < array_exePath.Count(); i++)
@@ -309,6 +309,9 @@ namespace OrderManagerNew
                         }
 
                         calcDiskwithSoftware2.Add(diskInfo);
+
+                        if (Directory.Exists(Properties.Settings.Default.systemDisk) == false && File.Exists(diskInfo.DiskName + @"Windows\explorer.exe") == true)
+                            Properties.Settings.Default.systemDisk = diskInfo.DiskName;
                     }
                     catch(Exception ex)
                     {
@@ -352,7 +355,7 @@ namespace OrderManagerNew
                 }
 
                 if (disk_most.SoftwareCount != 0)
-                    Properties.Settings.Default.systemDisk = disk_most.DiskName;
+                    Properties.Settings.Default.mostsoftwareDisk = disk_most.DiskName;
                 else
                 {
                     //一個軟體都沒安裝預設C碟，C碟沒有就D碟，兩個都沒有就用陣列第一筆磁碟
@@ -361,37 +364,49 @@ namespace OrderManagerNew
                     {
                         if (disk.DiskName == @"C:\")
                         {
-                            Properties.Settings.Default.systemDisk = @"C:\";
+                            Properties.Settings.Default.mostsoftwareDisk = @"C:\";
                             chosen = true;
                             break;
                         }
                         if (disk.DiskName == @"D:\")
                         {
-                            Properties.Settings.Default.systemDisk = @"D:\";
+                            Properties.Settings.Default.mostsoftwareDisk = @"D:\";
                             chosen = true;
                             break;
                         }
                     }
 
                     if (chosen == false)
-                        Properties.Settings.Default.systemDisk = sortedInfoList[0].DiskName;
+                        Properties.Settings.Default.mostsoftwareDisk = sortedInfoList[0].DiskName;
                 }
             }
-            //沒安裝的軟體Logo變灰
+            //沒安裝的軟體Logo變灰，有安裝的常亮
             if(classfrom == (int)_classFrom.MainWindow)
             {
-                if (cad_exePath == "")
+                if (Properties.Settings.Default.cad_exePath == "")
                     SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
-                if (implant_exePath == "")
+                else
+                    SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
+                if (Properties.Settings.Default.implant_exePath == "")
                     SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
-                if (ortho_exePath == "")
+                else
+                    SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
+                if (Properties.Settings.Default.ortho_exePath == "")
                     SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0.0);
-                if (tray_exePath == "")
+                else
+                    SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
+                if (Properties.Settings.Default.tray_exePath == "")
                     SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0.0);
-                if (splint_exePath == "")
+                else
+                    SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
+                if (Properties.Settings.Default.splint_exePath == "")
                     SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0.0);
-                if (guide_exePath == "")
+                else
+                    SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
+                if (Properties.Settings.Default.guide_exePath == "")
                     SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
+                else
+                    SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
             }
 
             Properties.Settings.Default.Save();
@@ -403,6 +418,7 @@ namespace OrderManagerNew
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "tray_exePath", "\t\"" + Properties.Settings.Default.tray_exePath + "\"");
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "splint_exePath", "\t\"" + Properties.Settings.Default.splint_exePath + "\"");
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "guide_exePath", "\t\"" + Properties.Settings.Default.guide_exePath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "mostswDisk", "\t\"" + Properties.Settings.Default.mostsoftwareDisk + "\"");
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "systemDisk", "\t\"" + Properties.Settings.Default.systemDisk + "\"");
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs AutoDetectEXE()", "Detect finish.");
             log.RecordLogSaperate();
@@ -567,10 +583,10 @@ namespace OrderManagerNew
                     {
                         try
                         {
-                            if (Properties.Settings.Default.systemDisk != "")
+                            if (Properties.Settings.Default.mostsoftwareDisk != "")
                             {
-                                Directory.CreateDirectory(Properties.Settings.Default.systemDisk + @"DicomData\");
-                                Properties.Settings.Default.implant_projectPath = Properties.Settings.Default.systemDisk + @"DicomData\";
+                                Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"DicomData\");
+                                Properties.Settings.Default.implant_projectPath = Properties.Settings.Default.mostsoftwareDisk + @"DicomData\";
                                 goto createtosysDirectorySuccess;
                             }
                             else

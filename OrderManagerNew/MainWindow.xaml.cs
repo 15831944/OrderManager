@@ -178,6 +178,8 @@ namespace OrderManagerNew
                         Properties.Settings.Default.splint_projectPath = "";
                         Properties.Settings.Default.sysLanguage = "";
                         Properties.Settings.Default.DownloadFolder = "";
+                        Properties.Settings.Default.mostsoftwareDisk = "";
+                        Properties.Settings.Default.systemDisk = "";
                         Properties.Settings.Default.engineerMode = false;
                         Properties.Settings.Default.PingTime = 5;
                         Properties.Settings.Default.Save();
@@ -252,6 +254,12 @@ namespace OrderManagerNew
                 case "DevBtn7":
                     {
                         OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                        break;
+                    }
+                case "DevBtn8":
+                    {
+                        UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
+                        StackPanel_Local.Children.Add(Order_CAD);
                         break;
                     }
             }

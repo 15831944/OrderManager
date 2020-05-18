@@ -83,9 +83,9 @@
 
         <Label
           x:Name="lb_userName" Grid.Row="1"
-          Content="{Binding userName}"
+          Content="{Binding UserName}"
           Style="{DynamicResource UserName}" />
-        <Label Grid.Row="2" Content="{Binding userMail}" Style="{DynamicResource UserMail}" />
+        <Label Grid.Row="2" Content="{Binding UserMail}" Style="{DynamicResource UserMail}" />
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -94,7 +94,7 @@
             <Image
               Grid.Column="0" Height="38" HorizontalAlignment="Right"
               Source="{DynamicResource icon_pointsDrawingImage}" />
-            <Label Grid.Column="1" Content="{Binding userPoints}" Style="{DynamicResource UserPoints}" />
+            <Label Grid.Column="1" Content="{Binding UserPoints}" Style="{DynamicResource UserPoints}" />
         </Grid>
         <Button
           Grid.Row="4" Height="36" Click="BtnClick_Logout"
