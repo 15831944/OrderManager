@@ -205,6 +205,177 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Abutment Design 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_ABUTMENT {
+            get {
+                return ResourceManager.GetString("DDS_ABUTMENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Cutback Design 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_ABUTMENT_CUTBACK {
+            get {
+                return ResourceManager.GetString("DDS_ABUTMENT_CUTBACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Deformation 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_ABUTMENT_DEFORM {
+            get {
+                return ResourceManager.GetString("DDS_ABUTMENT_DEFORM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Screw Hole Design 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_ABUTMENT_SCREW {
+            get {
+                return ResourceManager.GetString("DDS_ABUTMENT_SCREW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Connector Design 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_CONNECTOR {
+            get {
+                return ResourceManager.GetString("DDS_CONNECTOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Coping Design 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_COPING {
+            get {
+                return ResourceManager.GetString("DDS_COPING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Crown Design 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_CROWN {
+            get {
+                return ResourceManager.GetString("DDS_CROWN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Cutback Design 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_CURBACK {
+            get {
+                return ResourceManager.GetString("DDS_CURBACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Custom Crown Database 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_CUSTOM_CROWN_DATABASE {
+            get {
+                return ResourceManager.GetString("DDS_CUSTOM_CROWN_DATABASE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Cutback Design 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_CUTBACK {
+            get {
+                return ResourceManager.GetString("DDS_CUTBACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 eModel Design 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_EMODEL_MARGIN {
+            get {
+                return ResourceManager.GetString("DDS_EMODEL_MARGIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Final 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_FINAL {
+            get {
+                return ResourceManager.GetString("DDS_FINAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design Parameter 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_INNER {
+            get {
+                return ResourceManager.GetString("DDS_INNER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Insertion Operation 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_INSERTION {
+            get {
+                return ResourceManager.GetString("DDS_INSERTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 jig Position 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_JIG_POSITION {
+            get {
+                return ResourceManager.GetString("DDS_JIG_POSITION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Margin Operation 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_MARGIN {
+            get {
+                return ResourceManager.GetString("DDS_MARGIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Crown Predesign 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_PRECROWN {
+            get {
+                return ResourceManager.GetString("DDS_PRECROWN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Provisional Crown Design 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_TEMPCROWN {
+            get {
+                return ResourceManager.GetString("DDS_TEMPCROWN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Occlusion 的當地語系化字串。
+        /// </summary>
+        internal static string DDS_ZAXIS {
+            get {
+                return ResourceManager.GetString("DDS_ZAXIS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Demo Case 的當地語系化字串。
         /// </summary>
         internal static string DemoCase {
@@ -336,6 +507,15 @@ namespace OrderManagerNew.Properties {
         internal static string Minimize {
             get {
                 return ResourceManager.GetString("Minimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 None 的當地語系化字串。
+        /// </summary>
+        internal static string None {
+            get {
+                return ResourceManager.GetString("None", resourceCulture);
             }
         }
         

@@ -273,4 +273,64 @@
   <data name="OpenCaseFolder" xml:space="preserve">
     <value>開啟訂單資料夾</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>無</value>
+  </data>
+  <data name="DDS_ZAXIS" xml:space="preserve">
+    <value>咬合面調整</value>
+  </data>
+  <data name="DDS_MARGIN" xml:space="preserve">
+    <value>牙齦線</value>
+  </data>
+  <data name="DDS_INSERTION" xml:space="preserve">
+    <value>載入途徑</value>
+  </data>
+  <data name="DDS_INNER" xml:space="preserve">
+    <value>內冠設計參數</value>
+  </data>
+  <data name="DDS_CONNECTOR" xml:space="preserve">
+    <value>連接棒設計</value>
+  </data>
+  <data name="DDS_FINAL" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="DDS_CROWN" xml:space="preserve">
+    <value>牙冠設計</value>
+  </data>
+  <data name="DDS_EMODEL_MARGIN" xml:space="preserve">
+    <value>eModel設計</value>
+  </data>
+  <data name="DDS_CUTBACK" xml:space="preserve">
+    <value>回切設計</value>
+  </data>
+  <data name="DDS_TEMPCROWN" xml:space="preserve">
+    <value>臨時牙冠設計</value>
+  </data>
+  <data name="DDS_ABUTMENT_DEFORM" xml:space="preserve">
+    <value>自由造型</value>
+  </data>
+  <data name="DDS_ABUTMENT_CUTBACK" xml:space="preserve">
+    <value>回切設計</value>
+  </data>
+  <data name="DDS_ABUTMENT_SCREW" xml:space="preserve">
+    <value>螺絲孔設計</value>
+  </data>
+  <data name="DDS_CUSTOM_CROWN_DATABASE" xml:space="preserve">
+    <value>個人化牙冠資料庫</value>
+  </data>
+  <data name="DDS_ABUTMENT" xml:space="preserve">
+    <value>支台齒設計</value>
+  </data>
+  <data name="DDS_JIG_POSITION" xml:space="preserve">
+    <value>定位治具</value>
+  </data>
+  <data name="DDS_COPING" xml:space="preserve">
+    <value>內冠設計</value>
+  </data>
+  <data name="DDS_CURBACK" xml:space="preserve">
+    <value>回切設計</value>
+  </data>
+  <data name="DDS_PRECROWN" xml:space="preserve">
+    <value>牙冠預設計</value>
+  </data>
 </root>

@@ -252,7 +252,7 @@
                                 <Setter Property="Margin" Value="3,0" />
                                 <Setter Property="FontSize" Value="8" />
                                 <Setter Property="Focusable" Value="False" />
-                                <EventSetter Event="Click" Handler="Dev_Click_Btn" />
+                                <EventSetter Event="Click" Handler="Click_Dev_Btn" />
                             </Style>
                         </Grid.Resources>
                         <Grid.RowDefinitions>
@@ -296,7 +296,9 @@
                         <Button
                           x:Name="DevBtn8" Grid.Row="0" Grid.Column="7"
                           Content="Order CAD" />
-                        <Button x:Name="DevBtn9" Grid.Row="0" Grid.Column="8" />
+                        <Button
+                          x:Name="DevBtn9" Grid.Row="0" Grid.Column="8"
+                          Content="Load CAD proj" />
                         <Button x:Name="DevBtn10" Grid.Row="0" Grid.Column="9" />
                         <Button x:Name="DevBtn11" Grid.Row="1" Grid.Column="0" />
                         <Button x:Name="DevBtn12" Grid.Row="1" Grid.Column="1" />

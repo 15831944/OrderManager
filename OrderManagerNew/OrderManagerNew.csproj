@@ -96,6 +96,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>HyperLink.settings</DependentUpon>
     </Compile>
+    <Compile Include="Scripts\ProjectHandle.cs" />
     <Compile Include="Scripts\QueryProductState.cs" />
     <Compile Include="Setting.xaml.cs">
       <DependentUpon>Setting.xaml</DependentUpon>

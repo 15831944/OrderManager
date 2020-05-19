@@ -158,7 +158,7 @@ namespace OrderManagerNew
                 else
                 {
                     Properties.Settings.Default.cad_exePath = "";
-                    Properties.Settings.Default.cad_projectPath = "";
+                    Properties.Settings.Default.cad_projectDirectory = "";
                 }
                 if (File.Exists(implant_exePath) == true)
                 {
@@ -175,7 +175,7 @@ namespace OrderManagerNew
                 else
                 {
                     Properties.Settings.Default.implant_exePath = "";
-                    Properties.Settings.Default.implant_projectPath = "";
+                    Properties.Settings.Default.implant_projectDirectory = "";
                 }
                 if (File.Exists(ortho_exePath) == true)
                 {
@@ -192,7 +192,7 @@ namespace OrderManagerNew
                 else
                 {
                     Properties.Settings.Default.ortho_exePath = "";
-                    Properties.Settings.Default.ortho_projectPath = "";
+                    Properties.Settings.Default.ortho_projectDirectory = "";
                 }
                 if (File.Exists(tray_exePath) == true)
                 {
@@ -209,7 +209,7 @@ namespace OrderManagerNew
                 else
                 {
                     Properties.Settings.Default.tray_exePath = "";
-                    Properties.Settings.Default.tray_projectPath = "";
+                    Properties.Settings.Default.tray_projectDirectory = "";
                 }
                 if (File.Exists(splint_exePath) == true)
                 {
@@ -226,7 +226,7 @@ namespace OrderManagerNew
                 else
                 {
                     Properties.Settings.Default.splint_exePath = "";
-                    Properties.Settings.Default.splint_projectPath = "";
+                    Properties.Settings.Default.splint_projectDirectory = "";
                 }
                 if (File.Exists(guide_exePath) == true)
                 {
@@ -444,17 +444,17 @@ namespace OrderManagerNew
                     {
                         xmlDoc = XDocument.Load(oReader);
                     }
-                    string cad_projectPath = xmlDoc.Element("SystemSetting").Element("SystemPath").Element("DesignFilePath").Value;
-                    if (cad_projectPath[cad_projectPath.Length - 1].ToString() != @"\")
-                        cad_projectPath += @"\";
+                    string cad_projectDirectory = xmlDoc.Element("SystemSetting").Element("SystemPath").Element("DesignFilePath").Value;
+                    if (cad_projectDirectory[cad_projectDirectory.Length - 1].ToString() != @"\")
+                        cad_projectDirectory += @"\";
 
-                    Properties.Settings.Default.cad_projectPath = cad_projectPath;
+                    Properties.Settings.Default.cad_projectDirectory = cad_projectDirectory;
 
-                    if (!Directory.Exists(cad_projectPath))
-                        Directory.CreateDirectory(cad_projectPath);
+                    if (!Directory.Exists(cad_projectDirectory))
+                        Directory.CreateDirectory(cad_projectDirectory);
 
-                    /*_watch_EZCADProject.Path = cad_projectPath;
-                    MyFileSystemWatcher(_watch_EZCADProject, cad_projectPath);
+                    /*_watch_EZCADProject.Path = cad_projectDirectory;
+                    MyFileSystemWatcher(_watch_EZCADProject, cad_projectDirectory);
 
                     if (RecordAll == true)
                         log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadEZCADProject()", "IntoFunc");
@@ -474,17 +474,17 @@ namespace OrderManagerNew
                     {
                         xmlDoc = XDocument.Load(oReader);
                     }
-                    string tray_projectPath = xmlDoc.Element("SystemSetting").Element("DesignFilePath").Value;
-                    if (tray_projectPath[tray_projectPath.Length - 1].ToString() != @"\")
-                        tray_projectPath += @"\";
+                    string tray_projectDirectory = xmlDoc.Element("SystemSetting").Element("DesignFilePath").Value;
+                    if (tray_projectDirectory[tray_projectDirectory.Length - 1].ToString() != @"\")
+                        tray_projectDirectory += @"\";
 
-                    Properties.Settings.Default.tray_projectPath = tray_projectPath;
+                    Properties.Settings.Default.tray_projectDirectory = tray_projectDirectory;
 
-                    if (!Directory.Exists(tray_projectPath))
-                        Directory.CreateDirectory(tray_projectPath);
+                    if (!Directory.Exists(tray_projectDirectory))
+                        Directory.CreateDirectory(tray_projectDirectory);
 
-                    /*_watch_TrayProject.Path = tray_projectPath;
-                    MyFileSystemWatcher(_watch_TrayProject, tray_projectPath);
+                    /*_watch_TrayProject.Path = tray_projectDirectory;
+                    MyFileSystemWatcher(_watch_TrayProject, tray_projectDirectory);
 
                     if (RecordAll == true)
                         log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadTrayProject()", "IntoFunc");
@@ -504,17 +504,17 @@ namespace OrderManagerNew
                     {
                         xmlDoc = XDocument.Load(oReader);
                     }
-                    string splint_projectPath = xmlDoc.Element("SystemSetting").Element("DesignFilePath").Value;
-                    if (splint_projectPath[splint_projectPath.Length - 1].ToString() != @"\")
-                        splint_projectPath += @"\";
+                    string splint_projectDirectory = xmlDoc.Element("SystemSetting").Element("DesignFilePath").Value;
+                    if (splint_projectDirectory[splint_projectDirectory.Length - 1].ToString() != @"\")
+                        splint_projectDirectory += @"\";
 
-                    Properties.Settings.Default.splint_projectPath = splint_projectPath;
+                    Properties.Settings.Default.splint_projectDirectory = splint_projectDirectory;
 
-                    if (!Directory.Exists(splint_projectPath))
-                        Directory.CreateDirectory(splint_projectPath);
+                    if (!Directory.Exists(splint_projectDirectory))
+                        Directory.CreateDirectory(splint_projectDirectory);
 
-                    /*_watch_SplintProject.Path = splint_projectPath;
-                    MyFileSystemWatcher(_watch_SplintProject, splint_projectPath);
+                    /*_watch_SplintProject.Path = splint_projectDirectory;
+                    MyFileSystemWatcher(_watch_SplintProject, splint_projectDirectory);
 
                     if (RecordAll == true)
                         log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadSplintProject()", "IntoFunc");
@@ -534,17 +534,17 @@ namespace OrderManagerNew
                     {
                         xmlDoc = XDocument.Load(oReader);
                     }
-                    string ortho_projectPath = xmlDoc.Element("OrthoExport").Element("ProjectInfo").Element("PrjDataPath").Value;
-                    if (ortho_projectPath[ortho_projectPath.Length - 1].ToString() != @"\")
-                        ortho_projectPath += @"\";
+                    string ortho_projectDirectory = xmlDoc.Element("OrthoExport").Element("ProjectInfo").Element("PrjDataPath").Value;
+                    if (ortho_projectDirectory[ortho_projectDirectory.Length - 1].ToString() != @"\")
+                        ortho_projectDirectory += @"\";
 
-                    Properties.Settings.Default.ortho_projectPath = ortho_projectPath;
+                    Properties.Settings.Default.ortho_projectDirectory = ortho_projectDirectory;
 
-                    if (!Directory.Exists(ortho_projectPath))
-                        Directory.CreateDirectory(ortho_projectPath);
+                    if (!Directory.Exists(ortho_projectDirectory))
+                        Directory.CreateDirectory(ortho_projectDirectory);
 
-                    /*_watch_OrthoProject.Path = ortho_projectPath;
-                    MyFileSystemWatcher(_watch_OrthoProject, ortho_projectPath);
+                    /*_watch_OrthoProject.Path = ortho_projectDirectory;
+                    MyFileSystemWatcher(_watch_OrthoProject, ortho_projectDirectory);
 
                     if (RecordAll == true)
                         log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadOrthoProject()", "IntoFunc");
@@ -568,7 +568,7 @@ namespace OrderManagerNew
                         {
                             if(Directory.Exists(d.Name + @"DicomData\") == true)
                             {
-                                Properties.Settings.Default.implant_projectPath = d.Name + @"DicomData\";
+                                Properties.Settings.Default.implant_projectDirectory = d.Name + @"DicomData\";
                                 foundImplantPath = true;
                                 break;
                             }
@@ -586,7 +586,7 @@ namespace OrderManagerNew
                             if (Properties.Settings.Default.mostsoftwareDisk != "")
                             {
                                 Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"DicomData\");
-                                Properties.Settings.Default.implant_projectPath = Properties.Settings.Default.mostsoftwareDisk + @"DicomData\";
+                                Properties.Settings.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"DicomData\";
                                 goto createtosysDirectorySuccess;
                             }
                             else
@@ -606,13 +606,13 @@ namespace OrderManagerNew
                             {
                                 if (d.Name == @"C:\")
                                 {
-                                    Properties.Settings.Default.implant_projectPath = d.Name + @"DicomData\";
+                                    Properties.Settings.Default.implant_projectDirectory = d.Name + @"DicomData\";
                                     chosen = true;
                                     break;
                                 }
                                 if (d.Name == @"D:\")
                                 {
-                                    Properties.Settings.Default.implant_projectPath = d.Name + @"DicomData\";
+                                    Properties.Settings.Default.implant_projectDirectory = d.Name + @"DicomData\";
                                     chosen = true;
                                     break;
                                 }
@@ -630,7 +630,7 @@ namespace OrderManagerNew
                                 try
                                 {
                                     Directory.CreateDirectory(d.Name + @"DicomData\");
-                                    Properties.Settings.Default.implant_projectPath = d.Name + @"DicomData\";
+                                    Properties.Settings.Default.implant_projectDirectory = d.Name + @"DicomData\";
                                     break;
                                 }
                                 catch (Exception ex)
@@ -650,11 +650,11 @@ namespace OrderManagerNew
             Properties.Settings.Default.Save();
 
             //記錄到log檔內
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "cad_projectPath", "\t\"" + Properties.Settings.Default.cad_projectPath + "\"");
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "implant_projectPath", "\t\"" + Properties.Settings.Default.implant_projectPath + "\"");
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ortho_projectPath", "\t\"" + Properties.Settings.Default.ortho_projectPath + "\"");
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "tray_projectPath", "\t\"" + Properties.Settings.Default.tray_projectPath + "\"");
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "splint_projectPath", "\t\"" + Properties.Settings.Default.splint_projectPath + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "cad_projectDirectory", "\t\"" + Properties.Settings.Default.cad_projectDirectory + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "implant_projectDirectory", "\t\"" + Properties.Settings.Default.implant_projectDirectory + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ortho_projectDirectory", "\t\"" + Properties.Settings.Default.ortho_projectDirectory + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "tray_projectDirectory", "\t\"" + Properties.Settings.Default.tray_projectDirectory + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "splint_projectDirectory", "\t\"" + Properties.Settings.Default.splint_projectDirectory + "\"");
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs AutoDetectSoftwareProjectPath()", "Detect finish.");
             log.RecordLogSaperate();
         }

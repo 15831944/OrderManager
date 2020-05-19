@@ -146,60 +146,60 @@ namespace OrderManagerNew.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string cad_projectPath {
+        public string cad_projectDirectory {
             get {
-                return ((string)(this["cad_projectPath"]));
+                return ((string)(this["cad_projectDirectory"]));
             }
             set {
-                this["cad_projectPath"] = value;
+                this["cad_projectDirectory"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string implant_projectPath {
+        public string implant_projectDirectory {
             get {
-                return ((string)(this["implant_projectPath"]));
+                return ((string)(this["implant_projectDirectory"]));
             }
             set {
-                this["implant_projectPath"] = value;
+                this["implant_projectDirectory"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ortho_projectPath {
+        public string ortho_projectDirectory {
             get {
-                return ((string)(this["ortho_projectPath"]));
+                return ((string)(this["ortho_projectDirectory"]));
             }
             set {
-                this["ortho_projectPath"] = value;
+                this["ortho_projectDirectory"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string tray_projectPath {
+        public string tray_projectDirectory {
             get {
-                return ((string)(this["tray_projectPath"]));
+                return ((string)(this["tray_projectDirectory"]));
             }
             set {
-                this["tray_projectPath"] = value;
+                this["tray_projectDirectory"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string splint_projectPath {
+        public string splint_projectDirectory {
             get {
-                return ((string)(this["splint_projectPath"]));
+                return ((string)(this["splint_projectDirectory"]));
             }
             set {
-                this["splint_projectPath"] = value;
+                this["splint_projectDirectory"] = value;
             }
         }
         

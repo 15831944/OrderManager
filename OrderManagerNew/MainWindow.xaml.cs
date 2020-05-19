@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Media.Animation;
 using Path = System.IO.Path;
+using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation;
 
 //
 //                       _oo0oo_
@@ -62,13 +63,13 @@ namespace OrderManagerNew
         UpdateFunction UpdateFunc;                  //軟體更新cs
         BeforeDownload DialogBeforeDownload;        //下載前置畫面
         OrderManagerFunctions OrderManagerFunc;     //OrderManager的函式
+        ProjectHandle ProjHandle;
         bool developerMode = true;                  //開發者模式
         bool loginStatus = false;                   //是否登入了
         bool showUserDetail = false;                //是否正在顯示UserDetail
         bool haveEXE = false;                       //判斷安裝時是否有執行檔了
         int CheckedSoftwareID;                      //記錄使用者按下哪個軟體的SoftwareTable
         MaterialDesignThemes.Wpf.SnackbarMessageQueue MainsnackbarMessageQueue; //Snackbar
-        List<UserControls.Order_cadBase.CadInformation> Caselist_EZCAD;
         #endregion
         
         public MainWindow()
@@ -117,7 +118,15 @@ namespace OrderManagerNew
             UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
             UpdateFunc.LoadHLXml();                 //截取線上HL.xml內的資料
 
-            Caselist_EZCAD = new List<UserControls.Order_cadBase.CadInformation>();
+            ProjHandle = new ProjectHandle();
+            ProjHandle.caseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
+
+            if(Directory.Exists(Properties.Settings.Default.cad_projectDirectory) == true)  //TODO要再修改
+            {
+                ProjHandle.LoadEZCADProj((int)_softwareStatus.Installed);
+                Watcher_CaseProject(new FileSystemWatcher(), Properties.Settings.Default.cad_projectDirectory);
+            }
+
             //工程師模式切換
             if (developerMode == true)
             {
@@ -140,6 +149,164 @@ namespace OrderManagerNew
             
         }
 
+        #region Watcher事件
+        /// <summary>
+        /// 安裝軟體時或是刪除軟體時監看軟體資料夾
+        /// </summary>
+        /// <param name="watcherCommand">Installing、Delete 參考EnumSummary的_watcherCommand</param>
+        /// <param name="SoftwareID">軟體ID</param>
+        void Watcher_SoftwareInstall(int watcherCommand, int SoftwareID)
+        {
+            if (watcherCommand == (int)_watcherCommand.Install)   //安裝中
+            {
+                FileSystemWatcher watcher = new FileSystemWatcher
+                {
+                    Path = UpdateFunc.GetSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID),
+
+                    NotifyFilter = NotifyFilters.Size,
+                    //設定是否監控子資料夾
+                    IncludeSubdirectories = true,
+                    //設定是否啟動元件，此部分必須要設定為 true，不然事件是不會被觸發的
+                    EnableRaisingEvents = true
+                };
+                watcher.Created += new FileSystemEventHandler(Watcher_Installing_Changed);
+                watcher.Changed += new FileSystemEventHandler(Watcher_Installing_Changed);
+            }
+            else if (watcherCommand == (int)_watcherCommand.Delete)
+            {
+                if (SoftwareID == -1)
+                    return;
+
+                FileSystemWatcher watcher = new FileSystemWatcher
+                {
+                    //softwarePath是執行檔路徑，所以要抓資料夾用Path.GetDirectoryName()
+                    Path = Path.GetDirectoryName(UpdateFunc.GetSoftwarePath(SoftwareID)),
+
+                    NotifyFilter = NotifyFilters.FileName,
+
+                    IncludeSubdirectories = true,
+                    EnableRaisingEvents = true
+                };
+                watcher.Deleted += new FileSystemEventHandler(Watcher_Deleting_Changed);
+            }
+        }
+
+        /// <summary>
+        /// 如果資料夾內容大於封裝包就變成"已安裝"
+        /// </summary>
+        private void Watcher_Installing_Changed(object sender, FileSystemEventArgs e)
+        {
+            FileSystemWatcher watcher = sender as FileSystemWatcher;
+            //DirectoryInfo info = new DirectoryInfo(watcher.Path);
+            double dirSize = (double)OrderManagerFunc.DirSize(new DirectoryInfo(watcher.Path));
+            double LimitSize = UpdateFunc.readyInstallSoftwareInfo.softwareSize;
+
+            if (Path.GetExtension(e.FullPath) == ".exe" && (
+               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("cad") != -1 ||
+               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("implant") != -1 ||
+               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("ortho") != -1))
+            {
+                DialogBeforeDownload.SetPropertiesSoftewarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
+                haveEXE = true;
+            }
+
+            if (dirSize >= LimitSize && haveEXE == true)
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    haveEXE = false;
+                    watcher = new FileSystemWatcher();
+                    Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
+                    System.Threading.Thread.Sleep(1000);
+                    OrderManagerFunc.AutoDetectSoftwareProjectPath();
+                }));
+            }
+        }
+
+        /// <summary>
+        /// 監看資料夾內容是否被清除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Watcher_Deleting_Changed(object sender, FileSystemEventArgs e)
+        {
+            if (Path.GetExtension(e.FullPath) == ".exe" && (
+               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("cad") != -1 ||
+               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("implant") != -1 ||
+               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("ortho") != -1))
+            {
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    Console.WriteLine(e.FullPath);
+                    SetAllSoftwareTableDownloadisEnable(true);
+                    Handler_setSoftwareShow(CheckedSoftwareID, (int)_softwareStatus.NotInstall, 0);
+                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                }));
+            }
+
+        }
+
+        private void Watcher_CaseProject(FileSystemWatcher Watcher, string Path)
+        {
+            if (Directory.Exists(Path) == false)
+                return;
+
+            Watcher.Path = Path;
+            //設定所要監控的變更類型
+            Watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+
+            //設定所要監控的檔案
+            //Watcher.Filter = "*.xml";
+
+            //設定是否監控子資料夾
+            Watcher.IncludeSubdirectories = true;
+
+            //設定是否啟動元件，此部分必須要設定為 true，不然事件是不會被觸發的
+            Watcher.EnableRaisingEvents = true;
+
+            //設定觸發事件
+            Watcher.Created += new FileSystemEventHandler(_watch_Created);
+            Watcher.Deleted += new FileSystemEventHandler(_watch_Deleted);
+        }
+
+        private void _watch_Created(object sender, FileSystemEventArgs e)
+        {
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                try
+                {
+                    if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.cad_projectDirectory)
+                        ProjHandle.LoadEZCADProj((int)_softwareStatus.Installed);
+                    /*else if (e.FullPath.Replace(e.Name, "") == ImplantRoot)
+                        LoadImplantPlanningProject();
+                    else if (e.FullPath.Replace(e.Name, "") == TrayRoot)
+                        LoadTrayProject();
+                    else if (e.FullPath.Replace(e.Name, "") == SplintRoot)
+                        LoadSplintProject();*/
+                }
+                catch (Exception ex)
+                {
+                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "_watch_Created_exception", ex.Message);
+                }
+            }));
+
+        }
+        private void _watch_Deleted(object sender, FileSystemEventArgs e)
+        {
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.cad_projectDirectory)
+                    ProjHandle.LoadEZCADProj((int)_softwareStatus.Installed);
+                /*else if (e.FullPath.Replace(e.Name, "") == ImplantRoot)
+                    LoadImplantPlanningProject();
+                else if (e.FullPath.Replace(e.Name, "") == TrayRoot)
+                    LoadTrayProject();
+                else if (e.FullPath.Replace(e.Name, "") == SplintRoot)
+                    LoadSplintProject();*/
+            }));
+        }
+        #endregion
+
         #region WindowFrame
         private void Window_StateChanged(object sender, EventArgs e)
         {
@@ -160,7 +327,7 @@ namespace OrderManagerNew
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Closing OM", "Manual Shutdown.");
         }
 
-        private void Dev_Click_Btn(object sender, RoutedEventArgs e)
+        private void Click_Dev_Btn(object sender, RoutedEventArgs e)
         {
             Button Btn = sender as Button;
             switch (Btn.Name)
@@ -174,11 +341,11 @@ namespace OrderManagerNew
                         Properties.Settings.Default.tray_exePath = "";
                         Properties.Settings.Default.splint_exePath = "";
                         Properties.Settings.Default.guide_exePath = "";
-                        Properties.Settings.Default.cad_projectPath = "";
-                        Properties.Settings.Default.implant_projectPath = "";
-                        Properties.Settings.Default.ortho_projectPath = "";
-                        Properties.Settings.Default.tray_projectPath = "";
-                        Properties.Settings.Default.splint_projectPath = "";
+                        Properties.Settings.Default.cad_projectDirectory = "";
+                        Properties.Settings.Default.implant_projectDirectory = "";
+                        Properties.Settings.Default.ortho_projectDirectory = "";
+                        Properties.Settings.Default.tray_projectDirectory = "";
+                        Properties.Settings.Default.splint_projectDirectory = "";
                         Properties.Settings.Default.sysLanguage = "";
                         Properties.Settings.Default.DownloadFolder = "";
                         Properties.Settings.Default.mostsoftwareDisk = "";
@@ -275,6 +442,11 @@ namespace OrderManagerNew
                         StackPanel_Local.Children.Add(Order_CAD);
                         break;
                     }
+                case "DevBtn9":
+                    {
+                        
+                        break;
+                    }
             }
         }
 
@@ -291,6 +463,11 @@ namespace OrderManagerNew
                 if (mouseWasDownOnUserDetail == null)
                     UserDetailshow(false);
             }
+        }
+
+        private void Loaded_MainWindow(object sender, RoutedEventArgs e)
+        {
+            Handler_SoftwareLogoStatusChange();
         }
         #endregion
 
@@ -460,7 +637,7 @@ namespace OrderManagerNew
                                     progressbar_EZCAD_Installing.Visibility = Visibility.Visible;
                                     mask_EZCAD.Visibility = Visibility.Hidden;
                                     process_EZCAD.Visibility = Visibility.Hidden;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Installing, -1);
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
                             case (int)_softwareStatus.Uninstalling:
@@ -526,7 +703,7 @@ namespace OrderManagerNew
                                     progressbar_Implant_Installing.Visibility = Visibility.Visible;
                                     mask_Implant.Visibility = Visibility.Hidden;
                                     process_Implant.Visibility = Visibility.Hidden;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Installing, -1);
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
                             case (int)_softwareStatus.Uninstalling:
@@ -592,7 +769,7 @@ namespace OrderManagerNew
                                     progressbar_Ortho_Installing.Visibility = Visibility.Visible;
                                     mask_Ortho.Visibility = Visibility.Hidden;
                                     process_Ortho.Visibility = Visibility.Hidden;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Installing, -1);
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
                             case (int)_softwareStatus.Uninstalling:
@@ -658,7 +835,7 @@ namespace OrderManagerNew
                                     progressbar_Tray_Installing.Visibility = Visibility.Visible;
                                     mask_Tray.Visibility = Visibility.Hidden;
                                     process_Tray.Visibility = Visibility.Hidden;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Installing, -1);
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
                             case (int)_softwareStatus.Uninstalling:
@@ -724,7 +901,7 @@ namespace OrderManagerNew
                                     progressbar_Splint_Installing.Visibility = Visibility.Visible;
                                     mask_Splint.Visibility = Visibility.Hidden;
                                     process_Splint.Visibility = Visibility.Hidden;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Installing, -1);
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
                             case (int)_softwareStatus.Uninstalling:
@@ -790,7 +967,7 @@ namespace OrderManagerNew
                                     progressbar_Guide_Installing.Visibility = Visibility.Visible;
                                     mask_Guide.Visibility = Visibility.Hidden;
                                     process_Guide.Visibility = Visibility.Hidden;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Installing, -1);
+                                    Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
                             case (int)_softwareStatus.Uninstalling:
@@ -806,102 +983,6 @@ namespace OrderManagerNew
                         break;
                     }
             }
-        }
-
-        /// <summary>
-        /// 安裝軟體時或是刪除軟體時監看軟體資料夾
-        /// </summary>
-        /// <param name="watcherCommand">Installing、Delete 參考EnumSummary的_watcherCommand</param>
-        /// <param name="SoftwareID">軟體ID</param>
-        void Watcher_SoftwareInstall(int watcherCommand, int SoftwareID)
-        {
-            if(watcherCommand == (int)_watcherCommand.Installing)   //安裝中
-            {
-                FileSystemWatcher watcher = new FileSystemWatcher
-                {
-                    Path = UpdateFunc.GetSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID),
-
-                    NotifyFilter = NotifyFilters.Size,
-                    //設定是否監控子資料夾
-                    IncludeSubdirectories = true,
-                    //設定是否啟動元件，此部分必須要設定為 true，不然事件是不會被觸發的
-                    EnableRaisingEvents = true
-                };
-                watcher.Created += new FileSystemEventHandler(Watcher_Installing_Changed);
-                watcher.Changed += new FileSystemEventHandler(Watcher_Installing_Changed);
-            }
-            else if(watcherCommand == (int)_watcherCommand.Delete)
-            {
-                if (SoftwareID == -1)
-                    return;
-
-                FileSystemWatcher watcher = new FileSystemWatcher
-                {
-                    //softwarePath是執行檔路徑，所以要抓資料夾用Path.GetDirectoryName()
-                    Path = Path.GetDirectoryName(UpdateFunc.GetSoftwarePath(SoftwareID)),
-
-                    NotifyFilter = NotifyFilters.FileName,
-
-                    IncludeSubdirectories = true,
-                    EnableRaisingEvents = true
-                };
-                watcher.Deleted += new FileSystemEventHandler(Watcher_Deleting_Changed);
-            }
-        }
-
-        /// <summary>
-        /// 如果資料夾內容大於封裝包就變成"已安裝"
-        /// </summary>
-        private void Watcher_Installing_Changed(object sender, FileSystemEventArgs e)
-        {
-            FileSystemWatcher watcher = sender as FileSystemWatcher;
-            //DirectoryInfo info = new DirectoryInfo(watcher.Path);
-            double dirSize = (double)OrderManagerFunc.DirSize(new DirectoryInfo(watcher.Path));
-            double LimitSize = UpdateFunc.readyInstallSoftwareInfo.softwareSize;
-            
-            if(Path.GetExtension(e.FullPath) == ".exe" && (
-               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("cad") != -1 ||
-               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("implant") != -1 ||
-               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("ortho") != -1))
-            {
-                DialogBeforeDownload.SetPropertiesSoftewarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
-                haveEXE = true;
-            }
-
-            if (dirSize >= LimitSize && haveEXE == true)
-            {
-                this.Dispatcher.Invoke((Action)(() =>
-                {
-                    haveEXE = false;
-                    watcher = new FileSystemWatcher();
-                    Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
-                    System.Threading.Thread.Sleep(1000);
-                    OrderManagerFunc.AutoDetectSoftwareProjectPath();
-                }));
-            } 
-        }
-
-        /// <summary>
-        /// 監看資料夾內容是否被清除
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Watcher_Deleting_Changed(object sender, FileSystemEventArgs e)
-        {
-            if (Path.GetExtension(e.FullPath) == ".exe" && (
-               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("cad") != -1 ||
-               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("implant") != -1 ||
-               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("ortho") != -1))
-            {
-                this.Dispatcher.Invoke((Action)(() =>
-                {
-                    Console.WriteLine(e.FullPath);
-                    SetAllSoftwareTableDownloadisEnable(true);
-                    Handler_setSoftwareShow(CheckedSoftwareID, (int)_softwareStatus.NotInstall, 0);
-                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                }));
-            }
-
         }
         
         /// <summary>
@@ -1594,9 +1675,27 @@ namespace OrderManagerNew
 
         #endregion
 
-        private void Loaded_MainWindow(object sender, RoutedEventArgs e)
+        #region CaseTable事件
+        /// <summary>
+        /// 顯示Case
+        /// </summary>
+        /// <param name="SoftwareID"></param>
+        public void Handler_SetCaseShow(int SoftwareID)
         {
-            Handler_SoftwareLogoStatusChange();
+            switch(SoftwareID)
+            {
+                case (int)_softwareID.EZCAD:
+                    {
+                        foreach(CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
+                        {
+                            UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
+                            Order_CAD.SetCaseInfo(cadInfo);
+                            StackPanel_Local.Children.Add(Order_CAD);
+                        }
+                        break;
+                    }
+            }
         }
+        #endregion
     }
 }

@@ -6,16 +6,40 @@ using System.Threading.Tasks;
 
 namespace OrderManagerNew
 {
+    /// <summary>
+    /// 軟體安裝狀態
+    /// </summary>
     public enum _softwareStatus : int
     {
+        /// <summary>
+        /// 未安裝
+        /// </summary>
         NotInstall = 0,
+        /// <summary>
+        /// 下載中
+        /// </summary>
         Downloading,
+        /// <summary>
+        /// 安裝中
+        /// </summary>
         Installing,
+        /// <summary>
+        /// 已安裝
+        /// </summary>
         Installed,
+        /// <summary>
+        /// 解除安裝中
+        /// </summary>
         Uninstalling,
+        /// <summary>
+        /// 雲端
+        /// </summary>
         Cloud
     }
 
+    /// <summary>
+    /// 軟體ID
+    /// </summary>
     public enum _softwareID : int
     {
         EZCAD = 0,
@@ -23,9 +47,13 @@ namespace OrderManagerNew
         Ortho,
         Tray,
         Splint,
-        Guide = 5
+        Guide = 5,
+        All
     }
 
+    /// <summary>
+    /// 電腦容量單位
+    /// </summary>
     public enum _diskUnit : int
     {
         KB = 0,
@@ -34,9 +62,18 @@ namespace OrderManagerNew
         TB
     }
 
+    /// <summary>
+    /// 監看資料夾指令
+    /// </summary>
     public enum _watcherCommand : int
     {
-        Installing = 0,
+        /// <summary>
+        /// 安裝
+        /// </summary>
+        Install = 0,
+        /// <summary>
+        /// 刪除
+        /// </summary>
         Delete,
     }
 
@@ -46,9 +83,19 @@ namespace OrderManagerNew
         Setting,
     }
 
+    /// <summary>
+    /// 支援語系
+    /// </summary>
     public enum _langSupport : int
     {
+        /// <summary>
+        /// 英文
+        /// </summary>
         English = 0,
+        /// <summary>
+        /// 繁體中文
+        /// </summary>
         zhTW,
     }
+    
 }
