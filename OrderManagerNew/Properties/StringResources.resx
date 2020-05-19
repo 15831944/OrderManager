@@ -302,4 +302,24 @@
     <value>Are you sure to uninstall </value>
     <comment>Message</comment>
   </data>
+  <data name="PatientName" xml:space="preserve">
+    <value>Patient Name</value>
+    <comment>Case</comment>
+  </data>
+  <data name="DesignStep" xml:space="preserve">
+    <value>Design Step</value>
+    <comment>Case</comment>
+  </data>
+  <data name="OrderID" xml:space="preserve">
+    <value>Order ID</value>
+    <comment>Case</comment>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>Create Date</value>
+    <comment>Case</comment>
+  </data>
+  <data name="OpenCaseFolder" xml:space="preserve">
+    <value>Open Case folder</value>
+    <comment>Case</comment>
+  </data>
 </root>

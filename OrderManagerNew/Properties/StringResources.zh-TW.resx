@@ -258,4 +258,19 @@
   <data name="AreyousureUninstall" xml:space="preserve">
     <value>確定要解除安裝 </value>
   </data>
+  <data name="PatientName" xml:space="preserve">
+    <value>患者姓名</value>
+  </data>
+  <data name="DesignStep" xml:space="preserve">
+    <value>設計階段</value>
+  </data>
+  <data name="OrderID" xml:space="preserve">
+    <value>訂單編號</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>訂單創建日期</value>
+  </data>
+  <data name="OpenCaseFolder" xml:space="preserve">
+    <value>開啟訂單資料夾</value>
+  </data>
 </root>

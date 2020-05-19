@@ -187,6 +187,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Create Date 的當地語系化字串。
+        /// </summary>
+        internal static string CreateDate {
+            get {
+                return ResourceManager.GetString("CreateDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Create Order 的當地語系化字串。
         /// </summary>
         internal static string CreateOrder {
@@ -201,6 +210,15 @@ namespace OrderManagerNew.Properties {
         internal static string DemoCase {
             get {
                 return ResourceManager.GetString("DemoCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design Step 的當地語系化字串。
+        /// </summary>
+        internal static string DesignStep {
+            get {
+                return ResourceManager.GetString("DesignStep", resourceCulture);
             }
         }
         
@@ -376,11 +394,38 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Open Case folder 的當地語系化字串。
+        /// </summary>
+        internal static string OpenCaseFolder {
+            get {
+                return ResourceManager.GetString("OpenCaseFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Order ID 的當地語系化字串。
+        /// </summary>
+        internal static string OrderID {
+            get {
+                return ResourceManager.GetString("OrderID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Password 的當地語系化字串。
         /// </summary>
         internal static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Patient Name 的當地語系化字串。
+        /// </summary>
+        internal static string PatientName {
+            get {
+                return ResourceManager.GetString("PatientName", resourceCulture);
             }
         }
         

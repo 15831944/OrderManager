@@ -52,7 +52,7 @@ namespace OrderManagerNew
             currentSoftwareID = -1;
         }
 
-        private void TitleBar_Click_titlebarButtons(object sender, RoutedEventArgs e)
+        private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
         {
             Button titleButton = sender as Button;
 

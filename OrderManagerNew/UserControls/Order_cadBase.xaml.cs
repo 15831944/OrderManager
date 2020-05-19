@@ -27,15 +27,21 @@ namespace OrderManagerNew.UserControls
             public string OrderID { get; set; }
             public int DesignStep { get; set; }
             public string PatientName { get; set; }
-            public string CreateDate { get; set; }
+            public DateTime CreateDate { get; set; }
             public string CaseDirectoryPath { get; set; }
+
+            public string Client { get; set; }
+            public string Technician { get; set; }
+            public string Patient { get; set; }
+            public string Note { get; set; }
+            public Version CADversion { get; set; }
 
             public CadInformation()
             {
                 OrderID = "";
                 DesignStep = -1;
                 PatientName = "";
-                CreateDate = "";
+                CreateDate = new DateTime();
                 CaseDirectoryPath = "";
             }
         }
@@ -51,7 +57,7 @@ namespace OrderManagerNew.UserControls
             label_orderID.Content = cadInfo.OrderID;
             label_designStep.Content = cadInfo.DesignStep.ToString();
             label_patientName.Content = cadInfo.PatientName;
-            label_createDate.Content = cadInfo.CreateDate;
+            label_createDate.Content = cadInfo.CreateDate.ToLongDateString();
         }
 
         private void Click_FolderOpen(object sender, RoutedEventArgs e)

@@ -37,7 +37,7 @@
                       HorizontalAlignment="Right" VerticalAlignment="Center" Panel.ZIndex="1"
                       Background="{DynamicResource Common_OrangeTitleBar}"
                       Orientation="Horizontal">
-                        <Button Name="systemButton_Close" Click="TitleBar_Click_titlebarButtons" Style="{DynamicResource systemButton_close}" />
+                        <Button Name="systemButton_Close" Click="Click_TitleBar_titlebarButtons" Style="{DynamicResource systemButton_close}" />
                     </StackPanel>
                 </Grid>
             </Border>

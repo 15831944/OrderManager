@@ -68,6 +68,7 @@ namespace OrderManagerNew
         bool haveEXE = false;                       //判斷安裝時是否有執行檔了
         int CheckedSoftwareID;                      //記錄使用者按下哪個軟體的SoftwareTable
         MaterialDesignThemes.Wpf.SnackbarMessageQueue MainsnackbarMessageQueue; //Snackbar
+        List<UserControls.Order_cadBase.CadInformation> Caselist_EZCAD;
         #endregion
         
         public MainWindow()
@@ -115,6 +116,8 @@ namespace OrderManagerNew
             UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
             UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
             UpdateFunc.LoadHLXml();                 //截取線上HL.xml內的資料
+
+            Caselist_EZCAD = new List<UserControls.Order_cadBase.CadInformation>();
             //工程師模式切換
             if (developerMode == true)
             {
@@ -258,7 +261,17 @@ namespace OrderManagerNew
                     }
                 case "DevBtn8":
                     {
+                        //Order CAD
                         UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
+                        UserControls.Order_cadBase.CadInformation cadInfo = new UserControls.Order_cadBase.CadInformation
+                        {
+                            OrderID = "2005180858-工單1",
+                            PatientName = "Howwming",
+                            CreateDate = new DateTime(2020, 5, 19, 9, 44, 52),
+                            DesignStep = 1,
+                            CaseDirectoryPath = @"C:\IntewareData\EZCAD\DentDesign\2005180858-工單1-客戶-患者"
+                        };
+                        Order_CAD.SetCaseInfo(cadInfo);
                         StackPanel_Local.Children.Add(Order_CAD);
                         break;
                     }
@@ -289,7 +302,7 @@ namespace OrderManagerNew
         [DllImport("user32.dll")]
         static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
 
-        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        private void MouseDown_TitleBar(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
@@ -304,7 +317,7 @@ namespace OrderManagerNew
             }
         }
         
-        private void TitleBar_MouseMove(object sender, MouseEventArgs e)
+        private void MouseMove_TitleBar(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -314,7 +327,7 @@ namespace OrderManagerNew
             }
         }
 
-        private void TitleBar_Click_titlebarButtons(object sender, RoutedEventArgs e)
+        private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
         {
             if(sender is Button)
             {
@@ -348,7 +361,7 @@ namespace OrderManagerNew
         #endregion
 
         #region FunctionTable事件
-        private void FunctionTable_Click_Setting(object sender, RoutedEventArgs e)
+        private void Click_FunctionTable_Setting(object sender, RoutedEventArgs e)
         {
             GoToSetting(-1);
         }
@@ -894,7 +907,7 @@ namespace OrderManagerNew
         /// <summary>
         /// 設定SofttwareTable的PopupBox事件
         /// </summary>
-        private void SoftwareTable_Click(object sender, RoutedEventArgs e)
+        private void Click_SoftwareTable(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             switch (btn.Name)
@@ -1358,7 +1371,7 @@ namespace OrderManagerNew
                 UpdateFunc.StartDownloadSoftware();
         }
         
-        private void FunctionTable_Click_User(object sender, RoutedEventArgs e)
+        private void Click_FunctionTable_User(object sender, RoutedEventArgs e)
         {
             if (loginStatus == false)
             {
@@ -1377,7 +1390,7 @@ namespace OrderManagerNew
             }
         }
         
-        private void UserDetail_Click_Logout(object sender, RoutedEventArgs e)
+        private void Click_UserDetail_Logout(object sender, RoutedEventArgs e)
         {
             UserDetailshow(false);
             loginStatus = false;
@@ -1403,7 +1416,7 @@ namespace OrderManagerNew
             if (DialogSetting.DialogResult == true)
             {
                 Handler_SoftwareLogoStatusChange();
-                log.RecordConfigLog("FunctionTable_Click_Setting()", "Config changed");
+                log.RecordConfigLog("Click_FunctionTable_Setting()", "Config changed");
             }
 
             //主視窗還原
@@ -1444,7 +1457,7 @@ namespace OrderManagerNew
         #endregion
 
         #region SortTable事件
-        private void SortTable_Checked(object sender, RoutedEventArgs e)
+        private void Checked_SortTable(object sender, RoutedEventArgs e)
         {
             CheckBox chkbox = sender as CheckBox;
             switch (chkbox.Name)
@@ -1460,7 +1473,7 @@ namespace OrderManagerNew
             }
         }
 
-        private void SortTable_UnChecked(object sender, RoutedEventArgs e)
+        private void UnChecked_SortTable(object sender, RoutedEventArgs e)
         {
             CheckBox chkbox = sender as CheckBox;
             switch (chkbox.Name)
@@ -1486,7 +1499,7 @@ namespace OrderManagerNew
             Task.Factory.StartNew(() => MainsnackbarMessageQueue.Enqueue(Message));
         }
 
-        private void SortTable_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextChanged_SortTable(object sender, TextChangedEventArgs e)
         {
             TextBox txtbox = sender as TextBox;
             switch (txtbox.Name)
@@ -1530,7 +1543,7 @@ namespace OrderManagerNew
             }
         }
 
-        private void SortTable_Click_Filter(object sender, RoutedEventArgs e)
+        private void Click_SortTable_Filter(object sender, RoutedEventArgs e)
         {
             RadioButton radioBtn = sender as RadioButton;
             switch (radioBtn.Name)
