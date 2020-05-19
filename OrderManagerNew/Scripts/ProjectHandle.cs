@@ -14,7 +14,7 @@ namespace OrderManagerNew
     public class ProjectHandle
     {
         public delegate void caseShowEventHandler(int softwareID);
-        public event caseShowEventHandler caseShowEvent;
+        public event caseShowEventHandler CaseShowEvent;
 
         public List<CadInformation> Caselist_EZCAD;
         LogRecorder log;
@@ -69,7 +69,7 @@ namespace OrderManagerNew
             }
 
             if (Caselist_EZCAD.Count > 0)
-                caseShowEvent((int)_softwareID.EZCAD);
+                CaseShowEvent((int)_softwareID.EZCAD);
         }
 
         bool LoadXml(int SoftwareID, int CaseStatus, string XmlPath)

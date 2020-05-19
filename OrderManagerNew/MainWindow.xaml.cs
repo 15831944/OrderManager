@@ -119,7 +119,7 @@ namespace OrderManagerNew
             UpdateFunc.LoadHLXml();                 //截取線上HL.xml內的資料
 
             ProjHandle = new ProjectHandle();
-            ProjHandle.caseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
+            ProjHandle.CaseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
 
             if(Directory.Exists(Properties.Settings.Default.cad_projectDirectory) == true)  //TODO要再修改
             {
@@ -1025,7 +1025,7 @@ namespace OrderManagerNew
                 case "cad_open":
                     {
                         QueryProductState qPS = new QueryProductState();
-                        if (qPS.checkSoftwareVC((int)_softwareID.EZCAD) == true)
+                        if (qPS.CheckSoftwareVC((int)_softwareID.EZCAD) == true)
                             OrderManagerFunc.RunCommandLine(Properties.Settings.Default.cad_exePath, "");
                         break;
                     }
@@ -1092,7 +1092,7 @@ namespace OrderManagerNew
                 case "implant_create":
                     {
                         QueryProductState qPS = new QueryProductState();
-                        if (qPS.checkSoftwareVC((int)_softwareID.Implant) == true)
+                        if (qPS.CheckSoftwareVC((int)_softwareID.Implant) == true)
                             OrderManagerFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");
                         break;
                     }
@@ -1158,7 +1158,7 @@ namespace OrderManagerNew
                 case "ortho_open":
                     {
                         QueryProductState qPS = new QueryProductState();
-                        if (qPS.checkSoftwareVC((int)_softwareID.Ortho) == true)
+                        if (qPS.CheckSoftwareVC((int)_softwareID.Ortho) == true)
                             OrderManagerFunc.RunCommandLine(Properties.Settings.Default.ortho_exePath, "");
                         break;
                     }
@@ -1224,7 +1224,7 @@ namespace OrderManagerNew
                 case "tray_open":
                     {
                         QueryProductState qPS = new QueryProductState();
-                        if (qPS.checkSoftwareVC((int)_softwareID.Tray) == true)
+                        if (qPS.CheckSoftwareVC((int)_softwareID.Tray) == true)
                             OrderManagerFunc.RunCommandLine(Properties.Settings.Default.tray_exePath, "");
                         break;
                     }
@@ -1290,7 +1290,7 @@ namespace OrderManagerNew
                 case "splint_open":
                     {
                         QueryProductState qPS = new QueryProductState();
-                        if (qPS.checkSoftwareVC((int)_softwareID.Splint) == true)
+                        if (qPS.CheckSoftwareVC((int)_softwareID.Splint) == true)
                             OrderManagerFunc.RunCommandLine(Properties.Settings.Default.splint_exePath, "");
                         break;
                     }
@@ -1357,7 +1357,7 @@ namespace OrderManagerNew
                 case "guide_open":
                     {
                         QueryProductState qPS = new QueryProductState();
-                        if (qPS.checkSoftwareVC((int)_softwareID.Guide) == true)
+                        if (qPS.CheckSoftwareVC((int)_softwareID.Guide) == true)
                             OrderManagerFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "");
                         break;
                     }
