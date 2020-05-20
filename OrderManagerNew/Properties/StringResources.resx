@@ -402,4 +402,8 @@
     <value>Screw Hole Design</value>
     <comment>CAD_Step</comment>
   </data>
+  <data name="CurrentStep" xml:space="preserve">
+    <value>Current Step: </value>
+    <comment>Case</comment>
+  </data>
 </root>

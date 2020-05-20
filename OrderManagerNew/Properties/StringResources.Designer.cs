@@ -205,6 +205,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Current Step:  的當地語系化字串。
+        /// </summary>
+        internal static string CurrentStep {
+            get {
+                return ResourceManager.GetString("CurrentStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Abutment Design 的當地語系化字串。
         /// </summary>
         internal static string DDS_ABUTMENT {

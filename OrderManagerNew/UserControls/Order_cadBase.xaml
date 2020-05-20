@@ -36,9 +36,8 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="65" />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition  />
+                <ColumnDefinition  />
                 <ColumnDefinition Width="42" />
                 <ColumnDefinition Width="42" />
             </Grid.ColumnDefinitions>
@@ -53,12 +52,12 @@
               Content="DesignStep"
               ToolTip="{local1:LocExtension DesignStep}" />
             <Label
-              x:Name="label_orderID" Grid.Row="1" Grid.Column="2"
-              Content="OrderID"
+              x:Name="label_orderID" Grid.Row="0" Grid.Column="2"
+              Grid.ColumnSpan="2" Content="OrderID"
               ToolTip="{local1:LocExtension OrderID}" />
             <Label
-              x:Name="label_createDate" Grid.Row="1" Grid.Column="3"
-              Content="CreateDate"
+              x:Name="label_createDate" Grid.Row="1" Grid.Column="2"
+              Grid.ColumnSpan="2" Content="CreateDate"
               ToolTip="{local1:LocExtension CreateDate}" />
 
             <Image Grid.Row="0" Grid.RowSpan="2" Source="/ImageSource/FunctionTable/icon_D.png" />

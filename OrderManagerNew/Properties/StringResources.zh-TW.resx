@@ -333,4 +333,7 @@
   <data name="DDS_PRECROWN" xml:space="preserve">
     <value>牙冠預設計</value>
   </data>
+  <data name="CurrentStep" xml:space="preserve">
+    <value>目前步驟: </value>
+  </data>
 </root>

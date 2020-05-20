@@ -1686,6 +1686,7 @@ namespace OrderManagerNew
             {
                 case (int)_softwareID.EZCAD:
                     {
+                        StackPanel_Local.Children.Clear();
                         foreach(CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
                         {
                             UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
