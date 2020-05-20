@@ -50,7 +50,7 @@ namespace OrderManagerNew
             public int softwareLicense;         //參考EnumSummary的_softwareLic
             public double softwareSize;          //軟體大小(以MB計算)
             public string softwareName;         //軟體名稱
-            public string softwareVersion;      //軟體版本
+            public Version softwareVersion;      //軟體版本
             public string softwarePath;         //軟體路徑
             public string softwareDownloadLink; //軟體下載網址
 
@@ -60,7 +60,7 @@ namespace OrderManagerNew
                 softwareInstalled = -1;
                 softwareLicense = -1;
                 softwareName = "";
-                softwareVersion = "";
+                softwareVersion = new Version();
                 softwarePath = "";
                 softwareSize = 0;
                 softwareDownloadLink = "";
@@ -80,73 +80,6 @@ namespace OrderManagerNew
             readyInstallSoftwareInfo = new SoftwareInfo();
             downloadfilepath = "";
         }
-        
-        /// <summary>
-        /// 有新版本回傳True
-        /// </summary>
-        /// <param name="CurrentVersion">現有版本</param>
-        /// <param name="latestVersion">最新版本</param>
-        /// <returns></returns>
-        private bool HaveNewVersion(string currentVersion, string latestVersion)
-        {
-            if (currentVersion == "")
-                return true;
-
-            //版本樣子 1.2.3.4
-            string[] List_currentVersion = currentVersion.Split('.');
-            string[] List_latestVersion = latestVersion.Split('.');
-
-            //如果版本樣子是1.2.3則要自動更改為1.2.3.0
-            if (List_currentVersion.Length == 3)
-            {
-                currentVersion += ".0";
-                List_currentVersion = currentVersion.Split('.');
-            }
-
-            if (List_latestVersion.Length == 3)
-            {
-                latestVersion += ".0";
-                List_latestVersion = latestVersion.Split('.');
-            }
-            
-            try
-            {
-                if (currentVersion.ToLower().Replace(" ", "") == "oldversion")
-                    return true;
-
-                if (currentVersion == "" || List_currentVersion.Length < 3)
-                    return false;
-
-                //判斷[0]
-                if (Convert.ToInt16(List_latestVersion[0]) > Convert.ToInt16(List_currentVersion[0]))
-                    return true;
-                else if (Convert.ToInt16(List_currentVersion[0]) > Convert.ToInt16(List_latestVersion[0]))
-                    return false;
-
-                //判斷[1]
-                if (Convert.ToInt16(List_latestVersion[1]) > Convert.ToInt16(List_currentVersion[1]))
-                    return true;
-                else if (Convert.ToInt16(List_currentVersion[1]) > Convert.ToInt16(List_latestVersion[1]))
-                    return false;
-
-                //判斷[2]
-                if (Convert.ToInt16(List_latestVersion[2]) > Convert.ToInt16(List_currentVersion[2]))
-                    return true;
-                else if (Convert.ToInt16(List_currentVersion[2]) > Convert.ToInt16(List_latestVersion[2]))
-                    return false;
-
-                //判斷[3]
-                if (Convert.ToInt16(List_latestVersion[3]) > Convert.ToInt16(List_currentVersion[3]))
-                    return true;
-                else
-                    return false;
-            }
-            catch (Exception ex)
-            {
-                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Exception", ex.Message);
-                return false;
-            }
-        }
 
         /// <summary>
         /// Log檔記錄 軟體Info清單內容
@@ -163,7 +96,7 @@ namespace OrderManagerNew
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareInstalled", "\"" + Enum.GetName(typeof(_softwareStatus), outputInfo[i].softwareInstalled) + "\" " + outputInfo[i].softwareInstalled.ToString());
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareName", outputInfo[i].softwareName);
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareSize", outputInfo[i].softwareSize.ToString());
-                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareVersion", outputInfo[i].softwareVersion);
+                log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareVersion", outputInfo[i].softwareVersion.ToString());
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareDownloadLink", outputInfo[i].softwareDownloadLink);
                 log.RecordLogSaperate();
             }
@@ -363,7 +296,7 @@ namespace OrderManagerNew
 
                     softLicense.softwareInstalled = (int)_softwareStatus.Cloud;
                     softLicense.softwareName = item.SName;
-                    softLicense.softwareVersion = item.SVersion;
+                    softLicense.softwareVersion = new Version(item.SVersion);
                     softLicense.softwareDownloadLink = item.SHyperlink.Replace("\n ", "").Replace("\r ", "").Replace(" ", "");
 
                     CloudSoftwareTotal.Add(softLicense);

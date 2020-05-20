@@ -93,7 +93,7 @@ namespace OrderManagerNew
             List<RedistributableInfo> RedistPack { get; set; }
             public RedistributablePackage()
             {
-                RedistPack = new List<RedistributableInfo>();
+                /*RedistPack = new List<RedistributableInfo>();
                 RedistributableInfo VCPack = new RedistributableInfo();
                 VCPack.RedistributableName = "Visual C++ 2005 SP1 MFC Security Update Redistributable Package(x86)";
                 VCPack.RedistributableGUID = "{710F4C1C-CC18-4C49-8CBF-51240C89A1A2}";
@@ -141,7 +141,7 @@ namespace OrderManagerNew
                 VCPack = new RedistributableInfo();
                 VCPack.RedistributableName = "Microsoft Visual C++ 2015-2019 Redistributable (x86)";
                 VCPack.RedistributableGUID = "{65E650FF-30BE-469D-B63A-418D71EA1765}";
-                RedistPack.Add(VCPack);
+                RedistPack.Add(VCPack);*/
             }
 
             public bool CheckHaveInstallVC(int RedistPackID)
@@ -172,7 +172,7 @@ namespace OrderManagerNew
         {
             return true;//TODO之後要再修這個
 
-            RedistributablePackage redistPackage = new RedistributablePackage();
+            /*RedistributablePackage redistPackage = new RedistributablePackage();
 
             if (softwareID == (int)_softwareID.EZCAD)
             {
@@ -272,7 +272,7 @@ namespace OrderManagerNew
                 else
                     return true;
             }
-            return false;
+            return false;*/
         }
     }
 }

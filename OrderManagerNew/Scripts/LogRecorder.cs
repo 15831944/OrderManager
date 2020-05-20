@@ -35,6 +35,9 @@ namespace OrderManagerNew
         /// <returns></returns>
         public void RecordLog(string Row,string Block, string logMessage)
         {
+            if (Properties.Settings.Default.FullRecord == false)
+                return;
+
             using (StreamWriter w = File.AppendText("OrderManager.log"))
             {
                 string str = "row_" + Row + " " + Block;
@@ -51,10 +54,13 @@ namespace OrderManagerNew
         /// <returns></returns>
         public void RecordLogContinue(string Row, string Block, string logMessage)
         {
+            if (Properties.Settings.Default.FullRecord == false)
+                return;
+
             using (StreamWriter w = File.AppendText("OrderManager.log"))
             {
                 string str = "row_" + Row + " " + Block;
-                shortLog(str, logMessage, w);
+                ShortLog(str, logMessage, w);
             }
         }
 
@@ -66,6 +72,9 @@ namespace OrderManagerNew
         /// <returns></returns>
         public void RecordConfigLog(string Block, string logMessage)
         {
+            if (Properties.Settings.Default.FullRecord == false)
+                return;
+
             using (StreamWriter w = File.AppendText("OrderManager.log"))
             {
                 ConfigLog(Block, logMessage, w);
@@ -77,29 +86,53 @@ namespace OrderManagerNew
         /// </summary>
         public void RecordLogSaperate()
         {
+            if (Properties.Settings.Default.FullRecord == false)
+                return;
+
             using (StreamWriter w = File.AppendText("OrderManager.log"))
             {
-                seprateLog(w);
+                SeprateLog(w);
             }
         }
 
+        /// <summary>
+        /// 記錄客戶Config資訊
+        /// </summary>
+        /// <param name="Block"></param>
+        /// <param name="logMessage"></param>
+        /// <param name="w"></param>
         private void ConfigLog(string Block, string logMessage, TextWriter w)
         {
+            if (Properties.Settings.Default.FullRecord == false)
+                return;
+
             w.Write("\r\nLog Entry : ");
             w.WriteLine($"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
             w.WriteLine($"{Block}:{logMessage}");
             w.WriteLine("-------------------------------");
-            w.WriteLine($"path_EZCAD:{Properties.Settings.Default.cad_exePath}");
-            w.WriteLine($"path_Implant:{Properties.Settings.Default.implant_exePath}");
-            w.WriteLine($"path_Ortho:{Properties.Settings.Default.ortho_exePath}");
-            w.WriteLine($"path_Tray:{Properties.Settings.Default.tray_exePath}");
-            w.WriteLine($"path_Splint:{Properties.Settings.Default.splint_exePath}");
-            w.WriteLine($"path_Guide:{Properties.Settings.Default.guide_exePath}");
+            w.WriteLine($"EXEpath_EZCAD:{Properties.Settings.Default.cad_exePath}");
+            w.WriteLine($"EXEpath_Implant:{Properties.Settings.Default.implant_exePath}");
+            w.WriteLine($"EXEpath_Ortho:{Properties.Settings.Default.ortho_exePath}");
+            w.WriteLine($"EXEpath_Tray:{Properties.Settings.Default.tray_exePath}");
+            w.WriteLine($"EXEpath_Splint:{Properties.Settings.Default.splint_exePath}");
+            w.WriteLine($"EXEpath_Guide:{Properties.Settings.Default.guide_exePath}");
+            w.WriteLine($"caseDir_EZCAD:{Properties.Settings.Default.cad_projectDirectory}");
+            w.WriteLine($"caseDir_Implant:{Properties.Settings.Default.implant_projectDirectory}");
+            w.WriteLine($"caseDir_Ortho:{Properties.Settings.Default.ortho_projectDirectory}");
+            w.WriteLine($"caseDir_Tray:{Properties.Settings.Default.tray_projectDirectory}");
+            w.WriteLine($"caseDir_Splint:{Properties.Settings.Default.splint_projectDirectory}");
+            w.WriteLine($"SystemDisk:{Properties.Settings.Default.systemDisk}");
+            w.WriteLine($"MostSoftwareDisk:{Properties.Settings.Default.mostsoftwareDisk}");
+            w.WriteLine($"DownloadFolder:{Properties.Settings.Default.DownloadFolder}");
+            w.WriteLine($"PingTime:{Properties.Settings.Default.PingTime}");
             w.WriteLine($"UserLanguage:{Properties.Settings.Default.sysLanguage}");
         }
         
-        private void seprateLog( TextWriter w)
+        private void SeprateLog( TextWriter w)
         {
+            if (Properties.Settings.Default.FullRecord == false)
+                return;
+
             w.WriteLine("-------------------------------");
             w.WriteLine("");
         }
@@ -113,23 +146,9 @@ namespace OrderManagerNew
         }
 
         
-        private void shortLog(string Block, string logMessage, TextWriter w)
+        private void ShortLog(string Block, string logMessage, TextWriter w)
         {
             w.WriteLine($"{Block}:{logMessage}");
-        }
-
-        /// <summary>
-        /// 把log資料顯示在Console
-        /// </summary>
-        /// <param name="r">log檔路徑</param>
-        /// <returns></returns>
-        private void DumpLog(StreamReader r)
-        {
-            string line;
-            while ((line = r.ReadLine()) != null)
-            {
-                Console.WriteLine(line);
-            }
         }
     }
 }

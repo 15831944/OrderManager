@@ -75,6 +75,18 @@ namespace OrderManagerNew
         public MainWindow()
         {
             InitializeComponent();
+            string[] args;
+            args = Environment.GetCommandLineArgs();
+            if(args != null && args.Length > 1)
+            {
+                foreach(string argument in args)
+                {
+                    if (argument == "-Rec")
+                        Properties.Settings.Default.FullRecord = true;
+                }
+            }
+
+
             CheckedSoftwareID = -1;
 
             //OrderManager不能多開
@@ -136,6 +148,7 @@ namespace OrderManagerNew
                 Custommargin.Bottom = 40;
                 Dev_btnGrid.Margin = Custommargin;
                 Properties.Settings.Default.engineerMode = true;
+                Properties.Settings.Default.FullRecord = true;
                 SnackBarShow(message);
             }
             else
