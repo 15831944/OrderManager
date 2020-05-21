@@ -1725,57 +1725,75 @@ namespace OrderManagerNew
             {
                 case (int)_softwareID.EZCAD:
                     {
-                        //StackPanel_Local.Children.Clear();
-                        foreach(CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
+                        StackPanel_Local.Children.Clear();
+                        if (ProjHandle.Caselist_EZCAD != null && ProjHandle.Caselist_EZCAD.Count > 0)
                         {
-                            UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
-                            Order_CAD.SetCaseInfo(cadInfo);
-                            StackPanel_Local.Children.Add(Order_CAD);
+                            foreach (CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
+                            {
+                                UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
+                                Order_CAD.SetCaseInfo(cadInfo);
+                                StackPanel_Local.Children.Add(Order_CAD);
+                            }
                         }
                         break;
                     }
                 case (int)_softwareID.Tray:
                     {
-                        //StackPanel_Local.Children.Clear();
-                        foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
+                        StackPanel_Local.Children.Clear();
+                        if (ProjHandle.Caselist_Tray != null && ProjHandle.Caselist_Tray.Count > 0)
                         {
-                            UserControls.Order_tsBase Order_Tray = new UserControls.Order_tsBase();
-                            Order_Tray.SetTrayCaseInfo(trayInfo);
-                            StackPanel_Local.Children.Add(Order_Tray);
+                            foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
+                            {
+                                UserControls.Order_tsBase Order_Tray = new UserControls.Order_tsBase();
+                                Order_Tray.SetTrayCaseInfo(trayInfo);
+                                StackPanel_Local.Children.Add(Order_Tray);
+                            }
                         }
                         break;
                     }
                 case (int)_softwareID.Splint:
                     {
-                        //StackPanel_Local.Children.Clear();
-                        foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
+                        StackPanel_Local.Children.Clear();
+                        if (ProjHandle.Caselist_Splint != null && ProjHandle.Caselist_Splint.Count > 0)
                         {
-                            UserControls.Order_tsBase Order_Splint = new UserControls.Order_tsBase();
-                            Order_Splint.SetSplintCaseInfo(splintInfo);
-                            StackPanel_Local.Children.Add(Order_Splint);
+                            foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
+                            {
+                                UserControls.Order_tsBase Order_Splint = new UserControls.Order_tsBase();
+                                Order_Splint.SetSplintCaseInfo(splintInfo);
+                                StackPanel_Local.Children.Add(Order_Splint);
+                            }
                         }
                         break;
                     }
                 case (int)_softwareID.All:
                     {
                         StackPanel_Local.Children.Clear();
-                        foreach (CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
+                        if(ProjHandle.Caselist_EZCAD != null && ProjHandle.Caselist_EZCAD.Count > 0)
                         {
-                            UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
-                            Order_CAD.SetCaseInfo(cadInfo);
-                            StackPanel_Local.Children.Add(Order_CAD);
+                            foreach (CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
+                            {
+                                UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
+                                Order_CAD.SetCaseInfo(cadInfo);
+                                StackPanel_Local.Children.Add(Order_CAD);
+                            }
                         }
-                        foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
+                        if(ProjHandle.Caselist_Tray != null && ProjHandle.Caselist_Tray.Count > 0)
                         {
-                            UserControls.Order_tsBase Order_Tray = new UserControls.Order_tsBase();
-                            Order_Tray.SetTrayCaseInfo(trayInfo);
-                            StackPanel_Local.Children.Add(Order_Tray);
+                            foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
+                            {
+                                UserControls.Order_tsBase Order_Tray = new UserControls.Order_tsBase();
+                                Order_Tray.SetTrayCaseInfo(trayInfo);
+                                StackPanel_Local.Children.Add(Order_Tray);
+                            }
                         }
-                        foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
+                        if(ProjHandle.Caselist_Splint != null && ProjHandle.Caselist_Splint.Count > 0)
                         {
-                            UserControls.Order_tsBase Order_Splint = new UserControls.Order_tsBase();
-                            Order_Splint.SetSplintCaseInfo(splintInfo);
-                            StackPanel_Local.Children.Add(Order_Splint);
+                            foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
+                            {
+                                UserControls.Order_tsBase Order_Splint = new UserControls.Order_tsBase();
+                                Order_Splint.SetSplintCaseInfo(splintInfo);
+                                StackPanel_Local.Children.Add(Order_Splint);
+                            }
                         }
                         break;
                     }
