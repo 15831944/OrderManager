@@ -135,12 +135,31 @@ namespace OrderManagerNew
             ProjHandle = new ProjectHandle();
             ProjHandle.CaseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
 
-            if(Directory.Exists(Properties.Settings.Default.splint_projectDirectory) == true)  //TODO要再修改
+            if(Directory.Exists(Properties.Settings.Default.cad_projectDirectory) == true)  //TODO要再修改
             {
+                ProjHandle.LoadEZCADProj();
+                ProjHandle.LoadTrayProj();
                 ProjHandle.LoadSplintProj();
-                Watcher_CaseProject(new FileSystemWatcher(), Properties.Settings.Default.splint_projectDirectory);
+                Watcher_CaseProject(new FileSystemWatcher(), Properties.Settings.Default.cad_projectDirectory);
             }
 
+            if(Directory.Exists(Properties.Settings.Default.systemDisk) == false)
+            {
+                DriveInfo[] allDrives = DriveInfo.GetDrives();
+                foreach (DriveInfo diskInfo in allDrives)  //檢查客戶所有磁碟
+                {
+                    try
+                    {
+                        if (File.Exists(diskInfo.Name + @"Windows\explorer.exe") == true)
+                            Properties.Settings.Default.systemDisk = diskInfo.Name;
+                    }
+                    catch (Exception ex)
+                    {
+                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foreach to check have explorer", ex.Message);
+                    }
+                }
+            }
+            
             //工程師模式切換
             if (developerMode == true)
             {
@@ -292,12 +311,14 @@ namespace OrderManagerNew
                 {
                     if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.cad_projectDirectory)
                         ProjHandle.LoadEZCADProj();
+                    else if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.tray_projectDirectory)
+                        ProjHandle.LoadTrayProj();
+                    else if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.splint_projectDirectory)
+                        ProjHandle.LoadSplintProj();
+
+                    Handler_SetCaseShow((int)_softwareID.All);
                     /*else if (e.FullPath.Replace(e.Name, "") == ImplantRoot)
-                        LoadImplantPlanningProject();
-                    else if (e.FullPath.Replace(e.Name, "") == TrayRoot)
-                        LoadTrayProject();
-                    else if (e.FullPath.Replace(e.Name, "") == SplintRoot)
-                        LoadSplintProject();*/
+                        LoadImplantPlanningProject();*/
                 }
                 catch (Exception ex)
                 {
@@ -312,12 +333,15 @@ namespace OrderManagerNew
             {
                 if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.cad_projectDirectory)
                     ProjHandle.LoadEZCADProj();
+                else if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.tray_projectDirectory)
+                    ProjHandle.LoadTrayProj();
+                else if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.splint_projectDirectory)
+                    ProjHandle.LoadSplintProj();
+
+                Handler_SetCaseShow((int)_softwareID.All);
                 /*else if (e.FullPath.Replace(e.Name, "") == ImplantRoot)
                     LoadImplantPlanningProject();
-                else if (e.FullPath.Replace(e.Name, "") == TrayRoot)
-                    LoadTrayProject();
-                else if (e.FullPath.Replace(e.Name, "") == SplintRoot)
-                    LoadSplintProject();*/
+                else if (e.FullPath.Replace(e.Name, "") == TrayRoot)*/
             }));
         }
         #endregion
@@ -1701,7 +1725,7 @@ namespace OrderManagerNew
             {
                 case (int)_softwareID.EZCAD:
                     {
-                        StackPanel_Local.Children.Clear();
+                        //StackPanel_Local.Children.Clear();
                         foreach(CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
                         {
                             UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
@@ -1712,7 +1736,7 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Tray:
                     {
-                        StackPanel_Local.Children.Clear();
+                        //StackPanel_Local.Children.Clear();
                         foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
                         {
                             UserControls.Order_tsBase Order_Tray = new UserControls.Order_tsBase();
@@ -1723,7 +1747,30 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Splint:
                     {
+                        //StackPanel_Local.Children.Clear();
+                        foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
+                        {
+                            UserControls.Order_tsBase Order_Splint = new UserControls.Order_tsBase();
+                            Order_Splint.SetSplintCaseInfo(splintInfo);
+                            StackPanel_Local.Children.Add(Order_Splint);
+                        }
+                        break;
+                    }
+                case (int)_softwareID.All:
+                    {
                         StackPanel_Local.Children.Clear();
+                        foreach (CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
+                        {
+                            UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
+                            Order_CAD.SetCaseInfo(cadInfo);
+                            StackPanel_Local.Children.Add(Order_CAD);
+                        }
+                        foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
+                        {
+                            UserControls.Order_tsBase Order_Tray = new UserControls.Order_tsBase();
+                            Order_Tray.SetTrayCaseInfo(trayInfo);
+                            StackPanel_Local.Children.Add(Order_Tray);
+                        }
                         foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
                         {
                             UserControls.Order_tsBase Order_Splint = new UserControls.Order_tsBase();

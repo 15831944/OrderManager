@@ -1,5 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:OrderManagerNew.ImageSource">
     <ResourceDictionary.MergedDictionaries />
+    <SolidColorBrush x:Key="Common_OrangeTitleBar" Color="#FFE08A1E" />
+
     <DrawingImage x:Key="icon_cloud_downloadDrawingImage">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V65 H65 V0 H0 Z">
@@ -681,6 +683,31 @@
                         <EllipseGeometry Center="46.5,46.5" RadiusX="46.5" RadiusY="46.5" />
                     </GeometryDrawing.Geometry>
                 </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    <DrawingImage x:Key="icon_guideDrawingImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V62.36 H62.36 V0 H0 Z">
+                <GeometryDrawing Brush="#FF493E34">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry RadiusX="11.08" RadiusY="11.08" Rect="1.08,1.08,60.21,60.21" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Geometry="F1 M62.36,62.36z M0,0z M47.79,34.42A6.24,6.24,0,0,0,39,34.05A8.11,8.11,0,0,1,26.8,23.5A6.24,6.24,0,0,0,16.52,16.44A20.47,20.47,0,0,0,13.05,25.81L15.49,25.81A2.72,2.72,0,0,1,17.85,24.43L17.85,24.43A2.71,2.71,0,0,1,20.56,27.13A2.74,2.74,0,0,1,19.76,29.05A2.7,2.7,0,0,1,15.49,28.45L12.93,28.45A20.48,20.48,0,0,0,17.93,41.45L19.55,39.83A2.71,2.71,0,0,1,20.23,37.18A2.78,2.78,0,0,1,24.06,37.18A2.72,2.72,0,0,1,24.06,41.01L24.06,41.01A2.74,2.74,0,0,1,21.41,41.69L19.78,43.32A20.49,20.49,0,0,0,32.83,48.59L32.83,45.77A2.7,2.7,0,1,1,35.47,45.77L35.47,48.57A20.51,20.51,0,0,0,47.47,43.23A6.24,6.24,0,0,0,47.79,34.42z">
+                    <GeometryDrawing.Brush>
+                        <LinearGradientBrush MappingMode="Absolute" Opacity="1" SpreadMethod="Pad" StartPoint="31.18,13.74" EndPoint="31.18,48.63">
+                            <GradientStop Offset="0" Color="#FFF7B52C" />
+                            <GradientStop Offset="0.46" Color="#FFF7B52C" />
+                            <GradientStop Offset="0.55" Color="#FFF3AE29" />
+                            <GradientStop Offset="0.7" Color="#FFE69A22" />
+                            <GradientStop Offset="0.87" Color="#FFD27B16" />
+                            <GradientStop Offset="0.99" Color="#FFC05E0B" />
+                            <GradientStop Offset="1" Color="#FFC05E0B" />
+                        </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF493E34" Geometry="F1 M62.36,62.36z M0,0z M49.82,62.36L12.54,62.36A12.56,12.56,0,0,1,0,49.82L0,12.54A12.56,12.56,0,0,1,12.54,0L49.82,0A12.55,12.55,0,0,1,62.36,12.54L62.36,49.82A12.55,12.55,0,0,1,49.82,62.36z M12.54,2.15A10.4,10.4,0,0,0,2.15,12.54L2.15,49.82A10.4,10.4,0,0,0,12.54,60.21L49.82,60.21A10.4,10.4,0,0,0,60.21,49.82L60.21,12.54A10.4,10.4,0,0,0,49.82,2.15z" />
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>

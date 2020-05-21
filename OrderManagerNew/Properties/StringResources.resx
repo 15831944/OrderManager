@@ -280,6 +280,7 @@
   </data>
   <data name="AboutToInstall" xml:space="preserve">
     <value>You are about to install </value>
+    
     <comment>BeforeDownload</comment>
   </data>
   <data name="Account" xml:space="preserve">
@@ -440,5 +441,10 @@
   </data>
   <data name="GDS_GUIDECREATE_S" xml:space="preserve">
     <value>Splint Create</value>
+    <comment>TraySplint_Step</comment>
+  </data>
+  <data name="GuideModel" xml:space="preserve">
+    <value>Guide Model</value>
+    <comment>Case</comment>
   </data>
 </root>

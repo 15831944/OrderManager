@@ -363,4 +363,7 @@
   <data name="GDS_SPLINT_CREATION" xml:space="preserve">
     <value>輸出</value>
   </data>
+  <data name="GuideModel" xml:space="preserve">
+    <value>Guide 模型</value>
+  </data>
 </root>

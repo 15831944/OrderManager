@@ -520,6 +520,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Guide Model 的當地語系化字串。
+        /// </summary>
+        internal static string GuideModel {
+            get {
+                return ResourceManager.GetString("GuideModel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Hide password 的當地語系化字串。
         /// </summary>
         internal static string HidePWD {

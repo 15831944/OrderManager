@@ -219,6 +219,11 @@
               Stretch="Fill">
                 <Image Source="{DynamicResource icon_user_clickDrawingImage}" />
             </Viewbox>
+            <Viewbox
+              Width="36" Height="36" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{DynamicResource icon_guideDrawingImage}" />
+            </Viewbox>
         </StackPanel>
     </Grid>
 </Window>

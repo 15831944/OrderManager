@@ -108,6 +108,12 @@
     <Compile Include="UserControls\Order_cadBase.xaml.cs">
       <DependentUpon>Order_cadBase.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Order_case.xaml.cs">
+      <DependentUpon>Order_case.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Order_implantBase.xaml.cs">
+      <DependentUpon>Order_implantBase.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Order_tsBase.xaml.cs">
       <DependentUpon>Order_tsBase.xaml</DependentUpon>
     </Compile>
@@ -158,6 +164,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Order_cadBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Order_case.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Order_implantBase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,6 +228,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ImageSource\FunctionTable\icon_update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImageSource\CaseTable\guide_model.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -153,7 +153,7 @@ namespace OrderManagerNew.UserControls
 
         private void Click_FolderOpen(object sender, RoutedEventArgs e)
         {
-            if(cadInfo != null && System.IO.Directory.Exists(cadInfo.CaseDirectoryPath) == true)
+            if (cadInfo != null && System.IO.Directory.Exists(cadInfo.CaseDirectoryPath) == true)
             {
                 OrderManagerFunctions omFunc = new OrderManagerFunctions();
                 omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + cadInfo.CaseDirectoryPath + "\"");
