@@ -26,11 +26,13 @@ namespace OrderManagerNew.UserControls
         {
             public string OrderID { get; set; }
             public string GuideModelPath { get; set; }
+            public string CaseXmlPath { get; set; }
 
             public ImplantCaseInformation()
             {
                 OrderID = "";
                 GuideModelPath = "";
+                CaseXmlPath = "";
             }
         }
 
@@ -60,6 +62,12 @@ namespace OrderManagerNew.UserControls
                         break;
                     }
             }
+        }
+
+        public void SetCaseInfo(ImplantCaseInformation Import)
+        {
+            implantcaseInfo = Import;
+
         }
     }
 }
