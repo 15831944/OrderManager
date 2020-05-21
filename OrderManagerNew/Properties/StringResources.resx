@@ -406,4 +406,39 @@
     <value>Current Step: </value>
     <comment>Case</comment>
   </data>
+  <data name="GDS_MODELEDIT" xml:space="preserve">
+    <value>Model Edit</value>
+    <comment>TraySplint_Step</comment>
+  </data>
+  <data name="GDS_BLOCKOUT" xml:space="preserve">
+    <value>Blockout</value>
+    <comment>TraySplint_Step</comment>
+  </data>
+  <data name="GDS_MARGIN" xml:space="preserve">
+    <value>Boundary</value>
+    <comment>TraySplint_Step</comment>
+  </data>
+  <data name="GDS_GUIDECREATE_T" xml:space="preserve">
+    <value>Tray Create</value>
+    <comment>TraySplint_Step</comment>
+  </data>
+  <data name="GDS_POSTPROCESS" xml:space="preserve">
+    <value>Post-processing</value>
+    <comment>TraySplint_Step</comment>
+  </data>
+  <data name="GDS_OUTPUT" xml:space="preserve">
+    <value>Output</value>
+    <comment>TraySplint_Step</comment>
+  </data>
+  <data name="GDS_SPLINT_CREATION" xml:space="preserve">
+    <value>Output</value>
+    <comment>TraySplint_Step</comment>
+  </data>
+  <data name="GDS_SPLINT_TOOLKIT" xml:space="preserve">
+    <value>Adapt Design</value>
+    <comment>TraySplint_Step</comment>
+  </data>
+  <data name="GDS_GUIDECREATE_S" xml:space="preserve">
+    <value>Splint Create</value>
+  </data>
 </root>

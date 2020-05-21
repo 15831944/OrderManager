@@ -20,6 +20,8 @@ using System.IO;
 using System.Windows.Media.Animation;
 using Path = System.IO.Path;
 using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation;
+using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformation;
+using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
 
 //
 //                       _oo0oo_
@@ -133,10 +135,10 @@ namespace OrderManagerNew
             ProjHandle = new ProjectHandle();
             ProjHandle.CaseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
 
-            if(Directory.Exists(Properties.Settings.Default.cad_projectDirectory) == true)  //TODO要再修改
+            if(Directory.Exists(Properties.Settings.Default.splint_projectDirectory) == true)  //TODO要再修改
             {
-                ProjHandle.LoadEZCADProj((int)_softwareStatus.Installed);
-                Watcher_CaseProject(new FileSystemWatcher(), Properties.Settings.Default.cad_projectDirectory);
+                ProjHandle.LoadSplintProj();
+                Watcher_CaseProject(new FileSystemWatcher(), Properties.Settings.Default.splint_projectDirectory);
             }
 
             //工程師模式切換
@@ -289,7 +291,7 @@ namespace OrderManagerNew
                 try
                 {
                     if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.cad_projectDirectory)
-                        ProjHandle.LoadEZCADProj((int)_softwareStatus.Installed);
+                        ProjHandle.LoadEZCADProj();
                     /*else if (e.FullPath.Replace(e.Name, "") == ImplantRoot)
                         LoadImplantPlanningProject();
                     else if (e.FullPath.Replace(e.Name, "") == TrayRoot)
@@ -309,7 +311,7 @@ namespace OrderManagerNew
             this.Dispatcher.Invoke((Action)(() =>
             {
                 if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.cad_projectDirectory)
-                    ProjHandle.LoadEZCADProj((int)_softwareStatus.Installed);
+                    ProjHandle.LoadEZCADProj();
                 /*else if (e.FullPath.Replace(e.Name, "") == ImplantRoot)
                     LoadImplantPlanningProject();
                 else if (e.FullPath.Replace(e.Name, "") == TrayRoot)
@@ -1705,6 +1707,28 @@ namespace OrderManagerNew
                             UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
                             Order_CAD.SetCaseInfo(cadInfo);
                             StackPanel_Local.Children.Add(Order_CAD);
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Tray:
+                    {
+                        StackPanel_Local.Children.Clear();
+                        foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
+                        {
+                            UserControls.Order_tsBase Order_Tray = new UserControls.Order_tsBase();
+                            Order_Tray.SetTrayCaseInfo(trayInfo);
+                            StackPanel_Local.Children.Add(Order_Tray);
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Splint:
+                    {
+                        StackPanel_Local.Children.Clear();
+                        foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
+                        {
+                            UserControls.Order_tsBase Order_Splint = new UserControls.Order_tsBase();
+                            Order_Splint.SetSplintCaseInfo(splintInfo);
+                            StackPanel_Local.Children.Add(Order_Splint);
                         }
                         break;
                     }

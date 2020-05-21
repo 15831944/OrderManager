@@ -439,6 +439,87 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Blockout 的當地語系化字串。
+        /// </summary>
+        internal static string GDS_BLOCKOUT {
+            get {
+                return ResourceManager.GetString("GDS_BLOCKOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Splint Create 的當地語系化字串。
+        /// </summary>
+        internal static string GDS_GUIDECREATE_S {
+            get {
+                return ResourceManager.GetString("GDS_GUIDECREATE_S", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Tray Create 的當地語系化字串。
+        /// </summary>
+        internal static string GDS_GUIDECREATE_T {
+            get {
+                return ResourceManager.GetString("GDS_GUIDECREATE_T", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Boundary 的當地語系化字串。
+        /// </summary>
+        internal static string GDS_MARGIN {
+            get {
+                return ResourceManager.GetString("GDS_MARGIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Model Edit 的當地語系化字串。
+        /// </summary>
+        internal static string GDS_MODELEDIT {
+            get {
+                return ResourceManager.GetString("GDS_MODELEDIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Output 的當地語系化字串。
+        /// </summary>
+        internal static string GDS_OUTPUT {
+            get {
+                return ResourceManager.GetString("GDS_OUTPUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Post-processing 的當地語系化字串。
+        /// </summary>
+        internal static string GDS_POSTPROCESS {
+            get {
+                return ResourceManager.GetString("GDS_POSTPROCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Output 的當地語系化字串。
+        /// </summary>
+        internal static string GDS_SPLINT_CREATION {
+            get {
+                return ResourceManager.GetString("GDS_SPLINT_CREATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Adapt Design 的當地語系化字串。
+        /// </summary>
+        internal static string GDS_SPLINT_TOOLKIT {
+            get {
+                return ResourceManager.GetString("GDS_SPLINT_TOOLKIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Hide password 的當地語系化字串。
         /// </summary>
         internal static string HidePWD {

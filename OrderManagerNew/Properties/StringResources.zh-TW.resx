@@ -336,4 +336,31 @@
   <data name="CurrentStep" xml:space="preserve">
     <value>目前步驟: </value>
   </data>
+  <data name="GDS_POSTPROCESS" xml:space="preserve">
+    <value>後處理</value>
+  </data>
+  <data name="GDS_OUTPUT" xml:space="preserve">
+    <value>輸出</value>
+  </data>
+  <data name="GDS_MARGIN" xml:space="preserve">
+    <value>邊界線</value>
+  </data>
+  <data name="GDS_MODELEDIT" xml:space="preserve">
+    <value>模型編修</value>
+  </data>
+  <data name="GDS_GUIDECREATE_T" xml:space="preserve">
+    <value>建立牙托</value>
+  </data>
+  <data name="GDS_BLOCKOUT" xml:space="preserve">
+    <value>補倒凹</value>
+  </data>
+  <data name="GDS_GUIDECREATE_S" xml:space="preserve">
+    <value>建立咬合板</value>
+  </data>
+  <data name="GDS_SPLINT_TOOLKIT" xml:space="preserve">
+    <value>咬合設計</value>
+  </data>
+  <data name="GDS_SPLINT_CREATION" xml:space="preserve">
+    <value>輸出</value>
+  </data>
 </root>

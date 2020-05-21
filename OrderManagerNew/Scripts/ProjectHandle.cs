@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation;
+using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformation;
+using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
 
 
 namespace OrderManagerNew
@@ -17,6 +19,8 @@ namespace OrderManagerNew
         public event caseShowEventHandler CaseShowEvent;
 
         public List<CadInformation> Caselist_EZCAD;
+        public List<TrayInformation> Caselist_Tray;
+        public List<SplintInformation> Caselist_Splint;
         LogRecorder log;
 
         public ProjectHandle()
@@ -24,22 +28,8 @@ namespace OrderManagerNew
             log = new LogRecorder();
         }
 
-        public void LoadEZCADProj(int CaseStatus)
+        public void LoadEZCADProj()
         {
-            /*CadInformation cadInfo = new CadInformation
-            {
-                OrderID = "2005180858-工單1",
-                PatientName = "Howwming",
-                CreateDate = new DateTime(2020, 5, 19, 9, 44, 52),
-                DesignStep = 1,
-                CaseDirectoryPath = @"C:\IntewareData\EZCAD\DentDesign\2005180858-工單1-客戶-患者",
-                Client = "客戶",
-                Technician = "技工",
-                Patient = "患者",
-                Note = "備註",
-                CADversion = new Version("2.1.20512")
-            };*/
-
             string cad_projectDirectory = Properties.Settings.Default.cad_projectDirectory;
             string cad_exePath = Properties.Settings.Default.cad_exePath;
 
@@ -47,7 +37,6 @@ namespace OrderManagerNew
                 return;
 
             Caselist_EZCAD = new List<CadInformation>();
-
             try
             {
                 DirectoryInfo Dinfo = new DirectoryInfo(cad_projectDirectory);
@@ -58,9 +47,11 @@ namespace OrderManagerNew
 
                     if (File.Exists(XmlPath) == false)
                         continue;
-
-                    if (LoadXml((int)_softwareID.EZCAD, CaseStatus, XmlPath) == false)
-                        continue;
+                    else
+                    {
+                        if (LoadXml((int)_softwareID.EZCAD, XmlPath) == false)
+                            continue;
+                    }
                 }
             }
             catch(Exception ex)
@@ -72,9 +63,80 @@ namespace OrderManagerNew
                 CaseShowEvent((int)_softwareID.EZCAD);
         }
 
-        bool LoadXml(int SoftwareID, int CaseStatus, string XmlPath)
+        public void LoadTrayProj()
+        {
+            string tray_projectDirectory = Properties.Settings.Default.tray_projectDirectory;
+            string tray_exePath = Properties.Settings.Default.tray_exePath;
+
+            if (Directory.Exists(tray_projectDirectory) == false || File.Exists(tray_exePath) == false)
+                return;
+
+            Caselist_Tray = new List<TrayInformation>();
+            try
+            {
+                DirectoryInfo Dinfo = new DirectoryInfo(tray_projectDirectory);
+                foreach (DirectoryInfo folder in Dinfo.GetDirectories())
+                {
+                    string DirectoryName = folder.ToString();
+                    string XmlPath = Dinfo.ToString() + DirectoryName + @"\" + DirectoryName + ".tml";
+
+                    if (File.Exists(XmlPath) == false)
+                        continue;
+                    else
+                    {
+                        if (LoadXml((int)_softwareID.Tray, XmlPath) == false)
+                            continue;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadtrayProj Exception", ex.Message);
+            }
+
+            if (Caselist_Tray.Count > 0)
+                CaseShowEvent((int)_softwareID.Tray);
+        }
+
+        public void LoadSplintProj()
+        {
+            string splint_projectDirectory = Properties.Settings.Default.splint_projectDirectory;
+            string splint_exePath = Properties.Settings.Default.splint_exePath;
+
+            if (Directory.Exists(splint_projectDirectory) == false || File.Exists(splint_exePath) == false)
+                return;
+
+            Caselist_Splint = new List<SplintInformation>();
+            try
+            {
+                DirectoryInfo Dinfo = new DirectoryInfo(splint_projectDirectory);
+                foreach (DirectoryInfo folder in Dinfo.GetDirectories())
+                {
+                    string DirectoryName = folder.ToString();
+                    string XmlPath = Dinfo.ToString() + DirectoryName + @"\" + DirectoryName + ".sml";
+
+                    if (File.Exists(XmlPath) == false)
+                        continue;
+                    else
+                    {
+                        if (LoadXml((int)_softwareID.Splint, XmlPath) == false)
+                            continue;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadsplintProj Exception", ex.Message);
+            }
+
+            if (Caselist_Splint.Count > 0)
+                CaseShowEvent((int)_softwareID.Splint);
+        }
+
+        bool LoadXml(int SoftwareID, string XmlPath)
         {
             XDocument xmlDoc;
+            FileInfo fInfo = new FileInfo(XmlPath);//要取得檔案創建日期和修改日期
 
             try
             {
@@ -85,66 +147,122 @@ namespace OrderManagerNew
                 return false;
             }
 
-            if (CaseStatus == (int)_softwareStatus.Installed)
+            switch (SoftwareID)
             {
-                switch(SoftwareID)
-                {
-                    case (int)_softwareID.EZCAD:
+                case (int)_softwareID.EZCAD:
+                    {
+                        //判斷是否為Material的XML
+                        if (xmlDoc.Element("OrderExport") == null)
                         {
-                            //判斷是否為Material的XML
-                            if (xmlDoc.Element("OrderExport") == null)
-                            {
-                                return false;
-                            }
-
-                            try
-                            {
-                                XElement xml = xmlDoc.Element("OrderExport");
-                                string xCreateDate = xml.Element("OrderInfo").Element("CreateDate").Value;//ordernumer-custom
-                                string xOrderID = xml.Element("OrderInfo").Element("OrderID").Value;//ordernumer-custom
-                                string xClient = xml.Element("OrderInfo").Element("Client").Value;//Client
-                                string xTechnician = xml.Element("OrderInfo").Element("Technician").Value;//Technicain
-                                string xPatient = xml.Element("OrderInfo").Element("Patient").Value;//patient
-                                string xOrderNote = xml.Element("OrderInfo").Element("Note").Value;//Note
-                                string xDesignStep = xml.Element("DesignInfo").Element("DesignStep").Value;//DesignStep
-                                string xVersion = xml.Element("DesignInfo").Element("Version").Value;//Version
-                                
-                                if (xPatient == "")
-                                    xPatient = "No name";
-                                
-                                CadInformation cadInfo = new CadInformation
-                                {
-                                    OrderID = xOrderID,
-                                    PatientName = xPatient,
-                                    CreateDate = DateTime.Parse(xCreateDate, System.Globalization.CultureInfo.InvariantCulture),
-                                    DesignStep = Convert.ToInt32(xDesignStep),
-                                    CaseDirectoryPath = Path.GetDirectoryName(XmlPath),
-                                    Client = xClient,
-                                    Technician = xTechnician,
-                                    Note = xOrderNote,
-                                    CADversion = new Version(xVersion)
-                                };
-                                Caselist_EZCAD.Add(cadInfo);
-
-                                return true;
-                            }
-                            catch(Exception ex)
-                            {
-                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(EZCAD) Exception", ex.Message);
-                                return false;
-                            }
+                            return false;
                         }
-                    case (int)_softwareID.Implant:
+
+                        try
                         {
+                            XElement xml = xmlDoc.Element("OrderExport");
+                            string xOrderID = xml.Element("OrderInfo").Element("OrderID").Value;//ordernumer-custom
+                            string xClient = xml.Element("OrderInfo").Element("Client").Value;//Client
+                            string xTechnician = xml.Element("OrderInfo").Element("Technician").Value;//Technicain
+                            string xPatient = xml.Element("OrderInfo").Element("Patient").Value;//patient
+                            string xOrderNote = xml.Element("OrderInfo").Element("Note").Value;//Note
+                            string xDesignStep = xml.Element("DesignInfo").Element("DesignStep").Value;//DesignStep
+                            string xVersion = xml.Element("DesignInfo").Element("Version").Value;//Version
 
-                            break;
+                            CadInformation cadInfo = new CadInformation
+                            {
+                                OrderID = xOrderID,
+                                PatientName = xPatient,
+                                CreateDate = fInfo.CreationTime,
+                                ModifyDate = fInfo.LastWriteTime,
+                                DesignStep = Convert.ToInt32(xDesignStep),
+                                CaseDirectoryPath = Path.GetDirectoryName(XmlPath),
+                                Client = xClient,
+                                Technician = xTechnician,
+                                Note = xOrderNote,
+                                CADversion = new Version(xVersion)
+                            };
+                            Caselist_EZCAD.Add(cadInfo);
+
+                            return true;
                         }
-                    case (int)_softwareID.Ortho:
+                        catch (Exception ex)
                         {
-
-                            break;
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(EZCAD) Exception", ex.Message);
+                            return false;
                         }
-                }
+                    }
+                case (int)_softwareID.Implant:
+                    {
+
+                        break;
+                    }
+                case (int)_softwareID.Ortho:
+                    {
+
+                        break;
+                    }
+                case (int)_softwareID.Tray:
+                    {
+                        if (xmlDoc.Element("GuideExport") == null)
+                        {
+                            return false;
+                        }
+
+                        try
+                        {
+                            XElement xml = xmlDoc.Element("GuideExport");
+                            string xDesignStep = xml.Element("OrderInfo").Element("DesignStep").Value;//DesignStep
+                            string xOrderID = xml.Element("ProjectName").Value;//ordernumer-custom
+
+                            TrayInformation trayInfo = new TrayInformation
+                            {
+                                OrderID = xOrderID,
+                                CreateDate = fInfo.CreationTime,
+                                ModifyDate = fInfo.LastWriteTime,
+                                DesignStep = Convert.ToInt32(xDesignStep),
+                                CaseDirectoryPath = Path.GetDirectoryName(XmlPath),
+                            };
+                            Caselist_Tray.Add(trayInfo);
+
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Tray) Exception", ex.Message);
+                            return false;
+                        }
+                    }
+                case (int)_softwareID.Splint:
+                    {
+                        if (xmlDoc.Element("GuideExport") == null)
+                        {
+                            return false;
+                        }
+
+                        try
+                        {
+                            XElement xml = xmlDoc.Element("GuideExport");
+                            string xDesignStep = xml.Element("OrderInfo").Element("DesignStep").Value;//DesignStep
+                            string xOrderID = xml.Element("ProjectName").Value;//ordernumer-custom
+
+                            SplintInformation splintInfo = new SplintInformation
+                            {
+                                OrderID = xOrderID,
+                                CreateDate = fInfo.CreationTime,
+                                ModifyDate = fInfo.LastWriteTime,
+                                DesignStep = Convert.ToInt32(xDesignStep),
+                                CaseDirectoryPath = Path.GetDirectoryName(XmlPath),
+                            };
+                            Caselist_Splint.Add(splintInfo);
+
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Splint) Exception", ex.Message);
+                            return false;
+                        }
+                    }
             }
 
             return true;
