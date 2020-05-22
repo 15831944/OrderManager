@@ -24,13 +24,13 @@ namespace OrderManagerNew.UserControls
 
         public class ImplantCaseInformation
         {
-            public string OrderID { get; set; }
+            public string OrderName { get; set; }
             public string GuideModelPath { get; set; }
             public string CaseXmlPath { get; set; }
 
             public ImplantCaseInformation()
             {
-                OrderID = "";
+                OrderName = "";
                 GuideModelPath = "";
                 CaseXmlPath = "";
             }
@@ -43,31 +43,39 @@ namespace OrderManagerNew.UserControls
 
         private void Click_ButtonEvent(object sender, RoutedEventArgs e)
         {
-            OrderManagerFunctions omFunc = new OrderManagerFunctions();
-            switch (((Button)sender).Name)
+            if(button_Implant.Opacity != 0)
             {
-                case "button_Implant":
-                    {
-                        omFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");
-                        break;
-                    }
-                case "button_Guide":
-                    {
-                        omFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "");
-                        break;
-                    }
-                case "button_GuidePath":
-                    {
-                        omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + implantcaseInfo.GuideModelPath + "\"");
-                        break;
-                    }
+                //ImplantCase
+                OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                switch (((Button)sender).Name)
+                {
+                    case "button_Implant":
+                        {
+                            omFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");
+                            break;
+                        }
+                    case "button_Guide":
+                        {
+                            omFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "");
+                            break;
+                        }
+                    case "button_GuidePath":
+                        {
+                            omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + implantcaseInfo.GuideModelPath + "\"");
+                            break;
+                        }
+                }
+            }
+            else
+            {
+                //OrthoCase
             }
         }
 
-        public void SetCaseInfo(ImplantCaseInformation Import)
+        public void SetImplantCaseInfo(ImplantCaseInformation Import)
         {
             implantcaseInfo = Import;
-
+            label_ProjectName.Content = implantcaseInfo.OrderName;
         }
     }
 }
