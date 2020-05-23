@@ -123,66 +123,69 @@ namespace OrderManagerNew
 
         void DoWork_DownloadSoftware(object sender, DoWorkEventArgs e)
         {
-            BackgroundWorker bw = sender as BackgroundWorker;
-
-            //跳過https檢測 & Win7 相容
-            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-            
-            //Request資料
-            HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(readyInstallSoftwareInfo.softwareDownloadLink);
-            httpRequest.Credentials = CredentialCache.DefaultCredentials;
-            httpRequest.UserAgent = ".NET Framework Example Client";
-            httpRequest.Method = "GET";
-
-            Handler_snackbarShow("Get httpRequest Response Start..."); //開始取得資料 //TODO 多國語系
-            HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-
-            try
+            if(sender is BackgroundWorker)
             {
-                if (((HttpWebResponse)httpResponse).StatusDescription == "OK" && httpResponse.ContentLength > 1)
-                {
-                    //覆蓋軟體大小，以直接抓檔案內容最準
-                    readyInstallSoftwareInfo.softwareSize = Convert.ToDouble(Math.Round(((double)(Int64)httpResponse.ContentLength / 1024.0 / 1024.0), 1));
-                    
-                    if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == false)
-                    {
-                        Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + "IntewareTempFile\\";
-                        Properties.Settings.Default.Save();
-                        System.IO.Directory.CreateDirectory(Properties.Settings.Default.DownloadFolder);
-                    }
-                        
-                    // 取得下載的檔名
-                    Uri uri = new Uri(readyInstallSoftwareInfo.softwareDownloadLink);
-                    downloadfilepath = Properties.Settings.Default.DownloadFolder + @"\" + System.IO.Path.GetFileName(uri.LocalPath);
-                    Stream netStream = httpResponse.GetResponseStream();
-                    Stream fileStream = new FileStream(downloadfilepath, FileMode.Create);
-                    byte[] read = new byte[1024];
-                    long progressBarValue = 0;
-                    int realReadLen = netStream.Read(read, 0, read.Length);
+                BackgroundWorker bw = sender as BackgroundWorker;
 
-                    while (realReadLen > 0)
-                    {
-                        fileStream.Write(read, 0, realReadLen);
-                        //realReadLen 是一個封包大小，progressBarValue會一直累加
-                        progressBarValue += realReadLen;
-                        double percent = (double)progressBarValue / (double)httpResponse.ContentLength;
-                        bw.ReportProgress(Convert.ToInt32(percent*100));
-                        realReadLen = netStream.Read(read, 0, read.Length);
-                    }
-                    netStream.Close();
-                    fileStream.Close();
-                }
-                else
-                {
+                //跳過https檢測 & Win7 相容
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
 
+                //Request資料
+                HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(readyInstallSoftwareInfo.softwareDownloadLink);
+                httpRequest.Credentials = CredentialCache.DefaultCredentials;
+                httpRequest.UserAgent = ".NET Framework Example Client";
+                httpRequest.Method = "GET";
+
+                Handler_snackbarShow("Get httpRequest Response Start..."); //開始取得資料 //TODO 多國語系
+                HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+
+                try
+                {
+                    if (((HttpWebResponse)httpResponse).StatusDescription == "OK" && httpResponse.ContentLength > 1)
+                    {
+                        //覆蓋軟體大小，以直接抓檔案內容最準
+                        readyInstallSoftwareInfo.softwareSize = Convert.ToDouble(Math.Round(((double)(Int64)httpResponse.ContentLength / 1024.0 / 1024.0), 1));
+
+                        if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == false)
+                        {
+                            Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + "IntewareTempFile\\";
+                            Properties.Settings.Default.Save();
+                            System.IO.Directory.CreateDirectory(Properties.Settings.Default.DownloadFolder);
+                        }
+
+                        // 取得下載的檔名
+                        Uri uri = new Uri(readyInstallSoftwareInfo.softwareDownloadLink);
+                        downloadfilepath = Properties.Settings.Default.DownloadFolder + @"\" + System.IO.Path.GetFileName(uri.LocalPath);
+                        Stream netStream = httpResponse.GetResponseStream();
+                        Stream fileStream = new FileStream(downloadfilepath, FileMode.Create);
+                        byte[] read = new byte[1024];
+                        long progressBarValue = 0;
+                        int realReadLen = netStream.Read(read, 0, read.Length);
+
+                        while (realReadLen > 0)
+                        {
+                            fileStream.Write(read, 0, realReadLen);
+                            //realReadLen 是一個封包大小，progressBarValue會一直累加
+                            progressBarValue += realReadLen;
+                            double percent = (double)progressBarValue / (double)httpResponse.ContentLength;
+                            bw.ReportProgress(Convert.ToInt32(percent * 100));
+                            realReadLen = netStream.Read(read, 0, read.Length);
+                        }
+                        netStream.Close();
+                        fileStream.Close();
+                    }
+                    else
+                    {
+
+                    }
+                    httpResponse.Close();
                 }
-                httpResponse.Close();
-            }
-            catch (Exception ex)
-            {
-                Handler_snackbarShow(ex.Message);   //網路連線異常or載點掛掉 //TODO 多國語系
-                e.Cancel = true;
+                catch (Exception ex)
+                {
+                    Handler_snackbarShow(ex.Message);   //網路連線異常or載點掛掉 //TODO 多國語系
+                    e.Cancel = true;
+                }
             }
         }
 

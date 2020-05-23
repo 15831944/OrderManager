@@ -54,13 +54,14 @@ namespace OrderManagerNew
 
         private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
         {
-            Button titleButton = sender as Button;
-
-            switch (titleButton.Name)
+            if(sender is Button)
             {
-                case "systemButton_Close":              //關閉
-                    Close();
-                    break;
+                switch (((Button)sender).Name)
+                {
+                    case "systemButton_Close":              //關閉
+                        Close();
+                        break;
+                }
             }
         }
 
@@ -80,42 +81,44 @@ namespace OrderManagerNew
 
         private void Click_systemButton(object sender, RoutedEventArgs e)
         {
-            Button Btn = sender as Button;
-            switch(Btn.Name)
+            if(sender is Button)
             {
-                case "sysBtn_Yes":
-                    {
-                        //檢查客戶端容量是否比軟體檔案所需空間大超過3倍，如果沒有就Messagebox警告
-                        if(label_AvailableSpace.Foreground == Brushes.Orange)
+                switch (((Button)sender).Name)
+                {
+                    case "sysBtn_Yes":
                         {
-                            if(MessageBox.Show("磁碟空間可能不足以安裝軟體", "Waring", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
+                            //檢查客戶端容量是否比軟體檔案所需空間大超過3倍，如果沒有就Messagebox警告
+                            if (label_AvailableSpace.Foreground == Brushes.Orange)
                             {
-                                //磁碟空間可能不足以安裝軟體 //TODO 多國語系
-                                SetPropertiesSoftewarePath(currentSoftwareID, textbox_InstallPath.Text);
-                                this.DialogResult = true;
+                                if (MessageBox.Show("磁碟空間可能不足以安裝軟體", "Waring", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
+                                {
+                                    //磁碟空間可能不足以安裝軟體 //TODO 多國語系
+                                    SetPropertiesSoftewarePath(currentSoftwareID, textbox_InstallPath.Text);
+                                    this.DialogResult = true;
+                                }
+                                else
+                                {
+                                    this.DialogResult = false;
+                                }
+                            }
+                            else if (label_AvailableSpace.Foreground == Brushes.Orange)
+                            {
+                                MessageBox.Show("磁碟空間不足以安裝軟體，請空出更多磁碟空間");//磁碟空間不足以安裝軟體 //TODO 多國語系
+                                this.DialogResult = false;
                             }
                             else
                             {
-                                this.DialogResult = false;
+                                SetPropertiesSoftewarePath(currentSoftwareID, textbox_InstallPath.Text);
+                                this.DialogResult = true;
                             }
+                            break;
                         }
-                        else if(label_AvailableSpace.Foreground == Brushes.Orange)
+                    case "sysBtn_Cancel":
                         {
-                            MessageBox.Show("磁碟空間不足以安裝軟體，請空出更多磁碟空間");//磁碟空間不足以安裝軟體 //TODO 多國語系
                             this.DialogResult = false;
+                            break;
                         }
-                        else
-                        {
-                            SetPropertiesSoftewarePath(currentSoftwareID, textbox_InstallPath.Text);
-                            this.DialogResult = true;
-                        }
-                        break;
-                    }
-                case "sysBtn_Cancel":
-                    {
-                        this.DialogResult = false;
-                        break;
-                    }
+                }
             }
         }
 

@@ -37,13 +37,14 @@ namespace OrderManagerNew
 
         private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
         {
-            Button titleButton = sender as Button;
-
-            switch (titleButton.Name)
+            if(sender is Button)
             {
-                case "systemButton_Close":              //關閉
-                    Close();
-                    break;
+                switch (((Button)sender).Name)
+                {
+                    case "systemButton_Close":              //關閉
+                        Close();
+                        break;
+                }
             }
         }
 

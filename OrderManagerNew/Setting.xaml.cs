@@ -99,166 +99,171 @@ namespace OrderManagerNew
         
         private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
         {
-            Button titleButton = sender as Button;
-            
-            switch (titleButton.Name)
+            if(sender is Button)
             {
-                case "systemButton_Close":              //關閉
-                    Close();
-                    break;
+                switch (((Button)sender).Name)
+                {
+                    case "systemButton_Close":              //關閉
+                        Close();
+                        break;
+                }
             }
         }
 
         private void Click_OpenFilePath(object sender, RoutedEventArgs e)
         {
-            Button Btn = sender as Button;
-            int softwareID = -1;
-            string OriginalPath = "";
-
-            switch (Btn.Name)
+            if(sender is Button)
             {
-                case "Btn_EZCADprogram":
-                    {
-                        OriginalPath = textbox_EZCAD.Text;
-                        softwareID = (int)_softwareID.EZCAD;
-                        break;
-                    }
-                case "Btn_Implantprogram":
-                    {
-                        OriginalPath = textbox_Implant.Text;
-                        softwareID = (int)_softwareID.Implant;
-                        break;
-                    }
-                case "Btn_Orthoprogram":
-                    {
-                        OriginalPath = textbox_Ortho.Text;
-                        softwareID = (int)_softwareID.Ortho;
-                        break;
-                    }
-                case "Btn_Trayprogram":
-                    {
-                        OriginalPath = textbox_Tray.Text;
-                        softwareID = (int)_softwareID.Tray;
-                        break;
-                    }
-                case "Btn_Splintprogram":
-                    {
-                        OriginalPath = textbox_Splint.Text;
-                        softwareID = (int)_softwareID.Splint;
-                        break;
-                    }
-                case "Btn_Guideprogram":
-                    {
-                        OriginalPath = textbox_Guide.Text;
-                        softwareID = (int)_softwareID.Guide;
-                        break;
-                    }
-                case "Btn_Downloadpath":
-                    {
-                        using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
-                        {
-                            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-                            if(result == System.Windows.Forms.DialogResult.OK)
-                            {
-                                textbox_Download.Text = dialog.SelectedPath;
-                                textbox_Download.Focus();
-                            }
-                        }
-                        return;
-                    }
-            }
+                int softwareID = -1;
+                string OriginalPath = "";
 
-            SearchEXE(OriginalPath, softwareID);
+                switch (((Button)sender).Name)
+                {
+                    case "Btn_EZCADprogram":
+                        {
+                            OriginalPath = textbox_EZCAD.Text;
+                            softwareID = (int)_softwareID.EZCAD;
+                            break;
+                        }
+                    case "Btn_Implantprogram":
+                        {
+                            OriginalPath = textbox_Implant.Text;
+                            softwareID = (int)_softwareID.Implant;
+                            break;
+                        }
+                    case "Btn_Orthoprogram":
+                        {
+                            OriginalPath = textbox_Ortho.Text;
+                            softwareID = (int)_softwareID.Ortho;
+                            break;
+                        }
+                    case "Btn_Trayprogram":
+                        {
+                            OriginalPath = textbox_Tray.Text;
+                            softwareID = (int)_softwareID.Tray;
+                            break;
+                        }
+                    case "Btn_Splintprogram":
+                        {
+                            OriginalPath = textbox_Splint.Text;
+                            softwareID = (int)_softwareID.Splint;
+                            break;
+                        }
+                    case "Btn_Guideprogram":
+                        {
+                            OriginalPath = textbox_Guide.Text;
+                            softwareID = (int)_softwareID.Guide;
+                            break;
+                        }
+                    case "Btn_Downloadpath":
+                        {
+                            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+                            {
+                                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                                if (result == System.Windows.Forms.DialogResult.OK)
+                                {
+                                    textbox_Download.Text = dialog.SelectedPath;
+                                    textbox_Download.Focus();
+                                }
+                            }
+                            return;
+                        }
+                }
+
+                SearchEXE(OriginalPath, softwareID);
+            }
         }
         
         private void Click_systemButton(object sender, RoutedEventArgs e)
         {
-            Button Btn = sender as Button;
-            switch(Btn.Name)
+            if(sender is Button)
             {
-                case "sysBtn_Yes":
-                    {
-                        if (File.Exists(textbox_EZCAD.Text) == true)
-                            Properties.Settings.Default.cad_exePath = Path.GetFullPath(textbox_EZCAD.Text);
-                        else
-                            Properties.Settings.Default.cad_exePath = "";
-                        if (File.Exists(textbox_Implant.Text) == true)
-                            Properties.Settings.Default.implant_exePath = Path.GetFullPath(textbox_Implant.Text);
-                        else
-                            Properties.Settings.Default.implant_exePath = "";
-                        if (File.Exists(textbox_Ortho.Text) == true)
-                            Properties.Settings.Default.ortho_exePath = Path.GetFullPath(textbox_Ortho.Text);
-                        else
-                            Properties.Settings.Default.ortho_exePath = "";
-                        if (File.Exists(textbox_Tray.Text) == true)
-                            Properties.Settings.Default.tray_exePath = Path.GetFullPath(textbox_Tray.Text);
-                        else
-                            Properties.Settings.Default.tray_exePath = "";
-                        if (File.Exists(textbox_Splint.Text) == true)
-                            Properties.Settings.Default.splint_exePath = Path.GetFullPath(textbox_Splint.Text);
-                        else
-                            Properties.Settings.Default.splint_exePath = "";
-                        if (File.Exists(textbox_Guide.Text) == true)
-                            Properties.Settings.Default.guide_exePath = Path.GetFullPath(textbox_Guide.Text);
-                        else
-                            Properties.Settings.Default.guide_exePath = "";
-
-                        if (Directory.Exists(textbox_Download.Text) == true)
-                            Properties.Settings.Default.DownloadFolder = textbox_Download.Text;
-                        else
+                switch (((Button)sender).Name)
+                {
+                    case "sysBtn_Yes":
                         {
-                            Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + "IntewareTempFile\\";
+                            if (File.Exists(textbox_EZCAD.Text) == true)
+                                Properties.Settings.Default.cad_exePath = Path.GetFullPath(textbox_EZCAD.Text);
+                            else
+                                Properties.Settings.Default.cad_exePath = "";
+                            if (File.Exists(textbox_Implant.Text) == true)
+                                Properties.Settings.Default.implant_exePath = Path.GetFullPath(textbox_Implant.Text);
+                            else
+                                Properties.Settings.Default.implant_exePath = "";
+                            if (File.Exists(textbox_Ortho.Text) == true)
+                                Properties.Settings.Default.ortho_exePath = Path.GetFullPath(textbox_Ortho.Text);
+                            else
+                                Properties.Settings.Default.ortho_exePath = "";
+                            if (File.Exists(textbox_Tray.Text) == true)
+                                Properties.Settings.Default.tray_exePath = Path.GetFullPath(textbox_Tray.Text);
+                            else
+                                Properties.Settings.Default.tray_exePath = "";
+                            if (File.Exists(textbox_Splint.Text) == true)
+                                Properties.Settings.Default.splint_exePath = Path.GetFullPath(textbox_Splint.Text);
+                            else
+                                Properties.Settings.Default.splint_exePath = "";
+                            if (File.Exists(textbox_Guide.Text) == true)
+                                Properties.Settings.Default.guide_exePath = Path.GetFullPath(textbox_Guide.Text);
+                            else
+                                Properties.Settings.Default.guide_exePath = "";
 
-                            /*if (Directory.Exists(System.IO.Path.GetTempPath() + "IntewareTempFile\\") == false)
+                            if (Directory.Exists(textbox_Download.Text) == true)
+                                Properties.Settings.Default.DownloadFolder = textbox_Download.Text;
+                            else
                             {
-                                System.IO.Directory.CreateDirectory(System.IO.Path.GetTempPath() + "IntewareTempFile\\");
-                            }*/
+                                Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + "IntewareTempFile\\";
+
+                                /*if (Directory.Exists(System.IO.Path.GetTempPath() + "IntewareTempFile\\") == false)
+                                {
+                                    System.IO.Directory.CreateDirectory(System.IO.Path.GetTempPath() + "IntewareTempFile\\");
+                                }*/
+                            }
+
+                            //多國語系
+                            ComboBoxItem typeItem = (ComboBoxItem)comboboxLanguage.SelectedItem;
+
+                            if (typeItem.Content.ToString() == "繁體中文")
+                                Properties.Settings.Default.sysLanguage = "zh-TW";
+                            else
+                                Properties.Settings.Default.sysLanguage = "en-US";
+
+                            Properties.Settings.Default.Save();
+                            this.DialogResult = true;
+                            break;
                         }
-                            
-                        //多國語系
-                        ComboBoxItem typeItem = (ComboBoxItem)comboboxLanguage.SelectedItem;
+                    case "sysBtn_Cancel":
+                        {
+                            //還原
+                            Properties.Settings.Default.cad_exePath = OriginalSet.Cad_exePath;
+                            Properties.Settings.Default.implant_exePath = OriginalSet.Implant_exePath;
+                            Properties.Settings.Default.ortho_exePath = OriginalSet.Ortho_exePath;
+                            Properties.Settings.Default.tray_exePath = OriginalSet.Tray_exePath;
+                            Properties.Settings.Default.splint_exePath = OriginalSet.Splint_exePath;
+                            Properties.Settings.Default.guide_exePath = OriginalSet.Guide_exePath;
+                            Properties.Settings.Default.DownloadFolder = OriginalSet.DownloadFolder;
 
-                        if (typeItem.Content.ToString() == "繁體中文")
-                            Properties.Settings.Default.sysLanguage = "zh-TW";
-                        else
-                            Properties.Settings.Default.sysLanguage = "en-US";
+                            if (OriginalSet.Language == (int)_langSupport.zhTW)
+                                LocalizationService.SetLanguage("zh-TW");
+                            else
+                                LocalizationService.SetLanguage("en-US");
 
-                        Properties.Settings.Default.Save();
-                        this.DialogResult = true;
-                        break;
-                    }
-                case "sysBtn_Cancel":
-                    {
-                        //還原
-                        Properties.Settings.Default.cad_exePath = OriginalSet.Cad_exePath;
-                        Properties.Settings.Default.implant_exePath = OriginalSet.Implant_exePath;
-                        Properties.Settings.Default.ortho_exePath = OriginalSet.Ortho_exePath;
-                        Properties.Settings.Default.tray_exePath = OriginalSet.Tray_exePath;
-                        Properties.Settings.Default.splint_exePath = OriginalSet.Splint_exePath;
-                        Properties.Settings.Default.guide_exePath = OriginalSet.Guide_exePath;
-                        Properties.Settings.Default.DownloadFolder = OriginalSet.DownloadFolder;
+                            this.DialogResult = false;
+                            break;
+                        }
+                    case "sysBtn_AutoDetect":
+                        {
+                            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                            omFunc.AutoDetectEXE((int)_classFrom.Setting);//TODO如果原本properties全部都沒有，AutoDetect偵測到並寫入textbox，再按取消,則properties會寫入(bug)
 
-                        if(OriginalSet.Language == (int)_langSupport.zhTW)
-                            LocalizationService.SetLanguage("zh-TW");
-                        else
-                            LocalizationService.SetLanguage("en-US");
-
-                        this.DialogResult = false;
-                        break;
-                    }
-                case "sysBtn_AutoDetect":
-                    {
-                        OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                        omFunc.AutoDetectEXE((int)_classFrom.Setting);//TODO如果原本properties全部都沒有，AutoDetect偵測到並寫入textbox，再按取消,則properties會寫入(bug)
-
-                        textbox_EZCAD.Text = Properties.Settings.Default.cad_exePath;
-                        textbox_Implant.Text = Properties.Settings.Default.implant_exePath;
-                        textbox_Ortho.Text = Properties.Settings.Default.ortho_exePath;
-                        textbox_Tray.Text = Properties.Settings.Default.tray_exePath;
-                        textbox_Splint.Text = Properties.Settings.Default.splint_exePath;
-                        textbox_Guide.Text = Properties.Settings.Default.guide_exePath;
-                        break;
-                    }
+                            textbox_EZCAD.Text = Properties.Settings.Default.cad_exePath;
+                            textbox_Implant.Text = Properties.Settings.Default.implant_exePath;
+                            textbox_Ortho.Text = Properties.Settings.Default.ortho_exePath;
+                            textbox_Tray.Text = Properties.Settings.Default.tray_exePath;
+                            textbox_Splint.Text = Properties.Settings.Default.splint_exePath;
+                            textbox_Guide.Text = Properties.Settings.Default.guide_exePath;
+                            break;
+                        }
+                }
             }
         }
 

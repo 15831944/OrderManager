@@ -65,6 +65,5 @@ namespace OrderManagerNew.UserControls
             implantInfo = Import;
 
         }
-        
     }
 }
