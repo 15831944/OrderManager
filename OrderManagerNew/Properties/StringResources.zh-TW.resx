@@ -366,4 +366,7 @@
   <data name="GuideModel" xml:space="preserve">
     <value>Guide 模型</value>
   </data>
+  <data name="PatientNameWithAge" xml:space="preserve">
+    <value>患者姓名(年齡)</value>
+  </data>
 </root>

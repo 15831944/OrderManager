@@ -709,6 +709,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Patient Name(Age) 的當地語系化字串。
+        /// </summary>
+        internal static string PatientNameWithAge {
+            get {
+                return ResourceManager.GetString("PatientNameWithAge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Program Path 的當地語系化字串。
         /// </summary>
         internal static string ProgramPath {

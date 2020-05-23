@@ -148,7 +148,7 @@
                     <Label Grid.Row="0" Content="{local:LocExtension Account}" Style="{DynamicResource LabelwithTextbox}" />
                     <TextBox
                       x:Name="textbox_Account" Grid.Row="1" Text="Brian"
-                      TextChanged="textchanged_Account" />
+                      TextChanged="Textchanged_Account" />
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
@@ -176,7 +176,7 @@
                 <Label
                   x:Name="label_forgotPWD" Grid.Row="2" Height="24"
                   Padding="-10" HorizontalAlignment="Right" VerticalAlignment="Top"
-                  MouseLeftButtonUp="mouseLeftButtonUp_ForgotPWD">
+                  MouseLeftButtonUp="MouseLeftButtonUp_ForgotPWD">
                     <Hyperlink Foreground="Transparent">
                         <Label Content="Forgot your password?" Style="{DynamicResource forgotLabel}" />
                     </Hyperlink>

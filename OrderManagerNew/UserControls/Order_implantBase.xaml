@@ -20,51 +20,56 @@
           Grid.Row="1" Grid.Column="1" Margin="6,3,0,3"
           Panel.ZIndex="-1" Fill="White" />
 
-        <Grid Grid.Row="1" Grid.Column="1">
-            <Grid.Resources>
-                <Style TargetType="{x:Type Label}">
-                    <Setter Property="HorizontalAlignment" Value="Left" />
-                    <Setter Property="VerticalAlignment" Value="Center" />
-                    <Setter Property="FontWeight" Value="Normal" />
-                    <Setter Property="FontFamily" Value="Arial" />
-                    <Setter Property="FontSize" Value="16" />
-                </Style>
-            </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="65" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition />
-                <ColumnDefinition Width="42" />
-                <ColumnDefinition Width="42" />
-            </Grid.ColumnDefinitions>
+        <StackPanel
+          Grid.Row="1" Grid.Column="1" x:Name="stackpanel_Implant"
+          Orientation="Vertical">
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="HorizontalAlignment" Value="Left" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="FontWeight" Value="Normal" />
+                        <Setter Property="FontFamily" Value="Arial" />
+                        <Setter Property="FontSize" Value="16" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="65" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="42" />
+                    <ColumnDefinition Width="42" />
+                </Grid.ColumnDefinitions>
 
-            <Label
-              Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
-              x:Name="label_orderID" Content="OrderID" FontSize="20"
-              FontWeight="Bold"
-              ToolTip="{local1:LocExtension OrderID}" />
-            <Label
-              Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
-              x:Name="label_patientName" Content="PatientName"
-              ToolTip="{local1:LocExtension PatientName}" />
-            <Label
-              Grid.Row="1" Grid.Column="1" x:Name="label_designStep"
-              Content="DesignStep"
-              ToolTip="{local1:LocExtension DesignStep}" />
-            <Label
-              Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
-              x:Name="label_createDate" Content="CreateDate"
-              ToolTip="{local1:LocExtension CreateDate}" />
+                <Label
+                  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                  x:Name="label_orderID" Content="OrderID" FontSize="20"
+                  FontWeight="Bold"
+                  ToolTip="{local1:LocExtension OrderID}" />
+                <Label
+                  Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
+                  x:Name="label_patientName" Content="PatientName"
+                  ToolTip="{local1:LocExtension PatientName}" />
+                <Label
+                  Grid.Row="1" Grid.Column="1" x:Name="label_designStep"
+                  Content="DesignStep"
+                  ToolTip="{local1:LocExtension DesignStep}" />
+                <Label
+                  Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
+                  x:Name="label_createDate" Content="CreateDate"
+                  ToolTip="{local1:LocExtension CreateDate}" />
 
-            <Image Grid.Row="0" Grid.RowSpan="2" Source="/ImageSource/FunctionTable/icon_I.png" />
-            <Button
-              Grid.Row="0" Grid.RowSpan="2" Grid.Column="5"
-              Style="{StaticResource btn_folderOpen}"
-              ToolTip="{local1:LocExtension OpenCaseFolder}" />
-        </Grid>
+                <Image Grid.Row="0" Grid.RowSpan="2" Source="/ImageSource/FunctionTable/icon_I.png" />
+                <Button
+                  Grid.Row="0" Grid.RowSpan="2" Grid.Column="5"
+                  Click="Click_OpenDir"
+                  Style="{StaticResource btn_folderOpen}"
+                  ToolTip="{local1:LocExtension OpenCaseFolder}" />
+            </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>

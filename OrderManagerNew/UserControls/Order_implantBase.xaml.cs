@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Order_case = OrderManagerNew.UserControls.Order_case;
 
 namespace OrderManagerNew.UserControls
 {
@@ -37,7 +38,7 @@ namespace OrderManagerNew.UserControls
             public string Client { get; set; }
             public string CBCTPath { get; set; }
             public string JawPath { get; set; }
-            public List<OrderManagerNew.UserControls.Order_case> List_case { get; set; }
+            public List<Order_case> List_case { get; set; }
 
             public ImplantInformation()
             {
@@ -63,7 +64,23 @@ namespace OrderManagerNew.UserControls
         public void SetCaseInfo(ImplantInformation Import)
         {
             implantInfo = Import;
+            label_orderID.Content = implantInfo.OrderNumber;
+            label_patientName.Content = implantInfo.PatientName;
+            if(implantInfo.PatientBirth != new DateTime())
+            {
+                label_patientName.Content += "(" + (DateTime.Today.Year - implantInfo.PatientBirth.Year) + ")";
+                label_patientName.ToolTip = OrderManagerNew.TranslationSource.Instance["PatientNameWithAge"];
+            }   
+            label_createDate.Content = implantInfo.PatientBirth.ToLongDateString();
+        }
 
+        private void Click_OpenDir(object sender, RoutedEventArgs e)
+        {
+            if(implantInfo.List_case.Count > 0)
+            {
+                foreach(Order_case ImplantCase in implantInfo.List_case)
+                    stackpanel_Implant.Children.Add(ImplantCase);
+            }
         }
     }
 }

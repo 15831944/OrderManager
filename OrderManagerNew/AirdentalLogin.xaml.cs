@@ -25,7 +25,7 @@ namespace OrderManagerNew
         public AirdentalLogin()
         {
             InitializeComponent();
-            label_forgotPWD.AddHandler(Button.MouseLeftButtonUpEvent, new MouseButtonEventHandler(mouseLeftButtonUp_ForgotPWD), true);
+            label_forgotPWD.AddHandler(Button.MouseLeftButtonUpEvent, new MouseButtonEventHandler(MouseLeftButtonUp_ForgotPWD), true);
 
             log = new LogRecorder();
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AirdentalLogin.cs", "Initial Start");
@@ -83,7 +83,7 @@ namespace OrderManagerNew
             passwordbox_PWD.Visibility = Visibility.Visible;
         }
 
-        private void textchanged_Account(object sender, TextChangedEventArgs e)
+        private void Textchanged_Account(object sender, TextChangedEventArgs e)
         {
             textbox_Account.BorderBrush = Brushes.Gray;
         }
@@ -93,7 +93,7 @@ namespace OrderManagerNew
             passwordbox_PWD.Password = textbox_PWD.Text;
         }
 
-        private void mouseLeftButtonUp_ForgotPWD(object sender, MouseButtonEventArgs e)
+        private void MouseLeftButtonUp_ForgotPWD(object sender, MouseButtonEventArgs e)
         {
             RunCommandLine(Properties.HyperLink.Default.ForgetAirdentalPassword, "");
         }
