@@ -9,6 +9,8 @@ using System.Xml.Linq;
 using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation;
 using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformation;
 using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
+using ImplantInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantInformation;
+using ImplantCaseInformation = OrderManagerNew.UserControls.Order_case.ImplantCaseInformation;
 
 
 namespace OrderManagerNew
@@ -21,6 +23,14 @@ namespace OrderManagerNew
         public List<CadInformation> Caselist_EZCAD;
         public List<TrayInformation> Caselist_Tray;
         public List<SplintInformation> Caselist_Splint;
+        /// <summary>
+        /// ImplantPlanning Dicom專案
+        /// </summary>
+        public List<ImplantInformation> Caselist_Implant;
+        /// <summary>
+        /// ImplantPlanning 內部專案
+        /// </summary>
+        public List<ImplantCaseInformation> Caselist_ImplantCase;
         LogRecorder log;
 
         public ProjectHandle()
@@ -131,6 +141,19 @@ namespace OrderManagerNew
 
             if (Caselist_Splint.Count > 0)
                 CaseShowEvent((int)_softwareID.Splint);
+        }
+
+        public void LoadImplantProj()
+        {
+            string implant_projectDirectory = Properties.Settings.Default.implant_projectDirectory;
+            string implant_exePath = Properties.Settings.Default.implant_exePath;
+
+            if (Directory.Exists(implant_projectDirectory) == false || File.Exists(implant_projectDirectory) == false)
+                return;
+
+            //Implant內部專案先讀，讀完後把資料一個一個寫入Implant Dicom專案
+            Caselist_ImplantCase = new List<ImplantCaseInformation>();
+
         }
 
         bool LoadXml(int SoftwareID, string XmlPath)
