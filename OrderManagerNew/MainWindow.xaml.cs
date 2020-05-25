@@ -135,13 +135,14 @@ namespace OrderManagerNew
             ProjHandle = new ProjectHandle();
             ProjHandle.CaseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
 
-            if(Directory.Exists(Properties.Settings.Default.cad_projectDirectory) == true)  //TODO要再修改
+            ProjHandle.LoadImplantProj();
+            /*if(Directory.Exists(Properties.Settings.Default.cad_projectDirectory) == true)  //TODO要再修改
             {
                 ProjHandle.LoadEZCADProj();
                 ProjHandle.LoadTrayProj();
                 ProjHandle.LoadSplintProj();
                 Watcher_CaseProject(new FileSystemWatcher(), Properties.Settings.Default.cad_projectDirectory);
-            }
+            }*/
 
             if(Directory.Exists(Properties.Settings.Default.systemDisk) == false)
             {

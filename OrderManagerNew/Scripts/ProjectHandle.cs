@@ -148,12 +148,33 @@ namespace OrderManagerNew
             string implant_projectDirectory = Properties.Settings.Default.implant_projectDirectory;
             string implant_exePath = Properties.Settings.Default.implant_exePath;
 
-            if (Directory.Exists(implant_projectDirectory) == false || File.Exists(implant_projectDirectory) == false)
+            if (Directory.Exists(implant_projectDirectory) == false || File.Exists(implant_exePath) == false)
                 return;
 
             //Implant內部專案先讀，讀完後把資料一個一個寫入Implant Dicom專案
             Caselist_ImplantCase = new List<ImplantCaseInformation>();
+            
+            DirectoryInfo dInfo = new DirectoryInfo(implant_projectDirectory);
+            foreach (DirectoryInfo folder in dInfo.GetDirectories())
+            {
+                List<string> TiiList = new List<string>();
+                foreach (string filename in System.IO.Directory.GetFiles(folder.FullName))
+                {
+                    //找有幾個tii檔寫入TiiList
+                    if (Path.GetExtension(filename).ToLower() == ".tii")
+                        TiiList.Add(filename);
+                }
+                if (TiiList.Count > 0)
+                {
+                    for(int i=0; i<TiiList.Count; i++)
+                    {
+                        //記錄內部專案xml
+                        string CaseName = Path.GetFileNameWithoutExtension(TiiList[i]);
 
+                    }
+                }
+            }
+            
         }
 
         bool LoadXml(int SoftwareID, string XmlPath)
