@@ -21,12 +21,12 @@ namespace OrderManagerNew.UserControls
     /// </summary>
     public partial class Order_implantBase : UserControl
     {
-        private ImplantInformation implantInfo;
+        private ImplantOuterInformation implantInfo;
 
         /// <summary>
         /// ImplantPlanning專案資訊
         /// </summary>
-        public class ImplantInformation
+        public class ImplantOuterInformation
         {
             public string OrderNumber { get; set; }
             public string PatientName { get; set; }
@@ -35,12 +35,15 @@ namespace OrderManagerNew.UserControls
             public DateTime ModifyDate { get; set; }
             public string CaseDirectoryPath { get; set; }
 
-            public string Client { get; set; }
+            public string Clinic { get; set; }
+            public string Note { get; set; }
             public string CBCTPath { get; set; }
             public string JawPath { get; set; }
-            public List<Order_case> List_case { get; set; }
+            public string JawTrayPath { get; set; }
+            public string DenturePath { get; set; }
+            public List<Order_case> List_smallcase { get; set; }
 
-            public ImplantInformation()
+            public ImplantOuterInformation()
             {
                 OrderNumber = "";
                 PatientName = "";
@@ -48,7 +51,14 @@ namespace OrderManagerNew.UserControls
                 CreateDate = new DateTime();
                 ModifyDate = new DateTime();
                 CaseDirectoryPath = "";
-                List_case = new List<Order_case>();
+
+                Clinic = "";
+                Note = "";
+                CBCTPath = "";
+                JawPath = "";
+                JawTrayPath = "";
+                DenturePath = "";
+                List_smallcase = new List<Order_case>();
             }
         }
 
@@ -61,7 +71,7 @@ namespace OrderManagerNew.UserControls
             label_createDate.Content = "";
         }
 
-        public void SetCaseInfo(ImplantInformation Import)
+        public void SetCaseInfo(ImplantOuterInformation Import)
         {
             implantInfo = Import;
             label_orderID.Content = implantInfo.OrderNumber;
@@ -76,9 +86,9 @@ namespace OrderManagerNew.UserControls
 
         private void Click_OpenDir(object sender, RoutedEventArgs e)
         {
-            if(implantInfo.List_case.Count > 0)
+            if(implantInfo.List_smallcase.Count > 0)
             {
-                foreach(Order_case ImplantCase in implantInfo.List_case)
+                foreach(Order_case ImplantCase in implantInfo.List_smallcase)
                     stackpanel_Implant.Children.Add(ImplantCase);
             }
         }

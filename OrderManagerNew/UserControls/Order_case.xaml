@@ -31,7 +31,9 @@
                 <ColumnDefinition Width="42" />
                 <ColumnDefinition Width="42" />
             </Grid.ColumnDefinitions>
-            <Label x:Name="label_ProjectName" Grid.Column="1" VerticalAlignment="Center" Content="ProjectName" />
+            <Label
+              x:Name="label_ProjectName" Grid.Column="1" VerticalAlignment="Center"
+              Content="ProjectName" />
             <Button
               x:Name="button_Implant" Grid.Row="0" Grid.RowSpan="2"
               Grid.Column="2" Width="28" Click="Click_ButtonEvent"
@@ -42,15 +44,13 @@
             <Button
               x:Name="button_Guide" Grid.Row="0" Grid.RowSpan="2"
               Grid.Column="3" Width="28" Click="Click_ButtonEvent"
-              Style="{StaticResource ImageButton}"
-              ToolTip="{local1:LocExtension OpenCaseFolder}">
+              Style="{StaticResource ImageButton}">
                 <Image Source="/ImageSource/FunctionTable/icon_G.png" />
             </Button>
             <Button
-              x:Name="button_GuidePath" Grid.Row="0" Grid.RowSpan="2"
+              x:Name="button_GuideModelDir" Grid.Row="0" Grid.RowSpan="2"
               Grid.Column="4" Width="28" Click="Click_ButtonEvent"
-              Style="{StaticResource ImageButton}"
-              ToolTip="{local1:LocExtension OpenCaseFolder}">
+              Style="{StaticResource ImageButton}">
                 <Image Source="{DynamicResource icon_guideDrawingImage}" />
             </Button>
         </Grid>

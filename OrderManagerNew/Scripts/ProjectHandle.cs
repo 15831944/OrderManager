@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation;
 using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformation;
 using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
-using ImplantInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantInformation;
+using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
 using ImplantCaseInformation = OrderManagerNew.UserControls.Order_case.ImplantCaseInformation;
 
 
@@ -26,11 +26,7 @@ namespace OrderManagerNew
         /// <summary>
         /// ImplantPlanning Dicom專案
         /// </summary>
-        public List<ImplantInformation> Caselist_Implant;
-        /// <summary>
-        /// ImplantPlanning 內部專案
-        /// </summary>
-        public List<ImplantCaseInformation> Caselist_ImplantCase;
+        public List<ImplantOuterInformation> Caselist_ImplantOuterCase;
         LogRecorder log;
 
         public ProjectHandle()
@@ -151,30 +147,49 @@ namespace OrderManagerNew
             if (Directory.Exists(implant_projectDirectory) == false || File.Exists(implant_exePath) == false)
                 return;
 
-            //Implant內部專案先讀，讀完後把資料一個一個寫入Implant Dicom專案
-            Caselist_ImplantCase = new List<ImplantCaseInformation>();
+            //Implant外部清單
+            Caselist_ImplantOuterCase = new List<ImplantOuterInformation>();
             
             DirectoryInfo dInfo = new DirectoryInfo(implant_projectDirectory);
+            //C:\DicomData\2020130102946\202001301037_final_mi\LinkStation\ManufacturingDir\(Guide生出來的物件)
             foreach (DirectoryInfo folder in dInfo.GetDirectories())
             {
-                List<string> TiiList = new List<string>();
-                foreach (string filename in System.IO.Directory.GetFiles(folder.FullName))
+                // 這層是C:\DicomData\
+                
+                string XmlPath = folder.FullName + @"\" + folder.ToString() + ".xml";
+                if (File.Exists(XmlPath) == false)
+                    continue;
+                else
                 {
-                    //找有幾個tii檔寫入TiiList
-                    if (Path.GetExtension(filename).ToLower() == ".tii")
-                        TiiList.Add(filename);
-                }
-                if (TiiList.Count > 0)
-                {
-                    for(int i=0; i<TiiList.Count; i++)
-                    {
-                        //記錄內部專案xml
-                        string CaseName = Path.GetFileNameWithoutExtension(TiiList[i]);
+                    if (LoadXml((int)_softwareID.Implant, XmlPath) == false)
+                        continue;
 
+                    Caselist_ImplantOuterCase[Caselist_ImplantOuterCase.Count - 1].List_smallcase = new List<UserControls.Order_case>();
+                    //找有幾個tii檔就等於有幾個Implant要給Guide的檔
+                    foreach (string filename in Directory.GetFiles(folder.FullName))
+                    {
+                        // 這層是C:\DicomData\2020130102946\
+                        if (Path.GetExtension(filename).ToLower() == ".tii")
+                        {
+                            OrderManagerNew.UserControls.Order_case ImplantSmallCase = new OrderManagerNew.UserControls.Order_case();
+                            //記錄內部專案資料夾名稱(就是OrderName)、Guide專案資料夾路徑和檢查是否有從Guide輸出的模型
+                            ImplantCaseInformation impInfo = new ImplantCaseInformation();
+                            impInfo.OrderName = Path.GetFileNameWithoutExtension(filename);
+                            impInfo.ImplantTiiPath = filename;
+                            impInfo.GuideCaseDir = folder.FullName + @"\" + impInfo.OrderName + @"\LinkStation\";
+                            //TODO 這邊會有bug
+                            string[] guideModel = Directory.GetFiles(folder.FullName + @"\" + impInfo.OrderName + @"\LinkStation\ManufacturingDir");
+                            if (guideModel.Length > 0)
+                                impInfo.GuideModelPath = guideModel[0];
+                            else
+                                impInfo.GuideModelPath = "";
+
+                            ImplantSmallCase.SetImplantCaseInfo(impInfo);
+                            Caselist_ImplantOuterCase[Caselist_ImplantOuterCase.Count - 1].List_smallcase.Add(ImplantSmallCase);
+                        }
                     }
                 }
             }
-            
         }
 
         bool LoadXml(int SoftwareID, string XmlPath)
@@ -197,9 +212,7 @@ namespace OrderManagerNew
                     {
                         //判斷是否為Material的XML
                         if (xmlDoc.Element("OrderExport") == null)
-                        {
                             return false;
-                        }
 
                         try
                         {
@@ -237,8 +250,34 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Implant:
                     {
+                        if (xmlDoc.Element("ImplantOrderExport") == null)
+                            return false;
 
-                        break;
+                        try
+                        {
+                            ImplantOuterInformation tmpImpOuterInfo = new ImplantOuterInformation();
+
+                            XElement xml = xmlDoc.Element("ImplantOrderExport");
+                            tmpImpOuterInfo.OrderNumber = xml.Element("OrderInfo").Element("OrderNo").Value;
+                            tmpImpOuterInfo.PatientName = xml.Element("OrderInfo").Element("PatientName").Value;
+                            string pbirthday = xml.Element("OrderInfo").Element("PatientBirthday").Value + "T00:00:00";
+                            tmpImpOuterInfo.PatientBirth = Convert.ToDateTime(pbirthday);
+                            tmpImpOuterInfo.Clinic = xml.Element("OrderInfo").Element("Clinic").Value;
+                            tmpImpOuterInfo.Note = xml.Element("OrderInfo").Element("Note").Value;
+
+                            tmpImpOuterInfo.CBCTPath = xml.Element("ImageData").Element("CBCTPath").Value;
+                            tmpImpOuterInfo.JawPath = xml.Element("ImageData").Element("JawPath").Value;
+                            tmpImpOuterInfo.JawTrayPath = xml.Element("ImageData").Element("JawTrayPath").Value;
+                            tmpImpOuterInfo.DenturePath = xml.Element("ImageData").Element("DenturePath").Value;
+                            Caselist_ImplantOuterCase.Add(tmpImpOuterInfo);
+
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Implant) Exception", ex.Message);
+                            return false;
+                        }
                     }
                 case (int)_softwareID.Ortho:
                     {
@@ -248,9 +287,7 @@ namespace OrderManagerNew
                 case (int)_softwareID.Tray:
                     {
                         if (xmlDoc.Element("GuideExport") == null)
-                        {
                             return false;
-                        }
 
                         try
                         {
@@ -279,9 +316,7 @@ namespace OrderManagerNew
                 case (int)_softwareID.Splint:
                     {
                         if (xmlDoc.Element("GuideExport") == null)
-                        {
                             return false;
-                        }
 
                         try
                         {

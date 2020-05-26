@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,14 +26,16 @@ namespace OrderManagerNew.UserControls
         public class ImplantCaseInformation
         {
             public string OrderName { get; set; }
+            public string ImplantTiiPath { get; set; }
             public string GuideModelPath { get; set; }
-            public string CaseXmlPath { get; set; }
+            public string GuideCaseDir { get; set; }
 
             public ImplantCaseInformation()
             {
                 OrderName = "";
+                ImplantTiiPath = "";
                 GuideModelPath = "";
-                CaseXmlPath = "";
+                GuideCaseDir = "";
             }
         }
 
@@ -51,17 +54,24 @@ namespace OrderManagerNew.UserControls
                 {
                     case "button_Implant":
                         {
-                            omFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");
+                            omFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "\"readdii\" \"" + implantcaseInfo.ImplantTiiPath + "\"");
                             break;
                         }
                     case "button_Guide":
                         {
-                            omFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "");
+                            string gmlFile = implantcaseInfo.GuideCaseDir + implantcaseInfo.OrderName + "-Guide.gml";
+                            string lmgFile = implantcaseInfo.GuideCaseDir + implantcaseInfo.OrderName + ".lmg";
+
+                            if (File.Exists(gmlFile) == true)//有gml就先讀
+                                omFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "guiderpd \"" + gmlFile + "\"");
+                            else if (File.Exists(lmgFile) == true)//沒有gml再讀lmg
+                                omFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "guide \"" + lmgFile + "\"");
                             break;
                         }
-                    case "button_GuidePath":
+                    case "button_GuideModelDir":
                         {
-                            omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + implantcaseInfo.GuideModelPath + "\"");
+                            if(button_GuideModelDir.Opacity == 1)
+                                omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + implantcaseInfo.GuideModelPath + "\"");
                             break;
                         }
                 }
@@ -76,6 +86,16 @@ namespace OrderManagerNew.UserControls
         {
             implantcaseInfo = Import;
             label_ProjectName.Content = implantcaseInfo.OrderName;
+            if (implantcaseInfo.GuideModelPath == "")
+            {
+                button_GuideModelDir.Opacity = 0.2;
+                button_GuideModelDir.ToolTip = null;
+            }
+            else
+            {
+                button_GuideModelDir.Opacity = 1;
+                button_GuideModelDir.ToolTip = OrderManagerNew.TranslationSource.Instance["GuideModel"];
+            }
         }
     }
 }
