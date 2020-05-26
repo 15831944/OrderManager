@@ -78,10 +78,11 @@ namespace OrderManagerNew.UserControls
             label_patientName.Content = implantInfo.PatientName;
             if(implantInfo.PatientBirth != new DateTime())
             {
-                label_patientName.Content += "(" + (DateTime.Today.Year - implantInfo.PatientBirth.Year) + ")";
+                int patientAge = DateTime.Today.Year - implantInfo.PatientBirth.Year;
+                label_patientName.Content += "(" + patientAge.ToString() + ")";
                 label_patientName.ToolTip = OrderManagerNew.TranslationSource.Instance["PatientNameWithAge"];
             }   
-            label_createDate.Content = implantInfo.PatientBirth.ToLongDateString();
+            label_createDate.Content = implantInfo.CreateDate.ToLongDateString();
         }
 
         private void Click_OpenDir(object sender, RoutedEventArgs e)

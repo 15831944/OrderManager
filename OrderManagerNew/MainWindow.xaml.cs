@@ -22,6 +22,7 @@ using Path = System.IO.Path;
 using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation;
 using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformation;
 using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
+using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
 
 //
 //                       _oo0oo_
@@ -1748,6 +1749,20 @@ namespace OrderManagerNew
                                 UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
                                 Order_CAD.SetCaseInfo(cadInfo);
                                 StackPanel_Local.Children.Add(Order_CAD);
+                            }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Implant:
+                    {
+                        StackPanel_Local.Children.Clear();
+                        if (ProjHandle.Caselist_ImplantOuterCase != null && ProjHandle.Caselist_ImplantOuterCase.Count > 0)
+                        {
+                            foreach (ImplantOuterInformation implantInfo in ProjHandle.Caselist_ImplantOuterCase)
+                            {
+                                UserControls.Order_implantBase Order_Implant = new UserControls.Order_implantBase();
+                                Order_Implant.SetCaseInfo(implantInfo);
+                                StackPanel_Local.Children.Add(Order_Implant);
                             }
                         }
                         break;

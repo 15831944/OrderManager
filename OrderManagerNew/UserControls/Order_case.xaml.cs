@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace OrderManagerNew.UserControls
 {
@@ -71,7 +72,7 @@ namespace OrderManagerNew.UserControls
                     case "button_GuideModelDir":
                         {
                             if(button_GuideModelDir.Opacity == 1)
-                                omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + implantcaseInfo.GuideModelPath + "\"");
+                                omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + Path.GetDirectoryName(implantcaseInfo.GuideModelPath) + "\"");
                             break;
                         }
                 }

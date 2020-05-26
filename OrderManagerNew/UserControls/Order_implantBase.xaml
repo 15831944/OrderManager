@@ -17,7 +17,8 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Rectangle
-          Grid.Row="1" Grid.Column="1" Margin="6,3,0,3"
+          Grid.Row="1" Grid.Column="1" Width="Auto"
+          Height="54" Margin="6,3,0,3" VerticalAlignment="Top"
           Panel.ZIndex="-1" Fill="White" />
 
         <StackPanel

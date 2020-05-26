@@ -173,14 +173,22 @@ namespace OrderManagerNew
                         {
                             OrderManagerNew.UserControls.Order_case ImplantSmallCase = new OrderManagerNew.UserControls.Order_case();
                             //記錄內部專案資料夾名稱(就是OrderName)、Guide專案資料夾路徑和檢查是否有從Guide輸出的模型
-                            ImplantCaseInformation impInfo = new ImplantCaseInformation();
-                            impInfo.OrderName = Path.GetFileNameWithoutExtension(filename);
-                            impInfo.ImplantTiiPath = filename;
+                            ImplantCaseInformation impInfo = new ImplantCaseInformation
+                            {
+                                OrderName = Path.GetFileNameWithoutExtension(filename),
+                                ImplantTiiPath = filename
+                            };
                             impInfo.GuideCaseDir = folder.FullName + @"\" + impInfo.OrderName + @"\LinkStation\";
                             //TODO 這邊會有bug
-                            string[] guideModel = Directory.GetFiles(folder.FullName + @"\" + impInfo.OrderName + @"\LinkStation\ManufacturingDir");
-                            if (guideModel.Length > 0)
-                                impInfo.GuideModelPath = guideModel[0];
+                            string tmpGuideModelDir = folder.FullName + @"\" + impInfo.OrderName + @"\LinkStation\ManufacturingDir\";
+                            if (Directory.Exists(tmpGuideModelDir) == true)
+                            {
+                                string[] guideModel = Directory.GetFiles(tmpGuideModelDir);
+                                if (guideModel.Length > 0)
+                                    impInfo.GuideModelPath = guideModel[0];
+                                else
+                                    impInfo.GuideModelPath = "";
+                            }
                             else
                                 impInfo.GuideModelPath = "";
 
@@ -190,6 +198,9 @@ namespace OrderManagerNew
                     }
                 }
             }
+
+            if(Caselist_ImplantOuterCase.Count > 0)
+                CaseShowEvent((int)_softwareID.Implant);
         }
 
         bool LoadXml(int SoftwareID, string XmlPath)
@@ -269,6 +280,9 @@ namespace OrderManagerNew
                             tmpImpOuterInfo.JawPath = xml.Element("ImageData").Element("JawPath").Value;
                             tmpImpOuterInfo.JawTrayPath = xml.Element("ImageData").Element("JawTrayPath").Value;
                             tmpImpOuterInfo.DenturePath = xml.Element("ImageData").Element("DenturePath").Value;
+                            tmpImpOuterInfo.CreateDate = fInfo.CreationTime;
+                            tmpImpOuterInfo.ModifyDate = fInfo.LastWriteTime;
+
                             Caselist_ImplantOuterCase.Add(tmpImpOuterInfo);
 
                             return true;
