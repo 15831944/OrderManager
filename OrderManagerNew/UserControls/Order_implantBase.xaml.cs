@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Order_case = OrderManagerNew.UserControls.Order_case;
+using Order_ImplantSmallcase = OrderManagerNew.UserControls.Order_ImplantSmallcase;
 
 namespace OrderManagerNew.UserControls
 {
@@ -41,7 +41,7 @@ namespace OrderManagerNew.UserControls
             public string JawPath { get; set; }
             public string JawTrayPath { get; set; }
             public string DenturePath { get; set; }
-            public List<Order_case> List_smallcase { get; set; }
+            public List<Order_ImplantSmallcase> List_smallcase { get; set; }
 
             public ImplantOuterInformation()
             {
@@ -58,7 +58,7 @@ namespace OrderManagerNew.UserControls
                 JawPath = "";
                 JawTrayPath = "";
                 DenturePath = "";
-                List_smallcase = new List<Order_case>();
+                List_smallcase = new List<Order_ImplantSmallcase>();
             }
         }
 
@@ -89,7 +89,7 @@ namespace OrderManagerNew.UserControls
         {
             if(implantInfo.List_smallcase.Count > 0)
             {
-                foreach(Order_case ImplantCase in implantInfo.List_smallcase)
+                foreach(Order_ImplantSmallcase ImplantCase in implantInfo.List_smallcase)
                     stackpanel_Implant.Children.Add(ImplantCase);
             }
         }

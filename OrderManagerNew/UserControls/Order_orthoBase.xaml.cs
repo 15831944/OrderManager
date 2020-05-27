@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Order_orthoSmallcase = OrderManagerNew.UserControls.Order_orthoSmallcase;
 
 namespace OrderManagerNew.UserControls
 {
@@ -20,9 +21,65 @@ namespace OrderManagerNew.UserControls
     /// </summary>
     public partial class Order_orthoBase : UserControl
     {
+        private OrthoOuterInformation orthoInfo;
+
+        public class OrthoOuterInformation
+        {
+            public string PatientID { get; set; }
+            public string PatientName { get; set; }
+            public string PatientPhone { get; set; }
+            public bool PatientSex { get; set; }    //True為男性
+            public DateTime PatientBirth { get; set; }
+            public string PatientAddress { get; set; }
+            public string DentistName { get; set; }
+            public string ClinicName { get; set; }
+            public string LabName { get; set; }
+            public string LabWorkerName { get; set; }
+            public string Describe { get; set; }
+            public DateTime CreateTime { get; set; }
+            public DateTime ModifyTime { get; set; }
+            public List<Order_orthoSmallcase> List_smallcase { get; set; }
+
+            public OrthoOuterInformation()
+            {
+                PatientID = "";
+                PatientName = "";
+                PatientPhone = "";
+                PatientSex = false;
+                PatientAddress = "";
+                DentistName = "";
+                ClinicName = "";
+                LabName = "";
+                LabWorkerName = "";
+                Describe = "";
+                List_smallcase = new List<Order_orthoSmallcase>();
+                PatientBirth = new DateTime();
+                CreateTime = new DateTime();
+                ModifyTime = new DateTime();
+            }
+        }
+
         public Order_orthoBase()
         {
             InitializeComponent();
+            label_orderID.Content = "";
+            label_patientName.Content = "";
+            label_designStep.Content = "";
+            label_createDate.Content = "";
+        }
+
+        public void SetCaseInfo(OrthoOuterInformation Import)
+        {
+            orthoInfo = Import;
+            label_orderID.Content = orthoInfo.PatientID;
+            label_patientName.Content = orthoInfo.PatientName;
+            if(orthoInfo.PatientBirth != new DateTime())
+            {
+                int patientAge = DateTime.Today.Year - orthoInfo.PatientBirth.Year;
+                label_patientName.Content += "(" + patientAge.ToString() + ")";
+                label_patientName.ToolTip = OrderManagerNew.TranslationSource.Instance["PatientNameWithAge"];
+            }
+            label_createDate.Content = orthoInfo.CreateTime.ToLongDateString();
         }
 
         private void Click_OpenDir(object sender, RoutedEventArgs e)

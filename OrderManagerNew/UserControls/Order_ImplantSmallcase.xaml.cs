@@ -18,20 +18,20 @@ using Path = System.IO.Path;
 namespace OrderManagerNew.UserControls
 {
     /// <summary>
-    /// Order_case.xaml 的互動邏輯
+    /// Order_ImplantSmallcase.xaml 的互動邏輯
     /// </summary>
-    public partial class Order_case : UserControl
+    public partial class Order_ImplantSmallcase : UserControl
     {
-        private ImplantCaseInformation implantcaseInfo;
+        private ImplantSmallCaseInformation implantsmallcaseInfo;
 
-        public class ImplantCaseInformation
+        public class ImplantSmallCaseInformation
         {
             public string OrderName { get; set; }
             public string ImplantTiiPath { get; set; }
             public string GuideModelPath { get; set; }
             public string GuideCaseDir { get; set; }
 
-            public ImplantCaseInformation()
+            public ImplantSmallCaseInformation()
             {
                 OrderName = "";
                 ImplantTiiPath = "";
@@ -40,7 +40,7 @@ namespace OrderManagerNew.UserControls
             }
         }
 
-        public Order_case()
+        public Order_ImplantSmallcase()
         {
             InitializeComponent();
         }
@@ -55,13 +55,13 @@ namespace OrderManagerNew.UserControls
                 {
                     case "button_Implant":
                         {
-                            omFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "\"readdii\" \"" + implantcaseInfo.ImplantTiiPath + "\"");
+                            omFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "\"readdii\" \"" + implantsmallcaseInfo.ImplantTiiPath + "\"");
                             break;
                         }
                     case "button_Guide":
                         {
-                            string gmlFile = implantcaseInfo.GuideCaseDir + implantcaseInfo.OrderName + "-Guide.gml";
-                            string lmgFile = implantcaseInfo.GuideCaseDir + implantcaseInfo.OrderName + ".lmg";
+                            string gmlFile = implantsmallcaseInfo.GuideCaseDir + implantsmallcaseInfo.OrderName + "-Guide.gml";
+                            string lmgFile = implantsmallcaseInfo.GuideCaseDir + implantsmallcaseInfo.OrderName + ".lmg";
 
                             if (File.Exists(gmlFile) == true)//有gml就先讀
                                 omFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "guiderpd \"" + gmlFile + "\"");
@@ -72,7 +72,7 @@ namespace OrderManagerNew.UserControls
                     case "button_GuideModelDir":
                         {
                             if(button_GuideModelDir.IsEnabled == true)
-                                omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + Path.GetDirectoryName(implantcaseInfo.GuideModelPath) + "\"");
+                                omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + Path.GetDirectoryName(implantsmallcaseInfo.GuideModelPath) + "\"");
                             break;
                         }
                 }
@@ -83,11 +83,11 @@ namespace OrderManagerNew.UserControls
             }
         }
 
-        public void SetImplantCaseInfo(ImplantCaseInformation Import)
+        public void SetImplantSmallCaseInfo(ImplantSmallCaseInformation Import)
         {
-            implantcaseInfo = Import;
-            label_ProjectName.Content = implantcaseInfo.OrderName;
-            if (implantcaseInfo.GuideModelPath == "")
+            implantsmallcaseInfo = Import;
+            label_ProjectName.Content = implantsmallcaseInfo.OrderName;
+            if (implantsmallcaseInfo.GuideModelPath == "")
             {
                 button_GuideModelDir.IsEnabled = false;
                 button_GuideModelDir.ToolTip = null;

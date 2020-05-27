@@ -451,4 +451,8 @@
     <value>Patient Name(Age)</value>
     <comment>Case</comment>
   </data>
+  <data name="LoadProject" xml:space="preserve">
+    <value>Load Project</value>
+    <comment>Case</comment>
+  </data>
 </root>

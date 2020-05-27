@@ -565,6 +565,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Load Project 的當地語系化字串。
+        /// </summary>
+        internal static string LoadProject {
+            get {
+                return ResourceManager.GetString("LoadProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Local 的當地語系化字串。
         /// </summary>
         internal static string Local {

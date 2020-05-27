@@ -108,11 +108,17 @@
     <Compile Include="UserControls\Order_cadBase.xaml.cs">
       <DependentUpon>Order_cadBase.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Order_case.xaml.cs">
-      <DependentUpon>Order_case.xaml</DependentUpon>
+    <Compile Include="UserControls\Order_ImplantSmallcase.xaml.cs">
+      <DependentUpon>Order_ImplantSmallcase.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Order_implantBase.xaml.cs">
       <DependentUpon>Order_implantBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Order_orthoBase.xaml.cs">
+      <DependentUpon>Order_orthoBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Order_orthoSmallcase.xaml.cs">
+      <DependentUpon>Order_orthoSmallcase.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Order_tsBase.xaml.cs">
       <DependentUpon>Order_tsBase.xaml</DependentUpon>
@@ -167,11 +173,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Order_case.xaml">
+    <Page Include="UserControls\Order_ImplantSmallcase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Order_implantBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Order_orthoBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Order_orthoSmallcase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

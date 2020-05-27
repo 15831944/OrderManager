@@ -10,7 +10,7 @@ using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation
 using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformation;
 using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
 using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
-using ImplantCaseInformation = OrderManagerNew.UserControls.Order_case.ImplantCaseInformation;
+using ImplantSmallCaseInformation = OrderManagerNew.UserControls.Order_ImplantSmallcase.ImplantSmallCaseInformation;
 
 
 namespace OrderManagerNew
@@ -34,6 +34,9 @@ namespace OrderManagerNew
             log = new LogRecorder();
         }
 
+        /// <summary>
+        /// 讀取EZCAD專案
+        /// </summary>
         public void LoadEZCADProj()
         {
             string cad_projectDirectory = Properties.Settings.Default.cad_projectDirectory;
@@ -69,6 +72,9 @@ namespace OrderManagerNew
                 CaseShowEvent((int)_softwareID.EZCAD);
         }
 
+        /// <summary>
+        /// 讀取Tray專案
+        /// </summary>
         public void LoadTrayProj()
         {
             string tray_projectDirectory = Properties.Settings.Default.tray_projectDirectory;
@@ -104,6 +110,9 @@ namespace OrderManagerNew
                 CaseShowEvent((int)_softwareID.Tray);
         }
 
+        /// <summary>
+        /// 讀取Splint專案
+        /// </summary>
         public void LoadSplintProj()
         {
             string splint_projectDirectory = Properties.Settings.Default.splint_projectDirectory;
@@ -139,6 +148,9 @@ namespace OrderManagerNew
                 CaseShowEvent((int)_softwareID.Splint);
         }
 
+        /// <summary>
+        /// 讀取ImplantPlanning專案
+        /// </summary>
         public void LoadImplantProj()
         {
             string implant_projectDirectory = Properties.Settings.Default.implant_projectDirectory;
@@ -164,16 +176,16 @@ namespace OrderManagerNew
                     if (LoadXml((int)_softwareID.Implant, XmlPath) == false)
                         continue;
 
-                    Caselist_ImplantOuterCase[Caselist_ImplantOuterCase.Count - 1].List_smallcase = new List<UserControls.Order_case>();
-                    //找有幾個tii檔就等於有幾個Implant要給Guide的檔
+                    Caselist_ImplantOuterCase[Caselist_ImplantOuterCase.Count - 1].List_smallcase = new List<UserControls.Order_ImplantSmallcase>();
                     foreach (string filename in Directory.GetFiles(folder.FullName))
                     {
                         // 這層是C:\DicomData\2020130102946\
+                        //找有幾個tii檔就等於有幾個Implant要給Guide的檔
                         if (Path.GetExtension(filename).ToLower() == ".tii")
                         {
-                            OrderManagerNew.UserControls.Order_case ImplantSmallCase = new OrderManagerNew.UserControls.Order_case();
+                            OrderManagerNew.UserControls.Order_ImplantSmallcase ImplantSmallCase = new OrderManagerNew.UserControls.Order_ImplantSmallcase();
                             //記錄內部專案資料夾名稱(就是OrderName)、Guide專案資料夾路徑和檢查是否有從Guide輸出的模型
-                            ImplantCaseInformation impInfo = new ImplantCaseInformation
+                            ImplantSmallCaseInformation impInfo = new ImplantSmallCaseInformation
                             {
                                 OrderName = Path.GetFileNameWithoutExtension(filename),
                                 ImplantTiiPath = filename
@@ -192,7 +204,7 @@ namespace OrderManagerNew
                             else
                                 impInfo.GuideModelPath = "";
 
-                            ImplantSmallCase.SetImplantCaseInfo(impInfo);
+                            ImplantSmallCase.SetImplantSmallCaseInfo(impInfo);
                             Caselist_ImplantOuterCase[Caselist_ImplantOuterCase.Count - 1].List_smallcase.Add(ImplantSmallCase);
                         }
                     }
@@ -203,6 +215,26 @@ namespace OrderManagerNew
                 CaseShowEvent((int)_softwareID.Implant);
         }
 
+        /// <summary>
+        /// 讀取OrthoAnalysis專案
+        /// </summary>
+        public void LoadOrthoProj()
+        {
+            string ortho_exePath = Properties.Settings.Default.ortho_exePath;
+            string ortho_projectDirectory = Properties.Settings.Default.ortho_projectDirectory;
+
+            if (Directory.Exists(ortho_projectDirectory) == false || File.Exists(ortho_exePath) == false)
+                return;
+
+
+        }
+
+        /// <summary>
+        /// 讀各專案Xml檔內的資料
+        /// </summary>
+        /// <param name="SoftwareID">軟體ID 參考_SoftwareID</param>
+        /// <param name="XmlPath">Xml路徑</param>
+        /// <returns></returns>
         bool LoadXml(int SoftwareID, string XmlPath)
         {
             XDocument xmlDoc;
@@ -295,6 +327,14 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Ortho:
                     {
+                        if(XmlPath.ToLower().IndexOf("PatientInfo.xml") != -1)
+                        {
+                            //OuterCase xml
+                        }
+                        else
+                        {
+                            //smallCase xml
+                        }
 
                         break;
                     }

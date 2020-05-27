@@ -136,7 +136,7 @@ namespace OrderManagerNew
             ProjHandle = new ProjectHandle();
             ProjHandle.CaseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
 
-            ProjHandle.LoadImplantProj();
+            ProjHandle.LoadOrthoProj();
             /*if(Directory.Exists(Properties.Settings.Default.cad_projectDirectory) == true)  //TODO要再修改
             {
                 ProjHandle.LoadEZCADProj();

@@ -369,4 +369,7 @@
   <data name="PatientNameWithAge" xml:space="preserve">
     <value>患者姓名(年齡)</value>
   </data>
+  <data name="LoadProject" xml:space="preserve">
+    <value>讀取專案</value>
+  </data>
 </root>
