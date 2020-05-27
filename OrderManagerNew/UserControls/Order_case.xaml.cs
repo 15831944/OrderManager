@@ -71,7 +71,7 @@ namespace OrderManagerNew.UserControls
                         }
                     case "button_GuideModelDir":
                         {
-                            if(button_GuideModelDir.Opacity == 1)
+                            if(button_GuideModelDir.IsEnabled == true)
                                 omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + Path.GetDirectoryName(implantcaseInfo.GuideModelPath) + "\"");
                             break;
                         }
@@ -89,12 +89,12 @@ namespace OrderManagerNew.UserControls
             label_ProjectName.Content = implantcaseInfo.OrderName;
             if (implantcaseInfo.GuideModelPath == "")
             {
-                button_GuideModelDir.Opacity = 0.2;
+                button_GuideModelDir.IsEnabled = false;
                 button_GuideModelDir.ToolTip = null;
             }
             else
             {
-                button_GuideModelDir.Opacity = 1;
+                button_GuideModelDir.IsEnabled = true;
                 button_GuideModelDir.ToolTip = OrderManagerNew.TranslationSource.Instance["GuideModel"];
             }
         }
