@@ -33,9 +33,6 @@ namespace OrderManagerNew.UserControls
             public string PatientAddress { get; set; }
             public string DentistName { get; set; }
             public string ClinicName { get; set; }
-            public string LabName { get; set; }
-            public string LabWorkerName { get; set; }
-            public string Describe { get; set; }
             public DateTime CreateTime { get; set; }
             public DateTime ModifyTime { get; set; }
             public List<Order_orthoSmallcase> List_smallcase { get; set; }
@@ -49,9 +46,6 @@ namespace OrderManagerNew.UserControls
                 PatientAddress = "";
                 DentistName = "";
                 ClinicName = "";
-                LabName = "";
-                LabWorkerName = "";
-                Describe = "";
                 List_smallcase = new List<Order_orthoSmallcase>();
                 PatientBirth = new DateTime();
                 CreateTime = new DateTime();
@@ -84,7 +78,11 @@ namespace OrderManagerNew.UserControls
 
         private void Click_OpenDir(object sender, RoutedEventArgs e)
         {
-
+            if(orthoInfo.List_smallcase.Count > 0)
+            {
+                foreach (Order_orthoSmallcase OrthoCase in orthoInfo.List_smallcase)
+                    stackpanel_Ortho.Children.Add(OrthoCase);
+            }
         }
     }
 }

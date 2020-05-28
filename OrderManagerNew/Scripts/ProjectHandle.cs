@@ -11,7 +11,8 @@ using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformatio
 using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
 using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
 using ImplantSmallCaseInformation = OrderManagerNew.UserControls.Order_ImplantSmallcase.ImplantSmallCaseInformation;
-
+using OrthoOuterInformation = OrderManagerNew.UserControls.Order_orthoBase.OrthoOuterInformation;
+using OrthoSmallCaseInformation = OrderManagerNew.UserControls.Order_orthoSmallcase.OrthoSmallCaseInformation;
 
 namespace OrderManagerNew
 {
@@ -23,10 +24,9 @@ namespace OrderManagerNew
         public List<CadInformation> Caselist_EZCAD;
         public List<TrayInformation> Caselist_Tray;
         public List<SplintInformation> Caselist_Splint;
-        /// <summary>
-        /// ImplantPlanning Dicom專案
-        /// </summary>
         public List<ImplantOuterInformation> Caselist_ImplantOuterCase;
+        public List<OrthoOuterInformation> Caselist_OrthoOuterCase;
+
         LogRecorder log;
 
         public ProjectHandle()
@@ -163,10 +163,10 @@ namespace OrderManagerNew
             Caselist_ImplantOuterCase = new List<ImplantOuterInformation>();
             
             DirectoryInfo dInfo = new DirectoryInfo(implant_projectDirectory);
-            //C:\DicomData\2020130102946\202001301037_final_mi\LinkStation\ManufacturingDir\(Guide生出來的物件)
+            // C:\IntewareData\Implant\2020130102946\202001301037_final_mi\LinkStation\ManufacturingDir\(Guide生出來的物件)
             foreach (DirectoryInfo folder in dInfo.GetDirectories())
             {
-                // 這層是C:\DicomData\
+                // 這層是C:\IntewareData\Implant\
                 
                 string XmlPath = folder.FullName + @"\" + folder.ToString() + ".xml";
                 if (File.Exists(XmlPath) == false)
@@ -179,7 +179,7 @@ namespace OrderManagerNew
                     Caselist_ImplantOuterCase[Caselist_ImplantOuterCase.Count - 1].List_smallcase = new List<UserControls.Order_ImplantSmallcase>();
                     foreach (string filename in Directory.GetFiles(folder.FullName))
                     {
-                        // 這層是C:\DicomData\2020130102946\
+                        // 這層是C:\IntewareData\Implant\2020130102946\
                         //找有幾個tii檔就等於有幾個Implant要給Guide的檔
                         if (Path.GetExtension(filename).ToLower() == ".tii")
                         {
@@ -226,7 +226,72 @@ namespace OrderManagerNew
             if (Directory.Exists(ortho_projectDirectory) == false || File.Exists(ortho_exePath) == false)
                 return;
 
+            //Ortho外部清單
+            Caselist_OrthoOuterCase = new List<OrthoOuterInformation>();
 
+            DirectoryInfo dInfo = new DirectoryInfo(ortho_projectDirectory);
+            // C:\IntewareData\OrthoAnalysisV3\OrthoData\Test_1216\2019-12-16-1543\Test_1216.xml
+            foreach(DirectoryInfo folder in dInfo.GetDirectories())
+            {
+                // 這層是C:\IntewareData\OrthoAnalysisV3\OrthoData\folder\
+                string OuterXmlPath = folder.FullName + @"\PatientInfo.xml";
+                if (File.Exists(OuterXmlPath) == false)
+                    continue;
+                else
+                {
+                    if (LoadXml((int)_softwareID.Ortho, OuterXmlPath) == false)
+                        continue;
+
+                    Caselist_OrthoOuterCase[Caselist_OrthoOuterCase.Count - 1].List_smallcase = new List<UserControls.Order_orthoSmallcase>();
+                    //蒐集OrthoSmallcase然後存進OuterCase
+                    DirectoryInfo dInfo2 = new DirectoryInfo(folder.FullName + @"\");
+                    foreach (DirectoryInfo folder2 in dInfo2.GetDirectories())
+                    {
+                        // 這層是C:\IntewareData\OrthoAnalysisV3\OrthoData\Test_1216\folder2\
+                        string SmallXmlPath = folder2.FullName + @"\" + folder + ".xml";
+                        if (File.Exists(SmallXmlPath) == false)
+                            continue;
+                        else
+                        {
+                            XDocument xmlDoc;
+                            FileInfo fInfo = new FileInfo(SmallXmlPath);//要取得檔案創建日期和修改日期
+
+                            try
+                            {
+                                xmlDoc = XDocument.Load(SmallXmlPath);
+                            }
+                            catch(Exception ex)
+                            {
+                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Ortho smallcase) Exception", ex.Message);
+                                continue;
+                            }
+
+                            try
+                            {
+                                var orthodata = EZOrthoDataStructure.ProjectDataWrapper.ProjectDataWrapperDeserialize(SmallXmlPath);
+
+                                OrthoSmallCaseInformation tmpOrthosmallInfo = new OrthoSmallCaseInformation();
+                                //tmpOrthosmallInfo.SoftwareVer = new Version(orthodata.File_Version);
+                                tmpOrthosmallInfo.WorkflowStep = Convert.ToInt16(orthodata.workflowstep);
+                                tmpOrthosmallInfo.CreateTime = orthodata.patientInformation.m_CreateTime;
+                                tmpOrthosmallInfo.Describe = orthodata.patientInformation.m_Discribe;
+
+                                UserControls.Order_orthoSmallcase tmporthoSmallcase = new UserControls.Order_orthoSmallcase();
+                                tmporthoSmallcase.SetOrthoSmallCaseInfo(tmpOrthosmallInfo);
+                                Caselist_OrthoOuterCase[Caselist_OrthoOuterCase.Count - 1].List_smallcase.Add(tmporthoSmallcase);
+                            }
+                            catch(Exception ex)
+                            {
+                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Ortho smallcase) Exception2", ex.Message);
+                                continue;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (Caselist_OrthoOuterCase.Count > 0)
+                CaseShowEvent((int)_softwareID.Ortho);
         }
 
         /// <summary>
@@ -327,16 +392,38 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Ortho:
                     {
-                        if(XmlPath.ToLower().IndexOf("PatientInfo.xml") != -1)
+                        if (xmlDoc.Element("CreateProjectInfo") == null)
+                            return false;
+                        try
                         {
-                            //OuterCase xml
-                        }
-                        else
-                        {
-                            //smallCase xml
-                        }
+                            XElement xml = xmlDoc.Element("CreateProjectInfo");
 
-                        break;
+                            bool Gender = false;
+                            if (xml.Element("PatientSex").Value.ToLower() == "true")
+                                Gender = true;
+                            else
+                                Gender = false;
+
+                            OrthoOuterInformation orthoInfo = new OrthoOuterInformation();
+                            orthoInfo.PatientID = xml.Element("PatientID").Value;
+                            orthoInfo.PatientName = xml.Element("PatientName").Value;
+                            orthoInfo.PatientPhone = xml.Element("PatientPhone").Value;
+                            orthoInfo.PatientSex = Gender;
+                            orthoInfo.PatientBirth = Convert.ToDateTime(xml.Element("PatientBday").Value);
+                            orthoInfo.PatientAddress = xml.Element("PatientAddress").Value;
+                            orthoInfo.DentistName = xml.Element("DentistName").Value;
+                            orthoInfo.ClinicName = xml.Element("ClinicName").Value;
+                            orthoInfo.CreateTime = Convert.ToDateTime(xml.Element("CreateTime")?.Value);
+                            orthoInfo.ModifyTime = fInfo.LastWriteTime;
+                            Caselist_OrthoOuterCase.Add(orthoInfo);
+
+                            return true;
+                        }
+                        catch(Exception ex)
+                        {
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadouterXml(Ortho) Exception", ex.Message);
+                            return false;
+                        }
                     }
                 case (int)_softwareID.Tray:
                     {

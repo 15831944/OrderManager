@@ -253,55 +253,55 @@ namespace OrderManagerNew
                             DiskName = d.Name
                         };
 
-                        if (File.Exists(cad_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD\Bin\EZCAD.exe") == true)
+                        if (File.Exists(cad_exePath) == false && File.Exists(d.Name + @"IntewareInc\EZCAD\Bin\EZCAD.exe") == true)
                         {
                             if (Properties.Settings.Default.cad_exePath == "")
-                                Properties.Settings.Default.cad_exePath = d.Name + @"InteWare\EZCAD\Bin\EZCAD.exe";
+                                Properties.Settings.Default.cad_exePath = d.Name + @"IntewareInc\EZCAD\Bin\EZCAD.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(implant_exePath) == false && File.Exists(d.Name + @"InteWare\ImplantPlanning\ImplantPlanning.exe") == true)
+                        if (File.Exists(implant_exePath) == false && File.Exists(d.Name + @"IntewareInc\ImplantPlanning\ImplantPlanning.exe") == true)
                         {
                             if (Properties.Settings.Default.implant_exePath == "")
-                                Properties.Settings.Default.implant_exePath = d.Name + @"InteWare\ImplantPlanning\ImplantPlanning.exe";
+                                Properties.Settings.Default.implant_exePath = d.Name + @"IntewareInc\ImplantPlanning\ImplantPlanning.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(ortho_exePath) == false && File.Exists(d.Name + @"InteWare\OrthoAnalysis\OrthoAnalysis.exe") == true)
+                        if (File.Exists(ortho_exePath) == false && File.Exists(d.Name + @"IntewareInc\OrthoAnalysis\OrthoAnalysis.exe") == true)
                         {
                             if (Properties.Settings.Default.ortho_exePath == "")
-                                Properties.Settings.Default.ortho_exePath = d.Name + @"InteWare\OrthoAnalysis\OrthoAnalysis.exe";
+                                Properties.Settings.Default.ortho_exePath = d.Name + @"IntewareInc\OrthoAnalysis\OrthoAnalysis.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(tray_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD tray\Bin\EZCAD.tray.exe") == true)
+                        if (File.Exists(tray_exePath) == false && File.Exists(d.Name + @"IntewareInc\EZCAD tray\Bin\EZCAD.tray.exe") == true)
                         {
                             if (Properties.Settings.Default.tray_exePath == "")
-                                Properties.Settings.Default.tray_exePath = d.Name + @"InteWare\EZCAD tray\Bin\EZCAD.tray.exe";
+                                Properties.Settings.Default.tray_exePath = d.Name + @"IntewareInc\EZCAD tray\Bin\EZCAD.tray.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(splint_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD splint\Bin\EZCAD.splint.exe") == true)
+                        if (File.Exists(splint_exePath) == false && File.Exists(d.Name + @"IntewareInc\EZCAD splint\Bin\EZCAD.splint.exe") == true)
                         {
                             if (Properties.Settings.Default.splint_exePath == "")
-                                Properties.Settings.Default.splint_exePath = d.Name + @"InteWare\EZCAD splint\Bin\EZCAD.splint.exe";
+                                Properties.Settings.Default.splint_exePath = d.Name + @"IntewareInc\EZCAD splint\Bin\EZCAD.splint.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(guide_exePath) == false && File.Exists(d.Name + @"InteWare\EZCAD guide\Bin\EZCAD.guide.exe") == true)
+                        if (File.Exists(guide_exePath) == false && File.Exists(d.Name + @"IntewareInc\EZCAD guide\Bin\EZCAD.guide.exe") == true)
                         {
                             if (Properties.Settings.Default.guide_exePath == "")
-                                Properties.Settings.Default.guide_exePath = d.Name + @"InteWare\EZCAD guide\Bin\EZCAD.guide.exe";
+                                Properties.Settings.Default.guide_exePath = d.Name + @"IntewareInc\EZCAD guide\Bin\EZCAD.guide.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
@@ -566,9 +566,9 @@ namespace OrderManagerNew
                     {
                         try
                         {
-                            if(Directory.Exists(d.Name + @"DicomData\") == true)
+                            if(Directory.Exists(d.Name + @"IntewareData\Implant\") == true)
                             {
-                                Properties.Settings.Default.implant_projectDirectory = d.Name + @"DicomData\";
+                                Properties.Settings.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
                                 foundImplantPath = true;
                                 break;
                             }
@@ -585,8 +585,8 @@ namespace OrderManagerNew
                         {
                             if (Properties.Settings.Default.mostsoftwareDisk != "")
                             {
-                                Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"DicomData\");
-                                Properties.Settings.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"DicomData\";
+                                Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\");
+                                Properties.Settings.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\";
                                 goto createtosysDirectorySuccess;
                             }
                             else
@@ -606,13 +606,13 @@ namespace OrderManagerNew
                             {
                                 if (d.Name == @"C:\")
                                 {
-                                    Properties.Settings.Default.implant_projectDirectory = d.Name + @"DicomData\";
+                                    Properties.Settings.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
                                     chosen = true;
                                     break;
                                 }
                                 if (d.Name == @"D:\")
                                 {
-                                    Properties.Settings.Default.implant_projectDirectory = d.Name + @"DicomData\";
+                                    Properties.Settings.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
                                     chosen = true;
                                     break;
                                 }
@@ -629,8 +629,8 @@ namespace OrderManagerNew
                             {
                                 try
                                 {
-                                    Directory.CreateDirectory(d.Name + @"DicomData\");
-                                    Properties.Settings.Default.implant_projectDirectory = d.Name + @"DicomData\";
+                                    Directory.CreateDirectory(d.Name + @"IntewareData\Implant\");
+                                    Properties.Settings.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
                                     break;
                                 }
                                 catch (Exception ex)

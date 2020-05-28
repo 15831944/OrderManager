@@ -22,7 +22,7 @@
           Panel.ZIndex="-1" Fill="White" />
 
         <StackPanel
-          x:Name="stackpanel_Implant" Grid.Row="1" Grid.Column="1"
+          x:Name="stackpanel_Ortho" Grid.Row="1" Grid.Column="1"
           Orientation="Vertical">
             <Grid>
                 <Grid.Resources>
@@ -64,7 +64,7 @@
                   Grid.ColumnSpan="2" Content="CreateDate"
                   ToolTip="{local1:LocExtension CreateDate}" />
 
-                <Image Grid.Row="0" Grid.RowSpan="2" Source="/ImageSource/FunctionTable/icon_I.png" />
+                <Image Grid.Row="0" Grid.RowSpan="2" Source="/ImageSource/FunctionTable/icon_O.png" />
                 <Button
                   Grid.Row="0" Grid.RowSpan="2" Grid.Column="5"
                   Click="Click_OpenDir"

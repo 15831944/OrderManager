@@ -287,7 +287,7 @@ namespace OrderManagerNew
 
             label_TitleBar.Content = OrderManagerNew.TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             label_Header.Content = OrderManagerNew.TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
-            textbox_InstallPath.Text = @"C:\InteWare\" + SoftwareNameArray[currentSoftwareID] + @"\";
+            textbox_InstallPath.Text = @"C:\IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
 
             try
             {

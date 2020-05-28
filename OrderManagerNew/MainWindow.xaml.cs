@@ -23,6 +23,7 @@ using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation
 using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformation;
 using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
 using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
+using OrthoOuterInformation = OrderManagerNew.UserControls.Order_orthoBase.OrthoOuterInformation;
 
 //
 //                       _oo0oo_
@@ -136,7 +137,7 @@ namespace OrderManagerNew
             ProjHandle = new ProjectHandle();
             ProjHandle.CaseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
 
-            ProjHandle.LoadOrthoProj();
+            ProjHandle.LoadImplantProj();
             /*if(Directory.Exists(Properties.Settings.Default.cad_projectDirectory) == true)  //TODO要再修改
             {
                 ProjHandle.LoadEZCADProj();
@@ -1763,6 +1764,20 @@ namespace OrderManagerNew
                                 UserControls.Order_implantBase Order_Implant = new UserControls.Order_implantBase();
                                 Order_Implant.SetCaseInfo(implantInfo);
                                 StackPanel_Local.Children.Add(Order_Implant);
+                            }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Ortho:
+                    {
+                        StackPanel_Local.Children.Clear();
+                        if (ProjHandle.Caselist_OrthoOuterCase != null && ProjHandle.Caselist_OrthoOuterCase.Count > 0)
+                        {
+                            foreach (OrthoOuterInformation orthoInfo in ProjHandle.Caselist_OrthoOuterCase)
+                            {
+                                UserControls.Order_orthoBase Order_Ortho = new UserControls.Order_orthoBase();
+                                Order_Ortho.SetCaseInfo(orthoInfo);
+                                StackPanel_Local.Children.Add(Order_Ortho);
                             }
                         }
                         break;

@@ -372,4 +372,25 @@
   <data name="LoadProject" xml:space="preserve">
     <value>讀取專案</value>
   </data>
+  <data name="Crown_Postprocess" xml:space="preserve">
+    <value>牙冠後處理</value>
+  </data>
+  <data name="Crown_Margin_Adjust" xml:space="preserve">
+    <value>調整牙冠</value>
+  </data>
+  <data name="Model_Position" xml:space="preserve">
+    <value>模型放置 </value>
+  </data>
+  <data name="Teeth_Define" xml:space="preserve">
+    <value>齒位定義</value>
+  </data>
+  <data name="Treatment_Planning" xml:space="preserve">
+    <value>療程規劃</value>
+  </data>
+  <data name="Printing" xml:space="preserve">
+    <value>輸出</value>
+  </data>
+  <data name="SetupManage" xml:space="preserve">
+    <value>排牙管理</value>
+  </data>
 </root>

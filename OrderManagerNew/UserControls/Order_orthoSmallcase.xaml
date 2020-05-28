@@ -58,7 +58,7 @@
             </Grid.ColumnDefinitions>
             <Label
               x:Name="label_ProjectName" Grid.Column="1" VerticalAlignment="Center"
-              Content="ProjectName" />
+              Content="ProjectName(DesignStep)" />
             <Button
               x:Name="button_LoadOrthoProject" Grid.Row="0" Grid.RowSpan="2"
               Grid.Column="4" Width="28" Click="Click_ButtonEvent"

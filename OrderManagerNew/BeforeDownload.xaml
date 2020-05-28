@@ -82,7 +82,7 @@
                   x:Name="textbox_InstallPath" Grid.Row="4" Grid.Column="0"
                   Grid.ColumnSpan="2"
                   Style="{DynamicResource Setting_textbox}"
-                  Text="C:\InteWare\SoftwareName" />
+                  Text="C:\IntewareInc\SoftwareName" />
                 <Button
                   x:Name="Btn_Downloadpath" Grid.Row="4" Grid.Column="3"
                   Margin="0" HorizontalAlignment="Right" Click="Click_OpenFilePath"

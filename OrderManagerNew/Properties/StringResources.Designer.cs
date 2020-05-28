@@ -205,6 +205,24 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Adjust Margin 的當地語系化字串。
+        /// </summary>
+        internal static string Crown_Margin_Adjust {
+            get {
+                return ResourceManager.GetString("Crown_Margin_Adjust", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Post-Process 的當地語系化字串。
+        /// </summary>
+        internal static string Crown_Postprocess {
+            get {
+                return ResourceManager.GetString("Crown_Postprocess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Current Step:  的當地語系化字串。
         /// </summary>
         internal static string CurrentStep {
@@ -619,6 +637,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Align Model  的當地語系化字串。
+        /// </summary>
+        internal static string Model_Position {
+            get {
+                return ResourceManager.GetString("Model_Position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 None 的當地語系化字串。
         /// </summary>
         internal static string None {
@@ -727,6 +754,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Printing 的當地語系化字串。
+        /// </summary>
+        internal static string Printing {
+            get {
+                return ResourceManager.GetString("Printing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Program Path 的當地語系化字串。
         /// </summary>
         internal static string ProgramPath {
@@ -763,6 +799,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Setup Manage 的當地語系化字串。
+        /// </summary>
+        internal static string SetupManage {
+            get {
+                return ResourceManager.GetString("SetupManage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Introduction Website 的當地語系化字串。
         /// </summary>
         internal static string SoftwareWeb {
@@ -790,11 +835,29 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Crown Define 的當地語系化字串。
+        /// </summary>
+        internal static string Teeth_Define {
+            get {
+                return ResourceManager.GetString("Teeth_Define", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Today 的當地語系化字串。
         /// </summary>
         internal static string Today {
             get {
                 return ResourceManager.GetString("Today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Treatment Plan 的當地語系化字串。
+        /// </summary>
+        internal static string Treatment_Planning {
+            get {
+                return ResourceManager.GetString("Treatment_Planning", resourceCulture);
             }
         }
         

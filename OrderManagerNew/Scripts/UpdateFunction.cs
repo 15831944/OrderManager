@@ -17,7 +17,7 @@ namespace OrderManagerNew
     {
         #region 變數宣告
         readonly string HLXMLlink = @"https://inteware.com.tw/updateXML/HLnoLic.xml";//HL.xml網址
-        //string HLXMLlink = "D:\\Inteware\\HLnoLic.xml";    //單機測試//TODO之後要換到網上
+        //string HLXMLlink = "D:\\IntewareInc\\HLnoLic.xml";    //單機測試//TODO之後要換到網上
         string downloadfilepath;
         LogRecorder log;    //日誌檔cs
         BackgroundWorker bgWorker_Download;        //申明後臺物件

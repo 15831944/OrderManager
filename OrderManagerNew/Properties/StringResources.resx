@@ -455,4 +455,32 @@
     <value>Load Project</value>
     <comment>Case</comment>
   </data>
+  <data name="Model_Position" xml:space="preserve">
+    <value>Align Model </value>
+    <comment>Ortho_Step</comment>
+  </data>
+  <data name="Teeth_Define" xml:space="preserve">
+    <value>Crown Define</value>
+    <comment>Ortho_Step</comment>
+  </data>
+  <data name="Crown_Margin_Adjust" xml:space="preserve">
+    <value>Adjust Margin</value>
+    <comment>Ortho_Step</comment>
+  </data>
+  <data name="Crown_Postprocess" xml:space="preserve">
+    <value>Post-Process</value>
+    <comment>Ortho_Step</comment>
+  </data>
+  <data name="SetupManage" xml:space="preserve">
+    <value>Setup Manage</value>
+    <comment>Ortho_Step</comment>
+  </data>
+  <data name="Printing" xml:space="preserve">
+    <value>Printing</value>
+    
+  </data>
+  <data name="Treatment_Planning" xml:space="preserve">
+    <value>Treatment Plan</value>
+    <comment>Ortho_Step</comment>
+  </data>
 </root>
