@@ -19,11 +19,11 @@
         <Rectangle
           Grid.Row="1" Grid.Column="1" Width="Auto"
           Height="54" Margin="6,3,0,3" VerticalAlignment="Top"
-          Panel.ZIndex="-1" Fill="White" />
+          Panel.ZIndex="-1" Fill="White" PreviewMouseLeftButtonUp="PMDown_StackPanelMain" />
 
         <StackPanel
-          Grid.Row="1" Grid.Column="1" x:Name="stackpanel_Implant"
-          Orientation="Vertical">
+          x:Name="stackpanel_Implant" Grid.Row="1" Grid.Column="1"
+          Orientation="Vertical" PreviewMouseLeftButtonUp="PMDown_StackPanelMain">
             <Grid>
                 <Grid.Resources>
                     <Style TargetType="{x:Type Label}">
@@ -47,27 +47,26 @@
                 </Grid.ColumnDefinitions>
 
                 <Label
-                  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
-                  x:Name="label_orderID" Content="OrderID" FontSize="20"
+                  x:Name="label_orderID" Grid.Row="0" Grid.Column="1"
+                  Grid.ColumnSpan="2" Content="OrderID" FontSize="20"
                   FontWeight="Bold"
                   ToolTip="{local1:LocExtension OrderID}" />
                 <Label
-                  Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
-                  x:Name="label_patientName" Content="PatientName"
+                  x:Name="label_patientName" Grid.Row="0" Grid.Column="2"
+                  Grid.ColumnSpan="2" Content="PatientName"
                   ToolTip="{local1:LocExtension PatientName}" />
                 <Label
-                  Grid.Row="1" Grid.Column="1" x:Name="label_designStep"
+                  x:Name="label_designStep" Grid.Row="1" Grid.Column="1"
                   Content="DesignStep"
                   ToolTip="{local1:LocExtension DesignStep}" />
                 <Label
-                  Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
-                  x:Name="label_createDate" Content="CreateDate"
+                  x:Name="label_createDate" Grid.Row="1" Grid.Column="2"
+                  Grid.ColumnSpan="2" Content="CreateDate"
                   ToolTip="{local1:LocExtension CreateDate}" />
 
                 <Image Grid.Row="0" Grid.RowSpan="2" Source="/ImageSource/FunctionTable/icon_I.png" />
                 <Button
                   Grid.Row="0" Grid.RowSpan="2" Grid.Column="5"
-                  Click="Click_OpenDir"
                   Style="{StaticResource btn_folderOpen}"
                   ToolTip="{local1:LocExtension OpenCaseFolder}" />
             </Grid>

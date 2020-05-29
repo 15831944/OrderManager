@@ -128,6 +128,7 @@ namespace OrderManagerNew
             
             OrderManagerFunc = new OrderManagerFunctions();
             OrderManagerFunc.SoftwareLogoShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler(Handler_setSoftwareShow);
+            OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
 
             UpdateFunc = new UpdateFunction();
             UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
@@ -136,16 +137,7 @@ namespace OrderManagerNew
 
             ProjHandle = new ProjectHandle();
             ProjHandle.CaseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
-
-            ProjHandle.LoadImplantProj();
-            /*if(Directory.Exists(Properties.Settings.Default.cad_projectDirectory) == true)  //TODO要再修改
-            {
-                ProjHandle.LoadEZCADProj();
-                ProjHandle.LoadTrayProj();
-                ProjHandle.LoadSplintProj();
-                Watcher_CaseProject(new FileSystemWatcher(), Properties.Settings.Default.cad_projectDirectory);
-            }*/
-
+            
             if(Directory.Exists(Properties.Settings.Default.systemDisk) == false)
             {
                 DriveInfo[] allDrives = DriveInfo.GetDrives();
@@ -474,18 +466,14 @@ namespace OrderManagerNew
                         }
                     case "DevBtn8":
                         {
-                            //Order CAD
-                            UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
-                            UserControls.Order_cadBase.CadInformation cadInfo = new UserControls.Order_cadBase.CadInformation
+                            //reLoad Imp Proj
+                            foreach(var childCase in StackPanel_Local.Children)
                             {
-                                OrderID = "2005180858-工單1",
-                                PatientName = "Howwming",
-                                CreateDate = new DateTime(2020, 5, 19, 9, 44, 52),
-                                DesignStep = 1,
-                                CaseDirectoryPath = @"C:\IntewareData\EZCAD\DentDesign\2005180858-工單1-客戶-患者"
-                            };
-                            Order_CAD.SetCaseInfo(cadInfo);
-                            StackPanel_Local.Children.Add(Order_CAD);
+                                if(childCase is OrderManagerNew.UserControls.Order_orthoBase)
+                                {
+
+                                }
+                            }
                             break;
                         }
                     case "DevBtn9":
@@ -675,7 +663,7 @@ namespace OrderManagerNew
                                     cad_troubleShooting.Visibility = Visibility.Visible;
                                     cad_buyLic.Visibility = Visibility.Visible;
                                     cad_unInstall.Visibility = Visibility.Visible;
-                                    SetAllSoftwareTableDownloadisEnable(true);
+                                    
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -741,7 +729,6 @@ namespace OrderManagerNew
                                     implant_troubleShooting.Visibility = Visibility.Visible;
                                     implant_buyLic.Visibility = Visibility.Visible;
                                     implant_unInstall.Visibility = Visibility.Visible;
-                                    SetAllSoftwareTableDownloadisEnable(true);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -807,7 +794,6 @@ namespace OrderManagerNew
                                     ortho_troubleShooting.Visibility = Visibility.Visible;
                                     ortho_buyLic.Visibility = Visibility.Visible;
                                     ortho_unInstall.Visibility = Visibility.Visible;
-                                    SetAllSoftwareTableDownloadisEnable(true);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -873,7 +859,6 @@ namespace OrderManagerNew
                                     tray_troubleShooting.Visibility = Visibility.Visible;
                                     tray_buyLic.Visibility = Visibility.Visible;
                                     tray_unInstall.Visibility = Visibility.Visible;
-                                    SetAllSoftwareTableDownloadisEnable(true);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -939,7 +924,6 @@ namespace OrderManagerNew
                                     splint_troubleShooting.Visibility = Visibility.Visible;
                                     splint_buyLic.Visibility = Visibility.Visible;
                                     splint_unInstall.Visibility = Visibility.Visible;
-                                    SetAllSoftwareTableDownloadisEnable(true);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -1027,6 +1011,16 @@ namespace OrderManagerNew
                                     break;
                                 }
                         }
+                        break;
+                    }
+            }
+
+            switch(currentProgress)
+            {
+                case (int)_softwareStatus.Installed:
+                    {
+                        SetAllSoftwareTableDownloadisEnable(true);
+                        OrderManagerFunc.AutoDetectSoftwareProjectPath();
                         break;
                     }
             }
@@ -1682,6 +1676,7 @@ namespace OrderManagerNew
 
         private void Click_SortTable_Filter(object sender, RoutedEventArgs e)
         {
+            StackPanel_Local.Children.Clear();
             RadioButton radioBtn = sender as RadioButton;
             switch (radioBtn.Name)
             {
@@ -1701,28 +1696,29 @@ namespace OrderManagerNew
                     {
                         break;
                     }
-                case "SoftwareFilterAll":
-                    {
-                        break;
-                    }
                 case "SoftwareFilterCAD":
                     {
+                        ProjHandle.LoadEZCADProj();
                         break;
                     }
                 case "SoftwareFilterImplant":
                     {
+                        ProjHandle.LoadImplantProj();
                         break;
                     }
                 case "SoftwareFilterOrtho":
                     {
+                        ProjHandle.LoadOrthoProj();
                         break;
                     }
                 case "SoftwareFilterTray":
                     {
+                        ProjHandle.LoadTrayProj();
                         break;
                     }
                 case "SoftwareFilterSplint":
                     {
+                        ProjHandle.LoadSplintProj();
                         break;
                     }
             }

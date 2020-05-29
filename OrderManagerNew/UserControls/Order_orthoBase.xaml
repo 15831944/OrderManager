@@ -19,11 +19,11 @@
         <Rectangle
           Grid.Row="1" Grid.Column="1" Width="Auto"
           Height="54" Margin="6,3,0,3" VerticalAlignment="Top"
-          Panel.ZIndex="-1" Fill="White" />
+          Panel.ZIndex="-1" Fill="White" PreviewMouseLeftButtonUp="PMDown_StackPanelMain" />
 
         <StackPanel
           x:Name="stackpanel_Ortho" Grid.Row="1" Grid.Column="1"
-          Orientation="Vertical">
+          Orientation="Vertical" PreviewMouseLeftButtonUp="PMDown_StackPanelMain">
             <Grid>
                 <Grid.Resources>
                     <Style TargetType="{x:Type Label}">
@@ -66,8 +66,8 @@
 
                 <Image Grid.Row="0" Grid.RowSpan="2" Source="/ImageSource/FunctionTable/icon_O.png" />
                 <Button
-                  Grid.Row="0" Grid.RowSpan="2" Grid.Column="5"
-                  Click="Click_OpenDir"
+                  x:Name="button_OpenFolder" Grid.Row="0" Grid.RowSpan="2"
+                  Grid.Column="5"
                   Style="{StaticResource btn_folderOpen}"
                   ToolTip="{local1:LocExtension OpenCaseFolder}" />
             </Grid>

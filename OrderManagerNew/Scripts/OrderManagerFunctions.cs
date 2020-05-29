@@ -70,7 +70,70 @@ namespace OrderManagerNew
         }
 
         /// <summary>
-        /// 自動檢測軟體執行檔路徑並把最常用的磁碟存入 Properties.Settings.Default.mostsoftwareDisk
+        /// 再次檢查軟體執行檔是否存在，exePath路徑不會生
+        /// </summary>
+        public void DoubleCheckEXEexist()
+        {
+            if(File.Exists(Properties.Settings.Default.cad_exePath) == true)
+            {
+                SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
+            }
+            else
+            {
+                Properties.Settings.Default.cad_exePath = "";
+                SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
+            }
+            if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
+            {
+                SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
+            }
+            else
+            {
+                Properties.Settings.Default.implant_exePath = "";
+                SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
+            }
+            if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
+            {
+                SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
+            }
+            else
+            {
+                Properties.Settings.Default.ortho_exePath = "";
+                SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0.0);
+            }
+            if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
+            {
+                SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
+            }
+            else
+            {
+                Properties.Settings.Default.tray_exePath = "";
+                SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0.0);
+            }
+            if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
+            {
+                SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
+            }
+            else
+            {
+                Properties.Settings.Default.splint_exePath = "";
+                SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0.0);
+            }
+            if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
+            {
+                SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
+            }
+            else
+            {
+                Properties.Settings.Default.guide_exePath = "";
+                SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
+            }
+
+            AutoDetectSoftwareProjectPath();
+        }
+
+        /// <summary>
+        /// 自動檢測軟體執行檔路徑(偵測並寫入exePath)並把最常用的磁碟存入 Properties.Settings.Default.mostsoftwareDisk
         /// </summary>
         /// <param name="classfrom">哪個class呼叫的，參考 _classFrom</param>
         public void AutoDetectEXE(int classfrom)
@@ -380,36 +443,6 @@ namespace OrderManagerNew
                         Properties.Settings.Default.mostsoftwareDisk = sortedInfoList[0].DiskName;
                 }
             }
-            //沒安裝的軟體Logo變灰，有安裝的常亮
-            if(classfrom == (int)_classFrom.MainWindow)
-            {
-                if (Properties.Settings.Default.cad_exePath == "")
-                    SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
-                else
-                    SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
-                if (Properties.Settings.Default.implant_exePath == "")
-                    SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
-                else
-                    SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
-                if (Properties.Settings.Default.ortho_exePath == "")
-                    SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0.0);
-                else
-                    SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
-                if (Properties.Settings.Default.tray_exePath == "")
-                    SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0.0);
-                else
-                    SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
-                if (Properties.Settings.Default.splint_exePath == "")
-                    SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0.0);
-                else
-                    SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
-                if (Properties.Settings.Default.guide_exePath == "")
-                    SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
-                else
-                    SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
-            }
-
-            Properties.Settings.Default.Save();
 
             //記錄到log檔內
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "cad_exePath", "\t\"" + Properties.Settings.Default.cad_exePath + "\"");
@@ -423,7 +456,11 @@ namespace OrderManagerNew
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs AutoDetectEXE()", "Detect finish.");
             log.RecordLogSaperate();
 
-            AutoDetectSoftwareProjectPath();
+            //沒安裝的軟體Logo變灰，有安裝的常亮
+            if (classfrom == (int)_classFrom.MainWindow)
+            {
+                DoubleCheckEXEexist();
+            }
         }
 
         /// <summary>
@@ -462,8 +499,13 @@ namespace OrderManagerNew
                 }
                 catch (Exception ex)
                 {
+                    Properties.Settings.Default.cad_projectDirectory = "";
                     log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_CAD", ex.Message);
                 }
+            }
+            else
+            {
+                Properties.Settings.Default.cad_projectDirectory = "";
             }
             if (Properties.Settings.Default.tray_exePath != "")
             {
@@ -492,8 +534,13 @@ namespace OrderManagerNew
                 }
                 catch (Exception ex)
                 {
+                    Properties.Settings.Default.tray_projectDirectory = "";
                     log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_tray", ex.Message);
                 }
+            }
+            else
+            {
+                Properties.Settings.Default.tray_projectDirectory = "";
             }
             if (Properties.Settings.Default.splint_exePath != "")
             {
@@ -522,8 +569,13 @@ namespace OrderManagerNew
                 }
                 catch (Exception ex)
                 {
+                    Properties.Settings.Default.splint_projectDirectory = "";
                     log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_splint", ex.Message);
                 }
+            }
+            else
+            {
+                Properties.Settings.Default.splint_projectDirectory = "";
             }
             if (Properties.Settings.Default.ortho_exePath != "")
             {
@@ -552,10 +604,15 @@ namespace OrderManagerNew
                 }
                 catch (Exception ex)
                 {
+                    Properties.Settings.Default.ortho_projectDirectory = "";
                     log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_ortho", ex.Message);
                 }
             }
-            if(Properties.Settings.Default.implant_exePath != "")
+            else
+            {
+                Properties.Settings.Default.ortho_projectDirectory = "";
+            }
+            if (Properties.Settings.Default.implant_exePath != "")
             {
                 //Implant比較特殊，舊版Implant的專案檔路徑是OrderManager給的
                 try
@@ -644,8 +701,18 @@ namespace OrderManagerNew
                 }
                 catch (Exception ex)
                 {
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_ortho", ex.Message);
+                    Properties.Settings.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\";
+                    if(Directory.Exists(Properties.Settings.Default.implant_projectDirectory) == false)
+                        Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\");
+
+                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_implant", ex.Message);
                 }
+            }
+            else
+            {
+                Properties.Settings.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\";
+                if (Directory.Exists(Properties.Settings.Default.implant_projectDirectory) == false)
+                    Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\");
             }
             Properties.Settings.Default.Save();
 

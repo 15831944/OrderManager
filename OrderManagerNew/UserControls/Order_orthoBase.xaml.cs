@@ -22,12 +22,13 @@ namespace OrderManagerNew.UserControls
     public partial class Order_orthoBase : UserControl
     {
         private OrthoOuterInformation orthoInfo;
+        private bool UnfoldsmallCase = false;   //smallCase目前是否為攤開狀態
 
         public class OrthoOuterInformation
         {
+            public string CaseDirectoryPath { get; set; }
             public string PatientID { get; set; }
             public string PatientName { get; set; }
-            public string PatientPhone { get; set; }
             public bool PatientSex { get; set; }    //True為男性
             public DateTime PatientBirth { get; set; }
             public string PatientAddress { get; set; }
@@ -39,9 +40,9 @@ namespace OrderManagerNew.UserControls
 
             public OrthoOuterInformation()
             {
+                CaseDirectoryPath = "";
                 PatientID = "";
                 PatientName = "";
-                PatientPhone = "";
                 PatientSex = false;
                 PatientAddress = "";
                 DentistName = "";
@@ -60,12 +61,14 @@ namespace OrderManagerNew.UserControls
             label_patientName.Content = "";
             label_designStep.Content = "";
             label_createDate.Content = "";
+            UnfoldsmallCase = false;
         }
 
         public void SetCaseInfo(OrthoOuterInformation Import)
         {
             orthoInfo = Import;
-            label_orderID.Content = orthoInfo.PatientID;
+            string showID = orthoInfo.PatientID + "＿" + orthoInfo.PatientName;
+            label_orderID.Content = showID;
             label_patientName.Content = orthoInfo.PatientName;
             if(orthoInfo.PatientBirth != new DateTime())
             {
@@ -78,10 +81,39 @@ namespace OrderManagerNew.UserControls
 
         private void Click_OpenDir(object sender, RoutedEventArgs e)
         {
-            if(orthoInfo.List_smallcase.Count > 0)
+            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+            omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + System.IO.Path.GetDirectoryName(orthoInfo.CaseDirectoryPath) + "\"");
+        }
+
+        private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
+        {
+            if(e.Source is Button)
             {
-                foreach (Order_orthoSmallcase OrthoCase in orthoInfo.List_smallcase)
-                    stackpanel_Ortho.Children.Add(OrthoCase);
+                Click_OpenDir(null, null);
+            }
+            else
+            {
+                if(UnfoldsmallCase == false)
+                {
+                    //未被攤開，執行攤開
+                    if (orthoInfo.List_smallcase.Count > 0)
+                    {
+                        foreach (Order_orthoSmallcase OrthoCase in orthoInfo.List_smallcase)
+                        {
+                            stackpanel_Ortho.Children.Add(OrthoCase);
+                        }
+                        UnfoldsmallCase = true;
+                    }
+                }
+                else
+                {
+                    //已被攤開，收回
+                    if (orthoInfo.List_smallcase.Count > 0)
+                    {
+                        stackpanel_Ortho.Children.RemoveRange(1, (stackpanel_Ortho.Children.Count - 1));
+                        UnfoldsmallCase = false;
+                    }
+                }
             }
         }
     }

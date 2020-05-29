@@ -295,10 +295,10 @@
                           Content="AutoDetectEXE" />
                         <Button
                           x:Name="DevBtn8" Grid.Row="0" Grid.Column="7"
-                          Content="Order CAD" />
+                          Content="reLoad IMP proj" />
                         <Button
                           x:Name="DevBtn9" Grid.Row="0" Grid.Column="8"
-                          Content="Load CAD proj" />
+                          Content="" />
                         <Button x:Name="DevBtn10" Grid.Row="0" Grid.Column="9" />
                         <Button x:Name="DevBtn11" Grid.Row="1" Grid.Column="0" />
                         <Button x:Name="DevBtn12" Grid.Row="1" Grid.Column="1" />
@@ -371,8 +371,7 @@
                                     </Style>
                                 </Grid.Resources>
                                 <StackPanel Margin="30,0,0,0" Orientation="Vertical">
-                                    <RadioButton Name="SoftwareFilterAll" Content="{local:LocExtension All}" IsChecked="True" />
-                                    <RadioButton Name="SoftwareFilterCAD" Content="EZCAD" />
+                                    <RadioButton Name="SoftwareFilterCAD" Content="EZCAD" IsChecked="True" />
                                     <RadioButton Name="SoftwareFilterImplant" Content="ImplantPlanning" />
                                     <RadioButton Name="SoftwareFilterOrtho" Content="OrthoAnalysis" />
                                     <RadioButton Name="SoftwareFilterTray" Content="EZCAD.tray" />

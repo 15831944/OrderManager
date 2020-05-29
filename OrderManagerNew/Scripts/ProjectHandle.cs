@@ -270,11 +270,13 @@ namespace OrderManagerNew
                             {
                                 var orthodata = EZOrthoDataStructure.ProjectDataWrapper.ProjectDataWrapperDeserialize(SmallXmlPath);
 
-                                OrthoSmallCaseInformation tmpOrthosmallInfo = new OrthoSmallCaseInformation();
-                                //tmpOrthosmallInfo.SoftwareVer = new Version(orthodata.File_Version);
-                                tmpOrthosmallInfo.WorkflowStep = Convert.ToInt16(orthodata.workflowstep);
-                                tmpOrthosmallInfo.CreateTime = orthodata.patientInformation.m_CreateTime;
-                                tmpOrthosmallInfo.Describe = orthodata.patientInformation.m_Discribe;
+                                OrthoSmallCaseInformation tmpOrthosmallInfo = new OrthoSmallCaseInformation
+                                {
+                                    //tmpOrthosmallInfo.SoftwareVer = new Version(orthodata.File_Version);
+                                    WorkflowStep = Convert.ToInt16(orthodata.workflowstep),
+                                    CreateTime = orthodata.patientInformation.m_CreateTime,
+                                    Describe = orthodata.patientInformation.m_Discribe
+                                };
 
                                 UserControls.Order_orthoSmallcase tmporthoSmallcase = new UserControls.Order_orthoSmallcase();
                                 tmporthoSmallcase.SetOrthoSmallCaseInfo(tmpOrthosmallInfo);
@@ -363,23 +365,33 @@ namespace OrderManagerNew
 
                         try
                         {
-                            ImplantOuterInformation tmpImpOuterInfo = new ImplantOuterInformation();
-
                             XElement xml = xmlDoc.Element("ImplantOrderExport");
-                            tmpImpOuterInfo.OrderNumber = xml.Element("OrderInfo").Element("OrderNo").Value;
-                            tmpImpOuterInfo.PatientName = xml.Element("OrderInfo").Element("PatientName").Value;
-                            string pbirthday = xml.Element("OrderInfo").Element("PatientBirthday").Value + "T00:00:00";
-                            tmpImpOuterInfo.PatientBirth = Convert.ToDateTime(pbirthday);
-                            tmpImpOuterInfo.Clinic = xml.Element("OrderInfo").Element("Clinic").Value;
-                            tmpImpOuterInfo.Note = xml.Element("OrderInfo").Element("Note").Value;
 
-                            tmpImpOuterInfo.CBCTPath = xml.Element("ImageData").Element("CBCTPath").Value;
-                            tmpImpOuterInfo.JawPath = xml.Element("ImageData").Element("JawPath").Value;
-                            tmpImpOuterInfo.JawTrayPath = xml.Element("ImageData").Element("JawTrayPath").Value;
-                            tmpImpOuterInfo.DenturePath = xml.Element("ImageData").Element("DenturePath").Value;
-                            tmpImpOuterInfo.CreateDate = fInfo.CreationTime;
-                            tmpImpOuterInfo.ModifyDate = fInfo.LastWriteTime;
-
+                            ImplantOuterInformation tmpImpOuterInfo = new ImplantOuterInformation
+                            {
+                                OrderNumber = xml.Element("OrderInfo").Element("OrderNo").Value,
+                                PatientName = xml.Element("OrderInfo").Element("PatientName").Value,
+                                CaseDirectoryPath = Path.GetDirectoryName(XmlPath) + @"\",
+                                CreateDate = fInfo.CreationTime,
+                                ModifyDate = fInfo.LastWriteTime
+                            };
+                            
+                            try
+                            {
+                                string pbirthday = xml.Element("OrderInfo").Element("PatientBirthday").Value + "T00:00:00";
+                                tmpImpOuterInfo.PatientBirth = Convert.ToDateTime(pbirthday);
+                            }
+                            catch
+                            {
+                                tmpImpOuterInfo.PatientBirth = new DateTime();
+                            }
+                            try { tmpImpOuterInfo.Clinic = xml.Element("OrderInfo").Element("Clinic").Value; } catch { tmpImpOuterInfo.Clinic = ""; }
+                            try { tmpImpOuterInfo.Note = xml.Element("OrderInfo").Element("Note").Value; } catch { tmpImpOuterInfo.Note = ""; }
+                            try { tmpImpOuterInfo.CBCTPath = xml.Element("ImageData").Element("CBCTPath").Value; } catch { tmpImpOuterInfo.CBCTPath = ""; }
+                            try { tmpImpOuterInfo.JawPath = xml.Element("ImageData").Element("JawPath").Value; } catch { tmpImpOuterInfo.JawPath = ""; }
+                            try { tmpImpOuterInfo.JawTrayPath = xml.Element("ImageData").Element("JawTrayPath").Value; } catch { tmpImpOuterInfo.JawTrayPath = ""; }
+                            try { tmpImpOuterInfo.DenturePath = xml.Element("ImageData").Element("DenturePath").Value; } catch { tmpImpOuterInfo.DenturePath = ""; }
+                            
                             Caselist_ImplantOuterCase.Add(tmpImpOuterInfo);
 
                             return true;
@@ -399,22 +411,30 @@ namespace OrderManagerNew
                             XElement xml = xmlDoc.Element("CreateProjectInfo");
 
                             bool Gender = false;
-                            if (xml.Element("PatientSex").Value.ToLower() == "true")
-                                Gender = true;
-                            else
-                                Gender = false;
+                            try
+                            {
+                                if (xml.Element("PatientSex").Value.ToLower() == "true" || xml.Element("PatientSex").Value.ToLower() == "1")
+                                    Gender = true;
+                                else
+                                    Gender = false;
+                            }
+                            catch { }
 
-                            OrthoOuterInformation orthoInfo = new OrthoOuterInformation();
-                            orthoInfo.PatientID = xml.Element("PatientID").Value;
-                            orthoInfo.PatientName = xml.Element("PatientName").Value;
-                            orthoInfo.PatientPhone = xml.Element("PatientPhone").Value;
-                            orthoInfo.PatientSex = Gender;
-                            orthoInfo.PatientBirth = Convert.ToDateTime(xml.Element("PatientBday").Value);
-                            orthoInfo.PatientAddress = xml.Element("PatientAddress").Value;
-                            orthoInfo.DentistName = xml.Element("DentistName").Value;
-                            orthoInfo.ClinicName = xml.Element("ClinicName").Value;
-                            orthoInfo.CreateTime = Convert.ToDateTime(xml.Element("CreateTime")?.Value);
-                            orthoInfo.ModifyTime = fInfo.LastWriteTime;
+
+                            OrthoOuterInformation orthoInfo = new OrthoOuterInformation
+                            {
+                                CaseDirectoryPath = Path.GetDirectoryName(XmlPath) + @"\",
+                                PatientID = xml.Element("PatientID").Value,
+                                PatientName = xml.Element("PatientName").Value,
+                                PatientSex = Gender,
+                                ModifyTime = fInfo.LastWriteTime
+                        };
+                            try { orthoInfo.PatientBirth = Convert.ToDateTime(xml.Element("PatientBday").Value); } catch { orthoInfo.PatientBirth = new DateTime(); }
+                            try { orthoInfo.PatientAddress = xml.Element("PatientAddress").Value; } catch { orthoInfo.PatientAddress = ""; }
+                            try { orthoInfo.DentistName = xml.Element("DentistName").Value; } catch { orthoInfo.DentistName = ""; }
+                            try { orthoInfo.ClinicName = xml.Element("ClinicName").Value; } catch { orthoInfo.ClinicName = ""; }
+                            try { orthoInfo.CreateTime = Convert.ToDateTime(xml.Element("CreateTime")?.Value); } catch { orthoInfo.CreateTime = fInfo.CreationTime; }
+                            
                             Caselist_OrthoOuterCase.Add(orthoInfo);
 
                             return true;

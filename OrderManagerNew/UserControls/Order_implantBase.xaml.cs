@@ -22,6 +22,7 @@ namespace OrderManagerNew.UserControls
     public partial class Order_implantBase : UserControl
     {
         private ImplantOuterInformation implantInfo;
+        private bool UnfoldsmallCase = false;   //smallCase目前是否為攤開狀態
 
         /// <summary>
         /// ImplantPlanning專案資訊
@@ -69,6 +70,7 @@ namespace OrderManagerNew.UserControls
             label_patientName.Content = "";
             label_designStep.Content = "";
             label_createDate.Content = "";
+            UnfoldsmallCase = false;
         }
 
         public void SetCaseInfo(ImplantOuterInformation Import)
@@ -87,10 +89,39 @@ namespace OrderManagerNew.UserControls
 
         private void Click_OpenDir(object sender, RoutedEventArgs e)
         {
-            if(implantInfo.List_smallcase.Count > 0)
+            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+            omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + System.IO.Path.GetDirectoryName(implantInfo.CaseDirectoryPath) + "\"");
+        }
+
+        private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Source is Button)
             {
-                foreach(Order_ImplantSmallcase ImplantCase in implantInfo.List_smallcase)
-                    stackpanel_Implant.Children.Add(ImplantCase);
+                Click_OpenDir(null, null);
+            }
+            else
+            {
+                if (UnfoldsmallCase == false)
+                {
+                    //未被攤開，執行攤開
+                    if (implantInfo.List_smallcase.Count > 0)
+                    {
+                        foreach (Order_ImplantSmallcase ImplantCase in implantInfo.List_smallcase)
+                        {
+                            stackpanel_Implant.Children.Add(ImplantCase);
+                        }
+                        UnfoldsmallCase = true;
+                    }
+                }
+                else
+                {
+                    //已被攤開，收回
+                    if (implantInfo.List_smallcase.Count > 0)
+                    {
+                        stackpanel_Implant.Children.RemoveRange(1, (stackpanel_Implant.Children.Count - 1));
+                        UnfoldsmallCase = false;
+                    }
+                }
             }
         }
     }
