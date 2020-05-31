@@ -241,54 +241,6 @@ namespace OrderManagerNew
                 {
                     if (LoadXml((int)_softwareID.Ortho, OuterXmlPath) == false)
                         continue;
-
-                    Caselist_OrthoOuterCase[Caselist_OrthoOuterCase.Count - 1].List_smallcase = new List<UserControls.Order_orthoSmallcase>();
-                    //蒐集OrthoSmallcase然後存進OuterCase
-                    DirectoryInfo dInfo2 = new DirectoryInfo(folder.FullName + @"\");
-                    foreach (DirectoryInfo folder2 in dInfo2.GetDirectories())
-                    {
-                        // 這層是C:\IntewareData\OrthoAnalysisV3\OrthoData\Test_1216\folder2\
-                        string SmallXmlPath = folder2.FullName + @"\" + folder + ".xml";
-                        if (File.Exists(SmallXmlPath) == false)
-                            continue;
-                        else
-                        {
-                            XDocument xmlDoc;
-                            FileInfo fInfo = new FileInfo(SmallXmlPath);//要取得檔案創建日期和修改日期
-
-                            try
-                            {
-                                xmlDoc = XDocument.Load(SmallXmlPath);
-                            }
-                            catch(Exception ex)
-                            {
-                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Ortho smallcase) Exception", ex.Message);
-                                continue;
-                            }
-
-                            try
-                            {
-                                var orthodata = EZOrthoDataStructure.ProjectDataWrapper.ProjectDataWrapperDeserialize(SmallXmlPath);
-
-                                OrthoSmallCaseInformation tmpOrthosmallInfo = new OrthoSmallCaseInformation
-                                {
-                                    //tmpOrthosmallInfo.SoftwareVer = new Version(orthodata.File_Version);
-                                    WorkflowStep = Convert.ToInt16(orthodata.workflowstep),
-                                    CreateTime = orthodata.patientInformation.m_CreateTime,
-                                    Describe = orthodata.patientInformation.m_Discribe
-                                };
-
-                                UserControls.Order_orthoSmallcase tmporthoSmallcase = new UserControls.Order_orthoSmallcase();
-                                tmporthoSmallcase.SetOrthoSmallCaseInfo(tmpOrthosmallInfo);
-                                Caselist_OrthoOuterCase[Caselist_OrthoOuterCase.Count - 1].List_smallcase.Add(tmporthoSmallcase);
-                            }
-                            catch(Exception ex)
-                            {
-                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Ortho smallcase) Exception2", ex.Message);
-                                continue;
-                            }
-                        }
-                    }
                 }
             }
 

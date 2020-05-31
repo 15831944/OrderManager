@@ -72,8 +72,6 @@ namespace OrderManagerNew
                 OriginalSet.Ortho_exePath = Properties.Settings.Default.ortho_exePath;
             if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
                 OriginalSet.Tray_exePath = Properties.Settings.Default.tray_exePath;
-            if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
-                OriginalSet.Tray_exePath = Properties.Settings.Default.cad_exePath;
             if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
                 OriginalSet.Splint_exePath = Properties.Settings.Default.splint_exePath;
             if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
@@ -297,6 +295,8 @@ namespace OrderManagerNew
                 Dlg.InitialDirectory = System.IO.Path.GetDirectoryName(originPah);
             else if (Directory.Exists(Properties.Settings.Default.mostsoftwareDisk + @"IntewareInc\") == true)
                 Dlg.InitialDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareInc\";
+            else
+                return;
 
             Nullable<bool> result = Dlg.ShowDialog();
             if (result == true)
@@ -340,6 +340,10 @@ namespace OrderManagerNew
                             break;
                         }
                 }
+            }
+            else
+            {
+                this.DialogResult = false;
             }
         }
     }

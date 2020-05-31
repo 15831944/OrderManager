@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using Order_orthoSmallcase = OrderManagerNew.UserControls.Order_orthoSmallcase;
 
 namespace OrderManagerNew.UserControls
@@ -21,6 +24,7 @@ namespace OrderManagerNew.UserControls
     /// </summary>
     public partial class Order_orthoBase : UserControl
     {
+        LogRecorder log;
         private OrthoOuterInformation orthoInfo;
         private bool UnfoldsmallCase = false;   //smallCase目前是否為攤開狀態
 
@@ -57,6 +61,7 @@ namespace OrderManagerNew.UserControls
         public Order_orthoBase()
         {
             InitializeComponent();
+            log = new LogRecorder();
             label_orderID.Content = "";
             label_patientName.Content = "";
             label_designStep.Content = "";
@@ -104,6 +109,19 @@ namespace OrderManagerNew.UserControls
                         }
                         UnfoldsmallCase = true;
                     }
+                    else
+                    {
+                        LoadSmallCase();
+
+                        if (orthoInfo.List_smallcase.Count > 0)
+                        {
+                            foreach (Order_orthoSmallcase OrthoCase in orthoInfo.List_smallcase)
+                            {
+                                stackpanel_Ortho.Children.Add(OrthoCase);
+                            }
+                            UnfoldsmallCase = true;
+                        }
+                    } 
                 }
                 else
                 {
@@ -112,6 +130,58 @@ namespace OrderManagerNew.UserControls
                     {
                         stackpanel_Ortho.Children.RemoveRange(1, (stackpanel_Ortho.Children.Count - 1));
                         UnfoldsmallCase = false;
+                    }
+                }
+            }
+        }
+
+        //讀取SmallCase資訊
+        private void LoadSmallCase()
+        {
+            orthoInfo.List_smallcase = new List<UserControls.Order_orthoSmallcase>();
+            //蒐集OrthoSmallcase然後存進OuterCase
+            DirectoryInfo dInfo2 = new DirectoryInfo(orthoInfo.CaseDirectoryPath);
+            foreach (DirectoryInfo folder2 in dInfo2.GetDirectories())
+            {
+                // 這層是C:\IntewareData\OrthoAnalysisV3\OrthoData\Test_1216\folder2\
+                string SmallXmlPath = folder2.FullName + @"\" + (orthoInfo.PatientID + "_" + orthoInfo.PatientName) + ".xml";
+                if (File.Exists(SmallXmlPath) == false)
+                    continue;
+                else
+                {
+                    XDocument xmlDoc;
+                    FileInfo fInfo = new FileInfo(SmallXmlPath);//要取得檔案創建日期和修改日期
+
+                    try
+                    {
+                        xmlDoc = XDocument.Load(SmallXmlPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Ortho smallcase) Exception", ex.Message);
+                        continue;
+                    }
+
+                    try
+                    {
+                        var orthodata = EZOrthoDataStructure.ProjectDataWrapper.ProjectDataWrapperDeserialize(SmallXmlPath);
+
+                        Order_orthoSmallcase.OrthoSmallCaseInformation tmpOrthosmallInfo = new Order_orthoSmallcase.OrthoSmallCaseInformation
+                        {
+                            //tmpOrthosmallInfo.SoftwareVer = new Version(orthodata.File_Version);
+                            WorkflowStep = Convert.ToInt16(orthodata.workflowstep),
+                            CreateTime = orthodata.patientInformation.m_CreateTime,
+                            Describe = orthodata.patientInformation.m_Discribe
+                        };
+
+                        UserControls.Order_orthoSmallcase tmporthoSmallcase = new UserControls.Order_orthoSmallcase();
+                        tmporthoSmallcase.SetOrthoSmallCaseInfo(tmpOrthosmallInfo);
+                        orthoInfo.List_smallcase.Add(tmporthoSmallcase);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Ortho smallcase) Exception2", ex.Message);
+                        continue;
                     }
                 }
             }

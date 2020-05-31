@@ -232,10 +232,9 @@ namespace OrderManagerNew
                 double dirSize = (double)OrderManagerFunc.DirSize(new DirectoryInfo(watcher.Path));
                 double LimitSize = UpdateFunc.readyInstallSoftwareInfo.softwareSize;
 
-                if (Path.GetExtension(e.FullPath) == ".exe" && (
-                   Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("cad") != -1 ||
-                   Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("implant") != -1 ||
-                   Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("ortho") != -1))
+                string exeName = Path.GetFileName(e.FullPath).ToLower();
+                if (exeName.IndexOf("cad.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("orthoanalysis.exe") != -1
+                    || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1)
                 {
                     DialogBeforeDownload.SetPropertiesSoftewarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
                     haveEXE = true;
@@ -262,13 +261,14 @@ namespace OrderManagerNew
         /// <param name="e"></param>
         private void Watcher_Deleting_Changed(object sender, FileSystemEventArgs e)
         {
-            if (Path.GetExtension(e.FullPath) == ".exe" && (
-               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("cad") != -1 ||
-               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("implant") != -1 ||
-               Path.GetFileNameWithoutExtension(e.FullPath).ToLower().IndexOf("ortho") != -1))
-            {
+            bool HaveDeleted = false;
+            string exeName = Path.GetFileName(e.FullPath).ToLower();
+                if (HaveDeleted == false && (exeName.IndexOf("cad.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("orthoanalysis.exe") != -1
+                    || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1))
+                {
                 this.Dispatcher.Invoke((Action)(() =>
                 {
+                    HaveDeleted = true;
                     Console.WriteLine(e.FullPath);
                     SetAllSoftwareTableDownloadisEnable(true);
                     Handler_setSoftwareShow(CheckedSoftwareID, (int)_softwareStatus.NotInstall, 0);
@@ -287,9 +287,6 @@ namespace OrderManagerNew
             //設定所要監控的變更類型
             Watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
 
-            //設定所要監控的檔案
-            //Watcher.Filter = "*.xml";
-
             //設定是否監控子資料夾
             Watcher.IncludeSubdirectories = true;
 
@@ -297,49 +294,55 @@ namespace OrderManagerNew
             Watcher.EnableRaisingEvents = true;
 
             //設定觸發事件
-            Watcher.Created += new FileSystemEventHandler(_watch_Created);
-            Watcher.Deleted += new FileSystemEventHandler(_watch_Deleted);
+            Watcher.Created += new FileSystemEventHandler(Watcher_ProjectCreated);
+            Watcher.Deleted += new FileSystemEventHandler(Watcher_ProjectDeleted);
         }
 
-        private void _watch_Created(object sender, FileSystemEventArgs e)
+        private void Watcher_ProjectCreated(object sender, FileSystemEventArgs e)
         {
             this.Dispatcher.Invoke((Action)(() =>
             {
                 try
                 {
-                    if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.cad_projectDirectory)
+                    if ((SoftwareFilterCAD.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.cad_projectDirectory))
                         ProjHandle.LoadEZCADProj();
-                    else if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.tray_projectDirectory)
+                    else if ((SoftwareFilterImplant.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.implant_projectDirectory))
+                        ProjHandle.LoadImplantProj();
+                    else if ((SoftwareFilterOrtho.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.ortho_projectDirectory))
+                        ProjHandle.LoadOrthoProj();
+                    else if ((SoftwareFilterTray.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.tray_projectDirectory))
                         ProjHandle.LoadTrayProj();
-                    else if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.splint_projectDirectory)
+                    else if ((SoftwareFilterSplint.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.splint_projectDirectory))
                         ProjHandle.LoadSplintProj();
-
-                    Handler_SetCaseShow((int)_softwareID.All);
-                    /*else if (e.FullPath.Replace(e.Name, "") == ImplantRoot)
-                        LoadImplantPlanningProject();*/
                 }
                 catch (Exception ex)
                 {
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "_watch_Created_exception", ex.Message);
+                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Watcher_ProjectCreated_exception", ex.Message);
                 }
             }));
 
         }
-        private void _watch_Deleted(object sender, FileSystemEventArgs e)
+        private void Watcher_ProjectDeleted(object sender, FileSystemEventArgs e)
         {
             this.Dispatcher.Invoke((Action)(() =>
             {
-                if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.cad_projectDirectory)
-                    ProjHandle.LoadEZCADProj();
-                else if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.tray_projectDirectory)
-                    ProjHandle.LoadTrayProj();
-                else if (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.splint_projectDirectory)
-                    ProjHandle.LoadSplintProj();
-
-                Handler_SetCaseShow((int)_softwareID.All);
-                /*else if (e.FullPath.Replace(e.Name, "") == ImplantRoot)
-                    LoadImplantPlanningProject();
-                else if (e.FullPath.Replace(e.Name, "") == TrayRoot)*/
+                try
+                {
+                    if ((SoftwareFilterCAD.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.cad_projectDirectory))
+                        ProjHandle.LoadEZCADProj();
+                    else if ((SoftwareFilterImplant.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.implant_projectDirectory))
+                        ProjHandle.LoadImplantProj();
+                    else if ((SoftwareFilterOrtho.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.ortho_projectDirectory))
+                        ProjHandle.LoadOrthoProj();
+                    else if ((SoftwareFilterTray.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.tray_projectDirectory))
+                        ProjHandle.LoadTrayProj();
+                    else if ((SoftwareFilterSplint.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.splint_projectDirectory))
+                        ProjHandle.LoadSplintProj();
+                }
+                catch (Exception ex)
+                {
+                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Watcher_ProjectDeleted_exception", ex.Message);
+                }
             }));
         }
         #endregion
