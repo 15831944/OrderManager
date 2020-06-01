@@ -516,8 +516,8 @@
                         </BulletDecorator.Bullet>
                         <!--  Text element  -->
                         <TextBlock
-                          Margin="10,0,0,0" FontFamily="Segoe UI" FontSize="14"
-                          Foreground="#FFF4E9DC">
+                          Name="RadioContent" Margin="10,0,0,0" FontFamily="Segoe UI"
+                          FontSize="14" Foreground="#FFF4E9DC">
                             <ContentPresenter />
                         </TextBlock>
                     </BulletDecorator>
@@ -530,6 +530,10 @@
                             <!--  If item is checked, trigger the visibility of the mark and change the color of the selected bullet into a darker gray for better highlighting  -->
                             <Setter TargetName="RadioMark" Property="Visibility" Value="Visible" />
                             <Setter TargetName="RadioOuter" Property="BorderBrush" Value="#FFADADAD" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="RadioOuter" Property="Opacity" Value="0.2" />
+                            <Setter TargetName="RadioContent" Property="Opacity" Value="0.2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

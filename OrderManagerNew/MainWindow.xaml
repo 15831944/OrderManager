@@ -367,11 +367,11 @@
                                 <Grid.Resources>
                                     <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
                                         <Setter Property="GroupName" Value="SortSoftware" />
-                                        <EventSetter Event="Click" Handler="Click_SortTable_Filter" />
+                                        <EventSetter Event="Checked" Handler="Click_SortTable_Filter" />
                                     </Style>
                                 </Grid.Resources>
                                 <StackPanel Margin="30,0,0,0" Orientation="Vertical">
-                                    <RadioButton Name="SoftwareFilterCAD" Content="EZCAD" IsChecked="True" />
+                                    <RadioButton Name="SoftwareFilterCAD" Content="EZCAD" />
                                     <RadioButton Name="SoftwareFilterImplant" Content="ImplantPlanning" />
                                     <RadioButton Name="SoftwareFilterOrtho" Content="OrthoAnalysis" />
                                     <RadioButton Name="SoftwareFilterTray" Content="EZCAD.tray" />

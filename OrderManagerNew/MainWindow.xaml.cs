@@ -113,6 +113,12 @@ namespace OrderManagerNew
                 }
             }
 
+            SoftwareFilterCAD.IsEnabled = false;
+            SoftwareFilterImplant.IsEnabled = false;
+            SoftwareFilterOrtho.IsEnabled = false;
+            SoftwareFilterTray.IsEnabled = false;
+            SoftwareFilterSplint.IsEnabled = false;
+
             //初始化LogRecorder
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
@@ -125,7 +131,10 @@ namespace OrderManagerNew
 
             MediaTimeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(1000));    //設定動畫流暢度
             LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
-            
+
+            ProjHandle = new ProjectHandle();
+            ProjHandle.CaseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
+
             OrderManagerFunc = new OrderManagerFunctions();
             OrderManagerFunc.SoftwareLogoShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler(Handler_setSoftwareShow);
             OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
@@ -134,9 +143,6 @@ namespace OrderManagerNew
             UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
             UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
             UpdateFunc.LoadHLXml();                 //截取線上HL.xml內的資料
-
-            ProjHandle = new ProjectHandle();
-            ProjHandle.CaseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
             
             if(Directory.Exists(Properties.Settings.Default.systemDisk) == false)
             {
@@ -146,7 +152,10 @@ namespace OrderManagerNew
                     try
                     {
                         if (File.Exists(diskInfo.Name + @"Windows\explorer.exe") == true)
+                        {
                             Properties.Settings.Default.systemDisk = diskInfo.Name;
+                            break;
+                        }   
                     }
                     catch (Exception ex)
                     {
@@ -154,7 +163,7 @@ namespace OrderManagerNew
                     }
                 }
             }
-            
+
             //工程師模式切換
             if (developerMode == true)
             {
@@ -626,6 +635,7 @@ namespace OrderManagerNew
             {
                 case (int)_softwareID.EZCAD:
                     {
+                        SoftwareFilterCAD.IsEnabled = false;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -666,7 +676,7 @@ namespace OrderManagerNew
                                     cad_troubleShooting.Visibility = Visibility.Visible;
                                     cad_buyLic.Visibility = Visibility.Visible;
                                     cad_unInstall.Visibility = Visibility.Visible;
-                                    
+                                    SoftwareFilterCAD.IsEnabled = true;
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -692,6 +702,7 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Implant:
                     {
+                        SoftwareFilterImplant.IsEnabled = false;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -732,6 +743,7 @@ namespace OrderManagerNew
                                     implant_troubleShooting.Visibility = Visibility.Visible;
                                     implant_buyLic.Visibility = Visibility.Visible;
                                     implant_unInstall.Visibility = Visibility.Visible;
+                                    SoftwareFilterImplant.IsEnabled = true;
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -757,6 +769,7 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Ortho:
                     {
+                        SoftwareFilterOrtho.IsEnabled = false;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -797,6 +810,7 @@ namespace OrderManagerNew
                                     ortho_troubleShooting.Visibility = Visibility.Visible;
                                     ortho_buyLic.Visibility = Visibility.Visible;
                                     ortho_unInstall.Visibility = Visibility.Visible;
+                                    SoftwareFilterOrtho.IsEnabled = true;
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -822,6 +836,7 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Tray:
                     {
+                        SoftwareFilterTray.IsEnabled = false;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -862,6 +877,7 @@ namespace OrderManagerNew
                                     tray_troubleShooting.Visibility = Visibility.Visible;
                                     tray_buyLic.Visibility = Visibility.Visible;
                                     tray_unInstall.Visibility = Visibility.Visible;
+                                    SoftwareFilterTray.IsEnabled = true;
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -887,6 +903,7 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Splint:
                     {
+                        SoftwareFilterSplint.IsEnabled = false;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -927,6 +944,7 @@ namespace OrderManagerNew
                                     splint_troubleShooting.Visibility = Visibility.Visible;
                                     splint_buyLic.Visibility = Visibility.Visible;
                                     splint_unInstall.Visibility = Visibility.Visible;
+                                    SoftwareFilterSplint.IsEnabled = true;
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -1026,6 +1044,39 @@ namespace OrderManagerNew
                         OrderManagerFunc.AutoDetectSoftwareProjectPath();
                         break;
                     }
+            }
+
+            if(SoftwareFilterCAD.IsEnabled == false && SoftwareFilterImplant.IsEnabled == false && SoftwareFilterOrtho.IsEnabled == false && SoftwareFilterTray.IsEnabled == false && SoftwareFilterSplint.IsEnabled == false)
+            {
+                SoftwareFilterCAD.IsChecked = false;
+                SoftwareFilterImplant.IsChecked = false;
+                SoftwareFilterOrtho.IsChecked = false;
+                SoftwareFilterTray.IsChecked = false;
+                SoftwareFilterSplint.IsChecked = false;
+                StackPanel_Local.Children.Clear();
+            }
+            else
+            {
+                if (SoftwareFilterCAD.IsEnabled == true && SoftwareFilterCAD.IsChecked == true)
+                    return;
+                else if (SoftwareFilterImplant.IsEnabled == true && SoftwareFilterImplant.IsChecked == true)
+                    return;
+                else if (SoftwareFilterOrtho.IsEnabled == true && SoftwareFilterOrtho.IsChecked == true)
+                    return;
+                else if (SoftwareFilterTray.IsEnabled == true && SoftwareFilterTray.IsChecked == true)
+                    return;
+                else if (SoftwareFilterSplint.IsEnabled == true && SoftwareFilterSplint.IsChecked == true)
+                    return;
+                else if (SoftwareFilterCAD.IsEnabled == true && SoftwareFilterCAD.IsChecked == false)
+                    SoftwareFilterCAD.IsChecked = true;
+                else if (SoftwareFilterImplant.IsEnabled == true && SoftwareFilterImplant.IsChecked == false)
+                    SoftwareFilterImplant.IsChecked = true;
+                else if (SoftwareFilterOrtho.IsEnabled == true && SoftwareFilterOrtho.IsChecked == false)
+                    SoftwareFilterOrtho.IsChecked = true;
+                else if (SoftwareFilterTray.IsEnabled == true && SoftwareFilterTray.IsChecked == false)
+                    SoftwareFilterTray.IsChecked = true;
+                else if (SoftwareFilterSplint.IsEnabled == true && SoftwareFilterSplint.IsChecked == false)
+                    SoftwareFilterSplint.IsChecked = true;
             }
         }
         

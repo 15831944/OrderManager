@@ -341,10 +341,6 @@ namespace OrderManagerNew
                         }
                 }
             }
-            else
-            {
-                this.DialogResult = false;
-            }
         }
     }
 }

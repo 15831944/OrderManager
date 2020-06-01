@@ -93,6 +93,7 @@
     <Compile Include="BeforeDownload.xaml.cs">
       <DependentUpon>BeforeDownload.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Scripts\CaseSorter.cs" />
     <Compile Include="Scripts\OrderManagerFunctions.cs" />
     <Compile Include="Properties\HyperLink.Designer.cs">
       <AutoGen>True</AutoGen>

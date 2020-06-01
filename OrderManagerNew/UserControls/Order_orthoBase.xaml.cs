@@ -38,8 +38,8 @@ namespace OrderManagerNew.UserControls
             public string PatientAddress { get; set; }
             public string DentistName { get; set; }
             public string ClinicName { get; set; }
-            public DateTime CreateTime { get; set; }
-            public DateTime ModifyTime { get; set; }
+            public DateTime CreateDate { get; set; }
+            public DateTime ModifyDate { get; set; }
             public List<Order_orthoSmallcase> List_smallcase { get; set; }
 
             public OrthoOuterInformation()
@@ -53,8 +53,8 @@ namespace OrderManagerNew.UserControls
                 ClinicName = "";
                 List_smallcase = new List<Order_orthoSmallcase>();
                 PatientBirth = new DateTime();
-                CreateTime = new DateTime();
-                ModifyTime = new DateTime();
+                CreateDate = new DateTime();
+                ModifyDate = new DateTime();
             }
         }
 
@@ -81,7 +81,7 @@ namespace OrderManagerNew.UserControls
                 label_patientName.Content += "(" + patientAge.ToString() + ")";
                 label_patientName.ToolTip = OrderManagerNew.TranslationSource.Instance["PatientNameWithAge"];
             }
-            label_createDate.Content = orthoInfo.CreateTime.ToLongDateString();
+            label_createDate.Content = orthoInfo.CreateDate.ToLongDateString();
         }
 
         private void Click_OpenDir(object sender, RoutedEventArgs e)
@@ -170,7 +170,7 @@ namespace OrderManagerNew.UserControls
                         {
                             //tmpOrthosmallInfo.SoftwareVer = new Version(orthodata.File_Version);
                             WorkflowStep = Convert.ToInt16(orthodata.workflowstep),
-                            CreateTime = orthodata.patientInformation.m_CreateTime,
+                            CreateDate = orthodata.patientInformation.m_CreateTime,
                             Describe = orthodata.patientInformation.m_Discribe
                         };
 

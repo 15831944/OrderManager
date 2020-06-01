@@ -48,7 +48,7 @@ namespace OrderManagerNew.UserControls
             public string SmallCaseXmlPath { get; set; }
             //public Version SoftwareVer { get; set; }
             public int WorkflowStep { get; set; }
-            public string CreateTime { get; set; }
+            public string CreateDate { get; set; }
             public string Describe { get; set; }
 
             public OrthoSmallCaseInformation()
@@ -56,7 +56,7 @@ namespace OrderManagerNew.UserControls
                 SmallCaseXmlPath = "";
                 //SoftwareVer = new Version();
                 WorkflowStep = -1;
-                CreateTime = "";
+                CreateDate = "";
                 Describe = "";
             }
         }
@@ -83,7 +83,7 @@ namespace OrderManagerNew.UserControls
             else
                 button_LoadOrthoProject.IsEnabled = false;
 
-            label_ProjectName.Content = orthosmallcaseInfo.CreateTime;
+            label_ProjectName.Content = orthosmallcaseInfo.CreateDate;
         }
     }
 }

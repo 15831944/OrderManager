@@ -28,10 +28,12 @@ namespace OrderManagerNew
         public List<OrthoOuterInformation> Caselist_OrthoOuterCase;
 
         LogRecorder log;
+        CaseSorter Sorter;
 
         public ProjectHandle()
         {
             log = new LogRecorder();
+            Sorter = new CaseSorter();
         }
 
         /// <summary>
@@ -68,6 +70,7 @@ namespace OrderManagerNew
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadcadProj Exception", ex.Message);
             }
 
+            Sorter.Sort_EZCAD(Caselist_EZCAD, 0, (Caselist_EZCAD.Count - 1));
             if (Caselist_EZCAD.Count > 0)
                 CaseShowEvent((int)_softwareID.EZCAD);
         }
@@ -106,6 +109,7 @@ namespace OrderManagerNew
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadtrayProj Exception", ex.Message);
             }
 
+            Sorter.Sort_Tray(Caselist_Tray, 0, (Caselist_Tray.Count - 1));
             if (Caselist_Tray.Count > 0)
                 CaseShowEvent((int)_softwareID.Tray);
         }
@@ -144,6 +148,7 @@ namespace OrderManagerNew
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadsplintProj Exception", ex.Message);
             }
 
+            Sorter.Sort_Splint(Caselist_Splint, 0, (Caselist_Splint.Count - 1));
             if (Caselist_Splint.Count > 0)
                 CaseShowEvent((int)_softwareID.Splint);
         }
@@ -211,6 +216,7 @@ namespace OrderManagerNew
                 }
             }
 
+            Sorter.Sort_Implant(Caselist_ImplantOuterCase, 0, (Caselist_ImplantOuterCase.Count-1));
             if(Caselist_ImplantOuterCase.Count > 0)
                 CaseShowEvent((int)_softwareID.Implant);
         }
@@ -243,7 +249,8 @@ namespace OrderManagerNew
                         continue;
                 }
             }
-
+            
+            Sorter.Sort_Ortho(Caselist_OrthoOuterCase, 0, (Caselist_OrthoOuterCase.Count - 1));
             if (Caselist_OrthoOuterCase.Count > 0)
                 CaseShowEvent((int)_softwareID.Ortho);
         }
@@ -379,13 +386,13 @@ namespace OrderManagerNew
                                 PatientID = xml.Element("PatientID").Value,
                                 PatientName = xml.Element("PatientName").Value,
                                 PatientSex = Gender,
-                                ModifyTime = fInfo.LastWriteTime
+                                ModifyDate = fInfo.LastAccessTime
                         };
                             try { orthoInfo.PatientBirth = Convert.ToDateTime(xml.Element("PatientBday").Value); } catch { orthoInfo.PatientBirth = new DateTime(); }
                             try { orthoInfo.PatientAddress = xml.Element("PatientAddress").Value; } catch { orthoInfo.PatientAddress = ""; }
                             try { orthoInfo.DentistName = xml.Element("DentistName").Value; } catch { orthoInfo.DentistName = ""; }
                             try { orthoInfo.ClinicName = xml.Element("ClinicName").Value; } catch { orthoInfo.ClinicName = ""; }
-                            try { orthoInfo.CreateTime = Convert.ToDateTime(xml.Element("CreateTime")?.Value); } catch { orthoInfo.CreateTime = fInfo.CreationTime; }
+                            try { orthoInfo.CreateDate = Convert.ToDateTime(xml.Element("CreateTime")?.Value); } catch { orthoInfo.CreateDate = fInfo.CreationTime; }
                             
                             Caselist_OrthoOuterCase.Add(orthoInfo);
 
