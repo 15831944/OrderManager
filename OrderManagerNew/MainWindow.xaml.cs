@@ -74,6 +74,7 @@ namespace OrderManagerNew
         bool haveEXE = false;                       //判斷安裝時是否有執行檔了
         int CheckedSoftwareID;                      //記錄使用者按下哪個軟體的SoftwareTable
         MaterialDesignThemes.Wpf.SnackbarMessageQueue MainsnackbarMessageQueue; //Snackbar
+        FileSystemWatcher _watcherEZCAD, _watcherImplant, _watcherOrtho, _watcherTray, _watcherSplint;
         #endregion
         
         public MainWindow()
@@ -136,7 +137,7 @@ namespace OrderManagerNew
             UpdateFunc = new UpdateFunction();
             UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
             UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
-            UpdateFunc.LoadHLXml();                 //截取線上HL.xml內的資料
+            UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
             
             if(Directory.Exists(Properties.Settings.Default.systemDisk) == false)
             {
@@ -178,7 +179,6 @@ namespace OrderManagerNew
                 Dev_btnGrid.Margin = Custommargin;
                 Properties.Settings.Default.engineerMode = false;
             }
-            
         }
 
         #region Watcher事件
@@ -281,6 +281,11 @@ namespace OrderManagerNew
 
         }
 
+        /// <summary>
+        /// 監看CaseProject
+        /// </summary>
+        /// <param name="Watcher">固定寫new Watcher()</param>
+        /// <param name="Path">資料夾路徑</param>
         private void Watcher_CaseProject(FileSystemWatcher Watcher, string Path)
         {
             if (Directory.Exists(Path) == false)
@@ -1821,6 +1826,7 @@ namespace OrderManagerNew
                 case (int)_softwareID.EZCAD:
                     {
                         StackPanel_Local.Children.Clear();
+                        _watcherEZCAD = new FileSystemWatcher();
                         if (ProjHandle.Caselist_EZCAD != null && ProjHandle.Caselist_EZCAD.Count > 0)
                         {
                             foreach (CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
@@ -1829,12 +1835,14 @@ namespace OrderManagerNew
                                 Order_CAD.SetCaseInfo(cadInfo);
                                 StackPanel_Local.Children.Add(Order_CAD);
                             }
+                            Watcher_CaseProject(_watcherEZCAD, Properties.OrderManagerProps.Default.cad_projectDirectory);
                         }
                         break;
                     }
                 case (int)_softwareID.Implant:
                     {
                         StackPanel_Local.Children.Clear();
+                        _watcherImplant = new FileSystemWatcher();
                         if (ProjHandle.Caselist_ImplantOuterCase != null && ProjHandle.Caselist_ImplantOuterCase.Count > 0)
                         {
                             foreach (ImplantOuterInformation implantInfo in ProjHandle.Caselist_ImplantOuterCase)
@@ -1843,12 +1851,14 @@ namespace OrderManagerNew
                                 Order_Implant.SetCaseInfo(implantInfo);
                                 StackPanel_Local.Children.Add(Order_Implant);
                             }
+                            Watcher_CaseProject(_watcherImplant, Properties.OrderManagerProps.Default.implant_projectDirectory);
                         }
                         break;
                     }
                 case (int)_softwareID.Ortho:
                     {
                         StackPanel_Local.Children.Clear();
+                        _watcherOrtho = new FileSystemWatcher();
                         if (ProjHandle.Caselist_OrthoOuterCase != null && ProjHandle.Caselist_OrthoOuterCase.Count > 0)
                         {
                             foreach (OrthoOuterInformation orthoInfo in ProjHandle.Caselist_OrthoOuterCase)
@@ -1857,12 +1867,14 @@ namespace OrderManagerNew
                                 Order_Ortho.SetCaseInfo(orthoInfo);
                                 StackPanel_Local.Children.Add(Order_Ortho);
                             }
+                            Watcher_CaseProject(_watcherOrtho, Properties.OrderManagerProps.Default.ortho_projectDirectory);
                         }
                         break;
                     }
                 case (int)_softwareID.Tray:
                     {
                         StackPanel_Local.Children.Clear();
+                        _watcherTray = new FileSystemWatcher();
                         if (ProjHandle.Caselist_Tray != null && ProjHandle.Caselist_Tray.Count > 0)
                         {
                             foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
@@ -1871,12 +1883,14 @@ namespace OrderManagerNew
                                 Order_Tray.SetTrayCaseInfo(trayInfo);
                                 StackPanel_Local.Children.Add(Order_Tray);
                             }
+                            Watcher_CaseProject(_watcherTray, Properties.OrderManagerProps.Default.tray_projectDirectory);
                         }
                         break;
                     }
                 case (int)_softwareID.Splint:
                     {
                         StackPanel_Local.Children.Clear();
+                        _watcherSplint = new FileSystemWatcher();
                         if (ProjHandle.Caselist_Splint != null && ProjHandle.Caselist_Splint.Count > 0)
                         {
                             foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
@@ -1885,38 +1899,7 @@ namespace OrderManagerNew
                                 Order_Splint.SetSplintCaseInfo(splintInfo);
                                 StackPanel_Local.Children.Add(Order_Splint);
                             }
-                        }
-                        break;
-                    }
-                case (int)_softwareID.All:
-                    {
-                        StackPanel_Local.Children.Clear();
-                        if(ProjHandle.Caselist_EZCAD != null && ProjHandle.Caselist_EZCAD.Count > 0)
-                        {
-                            foreach (CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
-                            {
-                                UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
-                                Order_CAD.SetCaseInfo(cadInfo);
-                                StackPanel_Local.Children.Add(Order_CAD);
-                            }
-                        }
-                        if(ProjHandle.Caselist_Tray != null && ProjHandle.Caselist_Tray.Count > 0)
-                        {
-                            foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
-                            {
-                                UserControls.Order_tsBase Order_Tray = new UserControls.Order_tsBase();
-                                Order_Tray.SetTrayCaseInfo(trayInfo);
-                                StackPanel_Local.Children.Add(Order_Tray);
-                            }
-                        }
-                        if(ProjHandle.Caselist_Splint != null && ProjHandle.Caselist_Splint.Count > 0)
-                        {
-                            foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
-                            {
-                                UserControls.Order_tsBase Order_Splint = new UserControls.Order_tsBase();
-                                Order_Splint.SetSplintCaseInfo(splintInfo);
-                                StackPanel_Local.Children.Add(Order_Splint);
-                            }
+                            Watcher_CaseProject(_watcherSplint, Properties.OrderManagerProps.Default.splint_projectDirectory);
                         }
                         break;
                     }
