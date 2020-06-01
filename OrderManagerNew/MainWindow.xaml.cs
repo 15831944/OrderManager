@@ -113,12 +113,6 @@ namespace OrderManagerNew
                 }
             }
 
-            SoftwareFilterCAD.IsEnabled = false;
-            SoftwareFilterImplant.IsEnabled = false;
-            SoftwareFilterOrtho.IsEnabled = false;
-            SoftwareFilterTray.IsEnabled = false;
-            SoftwareFilterSplint.IsEnabled = false;
-
             //初始化LogRecorder
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
@@ -313,15 +307,15 @@ namespace OrderManagerNew
             {
                 try
                 {
-                    if ((SoftwareFilterCAD.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.cad_projectDirectory))
+                    if ((SoftwareFilterCAD.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.cad_projectDirectory))
                         ProjHandle.LoadEZCADProj();
-                    else if ((SoftwareFilterImplant.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.implant_projectDirectory))
+                    else if ((SoftwareFilterImplant.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.implant_projectDirectory))
                         ProjHandle.LoadImplantProj();
-                    else if ((SoftwareFilterOrtho.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.ortho_projectDirectory))
+                    else if ((SoftwareFilterOrtho.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.ortho_projectDirectory))
                         ProjHandle.LoadOrthoProj();
-                    else if ((SoftwareFilterTray.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.tray_projectDirectory))
+                    else if ((SoftwareFilterTray.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.tray_projectDirectory))
                         ProjHandle.LoadTrayProj();
-                    else if ((SoftwareFilterSplint.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.splint_projectDirectory))
+                    else if ((SoftwareFilterSplint.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.splint_projectDirectory))
                         ProjHandle.LoadSplintProj();
                 }
                 catch (Exception ex)
@@ -337,15 +331,15 @@ namespace OrderManagerNew
             {
                 try
                 {
-                    if ((SoftwareFilterCAD.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.cad_projectDirectory))
+                    if ((SoftwareFilterCAD.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.cad_projectDirectory))
                         ProjHandle.LoadEZCADProj();
-                    else if ((SoftwareFilterImplant.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.implant_projectDirectory))
+                    else if ((SoftwareFilterImplant.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.implant_projectDirectory))
                         ProjHandle.LoadImplantProj();
-                    else if ((SoftwareFilterOrtho.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.ortho_projectDirectory))
+                    else if ((SoftwareFilterOrtho.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.ortho_projectDirectory))
                         ProjHandle.LoadOrthoProj();
-                    else if ((SoftwareFilterTray.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.tray_projectDirectory))
+                    else if ((SoftwareFilterTray.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.tray_projectDirectory))
                         ProjHandle.LoadTrayProj();
-                    else if ((SoftwareFilterSplint.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.Settings.Default.splint_projectDirectory))
+                    else if ((SoftwareFilterSplint.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.splint_projectDirectory))
                         ProjHandle.LoadSplintProj();
                 }
                 catch (Exception ex)
@@ -391,11 +385,6 @@ namespace OrderManagerNew
                             Properties.Settings.Default.tray_exePath = "";
                             Properties.Settings.Default.splint_exePath = "";
                             Properties.Settings.Default.guide_exePath = "";
-                            Properties.Settings.Default.cad_projectDirectory = "";
-                            Properties.Settings.Default.implant_projectDirectory = "";
-                            Properties.Settings.Default.ortho_projectDirectory = "";
-                            Properties.Settings.Default.tray_projectDirectory = "";
-                            Properties.Settings.Default.splint_projectDirectory = "";
                             Properties.Settings.Default.sysLanguage = "";
                             Properties.Settings.Default.DownloadFolder = "";
                             Properties.Settings.Default.mostsoftwareDisk = "";
@@ -403,6 +392,16 @@ namespace OrderManagerNew
                             Properties.Settings.Default.engineerMode = false;
                             Properties.Settings.Default.PingTime = 5;
                             Properties.Settings.Default.Save();
+
+                            Properties.OrderManagerProps.Default.cad_projectDirectory = "";
+                            Properties.OrderManagerProps.Default.implant_projectDirectory = "";
+                            Properties.OrderManagerProps.Default.ortho_projectDirectory = "";
+                            Properties.OrderManagerProps.Default.tray_projectDirectory = "";
+                            Properties.OrderManagerProps.Default.splint_projectDirectory = "";
+                            Properties.OrderManagerProps.Default.DateFilter = (int)_DateFilter.All;
+                            Properties.OrderManagerProps.Default.PatientNameFilter = "";
+                            Properties.OrderManagerProps.Default.CaseNameFilter = "";
+
                             Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
                             Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
                             Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0.0);
@@ -1635,42 +1634,6 @@ namespace OrderManagerNew
         #endregion
 
         #region SortTable事件
-        private void Checked_SortTable(object sender, RoutedEventArgs e)
-        {
-            if(sender is CheckBox)
-            {
-                switch (((CheckBox)sender).Name)
-                {
-                    case "checkboxPatient":
-                        {
-                            break;
-                        }
-                    case "checkboxCase":
-                        {
-                            break;
-                        }
-                }
-            }
-        }
-
-        private void UnChecked_SortTable(object sender, RoutedEventArgs e)
-        {
-            if (sender is CheckBox)
-            {
-                switch (((CheckBox)sender).Name)
-                {
-                    case "checkboxPatient":
-                        {
-                            break;
-                        }
-                    case "checkboxCase":
-                        {
-                            break;
-                        }
-                }
-            }
-        }
-
         /// <summary>
         /// 跳出Snackbar訊息
         /// </summary>
@@ -1679,6 +1642,22 @@ namespace OrderManagerNew
         private void SnackBarShow(string Message)
         {
             Task.Factory.StartNew(() => MainsnackbarMessageQueue.Enqueue(Message));
+        }
+
+        private void ChooseToLoadProj() //日期過濾要加
+        {
+            if (SoftwareFilterCAD.IsChecked == true)
+                ProjHandle.LoadEZCADProj();
+            else if (SoftwareFilterImplant.IsChecked == true)
+                ProjHandle.LoadImplantProj();
+            else if (SoftwareFilterOrtho.IsChecked == true)
+                ProjHandle.LoadOrthoProj();
+            else if (SoftwareFilterTray.IsChecked == true)
+                ProjHandle.LoadTrayProj();
+            else if (SoftwareFilterSplint.IsChecked == true)
+                ProjHandle.LoadSplintProj();
+            else
+                StackPanel_Local.Children.Clear();
         }
 
         private void TextChanged_SortTable(object sender, TextChangedEventArgs e)
@@ -1690,91 +1669,140 @@ namespace OrderManagerNew
                 {
                     case "textboxPatient":
                         {
-                            if (txtbox.Text == "-engineer")
-                            {
-                                string message = "";
-                                if (developerMode == false)
-                                {
-                                    //開發者模式
-                                    developerMode = true;
-                                    message = "Developer Mode";
-                                    Thickness Custommargin = Dev_btnGrid.Margin;
-                                    Custommargin.Bottom = 40;
-                                    Dev_btnGrid.Margin = Custommargin;
-                                    Properties.Settings.Default.engineerMode = true;
-                                }
-                                else
-                                {
-                                    //使用者模式
-                                    developerMode = false;
-                                    message = "Customer Mode";
-                                    Thickness Custommargin = Dev_btnGrid.Margin;
-                                    Custommargin.Bottom = -120;
-                                    Dev_btnGrid.Margin = Custommargin;
-                                    Properties.Settings.Default.engineerMode = false;
-                                }
-                                SnackBarShow(message);
-                                txtbox.Text = "";
-                                Keyboard.ClearFocus();
-                            }
+                            Properties.OrderManagerProps.Default.PatientNameFilter = textboxPatient.Text;
 
+                            if (textboxPatient.Text == "")
+                                checkboxPatient.IsChecked = false;
+                            else
+                            {
+                                checkboxPatient.IsChecked = true;
+
+                                if (txtbox.Text == "-engineer")
+                                {
+                                    string message = "";
+                                    if (developerMode == false)
+                                    {
+                                        //開發者模式
+                                        developerMode = true;
+                                        message = "Developer Mode";
+                                        Thickness Custommargin = Dev_btnGrid.Margin;
+                                        Custommargin.Bottom = 40;
+                                        Dev_btnGrid.Margin = Custommargin;
+                                        Properties.Settings.Default.engineerMode = true;
+                                    }
+                                    else
+                                    {
+                                        //使用者模式
+                                        developerMode = false;
+                                        message = "Customer Mode";
+                                        Thickness Custommargin = Dev_btnGrid.Margin;
+                                        Custommargin.Bottom = -120;
+                                        Dev_btnGrid.Margin = Custommargin;
+                                        Properties.Settings.Default.engineerMode = false;
+                                    }
+                                    SnackBarShow(message);
+                                    txtbox.Text = "";
+                                    Keyboard.ClearFocus();
+                                }
+                            }
                             break;
                         }
                     case "textboxCase":
                         {
+                            Properties.OrderManagerProps.Default.CaseNameFilter = textboxCase.Text;
+
+                            if(textboxCase.Text == "")
+                                checkboxCase.IsChecked = false;
+                            else
+                                checkboxCase.IsChecked = true;
+                            break;
+                        }
+                }
+                ChooseToLoadProj();
+            }
+        }
+
+        private void Checked_SortTable_Filter(object sender, RoutedEventArgs e)
+        {
+            if(sender is RadioButton)
+            {
+                StackPanel_Local.Children.Clear();
+                RadioButton radioBtn = sender as RadioButton;
+                switch (radioBtn.Name)
+                {
+                    case "DateFilterAll":
+                        {
+                            Properties.OrderManagerProps.Default.DateFilter = (int)_DateFilter.All;
+                            ChooseToLoadProj();
+                            break;
+                        }
+                    case "DateFilterToday":
+                        {
+                            Properties.OrderManagerProps.Default.DateFilter = (int)_DateFilter.Today;
+                            ChooseToLoadProj();
+                            break;
+                        }
+                    case "DateFilterLW":
+                        {
+                            Properties.OrderManagerProps.Default.DateFilter = (int)_DateFilter.ThisWeek;
+                            ChooseToLoadProj();
+                            break;
+                        }
+                    case "DateFilterL2W":
+                        {
+                            Properties.OrderManagerProps.Default.DateFilter = (int)_DateFilter.LastTwoWeek;
+                            ChooseToLoadProj();
+                            break;
+                        }
+                    case "SoftwareFilterCAD":
+                        {
+                            ProjHandle.LoadEZCADProj();
+                            break;
+                        }
+                    case "SoftwareFilterImplant":
+                        {
+                            ProjHandle.LoadImplantProj();
+                            break;
+                        }
+                    case "SoftwareFilterOrtho":
+                        {
+                            ProjHandle.LoadOrthoProj();
+                            break;
+                        }
+                    case "SoftwareFilterTray":
+                        {
+                            ProjHandle.LoadTrayProj();
+                            break;
+                        }
+                    case "SoftwareFilterSplint":
+                        {
+                            ProjHandle.LoadSplintProj();
                             break;
                         }
                 }
             }
-        }
-
-        private void Click_SortTable_Filter(object sender, RoutedEventArgs e)
-        {
-            StackPanel_Local.Children.Clear();
-            RadioButton radioBtn = sender as RadioButton;
-            switch (radioBtn.Name)
+            else if(sender is CheckBox)
             {
-                case "DateFilterAll":
-                    {
-                        break;
-                    }
-                case "DateFilterToday":
-                    {
-                        break;
-                    }
-                case "DateFilterLW":
-                    {
-                        break;
-                    }
-                case "DateFilterL2W":
-                    {
-                        break;
-                    }
-                case "SoftwareFilterCAD":
-                    {
-                        ProjHandle.LoadEZCADProj();
-                        break;
-                    }
-                case "SoftwareFilterImplant":
-                    {
-                        ProjHandle.LoadImplantProj();
-                        break;
-                    }
-                case "SoftwareFilterOrtho":
-                    {
-                        ProjHandle.LoadOrthoProj();
-                        break;
-                    }
-                case "SoftwareFilterTray":
-                    {
-                        ProjHandle.LoadTrayProj();
-                        break;
-                    }
-                case "SoftwareFilterSplint":
-                    {
-                        ProjHandle.LoadSplintProj();
-                        break;
-                    }
+                switch (((CheckBox)sender).Name)
+                {
+                    case "checkboxPatient":
+                        {
+                            if (checkboxPatient.IsChecked == false)
+                                Properties.OrderManagerProps.Default.PatientNameFilter = "";
+                            else
+                                Properties.OrderManagerProps.Default.PatientNameFilter = textboxPatient.Text;
+                            break;
+                        }
+                    case "checkboxCase":
+                        {
+                            if (checkboxCase.IsChecked == false)
+                                Properties.OrderManagerProps.Default.CaseNameFilter = "";
+                            else
+                                Properties.OrderManagerProps.Default.CaseNameFilter = textboxCase.Text;
+                            break;
+                        }
+                }
+                ChooseToLoadProj();
             }
         }
 

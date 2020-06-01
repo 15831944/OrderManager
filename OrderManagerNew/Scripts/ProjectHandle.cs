@@ -41,7 +41,7 @@ namespace OrderManagerNew
         /// </summary>
         public void LoadEZCADProj()
         {
-            string cad_projectDirectory = Properties.Settings.Default.cad_projectDirectory;
+            string cad_projectDirectory = Properties.OrderManagerProps.Default.cad_projectDirectory;
             string cad_exePath = Properties.Settings.Default.cad_exePath;
 
             if (Directory.Exists(cad_projectDirectory) == false || File.Exists(cad_exePath) == false)
@@ -70,9 +70,8 @@ namespace OrderManagerNew
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadcadProj Exception", ex.Message);
             }
 
-            Sorter.Sort_EZCAD(Caselist_EZCAD, 0, (Caselist_EZCAD.Count - 1));
-            if (Caselist_EZCAD.Count > 0)
-                CaseShowEvent((int)_softwareID.EZCAD);
+            Sorter.Sort_EZCAD(Caselist_EZCAD, 0, (Caselist_EZCAD.Count - 1), true);
+            CaseShowEvent((int)_softwareID.EZCAD);
         }
 
         /// <summary>
@@ -80,7 +79,7 @@ namespace OrderManagerNew
         /// </summary>
         public void LoadTrayProj()
         {
-            string tray_projectDirectory = Properties.Settings.Default.tray_projectDirectory;
+            string tray_projectDirectory = Properties.OrderManagerProps.Default.tray_projectDirectory;
             string tray_exePath = Properties.Settings.Default.tray_exePath;
 
             if (Directory.Exists(tray_projectDirectory) == false || File.Exists(tray_exePath) == false)
@@ -109,9 +108,8 @@ namespace OrderManagerNew
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadtrayProj Exception", ex.Message);
             }
 
-            Sorter.Sort_Tray(Caselist_Tray, 0, (Caselist_Tray.Count - 1));
-            if (Caselist_Tray.Count > 0)
-                CaseShowEvent((int)_softwareID.Tray);
+            Sorter.Sort_Tray(Caselist_Tray, 0, (Caselist_Tray.Count - 1), true);
+            CaseShowEvent((int)_softwareID.Tray);
         }
 
         /// <summary>
@@ -119,7 +117,7 @@ namespace OrderManagerNew
         /// </summary>
         public void LoadSplintProj()
         {
-            string splint_projectDirectory = Properties.Settings.Default.splint_projectDirectory;
+            string splint_projectDirectory = Properties.OrderManagerProps.Default.splint_projectDirectory;
             string splint_exePath = Properties.Settings.Default.splint_exePath;
 
             if (Directory.Exists(splint_projectDirectory) == false || File.Exists(splint_exePath) == false)
@@ -148,9 +146,8 @@ namespace OrderManagerNew
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadsplintProj Exception", ex.Message);
             }
 
-            Sorter.Sort_Splint(Caselist_Splint, 0, (Caselist_Splint.Count - 1));
-            if (Caselist_Splint.Count > 0)
-                CaseShowEvent((int)_softwareID.Splint);
+            Sorter.Sort_Splint(Caselist_Splint, 0, (Caselist_Splint.Count - 1), true);
+            CaseShowEvent((int)_softwareID.Splint);
         }
 
         /// <summary>
@@ -158,7 +155,7 @@ namespace OrderManagerNew
         /// </summary>
         public void LoadImplantProj()
         {
-            string implant_projectDirectory = Properties.Settings.Default.implant_projectDirectory;
+            string implant_projectDirectory = Properties.OrderManagerProps.Default.implant_projectDirectory;
             string implant_exePath = Properties.Settings.Default.implant_exePath;
 
             if (Directory.Exists(implant_projectDirectory) == false || File.Exists(implant_exePath) == false)
@@ -216,9 +213,8 @@ namespace OrderManagerNew
                 }
             }
 
-            Sorter.Sort_Implant(Caselist_ImplantOuterCase, 0, (Caselist_ImplantOuterCase.Count-1));
-            if(Caselist_ImplantOuterCase.Count > 0)
-                CaseShowEvent((int)_softwareID.Implant);
+            Sorter.Sort_Implant(Caselist_ImplantOuterCase, 0, (Caselist_ImplantOuterCase.Count-1), true);
+            CaseShowEvent((int)_softwareID.Implant);
         }
 
         /// <summary>
@@ -227,7 +223,7 @@ namespace OrderManagerNew
         public void LoadOrthoProj()
         {
             string ortho_exePath = Properties.Settings.Default.ortho_exePath;
-            string ortho_projectDirectory = Properties.Settings.Default.ortho_projectDirectory;
+            string ortho_projectDirectory = Properties.OrderManagerProps.Default.ortho_projectDirectory;
 
             if (Directory.Exists(ortho_projectDirectory) == false || File.Exists(ortho_exePath) == false)
                 return;
@@ -250,9 +246,8 @@ namespace OrderManagerNew
                 }
             }
             
-            Sorter.Sort_Ortho(Caselist_OrthoOuterCase, 0, (Caselist_OrthoOuterCase.Count - 1));
-            if (Caselist_OrthoOuterCase.Count > 0)
-                CaseShowEvent((int)_softwareID.Ortho);
+            Sorter.Sort_Ortho(Caselist_OrthoOuterCase, 0, (Caselist_OrthoOuterCase.Count - 1), true);
+            CaseShowEvent((int)_softwareID.Ortho);
         }
 
         /// <summary>

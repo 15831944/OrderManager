@@ -316,15 +316,21 @@
                     <StackPanel
                       Grid.Column="0" Margin="0,3" Background="#FF756550"
                       Orientation="Vertical">
+                        <StackPanel.Resources>
+                            <Style BasedOn="{StaticResource MaterialDesignCheckBox}" TargetType="CheckBox">
+                                <EventSetter Event="Checked" Handler="Checked_SortTable_Filter" />
+                                <EventSetter Event="Unchecked" Handler="Checked_SortTable_Filter" />
+                                <Setter Property="HorizontalAlignment" Value="Right" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                            </Style>
+                        </StackPanel.Resources>
                         <Expander Header="{local:LocExtension ByPatient}" Style="{StaticResource ExpanderStyle}">
                             <Grid Background="#FF756550">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="45" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <CheckBox
-                                  x:Name="checkboxPatient" Grid.Column="0" HorizontalAlignment="Right"
-                                  VerticalAlignment="Center" Checked="Checked_SortTable" Unchecked="UnChecked_SortTable" />
+                                <CheckBox x:Name="checkboxPatient" Grid.Column="0" />
                                 <TextBox
                                   x:Name="textboxPatient" Grid.Column="1"
                                   Style="{StaticResource SortTextBox}"
@@ -337,9 +343,7 @@
                                     <ColumnDefinition Width="45" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <CheckBox
-                                  x:Name="checkboxCase" Grid.Column="0" HorizontalAlignment="Right"
-                                  VerticalAlignment="Center" Checked="Checked_SortTable" Unchecked="UnChecked_SortTable" />
+                                <CheckBox x:Name="checkboxCase" Grid.Column="0" />
                                 <TextBox
                                   x:Name="textboxCase" Grid.Column="1"
                                   Style="{StaticResource SortTextBox}"
@@ -350,7 +354,7 @@
                             <Grid Background="#FF756550">
                                 <Grid.Resources>
                                     <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
-                                        <EventSetter Event="Click" Handler="Click_SortTable_Filter" />
+                                        <EventSetter Event="Checked" Handler="Checked_SortTable_Filter" />
                                         <Setter Property="GroupName" Value="SortRadio" />
                                     </Style>
                                 </Grid.Resources>
@@ -367,7 +371,8 @@
                                 <Grid.Resources>
                                     <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
                                         <Setter Property="GroupName" Value="SortSoftware" />
-                                        <EventSetter Event="Checked" Handler="Click_SortTable_Filter" />
+                                        <Setter Property="IsEnabled" Value="False" />
+                                        <EventSetter Event="Checked" Handler="Checked_SortTable_Filter" />
                                     </Style>
                                 </Grid.Resources>
                                 <StackPanel Margin="30,0,0,0" Orientation="Vertical">

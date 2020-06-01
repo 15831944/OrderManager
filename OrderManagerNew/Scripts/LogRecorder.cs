@@ -116,11 +116,11 @@ namespace OrderManagerNew
             w.WriteLine($"EXEpath_Tray:{Properties.Settings.Default.tray_exePath}");
             w.WriteLine($"EXEpath_Splint:{Properties.Settings.Default.splint_exePath}");
             w.WriteLine($"EXEpath_Guide:{Properties.Settings.Default.guide_exePath}");
-            w.WriteLine($"caseDir_EZCAD:{Properties.Settings.Default.cad_projectDirectory}");
-            w.WriteLine($"caseDir_Implant:{Properties.Settings.Default.implant_projectDirectory}");
-            w.WriteLine($"caseDir_Ortho:{Properties.Settings.Default.ortho_projectDirectory}");
-            w.WriteLine($"caseDir_Tray:{Properties.Settings.Default.tray_projectDirectory}");
-            w.WriteLine($"caseDir_Splint:{Properties.Settings.Default.splint_projectDirectory}");
+            w.WriteLine($"caseDir_EZCAD:{Properties.OrderManagerProps.Default.cad_projectDirectory}");
+            w.WriteLine($"caseDir_Implant:{Properties.OrderManagerProps.Default.implant_projectDirectory}");
+            w.WriteLine($"caseDir_Ortho:{Properties.OrderManagerProps.Default.ortho_projectDirectory}");
+            w.WriteLine($"caseDir_Tray:{Properties.OrderManagerProps.Default.tray_projectDirectory}");
+            w.WriteLine($"caseDir_Splint:{Properties.OrderManagerProps.Default.splint_projectDirectory}");
             w.WriteLine($"SystemDisk:{Properties.Settings.Default.systemDisk}");
             w.WriteLine($"MostSoftwareDisk:{Properties.Settings.Default.mostsoftwareDisk}");
             w.WriteLine($"DownloadFolder:{Properties.Settings.Default.DownloadFolder}");

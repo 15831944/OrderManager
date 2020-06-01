@@ -145,7 +145,8 @@ namespace OrderManagerNew.UserControls
         public void SetCaseInfo(CadInformation Import)
         {
             cadInfo = Import;
-            label_orderID.Content = cadInfo.OrderID.Substring(cadInfo.OrderID.IndexOf('-') + 1);
+            //label_orderID.Content = cadInfo.OrderID.Substring(cadInfo.OrderID.IndexOf('-') + 1);
+            label_orderID.Content = cadInfo.OrderID;
             label_designStep.Content = GetDesignStep((int)cadInfo.DesignStep);
             label_patientName.Content = cadInfo.PatientName;
             label_createDate.Content = cadInfo.CreateDate.ToLongDateString();

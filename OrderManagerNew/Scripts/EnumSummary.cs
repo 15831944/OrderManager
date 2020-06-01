@@ -98,4 +98,14 @@ namespace OrderManagerNew
         zhTW,
     }
     
+    /// <summary>
+    /// 日期過濾
+    /// </summary>
+    public enum _DateFilter : int
+    {
+        All = 0,
+        Today,
+        ThisWeek,
+        LastTwoWeek
+    }
 }

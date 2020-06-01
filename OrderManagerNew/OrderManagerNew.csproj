@@ -93,6 +93,11 @@
     <Compile Include="BeforeDownload.xaml.cs">
       <DependentUpon>BeforeDownload.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\OrderManagerProps.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>OrderManagerProps.settings</DependentUpon>
+    </Compile>
     <Compile Include="Scripts\CaseSorter.cs" />
     <Compile Include="Scripts\OrderManagerFunctions.cs" />
     <Compile Include="Properties\HyperLink.Designer.cs">
@@ -222,6 +227,10 @@
     <None Include="Properties\HyperLink.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>HyperLink.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\OrderManagerProps.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>OrderManagerProps.Designer.cs</LastGenOutput>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
