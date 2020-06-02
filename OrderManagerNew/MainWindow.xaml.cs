@@ -272,7 +272,6 @@ namespace OrderManagerNew
                 this.Dispatcher.Invoke((Action)(() =>
                 {
                     HaveDeleted = true;
-                    Console.WriteLine(e.FullPath);
                     SetAllSoftwareTableDownloadisEnable(true);
                     Handler_setSoftwareShow(CheckedSoftwareID, (int)_softwareStatus.NotInstall, 0);
                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -640,6 +639,8 @@ namespace OrderManagerNew
                 case (int)_softwareID.EZCAD:
                     {
                         SoftwareFilterCAD.IsEnabled = false;
+                        mask_EZCAD.Visibility = Visibility.Hidden;
+                        process_EZCAD.Visibility = Visibility.Hidden;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -647,7 +648,6 @@ namespace OrderManagerNew
                                     mask2_EZCAD_Installing.Visibility = Visibility.Hidden;
                                     progressbar_EZCAD_Installing.Visibility = Visibility.Hidden;
                                     mask_EZCAD.Visibility = Visibility.Visible;
-                                    process_EZCAD.Visibility = Visibility.Hidden;
                                     popupbox_EZCAD.IsEnabled = true;
                                     cad_selectPath.Visibility = Visibility.Visible;
                                     cad_download.Visibility = Visibility.Visible;
@@ -660,7 +660,6 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Downloading:
                                 {
-                                    mask_EZCAD.Visibility = Visibility.Hidden;
                                     process_EZCAD.Visibility = Visibility.Visible;
                                     process_EZCAD.EndAngle = 360 - 360 * downloadPercent;
                                     popupbox_EZCAD.IsEnabled = false;
@@ -670,8 +669,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_EZCAD_Installing.Visibility = Visibility.Hidden;
                                     progressbar_EZCAD_Installing.Visibility = Visibility.Hidden;
-                                    mask_EZCAD.Visibility = Visibility.Hidden;
-                                    process_EZCAD.Visibility = Visibility.Hidden;
                                     popupbox_EZCAD.IsEnabled = true;
                                     cad_selectPath.Visibility = Visibility.Collapsed;
                                     cad_download.Visibility = Visibility.Collapsed;
@@ -687,8 +684,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_EZCAD_Installing.Visibility = Visibility.Visible;
                                     progressbar_EZCAD_Installing.Visibility = Visibility.Visible;
-                                    mask_EZCAD.Visibility = Visibility.Hidden;
-                                    process_EZCAD.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
@@ -696,8 +691,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_EZCAD_Installing.Visibility = Visibility.Visible;
                                     progressbar_EZCAD_Installing.Visibility = Visibility.Visible;
-                                    mask_EZCAD.Visibility = Visibility.Hidden;
-                                    process_EZCAD.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.EZCAD);
                                     break;
                                 }
@@ -707,6 +700,8 @@ namespace OrderManagerNew
                 case (int)_softwareID.Implant:
                     {
                         SoftwareFilterImplant.IsEnabled = false;
+                        mask_Implant.Visibility = Visibility.Hidden;
+                        process_Implant.Visibility = Visibility.Hidden;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -714,7 +709,6 @@ namespace OrderManagerNew
                                     mask2_Implant_Installing.Visibility = Visibility.Hidden;
                                     progressbar_Implant_Installing.Visibility = Visibility.Hidden;
                                     mask_Implant.Visibility = Visibility.Visible;
-                                    process_Implant.Visibility = Visibility.Hidden;
                                     popupbox_Implant.IsEnabled = true;
                                     implant_selectPath.Visibility = Visibility.Visible;
                                     implant_download.Visibility = Visibility.Visible;
@@ -727,7 +721,6 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Downloading:
                                 {
-                                    mask_Implant.Visibility = Visibility.Hidden;
                                     process_Implant.Visibility = Visibility.Visible;
                                     process_Implant.EndAngle = 360 - 360 * downloadPercent;
                                     popupbox_Implant.IsEnabled = false;
@@ -737,8 +730,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Implant_Installing.Visibility = Visibility.Hidden;
                                     progressbar_Implant_Installing.Visibility = Visibility.Hidden;
-                                    mask_Implant.Visibility = Visibility.Hidden;
-                                    process_Implant.Visibility = Visibility.Hidden;
                                     popupbox_Implant.IsEnabled = true;
                                     implant_selectPath.Visibility = Visibility.Collapsed;
                                     implant_download.Visibility = Visibility.Collapsed;
@@ -754,8 +745,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Implant_Installing.Visibility = Visibility.Visible;
                                     progressbar_Implant_Installing.Visibility = Visibility.Visible;
-                                    mask_Implant.Visibility = Visibility.Hidden;
-                                    process_Implant.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
@@ -763,8 +752,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Implant_Installing.Visibility = Visibility.Visible;
                                     progressbar_Implant_Installing.Visibility = Visibility.Visible;
-                                    mask_Implant.Visibility = Visibility.Hidden;
-                                    process_Implant.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Implant);
                                     break;
                                 }
@@ -774,6 +761,8 @@ namespace OrderManagerNew
                 case (int)_softwareID.Ortho:
                     {
                         SoftwareFilterOrtho.IsEnabled = false;
+                        mask_Ortho.Visibility = Visibility.Hidden;
+                        process_Ortho.Visibility = Visibility.Hidden;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -781,7 +770,6 @@ namespace OrderManagerNew
                                     mask2_Ortho_Installing.Visibility = Visibility.Hidden;
                                     progressbar_Ortho_Installing.Visibility = Visibility.Hidden;
                                     mask_Ortho.Visibility = Visibility.Visible;
-                                    process_Ortho.Visibility = Visibility.Hidden;
                                     popupbox_Ortho.IsEnabled = true;
                                     ortho_selectPath.Visibility = Visibility.Visible;
                                     ortho_download.Visibility = Visibility.Visible;
@@ -794,7 +782,6 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Downloading:
                                 {
-                                    mask_Ortho.Visibility = Visibility.Hidden;
                                     process_Ortho.Visibility = Visibility.Visible;
                                     process_Ortho.EndAngle = 360 - 360 * downloadPercent;
                                     popupbox_Ortho.IsEnabled = false;
@@ -804,8 +791,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Ortho_Installing.Visibility = Visibility.Hidden;
                                     progressbar_Ortho_Installing.Visibility = Visibility.Hidden;
-                                    mask_Ortho.Visibility = Visibility.Hidden;
-                                    process_Ortho.Visibility = Visibility.Hidden;
                                     popupbox_Ortho.IsEnabled = true;
                                     ortho_selectPath.Visibility = Visibility.Collapsed;
                                     ortho_download.Visibility = Visibility.Collapsed;
@@ -821,8 +806,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Ortho_Installing.Visibility = Visibility.Visible;
                                     progressbar_Ortho_Installing.Visibility = Visibility.Visible;
-                                    mask_Ortho.Visibility = Visibility.Hidden;
-                                    process_Ortho.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
@@ -830,8 +813,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Ortho_Installing.Visibility = Visibility.Visible;
                                     progressbar_Ortho_Installing.Visibility = Visibility.Visible;
-                                    mask_Ortho.Visibility = Visibility.Hidden;
-                                    process_Ortho.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Ortho);
                                     break;
                                 }
@@ -841,6 +822,8 @@ namespace OrderManagerNew
                 case (int)_softwareID.Tray:
                     {
                         SoftwareFilterTray.IsEnabled = false;
+                        mask_Tray.Visibility = Visibility.Hidden;
+                        process_Tray.Visibility = Visibility.Hidden;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -848,7 +831,6 @@ namespace OrderManagerNew
                                     mask2_Tray_Installing.Visibility = Visibility.Hidden;
                                     progressbar_Tray_Installing.Visibility = Visibility.Hidden;
                                     mask_Tray.Visibility = Visibility.Visible;
-                                    process_Tray.Visibility = Visibility.Hidden;
                                     popupbox_Tray.IsEnabled = true;
                                     tray_selectPath.Visibility = Visibility.Visible;
                                     tray_download.Visibility = Visibility.Visible;
@@ -861,7 +843,6 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Downloading:
                                 {
-                                    mask_Tray.Visibility = Visibility.Hidden;
                                     process_Tray.Visibility = Visibility.Visible;
                                     process_Tray.EndAngle = 360 - 360 * downloadPercent;
                                     popupbox_Tray.IsEnabled = false;
@@ -871,8 +852,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Tray_Installing.Visibility = Visibility.Hidden;
                                     progressbar_Tray_Installing.Visibility = Visibility.Hidden;
-                                    mask_Tray.Visibility = Visibility.Hidden;
-                                    process_Tray.Visibility = Visibility.Hidden;
                                     popupbox_Tray.IsEnabled = true;
                                     tray_selectPath.Visibility = Visibility.Collapsed;
                                     tray_download.Visibility = Visibility.Collapsed;
@@ -888,8 +867,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Tray_Installing.Visibility = Visibility.Visible;
                                     progressbar_Tray_Installing.Visibility = Visibility.Visible;
-                                    mask_Tray.Visibility = Visibility.Hidden;
-                                    process_Tray.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
@@ -897,8 +874,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Tray_Installing.Visibility = Visibility.Visible;
                                     progressbar_Tray_Installing.Visibility = Visibility.Visible;
-                                    mask_Tray.Visibility = Visibility.Hidden;
-                                    process_Tray.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Tray);
                                     break;
                                 }
@@ -908,6 +883,8 @@ namespace OrderManagerNew
                 case (int)_softwareID.Splint:
                     {
                         SoftwareFilterSplint.IsEnabled = false;
+                        mask_Splint.Visibility = Visibility.Hidden;
+                        process_Splint.Visibility = Visibility.Hidden;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -915,7 +892,6 @@ namespace OrderManagerNew
                                     mask2_Splint_Installing.Visibility = Visibility.Hidden;
                                     progressbar_Splint_Installing.Visibility = Visibility.Hidden;
                                     mask_Splint.Visibility = Visibility.Visible;
-                                    process_Splint.Visibility = Visibility.Hidden;
                                     popupbox_Splint.IsEnabled = true;
                                     splint_selectPath.Visibility = Visibility.Visible;
                                     splint_download.Visibility = Visibility.Visible;
@@ -928,7 +904,6 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Downloading:
                                 {
-                                    mask_Splint.Visibility = Visibility.Hidden;
                                     process_Splint.Visibility = Visibility.Visible;
                                     process_Splint.EndAngle = 360.0 - 360.0 * downloadPercent;
                                     popupbox_Splint.IsEnabled = false;
@@ -938,8 +913,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Splint_Installing.Visibility = Visibility.Hidden;
                                     progressbar_Splint_Installing.Visibility = Visibility.Hidden;
-                                    mask_Splint.Visibility = Visibility.Hidden;
-                                    process_Splint.Visibility = Visibility.Hidden;
                                     popupbox_Splint.IsEnabled = true;
                                     splint_selectPath.Visibility = Visibility.Collapsed;
                                     splint_download.Visibility = Visibility.Collapsed;
@@ -955,8 +928,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Splint_Installing.Visibility = Visibility.Visible;
                                     progressbar_Splint_Installing.Visibility = Visibility.Visible;
-                                    mask_Splint.Visibility = Visibility.Hidden;
-                                    process_Splint.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
@@ -964,8 +935,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Splint_Installing.Visibility = Visibility.Visible;
                                     progressbar_Splint_Installing.Visibility = Visibility.Visible;
-                                    mask_Splint.Visibility = Visibility.Hidden;
-                                    process_Splint.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Splint);
                                     break;
                                 }
@@ -974,6 +943,8 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Guide:
                     {
+                        mask_Guide.Visibility = Visibility.Hidden;
+                        process_Guide.Visibility = Visibility.Hidden;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -981,7 +952,6 @@ namespace OrderManagerNew
                                     mask2_Guide_Installing.Visibility = Visibility.Hidden;
                                     progressbar_Guide_Installing.Visibility = Visibility.Hidden;
                                     mask_Guide.Visibility = Visibility.Visible;
-                                    process_Guide.Visibility = Visibility.Hidden;
                                     popupbox_Guide.IsEnabled = true;
                                     guide_selectPath.Visibility = Visibility.Visible;
                                     guide_download.Visibility = Visibility.Visible;
@@ -994,7 +964,6 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Downloading:
                                 {
-                                    mask_Guide.Visibility = Visibility.Hidden;
                                     process_Guide.Visibility = Visibility.Visible;
                                     process_Guide.EndAngle = 360.0 - 360.0 * downloadPercent;
                                     popupbox_Guide.IsEnabled = false;
@@ -1004,8 +973,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Guide_Installing.Visibility = Visibility.Hidden;
                                     progressbar_Guide_Installing.Visibility = Visibility.Hidden;
-                                    mask_Guide.Visibility = Visibility.Hidden;
-                                    process_Guide.Visibility = Visibility.Hidden;
                                     popupbox_Guide.IsEnabled = true;
                                     guide_selectPath.Visibility = Visibility.Collapsed;
                                     guide_download.Visibility = Visibility.Collapsed;
@@ -1021,8 +988,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Guide_Installing.Visibility = Visibility.Visible;
                                     progressbar_Guide_Installing.Visibility = Visibility.Visible;
-                                    mask_Guide.Visibility = Visibility.Hidden;
-                                    process_Guide.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
@@ -1030,8 +995,6 @@ namespace OrderManagerNew
                                 {
                                     mask2_Guide_Installing.Visibility = Visibility.Visible;
                                     progressbar_Guide_Installing.Visibility = Visibility.Visible;
-                                    mask_Guide.Visibility = Visibility.Hidden;
-                                    process_Guide.Visibility = Visibility.Hidden;
                                     Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Guide);
                                     break;
                                 }
