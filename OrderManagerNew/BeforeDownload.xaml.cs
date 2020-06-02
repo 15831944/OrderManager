@@ -288,7 +288,8 @@ namespace OrderManagerNew
             label_TitleBar.Content = OrderManagerNew.TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             label_Header.Content = OrderManagerNew.TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             textbox_InstallPath.Text = @"C:\IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
-
+            jlabel_RequireSpace.Content += ":";
+            jlabel_AvailableSpace.Content += ":";
             try
             {
                 if (((HttpWebResponse)httpResponse).StatusDescription == "OK" && httpResponse.ContentLength > 1)
@@ -296,6 +297,7 @@ namespace OrderManagerNew
                     // 取得下載的檔名
                     Uri uri = new Uri(http_url);
                     string downloadfileRealName = System.IO.Path.GetFileName(uri.LocalPath);
+                    label_DownloadFileName.Content = "(" + downloadfileRealName + ")";
 
                     if (RemainingSpace(textbox_InstallPath.Text) == true)  //客戶電腦剩餘空間
                     {
@@ -315,7 +317,7 @@ namespace OrderManagerNew
                         else
                         {
                             label_AvailableSpace.Foreground = Brushes.White;
-                            label_AvailableSpace.ToolTip = null;
+                            label_AvailableSpace.ToolTip = OrderManagerNew.TranslationSource.Instance["SpaceAvailable"];
                         }
                     }
                     else

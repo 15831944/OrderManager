@@ -817,7 +817,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Disk space available: 的當地語系化字串。
+        ///   查詢類似 Disk space available 的當地語系化字串。
         /// </summary>
         internal static string SpaceAvailable {
             get {
@@ -826,7 +826,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Disk space required: 的當地語系化字串。
+        ///   查詢類似 Disk space required 的當地語系化字串。
         /// </summary>
         internal static string SpaceRequired {
             get {

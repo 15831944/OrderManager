@@ -3,7 +3,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OrderManagerNew" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Title="AirdentalLogin" Width="400"
   Height="400" AllowsTransparency="True" Background="#FF353631"
-  ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
+  ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
   WindowStyle="None" mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
@@ -147,7 +147,7 @@
 
                     <Label Grid.Row="0" Content="{local:LocExtension Account}" Style="{DynamicResource LabelwithTextbox}" />
                     <TextBox
-                      x:Name="textbox_Account" Grid.Row="1" Text="Brian"
+                      Grid.Row="1" x:Name="textbox_Account" Text="Brian"
                       TextChanged="Textchanged_Account" />
                 </Grid>
                 <Grid Grid.Row="1">
@@ -158,7 +158,7 @@
 
                     <Label Grid.Row="0" Content="{local:LocExtension Password}" Style="{DynamicResource LabelwithTextbox}" />
                     <PasswordBox
-                      x:Name="passwordbox_PWD" Grid.Row="1" VerticalContentAlignment="Center"
+                      Grid.Row="1" x:Name="passwordbox_PWD" VerticalContentAlignment="Center"
                       Panel.ZIndex="1" Background="White" BorderBrush="White"
                       BorderThickness="1"
                       Foreground="{DynamicResource Common_DarkBrown}"
@@ -170,11 +170,11 @@
                       Style="{DynamicResource SeePWD}"
                       Unchecked="Unchecked_PWD" />
                     <TextBox
-                      x:Name="textbox_PWD" Grid.Row="1" KeyUp="KeyUp_textboxPWD"
+                      Grid.Row="1" x:Name="textbox_PWD" KeyUp="KeyUp_textboxPWD"
                       Text="BrianPWD" />
                 </Grid>
                 <Label
-                  x:Name="label_forgotPWD" Grid.Row="2" Height="24"
+                  Grid.Row="2" x:Name="label_forgotPWD" Height="24"
                   Padding="-10" HorizontalAlignment="Right" VerticalAlignment="Top"
                   MouseLeftButtonUp="MouseLeftButtonUp_ForgotPWD">
                     <Hyperlink Foreground="Transparent">

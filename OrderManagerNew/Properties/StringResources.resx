@@ -267,11 +267,11 @@
     <comment>BeforeDownload</comment>
   </data>
   <data name="SpaceRequired" xml:space="preserve">
-    <value>Disk space required:</value>
+    <value>Disk space required</value>
     <comment>BeforeDownload</comment>
   </data>
   <data name="SpaceAvailable" xml:space="preserve">
-    <value>Disk space available:</value>
+    <value>Disk space available</value>
     <comment>BeforeDownload</comment>
   </data>
   <data name="ChooseLocationToInstall" xml:space="preserve">
@@ -478,6 +478,7 @@
   <data name="Printing" xml:space="preserve">
     <value>Printing</value>
     
+    <comment>Ortho_Step</comment>
   </data>
   <data name="Treatment_Planning" xml:space="preserve">
     <value>Treatment Plan</value>

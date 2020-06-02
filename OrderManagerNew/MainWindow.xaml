@@ -225,7 +225,7 @@
                     </Grid.ColumnDefinitions>
 
                     <uc:AirdentalUserDetail
-                      x:Name="usercontrolUserDetail" Grid.Column="2" HorizontalAlignment="Right"
+                      Grid.Column="2" x:Name="usercontrolUserDetail" HorizontalAlignment="Right"
                       VerticalAlignment="Top" Panel.ZIndex="1" LogoutClick="Click_UserDetail_Logout"
                       UserMail="bai123456@inteware.com.tw" UserName="Alex Bai" UserPoints="987654">
                         <uc:AirdentalUserDetail.RenderTransform>
@@ -239,12 +239,12 @@
                     </uc:AirdentalUserDetail>
 
                     <materialDesign:Snackbar
-                      x:Name="SnackbarMain" Grid.Column="0" Grid.ColumnSpan="3"
+                      Grid.Column="0" Grid.ColumnSpan="3" x:Name="SnackbarMain"
                       HorizontalAlignment="Stretch" Panel.ZIndex="10"
                       MessageQueue="{materialDesign:MessageQueue}" />
 
                     <Grid
-                      x:Name="Dev_btnGrid" Grid.Column="0" Grid.ColumnSpan="3"
+                      Grid.Column="0" Grid.ColumnSpan="3" x:Name="Dev_btnGrid"
                       Width="1000" Height="100" Margin="0,0,0,-120"
                       VerticalAlignment="Bottom" Panel.ZIndex="10">
                         <Grid.Resources>
@@ -273,43 +273,43 @@
                         </Grid.ColumnDefinitions>
 
                         <Button
-                          x:Name="DevBtn1" Grid.Row="0" Grid.Column="0"
+                          Grid.Row="0" Grid.Column="0" x:Name="DevBtn1"
                           Content="Reset Properties" />
                         <Button
-                          x:Name="DevBtn2" Grid.Row="0" Grid.Column="1"
+                          Grid.Row="0" Grid.Column="1" x:Name="DevBtn2"
                           Content="Load HL.xml" />
                         <Button
-                          x:Name="DevBtn3" Grid.Row="0" Grid.Column="2"
+                          Grid.Row="0" Grid.Column="2" x:Name="DevBtn3"
                           Content="Delete Log" />
                         <Button
-                          x:Name="DevBtn4" Grid.Row="0" Grid.Column="3"
+                          Grid.Row="0" Grid.Column="3" x:Name="DevBtn4"
                           Content="Show Log" />
                         <Button
-                          x:Name="DevBtn5" Grid.Row="0" Grid.Column="4"
+                          Grid.Row="0" Grid.Column="4" x:Name="DevBtn5"
                           Content="LoginStatus" />
                         <Button
-                          x:Name="DevBtn6" Grid.Row="0" Grid.Column="5"
+                          Grid.Row="0" Grid.Column="5" x:Name="DevBtn6"
                           Content="Splint Download" />
                         <Button
-                          x:Name="DevBtn7" Grid.Row="0" Grid.Column="6"
+                          Grid.Row="0" Grid.Column="6" x:Name="DevBtn7"
                           Content="AutoDetectEXE" />
                         <Button
-                          x:Name="DevBtn8" Grid.Row="0" Grid.Column="7"
+                          Grid.Row="0" Grid.Column="7" x:Name="DevBtn8"
                           Content="reLoad IMP proj" />
                         <Button
-                          x:Name="DevBtn9" Grid.Row="0" Grid.Column="8"
+                          Grid.Row="0" Grid.Column="8" x:Name="DevBtn9"
                           Content="" />
-                        <Button x:Name="DevBtn10" Grid.Row="0" Grid.Column="9" />
-                        <Button x:Name="DevBtn11" Grid.Row="1" Grid.Column="0" />
-                        <Button x:Name="DevBtn12" Grid.Row="1" Grid.Column="1" />
-                        <Button x:Name="DevBtn13" Grid.Row="1" Grid.Column="2" />
-                        <Button x:Name="DevBtn14" Grid.Row="1" Grid.Column="3" />
-                        <Button x:Name="DevBtn15" Grid.Row="1" Grid.Column="4" />
-                        <Button x:Name="DevBtn16" Grid.Row="1" Grid.Column="5" />
-                        <Button x:Name="DevBtn17" Grid.Row="1" Grid.Column="6" />
-                        <Button x:Name="DevBtn18" Grid.Row="1" Grid.Column="7" />
-                        <Button x:Name="DevBtn19" Grid.Row="1" Grid.Column="8" />
-                        <Button x:Name="DevBtn20" Grid.Row="1" Grid.Column="9" />
+                        <Button Grid.Row="0" Grid.Column="9" x:Name="DevBtn10" />
+                        <Button Grid.Row="1" Grid.Column="0" x:Name="DevBtn11" />
+                        <Button Grid.Row="1" Grid.Column="1" x:Name="DevBtn12" />
+                        <Button Grid.Row="1" Grid.Column="2" x:Name="DevBtn13" />
+                        <Button Grid.Row="1" Grid.Column="3" x:Name="DevBtn14" />
+                        <Button Grid.Row="1" Grid.Column="4" x:Name="DevBtn15" />
+                        <Button Grid.Row="1" Grid.Column="5" x:Name="DevBtn16" />
+                        <Button Grid.Row="1" Grid.Column="6" x:Name="DevBtn17" />
+                        <Button Grid.Row="1" Grid.Column="7" x:Name="DevBtn18" />
+                        <Button Grid.Row="1" Grid.Column="8" x:Name="DevBtn19" />
+                        <Button Grid.Row="1" Grid.Column="9" x:Name="DevBtn20" />
                     </Grid>
 
                     <!--  SortTable-Start  -->
@@ -330,9 +330,9 @@
                                     <ColumnDefinition Width="45" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <CheckBox x:Name="checkboxPatient" Grid.Column="0" />
+                                <CheckBox Grid.Column="0" x:Name="checkboxPatient" />
                                 <TextBox
-                                  x:Name="textboxPatient" Grid.Column="1"
+                                  Grid.Column="1" x:Name="textboxPatient"
                                   Style="{StaticResource SortTextBox}"
                                   Text="" TextChanged="TextChanged_SortTable" />
                             </Grid>
@@ -343,9 +343,9 @@
                                     <ColumnDefinition Width="45" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <CheckBox x:Name="checkboxCase" Grid.Column="0" />
+                                <CheckBox Grid.Column="0" x:Name="checkboxCase" />
                                 <TextBox
-                                  x:Name="textboxCase" Grid.Column="1"
+                                  Grid.Column="1" x:Name="textboxCase"
                                   Style="{StaticResource SortTextBox}"
                                   Text="" TextChanged="TextChanged_SortTable" />
                             </Grid>

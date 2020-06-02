@@ -57,24 +57,24 @@
                 <ColumnDefinition Width="42" />
             </Grid.ColumnDefinitions>
             <Label
-              x:Name="label_ProjectName" Grid.Column="1" VerticalAlignment="Center"
+              Grid.Column="1" x:Name="label_ProjectName" VerticalAlignment="Center"
               Content="ProjectName" />
             <Button
-              x:Name="button_Implant" Grid.Row="0" Grid.RowSpan="2"
-              Grid.Column="2" Width="28" Click="Click_ButtonEvent"
+              Grid.Row="0" Grid.RowSpan="2" Grid.Column="2"
+              x:Name="button_Implant" Width="28" Click="Click_ButtonEvent"
               Style="{DynamicResource ImageButton}"
               ToolTip="{local1:LocExtension OpenCaseFolder}">
                 <Image Source="/ImageSource/FunctionTable/icon_I.png" />
             </Button>
             <Button
-              x:Name="button_Guide" Grid.Row="0" Grid.RowSpan="2"
-              Grid.Column="3" Width="28" Click="Click_ButtonEvent"
+              Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"
+              x:Name="button_Guide" Width="28" Click="Click_ButtonEvent"
               Style="{StaticResource ImageButton}">
                 <Image Source="/ImageSource/FunctionTable/icon_G.png" />
             </Button>
             <Button
-              x:Name="button_GuideModelDir" Grid.Row="0" Grid.RowSpan="2"
-              Grid.Column="4" Width="28" Click="Click_ButtonEvent"
+              Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
+              x:Name="button_GuideModelDir" Width="28" Click="Click_ButtonEvent"
               Style="{StaticResource ImageButton}">
                 <Image Source="{DynamicResource icon_guideDrawingImage}" />
             </Button>

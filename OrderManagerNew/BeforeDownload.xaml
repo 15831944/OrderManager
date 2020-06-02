@@ -4,7 +4,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Title="BeforeDownload" Width="450"
   Height="360" AllowsTransparency="True"
   Background="{DynamicResource Common_DarkBackGround}"
-  ShowInTaskbar="False" WindowStartupLocation="CenterScreen" WindowStyle="None"
+  ShowInTaskbar="False" WindowStartupLocation="CenterOwner" WindowStyle="None"
   mc:Ignorable="d">
 
     <Window.Resources>
@@ -17,7 +17,7 @@
                 <Setter Property="FontFamily" Value="Arial" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
             </Style>
         </ResourceDictionary>
     </Window.Resources>
@@ -45,11 +45,12 @@
 
             <Grid Margin="12">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="64" />
+                    <RowDefinition Height="42" />
+                    <RowDefinition Height="68" />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
-                    <RowDefinition Height="48" />
+                    <RowDefinition Height="36" />
                     <RowDefinition Height="52" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -59,47 +60,55 @@
                 </Grid.ColumnDefinitions>
 
                 <Label
-                  x:Name="label_Header" Grid.Row="0" Grid.Column="0"
-                  Grid.ColumnSpan="3"
+                  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                  x:Name="label_Header"
                   Content="{local:LocExtension AboutToInstall}"
                   FontSize="24" />
-
-                <Label Grid.Row="1" Grid.Column="0" Content="{local:LocExtension SpaceRequired}" />
                 <Label
-                  x:Name="label_RequireSpace" Grid.Row="1" Grid.Column="0"
-                  Grid.ColumnSpan="2" HorizontalAlignment="Right" Content="101.1MB" />
-
-                <Label Grid.Row="2" Grid.Column="0" Content="{local:LocExtension SpaceAvailable}" />
+                  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                  x:Name="label_DownloadFileName" VerticalAlignment="Top" />
                 <Label
-                  x:Name="label_AvailableSpace" Grid.Row="2" Grid.Column="0"
-                  Grid.ColumnSpan="2" HorizontalAlignment="Right" Content="99999999.9MB" />
+                  Grid.Row="2" Grid.Column="0" x:Name="jlabel_RequireSpace"
+                  Content="{local:LocExtension SpaceRequired}" />
+                <Label
+                  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                  x:Name="label_RequireSpace" HorizontalAlignment="Right" Content="101.1MB"
+                  ToolTip="{local:LocExtension SpaceRequired}" />
 
                 <Label
-                  Grid.Row="3" Grid.Column="0" VerticalAlignment="Bottom"
+                  Grid.Row="3" Grid.Column="0" x:Name="jlabel_AvailableSpace"
+                  Content="{local:LocExtension SpaceAvailable}" />
+                <Label
+                  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+                  x:Name="label_AvailableSpace" HorizontalAlignment="Right" Content="99999999.9MB"
+                  ToolTip="{local:LocExtension SpaceAvailable}" />
+
+                <Label
+                  Grid.Row="4" Grid.Column="0" VerticalAlignment="Bottom"
                   Content="{local:LocExtension ChooseLocationToInstall}" />
 
                 <TextBox
-                  x:Name="textbox_InstallPath" Grid.Row="4" Grid.Column="0"
-                  Grid.ColumnSpan="2"
+                  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+                  x:Name="textbox_InstallPath"
                   Style="{DynamicResource Setting_textbox}"
                   Text="C:\IntewareInc\SoftwareName" />
                 <Button
-                  x:Name="Btn_Downloadpath" Grid.Row="4" Grid.Column="3"
+                  Grid.Row="5" Grid.Column="3" x:Name="Btn_Downloadpath"
                   Margin="0" HorizontalAlignment="Right" Click="Click_OpenFilePath"
                   Style="{DynamicResource btn_folderOpen}" />
 
-                <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4">
+                <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Button
-                      x:Name="sysBtn_Yes" Grid.Column="0" HorizontalAlignment="Left"
+                      Grid.Column="0" x:Name="sysBtn_Yes" HorizontalAlignment="Left"
                       Click="Click_systemButton"
                       Content="{local:LocExtension Install}"
                       Style="{DynamicResource Setting_sysBtn}" />
                     <Button
-                      x:Name="sysBtn_Cancel" Grid.Column="1" HorizontalAlignment="Right"
+                      Grid.Column="1" x:Name="sysBtn_Cancel" HorizontalAlignment="Right"
                       Click="Click_systemButton"
                       Content="{local:LocExtension Cancel}"
                       Style="{DynamicResource Setting_sysBtn}" />
