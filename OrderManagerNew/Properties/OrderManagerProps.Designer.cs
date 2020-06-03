@@ -12,7 +12,7 @@ namespace OrderManagerNew.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
     internal sealed partial class OrderManagerProps : global::System.Configuration.ApplicationSettingsBase {
         
         private static OrderManagerProps defaultInstance = ((OrderManagerProps)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new OrderManagerProps())));
@@ -116,6 +116,30 @@ namespace OrderManagerNew.Properties {
             }
             set {
                 this["CaseNameFilter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string mostsoftwareDisk {
+            get {
+                return ((string)(this["mostsoftwareDisk"]));
+            }
+            set {
+                this["mostsoftwareDisk"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string systemDisk {
+            get {
+                return ((string)(this["systemDisk"]));
+            }
+            set {
+                this["systemDisk"] = value;
             }
         }
     }

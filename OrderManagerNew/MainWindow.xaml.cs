@@ -25,32 +25,6 @@ using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInform
 using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
 using OrthoOuterInformation = OrderManagerNew.UserControls.Order_orthoBase.OrthoOuterInformation;
 
-//
-//                       _oo0oo_
-//                      o8888888o
-//                      88" . "88
-//                      (| -_- |)
-//                      0\  =  /0
-//                    ___/`---'\___
-//                  .' \\|     |// '.
-//                 / \\|||  :  |||// \
-//                / _||||| -:- |||||- \
-//               |   | \\\  -  /// |   |
-//               | \_|  ''\---/''  |_/ |
-//               \  .-\__  '-'  ___/-. /
-//             ___'. .'  /--.--\  `. .'___
-//          ."" '<  `.___\_<|>_/___.' >' "".
-//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-//         \  \ `_.   \_ __\ /__ _/   .-` /  /
-//     =====`-.____`.___ \_____/___.-`___.-'=====
-//                       `=---='
-//
-//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~          
-//               
-//               佛祖保佑         永無bug
-//
-//*****************************************************
-
 //Microsoft.Expression.Drawing.dll如果要針對多國語言版本: "C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries"
 //抓取程式碼行數: new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString()
 
@@ -137,26 +111,6 @@ namespace OrderManagerNew
             UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
             UpdateFunc.SoftwareUpdateEvent += new UpdateFunction.softwareUpdateStatusHandler(Handler_SetSoftwareUpdateButtonStatus);
             
-            if(Directory.Exists(Properties.Settings.Default.systemDisk) == false)
-            {
-                DriveInfo[] allDrives = DriveInfo.GetDrives();
-                foreach (DriveInfo diskInfo in allDrives)  //檢查客戶所有磁碟
-                {
-                    try
-                    {
-                        if (File.Exists(diskInfo.Name + @"Windows\explorer.exe") == true)
-                        {
-                            Properties.Settings.Default.systemDisk = diskInfo.Name;
-                            break;
-                        }   
-                    }
-                    catch (Exception ex)
-                    {
-                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foreach to check have explorer", ex.Message);
-                    }
-                }
-            }
-
             //工程師模式切換
             if (developerMode == true)
             {
@@ -389,8 +343,8 @@ namespace OrderManagerNew
                             Properties.Settings.Default.guide_exePath = "";
                             Properties.Settings.Default.sysLanguage = "";
                             Properties.Settings.Default.DownloadFolder = "";
-                            Properties.Settings.Default.mostsoftwareDisk = "";
-                            Properties.Settings.Default.systemDisk = "";
+                            Properties.OrderManagerProps.Default.mostsoftwareDisk = "";
+                            Properties.OrderManagerProps.Default.systemDisk = "";
                             Properties.Settings.Default.engineerMode = false;
                             Properties.Settings.Default.PingTime = 5;
                             Properties.Settings.Default.Save();
@@ -990,11 +944,13 @@ namespace OrderManagerNew
                 case (int)_softwareStatus.Installing:
                     {
                         Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
+                        SetAllSoftwareTableDownloadisEnable(false);
                         break;
                     }
                 case (int)_softwareStatus.Uninstalling:
                     {
                         Watcher_SoftwareInstall((int)_watcherCommand.Delete, softwareID);
+                        SetAllSoftwareTableDownloadisEnable(false);
                         break;
                     }
             }
@@ -1183,11 +1139,11 @@ namespace OrderManagerNew
                                     break;
                                 }
                             }
-
-                            SetAllSoftwareTableDownloadisEnable(false);
+                            
                             DialogBeforeDownload = new BeforeDownload();
                             DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
                             DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
                             DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
@@ -1221,7 +1177,6 @@ namespace OrderManagerNew
                                     if (File.Exists(uninstallPath) == true)
                                     {
                                         Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Uninstalling, 0);
-                                        SetAllSoftwareTableDownloadisEnable(false);
                                         OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
                                     }
                                     else
@@ -1253,11 +1208,11 @@ namespace OrderManagerNew
                                     break;
                                 }
                             }
-
-                            SetAllSoftwareTableDownloadisEnable(false);
+                            
                             DialogBeforeDownload = new BeforeDownload();
                             DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
                             DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
                             DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
@@ -1290,7 +1245,6 @@ namespace OrderManagerNew
                                     if (File.Exists(uninstallPath) == true)
                                     {
                                         Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Uninstalling, 0);
-                                        SetAllSoftwareTableDownloadisEnable(false);
                                         OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
                                     }
                                     else
@@ -1322,11 +1276,11 @@ namespace OrderManagerNew
                                     break;
                                 }
                             }
-
-                            SetAllSoftwareTableDownloadisEnable(false);
+                            
                             DialogBeforeDownload = new BeforeDownload();
                             DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
                             DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
                             DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
@@ -1359,7 +1313,6 @@ namespace OrderManagerNew
                                     if (File.Exists(uninstallPath) == true)
                                     {
                                         Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Uninstalling, 0);
-                                        SetAllSoftwareTableDownloadisEnable(false);
                                         OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
                                     }
                                     else
@@ -1391,11 +1344,11 @@ namespace OrderManagerNew
                                     break;
                                 }
                             }
-
-                            SetAllSoftwareTableDownloadisEnable(false);
+                            
                             DialogBeforeDownload = new BeforeDownload();
                             DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
                             DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
                             DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
@@ -1428,7 +1381,6 @@ namespace OrderManagerNew
                                     if (File.Exists(uninstallPath) == true)
                                     {
                                         Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Uninstalling, 0);
-                                        SetAllSoftwareTableDownloadisEnable(false);
                                         OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
                                     }
                                     else
@@ -1460,11 +1412,11 @@ namespace OrderManagerNew
                                     break;
                                 }
                             }
-
-                            SetAllSoftwareTableDownloadisEnable(false);
+                            
                             DialogBeforeDownload = new BeforeDownload();
                             DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
                             DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
                             DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
@@ -1497,7 +1449,6 @@ namespace OrderManagerNew
                                     if (File.Exists(uninstallPath) == true)
                                     {
                                         Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Uninstalling, 0);
-                                        SetAllSoftwareTableDownloadisEnable(false);
                                         OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
                                     }
                                     else
@@ -1530,11 +1481,11 @@ namespace OrderManagerNew
                                     break;
                                 }
                             }
-
-                            SetAllSoftwareTableDownloadisEnable(false);
+                            
                             DialogBeforeDownload = new BeforeDownload();
                             DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
                             DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
                             DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
@@ -1567,7 +1518,6 @@ namespace OrderManagerNew
                                     if (File.Exists(uninstallPath) == true)
                                     {
                                         Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Uninstalling, 0);
-                                        SetAllSoftwareTableDownloadisEnable(false);
                                         OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
                                     }
                                     else
@@ -1605,13 +1555,12 @@ namespace OrderManagerNew
         }
 
         /// <summary>
-            /// 從網上獲取下載資料成功就顯示BeforeDownload頁面
-            /// </summary>
+        /// 從網上獲取下載資料成功就顯示BeforeDownload頁面
+        /// </summary>
         private void Handler_ShowBeforeDownload()
         {
             haveEXE = false;
             bool DownloadStart = false;
-            SetAllSoftwareTableDownloadisEnable(true);
             if (DialogBeforeDownload.SetInformation() == true)
             {
                 //主視窗羽化
@@ -1623,10 +1572,11 @@ namespace OrderManagerNew
                 DialogBeforeDownload.ShowDialog();
                 if(DialogBeforeDownload.DialogResult == true)
                 {
-                    SetAllSoftwareTableDownloadisEnable(false);
                     SnackBarShow("Start Download"); //開始下載 //TODO 多國語系
                     DownloadStart = true;
                 }
+                else
+                    SetAllSoftwareTableDownloadisEnable(true);
 
                 //主視窗還原
                 this.Effect = null;

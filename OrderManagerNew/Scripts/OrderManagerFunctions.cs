@@ -74,9 +74,37 @@ namespace OrderManagerNew
         /// </summary>
         public void DoubleCheckEXEexist()
         {
+            var recDisk = new List<Tuple<string, int>>();
+
+            void AddDataToRecDisk(string exePathRoot)
+            {
+                if(recDisk.Count == 0)
+                {
+                    recDisk.Add(Tuple.Create(exePathRoot, 1));
+                }
+                else
+                {
+                    bool haveRec = false;
+                    for(int i=0; i<recDisk.Count; i++)
+                    {
+                        if (recDisk[i].Item1 == exePathRoot)
+                        {
+                            int count = recDisk[i].Item2 +1;
+                            recDisk.RemoveAt(i);
+                            recDisk.Add(Tuple.Create(exePathRoot, count));
+                            haveRec = true;
+                            i++;
+                        }
+                    }
+                    if(haveRec == false)
+                        recDisk.Add(Tuple.Create(exePathRoot, 1));
+                }
+            }
+
             if(File.Exists(Properties.Settings.Default.cad_exePath) == true)
             {
                 SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
+                AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.cad_exePath));
             }
             else
             {
@@ -86,6 +114,7 @@ namespace OrderManagerNew
             if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
             {
                 SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
+                AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.implant_exePath));
             }
             else
             {
@@ -95,6 +124,7 @@ namespace OrderManagerNew
             if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
             {
                 SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
+                AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.ortho_exePath));
             }
             else
             {
@@ -104,6 +134,7 @@ namespace OrderManagerNew
             if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
             {
                 SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
+                AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.tray_exePath));
             }
             else
             {
@@ -113,6 +144,7 @@ namespace OrderManagerNew
             if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
             {
                 SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
+                AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.splint_exePath));
             }
             else
             {
@@ -122,21 +154,56 @@ namespace OrderManagerNew
             if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
             {
                 SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
+                AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.guide_exePath));
             }
             else
             {
                 Properties.Settings.Default.guide_exePath = "";
                 SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
             }
+            //取得mostsoftwareDisk資料
+            if(recDisk.Count > 0)
+            {
+                var mostSoftwareDisk = new Tuple<string, int>("", 0);
+                for (int i=0; i<recDisk.Count; i++)
+                {
+                    if (mostSoftwareDisk.Item1 == "")
+                        mostSoftwareDisk = recDisk[i];
+                    else if (recDisk[i].Item2 > mostSoftwareDisk.Item2)
+                        mostSoftwareDisk = recDisk[i];
+                }
+                Properties.OrderManagerProps.Default.mostsoftwareDisk = mostSoftwareDisk.Item1;
+            }
 
-            for(int i=(int)_softwareID.EZCAD; i<(int)_softwareID.All; i++)
+            //取得systemDisk資料
+            if (Directory.Exists(Properties.OrderManagerProps.Default.systemDisk) == false)
+            {
+                DriveInfo[] allDrives = DriveInfo.GetDrives();
+                foreach (DriveInfo diskInfo in allDrives)  //檢查客戶所有磁碟
+                {
+                    try
+                    {
+                        if (File.Exists(diskInfo.Name + @"Windows\explorer.exe") == true)
+                        {
+                            Properties.OrderManagerProps.Default.systemDisk = diskInfo.Name;
+                            break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foreach to check have explorer", ex.Message);
+                    }
+                }
+            }
+
+            for (int i=(int)_softwareID.EZCAD; i<(int)_softwareID.All; i++)
             {
                 AutoDetectSoftwareProjectPath(i);
             }
         }
 
         /// <summary>
-        /// 自動檢測軟體執行檔路徑(偵測並寫入exePath)並把最常用的磁碟存入 Properties.Settings.Default.mostsoftwareDisk
+        /// 自動檢測軟體執行檔路徑(偵測並寫入exePath)並把最常用的磁碟存入 Properties.OrderManagerProps.Default.mostsoftwareDisk
         /// </summary>
         /// <param name="classfrom">哪個class呼叫的，參考 _classFrom</param>
         public void AutoDetectEXE(int classfrom)
@@ -149,7 +216,7 @@ namespace OrderManagerNew
             string tray_exePath = Properties.Settings.Default.tray_exePath;
             string splint_exePath = Properties.Settings.Default.splint_exePath;
             string guide_exePath = Properties.Settings.Default.guide_exePath;
-            string mostsoftwareDisk = Properties.Settings.Default.mostsoftwareDisk;
+            string mostsoftwareDisk = Properties.OrderManagerProps.Default.mostsoftwareDisk;
             string[] array_exePath = { cad_exePath, implant_exePath, ortho_exePath, tray_exePath, splint_exePath, guide_exePath };
             DiskSoftwareInfo disk_most = new DiskSoftwareInfo();//存最多軟體的磁碟
 
@@ -196,7 +263,7 @@ namespace OrderManagerNew
                         disk_most = calcDiskwithSoftware[i];
                 }
 
-                Properties.Settings.Default.mostsoftwareDisk = disk_most.DiskName;
+                Properties.OrderManagerProps.Default.mostsoftwareDisk = disk_most.DiskName;
 
                 //已經有mostsoftwareDisk資料
                 if (classfrom == (int)_classFrom.MainWindow)
@@ -376,8 +443,8 @@ namespace OrderManagerNew
 
                         calcDiskwithSoftware2.Add(diskInfo);
 
-                        if (Directory.Exists(Properties.Settings.Default.systemDisk) == false && File.Exists(diskInfo.DiskName + @"Windows\explorer.exe") == true)
-                            Properties.Settings.Default.systemDisk = diskInfo.DiskName;
+                        if (Directory.Exists(Properties.OrderManagerProps.Default.systemDisk) == false && File.Exists(diskInfo.DiskName + @"Windows\explorer.exe") == true)
+                            Properties.OrderManagerProps.Default.systemDisk = diskInfo.DiskName;
                     }
                     catch(Exception ex)
                     {
@@ -421,7 +488,7 @@ namespace OrderManagerNew
                 }
 
                 if (disk_most.SoftwareCount != 0)
-                    Properties.Settings.Default.mostsoftwareDisk = disk_most.DiskName;
+                    Properties.OrderManagerProps.Default.mostsoftwareDisk = disk_most.DiskName;
                 else
                 {
                     //一個軟體都沒安裝預設C碟，C碟沒有就D碟，兩個都沒有就用陣列第一筆磁碟
@@ -430,20 +497,20 @@ namespace OrderManagerNew
                     {
                         if (disk.DiskName == @"C:\")
                         {
-                            Properties.Settings.Default.mostsoftwareDisk = @"C:\";
+                            Properties.OrderManagerProps.Default.mostsoftwareDisk = @"C:\";
                             chosen = true;
                             break;
                         }
                         if (disk.DiskName == @"D:\")
                         {
-                            Properties.Settings.Default.mostsoftwareDisk = @"D:\";
+                            Properties.OrderManagerProps.Default.mostsoftwareDisk = @"D:\";
                             chosen = true;
                             break;
                         }
                     }
 
                     if (chosen == false)
-                        Properties.Settings.Default.mostsoftwareDisk = sortedInfoList[0].DiskName;
+                        Properties.OrderManagerProps.Default.mostsoftwareDisk = sortedInfoList[0].DiskName;
                 }
             }
 
@@ -454,8 +521,8 @@ namespace OrderManagerNew
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "tray_exePath", "\t\"" + Properties.Settings.Default.tray_exePath + "\"");
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "splint_exePath", "\t\"" + Properties.Settings.Default.splint_exePath + "\"");
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "guide_exePath", "\t\"" + Properties.Settings.Default.guide_exePath + "\"");
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "mostswDisk", "\t\"" + Properties.Settings.Default.mostsoftwareDisk + "\"");
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "systemDisk", "\t\"" + Properties.Settings.Default.systemDisk + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "mostswDisk", "\t\"" + Properties.OrderManagerProps.Default.mostsoftwareDisk + "\"");
+            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "systemDisk", "\t\"" + Properties.OrderManagerProps.Default.systemDisk + "\"");
             log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs AutoDetectEXE()", "Detect finish.");
             log.RecordLogSaperate();
 
@@ -547,10 +614,10 @@ namespace OrderManagerNew
                                 {
                                     try
                                     {
-                                        if (Properties.Settings.Default.mostsoftwareDisk != "")
+                                        if (Properties.OrderManagerProps.Default.mostsoftwareDisk != "")
                                         {
-                                            Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\");
-                                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\";
+                                            Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\Implant\");
+                                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\Implant\";
                                             goto createtosysDirectorySuccess;
                                         }
                                         else
@@ -608,18 +675,18 @@ namespace OrderManagerNew
                             }
                             catch (Exception ex)
                             {
-                                Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\";
+                                Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\Implant\";
                                 if (Directory.Exists(Properties.OrderManagerProps.Default.implant_projectDirectory) == false)
-                                    Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\");
+                                    Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\Implant\");
 
                                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_implant", ex.Message);
                             }
                         }
                         else
                         {
-                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\";
+                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\Implant\";
                             if (Directory.Exists(Properties.OrderManagerProps.Default.implant_projectDirectory) == false)
-                                Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\");
+                                Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\Implant\");
                         }
                         log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "implant_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.implant_projectDirectory + "\"");
                         break;

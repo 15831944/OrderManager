@@ -81,6 +81,24 @@ namespace OrderManagerNew
 
         private void Click_systemButton(object sender, RoutedEventArgs e)
         {
+            void GOTODownload()
+            {
+                try
+                {
+                    if (Directory.Exists(textbox_InstallPath.Text) != true)
+                        Directory.CreateDirectory(textbox_InstallPath.Text);
+
+                    SetPropertiesSoftewarePath(currentSoftwareID, textbox_InstallPath.Text);
+                    this.DialogResult = true;
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    this.DialogResult = false;
+                }
+                
+            }
+
             if(sender is Button)
             {
                 switch (((Button)sender).Name)
@@ -93,8 +111,7 @@ namespace OrderManagerNew
                                 if (MessageBox.Show("磁碟空間可能不足以安裝軟體", "Waring", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
                                 {
                                     //磁碟空間可能不足以安裝軟體 //TODO 多國語系
-                                    SetPropertiesSoftewarePath(currentSoftwareID, textbox_InstallPath.Text);
-                                    this.DialogResult = true;
+                                    GOTODownload();
                                 }
                                 else
                                 {
@@ -108,8 +125,7 @@ namespace OrderManagerNew
                             }
                             else
                             {
-                                SetPropertiesSoftewarePath(currentSoftwareID, textbox_InstallPath.Text);
-                                this.DialogResult = true;
+                                GOTODownload();
                             }
                             break;
                         }
@@ -287,7 +303,12 @@ namespace OrderManagerNew
 
             label_TitleBar.Content = OrderManagerNew.TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             label_Header.Content = OrderManagerNew.TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
-            textbox_InstallPath.Text = @"C:\IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
+            if(Properties.OrderManagerProps.Default.mostsoftwareDisk != "")
+                textbox_InstallPath.Text = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
+            else if(Properties.OrderManagerProps.Default.systemDisk != "")
+                textbox_InstallPath.Text = Properties.OrderManagerProps.Default.systemDisk + @"IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
+            else
+                textbox_InstallPath.Text = @"C:\IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
             jlabel_RequireSpace.Content += ":";
             jlabel_AvailableSpace.Content += ":";
             try

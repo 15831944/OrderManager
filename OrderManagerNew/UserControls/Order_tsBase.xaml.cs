@@ -214,12 +214,12 @@ namespace OrderManagerNew.UserControls
             if (trayInfo != null && System.IO.Directory.Exists(trayInfo.CaseDirectoryPath) == true)
             {
                 OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + trayInfo.CaseDirectoryPath + "\"");
+                omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + trayInfo.CaseDirectoryPath + "\"");
             }
             else if(splintInfo != null && System.IO.Directory.Exists(splintInfo.CaseDirectoryPath) == true)
             {
                 OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + splintInfo.CaseDirectoryPath + "\"");
+                omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + splintInfo.CaseDirectoryPath + "\"");
             }
         }
     }

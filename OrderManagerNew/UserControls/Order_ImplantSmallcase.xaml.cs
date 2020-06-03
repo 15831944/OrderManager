@@ -72,7 +72,7 @@ namespace OrderManagerNew.UserControls
                     case "button_GuideModelDir":
                         {
                             if(button_GuideModelDir.IsEnabled == true)
-                                omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + Path.GetDirectoryName(implantsmallcaseInfo.GuideModelPath) + "\"");
+                                omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + Path.GetDirectoryName(implantsmallcaseInfo.GuideModelPath) + "\"");
                             break;
                         }
                 }

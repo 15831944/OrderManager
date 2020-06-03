@@ -161,7 +161,7 @@ namespace OrderManagerNew.UserControls
             if (cadInfo != null && System.IO.Directory.Exists(cadInfo.CaseDirectoryPath) == true)
             {
                 OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + cadInfo.CaseDirectoryPath + "\"");
+                omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + cadInfo.CaseDirectoryPath + "\"");
             }
         }
     }

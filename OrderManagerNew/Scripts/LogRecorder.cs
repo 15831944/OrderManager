@@ -121,8 +121,8 @@ namespace OrderManagerNew
             w.WriteLine($"caseDir_Ortho:{Properties.OrderManagerProps.Default.ortho_projectDirectory}");
             w.WriteLine($"caseDir_Tray:{Properties.OrderManagerProps.Default.tray_projectDirectory}");
             w.WriteLine($"caseDir_Splint:{Properties.OrderManagerProps.Default.splint_projectDirectory}");
-            w.WriteLine($"SystemDisk:{Properties.Settings.Default.systemDisk}");
-            w.WriteLine($"MostSoftwareDisk:{Properties.Settings.Default.mostsoftwareDisk}");
+            w.WriteLine($"SystemDisk:{Properties.OrderManagerProps.Default.systemDisk}");
+            w.WriteLine($"MostSoftwareDisk:{Properties.OrderManagerProps.Default.mostsoftwareDisk}");
             w.WriteLine($"DownloadFolder:{Properties.Settings.Default.DownloadFolder}");
             w.WriteLine($"PingTime:{Properties.Settings.Default.PingTime}");
             w.WriteLine($"UserLanguage:{Properties.Settings.Default.sysLanguage}");

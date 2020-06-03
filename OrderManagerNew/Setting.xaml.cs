@@ -293,8 +293,8 @@ namespace OrderManagerNew
 
             if (File.Exists(originPah) == true)
                 Dlg.InitialDirectory = System.IO.Path.GetDirectoryName(originPah);
-            else if (Directory.Exists(Properties.Settings.Default.mostsoftwareDisk + @"IntewareInc\") == true)
-                Dlg.InitialDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareInc\";
+            else if (Directory.Exists(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareInc\") == true)
+                Dlg.InitialDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareInc\";
             else
                 return;
 

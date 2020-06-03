@@ -95,7 +95,7 @@ namespace OrderManagerNew.UserControls
         private void Click_OpenDir(object sender, RoutedEventArgs e)
         {
             OrderManagerFunctions omFunc = new OrderManagerFunctions();
-            omFunc.RunCommandLine(Properties.Settings.Default.systemDisk + @"Windows\explorer.exe", "\"" + System.IO.Path.GetDirectoryName(orthoInfo.CaseDirectoryPath) + "\"");
+            omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + System.IO.Path.GetDirectoryName(orthoInfo.CaseDirectoryPath) + "\"");
         }
 
         private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
