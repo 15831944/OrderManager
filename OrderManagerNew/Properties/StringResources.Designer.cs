@@ -808,6 +808,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Software Update 的當地語系化字串。
+        /// </summary>
+        internal static string SoftwareUpdate {
+            get {
+                return ResourceManager.GetString("SoftwareUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Introduction Website 的當地語系化字串。
         /// </summary>
         internal static string SoftwareWeb {

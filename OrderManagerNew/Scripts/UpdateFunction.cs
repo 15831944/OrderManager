@@ -313,5 +313,40 @@ namespace OrderManagerNew
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs Initial exception", ex.Message);
             }
         }
+
+        /// <summary>
+        /// OrderManagerLoaded完再開始檢查是否有更新
+        /// </summary>
+        public void CheckSoftwareHaveNewVersion()
+        {
+            if (CloudSoftwareTotal.Count < 1)   //代表沒有抓到軟體更新資訊
+                return;
+
+            FileVersionInfo verInfo;
+            if(File.Exists(Properties.Settings.Default.cad_exePath) == true)
+            {
+                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
+            }
+            if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
+            {
+
+            }
+            if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
+            {
+
+            }
+            if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
+            {
+
+            }
+            if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
+            {
+
+            }
+            if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
+            {
+
+            }
+        }
     }
 }

@@ -47,6 +47,7 @@ namespace OrderManagerNew.UserControls
         };
 
         private CadInformation cadInfo;
+        private int ItemIndex;
 
         /// <summary>
         /// EZCAD專案資訊
@@ -83,6 +84,7 @@ namespace OrderManagerNew.UserControls
             label_patientName.Content = "";
             label_designStep.Content = "";
             label_createDate.Content = "";
+            ItemIndex = -1;
         }
 
         /// <summary>
@@ -141,8 +143,9 @@ namespace OrderManagerNew.UserControls
         /// <summary>
         /// 設定顯示在UserControl上的內容
         /// </summary>
-        /// <param name="Import"></param>
-        public void SetCaseInfo(CadInformation Import)
+        /// <param name="Import">CadInformation清單</param>
+        /// <param name="Index">從0開始</param>
+        public void SetCaseInfo(CadInformation Import, int Index)
         {
             cadInfo = Import;
             //label_orderID.Content = cadInfo.OrderID.Substring(cadInfo.OrderID.IndexOf('-') + 1);
@@ -150,6 +153,7 @@ namespace OrderManagerNew.UserControls
             label_designStep.Content = GetDesignStep((int)cadInfo.DesignStep);
             label_patientName.Content = cadInfo.PatientName;
             label_createDate.Content = cadInfo.CreateDate.ToLongDateString();
+            ItemIndex = Index;
         }
 
         private void Click_FolderOpen(object sender, RoutedEventArgs e)

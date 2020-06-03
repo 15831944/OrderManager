@@ -26,7 +26,8 @@ namespace OrderManagerNew.UserControls
     {
         LogRecorder log;
         private OrthoOuterInformation orthoInfo;
-        private bool UnfoldsmallCase = false;   //smallCase目前是否為攤開狀態
+        private bool UserSelected = false;   //smallCase目前是否為攤開狀態
+        int ItemIndex;
 
         public class OrthoOuterInformation
         {
@@ -66,10 +67,16 @@ namespace OrderManagerNew.UserControls
             label_patientName.Content = "";
             label_designStep.Content = "";
             label_createDate.Content = "";
-            UnfoldsmallCase = false;
+            UserSelected = false;
+            ItemIndex = -1;
         }
 
-        public void SetCaseInfo(OrthoOuterInformation Import)
+        /// <summary>
+        /// 設定顯示在UserControl上的內容
+        /// </summary>
+        /// <param name="Import">OrthoOuterInformation清單</param>
+        /// <param name="Index">從0開始</param>
+        public void SetCaseInfo(OrthoOuterInformation Import, int Index)
         {
             orthoInfo = Import;
             string showID = orthoInfo.PatientID + "＿" + orthoInfo.PatientName;
@@ -82,6 +89,7 @@ namespace OrderManagerNew.UserControls
                 label_patientName.ToolTip = OrderManagerNew.TranslationSource.Instance["PatientNameWithAge"];
             }
             label_createDate.Content = orthoInfo.CreateDate.ToLongDateString();
+            ItemIndex = Index;
         }
 
         private void Click_OpenDir(object sender, RoutedEventArgs e)
@@ -98,7 +106,7 @@ namespace OrderManagerNew.UserControls
             }
             else
             {
-                if(UnfoldsmallCase == false)
+                if(UserSelected == false)
                 {
                     //未被攤開，執行攤開
                     if (orthoInfo.List_smallcase.Count > 0)
@@ -107,21 +115,22 @@ namespace OrderManagerNew.UserControls
                         {
                             stackpanel_Ortho.Children.Add(OrthoCase);
                         }
-                        UnfoldsmallCase = true;
                     }
                     else
                     {
+                        Mouse.OverrideCursor = Cursors.Wait;
                         LoadSmallCase();
-
+                        Mouse.OverrideCursor = Cursors.Arrow;
                         if (orthoInfo.List_smallcase.Count > 0)
                         {
                             foreach (Order_orthoSmallcase OrthoCase in orthoInfo.List_smallcase)
                             {
                                 stackpanel_Ortho.Children.Add(OrthoCase);
                             }
-                            UnfoldsmallCase = true;
                         }
-                    } 
+                    }
+                    UserSelected = true;
+                    rectangle_orthoBase.Fill = this.FindResource("background_CheckedBaseCaseTable") as SolidColorBrush;
                 }
                 else
                 {
@@ -129,8 +138,9 @@ namespace OrderManagerNew.UserControls
                     if (orthoInfo.List_smallcase.Count > 0)
                     {
                         stackpanel_Ortho.Children.RemoveRange(1, (stackpanel_Ortho.Children.Count - 1));
-                        UnfoldsmallCase = false;
                     }
+                    rectangle_orthoBase.Fill = Brushes.White;
+                    UserSelected = false;
                 }
             }
         }

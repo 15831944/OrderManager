@@ -17,9 +17,10 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Rectangle
-          Grid.Row="1" Grid.Column="1" Width="Auto"
-          Height="54" Margin="6,3,0,3" VerticalAlignment="Top"
-          Panel.ZIndex="-1" Fill="White" PreviewMouseLeftButtonUp="PMDown_StackPanelMain" />
+          Grid.Row="1" Grid.Column="1" x:Name="rectangle_orthoBase"
+          Width="Auto" Height="54" Margin="6,3,0,3"
+          VerticalAlignment="Top" Panel.ZIndex="-1" Fill="White"
+          PreviewMouseLeftButtonUp="PMDown_StackPanelMain" />
 
         <StackPanel
           Grid.Row="1" Grid.Column="1" x:Name="stackpanel_Ortho"

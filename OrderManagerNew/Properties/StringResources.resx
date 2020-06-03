@@ -484,4 +484,8 @@
     <value>Treatment Plan</value>
     <comment>Ortho_Step</comment>
   </data>
+  <data name="SoftwareUpdate" xml:space="preserve">
+    <value>Software Update</value>
+    <comment>TableFunction</comment>
+  </data>
 </root>

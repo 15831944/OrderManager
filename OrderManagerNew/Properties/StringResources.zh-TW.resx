@@ -393,4 +393,7 @@
   <data name="SetupManage" xml:space="preserve">
     <value>排牙管理</value>
   </data>
+  <data name="SoftwareUpdate" xml:space="preserve">
+    <value>軟體更新</value>
+  </data>
 </root>

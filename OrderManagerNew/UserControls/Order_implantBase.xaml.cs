@@ -23,7 +23,7 @@ namespace OrderManagerNew.UserControls
     {
         private ImplantOuterInformation implantInfo;
         private bool UnfoldsmallCase = false;   //smallCase目前是否為攤開狀態
-
+        private int ItemIndex;
         /// <summary>
         /// ImplantPlanning專案資訊
         /// </summary>
@@ -71,9 +71,15 @@ namespace OrderManagerNew.UserControls
             label_designStep.Content = "";
             label_createDate.Content = "";
             UnfoldsmallCase = false;
+            ItemIndex = -1;
         }
 
-        public void SetCaseInfo(ImplantOuterInformation Import)
+        /// <summary>
+        /// 設定顯示在UserControl上的內容
+        /// </summary>
+        /// <param name="Import">ImplantInformation清單</param>
+        /// <param name="Index">從0開始</param>
+        public void SetCaseInfo(ImplantOuterInformation Import, int Index)
         {
             implantInfo = Import;
             label_orderID.Content = implantInfo.OrderNumber;
@@ -85,6 +91,7 @@ namespace OrderManagerNew.UserControls
                 label_patientName.ToolTip = OrderManagerNew.TranslationSource.Instance["PatientNameWithAge"];
             }   
             label_createDate.Content = implantInfo.CreateDate.ToLongDateString();
+            ItemIndex = Index;
         }
 
         private void Click_OpenDir(object sender, RoutedEventArgs e)

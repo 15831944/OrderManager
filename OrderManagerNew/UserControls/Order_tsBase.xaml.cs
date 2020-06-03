@@ -50,6 +50,7 @@ namespace OrderManagerNew.UserControls
 
         private TrayInformation trayInfo;
         private SplintInformation splintInfo;
+        private int ItemIndex;
 
         /// <summary>
         /// Tray專案資訊
@@ -114,6 +115,7 @@ namespace OrderManagerNew.UserControls
             label_patientName.Content = "";
             label_designStep.Content = "";
             label_createDate.Content = "";
+            ItemIndex = -1;
         }
 
         /// <summary>
@@ -177,20 +179,23 @@ namespace OrderManagerNew.UserControls
         /// <summary>
         /// 設定顯示在UserControl上的內容
         /// </summary>
-        /// <param name="Import"></param>
-        public void SetTrayCaseInfo(TrayInformation Import)
+        /// <param name="Import">TrayInformation清單</param>
+        /// <param name="Index">從0開始</param>
+        public void SetTrayCaseInfo(TrayInformation Import, int Index)
         {
             trayInfo = Import;
             label_orderID.Content = trayInfo.OrderID.Substring(trayInfo.OrderID.IndexOf('-') + 1);
             label_designStep.Content = GetTrayDesignStep((int)trayInfo.DesignStep);
             label_createDate.Content = trayInfo.CreateDate.ToLongDateString();
+            ItemIndex = Index;
         }
 
         /// <summary>
         /// 設定顯示在UserControl上的內容
         /// </summary>
-        /// <param name="Import"></param>
-        public void SetSplintCaseInfo(SplintInformation Import)
+        /// <param name="Import">SplintInformation清單</param>
+        /// <param name="Index">從0開始</param>
+        public void SetSplintCaseInfo(SplintInformation Import, int Index)
         {
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
@@ -201,6 +206,7 @@ namespace OrderManagerNew.UserControls
             label_orderID.Content = splintInfo.OrderID.Substring(splintInfo.OrderID.IndexOf('-') + 1);
             label_designStep.Content = GetSplintDesignStep((int)splintInfo.DesignStep);
             label_createDate.Content = splintInfo.CreateDate.ToLongDateString();
+            ItemIndex = Index;
         }
 
         private void Click_FolderOpen(object sender, RoutedEventArgs e)

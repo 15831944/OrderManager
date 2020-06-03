@@ -1083,6 +1083,50 @@ namespace OrderManagerNew
                     SoftwareFilterSplint.IsChecked = true;
             }
         }
+
+        void Handler_SetSoftwareUpdateButtonStatus(int SoftwareID,bool canUpdate)
+        {
+            if(canUpdate == true)
+            {
+                switch(SoftwareID)
+                {
+                    case (int)_softwareID.EZCAD:
+                        {
+                            cad_update.IsEnabled = canUpdate;
+                            break;
+                        }
+                    case (int)_softwareID.Implant:
+                        {
+                            implant_update.IsEnabled = canUpdate;
+                            break;
+                        }
+                    case (int)_softwareID.Ortho:
+                        {
+                            ortho_update.IsEnabled = canUpdate;
+                            break;
+                        }
+                    case (int)_softwareID.Tray:
+                        {
+                            tray_update.IsEnabled = canUpdate;
+                            break;
+                        }
+                    case (int)_softwareID.Splint:
+                        {
+                            splint_update.IsEnabled = canUpdate;
+                            break;
+                        }
+                    case (int)_softwareID.Guide:
+                        {
+                            guide_update.IsEnabled = canUpdate;
+                            break;
+                        }
+                }
+            }
+            else
+            {
+
+            }
+        }
         
         /// <summary>
         /// 設定SofttwareTable的PopupBox事件
@@ -1097,7 +1141,6 @@ namespace OrderManagerNew
                         {
                             break;
                         }
-
                     #region EZCAD
                     case "cad_selectPath":
                         {
@@ -1164,7 +1207,6 @@ namespace OrderManagerNew
                             break;
                         }
                     #endregion
-
                     #region Implant
                     case "implant_selectPath":
                         {
@@ -1230,7 +1272,6 @@ namespace OrderManagerNew
                             break;
                         }
                     #endregion
-
                     #region Ortho
                     case "ortho_selectPath":
                         {
@@ -1296,7 +1337,6 @@ namespace OrderManagerNew
                             break;
                         }
                     #endregion
-
                     #region Tray
                     case "tray_selectPath":
                         {
@@ -1362,7 +1402,6 @@ namespace OrderManagerNew
                             break;
                         }
                     #endregion
-
                     #region Splint
                     case "splint_selectPath":
                         {
@@ -1428,7 +1467,6 @@ namespace OrderManagerNew
                             break;
                         }
                     #endregion
-
                     #region Guide
                     case "guide_selectPath":
                         {
@@ -1829,11 +1867,13 @@ namespace OrderManagerNew
                         _watcherEZCAD = new FileSystemWatcher();
                         if (ProjHandle.Caselist_EZCAD != null && ProjHandle.Caselist_EZCAD.Count > 0)
                         {
+                            int countIndex = 0;
                             foreach (CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
                             {
                                 UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
-                                Order_CAD.SetCaseInfo(cadInfo);
+                                Order_CAD.SetCaseInfo(cadInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_CAD);
+                                countIndex++;
                             }
                             Watcher_CaseProject(_watcherEZCAD, Properties.OrderManagerProps.Default.cad_projectDirectory);
                         }
@@ -1843,13 +1883,15 @@ namespace OrderManagerNew
                     {
                         StackPanel_Local.Children.Clear();
                         _watcherImplant = new FileSystemWatcher();
+                        int countIndex = 0;
                         if (ProjHandle.Caselist_ImplantOuterCase != null && ProjHandle.Caselist_ImplantOuterCase.Count > 0)
                         {
                             foreach (ImplantOuterInformation implantInfo in ProjHandle.Caselist_ImplantOuterCase)
                             {
                                 UserControls.Order_implantBase Order_Implant = new UserControls.Order_implantBase();
-                                Order_Implant.SetCaseInfo(implantInfo);
+                                Order_Implant.SetCaseInfo(implantInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_Implant);
+                                countIndex++;
                             }
                             Watcher_CaseProject(_watcherImplant, Properties.OrderManagerProps.Default.implant_projectDirectory);
                         }
@@ -1859,13 +1901,15 @@ namespace OrderManagerNew
                     {
                         StackPanel_Local.Children.Clear();
                         _watcherOrtho = new FileSystemWatcher();
+                        int countIndex = 0;
                         if (ProjHandle.Caselist_OrthoOuterCase != null && ProjHandle.Caselist_OrthoOuterCase.Count > 0)
                         {
                             foreach (OrthoOuterInformation orthoInfo in ProjHandle.Caselist_OrthoOuterCase)
                             {
                                 UserControls.Order_orthoBase Order_Ortho = new UserControls.Order_orthoBase();
-                                Order_Ortho.SetCaseInfo(orthoInfo);
+                                Order_Ortho.SetCaseInfo(orthoInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_Ortho);
+                                countIndex++;
                             }
                             Watcher_CaseProject(_watcherOrtho, Properties.OrderManagerProps.Default.ortho_projectDirectory);
                         }
@@ -1875,13 +1919,15 @@ namespace OrderManagerNew
                     {
                         StackPanel_Local.Children.Clear();
                         _watcherTray = new FileSystemWatcher();
+                        int countIndex = 0;
                         if (ProjHandle.Caselist_Tray != null && ProjHandle.Caselist_Tray.Count > 0)
                         {
                             foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
                             {
                                 UserControls.Order_tsBase Order_Tray = new UserControls.Order_tsBase();
-                                Order_Tray.SetTrayCaseInfo(trayInfo);
+                                Order_Tray.SetTrayCaseInfo(trayInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_Tray);
+                                countIndex++;
                             }
                             Watcher_CaseProject(_watcherTray, Properties.OrderManagerProps.Default.tray_projectDirectory);
                         }
@@ -1891,13 +1937,15 @@ namespace OrderManagerNew
                     {
                         StackPanel_Local.Children.Clear();
                         _watcherSplint = new FileSystemWatcher();
+                        int countIndex = 0;
                         if (ProjHandle.Caselist_Splint != null && ProjHandle.Caselist_Splint.Count > 0)
                         {
                             foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
                             {
                                 UserControls.Order_tsBase Order_Splint = new UserControls.Order_tsBase();
-                                Order_Splint.SetSplintCaseInfo(splintInfo);
+                                Order_Splint.SetSplintCaseInfo(splintInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_Splint);
+                                countIndex++;
                             }
                             Watcher_CaseProject(_watcherSplint, Properties.OrderManagerProps.Default.splint_projectDirectory);
                         }

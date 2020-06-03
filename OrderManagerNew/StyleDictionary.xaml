@@ -10,6 +10,9 @@
     <SolidColorBrush x:Key="Common_DarkBrown" Color="#FF493E34" />
     <SolidColorBrush x:Key="background_CaseTable" Color="#FFEDEDE2" />
     <SolidColorBrush x:Key="background_SettingWindow" Color="#FF30312C" />
+    <SolidColorBrush x:Key="background_CheckedBaseCaseTable" Color="#FFFFD6AE" />
+    <SolidColorBrush x:Key="background_CheckedSmallCaseTable" Color="#FFEDAE9F" />
+    <SolidColorBrush x:Key="borderbrush_CheckedSmallCaseTable" Color="#FFF26C5A" />
     <Style TargetType="{x:Type Label}">
         <Setter Property="FontFamily" Value="Arial" />
     </Style>
@@ -407,14 +410,14 @@
 
 
                             <ToggleButton
-                              x:Name="HeaderSite" Grid.Row="0"
+                              Grid.Row="0" x:Name="HeaderSite"
                               Content="{TemplateBinding Header}"
                               ContentTemplate="{TemplateBinding HeaderTemplate}"
                               ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                               IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                               Style="{DynamicResource ExpanderToggleButtonStyle}" />
                             <ContentPresenter
-                              x:Name="ExpandSite" Grid.Row="1"
+                              Grid.Row="1" x:Name="ExpandSite"
                               Margin="{TemplateBinding Padding}"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -587,7 +590,7 @@
                           CornerRadius="5" />
 
                         <Track
-                          x:Name="PART_Track" Grid.Row="0" Focusable="false"
+                          Grid.Row="0" x:Name="PART_Track" Focusable="false"
                           IsDirectionReversed="true">
                             <Track.Thumb>
                                 <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{DynamicResource ScrollThumbs}" />
@@ -780,11 +783,11 @@
                                             <ColumnDefinition Width="26" />
                                         </Grid.ColumnDefinitions>
                                         <Border
-                                          x:Name="Border" Grid.Column="1" Background="#353531"
+                                          Grid.Column="1" x:Name="Border" Background="#353531"
                                           BorderThickness="0" />
                                         <Border Grid.Column="0" Background="#756550" BorderThickness="0" />
                                         <Path
-                                          x:Name="Arrow" Grid.Column="1" Width="10"
+                                          Grid.Column="1" x:Name="Arrow" Width="10"
                                           Height="10" HorizontalAlignment="Center" VerticalAlignment="Center"
                                           Data="F1M181.297,177.841L181.205,177.746 181.385,177.563 202.804,156.146 202.804,135.07 178.497,159.373 170.847,167.026 170.666,167.205 163.107,159.653 138.804,135.345 138.804,156.42 160.219,177.841 170.76,188.379 181.297,177.841z" Fill="White" Stretch="Uniform" />
                                     </Grid>
