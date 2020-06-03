@@ -24,6 +24,8 @@ using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformatio
 using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
 using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
 using OrthoOuterInformation = OrderManagerNew.UserControls.Order_orthoBase.OrthoOuterInformation;
+//Mahapps套件(NuGet下載): MaterialDesignThemes.MahApps v0.0.12
+
 
 //Microsoft.Expression.Drawing.dll如果要針對多國語言版本: "C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries"
 //抓取程式碼行數: new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString()
