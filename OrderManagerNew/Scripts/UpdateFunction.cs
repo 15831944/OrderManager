@@ -40,7 +40,14 @@ namespace OrderManagerNew
         /// <param name="message">顯示訊息</param>
         public delegate void updatefuncEventHandler_snackbar(string message);
         public event updatefuncEventHandler_snackbar Handler_snackbarShow;
-        
+        /// <summary>
+        /// 設定各單機軟體的軟體更新Button的isEnable狀態
+        /// </summary>
+        /// <param name="SoftwareID">參考_softwareID</param>
+        /// <param name="canUpdate">isEnable開關</param>
+        public delegate void softwareUpdateStatusHandler(int SoftwareID, bool canUpdate);
+        public event softwareUpdateStatusHandler SoftwareUpdateEvent;
+
         public List<SoftwareInfo> CloudSoftwareTotal { get; set; }  //軟體最新版清單
         #endregion
         public class SoftwareInfo
@@ -317,35 +324,111 @@ namespace OrderManagerNew
         /// <summary>
         /// OrderManagerLoaded完再開始檢查是否有更新
         /// </summary>
-        public void CheckSoftwareHaveNewVersion()
+        public void CheckSoftwareHaveNewVersion(int TmpsoftwareID)
         {
             if (CloudSoftwareTotal.Count < 1)   //代表沒有抓到軟體更新資訊
                 return;
 
             FileVersionInfo verInfo;
-            if(File.Exists(Properties.Settings.Default.cad_exePath) == true)
-            {
-                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
-            }
-            if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
-            {
 
-            }
-            if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
+            switch(TmpsoftwareID)
             {
-
-            }
-            if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
-            {
-
-            }
-            if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
-            {
-
-            }
-            if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
-            {
-
+                case (int)_softwareID.EZCAD:
+                    {
+                        if (File.Exists(Properties.Settings.Default.cad_exePath) == true)
+                        {
+                            TmpsoftwareID = (int)_softwareID.EZCAD;
+                            verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
+                            foreach (SoftwareInfo info in CloudSoftwareTotal)
+                            {
+                                if (info.softwareID != TmpsoftwareID)
+                                    continue;
+                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                                    SoftwareUpdateEvent(TmpsoftwareID, true);
+                            }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Implant:
+                    {
+                        if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
+                        {
+                            TmpsoftwareID = (int)_softwareID.Implant;
+                            verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.implant_exePath);
+                            foreach (SoftwareInfo info in CloudSoftwareTotal)
+                            {
+                                if (info.softwareID != TmpsoftwareID)
+                                    continue;
+                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                                    SoftwareUpdateEvent(TmpsoftwareID, true);
+                            }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Ortho:
+                    {
+                        if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
+                        {
+                            TmpsoftwareID = (int)_softwareID.Ortho;
+                            verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.ortho_exePath);
+                            foreach (SoftwareInfo info in CloudSoftwareTotal)
+                            {
+                                if (info.softwareID != TmpsoftwareID)
+                                    continue;
+                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                                    SoftwareUpdateEvent(TmpsoftwareID, true);
+                            }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Tray:
+                    {
+                        if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
+                        {
+                            TmpsoftwareID = (int)_softwareID.Tray;
+                            verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.tray_exePath);
+                            foreach (SoftwareInfo info in CloudSoftwareTotal)
+                            {
+                                if (info.softwareID != TmpsoftwareID)
+                                    continue;
+                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                                    SoftwareUpdateEvent(TmpsoftwareID, true);
+                            }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Splint:
+                    {
+                        if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
+                        {
+                            TmpsoftwareID = (int)_softwareID.Splint;
+                            verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.splint_exePath);
+                            foreach (SoftwareInfo info in CloudSoftwareTotal)
+                            {
+                                if (info.softwareID != TmpsoftwareID)
+                                    continue;
+                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                                    SoftwareUpdateEvent(TmpsoftwareID, true);
+                            }
+                        }
+                        break;
+                    }
+                case (int)_softwareID.Guide:
+                    {
+                        if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
+                        {
+                            TmpsoftwareID = (int)_softwareID.Guide;
+                            verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.guide_exePath);
+                            foreach (SoftwareInfo info in CloudSoftwareTotal)
+                            {
+                                if (info.softwareID != TmpsoftwareID)
+                                    continue;
+                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                                    SoftwareUpdateEvent(TmpsoftwareID, true);
+                            }
+                        }
+                        break;
+                    }
             }
         }
     }

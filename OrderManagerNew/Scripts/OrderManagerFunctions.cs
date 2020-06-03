@@ -129,7 +129,10 @@ namespace OrderManagerNew
                 SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
             }
 
-            AutoDetectSoftwareProjectPath();
+            for(int i=(int)_softwareID.EZCAD; i<(int)_softwareID.All; i++)
+            {
+                AutoDetectSoftwareProjectPath(i);
+            }
         }
 
         /// <summary>
@@ -466,264 +469,284 @@ namespace OrderManagerNew
         /// <summary>
         /// 自動偵測各軟體專案檔路徑
         /// </summary>
-        public void AutoDetectSoftwareProjectPath()
+        public void AutoDetectSoftwareProjectPath(int softwareID)
         {
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs AutoDetectSoftwareProjectPath()", "IntoFunction");
 
             XDocument xmlDoc = new XDocument();
 
-            if (Properties.Settings.Default.cad_exePath != "")
+            switch(softwareID)
             {
-                try
-                {
-                    string xmlPath = Path.GetDirectoryName(Properties.Settings.Default.cad_exePath) + @"\SystemSetting.xml";
-                    using (StreamReader oReader = new StreamReader(xmlPath, Encoding.GetEncoding("utf-8")))
+                case (int)_softwareID.EZCAD:
                     {
-                        xmlDoc = XDocument.Load(oReader);
-                    }
-                    string cad_projectDirectory = xmlDoc.Element("SystemSetting").Element("SystemPath").Element("DesignFilePath").Value;
-                    if (cad_projectDirectory[cad_projectDirectory.Length - 1].ToString() != @"\")
-                        cad_projectDirectory += @"\";
-
-                    Properties.OrderManagerProps.Default.cad_projectDirectory = cad_projectDirectory;
-
-                    if (!Directory.Exists(cad_projectDirectory))
-                        Directory.CreateDirectory(cad_projectDirectory);
-
-                    /*_watch_EZCADProject.Path = cad_projectDirectory;
-                    MyFileSystemWatcher(_watch_EZCADProject, cad_projectDirectory);
-
-                    if (RecordAll == true)
-                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadEZCADProject()", "IntoFunc");
-                    LoadEZCADProject();*/
-                }
-                catch (Exception ex)
-                {
-                    Properties.OrderManagerProps.Default.cad_projectDirectory = "";
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_CAD", ex.Message);
-                }
-            }
-            else
-            {
-                Properties.OrderManagerProps.Default.cad_projectDirectory = "";
-            }
-            if (Properties.Settings.Default.tray_exePath != "")
-            {
-                try
-                {
-                    string xmlPath = Path.GetDirectoryName(Properties.Settings.Default.tray_exePath) + @"\SystemSetting.xml";
-                    using (StreamReader oReader = new StreamReader(xmlPath, Encoding.GetEncoding("utf-8")))
-                    {
-                        xmlDoc = XDocument.Load(oReader);
-                    }
-                    string tray_projectDirectory = xmlDoc.Element("SystemSetting").Element("DesignFilePath").Value;
-                    if (tray_projectDirectory[tray_projectDirectory.Length - 1].ToString() != @"\")
-                        tray_projectDirectory += @"\";
-
-                    Properties.OrderManagerProps.Default.tray_projectDirectory = tray_projectDirectory;
-
-                    if (!Directory.Exists(tray_projectDirectory))
-                        Directory.CreateDirectory(tray_projectDirectory);
-
-                    /*_watch_TrayProject.Path = tray_projectDirectory;
-                    MyFileSystemWatcher(_watch_TrayProject, tray_projectDirectory);
-
-                    if (RecordAll == true)
-                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadTrayProject()", "IntoFunc");
-                    LoadTrayProject();*/
-                }
-                catch (Exception ex)
-                {
-                    Properties.OrderManagerProps.Default.tray_projectDirectory = "";
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_tray", ex.Message);
-                }
-            }
-            else
-            {
-                Properties.OrderManagerProps.Default.tray_projectDirectory = "";
-            }
-            if (Properties.Settings.Default.splint_exePath != "")
-            {
-                try
-                {
-                    string xmlPath = Path.GetDirectoryName(Properties.Settings.Default.splint_exePath) + @"\SystemSetting.xml";
-                    using (StreamReader oReader = new StreamReader(xmlPath, Encoding.GetEncoding("utf-8")))
-                    {
-                        xmlDoc = XDocument.Load(oReader);
-                    }
-                    string splint_projectDirectory = xmlDoc.Element("SystemSetting").Element("DesignFilePath").Value;
-                    if (splint_projectDirectory[splint_projectDirectory.Length - 1].ToString() != @"\")
-                        splint_projectDirectory += @"\";
-
-                    Properties.OrderManagerProps.Default.splint_projectDirectory = splint_projectDirectory;
-
-                    if (!Directory.Exists(splint_projectDirectory))
-                        Directory.CreateDirectory(splint_projectDirectory);
-
-                    /*_watch_SplintProject.Path = splint_projectDirectory;
-                    MyFileSystemWatcher(_watch_SplintProject, splint_projectDirectory);
-
-                    if (RecordAll == true)
-                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadSplintProject()", "IntoFunc");
-                    LoadSplintProject();*/
-                }
-                catch (Exception ex)
-                {
-                    Properties.OrderManagerProps.Default.splint_projectDirectory = "";
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_splint", ex.Message);
-                }
-            }
-            else
-            {
-                Properties.OrderManagerProps.Default.splint_projectDirectory = "";
-            }
-            if (Properties.Settings.Default.ortho_exePath != "")
-            {
-                try
-                {
-                    string xmlPath = Path.GetDirectoryName(Properties.Settings.Default.ortho_exePath) + @"\SystemPara.xml";
-                    using (StreamReader oReader = new StreamReader(xmlPath, Encoding.GetEncoding("utf-8")))
-                    {
-                        xmlDoc = XDocument.Load(oReader);
-                    }
-                    string ortho_projectDirectory = xmlDoc.Element("OrthoExport").Element("ProjectInfo").Element("PrjDataPath").Value;
-                    if (ortho_projectDirectory[ortho_projectDirectory.Length - 1].ToString() != @"\")
-                        ortho_projectDirectory += @"\";
-
-                    Properties.OrderManagerProps.Default.ortho_projectDirectory = ortho_projectDirectory;
-
-                    if (!Directory.Exists(ortho_projectDirectory))
-                        Directory.CreateDirectory(ortho_projectDirectory);
-
-                    /*_watch_OrthoProject.Path = ortho_projectDirectory;
-                    MyFileSystemWatcher(_watch_OrthoProject, ortho_projectDirectory);
-
-                    if (RecordAll == true)
-                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadOrthoProject()", "IntoFunc");
-                    LoadOrthoProject();*/
-                }
-                catch (Exception ex)
-                {
-                    Properties.OrderManagerProps.Default.ortho_projectDirectory = "";
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_ortho", ex.Message);
-                }
-            }
-            else
-            {
-                Properties.OrderManagerProps.Default.ortho_projectDirectory = "";
-            }
-            if (Properties.Settings.Default.implant_exePath != "")
-            {
-                //Implant比較特殊，舊版Implant的專案檔路徑是OrderManager給的
-                try
-                {
-                    bool foundImplantPath = false;
-                    DriveInfo[] allDrives = DriveInfo.GetDrives();
-                    foreach (DriveInfo d in allDrives)  //檢查客戶所有磁碟
-                    {
-                        try
-                        {
-                            if(Directory.Exists(d.Name + @"IntewareData\Implant\") == true)
-                            {
-                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
-                                foundImplantPath = true;
-                                break;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foreach to check every Disk exception", ex.Message);
-                        }
-                    }
-
-                    if(foundImplantPath == false)
-                    {
-                        try
-                        {
-                            if (Properties.Settings.Default.mostsoftwareDisk != "")
-                            {
-                                Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\");
-                                Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\";
-                                goto createtosysDirectorySuccess;
-                            }
-                            else
-                                goto createtosysDirectoryFailed;
-                        }
-                        catch (Exception ex)
-                        {
-                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foundImplantPath=false_1 exception", ex.Message);
-                            goto createtosysDirectoryFailed;
-                        }
-
-                        createtosysDirectoryFailed:
-                        bool chosen = false;    //是否已選中
-                        foreach (DriveInfo d in allDrives)  //檢查客戶所有磁碟
+                        if (Properties.Settings.Default.cad_exePath != "")
                         {
                             try
                             {
-                                if (d.Name == @"C:\")
+                                string xmlPath = Path.GetDirectoryName(Properties.Settings.Default.cad_exePath) + @"\SystemSetting.xml";
+                                using (StreamReader oReader = new StreamReader(xmlPath, Encoding.GetEncoding("utf-8")))
                                 {
-                                    Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
-                                    chosen = true;
-                                    break;
+                                    xmlDoc = XDocument.Load(oReader);
                                 }
-                                if (d.Name == @"D:\")
+                                string cad_projectDirectory = xmlDoc.Element("SystemSetting").Element("SystemPath").Element("DesignFilePath").Value;
+                                if (cad_projectDirectory[cad_projectDirectory.Length - 1].ToString() != @"\")
+                                    cad_projectDirectory += @"\";
+
+                                Properties.OrderManagerProps.Default.cad_projectDirectory = cad_projectDirectory;
+
+                                if (!Directory.Exists(cad_projectDirectory))
+                                    Directory.CreateDirectory(cad_projectDirectory);
+
+                                /*_watch_EZCADProject.Path = cad_projectDirectory;
+                                MyFileSystemWatcher(_watch_EZCADProject, cad_projectDirectory);
+
+                                if (RecordAll == true)
+                                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadEZCADProject()", "IntoFunc");
+                                LoadEZCADProject();*/
+                            }
+                            catch (Exception ex)
+                            {
+                                Properties.OrderManagerProps.Default.cad_projectDirectory = "";
+                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_CAD", ex.Message);
+                            }
+                        }
+                        else
+                        {
+                            Properties.OrderManagerProps.Default.cad_projectDirectory = "";
+                        }
+                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "cad_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.cad_projectDirectory + "\"");
+                        break;
+                    }
+                case (int)_softwareID.Implant:
+                    {
+                        if (Properties.Settings.Default.implant_exePath != "")
+                        {
+                            //Implant比較特殊，舊版Implant的專案檔路徑是OrderManager給的
+                            try
+                            {
+                                bool foundImplantPath = false;
+                                DriveInfo[] allDrives = DriveInfo.GetDrives();
+                                foreach (DriveInfo d in allDrives)  //檢查客戶所有磁碟
                                 {
-                                    Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
-                                    chosen = true;
-                                    break;
+                                    try
+                                    {
+                                        if (Directory.Exists(d.Name + @"IntewareData\Implant\") == true)
+                                        {
+                                            Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
+                                            foundImplantPath = true;
+                                            break;
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foreach to check every Disk exception", ex.Message);
+                                    }
+                                }
+
+                                if (foundImplantPath == false)
+                                {
+                                    try
+                                    {
+                                        if (Properties.Settings.Default.mostsoftwareDisk != "")
+                                        {
+                                            Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\");
+                                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\";
+                                            goto createtosysDirectorySuccess;
+                                        }
+                                        else
+                                            goto createtosysDirectoryFailed;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foundImplantPath=false_1 exception", ex.Message);
+                                        goto createtosysDirectoryFailed;
+                                    }
+
+                                createtosysDirectoryFailed:
+                                    bool chosen = false;    //是否已選中
+                                    foreach (DriveInfo d in allDrives)  //檢查客戶所有磁碟
+                                    {
+                                        try
+                                        {
+                                            if (d.Name == @"C:\")
+                                            {
+                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
+                                                chosen = true;
+                                                break;
+                                            }
+                                            if (d.Name == @"D:\")
+                                            {
+                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
+                                                chosen = true;
+                                                break;
+                                            }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foundImplantPath=false_2 exception", ex.Message);
+                                        }
+                                    }
+
+                                    if (chosen == false)
+                                    {
+                                        foreach (DriveInfo d in allDrives)
+                                        {
+                                            try
+                                            {
+                                                Directory.CreateDirectory(d.Name + @"IntewareData\Implant\");
+                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
+                                                break;
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foundImplantPath=false_3 exception", ex.Message);
+                                            }
+                                        }
+                                    }
+                                createtosysDirectorySuccess:;
                                 }
                             }
                             catch (Exception ex)
                             {
-                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foundImplantPath=false_2 exception", ex.Message);
+                                Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\";
+                                if (Directory.Exists(Properties.OrderManagerProps.Default.implant_projectDirectory) == false)
+                                    Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\");
+
+                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_implant", ex.Message);
                             }
                         }
-
-                        if (chosen == false)
+                        else
                         {
-                            foreach (DriveInfo d in allDrives)
+                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\";
+                            if (Directory.Exists(Properties.OrderManagerProps.Default.implant_projectDirectory) == false)
+                                Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\");
+                        }
+                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "implant_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.implant_projectDirectory + "\"");
+                        break;
+                    }
+                case (int)_softwareID.Ortho:
+                    {
+                        if (Properties.Settings.Default.ortho_exePath != "")
+                        {
+                            try
                             {
-                                try
+                                string xmlPath = Path.GetDirectoryName(Properties.Settings.Default.ortho_exePath) + @"\SystemPara.xml";
+                                using (StreamReader oReader = new StreamReader(xmlPath, Encoding.GetEncoding("utf-8")))
                                 {
-                                    Directory.CreateDirectory(d.Name + @"IntewareData\Implant\");
-                                    Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
-                                    break;
+                                    xmlDoc = XDocument.Load(oReader);
                                 }
-                                catch (Exception ex)
-                                {
-                                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foundImplantPath=false_3 exception", ex.Message);
-                                }
+                                string ortho_projectDirectory = xmlDoc.Element("OrthoExport").Element("ProjectInfo").Element("PrjDataPath").Value;
+                                if (ortho_projectDirectory[ortho_projectDirectory.Length - 1].ToString() != @"\")
+                                    ortho_projectDirectory += @"\";
+
+                                Properties.OrderManagerProps.Default.ortho_projectDirectory = ortho_projectDirectory;
+
+                                if (!Directory.Exists(ortho_projectDirectory))
+                                    Directory.CreateDirectory(ortho_projectDirectory);
+
+                                /*_watch_OrthoProject.Path = ortho_projectDirectory;
+                                MyFileSystemWatcher(_watch_OrthoProject, ortho_projectDirectory);
+
+                                if (RecordAll == true)
+                                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadOrthoProject()", "IntoFunc");
+                                LoadOrthoProject();*/
+                            }
+                            catch (Exception ex)
+                            {
+                                Properties.OrderManagerProps.Default.ortho_projectDirectory = "";
+                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_ortho", ex.Message);
                             }
                         }
-                        createtosysDirectorySuccess:;
+                        else
+                        {
+                            Properties.OrderManagerProps.Default.ortho_projectDirectory = "";
+                        }
+                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ortho_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.ortho_projectDirectory + "\"");
+                        break;
                     }
-                }
-                catch (Exception ex)
-                {
-                    Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\";
-                    if(Directory.Exists(Properties.OrderManagerProps.Default.implant_projectDirectory) == false)
-                        Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\");
+                case (int)_softwareID.Tray:
+                    {
+                        if (Properties.Settings.Default.tray_exePath != "")
+                        {
+                            try
+                            {
+                                string xmlPath = Path.GetDirectoryName(Properties.Settings.Default.tray_exePath) + @"\SystemSetting.xml";
+                                using (StreamReader oReader = new StreamReader(xmlPath, Encoding.GetEncoding("utf-8")))
+                                {
+                                    xmlDoc = XDocument.Load(oReader);
+                                }
+                                string tray_projectDirectory = xmlDoc.Element("SystemSetting").Element("DesignFilePath").Value;
+                                if (tray_projectDirectory[tray_projectDirectory.Length - 1].ToString() != @"\")
+                                    tray_projectDirectory += @"\";
 
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_implant", ex.Message);
-                }
-            }
-            else
-            {
-                Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\";
-                if (Directory.Exists(Properties.OrderManagerProps.Default.implant_projectDirectory) == false)
-                    Directory.CreateDirectory(Properties.Settings.Default.mostsoftwareDisk + @"IntewareData\Implant\");
-            }
-            Properties.Settings.Default.Save();
+                                Properties.OrderManagerProps.Default.tray_projectDirectory = tray_projectDirectory;
 
-            //記錄到log檔內
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "cad_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.cad_projectDirectory + "\"");
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "implant_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.implant_projectDirectory + "\"");
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ortho_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.ortho_projectDirectory + "\"");
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "tray_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.tray_projectDirectory + "\"");
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "splint_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.splint_projectDirectory + "\"");
-            log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs AutoDetectSoftwareProjectPath()", "Detect finish.");
+                                if (!Directory.Exists(tray_projectDirectory))
+                                    Directory.CreateDirectory(tray_projectDirectory);
+
+                                /*_watch_TrayProject.Path = tray_projectDirectory;
+                                MyFileSystemWatcher(_watch_TrayProject, tray_projectDirectory);
+
+                                if (RecordAll == true)
+                                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadTrayProject()", "IntoFunc");
+                                LoadTrayProject();*/
+                            }
+                            catch (Exception ex)
+                            {
+                                Properties.OrderManagerProps.Default.tray_projectDirectory = "";
+                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_tray", ex.Message);
+                            }
+                        }
+                        else
+                        {
+                            Properties.OrderManagerProps.Default.tray_projectDirectory = "";
+                        }
+                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "tray_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.tray_projectDirectory + "\"");
+                        break;
+                    }
+                case (int)_softwareID.Splint:
+                    {
+                        if (Properties.Settings.Default.splint_exePath != "")
+                        {
+                            try
+                            {
+                                string xmlPath = Path.GetDirectoryName(Properties.Settings.Default.splint_exePath) + @"\SystemSetting.xml";
+                                using (StreamReader oReader = new StreamReader(xmlPath, Encoding.GetEncoding("utf-8")))
+                                {
+                                    xmlDoc = XDocument.Load(oReader);
+                                }
+                                string splint_projectDirectory = xmlDoc.Element("SystemSetting").Element("DesignFilePath").Value;
+                                if (splint_projectDirectory[splint_projectDirectory.Length - 1].ToString() != @"\")
+                                    splint_projectDirectory += @"\";
+
+                                Properties.OrderManagerProps.Default.splint_projectDirectory = splint_projectDirectory;
+
+                                if (!Directory.Exists(splint_projectDirectory))
+                                    Directory.CreateDirectory(splint_projectDirectory);
+
+                                /*_watch_SplintProject.Path = splint_projectDirectory;
+                                MyFileSystemWatcher(_watch_SplintProject, splint_projectDirectory);
+
+                                if (RecordAll == true)
+                                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadSplintProject()", "IntoFunc");
+                                LoadSplintProject();*/
+                            }
+                            catch (Exception ex)
+                            {
+                                Properties.OrderManagerProps.Default.splint_projectDirectory = "";
+                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_splint", ex.Message);
+                            }
+                        }
+                        else
+                        {
+                            Properties.OrderManagerProps.Default.splint_projectDirectory = "";
+                        }
+                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "splint_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.splint_projectDirectory + "\"");
+                        break;
+                    }
+            }
             log.RecordLogSaperate();
+            Properties.Settings.Default.Save();
         }
 
         /// <summary>

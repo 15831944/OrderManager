@@ -90,8 +90,7 @@ namespace OrderManagerNew
                         Properties.Settings.Default.FullRecord = true;
                 }
             }
-
-
+            
             CheckedSoftwareID = -1;
 
             //OrderManager不能多開
@@ -132,12 +131,11 @@ namespace OrderManagerNew
 
             OrderManagerFunc = new OrderManagerFunctions();
             OrderManagerFunc.SoftwareLogoShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler(Handler_setSoftwareShow);
-            OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
 
             UpdateFunc = new UpdateFunction();
             UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
             UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
-            UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
+            UpdateFunc.SoftwareUpdateEvent += new UpdateFunction.softwareUpdateStatusHandler(Handler_SetSoftwareUpdateButtonStatus);
             
             if(Directory.Exists(Properties.Settings.Default.systemDisk) == false)
             {
@@ -251,7 +249,6 @@ namespace OrderManagerNew
                         watcher = new FileSystemWatcher();
                         Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
                         System.Threading.Thread.Sleep(1000);
-                        OrderManagerFunc.AutoDetectSoftwareProjectPath();
                     }));
                 }
             }
@@ -517,7 +514,8 @@ namespace OrderManagerNew
 
         private void Loaded_MainWindow(object sender, RoutedEventArgs e)
         {
-            Handler_SoftwareLogoStatusChange();
+            UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
+            OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
         }
         #endregion
 
@@ -592,38 +590,7 @@ namespace OrderManagerNew
         {
             GoToSetting(-1);
         }
-
-        /// <summary>
-        /// 讀取Properties內的值並顯示已安裝的SoftwareLogo
-        /// </summary>
-        void Handler_SoftwareLogoStatusChange()
-        {
-            if (File.Exists(Properties.Settings.Default.cad_exePath) == true)
-                Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
-            else
-                Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
-            if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
-                Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
-            else
-                Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
-            if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
-                Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
-            else
-                Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0.0);
-            if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
-                Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
-            else
-                Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0.0);
-            if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
-                Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
-            else
-                Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0.0);
-            if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
-                Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
-            else
-                Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
-        }
-
+        
         /// <summary>
         /// 設定SofttwareTable各Icon顯示狀態
         /// </summary>
@@ -641,6 +608,7 @@ namespace OrderManagerNew
                         SoftwareFilterCAD.IsEnabled = false;
                         mask_EZCAD.Visibility = Visibility.Hidden;
                         process_EZCAD.Visibility = Visibility.Hidden;
+                        cad_update.Visibility = Visibility.Collapsed;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -678,6 +646,8 @@ namespace OrderManagerNew
                                     cad_buyLic.Visibility = Visibility.Visible;
                                     cad_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterCAD.IsEnabled = true;
+                                    cad_update.Visibility = Visibility.Visible;
+                                    cad_update.IsEnabled = false;
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -702,6 +672,7 @@ namespace OrderManagerNew
                         SoftwareFilterImplant.IsEnabled = false;
                         mask_Implant.Visibility = Visibility.Hidden;
                         process_Implant.Visibility = Visibility.Hidden;
+                        implant_update.Visibility = Visibility.Collapsed;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -739,6 +710,8 @@ namespace OrderManagerNew
                                     implant_buyLic.Visibility = Visibility.Visible;
                                     implant_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterImplant.IsEnabled = true;
+                                    implant_update.Visibility = Visibility.Visible;
+                                    implant_update.IsEnabled = false;
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -763,6 +736,7 @@ namespace OrderManagerNew
                         SoftwareFilterOrtho.IsEnabled = false;
                         mask_Ortho.Visibility = Visibility.Hidden;
                         process_Ortho.Visibility = Visibility.Hidden;
+                        ortho_update.Visibility = Visibility.Collapsed;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -800,6 +774,8 @@ namespace OrderManagerNew
                                     ortho_buyLic.Visibility = Visibility.Visible;
                                     ortho_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterOrtho.IsEnabled = true;
+                                    ortho_update.Visibility = Visibility.Visible;
+                                    ortho_update.IsEnabled = false;
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -824,6 +800,7 @@ namespace OrderManagerNew
                         SoftwareFilterTray.IsEnabled = false;
                         mask_Tray.Visibility = Visibility.Hidden;
                         process_Tray.Visibility = Visibility.Hidden;
+                        tray_update.Visibility = Visibility.Collapsed;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -861,6 +838,8 @@ namespace OrderManagerNew
                                     tray_buyLic.Visibility = Visibility.Visible;
                                     tray_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterTray.IsEnabled = true;
+                                    tray_update.Visibility = Visibility.Visible;
+                                    tray_update.IsEnabled = false;
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -885,6 +864,7 @@ namespace OrderManagerNew
                         SoftwareFilterSplint.IsEnabled = false;
                         mask_Splint.Visibility = Visibility.Hidden;
                         process_Splint.Visibility = Visibility.Hidden;
+                        splint_update.Visibility = Visibility.Collapsed;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -922,6 +902,8 @@ namespace OrderManagerNew
                                     splint_buyLic.Visibility = Visibility.Visible;
                                     splint_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterSplint.IsEnabled = true;
+                                    splint_update.Visibility = Visibility.Visible;
+                                    splint_update.IsEnabled = false;
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -945,6 +927,7 @@ namespace OrderManagerNew
                     {
                         mask_Guide.Visibility = Visibility.Hidden;
                         process_Guide.Visibility = Visibility.Hidden;
+                        guide_update.Visibility = Visibility.Collapsed;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -981,7 +964,8 @@ namespace OrderManagerNew
                                     guide_troubleShooting.Visibility = Visibility.Visible;
                                     guide_buyLic.Visibility = Visibility.Visible;
                                     guide_unInstall.Visibility = Visibility.Visible;
-                                    SetAllSoftwareTableDownloadisEnable(true);
+                                    guide_update.Visibility = Visibility.Visible;
+                                    guide_update.IsEnabled = false;
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -1008,11 +992,13 @@ namespace OrderManagerNew
                 case (int)_softwareStatus.Installed:
                     {
                         SetAllSoftwareTableDownloadisEnable(true);
-                        OrderManagerFunc.AutoDetectSoftwareProjectPath();
+                        OrderManagerFunc.AutoDetectSoftwareProjectPath(softwareID);
+                        UpdateFunc.CheckSoftwareHaveNewVersion(softwareID);
                         break;
                     }
             }
 
+            // CaseFilter RadioButton狀態處理
             if(SoftwareFilterCAD.IsEnabled == false && SoftwareFilterImplant.IsEnabled == false && SoftwareFilterOrtho.IsEnabled == false && SoftwareFilterTray.IsEnabled == false && SoftwareFilterSplint.IsEnabled == false)
             {
                 SoftwareFilterCAD.IsChecked = false;
@@ -1049,46 +1035,41 @@ namespace OrderManagerNew
 
         void Handler_SetSoftwareUpdateButtonStatus(int SoftwareID,bool canUpdate)
         {
-            if(canUpdate == true)
+            switch(SoftwareID)
             {
-                switch(SoftwareID)
-                {
-                    case (int)_softwareID.EZCAD:
-                        {
-                            cad_update.IsEnabled = canUpdate;
-                            break;
-                        }
-                    case (int)_softwareID.Implant:
-                        {
-                            implant_update.IsEnabled = canUpdate;
-                            break;
-                        }
-                    case (int)_softwareID.Ortho:
-                        {
-                            ortho_update.IsEnabled = canUpdate;
-                            break;
-                        }
-                    case (int)_softwareID.Tray:
-                        {
-                            tray_update.IsEnabled = canUpdate;
-                            break;
-                        }
-                    case (int)_softwareID.Splint:
-                        {
-                            splint_update.IsEnabled = canUpdate;
-                            break;
-                        }
-                    case (int)_softwareID.Guide:
-                        {
-                            guide_update.IsEnabled = canUpdate;
-                            break;
-                        }
-                }
+                //TODO:要再加上Logo右上角小提示
+                case (int)_softwareID.EZCAD:
+                    {
+                        cad_update.IsEnabled = canUpdate;
+                        break;
+                    }
+                case (int)_softwareID.Implant:
+                    {
+                        implant_update.IsEnabled = canUpdate;
+                        break;
+                    }
+                case (int)_softwareID.Ortho:
+                    {
+                        ortho_update.IsEnabled = canUpdate;
+                        break;
+                    }
+                case (int)_softwareID.Tray:
+                    {
+                        tray_update.IsEnabled = canUpdate;
+                        break;
+                    }
+                case (int)_softwareID.Splint:
+                    {
+                        splint_update.IsEnabled = canUpdate;
+                        break;
+                    }
+                case (int)_softwareID.Guide:
+                    {
+                        guide_update.IsEnabled = canUpdate;
+                        break;
+                    }
             }
-            else
-            {
-
-            }
+            
         }
         
         /// <summary>
@@ -1598,7 +1579,7 @@ namespace OrderManagerNew
             DialogSetting.ShowDialog();
             if (DialogSetting.DialogResult == true)
             {
-                Handler_SoftwareLogoStatusChange();
+                OrderManagerFunc.DoubleCheckEXEexist();
                 log.RecordConfigLog("Click_FunctionTable_Setting()", "Config changed");
             }
 
