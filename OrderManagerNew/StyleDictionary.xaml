@@ -9,10 +9,10 @@
     <SolidColorBrush x:Key="Common_OrangeTitleBar" Color="#FFE08A1E" />
     <SolidColorBrush x:Key="Common_DarkBrown" Color="#FF493E34" />
     <SolidColorBrush x:Key="background_CaseTable" Color="#FFEDEDE2" />
-    <SolidColorBrush x:Key="background_SettingWindow" Color="#FF30312C" />
     <SolidColorBrush x:Key="background_CheckedBaseCaseTable" Color="#FFFFD6AE" />
     <SolidColorBrush x:Key="background_CheckedSmallCaseTable" Color="#FFEDAE9F" />
     <SolidColorBrush x:Key="borderbrush_CheckedSmallCaseTable" Color="#FFF26C5A" />
+    <SolidColorBrush x:Key="background_SmallCase" Color="#FFBCB2AA" />
     <Style TargetType="{x:Type Label}">
         <Setter Property="FontFamily" Value="Arial" />
     </Style>
@@ -164,13 +164,11 @@
     <!--  TitleBar-End  -->
 
     <!--  FunctionTable-Start  -->
-    <Style x:Key="progressLabel" TargetType="{x:Type Label}">
+    <!--<Image Height="68" Panel.ZIndex="3" Source="{StaticResource icon_auxiliary_updateDrawingImage}" />-->
+    <Style x:Key="updateImage" TargetType="{x:Type Image}">
+        <Setter Property="Source" Value="{DynamicResource icon_auxiliary_updateDrawingImage}" />
         <Setter Property="Panel.ZIndex" Value="2" />
-        <Setter Property="Foreground" Value="#FF493E34" />
-        <Setter Property="FontSize" Value="18" />
-        <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Height" Value="68" />
     </Style>
     <Style x:Key="maskImage" TargetType="{x:Type Rectangle}">
         <Setter Property="Panel.ZIndex" Value="1" />
@@ -183,8 +181,8 @@
         <Setter Property="Fill" Value="{StaticResource Common_DarkBrown}" />
         <Setter Property="Opacity" Value="0.8" />
         <Setter Property="Visibility" Value="Visible" />
-        <Setter Property="Width" Value="Auto" />
-        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Width" Value="54" />
+        <Setter Property="Height" Value="54" />
         <Setter Property="Margin" Value="5" />
     </Style>
     <Style x:Key="progressbarInstalling" BasedOn="{StaticResource MaterialDesignCircularProgressBar}" TargetType="{x:Type ProgressBar}">
@@ -226,7 +224,7 @@
         <Setter Property="Height" Value="64" />
         <Setter Property="Width" Value="64" />
     </Style>
-    <Style x:Key="pupupBoxSoftwareTable" TargetType="{x:Type materialDesign:PopupBox}">
+    <Style x:Key="popupBoxSoftwareTable" TargetType="{x:Type materialDesign:PopupBox}">
         <Setter Property="Foreground" Value="Transparent" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Panel.ZIndex" Value="2" />
@@ -646,7 +644,7 @@
         <Setter Property="Width" Value="200" />
         <Setter Property="Background" Value="{StaticResource background_CaseTable}" />
         <Setter Property="FontFamily" Value="Arial" />
-        <Setter Property="FontSize" Value="21" />
+        <Setter Property="FontSize" Value="18" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="{StaticResource Common_DarkBrown}" />
     </Style>
@@ -725,6 +723,24 @@
             </Setter.Value>
         </Setter>
     </Style>-->
+
+    <Style x:Key="OrderBase_normallabel" TargetType="{x:Type Label}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style x:Key="OrderBase_OrderIDlabel" BasedOn="{StaticResource OrderBase_normallabel}" TargetType="{x:Type Label}">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <Style x:Key="OrderSmallCase_OrderIDlabel" BasedOn="{StaticResource OrderBase_normallabel}" TargetType="{x:Type Label}">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="10" />
+    </Style>
     <!--  CaseTable-End  -->
 
     <!--  Setting-Start  -->

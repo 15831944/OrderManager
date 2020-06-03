@@ -22,13 +22,7 @@
 
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.Resources>
-                <Style TargetType="{x:Type Label}">
-                    <Setter Property="HorizontalAlignment" Value="Left" />
-                    <Setter Property="VerticalAlignment" Value="Center" />
-                    <Setter Property="FontWeight" Value="Normal" />
-                    <Setter Property="FontFamily" Value="Arial" />
-                    <Setter Property="FontSize" Value="16" />
-                </Style>
+                <Style BasedOn="{StaticResource OrderBase_normallabel}" TargetType="{x:Type Label}" />
             </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -44,8 +38,8 @@
 
             <Label
               Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
-              x:Name="label_orderID" Content="OrderID" FontSize="20"
-              FontWeight="Bold"
+              x:Name="label_orderID" Content="OrderID"
+              Style="{DynamicResource OrderBase_OrderIDlabel}"
               ToolTip="{local1:LocExtension OrderID}" />
             <Label
               Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
@@ -64,7 +58,7 @@
             <Button
               Grid.Row="0" Grid.RowSpan="2" Grid.Column="5"
               Click="Click_FolderOpen"
-              Style="{StaticResource btn_folderOpen}"
+              Style="{DynamicResource btn_folderOpen}"
               ToolTip="{local1:LocExtension OpenCaseFolder}" />
         </Grid>
     </Grid>

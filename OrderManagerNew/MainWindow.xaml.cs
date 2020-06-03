@@ -62,7 +62,7 @@ namespace OrderManagerNew
 {
     public partial class MainWindow : Window
     {
-        #region 變數宣告
+#region 變數宣告
         LogRecorder log;                            //日誌檔cs
         UpdateFunction UpdateFunc;                  //軟體更新cs
         BeforeDownload DialogBeforeDownload;        //下載前置畫面
@@ -75,7 +75,7 @@ namespace OrderManagerNew
         int CheckedSoftwareID;                      //記錄使用者按下哪個軟體的SoftwareTable
         MaterialDesignThemes.Wpf.SnackbarMessageQueue MainsnackbarMessageQueue; //Snackbar
         FileSystemWatcher _watcherEZCAD, _watcherImplant, _watcherOrtho, _watcherTray, _watcherSplint;
-        #endregion
+#endregion
         
         public MainWindow()
         {
@@ -179,13 +179,13 @@ namespace OrderManagerNew
             }
         }
 
-        #region Watcher事件
+#region Watcher事件
         /// <summary>
         /// 安裝軟體時或是刪除軟體時監看軟體資料夾
         /// </summary>
         /// <param name="watcherCommand">Installing、Delete 參考EnumSummary的_watcherCommand</param>
         /// <param name="SoftwareID">軟體ID</param>
-        void Watcher_SoftwareInstall(int watcherCommand, int SoftwareID)
+        private void Watcher_SoftwareInstall(int watcherCommand, int SoftwareID)
         {
             if (watcherCommand == (int)_watcherCommand.Install)   //安裝中
             {
@@ -326,6 +326,7 @@ namespace OrderManagerNew
             }));
 
         }
+
         private void Watcher_ProjectDeleted(object sender, FileSystemEventArgs e)
         {
             this.Dispatcher.Invoke((Action)(() =>
@@ -349,9 +350,9 @@ namespace OrderManagerNew
                 }
             }));
         }
-        #endregion
+#endregion
 
-        #region WindowFrame
+#region WindowFrame
         private void Window_StateChanged(object sender, EventArgs e)
         {
             if (this.WindowState == WindowState.Maximized)
@@ -517,9 +518,9 @@ namespace OrderManagerNew
             UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
             OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
         }
-        #endregion
+#endregion
 
-        #region TitleBar事件
+#region TitleBar事件
         private Point startPos;
 
         [DllImport("user32.dll")]
@@ -559,13 +560,16 @@ namespace OrderManagerNew
                 switch (((Button)sender).Name)
                 {
                     case "systemButton_ContactInteware":    //聯絡客服
-                        ContactInteware();
+                        OrderManagerFunc.RunCommandLine(Properties.HyperLink.Default.ContactInteware, "");
                         break;
                     case "systemButton_Minimize":           //最小化
                         this.WindowState = WindowState.Minimized;
                         break;
                     case "systemButton_Close":              //關閉
                         Close();
+                        break;
+                    default:
+                        OrderManagerFunc.RunCommandLine(Properties.HyperLink.Default.ContactInteware, "");
                         break;
                 }
             }
@@ -575,17 +579,9 @@ namespace OrderManagerNew
                 this.WindowState = (this.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
             }
         }
+#endregion
 
-        /// <summary>
-        /// 聯絡客服事件
-        /// </summary>
-        void ContactInteware()
-        {
-            OrderManagerFunc.RunCommandLine(Properties.HyperLink.Default.ContactInteware, "");
-        }
-        #endregion
-
-        #region FunctionTable事件
+#region FunctionTable事件
         private void Click_FunctionTable_Setting(object sender, RoutedEventArgs e)
         {
             GoToSetting(-1);
@@ -598,7 +594,7 @@ namespace OrderManagerNew
         /// <param name="currentProgress">(目前進度) 未安裝、下載中... 請參考_SoftwareStatus</param>
         /// <param name="downloadPercent">(下載百分比) 100%的值為1.00</param>
         /// <returns></returns>
-        void Handler_setSoftwareShow(int softwareID, int currentProgress, double downloadPercent)
+        private void Handler_setSoftwareShow(int softwareID, int currentProgress, double downloadPercent)
         {
             CheckedSoftwareID = softwareID;
             switch (softwareID)
@@ -609,6 +605,7 @@ namespace OrderManagerNew
                         mask_EZCAD.Visibility = Visibility.Hidden;
                         process_EZCAD.Visibility = Visibility.Hidden;
                         cad_update.Visibility = Visibility.Collapsed;
+                        updateimage_EZCAD.Visibility = Visibility.Hidden;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -654,14 +651,12 @@ namespace OrderManagerNew
                                 {
                                     mask2_EZCAD_Installing.Visibility = Visibility.Visible;
                                     progressbar_EZCAD_Installing.Visibility = Visibility.Visible;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
                             case (int)_softwareStatus.Uninstalling:
                                 {
                                     mask2_EZCAD_Installing.Visibility = Visibility.Visible;
                                     progressbar_EZCAD_Installing.Visibility = Visibility.Visible;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.EZCAD);
                                     break;
                                 }
                         }
@@ -673,6 +668,7 @@ namespace OrderManagerNew
                         mask_Implant.Visibility = Visibility.Hidden;
                         process_Implant.Visibility = Visibility.Hidden;
                         implant_update.Visibility = Visibility.Collapsed;
+                        updateimage_Implant.Visibility = Visibility.Hidden;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -718,14 +714,12 @@ namespace OrderManagerNew
                                 {
                                     mask2_Implant_Installing.Visibility = Visibility.Visible;
                                     progressbar_Implant_Installing.Visibility = Visibility.Visible;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
                             case (int)_softwareStatus.Uninstalling:
                                 {
                                     mask2_Implant_Installing.Visibility = Visibility.Visible;
                                     progressbar_Implant_Installing.Visibility = Visibility.Visible;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Implant);
                                     break;
                                 }
                         }
@@ -737,6 +731,7 @@ namespace OrderManagerNew
                         mask_Ortho.Visibility = Visibility.Hidden;
                         process_Ortho.Visibility = Visibility.Hidden;
                         ortho_update.Visibility = Visibility.Collapsed;
+                        updateimage_Ortho.Visibility = Visibility.Hidden;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -782,14 +777,12 @@ namespace OrderManagerNew
                                 {
                                     mask2_Ortho_Installing.Visibility = Visibility.Visible;
                                     progressbar_Ortho_Installing.Visibility = Visibility.Visible;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
                             case (int)_softwareStatus.Uninstalling:
                                 {
                                     mask2_Ortho_Installing.Visibility = Visibility.Visible;
                                     progressbar_Ortho_Installing.Visibility = Visibility.Visible;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Ortho);
                                     break;
                                 }
                         }
@@ -801,6 +794,7 @@ namespace OrderManagerNew
                         mask_Tray.Visibility = Visibility.Hidden;
                         process_Tray.Visibility = Visibility.Hidden;
                         tray_update.Visibility = Visibility.Collapsed;
+                        updateimage_Tray.Visibility = Visibility.Hidden;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -846,14 +840,12 @@ namespace OrderManagerNew
                                 {
                                     mask2_Tray_Installing.Visibility = Visibility.Visible;
                                     progressbar_Tray_Installing.Visibility = Visibility.Visible;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
                             case (int)_softwareStatus.Uninstalling:
                                 {
                                     mask2_Tray_Installing.Visibility = Visibility.Visible;
                                     progressbar_Tray_Installing.Visibility = Visibility.Visible;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Tray);
                                     break;
                                 }
                         }
@@ -865,6 +857,7 @@ namespace OrderManagerNew
                         mask_Splint.Visibility = Visibility.Hidden;
                         process_Splint.Visibility = Visibility.Hidden;
                         splint_update.Visibility = Visibility.Collapsed;
+                        updateimage_Splint.Visibility = Visibility.Hidden;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -910,14 +903,12 @@ namespace OrderManagerNew
                                 {
                                     mask2_Splint_Installing.Visibility = Visibility.Visible;
                                     progressbar_Splint_Installing.Visibility = Visibility.Visible;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
                             case (int)_softwareStatus.Uninstalling:
                                 {
                                     mask2_Splint_Installing.Visibility = Visibility.Visible;
                                     progressbar_Splint_Installing.Visibility = Visibility.Visible;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Splint);
                                     break;
                                 }
                         }
@@ -928,6 +919,7 @@ namespace OrderManagerNew
                         mask_Guide.Visibility = Visibility.Hidden;
                         process_Guide.Visibility = Visibility.Hidden;
                         guide_update.Visibility = Visibility.Collapsed;
+                        updateimage_Guide.Visibility = Visibility.Hidden;
                         switch (currentProgress)
                         {
                             case (int)_softwareStatus.NotInstall:
@@ -972,14 +964,12 @@ namespace OrderManagerNew
                                 {
                                     mask2_Guide_Installing.Visibility = Visibility.Visible;
                                     progressbar_Guide_Installing.Visibility = Visibility.Visible;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
                                     break;
                                 }
                             case (int)_softwareStatus.Uninstalling:
                                 {
                                     mask2_Guide_Installing.Visibility = Visibility.Visible;
                                     progressbar_Guide_Installing.Visibility = Visibility.Visible;
-                                    Watcher_SoftwareInstall((int)_watcherCommand.Delete, (int)_softwareID.Guide);
                                     break;
                                 }
                         }
@@ -987,6 +977,7 @@ namespace OrderManagerNew
                     }
             }
 
+            //事件
             switch(currentProgress)
             {
                 case (int)_softwareStatus.Installed:
@@ -994,6 +985,16 @@ namespace OrderManagerNew
                         SetAllSoftwareTableDownloadisEnable(true);
                         OrderManagerFunc.AutoDetectSoftwareProjectPath(softwareID);
                         UpdateFunc.CheckSoftwareHaveNewVersion(softwareID);
+                        break;
+                    }
+                case (int)_softwareStatus.Installing:
+                    {
+                        Watcher_SoftwareInstall((int)_watcherCommand.Install, -1);
+                        break;
+                    }
+                case (int)_softwareStatus.Uninstalling:
+                    {
+                        Watcher_SoftwareInstall((int)_watcherCommand.Delete, softwareID);
                         break;
                     }
             }
@@ -1033,7 +1034,12 @@ namespace OrderManagerNew
             }
         }
 
-        void Handler_SetSoftwareUpdateButtonStatus(int SoftwareID,bool canUpdate)
+        /// <summary>
+        /// 設定各單機軟體更新Button的isEnable狀態
+        /// </summary>
+        /// <param name="SoftwareID"></param>
+        /// <param name="canUpdate"></param>
+        private void Handler_SetSoftwareUpdateButtonStatus(int SoftwareID,bool canUpdate)
         {
             switch(SoftwareID)
             {
@@ -1041,31 +1047,103 @@ namespace OrderManagerNew
                 case (int)_softwareID.EZCAD:
                     {
                         cad_update.IsEnabled = canUpdate;
+                        if (cad_update.IsEnabled == true)
+                        {
+                            updateimage_EZCAD.Visibility = Visibility.Visible;
+                            cad_update.FontWeight = FontWeights.Bold;
+                            cad_update.Foreground = Brushes.Red;
+                        }   
+                        else
+                        {
+                            updateimage_EZCAD.Visibility = Visibility.Hidden;
+                            cad_update.FontWeight = FontWeights.Normal;
+                            cad_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
+                        }
                         break;
                     }
                 case (int)_softwareID.Implant:
                     {
                         implant_update.IsEnabled = canUpdate;
+                        if (implant_update.IsEnabled == true)
+                        {
+                            updateimage_Implant.Visibility = Visibility.Visible;
+                            implant_update.FontWeight = FontWeights.Bold;
+                            implant_update.Foreground = Brushes.Red;
+                        }   
+                        else
+                        {
+                            updateimage_Implant.Visibility = Visibility.Hidden;
+                            implant_update.FontWeight = FontWeights.Normal;
+                            implant_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
+                        }
                         break;
                     }
                 case (int)_softwareID.Ortho:
                     {
                         ortho_update.IsEnabled = canUpdate;
+                        if (ortho_update.IsEnabled == true)
+                        {
+                            updateimage_Ortho.Visibility = Visibility.Visible;
+                            ortho_update.FontWeight = FontWeights.Bold;
+                            ortho_update.Foreground = Brushes.Red;
+                        }   
+                        else
+                        {
+                            updateimage_Ortho.Visibility = Visibility.Hidden;
+                            ortho_update.FontWeight = FontWeights.Normal;
+                            ortho_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
+                        }
                         break;
                     }
                 case (int)_softwareID.Tray:
                     {
                         tray_update.IsEnabled = canUpdate;
+                        if (tray_update.IsEnabled == true)
+                        {
+                            updateimage_Tray.Visibility = Visibility.Visible;
+                            tray_update.FontWeight = FontWeights.Bold;
+                            tray_update.Foreground = Brushes.Red;
+                        }
+                        else
+                        {
+                            updateimage_Tray.Visibility = Visibility.Hidden;
+                            tray_update.FontWeight = FontWeights.Normal;
+                            tray_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
+                        }   
                         break;
                     }
                 case (int)_softwareID.Splint:
                     {
                         splint_update.IsEnabled = canUpdate;
+                        if (splint_update.IsEnabled == true)
+                        {
+                            updateimage_Splint.Visibility = Visibility.Visible;
+                            splint_update.FontWeight = FontWeights.Bold;
+                            splint_update.Foreground = Brushes.Red;
+                        }   
+                        else
+                        {
+                            updateimage_Splint.Visibility = Visibility.Hidden;
+                            splint_update.FontWeight = FontWeights.Normal;
+                            splint_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
+                        }   
                         break;
                     }
                 case (int)_softwareID.Guide:
                     {
                         guide_update.IsEnabled = canUpdate;
+                        if (guide_update.IsEnabled == true)
+                        {
+                            updateimage_Guide.Visibility = Visibility.Visible;
+                            guide_update.FontWeight = FontWeights.Bold;
+                            guide_update.Foreground = Brushes.Red;
+                        }   
+                        else
+                        {
+                            updateimage_Guide.Visibility = Visibility.Hidden;
+                            guide_update.FontWeight = FontWeights.Normal;
+                            guide_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
+                        }
                         break;
                     }
             }
@@ -1086,6 +1164,10 @@ namespace OrderManagerNew
                             break;
                         }
                     #region EZCAD
+                    case "cad_update":
+                        {
+                            break;
+                        }
                     case "cad_selectPath":
                         {
                             GoToSetting((int)_softwareID.EZCAD);
@@ -1152,6 +1234,10 @@ namespace OrderManagerNew
                         }
                     #endregion
                     #region Implant
+                    case "implant_update":
+                        {
+                            break;
+                        }
                     case "implant_selectPath":
                         {
                             GoToSetting((int)_softwareID.Implant);
@@ -1217,6 +1303,10 @@ namespace OrderManagerNew
                         }
                     #endregion
                     #region Ortho
+                    case "ortho_update":
+                        {
+                            break;
+                        }
                     case "ortho_selectPath":
                         {
                             GoToSetting((int)_softwareID.Ortho);
@@ -1282,6 +1372,10 @@ namespace OrderManagerNew
                         }
                     #endregion
                     #region Tray
+                    case "tray_update":
+                        {
+                            break;
+                        }
                     case "tray_selectPath":
                         {
                             GoToSetting((int)_softwareID.Tray);
@@ -1347,6 +1441,10 @@ namespace OrderManagerNew
                         }
                     #endregion
                     #region Splint
+                    case "splint_update":
+                        {
+                            break;
+                        }
                     case "splint_selectPath":
                         {
                             GoToSetting((int)_softwareID.Splint);
@@ -1412,6 +1510,10 @@ namespace OrderManagerNew
                         }
                     #endregion
                     #region Guide
+                    case "guide_update":
+                        {
+                            break;
+                        }
                     case "guide_selectPath":
                         {
                             GoToSetting((int)_softwareID.Guide);
@@ -1485,7 +1587,7 @@ namespace OrderManagerNew
         /// 設定各軟體Popupbox內"下載軟體"的isEnable屬性
         /// </summary>
         /// <param name="enable">isEnable屬性</param>
-        void SetAllSoftwareTableDownloadisEnable(bool enable)
+        private void SetAllSoftwareTableDownloadisEnable(bool enable)
         {
             cad_download.IsEnabled = enable;
             implant_download.IsEnabled = enable;
@@ -1505,7 +1607,7 @@ namespace OrderManagerNew
         /// <summary>
             /// 從網上獲取下載資料成功就顯示BeforeDownload頁面
             /// </summary>
-        void Handler_ShowBeforeDownload()
+        private void Handler_ShowBeforeDownload()
         {
             haveEXE = false;
             bool DownloadStart = false;
@@ -1618,9 +1720,9 @@ namespace OrderManagerNew
                 showUserDetail = false;
             }
         }
-        #endregion
+#endregion
 
-        #region SortTable事件
+#region SortTable事件
         /// <summary>
         /// 跳出Snackbar訊息
         /// </summary>
@@ -1792,11 +1894,9 @@ namespace OrderManagerNew
                 ChooseToLoadProj();
             }
         }
+#endregion
 
-
-        #endregion
-
-        #region CaseTable事件
+#region CaseTable事件
         /// <summary>
         /// 顯示Case
         /// </summary>
@@ -1897,6 +1997,6 @@ namespace OrderManagerNew
                     }
             }
         }
-        #endregion
+#endregion
     }
 }

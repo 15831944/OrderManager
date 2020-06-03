@@ -711,4 +711,31 @@
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
+    <DrawingImage x:Key="icon_auxiliary_updateDrawingImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V68.99 H72.56 V0 H0 Z">
+                <DrawingGroup.Transform>
+                    <TranslateTransform X="0" Y="0.00036473065847530961" />
+                </DrawingGroup.Transform>
+                <DrawingGroup Opacity="1">
+                    <DrawingGroup.ClipGeometry>
+                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,72.56,68.99" />
+                    </DrawingGroup.ClipGeometry>
+                    <GeometryDrawing Brush="#FFED1C24">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="60.06,12.5" RadiusX="12.5" RadiusY="12.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFED1C24">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="60.06,12.5" RadiusX="12" RadiusY="12" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF493E34" Geometry="F1 M72.56,68.99z M0,0z M60.06,25A12.5,12.5,0,1,1,72.56,12.5A12.52,12.52,0,0,1,60.06,25z M60.06,2A10.5,10.5,0,1,0,70.56,12.5A10.51,10.51,0,0,0,60.06,2z" />
+                    <GeometryDrawing Brush="#FF493E34" Geometry="F1 M72.56,68.99z M0,0z M60.06,1.5A11,11,0,1,1,49.06,12.5A11,11,0,0,1,60.06,1.5 M60.06,0.5A12,12,0,1,0,72.06,12.5A12,12,0,0,0,60.06,0.5z" />
+                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M72.56,68.99z M0,0z M59.49,5.56L60.64,5.56A1.34,1.34,0,0,1,62,6.89L62,8.41A1,1,0,0,1,62,8.58L61.42,13.22A1.33,1.33,0,0,1,60.09,14.39L60.09,14.39A1.33,1.33,0,0,1,58.77,13.22L58.2,8.57A0.81,0.81,0,0,1,58.2,8.41L58.2,6.89A1.34,1.34,0,0,1,59.49,5.56z M59.86,16.29L60.27,16.29A1.57,1.57,0,0,1,61.85,17.86L61.85,17.86A1.58,1.58,0,0,1,60.27,19.44L59.86,19.44A1.58,1.58,0,0,1,58.28,17.86L58.28,17.86A1.57,1.57,0,0,1,59.86,16.29z" />
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
 </ResourceDictionary>

@@ -70,6 +70,11 @@
               Stretch="Fill">
                 <Image Source="{DynamicResource icon_set_up_clickDrawingImage}" />
             </Viewbox>
+            <Viewbox
+              Width="65" Height="65" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{DynamicResource icon_auxiliary_updateDrawingImage}" />
+            </Viewbox>
         </StackPanel>
         <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal">
             <Viewbox
