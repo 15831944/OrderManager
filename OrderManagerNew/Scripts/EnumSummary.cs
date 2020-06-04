@@ -34,7 +34,11 @@ namespace OrderManagerNew
         /// <summary>
         /// 雲端
         /// </summary>
-        Cloud
+        Cloud,
+        /// <summary>
+        /// 更新中
+        /// </summary>
+        Updating
     }
 
     /// <summary>

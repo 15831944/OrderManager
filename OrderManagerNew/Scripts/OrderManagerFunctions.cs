@@ -12,7 +12,6 @@ namespace OrderManagerNew
     public class OrderManagerFunctions
     {
         LogRecorder log;
-
         /// <summary>
         /// 委派到MainWindow.xaml.cs裡面的setSoftwareShow()
         /// </summary>
@@ -21,19 +20,16 @@ namespace OrderManagerNew
         /// <param name="downloadPercent">(下載百分比) 100%的值為1.00</param>
         public delegate void softwareLogoShowEventHandler(int softwareID, int currentProgress, double downloadPercent);
         public event softwareLogoShowEventHandler SoftwareLogoShowEvent;
-
         /// <summary>
         /// 委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
         /// </summary>
         /// <param name="message">顯示訊息</param>
         public delegate void updatefuncEventHandler_snackbar(string message);
         public event updatefuncEventHandler_snackbar Handler_snackbarShow;
-
         public OrderManagerFunctions()
         {
             log = new LogRecorder();
         }
-
         class DiskSoftwareInfo
         {
             public string DiskName { get; set; }
@@ -45,7 +41,6 @@ namespace OrderManagerNew
                 SoftwareCount = 0;
             }
         }
-
         /// <summary>
         /// 資料夾容量大小
         /// </summary>
@@ -68,7 +63,6 @@ namespace OrderManagerNew
             }
             return size;
         }
-
         /// <summary>
         /// 再次檢查軟體執行檔是否存在，exePath路徑不會生
         /// </summary>
@@ -201,7 +195,6 @@ namespace OrderManagerNew
                 AutoDetectSoftwareProjectPath(i);
             }
         }
-
         /// <summary>
         /// 自動檢測軟體執行檔路徑(偵測並寫入exePath)並把最常用的磁碟存入 Properties.OrderManagerProps.Default.mostsoftwareDisk
         /// </summary>
@@ -532,7 +525,6 @@ namespace OrderManagerNew
                 DoubleCheckEXEexist();
             }
         }
-
         /// <summary>
         /// 自動偵測各軟體專案檔路徑
         /// </summary>
@@ -815,7 +807,6 @@ namespace OrderManagerNew
             log.RecordLogSaperate();
             Properties.Settings.Default.Save();
         }
-
         /// <summary>
         /// CommandLine(命令提示字元)
         /// </summary>
@@ -836,6 +827,27 @@ namespace OrderManagerNew
                 Handler_snackbarShow(ex.Message);
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RunCommandLine exception", ex.Message);
             }
+        }
+        /// <summary>
+        /// 取得往上第 n 個階層的目錄路徑
+        /// </summary>
+        /// <param name="path">檔案路徑</param>
+        /// <param name="upLevel">往上取幾個階層</param>
+        /// <returns></returns>
+        public string GetUpLevelDirectory(string path, int upLevel)
+        {
+            var directory = File.GetAttributes(path).HasFlag(FileAttributes.Directory)
+                ? path
+                : Path.GetDirectoryName(path);
+
+            upLevel = upLevel < 0 ? 0 : upLevel;
+
+            for (var i = 0; i < upLevel; i++)
+            {
+                directory = Path.GetDirectoryName(directory);
+            }
+
+            return directory;
         }
     }
 }
