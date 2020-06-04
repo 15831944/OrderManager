@@ -1329,6 +1329,15 @@ namespace OrderManagerNew
                     #region Tray
                     case "tray_update":
                         {
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Tray)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
                             break;
                         }
                     case "tray_selectPath":

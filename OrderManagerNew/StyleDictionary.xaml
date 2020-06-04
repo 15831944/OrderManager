@@ -739,7 +739,7 @@
 
     <Style x:Key="OrderSmallCase_OrderIDlabel" BasedOn="{StaticResource OrderBase_normallabel}" TargetType="{x:Type Label}">
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontSize" Value="14" />
     </Style>
     <!--  CaseTable-End  -->
 
