@@ -26,6 +26,10 @@ namespace OrderManagerNew
         /// <param name="message">顯示訊息</param>
         public delegate void updatefuncEventHandler_snackbar(string message);
         public event updatefuncEventHandler_snackbar Handler_snackbarShow;
+        /// <summary>
+        /// 單機軟體全名
+        /// </summary>
+        public string[] SoftwareNameArray = new string[6] { "EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD.tray", "EZCAD.splint", "EZCAD.guide" };
         public OrderManagerFunctions()
         {
             log = new LogRecorder();
@@ -188,11 +192,6 @@ namespace OrderManagerNew
                         log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foreach to check have explorer", ex.Message);
                     }
                 }
-            }
-
-            for (int i=(int)_softwareID.EZCAD; i<(int)_softwareID.All; i++)
-            {
-                AutoDetectSoftwareProjectPath(i);
             }
         }
         /// <summary>

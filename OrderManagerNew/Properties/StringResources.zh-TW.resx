@@ -396,4 +396,7 @@
   <data name="SoftwareUpdate" xml:space="preserve">
     <value>軟體更新</value>
   </data>
+  <data name="Successfully" xml:space="preserve">
+    <value>成功</value>
+  </data>
 </root>

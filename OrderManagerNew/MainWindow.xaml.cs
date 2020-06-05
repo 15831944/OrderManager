@@ -203,6 +203,7 @@ namespace OrderManagerNew
                     IncludeSubdirectories = true,
                     EnableRaisingEvents = true
                 };
+                UpdateFunc.readyUninstallSoftwareInfo.softwareID = SoftwareID;
                 watcher.Deleted += new FileSystemEventHandler(Watcher_Deleting_Changed);
             }
         }
@@ -234,7 +235,10 @@ namespace OrderManagerNew
                         haveEXE = false;
                         watcher = new FileSystemWatcher();
                         Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
-                        System.Threading.Thread.Sleep(1000);
+                        string snackStr = OrderManagerNew.TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[UpdateFunc.readyInstallSoftwareInfo.softwareID] 
+                        + " " + OrderManagerNew.TranslationSource.Instance["Successfully"];
+                        SnackBarShow(snackStr);
+                        //System.Threading.Thread.Sleep(1000);
                     }));
                 }
             }
@@ -256,8 +260,12 @@ namespace OrderManagerNew
                 {
                     HaveDeleted = true;
                     SetAllSoftwareTableDownloadisEnable(true);
-                    Handler_setSoftwareShow(CheckedSoftwareID, (int)_softwareStatus.NotInstall, 0);
+                    string snackStr = OrderManagerNew.TranslationSource.Instance["Uninstall"] + " " + OrderManagerFunc.SoftwareNameArray[UpdateFunc.readyUninstallSoftwareInfo.softwareID]
+                        + " " + OrderManagerNew.TranslationSource.Instance["Successfully"];
+                    SnackBarShow(snackStr);
                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                    //System.Threading.Thread.Sleep(1000);
+                    Handler_setSoftwareShow(UpdateFunc.readyUninstallSoftwareInfo.softwareID, (int)_softwareStatus.NotInstall, 0);
                 }));
             }
 
@@ -608,6 +616,7 @@ namespace OrderManagerNew
                                     cad_troubleShooting.Visibility = Visibility.Collapsed;
                                     cad_buyLic.Visibility = Visibility.Collapsed;
                                     cad_unInstall.Visibility = Visibility.Collapsed;
+                                    _watcherEZCAD = new FileSystemWatcher();
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
@@ -675,6 +684,7 @@ namespace OrderManagerNew
                                     implant_troubleShooting.Visibility = Visibility.Collapsed;
                                     implant_buyLic.Visibility = Visibility.Collapsed;
                                     implant_unInstall.Visibility = Visibility.Collapsed;
+                                    _watcherImplant = new FileSystemWatcher();
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
@@ -742,6 +752,7 @@ namespace OrderManagerNew
                                     ortho_troubleShooting.Visibility = Visibility.Collapsed;
                                     ortho_buyLic.Visibility = Visibility.Collapsed;
                                     ortho_unInstall.Visibility = Visibility.Collapsed;
+                                    _watcherOrtho = new FileSystemWatcher();
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
@@ -809,6 +820,7 @@ namespace OrderManagerNew
                                     tray_troubleShooting.Visibility = Visibility.Collapsed;
                                     tray_buyLic.Visibility = Visibility.Collapsed;
                                     tray_unInstall.Visibility = Visibility.Collapsed;
+                                    _watcherTray = new FileSystemWatcher();
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
@@ -876,6 +888,7 @@ namespace OrderManagerNew
                                     splint_troubleShooting.Visibility = Visibility.Collapsed;
                                     splint_buyLic.Visibility = Visibility.Collapsed;
                                     splint_unInstall.Visibility = Visibility.Collapsed;
+                                    _watcherSplint = new FileSystemWatcher();
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
@@ -1183,6 +1196,21 @@ namespace OrderManagerNew
                     #region EZCAD
                     case "cad_update":
                         {
+                            Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Updating, 0);
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.EZCAD)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
                     case "cad_selectPath":
@@ -1229,7 +1257,7 @@ namespace OrderManagerNew
                         }
                     case "cad_unInstall":
                         {
-                            //TODO要再詢問一次是否真的要解除安裝
+                            //TODO 多國語系
                             if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "EZCAD?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.cad_exePath) == ".exe")
@@ -1252,6 +1280,21 @@ namespace OrderManagerNew
                     #region Implant
                     case "implant_update":
                         {
+                            Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Updating, 0);
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Implant)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
                     case "implant_selectPath":
@@ -1471,6 +1514,21 @@ namespace OrderManagerNew
                     #region Splint
                     case "splint_update":
                         {
+                            Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Updating, 0);
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Splint)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
                     case "splint_selectPath":
@@ -1539,6 +1597,21 @@ namespace OrderManagerNew
                     #region Guide
                     case "guide_update":
                         {
+                            Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Updating, 0);
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Guide)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
                     case "guide_selectPath":

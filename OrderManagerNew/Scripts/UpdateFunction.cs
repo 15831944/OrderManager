@@ -25,6 +25,10 @@ namespace OrderManagerNew
         /// 準備要安裝的軟體Info
         /// </summary>
         public SoftwareInfo readyInstallSoftwareInfo;
+        /// <summary>
+        /// 準備要解除安裝的軟體Info
+        /// </summary>
+        public SoftwareInfo readyUninstallSoftwareInfo;
 
         /// <summary>
         /// 委派到MainWindow.xaml.cs裡面的setSoftwareShow()
@@ -85,6 +89,7 @@ namespace OrderManagerNew
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs", "Initial Start");
             CloudSoftwareTotal = new List<SoftwareInfo>();
             readyInstallSoftwareInfo = new SoftwareInfo();
+            readyUninstallSoftwareInfo = new SoftwareInfo();
             downloadfilepath = "";
         }
 
@@ -343,7 +348,7 @@ namespace OrderManagerNew
                             {
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
-                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                                else if (info.softwareVersion > new Version(verInfo.ProductVersion))
                                     SoftwareUpdateEvent(TmpsoftwareID, true);
                             }
                         }
@@ -359,7 +364,7 @@ namespace OrderManagerNew
                             {
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
-                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                                else if (info.softwareVersion > new Version(verInfo.ProductVersion))
                                     SoftwareUpdateEvent(TmpsoftwareID, true);
                             }
                         }
@@ -375,7 +380,7 @@ namespace OrderManagerNew
                             {
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
-                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                                else if (info.softwareVersion > new Version(verInfo.ProductVersion))
                                     SoftwareUpdateEvent(TmpsoftwareID, true);
                             }
                         }
@@ -391,7 +396,7 @@ namespace OrderManagerNew
                             {
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
-                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                                else if (info.softwareVersion > new Version(verInfo.ProductVersion))
                                     SoftwareUpdateEvent(TmpsoftwareID, true);
                             }
                         }
@@ -407,7 +412,7 @@ namespace OrderManagerNew
                             {
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
-                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                                else if (info.softwareVersion > new Version(verInfo.ProductVersion))
                                     SoftwareUpdateEvent(TmpsoftwareID, true);
                             }
                         }
@@ -423,7 +428,7 @@ namespace OrderManagerNew
                             {
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
-                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                                else if (info.softwareVersion > new Version(verInfo.ProductVersion))
                                     SoftwareUpdateEvent(TmpsoftwareID, true);
                             }
                         }

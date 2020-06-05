@@ -44,6 +44,12 @@ namespace OrderManagerNew
             string cad_projectDirectory = Properties.OrderManagerProps.Default.cad_projectDirectory;
             string cad_exePath = Properties.Settings.Default.cad_exePath;
 
+            if (Directory.Exists(cad_projectDirectory) == false && File.Exists(cad_exePath) != false)
+            {
+                OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                omFunc.AutoDetectSoftwareProjectPath((int)_softwareID.EZCAD);
+                cad_projectDirectory = Properties.OrderManagerProps.Default.cad_projectDirectory;
+            }
             if (Directory.Exists(cad_projectDirectory) == false || File.Exists(cad_exePath) == false)
                 return;
 
@@ -82,6 +88,12 @@ namespace OrderManagerNew
             string tray_projectDirectory = Properties.OrderManagerProps.Default.tray_projectDirectory;
             string tray_exePath = Properties.Settings.Default.tray_exePath;
 
+            if (Directory.Exists(tray_projectDirectory) == false && File.Exists(tray_exePath) != false)
+            {
+                OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                omFunc.AutoDetectSoftwareProjectPath((int)_softwareID.Tray);
+                tray_projectDirectory = Properties.OrderManagerProps.Default.tray_projectDirectory;
+            }
             if (Directory.Exists(tray_projectDirectory) == false || File.Exists(tray_exePath) == false)
                 return;
 
@@ -120,6 +132,12 @@ namespace OrderManagerNew
             string splint_projectDirectory = Properties.OrderManagerProps.Default.splint_projectDirectory;
             string splint_exePath = Properties.Settings.Default.splint_exePath;
 
+            if (Directory.Exists(splint_projectDirectory) == false && File.Exists(splint_exePath) != false)
+            {
+                OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                omFunc.AutoDetectSoftwareProjectPath((int)_softwareID.Splint);
+                splint_projectDirectory = Properties.OrderManagerProps.Default.splint_projectDirectory;
+            }
             if (Directory.Exists(splint_projectDirectory) == false || File.Exists(splint_exePath) == false)
                 return;
 
@@ -158,6 +176,12 @@ namespace OrderManagerNew
             string implant_projectDirectory = Properties.OrderManagerProps.Default.implant_projectDirectory;
             string implant_exePath = Properties.Settings.Default.implant_exePath;
 
+            if (Directory.Exists(implant_projectDirectory) == false && File.Exists(implant_exePath) != false)
+            {
+                OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                omFunc.AutoDetectSoftwareProjectPath((int)_softwareID.Implant);
+                implant_projectDirectory = Properties.OrderManagerProps.Default.implant_projectDirectory;
+            }
             if (Directory.Exists(implant_projectDirectory) == false || File.Exists(implant_exePath) == false)
                 return;
 
@@ -225,6 +249,12 @@ namespace OrderManagerNew
             string ortho_exePath = Properties.Settings.Default.ortho_exePath;
             string ortho_projectDirectory = Properties.OrderManagerProps.Default.ortho_projectDirectory;
 
+            if (Directory.Exists(ortho_projectDirectory) == false && File.Exists(ortho_exePath) != false)
+            {
+                OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                omFunc.AutoDetectSoftwareProjectPath((int)_softwareID.Ortho);
+                ortho_projectDirectory = Properties.OrderManagerProps.Default.ortho_projectDirectory;
+            }
             if (Directory.Exists(ortho_projectDirectory) == false || File.Exists(ortho_exePath) == false)
                 return;
 

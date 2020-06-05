@@ -844,6 +844,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Successfully 的當地語系化字串。
+        /// </summary>
+        internal static string Successfully {
+            get {
+                return ResourceManager.GetString("Successfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Crown Define 的當地語系化字串。
         /// </summary>
         internal static string Teeth_Define {

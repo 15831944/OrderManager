@@ -298,9 +298,7 @@ namespace OrderManagerNew
                 MessageBox.Show("SoftwareID is -1");
                 return false;
             }
-
             string[] SoftwareNameArray = new string[6] { "EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD tray", "EZCAD splint", "EZCAD guide" };
-
             label_TitleBar.Content = OrderManagerNew.TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             label_Header.Content = OrderManagerNew.TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             if(Properties.OrderManagerProps.Default.mostsoftwareDisk != "")
