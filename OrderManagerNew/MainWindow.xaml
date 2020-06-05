@@ -373,7 +373,8 @@
                             <Rectangle x:Name="mask2_Guide_Installing" Style="{StaticResource maskImageInstalling}" />
                             <ProgressBar x:Name="progressbar_Guide_Installing" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
-                        <Grid Margin="6,0">
+                        <!--  TODO可能不用  -->
+                        <Grid Margin="6,0" Visibility="Hidden">
                             <Image Source="ImageSource/FunctionTable/icon_update.png" Style="{StaticResource progressImage}" />
                         </Grid>
                     </StackPanel>
@@ -498,6 +499,40 @@
                                 <Setter Property="VerticalAlignment" Value="Center" />
                             </Style>
                         </StackPanel.Resources>
+                        <Expander Header="{local:LocExtension BySoftware}" Style="{StaticResource ExpanderStyle}">
+                            <Grid Background="#FF756550">
+                                <Grid.Resources>
+                                    <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
+                                        <Setter Property="GroupName" Value="SortSoftware" />
+                                        <Setter Property="IsEnabled" Value="False" />
+                                        <EventSetter Event="Checked" Handler="Checked_SortTable_Filter" />
+                                    </Style>
+                                </Grid.Resources>
+                                <StackPanel Margin="30,0,0,0" Orientation="Vertical">
+                                    <RadioButton Name="SoftwareFilterCAD" Content="EZCAD" />
+                                    <RadioButton Name="SoftwareFilterImplant" Content="ImplantPlanning" />
+                                    <RadioButton Name="SoftwareFilterOrtho" Content="OrthoAnalysis" />
+                                    <RadioButton Name="SoftwareFilterTray" Content="EZCAD.tray" />
+                                    <RadioButton Name="SoftwareFilterSplint" Content="EZCAD.splint" />
+                                </StackPanel>
+                            </Grid>
+                        </Expander>
+                        <Expander Header="{local:LocExtension ByDate}" Style="{StaticResource ExpanderStyle}">
+                            <Grid Background="#FF756550">
+                                <Grid.Resources>
+                                    <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
+                                        <EventSetter Event="Checked" Handler="Checked_SortTable_Filter" />
+                                        <Setter Property="GroupName" Value="SortRadio" />
+                                    </Style>
+                                </Grid.Resources>
+                                <StackPanel Margin="30,0,0,0" Orientation="Vertical">
+                                    <RadioButton Name="DateFilterAll" Content="{local:LocExtension All}" IsChecked="True" />
+                                    <RadioButton Name="DateFilterToday" Content="{local:LocExtension Today}" />
+                                    <RadioButton Name="DateFilterLW" Content="{local:LocExtension LastWeek}" />
+                                    <RadioButton Name="DateFilterL2W" Content="{local:LocExtension Last2Week}" />
+                                </StackPanel>
+                            </Grid>
+                        </Expander>
                         <Expander Header="{local:LocExtension ByPatient}" Style="{StaticResource ExpanderStyle}">
                             <Grid Background="#FF756550">
                                 <Grid.ColumnDefinitions>
@@ -522,40 +557,6 @@
                                   Grid.Column="1" x:Name="textboxCase"
                                   Style="{StaticResource SortTextBox}"
                                   Text="" TextChanged="TextChanged_SortTable" />
-                            </Grid>
-                        </Expander>
-                        <Expander Header="{local:LocExtension ByDate}" Style="{StaticResource ExpanderStyle}">
-                            <Grid Background="#FF756550">
-                                <Grid.Resources>
-                                    <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
-                                        <EventSetter Event="Checked" Handler="Checked_SortTable_Filter" />
-                                        <Setter Property="GroupName" Value="SortRadio" />
-                                    </Style>
-                                </Grid.Resources>
-                                <StackPanel Margin="30,0,0,0" Orientation="Vertical">
-                                    <RadioButton Name="DateFilterAll" Content="{local:LocExtension All}" IsChecked="True" />
-                                    <RadioButton Name="DateFilterToday" Content="{local:LocExtension Today}" />
-                                    <RadioButton Name="DateFilterLW" Content="{local:LocExtension LastWeek}" />
-                                    <RadioButton Name="DateFilterL2W" Content="{local:LocExtension Last2Week}" />
-                                </StackPanel>
-                            </Grid>
-                        </Expander>
-                        <Expander Header="{local:LocExtension BySoftware}" Style="{StaticResource ExpanderStyle}">
-                            <Grid Background="#FF756550">
-                                <Grid.Resources>
-                                    <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
-                                        <Setter Property="GroupName" Value="SortSoftware" />
-                                        <Setter Property="IsEnabled" Value="False" />
-                                        <EventSetter Event="Checked" Handler="Checked_SortTable_Filter" />
-                                    </Style>
-                                </Grid.Resources>
-                                <StackPanel Margin="30,0,0,0" Orientation="Vertical">
-                                    <RadioButton Name="SoftwareFilterCAD" Content="EZCAD" />
-                                    <RadioButton Name="SoftwareFilterImplant" Content="ImplantPlanning" />
-                                    <RadioButton Name="SoftwareFilterOrtho" Content="OrthoAnalysis" />
-                                    <RadioButton Name="SoftwareFilterTray" Content="EZCAD.tray" />
-                                    <RadioButton Name="SoftwareFilterSplint" Content="EZCAD.splint" />
-                                </StackPanel>
                             </Grid>
                         </Expander>
                     </StackPanel>

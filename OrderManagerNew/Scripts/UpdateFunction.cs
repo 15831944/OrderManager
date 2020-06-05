@@ -348,7 +348,7 @@ namespace OrderManagerNew
                             {
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
-                                else if (info.softwareVersion > new Version(verInfo.ProductVersion))
+                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
                                     SoftwareUpdateEvent(TmpsoftwareID, true);
                             }
                         }
@@ -364,7 +364,7 @@ namespace OrderManagerNew
                             {
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
-                                else if (info.softwareVersion > new Version(verInfo.ProductVersion))
+                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
                                     SoftwareUpdateEvent(TmpsoftwareID, true);
                             }
                         }
@@ -380,7 +380,7 @@ namespace OrderManagerNew
                             {
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
-                                else if (info.softwareVersion > new Version(verInfo.ProductVersion))
+                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
                                     SoftwareUpdateEvent(TmpsoftwareID, true);
                             }
                         }
@@ -396,7 +396,7 @@ namespace OrderManagerNew
                             {
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
-                                else if (info.softwareVersion > new Version(verInfo.ProductVersion))
+                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
                                     SoftwareUpdateEvent(TmpsoftwareID, true);
                             }
                         }
@@ -412,7 +412,7 @@ namespace OrderManagerNew
                             {
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
-                                else if (info.softwareVersion > new Version(verInfo.ProductVersion))
+                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
                                     SoftwareUpdateEvent(TmpsoftwareID, true);
                             }
                         }
@@ -428,7 +428,7 @@ namespace OrderManagerNew
                             {
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
-                                else if (info.softwareVersion > new Version(verInfo.ProductVersion))
+                                else if (info.softwareVersion > new Version(verInfo.FileVersion))
                                     SoftwareUpdateEvent(TmpsoftwareID, true);
                             }
                         }
