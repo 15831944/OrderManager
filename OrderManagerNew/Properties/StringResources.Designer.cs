@@ -574,11 +574,11 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Last week 的當地語系化字串。
+        ///   查詢類似 This week 的當地語系化字串。
         /// </summary>
-        internal static string LastWeek {
+        internal static string ThisWeek {
             get {
-                return ResourceManager.GetString("LastWeek", resourceCulture);
+                return ResourceManager.GetString("ThisWeek", resourceCulture);
             }
         }
         

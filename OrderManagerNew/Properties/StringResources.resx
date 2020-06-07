@@ -120,31 +120,31 @@
   </data>
   <data name="ByCase" xml:space="preserve">
     <value>By Case</value>
-    <comment>UI</comment>
+    <comment>Filter</comment>
   </data>
   <data name="ByDate" xml:space="preserve">
     <value>By Date</value>
-    <comment>UI</comment>
+    <comment>Filter</comment>
   </data>
   <data name="BySoftware" xml:space="preserve">
     <value>By Software</value>
-    <comment>UI</comment>
+    <comment>Filter</comment>
   </data>
   <data name="All" xml:space="preserve">
     <value>ALL</value>
-    <comment>UI</comment>
+    <comment>Filter</comment>
   </data>
   <data name="Today" xml:space="preserve">
     <value>Today</value>
     <comment>UI</comment>
   </data>
-  <data name="LastWeek" xml:space="preserve">
-    <value>Last week</value>
-    <comment>UI</comment>
+  <data name="ThisWeek" xml:space="preserve">
+    <value>This week</value>
+    <comment>Filter</comment>
   </data>
   <data name="Last2Week" xml:space="preserve">
     <value>Last two weeks</value>
-    <comment>UI</comment>
+    <comment>Filter</comment>
   </data>
   <data name="Local" xml:space="preserve">
     <value>Local</value>

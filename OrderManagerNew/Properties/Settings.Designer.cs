@@ -154,5 +154,17 @@ namespace OrderManagerNew.Properties {
                 this["FullRecord"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int LastSoftwareFilter {
+            get {
+                return ((int)(this["LastSoftwareFilter"]));
+            }
+            set {
+                this["LastSoftwareFilter"] = value;
+            }
+        }
     }
 }

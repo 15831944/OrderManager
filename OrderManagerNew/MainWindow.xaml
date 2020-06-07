@@ -528,7 +528,7 @@
                                 <StackPanel Margin="30,0,0,0" Orientation="Vertical">
                                     <RadioButton Name="DateFilterAll" Content="{local:LocExtension All}" IsChecked="True" />
                                     <RadioButton Name="DateFilterToday" Content="{local:LocExtension Today}" />
-                                    <RadioButton Name="DateFilterLW" Content="{local:LocExtension LastWeek}" />
+                                    <RadioButton Name="DateFilterTW" Content="{local:LocExtension ThisWeek}" />
                                     <RadioButton Name="DateFilterL2W" Content="{local:LocExtension Last2Week}" />
                                 </StackPanel>
                             </Grid>

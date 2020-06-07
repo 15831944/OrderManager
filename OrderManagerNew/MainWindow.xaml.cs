@@ -266,6 +266,7 @@ namespace OrderManagerNew
                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
                     //System.Threading.Thread.Sleep(1000);
                     Handler_setSoftwareShow(UpdateFunc.readyUninstallSoftwareInfo.softwareID, (int)_softwareStatus.NotInstall, 0);
+                    ChangeSoftwareFilter();
                 }));
             }
 
@@ -512,6 +513,60 @@ namespace OrderManagerNew
         {
             UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
             OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
+            DateFilterTW.IsChecked = true;
+            // CaseFilter RadioButton狀態處理
+            if (Properties.Settings.Default.LastSoftwareFilter >= (int)_softwareID.EZCAD && Properties.Settings.Default.LastSoftwareFilter < (int)_softwareID.All)
+            {
+                switch (Properties.Settings.Default.LastSoftwareFilter)
+                {
+                    case (int)_softwareID.EZCAD:
+                        {
+                            if (SoftwareFilterCAD.IsEnabled == true)
+                            {
+                                SoftwareFilterCAD.IsChecked = true;
+                                return;
+                            }
+                            break;
+                        }
+                    case (int)_softwareID.Implant:
+                        {
+                            if (SoftwareFilterImplant.IsEnabled == true)
+                            {
+                                SoftwareFilterImplant.IsChecked = true;
+                                return;
+                            }
+                            break;
+                        }
+                    case (int)_softwareID.Ortho:
+                        {
+                            if (SoftwareFilterOrtho.IsEnabled == true)
+                            {
+                                SoftwareFilterOrtho.IsChecked = true;
+                                return;
+                            }
+                            break;
+                        }
+                    case (int)_softwareID.Tray:
+                        {
+                            if (SoftwareFilterTray.IsEnabled == true)
+                            {
+                                SoftwareFilterTray.IsChecked = true;
+                                return;
+                            }
+                            break;
+                        }
+                    case (int)_softwareID.Splint:
+                        {
+                            if (SoftwareFilterSplint.IsEnabled == true)
+                            {
+                                SoftwareFilterSplint.IsChecked = true;
+                                return;
+                            }
+                            break;
+                        }
+                }
+            }
+            ChangeSoftwareFilter();
         }
 #endregion
 
@@ -1027,40 +1082,6 @@ namespace OrderManagerNew
                         SetAllSoftwareTableDownloadisEnable(false);
                         break;
                     }
-            }
-
-            // CaseFilter RadioButton狀態處理
-            if(SoftwareFilterCAD.IsEnabled == false && SoftwareFilterImplant.IsEnabled == false && SoftwareFilterOrtho.IsEnabled == false && SoftwareFilterTray.IsEnabled == false && SoftwareFilterSplint.IsEnabled == false)
-            {
-                SoftwareFilterCAD.IsChecked = false;
-                SoftwareFilterImplant.IsChecked = false;
-                SoftwareFilterOrtho.IsChecked = false;
-                SoftwareFilterTray.IsChecked = false;
-                SoftwareFilterSplint.IsChecked = false;
-                StackPanel_Local.Children.Clear();
-            }
-            else
-            {
-                if (SoftwareFilterCAD.IsEnabled == true && SoftwareFilterCAD.IsChecked == true)
-                    return;
-                else if (SoftwareFilterImplant.IsEnabled == true && SoftwareFilterImplant.IsChecked == true)
-                    return;
-                else if (SoftwareFilterOrtho.IsEnabled == true && SoftwareFilterOrtho.IsChecked == true)
-                    return;
-                else if (SoftwareFilterTray.IsEnabled == true && SoftwareFilterTray.IsChecked == true)
-                    return;
-                else if (SoftwareFilterSplint.IsEnabled == true && SoftwareFilterSplint.IsChecked == true)
-                    return;
-                else if (SoftwareFilterCAD.IsEnabled == true && SoftwareFilterCAD.IsChecked == false)
-                    SoftwareFilterCAD.IsChecked = true;
-                else if (SoftwareFilterImplant.IsEnabled == true && SoftwareFilterImplant.IsChecked == false)
-                    SoftwareFilterImplant.IsChecked = true;
-                else if (SoftwareFilterOrtho.IsEnabled == true && SoftwareFilterOrtho.IsChecked == false)
-                    SoftwareFilterOrtho.IsChecked = true;
-                else if (SoftwareFilterTray.IsEnabled == true && SoftwareFilterTray.IsChecked == false)
-                    SoftwareFilterTray.IsChecked = true;
-                else if (SoftwareFilterSplint.IsEnabled == true && SoftwareFilterSplint.IsChecked == false)
-                    SoftwareFilterSplint.IsChecked = true;
             }
         }
 
@@ -2008,7 +2029,7 @@ namespace OrderManagerNew
                             ChooseToLoadProj();
                             break;
                         }
-                    case "DateFilterLW":
+                    case "DateFilterTW":
                         {
                             Properties.OrderManagerProps.Default.DateFilter = (int)_DateFilter.ThisWeek;
                             ChooseToLoadProj();
@@ -2022,30 +2043,36 @@ namespace OrderManagerNew
                         }
                     case "SoftwareFilterCAD":
                         {
+                            Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.EZCAD;
                             ProjHandle.LoadEZCADProj();
                             break;
                         }
                     case "SoftwareFilterImplant":
                         {
+                            Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.Implant;
                             ProjHandle.LoadImplantProj();
                             break;
                         }
                     case "SoftwareFilterOrtho":
                         {
+                            Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.Ortho;
                             ProjHandle.LoadOrthoProj();
                             break;
                         }
                     case "SoftwareFilterTray":
                         {
+                            Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.Tray;
                             ProjHandle.LoadTrayProj();
                             break;
                         }
                     case "SoftwareFilterSplint":
                         {
+                            Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.Splint;
                             ProjHandle.LoadSplintProj();
                             break;
                         }
                 }
+                Properties.Settings.Default.Save();
             }
             else if(sender is CheckBox)
             {
@@ -2069,6 +2096,45 @@ namespace OrderManagerNew
                         }
                 }
                 ChooseToLoadProj();
+            }
+        }
+
+        /// <summary>
+        /// 由程式判斷並切換顯示哪個軟體Case(目前用到只有Loaded和刪除軟體時)
+        /// </summary>
+        private void ChangeSoftwareFilter()
+        {
+            if (SoftwareFilterCAD.IsEnabled == false && SoftwareFilterImplant.IsEnabled == false && SoftwareFilterOrtho.IsEnabled == false && SoftwareFilterTray.IsEnabled == false && SoftwareFilterSplint.IsEnabled == false)
+            {
+                SoftwareFilterCAD.IsChecked = false;
+                SoftwareFilterImplant.IsChecked = false;
+                SoftwareFilterOrtho.IsChecked = false;
+                SoftwareFilterTray.IsChecked = false;
+                SoftwareFilterSplint.IsChecked = false;
+                StackPanel_Local.Children.Clear();
+            }
+            else
+            {
+                if (SoftwareFilterCAD.IsEnabled == true && SoftwareFilterCAD.IsChecked == true)
+                    return;
+                else if (SoftwareFilterImplant.IsEnabled == true && SoftwareFilterImplant.IsChecked == true)
+                    return;
+                else if (SoftwareFilterOrtho.IsEnabled == true && SoftwareFilterOrtho.IsChecked == true)
+                    return;
+                else if (SoftwareFilterTray.IsEnabled == true && SoftwareFilterTray.IsChecked == true)
+                    return;
+                else if (SoftwareFilterSplint.IsEnabled == true && SoftwareFilterSplint.IsChecked == true)
+                    return;
+                else if (SoftwareFilterCAD.IsEnabled == true && SoftwareFilterCAD.IsChecked == false)
+                    SoftwareFilterCAD.IsChecked = true;
+                else if (SoftwareFilterImplant.IsEnabled == true && SoftwareFilterImplant.IsChecked == false)
+                    SoftwareFilterImplant.IsChecked = true;
+                else if (SoftwareFilterOrtho.IsEnabled == true && SoftwareFilterOrtho.IsChecked == false)
+                    SoftwareFilterOrtho.IsChecked = true;
+                else if (SoftwareFilterTray.IsEnabled == true && SoftwareFilterTray.IsChecked == false)
+                    SoftwareFilterTray.IsChecked = true;
+                else if (SoftwareFilterSplint.IsEnabled == true && SoftwareFilterSplint.IsChecked == false)
+                    SoftwareFilterSplint.IsChecked = true;
             }
         }
 #endregion

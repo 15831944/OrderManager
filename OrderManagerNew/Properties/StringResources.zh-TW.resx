@@ -133,10 +133,10 @@
     <value>全部</value>
   </data>
   <data name="Last2Week" xml:space="preserve">
-    <value>兩周內</value>
+    <value>兩週內</value>
   </data>
-  <data name="LastWeek" xml:space="preserve">
-    <value>本周</value>
+  <data name="ThisWeek" xml:space="preserve">
+    <value>本週</value>
   </data>
   <data name="Today" xml:space="preserve">
     <value>今天</value>
