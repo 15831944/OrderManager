@@ -22,8 +22,13 @@ namespace OrderManagerNew.UserControls
     /// </summary>
     public partial class Order_ImplantSmallcase : UserControl
     {
+        //委派到Order_implantBase.xaml.cs裡面的SmallCaseHandler()
+        public delegate void implantSmallCaseEventHandler(int projectIndex);
+        public event implantSmallCaseEventHandler SetsmallCaseShow;
+
         private ImplantSmallCaseInformation implantsmallcaseInfo;
         private bool IsFocusSmallCase;
+        private int ItemIndex;
 
         public class ImplantSmallCaseInformation
         {
@@ -45,9 +50,10 @@ namespace OrderManagerNew.UserControls
         {
             InitializeComponent();
             IsFocusSmallCase = false;
+            ItemIndex = -1;
         }
 
-        public void SetImplantSmallCaseInfo(ImplantSmallCaseInformation Import)
+        public void SetImplantSmallCaseInfo(ImplantSmallCaseInformation Import, int Index)
         {
             implantsmallcaseInfo = Import;
             label_ProjectName.Content = implantsmallcaseInfo.OrderName;
@@ -61,6 +67,7 @@ namespace OrderManagerNew.UserControls
                 button_GuideModelDir.IsEnabled = true;
                 button_GuideModelDir.ToolTip = OrderManagerNew.TranslationSource.Instance["GuideModel"];
             }
+            ItemIndex = Index;
         }
 
         private void Click_ButtonEvent(object sender, RoutedEventArgs e)
@@ -127,6 +134,7 @@ namespace OrderManagerNew.UserControls
             }
             else
             {
+                SetsmallCaseShow(ItemIndex);
                 if (IsFocusSmallCase == false)
                 {
                     SetCaseFocusStatus(true);

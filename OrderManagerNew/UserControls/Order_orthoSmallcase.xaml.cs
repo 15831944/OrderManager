@@ -21,8 +21,12 @@ namespace OrderManagerNew.UserControls
     /// </summary>
     public partial class Order_orthoSmallcase : UserControl
     {
+        //委派到Order_orthoBase.xaml.cs裡面的SmallCaseHandler()
+        public delegate void implantSmallCaseEventHandler(int projectIndex);
+        public event implantSmallCaseEventHandler SetsmallCaseShow;
         private OrthoSmallCaseInformation orthosmallcaseInfo;
         private bool IsFocusSmallCase;
+        private int ItemIndex;
 
         public enum OrthoWorkFlow : int
         {
@@ -43,7 +47,6 @@ namespace OrderManagerNew.UserControls
             Shell_Creation,
             Bracket_Treatment
         }
-
         public class OrthoSmallCaseInformation
         {
             public string SmallCaseXmlPath { get; set; }
@@ -68,9 +71,10 @@ namespace OrderManagerNew.UserControls
             label_ProjectName.Content = "";
             button_LoadOrthoProject.IsEnabled = false;
             IsFocusSmallCase = false;
+            ItemIndex = -1;
         }
 
-        public void SetOrthoSmallCaseInfo(OrthoSmallCaseInformation Import)
+        public void SetOrthoSmallCaseInfo(OrthoSmallCaseInformation Import, int Index)
         {
             orthosmallcaseInfo = Import;
 
@@ -80,6 +84,7 @@ namespace OrderManagerNew.UserControls
                 button_LoadOrthoProject.IsEnabled = false;
 
             label_ProjectName.Content = orthosmallcaseInfo.CreateDate;
+            ItemIndex = Index;
         }
 
         private void Click_ButtonEvent(object sender, RoutedEventArgs e)
@@ -122,6 +127,7 @@ namespace OrderManagerNew.UserControls
             }
             else
             {
+                SetsmallCaseShow(ItemIndex);
                 if (IsFocusSmallCase == false)
                 {
                     SetCaseFocusStatus(true);

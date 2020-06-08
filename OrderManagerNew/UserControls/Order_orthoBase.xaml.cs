@@ -24,6 +24,9 @@ namespace OrderManagerNew.UserControls
     /// </summary>
     public partial class Order_orthoBase : UserControl
     {
+        //委派到MainWindow.xaml.cs裡面CaseHandler_Ortho_showSingleProject()
+        public delegate void orthoBaseEventHandler(int projectIndex);
+        public event orthoBaseEventHandler SetBaseProjectShow;
         LogRecorder log;
         private OrthoOuterInformation orthoInfo;
         private bool IsFocusCase = false;   //smallCase目前是否為攤開狀態
@@ -98,6 +101,7 @@ namespace OrderManagerNew.UserControls
         private void LoadSmallCase()
         {
             orthoInfo.List_smallcase = new List<UserControls.Order_orthoSmallcase>();
+            int itemIndex = 0;
             //蒐集OrthoSmallcase然後存進OuterCase
             DirectoryInfo dInfo2 = new DirectoryInfo(orthoInfo.CaseDirectoryPath);
             foreach (DirectoryInfo folder2 in dInfo2.GetDirectories())
@@ -133,9 +137,11 @@ namespace OrderManagerNew.UserControls
                             Describe = orthodata.patientInformation.m_Discribe
                         };
 
-                        UserControls.Order_orthoSmallcase tmporthoSmallcase = new UserControls.Order_orthoSmallcase();
-                        tmporthoSmallcase.SetOrthoSmallCaseInfo(tmpOrthosmallInfo);
+                        Order_orthoSmallcase tmporthoSmallcase = new Order_orthoSmallcase();
+                        tmporthoSmallcase.SetsmallCaseShow += SmallCaseHandler;
+                        tmporthoSmallcase.SetOrthoSmallCaseInfo(tmpOrthosmallInfo, itemIndex);
                         orthoInfo.List_smallcase.Add(tmporthoSmallcase);
+                        itemIndex++;
                     }
                     catch (Exception ex)
                     {
@@ -143,6 +149,17 @@ namespace OrderManagerNew.UserControls
                         continue;
                     }
                 }
+            }
+        }
+
+        private void SmallCaseHandler(int SmallcaseIndex)
+        {
+            for (int i = 0; i < orthoInfo.List_smallcase.Count; i++)
+            {
+                if (i == SmallcaseIndex)
+                    continue;
+
+                orthoInfo.List_smallcase[i].SetCaseFocusStatus(false);
             }
         }
 
@@ -215,7 +232,8 @@ namespace OrderManagerNew.UserControls
             }
             else
             {
-                if(IsFocusCase == false)
+                SetBaseProjectShow(ItemIndex);
+                if (IsFocusCase == false)
                 {
                     SetCaseFocusStatus(true);
                 }

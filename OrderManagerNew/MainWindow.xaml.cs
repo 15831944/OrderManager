@@ -2158,6 +2158,7 @@ namespace OrderManagerNew
                             foreach (CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
                             {
                                 UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
+                                Order_CAD.SetBaseProjectShow += CaseHandler_EZCAD_showSingleProject;
                                 Order_CAD.SetCaseInfo(cadInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_CAD);
                                 countIndex++;
@@ -2176,6 +2177,7 @@ namespace OrderManagerNew
                             foreach (ImplantOuterInformation implantInfo in ProjHandle.Caselist_ImplantOuterCase)
                             {
                                 UserControls.Order_implantBase Order_Implant = new UserControls.Order_implantBase();
+                                Order_Implant.SetBaseProjectShow += CaseHandler_Implant_showSingleProject;
                                 Order_Implant.SetCaseInfo(implantInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_Implant);
                                 countIndex++;
@@ -2194,6 +2196,7 @@ namespace OrderManagerNew
                             foreach (OrthoOuterInformation orthoInfo in ProjHandle.Caselist_OrthoOuterCase)
                             {
                                 UserControls.Order_orthoBase Order_Ortho = new UserControls.Order_orthoBase();
+                                Order_Ortho.SetBaseProjectShow += CaseHandler_Ortho_showSingleProject;
                                 Order_Ortho.SetCaseInfo(orthoInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_Ortho);
                                 countIndex++;
@@ -2212,6 +2215,7 @@ namespace OrderManagerNew
                             foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
                             {
                                 UserControls.Order_tsBase Order_Tray = new UserControls.Order_tsBase();
+                                Order_Tray.SetBaseProjectShow += CaseHandler_TraySplint_showSingleProject;
                                 Order_Tray.SetTrayCaseInfo(trayInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_Tray);
                                 countIndex++;
@@ -2230,6 +2234,7 @@ namespace OrderManagerNew
                             foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
                             {
                                 UserControls.Order_tsBase Order_Splint = new UserControls.Order_tsBase();
+                                Order_Splint.SetBaseProjectShow += CaseHandler_TraySplint_showSingleProject;
                                 Order_Splint.SetSplintCaseInfo(splintInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_Splint);
                                 countIndex++;
@@ -2240,6 +2245,47 @@ namespace OrderManagerNew
                     }
             }
         }
-#endregion
+
+        private void CaseHandler_EZCAD_showSingleProject(int projectIndex)
+        {
+            for (int i = 0; i < StackPanel_Local.Children.Count; i++)
+            {
+                if (i == projectIndex)
+                    continue;
+
+                ((UserControls.Order_cadBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
+            }
+        }
+        private void CaseHandler_Implant_showSingleProject(int projectIndex)
+        {
+            for (int i = 0; i < StackPanel_Local.Children.Count; i++)
+            {
+                if (i == projectIndex)
+                    continue;
+
+                ((UserControls.Order_implantBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
+            }
+        }
+        private void CaseHandler_Ortho_showSingleProject(int projectIndex)
+        {
+            for (int i = 0; i < StackPanel_Local.Children.Count; i++)
+            {
+                if (i == projectIndex)
+                    continue;
+
+                ((UserControls.Order_orthoBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
+            }
+        }
+        private void CaseHandler_TraySplint_showSingleProject(int projectIndex)
+        {
+            for (int i = 0; i < StackPanel_Local.Children.Count; i++)
+            {
+                if (i == projectIndex)
+                    continue;
+
+                ((UserControls.Order_tsBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
+            }
+        }
+        #endregion
     }
 }

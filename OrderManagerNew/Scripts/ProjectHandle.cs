@@ -10,9 +10,7 @@ using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation
 using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformation;
 using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
 using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
-using ImplantSmallCaseInformation = OrderManagerNew.UserControls.Order_ImplantSmallcase.ImplantSmallCaseInformation;
 using OrthoOuterInformation = OrderManagerNew.UserControls.Order_orthoBase.OrthoOuterInformation;
-using OrthoSmallCaseInformation = OrderManagerNew.UserControls.Order_orthoSmallcase.OrthoSmallCaseInformation;
 
 namespace OrderManagerNew
 {
@@ -253,7 +251,7 @@ namespace OrderManagerNew
         /// <param name="SoftwareID">軟體ID 參考_SoftwareID</param>
         /// <param name="XmlPath">Xml路徑</param>
         /// <returns></returns>
-        bool LoadXml(int SoftwareID, string XmlPath)
+        private bool LoadXml(int SoftwareID, string XmlPath)
         {
             XDocument xmlDoc;
             FileInfo fInfo = new FileInfo(XmlPath);//要取得檔案創建日期和修改日期
@@ -457,6 +455,18 @@ namespace OrderManagerNew
             }
 
             return true;
+        }
+
+        private void Handler_EZCAD_showSingleProject(int projectIndex)
+        {
+
+        }
+
+        
+
+        private void Handler_Ortho_showSingleProject(int projectIndex)
+        {
+
         }
     }
 }

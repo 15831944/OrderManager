@@ -20,6 +20,10 @@ namespace OrderManagerNew.UserControls
     /// </summary>
     public partial class Order_tsBase : UserControl
     {
+        //委派到MainWindow.xaml.cs裡面的CaseHandler_EZCAD_showSingleProject()
+        public delegate void tsBaseEventHandler(int projectIndex);
+        public event tsBaseEventHandler SetBaseProjectShow;
+
         /// <summary>
         /// Tray設計階段
         /// </summary>
@@ -257,6 +261,7 @@ namespace OrderManagerNew.UserControls
             }
             else
             {
+                SetBaseProjectShow(ItemIndex);
                 if (IsFocusCase == false)
                 {
                     SetCaseFocusStatus(true);

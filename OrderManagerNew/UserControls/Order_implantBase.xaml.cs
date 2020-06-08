@@ -24,8 +24,12 @@ namespace OrderManagerNew.UserControls
     /// </summary>
     public partial class Order_implantBase : UserControl
     {
+        //委派到MainWindow.xaml.cs裡面的CaseHandler_Implant_showSingleProject()
+        public delegate void implantBaseEventHandler(int projectIndex);
+        public event implantBaseEventHandler SetBaseProjectShow;
+
         private ImplantOuterInformation implantInfo;
-        private bool IsFocusCase = false;   //smallCase目前是否為攤開狀態
+        private bool IsFocusCase;
         private int ItemIndex;
         /// <summary>
         /// ImplantPlanning專案資訊
@@ -103,6 +107,7 @@ namespace OrderManagerNew.UserControls
         private void LoadSmallCase()
         {
             implantInfo.List_smallcase = new List<UserControls.Order_ImplantSmallcase>();
+            int itemIndex = 0;
             foreach (string filename in Directory.GetFiles(implantInfo.CaseDirectoryPath))
             {
                 // 這層是C:\IntewareData\Implant\2020130102946\
@@ -110,6 +115,7 @@ namespace OrderManagerNew.UserControls
                 if (Path.GetExtension(filename).ToLower() == ".tii")
                 {
                     OrderManagerNew.UserControls.Order_ImplantSmallcase ImplantSmallCase = new OrderManagerNew.UserControls.Order_ImplantSmallcase();
+                    ImplantSmallCase.SetsmallCaseShow += SmallCaseHandler;
                     //記錄內部專案資料夾名稱(就是OrderName)、Guide專案資料夾路徑和檢查是否有從Guide輸出的模型
                     ImplantSmallCaseInformation impInfo = new ImplantSmallCaseInformation
                     {
@@ -130,9 +136,21 @@ namespace OrderManagerNew.UserControls
                     else
                         impInfo.GuideModelPath = "";
 
-                    ImplantSmallCase.SetImplantSmallCaseInfo(impInfo);
+                    ImplantSmallCase.SetImplantSmallCaseInfo(impInfo, itemIndex);
                     implantInfo.List_smallcase.Add(ImplantSmallCase);
+                    itemIndex++;
                 }
+            }
+        }
+
+        private void SmallCaseHandler(int SmallcaseIndex)
+        {
+            for (int i = 0; i < implantInfo.List_smallcase.Count; i++)
+            {
+                if (i == SmallcaseIndex)
+                    continue;
+
+                implantInfo.List_smallcase[i].SetCaseFocusStatus(false);
             }
         }
 
@@ -204,6 +222,7 @@ namespace OrderManagerNew.UserControls
             }
             else
             {
+                SetBaseProjectShow(ItemIndex);
                 if (IsFocusCase == false)
                 {
                     SetCaseFocusStatus(true);
