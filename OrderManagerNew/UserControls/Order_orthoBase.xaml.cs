@@ -26,7 +26,7 @@ namespace OrderManagerNew.UserControls
     {
         LogRecorder log;
         private OrthoOuterInformation orthoInfo;
-        private bool UserSelected = false;   //smallCase目前是否為攤開狀態
+        private bool IsFocusCase = false;   //smallCase目前是否為攤開狀態
         int ItemIndex;
 
         public class OrthoOuterInformation
@@ -67,7 +67,7 @@ namespace OrderManagerNew.UserControls
             label_patientName.Content = "";
             label_designStep.Content = "";
             label_createDate.Content = "";
-            UserSelected = false;
+            IsFocusCase = false;
             ItemIndex = -1;
         }
 
@@ -91,61 +91,10 @@ namespace OrderManagerNew.UserControls
             label_createDate.Content = orthoInfo.CreateDate.ToLongDateString();
             ItemIndex = Index;
         }
-
-        private void Click_OpenDir(object sender, RoutedEventArgs e)
-        {
-            OrderManagerFunctions omFunc = new OrderManagerFunctions();
-            omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + System.IO.Path.GetDirectoryName(orthoInfo.CaseDirectoryPath) + "\"");
-        }
-
-        private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
-        {
-            if(e.Source is Button)
-            {
-                Click_OpenDir(null, null);
-            }
-            else
-            {
-                if(UserSelected == false)
-                {
-                    //未被攤開，執行攤開
-                    if (orthoInfo.List_smallcase.Count > 0)
-                    {
-                        foreach (Order_orthoSmallcase OrthoCase in orthoInfo.List_smallcase)
-                        {
-                            stackpanel_Ortho.Children.Add(OrthoCase);
-                        }
-                    }
-                    else
-                    {
-                        Mouse.OverrideCursor = Cursors.Wait;
-                        LoadSmallCase();
-                        Mouse.OverrideCursor = Cursors.Arrow;
-                        if (orthoInfo.List_smallcase.Count > 0)
-                        {
-                            foreach (Order_orthoSmallcase OrthoCase in orthoInfo.List_smallcase)
-                            {
-                                stackpanel_Ortho.Children.Add(OrthoCase);
-                            }
-                        }
-                    }
-                    UserSelected = true;
-                    rectangle_orthoBase.Fill = this.FindResource("background_CheckedBaseCaseTable") as SolidColorBrush;
-                }
-                else
-                {
-                    //已被攤開，收回
-                    if (orthoInfo.List_smallcase.Count > 0)
-                    {
-                        stackpanel_Ortho.Children.RemoveRange(1, (stackpanel_Ortho.Children.Count - 1));
-                    }
-                    rectangle_orthoBase.Fill = Brushes.White;
-                    UserSelected = false;
-                }
-            }
-        }
-
-        //讀取SmallCase資訊
+        
+        /// <summary>
+        /// 讀取SmallCase資訊
+        /// </summary>
         private void LoadSmallCase()
         {
             orthoInfo.List_smallcase = new List<UserControls.Order_orthoSmallcase>();
@@ -193,6 +142,86 @@ namespace OrderManagerNew.UserControls
                         log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Ortho smallcase) Exception2", ex.Message);
                         continue;
                     }
+                }
+            }
+        }
+
+        private void Click_OpenDir(object sender, RoutedEventArgs e)
+        {
+            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+            omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + System.IO.Path.GetDirectoryName(orthoInfo.CaseDirectoryPath) + "\"");
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// 設定Case的Focus狀態
+        /// </summary>
+        /// <param name="isFocused">是否要Focus</param>
+        public void SetCaseFocusStatus(bool isFocused)
+        {
+            switch (isFocused)
+            {
+                case true:
+                    {
+                        background_orthoBase.Fill = this.FindResource("background_FocusedCase") as SolidColorBrush;
+                        //執行攤開
+                        if (orthoInfo.List_smallcase.Count > 0)
+                        {
+                            foreach (Order_orthoSmallcase OrthoCase in orthoInfo.List_smallcase)
+                            {
+                                stackpanel_Ortho.Children.Add(OrthoCase);
+                            }
+                        }
+                        else
+                        {
+                            Mouse.OverrideCursor = Cursors.Wait;
+                            LoadSmallCase();
+                            Mouse.OverrideCursor = Cursors.Arrow;
+                            if (orthoInfo.List_smallcase.Count > 0)
+                            {
+                                foreach (Order_orthoSmallcase OrthoCase in orthoInfo.List_smallcase)
+                                {
+                                    stackpanel_Ortho.Children.Add(OrthoCase);
+                                }
+                            }
+                        }
+                        IsFocusCase = true;
+                        break;
+                    }
+                case false:
+                    {
+                        background_orthoBase.Fill = Brushes.White;
+                        //收回
+                        if (orthoInfo.List_smallcase.Count > 0)
+                        {
+                            for(int i=1; i< stackpanel_Ortho.Children.Count; i++)
+                            {
+                                ((Order_orthoSmallcase)stackpanel_Ortho.Children[i]).SetCaseFocusStatus(false);
+                            }
+
+                            stackpanel_Ortho.Children.RemoveRange(1, (stackpanel_Ortho.Children.Count - 1));
+                        }
+                        IsFocusCase = false;
+                        break;
+                    }
+            }
+        }
+
+        private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
+        {
+            if(e.Source is Button)
+            {
+                Click_OpenDir(e.Source, e);
+            }
+            else
+            {
+                if(IsFocusCase == false)
+                {
+                    SetCaseFocusStatus(true);
+                }
+                else
+                {
+                    SetCaseFocusStatus(false);
                 }
             }
         }

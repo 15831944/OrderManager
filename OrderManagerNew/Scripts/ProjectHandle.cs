@@ -201,39 +201,6 @@ namespace OrderManagerNew
                 {
                     if (LoadXml((int)_softwareID.Implant, XmlPath) == false)
                         continue;
-
-                    Caselist_ImplantOuterCase[Caselist_ImplantOuterCase.Count - 1].List_smallcase = new List<UserControls.Order_ImplantSmallcase>();
-                    foreach (string filename in Directory.GetFiles(folder.FullName))
-                    {
-                        // 這層是C:\IntewareData\Implant\2020130102946\
-                        //找有幾個tii檔就等於有幾個Implant要給Guide的檔
-                        if (Path.GetExtension(filename).ToLower() == ".tii")
-                        {
-                            OrderManagerNew.UserControls.Order_ImplantSmallcase ImplantSmallCase = new OrderManagerNew.UserControls.Order_ImplantSmallcase();
-                            //記錄內部專案資料夾名稱(就是OrderName)、Guide專案資料夾路徑和檢查是否有從Guide輸出的模型
-                            ImplantSmallCaseInformation impInfo = new ImplantSmallCaseInformation
-                            {
-                                OrderName = Path.GetFileNameWithoutExtension(filename),
-                                ImplantTiiPath = filename
-                            };
-                            impInfo.GuideCaseDir = folder.FullName + @"\" + impInfo.OrderName + @"\LinkStation\";
-                            //TODO 這邊會有bug
-                            string tmpGuideModelDir = folder.FullName + @"\" + impInfo.OrderName + @"\LinkStation\ManufacturingDir\";
-                            if (Directory.Exists(tmpGuideModelDir) == true)
-                            {
-                                string[] guideModel = Directory.GetFiles(tmpGuideModelDir);
-                                if (guideModel.Length > 0)
-                                    impInfo.GuideModelPath = guideModel[0];
-                                else
-                                    impInfo.GuideModelPath = "";
-                            }
-                            else
-                                impInfo.GuideModelPath = "";
-
-                            ImplantSmallCase.SetImplantSmallCaseInfo(impInfo);
-                            Caselist_ImplantOuterCase[Caselist_ImplantOuterCase.Count - 1].List_smallcase.Add(ImplantSmallCase);
-                        }
-                    }
                 }
             }
 

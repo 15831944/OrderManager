@@ -45,9 +45,10 @@ namespace OrderManagerNew.UserControls
             DDS_ABUTMENT_CUTBACK = 0x00020000,
             DDS_ABUTMENT_SCREW = 0x00040000,
         };
-
+        
         private CadInformation cadInfo;
         private int ItemIndex;
+        private bool IsFocusCase;
 
         /// <summary>
         /// EZCAD專案資訊
@@ -85,6 +86,7 @@ namespace OrderManagerNew.UserControls
             label_designStep.Content = "";
             label_createDate.Content = "";
             ItemIndex = -1;
+            IsFocusCase = false;
         }
 
         /// <summary>
@@ -162,6 +164,49 @@ namespace OrderManagerNew.UserControls
             {
                 OrderManagerFunctions omFunc = new OrderManagerFunctions();
                 omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + cadInfo.CaseDirectoryPath + "\"");
+            }
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// 設定Case的Focus狀態
+        /// </summary>
+        /// <param name="isFocused">是否要Focus</param>
+        public void SetCaseFocusStatus(bool isFocused)
+        {
+            switch(isFocused)
+            {
+                case true:
+                    {
+                        background_cadBase.Fill = this.FindResource("background_FocusedCase") as SolidColorBrush;
+                        IsFocusCase = true;
+                        break;
+                    }
+                case false:
+                    {
+                        background_cadBase.Fill = Brushes.White;
+                        IsFocusCase = false;
+                        break;
+                    }
+            }
+        }
+
+        private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Source is Button)
+            {
+                Click_FolderOpen(e.Source, e);
+            }
+            else
+            {
+                if (IsFocusCase == false)
+                {
+                    SetCaseFocusStatus(true);
+                }
+                else
+                {
+                    SetCaseFocusStatus(false);
+                }
             }
         }
     }

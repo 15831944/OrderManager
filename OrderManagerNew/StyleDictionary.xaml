@@ -13,6 +13,9 @@
     <SolidColorBrush x:Key="background_CheckedSmallCaseTable" Color="#FFEDAE9F" />
     <SolidColorBrush x:Key="borderbrush_CheckedSmallCaseTable" Color="#FFF26C5A" />
     <SolidColorBrush x:Key="background_SmallCase" Color="#FFBCB2AA" />
+    <SolidColorBrush x:Key="background_FocusedCase" Color="#FFFFF1C2" />
+    <SolidColorBrush x:Key="background_FocusedSmallCase" Color="#FFEDAE9F" />
+    <SolidColorBrush x:Key="borderbrush_FocusedSmallCase" Color="#FFF26C5A" />
     <Style TargetType="{x:Type Label}">
         <Setter Property="FontFamily" Value="Arial" />
     </Style>

@@ -46,8 +46,11 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Rectangle Grid.Column="1" Fill="{DynamicResource background_SmallCase}" />
-        <Grid Grid.Column="1">
+        <Rectangle
+          Grid.Column="1" x:Name="background_orthoSmallcase"
+          Fill="{DynamicResource background_SmallCase}"
+          PreviewMouseLeftButtonUp="PMDown_StackPanelMain" />
+        <Grid Grid.Column="1" PreviewMouseLeftButtonUp="PMDown_StackPanelMain">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition />

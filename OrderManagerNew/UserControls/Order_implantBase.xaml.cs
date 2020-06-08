@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Order_ImplantSmallcase = OrderManagerNew.UserControls.Order_ImplantSmallcase;
+using ImplantSmallCaseInformation = OrderManagerNew.UserControls.Order_ImplantSmallcase.ImplantSmallCaseInformation;
+using Path = System.IO.Path;
 
 namespace OrderManagerNew.UserControls
 {
@@ -22,7 +25,7 @@ namespace OrderManagerNew.UserControls
     public partial class Order_implantBase : UserControl
     {
         private ImplantOuterInformation implantInfo;
-        private bool UnfoldsmallCase = false;   //smallCase目前是否為攤開狀態
+        private bool IsFocusCase = false;   //smallCase目前是否為攤開狀態
         private int ItemIndex;
         /// <summary>
         /// ImplantPlanning專案資訊
@@ -70,7 +73,7 @@ namespace OrderManagerNew.UserControls
             label_patientName.Content = "";
             label_designStep.Content = "";
             label_createDate.Content = "";
-            UnfoldsmallCase = false;
+            IsFocusCase = false;
             ItemIndex = -1;
         }
 
@@ -94,40 +97,120 @@ namespace OrderManagerNew.UserControls
             ItemIndex = Index;
         }
 
+        /// <summary>
+        /// 讀取SmallCase資訊
+        /// </summary>
+        private void LoadSmallCase()
+        {
+            implantInfo.List_smallcase = new List<UserControls.Order_ImplantSmallcase>();
+            foreach (string filename in Directory.GetFiles(implantInfo.CaseDirectoryPath))
+            {
+                // 這層是C:\IntewareData\Implant\2020130102946\
+                //找有幾個tii檔就等於有幾個Implant要給Guide的檔
+                if (Path.GetExtension(filename).ToLower() == ".tii")
+                {
+                    OrderManagerNew.UserControls.Order_ImplantSmallcase ImplantSmallCase = new OrderManagerNew.UserControls.Order_ImplantSmallcase();
+                    //記錄內部專案資料夾名稱(就是OrderName)、Guide專案資料夾路徑和檢查是否有從Guide輸出的模型
+                    ImplantSmallCaseInformation impInfo = new ImplantSmallCaseInformation
+                    {
+                        OrderName = Path.GetFileNameWithoutExtension(filename),
+                        ImplantTiiPath = filename
+                    };
+                    impInfo.GuideCaseDir = implantInfo.CaseDirectoryPath + @"\" + impInfo.OrderName + @"\LinkStation\";
+                    //TODO 這邊會有bug
+                    string tmpGuideModelDir = implantInfo.CaseDirectoryPath + @"\" + impInfo.OrderName + @"\LinkStation\ManufacturingDir\";
+                    if (Directory.Exists(tmpGuideModelDir) == true)
+                    {
+                        string[] guideModel = Directory.GetFiles(tmpGuideModelDir);
+                        if (guideModel.Length > 0)
+                            impInfo.GuideModelPath = guideModel[0];
+                        else
+                            impInfo.GuideModelPath = "";
+                    }
+                    else
+                        impInfo.GuideModelPath = "";
+
+                    ImplantSmallCase.SetImplantSmallCaseInfo(impInfo);
+                    implantInfo.List_smallcase.Add(ImplantSmallCase);
+                }
+            }
+        }
+
         private void Click_OpenDir(object sender, RoutedEventArgs e)
         {
             OrderManagerFunctions omFunc = new OrderManagerFunctions();
             omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + System.IO.Path.GetDirectoryName(implantInfo.CaseDirectoryPath) + "\"");
         }
 
+        /// <summary>
+        /// 設定Case的Focus狀態
+        /// </summary>
+        /// <param name="isFocused">是否要Focus</param>
+        public void SetCaseFocusStatus(bool isFocused)
+        {
+            switch (isFocused)
+            {
+                case true:
+                    {
+                        background_implantBase.Fill = this.FindResource("background_FocusedCase") as SolidColorBrush;
+                        //執行攤開
+                        if (implantInfo.List_smallcase.Count > 0)
+                        {
+                            foreach (Order_ImplantSmallcase ImplantCase in implantInfo.List_smallcase)
+                            {
+                                stackpanel_Implant.Children.Add(ImplantCase);
+                            }
+                        }
+                        else
+                        {
+                            Mouse.OverrideCursor = Cursors.Wait;
+                            LoadSmallCase();
+                            Mouse.OverrideCursor = Cursors.Arrow;
+                            if (implantInfo.List_smallcase.Count > 0)
+                            {
+                                foreach (Order_ImplantSmallcase ImplantCase in implantInfo.List_smallcase)
+                                {
+                                    stackpanel_Implant.Children.Add(ImplantCase);
+                                }
+                            }
+                        }
+                        IsFocusCase = true;
+                        break;
+                    }
+                case false:
+                    {
+                        background_implantBase.Fill = Brushes.White;
+                        //收回
+                        if (implantInfo.List_smallcase.Count > 0)
+                        {
+                            for (int i = 1; i < stackpanel_Implant.Children.Count; i++)
+                            {
+                                ((Order_ImplantSmallcase)stackpanel_Implant.Children[i]).SetCaseFocusStatus(false);
+                            }
+
+                            stackpanel_Implant.Children.RemoveRange(1, (stackpanel_Implant.Children.Count - 1));
+                        }
+                        IsFocusCase = false;
+                        break;
+                    }
+            }
+        }
+
         private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
         {
             if (e.Source is Button)
             {
-                Click_OpenDir(null, null);
+                Click_OpenDir(e.Source, e);
             }
             else
             {
-                if (UnfoldsmallCase == false)
+                if (IsFocusCase == false)
                 {
-                    //未被攤開，執行攤開
-                    if (implantInfo.List_smallcase.Count > 0)
-                    {
-                        foreach (Order_ImplantSmallcase ImplantCase in implantInfo.List_smallcase)
-                        {
-                            stackpanel_Implant.Children.Add(ImplantCase);
-                        }
-                        UnfoldsmallCase = true;
-                    }
+                    SetCaseFocusStatus(true);
                 }
                 else
                 {
-                    //已被攤開，收回
-                    if (implantInfo.List_smallcase.Count > 0)
-                    {
-                        stackpanel_Implant.Children.RemoveRange(1, (stackpanel_Implant.Children.Count - 1));
-                        UnfoldsmallCase = false;
-                    }
+                    SetCaseFocusStatus(false);
                 }
             }
         }

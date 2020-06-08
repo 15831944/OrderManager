@@ -51,6 +51,7 @@ namespace OrderManagerNew.UserControls
         private TrayInformation trayInfo;
         private SplintInformation splintInfo;
         private int ItemIndex;
+        private bool IsFocusCase;
 
         /// <summary>
         /// Tray專案資訊
@@ -116,6 +117,7 @@ namespace OrderManagerNew.UserControls
             label_designStep.Content = "";
             label_createDate.Content = "";
             ItemIndex = -1;
+            IsFocusCase = false;
         }
 
         /// <summary>
@@ -220,6 +222,49 @@ namespace OrderManagerNew.UserControls
             {
                 OrderManagerFunctions omFunc = new OrderManagerFunctions();
                 omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + splintInfo.CaseDirectoryPath + "\"");
+            }
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// 設定Case的Focus狀態
+        /// </summary>
+        /// <param name="isFocused">是否要Focus</param>
+        public void SetCaseFocusStatus(bool isFocused)
+        {
+            switch (isFocused)
+            {
+                case true:
+                    {
+                        background_tsBase.Fill = this.FindResource("background_FocusedCase") as SolidColorBrush;
+                        IsFocusCase = true;
+                        break;
+                    }
+                case false:
+                    {
+                        background_tsBase.Fill = Brushes.White;
+                        IsFocusCase = false;
+                        break;
+                    }
+            }
+        }
+
+        private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Source is Button)
+            {
+                Click_FolderOpen(e.Source, e);
+            }
+            else
+            {
+                if (IsFocusCase == false)
+                {
+                    SetCaseFocusStatus(true);
+                }
+                else
+                {
+                    SetCaseFocusStatus(false);
+                }
             }
         }
     }

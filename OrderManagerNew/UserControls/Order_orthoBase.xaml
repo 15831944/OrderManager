@@ -17,15 +17,15 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Rectangle
-          Grid.Row="1" Grid.Column="1" x:Name="rectangle_orthoBase"
+          Grid.Row="1" Grid.Column="1" x:Name="background_orthoBase"
           Width="Auto" Height="54" Margin="6,3,0,3"
           VerticalAlignment="Top" Panel.ZIndex="-1" Fill="White"
           PreviewMouseLeftButtonUp="PMDown_StackPanelMain" />
 
         <StackPanel
           Grid.Row="1" Grid.Column="1" x:Name="stackpanel_Ortho"
-          Orientation="Vertical" PreviewMouseLeftButtonUp="PMDown_StackPanelMain">
-            <Grid>
+          Orientation="Vertical">
+            <Grid PreviewMouseLeftButtonUp="PMDown_StackPanelMain">
                 <Grid.Resources>
                     <Style BasedOn="{StaticResource OrderBase_normallabel}" TargetType="{x:Type Label}" />
                 </Grid.Resources>

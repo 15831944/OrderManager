@@ -17,10 +17,11 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Rectangle
-          Grid.Row="1" Grid.Column="1" Margin="6,3,0,3"
-          Panel.ZIndex="-1" Fill="White" />
+          Grid.Row="1" Grid.Column="1" x:Name="background_cadBase"
+          Margin="6,3,0,3" Panel.ZIndex="-1" Fill="White"
+          PreviewMouseLeftButtonUp="PMDown_StackPanelMain" />
 
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="1" PreviewMouseLeftButtonUp="PMDown_StackPanelMain">
             <Grid.Resources>
                 <Style BasedOn="{StaticResource OrderBase_normallabel}" TargetType="{x:Type Label}" />
             </Grid.Resources>

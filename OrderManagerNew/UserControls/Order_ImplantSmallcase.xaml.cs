@@ -23,6 +23,7 @@ namespace OrderManagerNew.UserControls
     public partial class Order_ImplantSmallcase : UserControl
     {
         private ImplantSmallCaseInformation implantsmallcaseInfo;
+        private bool IsFocusSmallCase;
 
         public class ImplantSmallCaseInformation
         {
@@ -43,44 +44,7 @@ namespace OrderManagerNew.UserControls
         public Order_ImplantSmallcase()
         {
             InitializeComponent();
-        }
-
-        private void Click_ButtonEvent(object sender, RoutedEventArgs e)
-        {
-            if(button_Implant.Opacity != 0)
-            {
-                //ImplantCase
-                OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                switch (((Button)sender).Name)
-                {
-                    case "button_Implant":
-                        {
-                            omFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "\"readdii\" \"" + implantsmallcaseInfo.ImplantTiiPath + "\"");
-                            break;
-                        }
-                    case "button_Guide":
-                        {
-                            string gmlFile = implantsmallcaseInfo.GuideCaseDir + implantsmallcaseInfo.OrderName + "-Guide.gml";
-                            string lmgFile = implantsmallcaseInfo.GuideCaseDir + implantsmallcaseInfo.OrderName + ".lmg";
-
-                            if (File.Exists(gmlFile) == true)//有gml就先讀
-                                omFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "guiderpd \"" + gmlFile + "\"");
-                            else if (File.Exists(lmgFile) == true)//沒有gml再讀lmg
-                                omFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "guide \"" + lmgFile + "\"");
-                            break;
-                        }
-                    case "button_GuideModelDir":
-                        {
-                            if(button_GuideModelDir.IsEnabled == true)
-                                omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + Path.GetDirectoryName(implantsmallcaseInfo.GuideModelPath) + "\"");
-                            break;
-                        }
-                }
-            }
-            else
-            {
-                //OrthoCase
-            }
+            IsFocusSmallCase = false;
         }
 
         public void SetImplantSmallCaseInfo(ImplantSmallCaseInformation Import)
@@ -96,6 +60,81 @@ namespace OrderManagerNew.UserControls
             {
                 button_GuideModelDir.IsEnabled = true;
                 button_GuideModelDir.ToolTip = OrderManagerNew.TranslationSource.Instance["GuideModel"];
+            }
+        }
+
+        private void Click_ButtonEvent(object sender, RoutedEventArgs e)
+        {
+            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+            switch (((Button)sender).Name)
+            {
+                case "button_Implant":
+                    {
+                        omFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "\"readdii\" \"" + implantsmallcaseInfo.ImplantTiiPath + "\"");
+                        break;
+                    }
+                case "button_Guide":
+                    {
+                        string gmlFile = implantsmallcaseInfo.GuideCaseDir + implantsmallcaseInfo.OrderName + "-Guide.gml";
+                        string lmgFile = implantsmallcaseInfo.GuideCaseDir + implantsmallcaseInfo.OrderName + ".lmg";
+
+                        if (File.Exists(gmlFile) == true)//有gml就先讀
+                            omFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "guiderpd \"" + gmlFile + "\"");
+                        else if (File.Exists(lmgFile) == true)//沒有gml再讀lmg
+                            omFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "guide \"" + lmgFile + "\"");
+                        break;
+                    }
+                case "button_GuideModelDir":
+                    {
+                        if(button_GuideModelDir.IsEnabled == true)
+                            omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + Path.GetDirectoryName(implantsmallcaseInfo.GuideModelPath) + "\"");
+                        break;
+                    }
+            }
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// 設定Case的Focus狀態
+        /// </summary>
+        /// <param name="isFocused">是否要Focus</param>
+        public void SetCaseFocusStatus(bool isFocused)
+        {
+            switch (isFocused)
+            {
+                case true:
+                    {
+                        background_implantSmallcase.Fill = this.FindResource("background_FocusedSmallCase") as SolidColorBrush;
+                        background_implantSmallcase.Stroke = this.FindResource("borderbrush_FocusedSmallCase") as SolidColorBrush;
+                        IsFocusSmallCase = true;
+                        break;
+                    }
+                case false:
+                    {
+                        background_implantSmallcase.Fill = this.FindResource("background_SmallCase") as SolidColorBrush;
+                        background_implantSmallcase.Stroke = null;
+                        IsFocusSmallCase = false;
+                        break;
+                    }
+            }
+        }
+
+        private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Source is Button)
+            {
+                Click_ButtonEvent(e.Source, e);
+            }
+            else
+            {
+                if (IsFocusSmallCase == false)
+                {
+                    SetCaseFocusStatus(true);
+                }
+                else
+                {
+                    SetCaseFocusStatus(false);
+                }
             }
         }
     }

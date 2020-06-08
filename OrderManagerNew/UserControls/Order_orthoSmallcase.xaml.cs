@@ -22,6 +22,7 @@ namespace OrderManagerNew.UserControls
     public partial class Order_orthoSmallcase : UserControl
     {
         private OrthoSmallCaseInformation orthosmallcaseInfo;
+        private bool IsFocusSmallCase;
 
         public enum OrthoWorkFlow : int
         {
@@ -66,12 +67,7 @@ namespace OrderManagerNew.UserControls
             InitializeComponent();
             label_ProjectName.Content = "";
             button_LoadOrthoProject.IsEnabled = false;
-        }
-
-        private void Click_ButtonEvent(object sender, RoutedEventArgs e)
-        {
-            OrderManagerFunctions omFunc = new OrderManagerFunctions();
-            omFunc.RunCommandLine(Properties.Settings.Default.ortho_exePath, "-rp \"" + orthosmallcaseInfo.SmallCaseXmlPath + "\"");
+            IsFocusSmallCase = false;
         }
 
         public void SetOrthoSmallCaseInfo(OrthoSmallCaseInformation Import)
@@ -84,6 +80,57 @@ namespace OrderManagerNew.UserControls
                 button_LoadOrthoProject.IsEnabled = false;
 
             label_ProjectName.Content = orthosmallcaseInfo.CreateDate;
+        }
+
+        private void Click_ButtonEvent(object sender, RoutedEventArgs e)
+        {
+            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+            omFunc.RunCommandLine(Properties.Settings.Default.ortho_exePath, "-rp \"" + orthosmallcaseInfo.SmallCaseXmlPath + "\"");
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// 設定Case的Focus狀態
+        /// </summary>
+        /// <param name="isFocused">是否要Focus</param>
+        public void SetCaseFocusStatus(bool isFocused)
+        {
+            switch (isFocused)
+            {
+                case true:
+                    {
+                        background_orthoSmallcase.Fill = this.FindResource("background_FocusedSmallCase") as SolidColorBrush;
+                        background_orthoSmallcase.Stroke = this.FindResource("borderbrush_FocusedSmallCase") as SolidColorBrush;
+                        IsFocusSmallCase = true;
+                        break;
+                    }
+                case false:
+                    {
+                        background_orthoSmallcase.Fill = this.FindResource("background_SmallCase") as SolidColorBrush;
+                        background_orthoSmallcase.Stroke = null;
+                        IsFocusSmallCase = false;
+                        break;
+                    }
+            }
+        }
+
+        private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Source is Button)
+            {
+                Click_ButtonEvent(e.Source, e);
+            }
+            else
+            {
+                if (IsFocusSmallCase == false)
+                {
+                    SetCaseFocusStatus(true);
+                }
+                else
+                {
+                    SetCaseFocusStatus(false);
+                }
+            }
         }
     }
 }
