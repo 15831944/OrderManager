@@ -65,6 +65,7 @@ namespace OrderManagerNew.UserControls
             public DateTime CreateDate { get; set; }
             public DateTime ModifyDate { get; set; }
             public string CaseDirectoryPath { get; set; }
+            public string CaseXmlPath { get; set; }
 
             public string Client { get; set; }
             public string Technician { get; set; }
@@ -79,6 +80,7 @@ namespace OrderManagerNew.UserControls
                 CreateDate = new DateTime();
                 ModifyDate = new DateTime();
                 CaseDirectoryPath = "";
+                CaseXmlPath = "";
             }
         }
 

@@ -114,6 +114,9 @@
     <Compile Include="UserControls\AirdentalUserDetail.xaml.cs">
       <DependentUpon>AirdentalUserDetail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Detail_cad.xaml.cs">
+      <DependentUpon>Detail_cad.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Order_cadBase.xaml.cs">
       <DependentUpon>Order_cadBase.xaml</DependentUpon>
     </Compile>
@@ -175,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\AirdentalUserDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Detail_cad.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,6 +268,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dllext\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImageSource\DetailTable\cadDemo.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

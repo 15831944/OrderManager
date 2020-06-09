@@ -70,6 +70,51 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Abutment 的當地語系化字串。
+        /// </summary>
+        internal static string Abutment {
+            get {
+                return ResourceManager.GetString("Abutment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Abut. + Anatomic Coping 的當地語系化字串。
+        /// </summary>
+        internal static string Abutment___Anatomic_Coping {
+            get {
+                return ResourceManager.GetString("Abutment + Anatomic Coping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Abut. + Anatomic Crown 的當地語系化字串。
+        /// </summary>
+        internal static string Abutment___Anatomic_Crown {
+            get {
+                return ResourceManager.GetString("Abutment + Anatomic Crown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Abut. + Offset Coping 的當地語系化字串。
+        /// </summary>
+        internal static string Abutment___Offset_Coping {
+            get {
+                return ResourceManager.GetString("Abutment + Offset Coping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Abut. + Temp Crown 的當地語系化字串。
+        /// </summary>
+        internal static string Abutment___Temp_Crown {
+            get {
+                return ResourceManager.GetString("Abutment + Temp Crown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Account 的當地語系化字串。
         /// </summary>
         internal static string Account {
@@ -84,6 +129,60 @@ namespace OrderManagerNew.Properties {
         internal static string All {
             get {
                 return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Anatomic Coping 的當地語系化字串。
+        /// </summary>
+        internal static string Anatomic_Coping {
+            get {
+                return ResourceManager.GetString("Anatomic Coping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Anatomic Coping (AI) 的當地語系化字串。
+        /// </summary>
+        internal static string Anatomic_Coping__AI_ {
+            get {
+                return ResourceManager.GetString("Anatomic Coping (AI)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Anatomic Crown 的當地語系化字串。
+        /// </summary>
+        internal static string Anatomic_Crown {
+            get {
+                return ResourceManager.GetString("Anatomic Crown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Anatomic Crown (AI) 的當地語系化字串。
+        /// </summary>
+        internal static string Anatomic_Crown__AI_ {
+            get {
+                return ResourceManager.GetString("Anatomic Crown (AI)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Anatomic Crown Shell 的當地語系化字串。
+        /// </summary>
+        internal static string Anatomic_Crown_Shell {
+            get {
+                return ResourceManager.GetString("Anatomic Crown Shell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Anatomic Pontic 的當地語系化字串。
+        /// </summary>
+        internal static string Anatomic_Pontic {
+            get {
+                return ResourceManager.GetString("Anatomic Pontic", resourceCulture);
             }
         }
         
@@ -169,6 +268,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Client 的當地語系化字串。
+        /// </summary>
+        internal static string Client {
+            get {
+                return ResourceManager.GetString("Client", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Close 的當地語系化字串。
         /// </summary>
         internal static string Close_titlebar {
@@ -183,6 +291,15 @@ namespace OrderManagerNew.Properties {
         internal static string Contect {
             get {
                 return ResourceManager.GetString("Contect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Core Pontic 的當地語系化字串。
+        /// </summary>
+        internal static string Core_Pontic {
+            get {
+                return ResourceManager.GetString("Core Pontic", resourceCulture);
             }
         }
         
@@ -412,11 +529,38 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Design Setting 的當地語系化字串。
+        /// </summary>
+        internal static string DesignSetting {
+            get {
+                return ResourceManager.GetString("DesignSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Design Step 的當地語系化字串。
         /// </summary>
         internal static string DesignStep {
             get {
                 return ResourceManager.GetString("DesignStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Diagnostic Waxup Crown 的當地語系化字串。
+        /// </summary>
+        internal static string Diagnostic_Waxup_Crown {
+            get {
+                return ResourceManager.GetString("Diagnostic Waxup Crown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Diagnostic Waxup Pontic 的當地語系化字串。
+        /// </summary>
+        internal static string Diagnostic_Waxup_Pontic {
+            get {
+                return ResourceManager.GetString("Diagnostic Waxup Pontic", resourceCulture);
             }
         }
         
@@ -556,6 +700,24 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Inlay / Onlay 的當地語系化字串。
+        /// </summary>
+        internal static string Inlay___Onlay {
+            get {
+                return ResourceManager.GetString("Inlay / Onlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Inlay / Onlay (AI) 的當地語系化字串。
+        /// </summary>
+        internal static string Inlay___Onlay__AI_ {
+            get {
+                return ResourceManager.GetString("Inlay / Onlay (AI)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Install 的當地語系化字串。
         /// </summary>
         internal static string Install {
@@ -574,11 +736,11 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 This week 的當地語系化字串。
+        ///   查詢類似 Load Project 的當地語系化字串。
         /// </summary>
-        internal static string ThisWeek {
+        internal static string LoadProj {
             get {
-                return ResourceManager.GetString("ThisWeek", resourceCulture);
+                return ResourceManager.GetString("LoadProj", resourceCulture);
             }
         }
         
@@ -646,11 +808,38 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Adjacent Tooth 的當地語系化字串。
+        /// </summary>
+        internal static string Neighbor_Tooth {
+            get {
+                return ResourceManager.GetString("Neighbor Tooth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 None 的當地語系化字串。
         /// </summary>
         internal static string None {
             get {
                 return ResourceManager.GetString("None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Note 的當地語系化字串。
+        /// </summary>
+        internal static string Note {
+            get {
+                return ResourceManager.GetString("Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Offset Coping 的當地語系化字串。
+        /// </summary>
+        internal static string Offset_Coping {
+            get {
+                return ResourceManager.GetString("Offset Coping", resourceCulture);
             }
         }
         
@@ -718,6 +907,24 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Open Directory 的當地語系化字串。
+        /// </summary>
+        internal static string OpenDir {
+            get {
+                return ResourceManager.GetString("OpenDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Order 的當地語系化字串。
+        /// </summary>
+        internal static string Order {
+            get {
+                return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Order ID 的當地語系化字串。
         /// </summary>
         internal static string OrderID {
@@ -727,11 +934,29 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Order Information 的當地語系化字串。
+        /// </summary>
+        internal static string OrderInfo {
+            get {
+                return ResourceManager.GetString("OrderInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Password 的當地語系化字串。
         /// </summary>
         internal static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Patient 的當地語系化字串。
+        /// </summary>
+        internal static string Patient {
+            get {
+                return ResourceManager.GetString("Patient", resourceCulture);
             }
         }
         
@@ -772,11 +997,56 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Provisional Crown 的當地語系化字串。
+        /// </summary>
+        internal static string Provisional_Crown {
+            get {
+                return ResourceManager.GetString("Provisional Crown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Provisional Pontic 的當地語系化字串。
+        /// </summary>
+        internal static string Provisional_Pontic {
+            get {
+                return ResourceManager.GetString("Provisional Pontic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Reduced Pontic 的當地語系化字串。
+        /// </summary>
+        internal static string Reduced_Pontic {
+            get {
+                return ResourceManager.GetString("Reduced Pontic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Restore 的當地語系化字串。
         /// </summary>
         internal static string Restore_titlebar {
             get {
                 return ResourceManager.GetString("Restore_titlebar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Screw Retained Abutment 的當地語系化字串。
+        /// </summary>
+        internal static string Screw_Retained_Abutment {
+            get {
+                return ResourceManager.GetString("Screw Retained Abutment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Screw Retained Abutment (Anatomic Crown) 的當地語系化字串。
+        /// </summary>
+        internal static string Screw_Retained_Abutment__Anatomic_Crown_ {
+            get {
+                return ResourceManager.GetString("Screw Retained Abutment (Anatomic Crown)", resourceCulture);
             }
         }
         
@@ -853,11 +1123,29 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Technician 的當地語系化字串。
+        /// </summary>
+        internal static string Technician {
+            get {
+                return ResourceManager.GetString("Technician", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Crown Define 的當地語系化字串。
         /// </summary>
         internal static string Teeth_Define {
             get {
                 return ResourceManager.GetString("Teeth_Define", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 This week 的當地語系化字串。
+        /// </summary>
+        internal static string ThisWeek {
+            get {
+                return ResourceManager.GetString("ThisWeek", resourceCulture);
             }
         }
         
@@ -894,6 +1182,15 @@ namespace OrderManagerNew.Properties {
         internal static string Uninstall {
             get {
                 return ResourceManager.GetString("Uninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Veneer 的當地語系化字串。
+        /// </summary>
+        internal static string Veneer {
+            get {
+                return ResourceManager.GetString("Veneer", resourceCulture);
             }
         }
         

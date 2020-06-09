@@ -62,7 +62,7 @@ namespace OrderManagerNew
         /// <summary>
         /// 開發者模式
         /// </summary>
-        bool developerMode = true;
+        bool developerMode = false;
         /// <summary>
         /// 是否登入了
         /// </summary>
@@ -2248,6 +2248,10 @@ namespace OrderManagerNew
 
         private void CaseHandler_EZCAD_showSingleProject(int projectIndex)
         {
+            StackPanel_Detail.Children.Clear();
+            UserControls.Detail_cad detail_cad = new UserControls.Detail_cad();
+            detail_cad.SetDetailInfo(ProjHandle.Caselist_EZCAD[projectIndex]);
+            StackPanel_Detail.Children.Add(detail_cad);
             for (int i = 0; i < StackPanel_Local.Children.Count; i++)
             {
                 if (i == projectIndex)

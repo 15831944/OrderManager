@@ -2,7 +2,7 @@
   x:Class="OrderManagerNew.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" xmlns:local="clr-namespace:OrderManagerNew"
   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:OrderManagerNew.UserControls"
-  Title="OrderManager" Width="1280" Height="768"
+  Title="OrderManager" Width="1310" Height="768"
   MinWidth="1280" MinHeight="768" Background="#FF353531"
   Closing="Closing_MainWindow" Loaded="Loaded_MainWindow" StateChanged="Window_StateChanged"
   WindowStartupLocation="CenterScreen" WindowStyle="None" mc:Ignorable="d">
@@ -396,7 +396,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="172" />
                         <ColumnDefinition />
-                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="330" />
                     </Grid.ColumnDefinitions>
 
                     <uc:AirdentalUserDetail
@@ -564,7 +564,9 @@
 
                     <!--  CaseTable-Start  -->
                     <TabControl
-                      Grid.Column="1" Background="#FF353531" BorderBrush="#FF353531"
+                      Grid.Column="1"
+                      Background="{StaticResource background_SuperDarkCaseTable}"
+                      BorderBrush="{StaticResource background_SuperDarkCaseTable}"
                       BorderThickness="1">
                         <TabItem Header="{local:LocExtension Local}" Style="{StaticResource CaseTabItem}">
                             <Border Background="#FFEDEDE2">
@@ -584,9 +586,11 @@
                     <!--  CaseTable-End  -->
 
                     <!--  InfoTable-Start  -->
-                    <Frame
-                      Grid.Column="2" Background="White" BorderBrush="#FF353531"
-                      BorderThickness="0,3" />
+                    <Border Grid.Column="2" Background="{StaticResource background_SuperDarkCaseTable}" BorderThickness="0,2">
+                        <ScrollViewer>
+                            <StackPanel x:Name="StackPanel_Detail" Orientation="Vertical" />
+                        </ScrollViewer>
+                    </Border>
                     <!--  InfoTable-End  -->
                 </Grid>
             </Grid>

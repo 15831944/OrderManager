@@ -399,4 +399,103 @@
   <data name="Successfully" xml:space="preserve">
     <value>成功</value>
   </data>
+  <data name="OrderInfo" xml:space="preserve">
+    <value>工單資訊</value>
+  </data>
+  <data name="DesignSetting" xml:space="preserve">
+    <value>齒位資訊</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>工單</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>客戶</value>
+  </data>
+  <data name="Patient" xml:space="preserve">
+    <value>患者</value>
+  </data>
+  <data name="Technician" xml:space="preserve">
+    <value>技工</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>備註</value>
+  </data>
+  <data name="LoadProj" xml:space="preserve">
+    <value>讀取專案</value>
+  </data>
+  <data name="OpenDir" xml:space="preserve">
+    <value>開啟專案資料夾</value>
+  </data>
+  <data name="Offset Coping" xml:space="preserve">
+    <value>內冠</value>
+  </data>
+  <data name="Anatomic Coping" xml:space="preserve">
+    <value>解剖內冠</value>
+  </data>
+  <data name="Anatomic Crown" xml:space="preserve">
+    <value>解剖全冠</value>
+  </data>
+  <data name="Core Pontic" xml:space="preserve">
+    <value>橋體</value>
+  </data>
+  <data name="Reduced Pontic" xml:space="preserve">
+    <value>縮減橋體</value>
+  </data>
+  <data name="Anatomic Pontic" xml:space="preserve">
+    <value>解剖橋體</value>
+  </data>
+  <data name="Veneer" xml:space="preserve">
+    <value>貼片</value>
+  </data>
+  <data name="Inlay / Onlay" xml:space="preserve">
+    <value>嵌體</value>
+  </data>
+  <data name="Abutment" xml:space="preserve">
+    <value>支台齒</value>
+  </data>
+  <data name="Abutment + Offset Coping" xml:space="preserve">
+    <value>支台齒 + 內冠</value>
+  </data>
+  <data name="Abutment + Anatomic Coping" xml:space="preserve">
+    <value>支台齒 + 解剖內冠</value>
+  </data>
+  <data name="Abutment + Anatomic Crown" xml:space="preserve">
+    <value>支台齒 + 解剖全冠</value>
+  </data>
+  <data name="Diagnostic Waxup Crown" xml:space="preserve">
+    <value>診斷蠟型牙冠</value>
+  </data>
+  <data name="Screw Retained Abutment" xml:space="preserve">
+    <value>螺絲鎖定式支台齒</value>
+  </data>
+  <data name="Screw Retained Abutment (Anatomic Crown)" xml:space="preserve">
+    <value>螺絲鎖定式支台齒(解剖全冠)</value>
+  </data>
+  <data name="Neighbor Tooth" xml:space="preserve">
+    <value>鄰牙</value>
+  </data>
+  <data name="Provisional Crown" xml:space="preserve">
+    <value>臨時牙冠</value>
+  </data>
+  <data name="Provisional Pontic" xml:space="preserve">
+    <value>臨時橋體</value>
+  </data>
+  <data name="Diagnostic Waxup Pontic" xml:space="preserve">
+    <value>診斷蠟型橋體</value>
+  </data>
+  <data name="Anatomic Crown (AI)" xml:space="preserve">
+    <value>解剖全冠 (AI)</value>
+  </data>
+  <data name="Inlay / Onlay (AI)" xml:space="preserve">
+    <value>嵌體 (AI)</value>
+  </data>
+  <data name="Anatomic Coping (AI)" xml:space="preserve">
+    <value>解剖內冠 (AI)</value>
+  </data>
+  <data name="Anatomic Crown Shell" xml:space="preserve">
+    <value>解剖全冠 (薄殻)</value>
+  </data>
+  <data name="Abutment + Temp Crown" xml:space="preserve">
+    <value>支台齒 + 臨時牙冠</value>
+  </data>
 </root>

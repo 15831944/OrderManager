@@ -292,6 +292,7 @@ namespace OrderManagerNew
                                 ModifyDate = fInfo.LastWriteTime,
                                 DesignStep = Convert.ToInt32(xDesignStep),
                                 CaseDirectoryPath = Path.GetDirectoryName(XmlPath),
+                                CaseXmlPath = XmlPath,
                                 Client = xClient,
                                 Technician = xTechnician,
                                 Note = xOrderNote,

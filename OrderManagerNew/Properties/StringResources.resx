@@ -492,4 +492,136 @@
     <value>Successfully</value>
     <comment>Download</comment>
   </data>
+  <data name="OrderInfo" xml:space="preserve">
+    <value>Order Information</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="DesignSetting" xml:space="preserve">
+    <value>Design Setting</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Order</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Client</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Patient" xml:space="preserve">
+    <value>Patient</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Technician" xml:space="preserve">
+    <value>Technician</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="LoadProj" xml:space="preserve">
+    <value>Load Project</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="OpenDir" xml:space="preserve">
+    <value>Open Directory</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Offset Coping" xml:space="preserve">
+    <value>Offset Coping</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Anatomic Coping" xml:space="preserve">
+    <value>Anatomic Coping</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Anatomic Crown" xml:space="preserve">
+    <value>Anatomic Crown</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Core Pontic" xml:space="preserve">
+    <value>Core Pontic</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Reduced Pontic" xml:space="preserve">
+    <value>Reduced Pontic</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Anatomic Pontic" xml:space="preserve">
+    <value>Anatomic Pontic</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Veneer" xml:space="preserve">
+    <value>Veneer</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Inlay / Onlay" xml:space="preserve">
+    <value>Inlay / Onlay</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Abutment" xml:space="preserve">
+    <value>Abutment</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Abutment + Offset Coping" xml:space="preserve">
+    <value>Abut. + Offset Coping</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Abutment + Anatomic Coping" xml:space="preserve">
+    <value>Abut. + Anatomic Coping</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Abutment + Anatomic Crown" xml:space="preserve">
+    <value>Abut. + Anatomic Crown</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Diagnostic Waxup Crown" xml:space="preserve">
+    <value>Diagnostic Waxup Crown</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Screw Retained Abutment" xml:space="preserve">
+    <value>Screw Retained Abutment</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Screw Retained Abutment (Anatomic Crown)" xml:space="preserve">
+    <value>Screw Retained Abutment (Anatomic Crown)</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Neighbor Tooth" xml:space="preserve">
+    <value>Adjacent Tooth</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Provisional Crown" xml:space="preserve">
+    <value>Provisional Crown</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Provisional Pontic" xml:space="preserve">
+    <value>Provisional Pontic</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Diagnostic Waxup Pontic" xml:space="preserve">
+    <value>Diagnostic Waxup Pontic</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Anatomic Crown (AI)" xml:space="preserve">
+    <value>Anatomic Crown (AI)</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Inlay / Onlay (AI)" xml:space="preserve">
+    <value>Inlay / Onlay (AI)</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Anatomic Coping (AI)" xml:space="preserve">
+    <value>Anatomic Coping (AI)</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Anatomic Crown Shell" xml:space="preserve">
+    <value>Anatomic Crown Shell</value>
+    <comment>Detail_CAD</comment>
+  </data>
+  <data name="Abutment + Temp Crown" xml:space="preserve">
+    <value>Abut. + Temp Crown</value>
+    <comment>Detail_CAD</comment>
+  </data>
 </root>

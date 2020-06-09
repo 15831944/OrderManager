@@ -8,14 +8,14 @@
     <SolidColorBrush x:Key="Common_DarkBackGround" Color="#FF30312C" />
     <SolidColorBrush x:Key="Common_OrangeTitleBar" Color="#FFE08A1E" />
     <SolidColorBrush x:Key="Common_DarkBrown" Color="#FF493E34" />
-    <SolidColorBrush x:Key="background_CaseTable" Color="#FFEDEDE2" />
+    <SolidColorBrush x:Key="background_SuperDarkCaseTable" Color="#FF353531" />
+    <SolidColorBrush x:Key="background_WhiteCaseTable" Color="#FFEDEDE2" />
     <SolidColorBrush x:Key="background_CheckedBaseCaseTable" Color="#FFFFD6AE" />
-    <SolidColorBrush x:Key="background_CheckedSmallCaseTable" Color="#FFEDAE9F" />
-    <SolidColorBrush x:Key="borderbrush_CheckedSmallCaseTable" Color="#FFF26C5A" />
     <SolidColorBrush x:Key="background_SmallCase" Color="#FFBCB2AA" />
     <SolidColorBrush x:Key="background_FocusedCase" Color="#FFFFF1C2" />
     <SolidColorBrush x:Key="background_FocusedSmallCase" Color="#FFEDAE9F" />
     <SolidColorBrush x:Key="borderbrush_FocusedSmallCase" Color="#FFF26C5A" />
+    <SolidColorBrush x:Key="borderbrush_SuperWhiteDetail" Color="#FFDDDDDD" />
     <Style TargetType="{x:Type Label}">
         <Setter Property="FontFamily" Value="Arial" />
     </Style>
@@ -94,7 +94,6 @@
             </MultiTrigger>
         </Style.Triggers>
     </Style>
-
     <Style x:Key="systemButton" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="35" />
         <Setter Property="Height" Value="30" />
@@ -111,7 +110,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style x:Key="systemButton_contactInteware" BasedOn="{StaticResource systemButton}" TargetType="{x:Type Button}">
         <Setter Property="Background">
             <Setter.Value>
@@ -129,7 +127,6 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
     <Style x:Key="systemButton_mimimize" BasedOn="{StaticResource systemButton}" TargetType="{x:Type Button}">
         <Setter Property="Background">
             <Setter.Value>
@@ -167,7 +164,6 @@
     <!--  TitleBar-End  -->
 
     <!--  FunctionTable-Start  -->
-    <!--<Image Height="68" Panel.ZIndex="3" Source="{StaticResource icon_auxiliary_updateDrawingImage}" />-->
     <Style x:Key="updateImage" TargetType="{x:Type Image}">
         <Setter Property="Source" Value="{DynamicResource icon_auxiliary_updateDrawingImage}" />
         <Setter Property="Panel.ZIndex" Value="2" />
@@ -383,7 +379,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style x:Key="ExpanderStyle" TargetType="{x:Type Expander}">
         <Setter Property="Foreground" Value="#FFF4E9DC" />
         <Setter Property="FontFamily" Value="Segoe UI" />
@@ -440,7 +435,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style x:Key="SortTextBox" BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
         <Setter Property="Width" Value="112" />
         <Setter Property="Height" Value="25" />
@@ -453,7 +447,6 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="BorderThickness" Value="1" />
     </Style>
-
     <Style x:Key="SortRadioButton" TargetType="{x:Type RadioButton}">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -571,7 +564,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style TargetType="{x:Type ScrollBar}">
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
         <Setter Property="Foreground" Value="#FF756550" />
@@ -642,16 +634,14 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style x:Key="CaseTabItem" TargetType="{x:Type TabItem}">
         <Setter Property="Width" Value="200" />
-        <Setter Property="Background" Value="{StaticResource background_CaseTable}" />
+        <Setter Property="Background" Value="{StaticResource background_WhiteCaseTable}" />
         <Setter Property="FontFamily" Value="Arial" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="{StaticResource Common_DarkBrown}" />
     </Style>
-
     <!--<Style x:Key="CaseTabControl" TargetType="{x:Type TabControl}">
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
@@ -726,7 +716,6 @@
             </Setter.Value>
         </Setter>
     </Style>-->
-
     <Style x:Key="OrderBase_normallabel" TargetType="{x:Type Label}">
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -734,17 +723,47 @@
         <Setter Property="FontFamily" Value="Arial" />
         <Setter Property="FontSize" Value="14" />
     </Style>
-
     <Style x:Key="OrderBase_OrderIDlabel" BasedOn="{StaticResource OrderBase_normallabel}" TargetType="{x:Type Label}">
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="16" />
     </Style>
-
     <Style x:Key="OrderSmallCase_OrderIDlabel" BasedOn="{StaticResource OrderBase_normallabel}" TargetType="{x:Type Label}">
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="14" />
     </Style>
     <!--  CaseTable-End  -->
+
+    <!--  DetailTable-Start  -->
+    <Style x:Key="label_detail" TargetType="Label">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{DynamicResource Common_DarkBrown}" />
+    </Style>
+    <Style x:Key="textbox_detail" BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="White" />
+        <Setter Property="Foreground" Value="{StaticResource Common_DarkBrown}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource borderbrush_SuperWhiteDetail}" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="Margin" Value="0,3,3,3" />
+        <Setter Property="Padding" Value="1,0,0,0" />
+    </Style>
+    <Style x:Key="textbox_detail_MultiLine" BasedOn="{StaticResource textbox_detail}" TargetType="TextBox">
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+    </Style>
+    <Style x:Key="textbox_detail_MultiLine_leftAlign" BasedOn="{x:Null}" TargetType="TextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="Foreground" Value="{StaticResource Common_DarkBrown}" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <!--  DetailTable-End  -->
 
     <!--  Setting-Start  -->
     <Style x:Key="Setting_sysBtn" BasedOn="{StaticResource MaterialDesignRaisedButton}" TargetType="{x:Type Button}">
