@@ -52,7 +52,7 @@ namespace OrderManagerNew.UserControls
         
         private CadInformation cadInfo;
         private int ItemIndex;
-        private bool IsFocusCase;
+        public bool IsFocusCase;
 
         /// <summary>
         /// EZCAD專案資訊

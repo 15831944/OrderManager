@@ -29,7 +29,7 @@ namespace OrderManagerNew
         /// <summary>
         /// 寫入log資訊
         /// </summary>
-        /// <param name="Row"> 第幾行</param>
+        /// <param name="Row">第幾行--> new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString()</param>
         /// <param name="Block"> 區塊</param>
         /// <param name="logMessage"> 詳細資訊</param>
         /// <returns></returns>

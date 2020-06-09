@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace OrderManagerNew.UserControls
         public Detail_cad()
         {
             InitializeComponent();
+
             CADInfo = new CadInformation();
             textbox_Order.Text = "";
             textbox_Client.Text = "";
@@ -73,6 +75,8 @@ namespace OrderManagerNew.UserControls
             }
             catch(Exception ex)
             {
+                LogRecorder Log = new LogRecorder();
+                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Detail_cad.xaml.cs GetToothProductString()_exception", ex.Message);
                 //MessageBox.Show(ex.Message);//TODO log要記下來
                 return "UnKnow";
             }
@@ -144,13 +148,13 @@ namespace OrderManagerNew.UserControls
                     case "button_loadProj":
                         {
                             OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                            omFunc.RunCommandLine(Properties.Settings.Default.cad_exePath, "-openrpd \"" + CADInfo.CaseDirectoryPath + "\"");
+                            omFunc.RunCommandLine(Properties.Settings.Default.cad_exePath, "-openrpd \"" + CADInfo.CaseXmlPath + "\"");
                             break;
                         }
                     case "button_openDir":
                         {
                             OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                            omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + System.IO.Path.GetDirectoryName(CADInfo.CaseDirectoryPath) + "\"");
+                            omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + CADInfo.CaseDirectoryPath + @"\" + "\"");
                             break;
                         }
                 }

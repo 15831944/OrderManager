@@ -2146,11 +2146,12 @@ namespace OrderManagerNew
         /// <param name="SoftwareID"></param>
         public void Handler_SetCaseShow(int SoftwareID)
         {
-            switch(SoftwareID)
+            StackPanel_Local.Children.Clear();
+            StackPanel_Detail.Children.Clear();
+            switch (SoftwareID)
             {
                 case (int)_softwareID.EZCAD:
                     {
-                        StackPanel_Local.Children.Clear();
                         _watcherEZCAD = new FileSystemWatcher();
                         if (ProjHandle.Caselist_EZCAD != null && ProjHandle.Caselist_EZCAD.Count > 0)
                         {
@@ -2169,7 +2170,6 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Implant:
                     {
-                        StackPanel_Local.Children.Clear();
                         _watcherImplant = new FileSystemWatcher();
                         int countIndex = 0;
                         if (ProjHandle.Caselist_ImplantOuterCase != null && ProjHandle.Caselist_ImplantOuterCase.Count > 0)
@@ -2188,7 +2188,6 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Ortho:
                     {
-                        StackPanel_Local.Children.Clear();
                         _watcherOrtho = new FileSystemWatcher();
                         int countIndex = 0;
                         if (ProjHandle.Caselist_OrthoOuterCase != null && ProjHandle.Caselist_OrthoOuterCase.Count > 0)
@@ -2207,7 +2206,6 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Tray:
                     {
-                        StackPanel_Local.Children.Clear();
                         _watcherTray = new FileSystemWatcher();
                         int countIndex = 0;
                         if (ProjHandle.Caselist_Tray != null && ProjHandle.Caselist_Tray.Count > 0)
@@ -2226,7 +2224,6 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Splint:
                     {
-                        StackPanel_Local.Children.Clear();
                         _watcherSplint = new FileSystemWatcher();
                         int countIndex = 0;
                         if (ProjHandle.Caselist_Splint != null && ProjHandle.Caselist_Splint.Count > 0)
@@ -2249,9 +2246,12 @@ namespace OrderManagerNew
         private void CaseHandler_EZCAD_showSingleProject(int projectIndex)
         {
             StackPanel_Detail.Children.Clear();
-            UserControls.Detail_cad detail_cad = new UserControls.Detail_cad();
-            detail_cad.SetDetailInfo(ProjHandle.Caselist_EZCAD[projectIndex]);
-            StackPanel_Detail.Children.Add(detail_cad);
+            if (((UserControls.Order_cadBase)StackPanel_Local.Children[projectIndex]).IsFocusCase == false)
+            {
+                UserControls.Detail_cad detail_cad = new UserControls.Detail_cad();
+                detail_cad.SetDetailInfo(ProjHandle.Caselist_EZCAD[projectIndex]);
+                StackPanel_Detail.Children.Add(detail_cad);
+            }
             for (int i = 0; i < StackPanel_Local.Children.Count; i++)
             {
                 if (i == projectIndex)

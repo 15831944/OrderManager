@@ -56,7 +56,7 @@
                   Text="Bala" />
                 <TextBox
                   Grid.Row="4" Grid.Column="1" x:Name="textbox_Note"
-                  MinHeight="80" MaxHeight="180" IsReadOnly="False"
+                  MinHeight="80" MaxHeight="180"
                   Style="{DynamicResource textbox_detail_MultiLine}" />
             </Grid>
         </Grid>
