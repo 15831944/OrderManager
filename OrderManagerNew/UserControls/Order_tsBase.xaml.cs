@@ -52,10 +52,10 @@ namespace OrderManagerNew.UserControls
             GDS_SPLINT_TOOLKIT = 0x00000080,
         };
 
-        private TrayInformation trayInfo;
-        private SplintInformation splintInfo;
+        public TrayInformation trayInfo;
+        public SplintInformation splintInfo;
         private int ItemIndex;
-        private bool IsFocusCase;
+        public bool IsFocusCase;
 
         /// <summary>
         /// Tray專案資訊
@@ -67,20 +67,25 @@ namespace OrderManagerNew.UserControls
             /// </summary>
             public string OrderID { get; set; }
             public int DesignStep { get; set; }
+            public string DesignStepString { get; set; }
             public string Brand { get; set; }
             public int GuideType { get; set; }
+            public string GuideTypeString { get; set; }
             public DateTime CreateDate { get; set; }
             public DateTime ModifyDate { get; set; }
             public string CaseDirectoryPath { get; set; }
-
+            public string CaseXmlPath { get; set; }
             public TrayInformation()
             {
                 OrderID = "";
                 DesignStep = -1;
+                DesignStepString = "";
                 Brand = "";
                 GuideType = -1;
                 CreateDate = new DateTime();
                 CaseDirectoryPath = "";
+                CaseXmlPath = "";
+                GuideTypeString = "";
             }
         }
         
@@ -94,28 +99,35 @@ namespace OrderManagerNew.UserControls
             /// </summary>
             public string OrderID { get; set; }
             public int DesignStep { get; set; }
+            public string DesignStepString { get; set; }
             public string Brand { get; set; }
             public int GuideType { get; set; }
+            public string GuideTypeString { get; set; }
             public DateTime CreateDate { get; set; }
             public DateTime ModifyDate { get; set; }
             public string CaseDirectoryPath { get; set; }
+            public string CaseXmlPath { get; set; }
 
             public SplintInformation()
             {
                 OrderID = "";
                 DesignStep = -1;
+                DesignStepString = "";
                 Brand = "";
                 GuideType = -1;
                 CreateDate = new DateTime();
                 ModifyDate = new DateTime();
                 CaseDirectoryPath = "";
+                CaseXmlPath = "";
+                GuideTypeString = "";
             }
         }
 
         public Order_tsBase()
         {
             InitializeComponent();
-
+            trayInfo = null;
+            splintInfo = null;
             label_orderID.Content = "";
             label_patientName.Content = "";
             label_designStep.Content = "";
@@ -131,7 +143,7 @@ namespace OrderManagerNew.UserControls
         /// <returns></returns>
         private string GetTrayDesignStep(int trayDesignStep)
         {
-            string ShowStep = OrderManagerNew.TranslationSource.Instance["CurrentStep"];
+            string ShowStep = "";
 
             if ((trayDesignStep & (int)TrayStep.GDS_MODELEDIT) == 0)
                 ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_MODELEDIT"];
@@ -158,7 +170,7 @@ namespace OrderManagerNew.UserControls
         /// <returns></returns>
         private string GetSplintDesignStep(int splintDesignStep)
         {
-            string ShowStep = OrderManagerNew.TranslationSource.Instance["CurrentStep"];
+            string ShowStep = "";
 
             if ((splintDesignStep & (int)SplintStep.GDS_MODELEDIT) == 0)
                 ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_MODELEDIT"];
@@ -190,8 +202,9 @@ namespace OrderManagerNew.UserControls
         public void SetTrayCaseInfo(TrayInformation Import, int Index)
         {
             trayInfo = Import;
+            trayInfo.DesignStepString = GetTrayDesignStep((int)trayInfo.DesignStep);
             label_orderID.Content = trayInfo.OrderID.Substring(trayInfo.OrderID.IndexOf('-') + 1);
-            label_designStep.Content = GetTrayDesignStep((int)trayInfo.DesignStep);
+            label_designStep.Content = OrderManagerNew.TranslationSource.Instance["CurrentStep"] + trayInfo.DesignStepString;
             label_createDate.Content = trayInfo.CreateDate.ToLongDateString();
             ItemIndex = Index;
         }
@@ -208,9 +221,11 @@ namespace OrderManagerNew.UserControls
             bitmap.UriSource = new Uri(@"/ImageSource/FunctionTable/icon_S.png", UriKind.Relative);
             bitmap.EndInit();
             image_Main.Source = bitmap;
+
             splintInfo = Import;
+            splintInfo.DesignStepString = GetSplintDesignStep((int)splintInfo.DesignStep);
             label_orderID.Content = splintInfo.OrderID.Substring(splintInfo.OrderID.IndexOf('-') + 1);
-            label_designStep.Content = GetSplintDesignStep((int)splintInfo.DesignStep);
+            label_designStep.Content = OrderManagerNew.TranslationSource.Instance["CurrentStep"] + splintInfo.DesignStepString;
             label_createDate.Content = splintInfo.CreateDate.ToLongDateString();
             ItemIndex = Index;
         }

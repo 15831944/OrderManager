@@ -39,7 +39,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="86" />
+                    <ColumnDefinition Width="90" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="{local1:LocExtension ProductType}" />

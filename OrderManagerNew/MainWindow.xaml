@@ -5,7 +5,7 @@
   Title="OrderManager" Width="1310" Height="768"
   MinWidth="1280" MinHeight="768" Background="#FF353531"
   Closing="Closing_MainWindow" Loaded="Loaded_MainWindow" StateChanged="Window_StateChanged"
-  WindowStartupLocation="CenterScreen" WindowStyle="None" mc:Ignorable="d">
+  WindowStartupLocation="CenterScreen" WindowStyle="None" mc:Ignorable="d" KeyUp="KeyUp_MainWindow">
 
     <Window.Resources>
         <ResourceDictionary>

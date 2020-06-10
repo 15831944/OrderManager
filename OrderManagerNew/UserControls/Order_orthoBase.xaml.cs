@@ -139,6 +139,7 @@ namespace OrderManagerNew.UserControls
                             CreateDate = orthodata.patientInformation.m_CreateTime,
                             Describe = orthodata.patientInformation.m_Discribe,
                             ModifyTime = fInfo.LastWriteTime,
+                            SmallCaseXmlPath = SmallXmlPath,
 
                             ProductTypeString = OrderManagerNew.TranslationSource.Instance["ClearAligner"],
                             Name = orthodata.patientInformation.m_PatientName,

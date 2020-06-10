@@ -214,6 +214,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Brand 的當地語系化字串。
+        /// </summary>
+        internal static string Brand {
+            get {
+                return ResourceManager.GetString("Brand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Buy License 的當地語系化字串。
         /// </summary>
         internal static string BuyLic {
@@ -741,6 +750,15 @@ namespace OrderManagerNew.Properties {
         internal static string GuideModel {
             get {
                 return ResourceManager.GetString("GuideModel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Guide Type 的當地語系化字串。
+        /// </summary>
+        internal static string GuideType {
+            get {
+                return ResourceManager.GetString("GuideType", resourceCulture);
             }
         }
         

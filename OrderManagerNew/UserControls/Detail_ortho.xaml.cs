@@ -63,7 +63,7 @@ namespace OrderManagerNew.UserControls
             textbox_Gender.Text = orthoInfo.Gender;
             textbox_Age.Text = orthoInfo.Age;
             textbox_CreateDate.Text = orthoInfo.CreateDate;
-            textbox_ModifyDate.Text = orthoInfo.ModifyTime.ToLongTimeString();
+            textbox_ModifyDate.Text = orthoInfo.ModifyTime.ToLongDateString() + " " + orthoInfo.ModifyTime.ToLongTimeString();
             textbox_Clinic.Text = orthoInfo.Clinic;
             textbox_Dentist.Text = orthoInfo.Dentist;
             textbox_Note.Text = orthoInfo.Describe;

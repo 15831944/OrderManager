@@ -412,6 +412,7 @@ namespace OrderManagerNew
                                 ModifyDate = fInfo.LastWriteTime,
                                 DesignStep = Convert.ToInt32(xDesignStep),
                                 CaseDirectoryPath = Path.GetDirectoryName(XmlPath),
+                                CaseXmlPath = XmlPath
                             };
                             Caselist_Tray.Add(trayInfo);
 
@@ -441,6 +442,7 @@ namespace OrderManagerNew
                                 ModifyDate = fInfo.LastWriteTime,
                                 DesignStep = Convert.ToInt32(xDesignStep),
                                 CaseDirectoryPath = Path.GetDirectoryName(XmlPath),
+                                CaseXmlPath = XmlPath
                             };
                             Caselist_Splint.Add(splintInfo);
 
@@ -455,18 +457,6 @@ namespace OrderManagerNew
             }
 
             return true;
-        }
-
-        private void Handler_EZCAD_showSingleProject(int projectIndex)
-        {
-
-        }
-
-        
-
-        private void Handler_Ortho_showSingleProject(int projectIndex)
-        {
-
         }
     }
 }

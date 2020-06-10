@@ -345,9 +345,14 @@ namespace OrderManagerNew
                 }
             }));
         }
-#endregion
+        #endregion
 
-#region WindowFrame
+        #region WindowFrame
+        private void KeyUp_MainWindow(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F5)
+                ChooseToLoadProj();
+        }
         private void Window_StateChanged(object sender, EventArgs e)
         {
             if (this.WindowState == WindowState.Maximized)
@@ -361,13 +366,11 @@ namespace OrderManagerNew
                 this.BorderThickness = new Thickness(0);
             }
         }
-
         private void Closing_MainWindow(object sender, System.ComponentModel.CancelEventArgs e)
         {
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Closing OM", "Manual Shutdown.");
             Environment.Exit(0);
         }
-
         private void Click_Dev_Btn(object sender, RoutedEventArgs e)
         {
             if(sender is Button)
@@ -493,7 +496,6 @@ namespace OrderManagerNew
                 }
             }
         }
-
         private void PMouseDown_Main(object sender, MouseButtonEventArgs e)
         {
             //點擊UserDetail以外的地方就收回
@@ -508,7 +510,6 @@ namespace OrderManagerNew
                     UserDetailshow(false);
             }
         }
-
         private void Loaded_MainWindow(object sender, RoutedEventArgs e)
         {
             UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
@@ -1930,7 +1931,9 @@ namespace OrderManagerNew
         {
             Task.Factory.StartNew(() => MainsnackbarMessageQueue.Enqueue(Message));
         }
-
+        /// <summary>
+        /// F5重新整理專案
+        /// </summary>
         private void ChooseToLoadProj() //日期過濾要加
         {
             if (SoftwareFilterCAD.IsChecked == true)
@@ -2261,6 +2264,7 @@ namespace OrderManagerNew
                 ((UserControls.Order_cadBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
             }
         }
+
         private void CaseHandler_Implant_showSingleProject(int projectIndex)
         {
             for (int i = 0; i < StackPanel_Local.Children.Count; i++)
@@ -2284,6 +2288,21 @@ namespace OrderManagerNew
         private void CaseHandler_TraySplint_showSingleProject(int projectIndex)
         {
             StackPanel_Detail.Children.Clear();
+            if (((UserControls.Order_tsBase)StackPanel_Local.Children[projectIndex]).IsFocusCase == false)
+            {
+                if(((UserControls.Order_tsBase)StackPanel_Local.Children[projectIndex]).trayInfo != null)
+                {
+                    UserControls.Detail_traysplint detail_tray = new UserControls.Detail_traysplint();
+                    detail_tray.SetTrayDetailInfo(ProjHandle.Caselist_Tray[projectIndex]);
+                    StackPanel_Detail.Children.Add(detail_tray);
+                }
+                else
+                {
+                    UserControls.Detail_traysplint detail_splint = new UserControls.Detail_traysplint();
+                    detail_splint.SetSplintDetailInfo(ProjHandle.Caselist_Splint[projectIndex]);
+                    StackPanel_Detail.Children.Add(detail_splint);
+                }
+            }
             for (int i = 0; i < StackPanel_Local.Children.Count; i++)
             {
                 if (i == projectIndex)
@@ -2298,10 +2317,9 @@ namespace OrderManagerNew
             StackPanel_Detail.Children.Clear();
             if(StackPanel_Local.Children[BaseCaseIndex] is UserControls.Order_orthoBase)
             {
-                if (((UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex+1] is UserControls.Order_orthoSmallcase)
+                if (((UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex + 1] is UserControls.Order_orthoSmallcase tmpOrthoSmall)
                 {
-                    UserControls.Order_orthoSmallcase tmpOrthoSmall = (UserControls.Order_orthoSmallcase)((UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex+1];
-                    if(tmpOrthoSmall.IsFocusSmallCase == false)
+                    if (tmpOrthoSmall.IsFocusSmallCase == false)
                     {
                         UserControls.Detail_ortho detail_ortho = new UserControls.Detail_ortho();
                         detail_ortho.SetDetailInfo(tmpOrthoSmall.orthosmallcaseInfo);

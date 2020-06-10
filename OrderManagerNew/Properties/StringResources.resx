@@ -650,7 +650,7 @@
   </data>
   <data name="Clinic" xml:space="preserve">
     <value>Clinic</value>
-    <comment>Detail_Ortho</comment>
+    
   </data>
   <data name="Dentist" xml:space="preserve">
     <value>Dentist</value>
@@ -666,5 +666,14 @@
   </data>
   <data name="ClearAligner" xml:space="preserve">
     <value>Clear Aligner</value>
+    <comment>Detail_Ortho</comment>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>Brand</value>
+    <comment>Detail_TraySplint</comment>
+  </data>
+  <data name="GuideType" xml:space="preserve">
+    <value>Guide Type</value>
+    <comment>Detail_TraySplint</comment>
   </data>
 </root>

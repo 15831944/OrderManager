@@ -268,7 +268,7 @@
     <value>訂單編號</value>
   </data>
   <data name="CreateDate" xml:space="preserve">
-    <value>訂單創建日期</value>
+    <value>創建日期</value>
   </data>
   <data name="OpenCaseFolder" xml:space="preserve">
     <value>開啟訂單資料夾</value>
@@ -530,5 +530,11 @@
   </data>
   <data name="ClearAligner" xml:space="preserve">
     <value>隱形牙套</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>廠牌</value>
+  </data>
+  <data name="GuideType" xml:space="preserve">
+    <value>Guide 產品</value>
   </data>
 </root>
