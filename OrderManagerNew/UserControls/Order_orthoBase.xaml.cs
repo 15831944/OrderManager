@@ -27,10 +27,14 @@ namespace OrderManagerNew.UserControls
         //委派到MainWindow.xaml.cs裡面CaseHandler_Ortho_showSingleProject()
         public delegate void orthoBaseEventHandler(int projectIndex);
         public event orthoBaseEventHandler SetBaseProjectShow;
+        //委派到MainWindow.xaml.cs裡面的CaseHandler_Ortho_showDetail()
+        public delegate void orthoBaseEventHandler2(int BaseCaseIndex, int SmallCaseIndex);
+        public event orthoBaseEventHandler2 SetSmallProjectDetailShow;
+
         LogRecorder log;
         private OrthoOuterInformation orthoInfo;
         private bool IsFocusCase = false;   //smallCase目前是否為攤開狀態
-        int ItemIndex;
+        public int BaseCaseIndex;
 
         public class OrthoOuterInformation
         {
@@ -43,7 +47,6 @@ namespace OrderManagerNew.UserControls
             public string DentistName { get; set; }
             public string ClinicName { get; set; }
             public DateTime CreateDate { get; set; }
-            public DateTime ModifyDate { get; set; }
             public List<Order_orthoSmallcase> List_smallcase { get; set; }
 
             public OrthoOuterInformation()
@@ -58,7 +61,6 @@ namespace OrderManagerNew.UserControls
                 List_smallcase = new List<Order_orthoSmallcase>();
                 PatientBirth = new DateTime();
                 CreateDate = new DateTime();
-                ModifyDate = new DateTime();
             }
         }
 
@@ -71,7 +73,7 @@ namespace OrderManagerNew.UserControls
             label_designStep.Content = "";
             label_createDate.Content = "";
             IsFocusCase = false;
-            ItemIndex = -1;
+            BaseCaseIndex = -1;
         }
 
         /// <summary>
@@ -92,7 +94,7 @@ namespace OrderManagerNew.UserControls
                 label_patientName.ToolTip = OrderManagerNew.TranslationSource.Instance["PatientNameWithAge"];
             }
             label_createDate.Content = orthoInfo.CreateDate.ToLongDateString();
-            ItemIndex = Index;
+            BaseCaseIndex = Index;
         }
         
         /// <summary>
@@ -128,13 +130,23 @@ namespace OrderManagerNew.UserControls
                     try
                     {
                         var orthodata = EZOrthoDataStructure.ProjectDataWrapper.ProjectDataWrapperDeserialize(SmallXmlPath);
+                        int patientAge = DateTime.Today.Year - DateTime.Parse(orthodata.patientInformation.m_PatientBday).Year;
 
                         Order_orthoSmallcase.OrthoSmallCaseInformation tmpOrthosmallInfo = new Order_orthoSmallcase.OrthoSmallCaseInformation
                         {
                             //tmpOrthosmallInfo.SoftwareVer = new Version(orthodata.File_Version);
                             WorkflowStep = Convert.ToInt16(orthodata.workflowstep),
                             CreateDate = orthodata.patientInformation.m_CreateTime,
-                            Describe = orthodata.patientInformation.m_Discribe
+                            Describe = orthodata.patientInformation.m_Discribe,
+                            ModifyTime = fInfo.LastWriteTime,
+
+                            ProductTypeString = OrderManagerNew.TranslationSource.Instance["ClearAligner"],
+                            Name = orthodata.patientInformation.m_PatientName,
+                            OrderID = orthodata.patientInformation.m_PatientID,
+                            Gender = orthodata.patientInformation.m_PatientSex ? TranslationSource.Instance["Male"] : TranslationSource.Instance["Female"],
+                            Age = patientAge.ToString(),
+                            Clinic = orthodata.patientInformation.m_ClinicName,
+                            Dentist = orthodata.patientInformation.m_DentistName
                         };
 
                         Order_orthoSmallcase tmporthoSmallcase = new Order_orthoSmallcase();
@@ -152,8 +164,13 @@ namespace OrderManagerNew.UserControls
             }
         }
 
+        /// <summary>
+        /// 使用者點擊SmallCase時事件
+        /// </summary>
+        /// <param name="SmallcaseIndex">SmallCase的Index</param>
         private void SmallCaseHandler(int SmallcaseIndex)
         {
+            SetSmallProjectDetailShow(BaseCaseIndex, SmallcaseIndex);  //MainWindow顯示Small Case Detail
             for (int i = 0; i < orthoInfo.List_smallcase.Count; i++)
             {
                 if (i == SmallcaseIndex)
@@ -232,7 +249,7 @@ namespace OrderManagerNew.UserControls
             }
             else
             {
-                SetBaseProjectShow(ItemIndex);
+                SetBaseProjectShow(BaseCaseIndex);
                 if (IsFocusCase == false)
                 {
                     SetCaseFocusStatus(true);

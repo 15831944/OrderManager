@@ -124,6 +124,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Age 的當地語系化字串。
+        /// </summary>
+        internal static string Age {
+            get {
+                return ResourceManager.GetString("Age", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 ALL 的當地語系化字串。
         /// </summary>
         internal static string All {
@@ -268,11 +277,29 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Clear Aligner 的當地語系化字串。
+        /// </summary>
+        internal static string ClearAligner {
+            get {
+                return ResourceManager.GetString("ClearAligner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Client 的當地語系化字串。
         /// </summary>
         internal static string Client {
             get {
                 return ResourceManager.GetString("Client", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Clinic 的當地語系化字串。
+        /// </summary>
+        internal static string Clinic {
+            get {
+                return ResourceManager.GetString("Clinic", resourceCulture);
             }
         }
         
@@ -529,6 +556,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Dentist 的當地語系化字串。
+        /// </summary>
+        internal static string Dentist {
+            get {
+                return ResourceManager.GetString("Dentist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Design Setting 的當地語系化字串。
         /// </summary>
         internal static string DesignSetting {
@@ -597,6 +633,15 @@ namespace OrderManagerNew.Properties {
         internal static string exePathConflictDescription {
             get {
                 return ResourceManager.GetString("exePathConflictDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Female 的當地語系化字串。
+        /// </summary>
+        internal static string Female {
+            get {
+                return ResourceManager.GetString("Female", resourceCulture);
             }
         }
         
@@ -678,6 +723,15 @@ namespace OrderManagerNew.Properties {
         internal static string GDS_SPLINT_TOOLKIT {
             get {
                 return ResourceManager.GetString("GDS_SPLINT_TOOLKIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Gender 的當地語系化字串。
+        /// </summary>
+        internal static string Gender {
+            get {
+                return ResourceManager.GetString("Gender", resourceCulture);
             }
         }
         
@@ -781,6 +835,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Male 的當地語系化字串。
+        /// </summary>
+        internal static string Male {
+            get {
+                return ResourceManager.GetString("Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Maximize 的當地語系化字串。
         /// </summary>
         internal static string Maximize {
@@ -804,6 +867,24 @@ namespace OrderManagerNew.Properties {
         internal static string Model_Position {
             get {
                 return ResourceManager.GetString("Model_Position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Modified date 的當地語系化字串。
+        /// </summary>
+        internal static string ModifyDate {
+            get {
+                return ResourceManager.GetString("ModifyDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Name 的當地語系化字串。
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         
@@ -984,6 +1065,15 @@ namespace OrderManagerNew.Properties {
         internal static string Printing {
             get {
                 return ResourceManager.GetString("Printing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Product Type 的當地語系化字串。
+        /// </summary>
+        internal static string ProductType {
+            get {
+                return ResourceManager.GetString("ProductType", resourceCulture);
             }
         }
         
@@ -1200,6 +1290,15 @@ namespace OrderManagerNew.Properties {
         internal static string ViewPWD {
             get {
                 return ResourceManager.GetString("ViewPWD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Workflow 的當地語系化字串。
+        /// </summary>
+        internal static string Workflow {
+            get {
+                return ResourceManager.GetString("Workflow", resourceCulture);
             }
         }
     }

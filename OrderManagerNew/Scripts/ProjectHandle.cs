@@ -376,8 +376,7 @@ namespace OrderManagerNew
                                 CaseDirectoryPath = Path.GetDirectoryName(XmlPath) + @"\",
                                 PatientID = xml.Element("PatientID").Value,
                                 PatientName = xml.Element("PatientName").Value,
-                                PatientSex = Gender,
-                                ModifyDate = fInfo.LastAccessTime
+                                PatientSex = Gender
                         };
                             try { orthoInfo.PatientBirth = Convert.ToDateTime(xml.Element("PatientBday").Value); } catch { orthoInfo.PatientBirth = new DateTime(); }
                             try { orthoInfo.PatientAddress = xml.Element("PatientAddress").Value; } catch { orthoInfo.PatientAddress = ""; }

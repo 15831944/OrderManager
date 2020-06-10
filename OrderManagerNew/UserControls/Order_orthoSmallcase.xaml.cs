@@ -24,44 +24,41 @@ namespace OrderManagerNew.UserControls
         //委派到Order_orthoBase.xaml.cs裡面的SmallCaseHandler()
         public delegate void implantSmallCaseEventHandler(int projectIndex);
         public event implantSmallCaseEventHandler SetsmallCaseShow;
-        private OrthoSmallCaseInformation orthosmallcaseInfo;
-        private bool IsFocusSmallCase;
+        public OrthoSmallCaseInformation orthosmallcaseInfo;
+        public bool IsFocusSmallCase;
         private int ItemIndex;
 
-        public enum OrthoWorkFlow : int
-        {
-            Develope = -2,
-            General = -1,
-            Model_Position,//模型擺放
-            Model_Edit,//模型編修
-            Teeth_Define,//齒位定義
-            Crown_Margin_Adjust,//調整牙冠
-            Crown_Postprocess,//牙冠後修
-            IB_DefineAxis,//定義齒軸坐標系(未分離)
-            Finish,//牙冠分離結束 這個當作分隔線 以上或以下步驟的順序不可亂動
-            SetupManage,//排牙療程總管理頁面
-            Printing,//輸出模型
-            CompareScanModel,//與掃描模型比較
-            Measurement,//與其他排牙療程比較
-            Treatment_Planning,//Ezortho排牙規劃
-            Shell_Creation,
-            Bracket_Treatment
-        }
         public class OrthoSmallCaseInformation
         {
             public string SmallCaseXmlPath { get; set; }
-            //public Version SoftwareVer { get; set; }
             public int WorkflowStep { get; set; }
             public string CreateDate { get; set; }
             public string Describe { get; set; }
+            public DateTime ModifyTime { get; set; }
+
+            public string ProductTypeString { get; set; }
+            public string Name { get; set; }
+            public string OrderID { get; set; }
+            public string Gender { get; set; }
+            public string Age { get; set; }
+            public string Clinic { get; set; }
+            public string Dentist { get; set; }
 
             public OrthoSmallCaseInformation()
             {
                 SmallCaseXmlPath = "";
-                //SoftwareVer = new Version();
                 WorkflowStep = -1;
                 CreateDate = "";
                 Describe = "";
+                ModifyTime = new DateTime();
+
+                ProductTypeString = "";
+                Name = "";
+                OrderID = "";
+                Gender = "";
+                Age = "";
+                Clinic = "";
+                Dentist = "";
             }
         }
 

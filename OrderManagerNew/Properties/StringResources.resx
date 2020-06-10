@@ -624,4 +624,47 @@
     <value>Abut. + Temp Crown</value>
     <comment>Detail_CAD</comment>
   </data>
+  <data name="ProductType" xml:space="preserve">
+    <value>Product Type</value>
+    <comment>Detail_Ortho</comment>
+  </data>
+  <data name="Workflow" xml:space="preserve">
+    <value>Workflow</value>
+    <comment>Detail_Ortho</comment>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+    <comment>Detail_Ortho</comment>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+    <comment>Detail_Ortho</comment>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>Age</value>
+    <comment>Detail_Ortho</comment>
+  </data>
+  <data name="ModifyDate" xml:space="preserve">
+    <value>Modified date</value>
+    <comment>Detail_Ortho</comment>
+  </data>
+  <data name="Clinic" xml:space="preserve">
+    <value>Clinic</value>
+    <comment>Detail_Ortho</comment>
+  </data>
+  <data name="Dentist" xml:space="preserve">
+    <value>Dentist</value>
+    <comment>Detail_Ortho</comment>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>Male</value>
+    <comment>Detail_Ortho</comment>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>Female</value>
+    <comment>Detail_Ortho</comment>
+  </data>
+  <data name="ClearAligner" xml:space="preserve">
+    <value>Clear Aligner</value>
+  </data>
 </root>

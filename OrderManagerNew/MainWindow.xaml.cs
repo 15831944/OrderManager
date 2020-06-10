@@ -2196,6 +2196,7 @@ namespace OrderManagerNew
                             {
                                 UserControls.Order_orthoBase Order_Ortho = new UserControls.Order_orthoBase();
                                 Order_Ortho.SetBaseProjectShow += CaseHandler_Ortho_showSingleProject;
+                                Order_Ortho.SetSmallProjectDetailShow += CaseHandler_Ortho_showDetail;
                                 Order_Ortho.SetCaseInfo(orthoInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_Ortho);
                                 countIndex++;
@@ -2282,12 +2283,31 @@ namespace OrderManagerNew
         }
         private void CaseHandler_TraySplint_showSingleProject(int projectIndex)
         {
+            StackPanel_Detail.Children.Clear();
             for (int i = 0; i < StackPanel_Local.Children.Count; i++)
             {
                 if (i == projectIndex)
                     continue;
 
                 ((UserControls.Order_tsBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
+            }
+        }
+
+        private void CaseHandler_Ortho_showDetail(int BaseCaseIndex, int SmallCaseIndex)
+        {
+            StackPanel_Detail.Children.Clear();
+            if(StackPanel_Local.Children[BaseCaseIndex] is UserControls.Order_orthoBase)
+            {
+                if (((UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex+1] is UserControls.Order_orthoSmallcase)
+                {
+                    UserControls.Order_orthoSmallcase tmpOrthoSmall = (UserControls.Order_orthoSmallcase)((UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex+1];
+                    if(tmpOrthoSmall.IsFocusSmallCase == false)
+                    {
+                        UserControls.Detail_ortho detail_ortho = new UserControls.Detail_ortho();
+                        detail_ortho.SetDetailInfo(tmpOrthoSmall.orthosmallcaseInfo);
+                        StackPanel_Detail.Children.Add(detail_ortho);
+                    }
+                }
             }
         }
         #endregion

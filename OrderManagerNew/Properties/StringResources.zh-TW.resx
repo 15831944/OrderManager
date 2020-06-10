@@ -498,4 +498,37 @@
   <data name="Abutment + Temp Crown" xml:space="preserve">
     <value>支台齒 + 臨時牙冠</value>
   </data>
+  <data name="ProductType" xml:space="preserve">
+    <value>產品項目</value>
+  </data>
+  <data name="Workflow" xml:space="preserve">
+    <value>流程</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>患者姓名</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>性別</value>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>年齡</value>
+  </data>
+  <data name="ModifyDate" xml:space="preserve">
+    <value>修改日期</value>
+  </data>
+  <data name="Clinic" xml:space="preserve">
+    <value>診所</value>
+  </data>
+  <data name="Dentist" xml:space="preserve">
+    <value>醫師</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>男</value>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>女</value>
+  </data>
+  <data name="ClearAligner" xml:space="preserve">
+    <value>隱形牙套</value>
+  </data>
 </root>
