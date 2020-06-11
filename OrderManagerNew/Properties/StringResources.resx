@@ -676,4 +676,12 @@
     <value>Guide Type</value>
     <comment>Detail_TraySplint</comment>
   </data>
+  <data name="SurgicalGT" xml:space="preserve">
+    <value>Surgical guideType</value>
+    <comment>Detail_Implant</comment>
+  </data>
+  <data name="SurgicalKit" xml:space="preserve">
+    <value>Surgical kit</value>
+    <comment>Detail_Implant</comment>
+  </data>
 </root>

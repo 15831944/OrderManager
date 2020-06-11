@@ -1231,6 +1231,24 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Surgical guideType 的當地語系化字串。
+        /// </summary>
+        internal static string SurgicalGT {
+            get {
+                return ResourceManager.GetString("SurgicalGT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Surgical kit 的當地語系化字串。
+        /// </summary>
+        internal static string SurgicalKit {
+            get {
+                return ResourceManager.GetString("SurgicalKit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Technician 的當地語系化字串。
         /// </summary>
         internal static string Technician {

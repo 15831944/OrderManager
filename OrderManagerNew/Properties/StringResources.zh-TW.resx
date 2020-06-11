@@ -537,4 +537,10 @@
   <data name="GuideType" xml:space="preserve">
     <value>Guide 產品</value>
   </data>
+  <data name="SurgicalGT" xml:space="preserve">
+    <value>導板型態</value>
+  </data>
+  <data name="SurgicalKit" xml:space="preserve">
+    <value>手術器械</value>
+  </data>
 </root>
