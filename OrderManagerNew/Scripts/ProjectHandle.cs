@@ -402,14 +402,17 @@ namespace OrderManagerNew
                         try
                         {
                             XElement xml = xmlDoc.Element("GuideExport");
+                            string xGuideType = xml.Element("OrderInfo").Element("GuideType").Value;
                             string xDesignStep = xml.Element("OrderInfo").Element("DesignStep").Value;//DesignStep
                             string xOrderID = xml.Element("ProjectName").Value;//ordernumer-custom
 
                             TrayInformation trayInfo = new TrayInformation
                             {
                                 OrderID = xOrderID,
+                                Brand = xml.Element("OrderInfo").Element("Brand").Value,
                                 CreateDate = fInfo.CreationTime,
                                 ModifyDate = fInfo.LastWriteTime,
+                                GuideType = Convert.ToInt16(xGuideType),
                                 DesignStep = Convert.ToInt32(xDesignStep),
                                 CaseDirectoryPath = Path.GetDirectoryName(XmlPath),
                                 CaseXmlPath = XmlPath
@@ -432,14 +435,17 @@ namespace OrderManagerNew
                         try
                         {
                             XElement xml = xmlDoc.Element("GuideExport");
+                            string xGuideType = xml.Element("OrderInfo").Element("GuideType").Value;
                             string xDesignStep = xml.Element("OrderInfo").Element("DesignStep").Value;//DesignStep
                             string xOrderID = xml.Element("ProjectName").Value;//ordernumer-custom
 
                             SplintInformation splintInfo = new SplintInformation
                             {
                                 OrderID = xOrderID,
+                                Brand = xml.Element("OrderInfo").Element("Brand").Value,
                                 CreateDate = fInfo.CreationTime,
                                 ModifyDate = fInfo.LastWriteTime,
+                                GuideType = Convert.ToInt16(xGuideType),
                                 DesignStep = Convert.ToInt32(xDesignStep),
                                 CaseDirectoryPath = Path.GetDirectoryName(XmlPath),
                                 CaseXmlPath = XmlPath

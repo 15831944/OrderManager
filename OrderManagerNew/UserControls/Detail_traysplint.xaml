@@ -30,7 +30,6 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
-                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
@@ -38,13 +37,13 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="{local1:LocExtension Order}" />
                 <Label Grid.Row="1" Grid.Column="0" Content="{local1:LocExtension DesignStep}" />
-                <Label Grid.Row="2" Grid.Column="0" Content="{local1:LocExtension Brand}" />
-                <Label Grid.Row="3" Grid.Column="0" Content="{local1:LocExtension GuideType}" />
-                <Label Grid.Row="4" Grid.Column="0" Content="{local1:LocExtension CreateDate}" />
-                <Label Grid.Row="5" Grid.Column="0" Content="{local1:LocExtension ModifyDate}" />
+                <Label Grid.Row="2" Grid.Column="0" Content="{local1:LocExtension ProductType}" />
+                <Label Grid.Row="3" Grid.Column="0" Content="{local1:LocExtension CreateDate}" />
+                <Label Grid.Row="4" Grid.Column="0" Content="{local1:LocExtension ModifyDate}" />
                 <TextBox
                   Grid.Row="0" Grid.Column="1" x:Name="textbox_Order"
-                  Text="Bala" />
+                  Text="Bala"
+                  ToolTip="{Binding ElementName=textbox_Order, Path=Text}" />
                 <TextBox
                   Grid.Row="1" Grid.Column="1" x:Name="textbox_DesignStep"
                   Text="Bala" />
@@ -52,13 +51,10 @@
                   Grid.Row="2" Grid.Column="1" x:Name="textbox_Brand"
                   Text="Bala" />
                 <TextBox
-                  Grid.Row="3" Grid.Column="1" x:Name="textbox_GuideType"
+                  Grid.Row="3" Grid.Column="1" x:Name="textbox_CreateDate"
                   Text="Bala" />
                 <TextBox
-                  Grid.Row="4" Grid.Column="1" x:Name="textbox_CreateDate"
-                  Text="Bala" />
-                <TextBox
-                  Grid.Row="5" Grid.Column="1" x:Name="textbox_ModifyDate"
+                  Grid.Row="4" Grid.Column="1" x:Name="textbox_ModifyDate"
                   Text="Bala" />
             </Grid>
         </Grid>

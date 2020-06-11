@@ -33,7 +33,6 @@ namespace OrderManagerNew.UserControls
             textbox_Order.Text = "";
             textbox_DesignStep.Text = "";
             textbox_Brand.Text = "";
-            textbox_GuideType.Text = "";
             textbox_CreateDate.Text = "";
             textbox_ModifyDate.Text = "";
         }
@@ -44,7 +43,6 @@ namespace OrderManagerNew.UserControls
             textbox_Order.Text = TrayInfo.OrderID;
             textbox_DesignStep.Text = TrayInfo.DesignStepString;
             textbox_Brand.Text = TrayInfo.Brand;
-            textbox_GuideType.Text = TrayInfo.GuideTypeString;
             textbox_CreateDate.Text = TrayInfo.CreateDate.ToLongDateString() + " " + TrayInfo.CreateDate.ToLongTimeString();
             textbox_ModifyDate.Text = TrayInfo.ModifyDate.ToLongDateString() + " " + TrayInfo.ModifyDate.ToLongTimeString();
         }
@@ -55,7 +53,6 @@ namespace OrderManagerNew.UserControls
             textbox_Order.Text = SplintInfo.OrderID;
             textbox_DesignStep.Text = SplintInfo.DesignStepString;
             textbox_Brand.Text = SplintInfo.Brand;
-            textbox_GuideType.Text = SplintInfo.GuideTypeString;
             textbox_CreateDate.Text = SplintInfo.CreateDate.ToLongDateString() + " " + SplintInfo.CreateDate.ToLongTimeString();
             textbox_ModifyDate.Text = SplintInfo.ModifyDate.ToLongDateString() + " " + SplintInfo.ModifyDate.ToLongTimeString();
         }

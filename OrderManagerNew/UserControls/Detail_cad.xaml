@@ -46,7 +46,8 @@
                   Content="{local1:LocExtension Note}" />
                 <TextBox
                   Grid.Row="0" Grid.Column="1" x:Name="textbox_Order"
-                  Text="Bala" />
+                  Text="Bala"
+                  ToolTip="{Binding ElementName=textbox_Order, Path=Text}" />
                 <TextBox
                   Grid.Row="1" Grid.Column="1" x:Name="textbox_Client"
                   Text="Bala" />
