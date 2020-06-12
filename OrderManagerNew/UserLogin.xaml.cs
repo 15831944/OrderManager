@@ -15,14 +15,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace OrderManagerNew
-{
+{                                                                                                                       
     /// <summary>
     /// UserLogin.xaml 的互動邏輯
     /// </summary>
     public partial class UserLogin : Window
     {
         LogRecorder log;    //日誌檔cs
-
+        public string _UserEmail = "";
+        public string _UserName = "";
         public UserLogin()
         {
             InitializeComponent();
@@ -71,22 +72,29 @@ namespace OrderManagerNew
 
             Dll_Airdental.Main Airdental = new Dll_Airdental.Main();
             WebException ex = new WebException();
-            if (Airdental.Login(textbox_Account.Text, passwordbox_PWD.Password, ref ex) == true)
+            string _UserUid = "";
+            if (Airdental.Login(textbox_Account.Text, passwordbox_PWD.Password, ref _UserUid, ref _UserEmail, ref _UserName, ref ex) == true)
             {
-                MessageBox.Show("login success");
-                /*Properties.Settings.Default.AirdentalAcc = textbox_Account.Text;
+                Properties.Settings.Default.AirdentalAcc = textbox_Account.Text;
                 Properties.Settings.Default.Save();
-                DialogResult = true;*/
+                if(_UserUid != "")
+                {
+                    Properties.OrderManagerProps.Default.AirD_uid = _UserUid;
+                    DialogResult = true;
+                }
+                else
+                {
+                    DialogResult = false;
+                }
             }
             else
             {
                 if (ex.Status == WebExceptionStatus.ProtocolError)
                 {
-                    HttpWebResponse response = ex.Response as HttpWebResponse;
                     string errMessage = "";
-                    if (response != null)
+                    if (ex.Response is HttpWebResponse response)
                     {
-                        switch(response.StatusCode)
+                        switch (response.StatusCode)
                         {
                             case HttpStatusCode.BadRequest:
                                 {
@@ -108,7 +116,7 @@ namespace OrderManagerNew
                     else
                         errMessage = ex.ToString();
 
-                    if(errMessage != "")
+                    if (errMessage != "")
                         MessageBox.Show(errMessage);
                 }
             }
@@ -116,7 +124,10 @@ namespace OrderManagerNew
 
         private void Keyup_PWD(object sender, KeyEventArgs e)
         {
-            textbox_PWD.Text = passwordbox_PWD.Password;
+            if (e.Key == Key.Enter)
+                Click_OK(null, null);
+            else
+                textbox_PWD.Text = passwordbox_PWD.Password;
         }
 
         private void Checked_ShowPWD(object sender, RoutedEventArgs e)
@@ -169,6 +180,17 @@ namespace OrderManagerNew
             {
                 image_loginFail.Visibility = Visibility.Hidden;
                 label_loginFail.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void Loaded_UserLogin(object sender, RoutedEventArgs e)
+        {
+            if(textbox_Account.Text != "")
+            {
+                if (passwordbox_PWD.Visibility == Visibility.Visible)
+                    passwordbox_PWD.Focus();
+                else if (textbox_PWD.Visibility == Visibility.Visible)
+                    textbox_PWD.Focus();
             }
         }
     }

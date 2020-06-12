@@ -23,7 +23,7 @@ namespace OrderManagerNew.UserControls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
+            if (value == null || (string)value == "")
                 return "";
             string fullName = value.ToString();
             string capitalName = fullName[0].ToString().ToUpper();
@@ -43,18 +43,62 @@ namespace OrderManagerNew.UserControls
     public partial class AirdentalUserDetail : UserControl
     {
         public event RoutedEventHandler LogoutClick;
+        /// <summary>
+        /// 使用者名稱
+        /// </summary>
+        public string UserName { get; set; }
+        /// <summary>
+        /// 使用者名稱取第一個字
+        /// </summary>
+        public string UserPicName { get; set; }
+        /// <summary>
+        /// 使用者Email
+        /// </summary>
+        public string UserMail { get; set; }
+        /// <summary>
+        /// 使用者點數
+        /// </summary>
+        public long UserPoints { get; set; }
+        /// <summary>
+        /// 使用者大頭照
+        /// </summary>
+        public string UserPicSource { get; set; }
 
         public AirdentalUserDetail()
         {
             InitializeComponent();
+            UserName = "";
+            UserPicName = "";
+            UserMail = "";
+            UserPoints = 0;
+            UserPicSource = "";
             this.DataContext = this;
         }
 
-        public string UserName { get; set; }
-        public string UserPicName { get; set; }
-        public string UserMail { get; set; }
-        public string UserPoints { get; set; }
+        public void SetUserPic(string picPath)
+        {
+            try
+            {
+                UserPicSource = picPath;
+                image_user.BeginInit();
+                image_user.Source = new BitmapImage(new Uri(UserPicSource, UriKind.RelativeOrAbsolute));
+                image_user.EndInit();
 
+                Panel.SetZIndex(image_user, 1);
+            }
+            catch
+            {
+                UserPicSource = "";
+                Panel.SetZIndex(image_user, -1);
+            }
+            lb_userName.Content = UserName;
+            lb_userMail.Content = UserMail;
+            lb_points.Content = UserPoints;
+        }
+
+        /// <summary>
+        /// Click事件改成LogoutClick事件
+        /// </summary>
         private void BtnClick_Logout(object sender, RoutedEventArgs e)
         {
             LogoutClick?.Invoke(this, new RoutedEventArgs());

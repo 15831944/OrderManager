@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,6 +20,47 @@ namespace Dll_Airdental
         /// Airdental API網址
         /// </summary>
         public string APIPortal;
+        public static CookieContainer cookies = new CookieContainer();
+        /// <summary>
+        /// 登入後顯示UserInfo
+        /// </summary>
+        private class _Login_UserInfo
+        {
+            [JsonProperty("user_id")]
+            public string user_id { get; set; }
+
+            [JsonProperty("lastlogin")]
+            public long lastlogin { get; set; }
+
+            [JsonProperty("usergroup")]
+            public string usergroup { get; set; }
+
+            _Login_UserInfo()
+            {
+                user_id = "";
+                lastlogin = -1;
+                usergroup = "";
+            }
+        }
+        /// <summary>
+        /// User詳細訊息
+        /// </summary>
+        private class _UserDetail
+        {
+            [JsonProperty("uid")]
+            public string uid { get; set; }
+            [JsonProperty("email")]
+            public string email { get; set; }
+            [JsonProperty("name")]
+            public string name { get; set; }
+
+            _UserDetail()
+            {
+                uid = "";
+                email = "";
+                name = "";
+            }
+        }
 
         public Main()
         {
@@ -65,7 +107,17 @@ namespace Dll_Airdental
             }
         }
 
-        public bool Login(string id, string passwd, ref WebException except)
+        /// <summary>
+        /// 登入
+        /// </summary>
+        /// <param name="id">帳號</param>
+        /// <param name="passwd">密碼</param>
+        /// <param name="uid">uid</param>
+        /// <param name="mail">email</param>
+        /// <param name="UserName">user名稱</param>
+        /// <param name="except">例外</param>
+        /// <returns></returns>
+        public bool Login(string id, string passwd,ref string uid, ref string mail, ref string UserName, ref WebException except)
         {
             try
             {
@@ -78,13 +130,16 @@ namespace Dll_Airdental
                 request.Method = "POST";
                 request.ContentLength = (long)bytes.Length;
                 request.ContentType = "application/x-www-form-urlencoded";
+                request.CookieContainer = cookies;
                 Stream requestStream = request.GetRequestStream();
                 requestStream.Write(bytes, 0, bytes.Length);
                 requestStream.Close();
                 //Response資料
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                var result = ((HttpWebResponse)response).StatusDescription;
+                string WebContent = new StreamReader(response.GetResponseStream()).ReadToEnd();
                 response.Close();
+                UserDetailInfo(ref uid, ref mail, ref UserName);
+
                 return true;
             }
             catch (WebException ex)
@@ -92,6 +147,26 @@ namespace Dll_Airdental
                 except = ex;
                 return false;
             }
+        }
+
+        private void UserDetailInfo(ref string _uid, ref string _mail, ref string _UserName)
+        {
+            //https://airdental.inteware.com.tw/api/userinfo
+            string web_Detail = APIPortal + "userinfo";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(web_Detail);
+            request.Credentials = CredentialCache.DefaultCredentials;
+            request.CookieContainer = cookies;
+            request.UserAgent = ".NET Framework Example Client";
+            request.Method = "GET";
+            //Response資料
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            string WebContent = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            response.Close();
+            //CloudFileConnector.OrderLists json = JsonConvert.DeserializeObject<CloudFileConnector.OrderLists>(end);
+            _UserDetail json = JsonConvert.DeserializeObject<_UserDetail>(WebContent);
+            _uid = json.uid;
+            _mail = json.email;
+            _UserName = json.name;
         }
     }
 }

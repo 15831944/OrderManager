@@ -38,7 +38,7 @@ namespace OrderManagerNew
 {
     public partial class MainWindow : Window
     {
-        #region 變數宣告
+#region 變數宣告
         /// <summary>
         /// AirDental DLL
         /// </summary>
@@ -311,7 +311,7 @@ namespace OrderManagerNew
                     if ((SoftwareFilterCAD.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.cad_projectDirectory))
                         ProjHandle.LoadEZCADProj();
                     else if ((SoftwareFilterImplant.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.implant_projectDirectory))
-                        ProjHandle.LoadImplantProj();
+                        ProjHandle.LoadImplantProjV2();
                     else if ((SoftwareFilterOrtho.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.ortho_projectDirectory))
                         ProjHandle.LoadOrthoProj();
                     else if ((SoftwareFilterTray.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.tray_projectDirectory))
@@ -336,7 +336,7 @@ namespace OrderManagerNew
                     if ((SoftwareFilterCAD.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.cad_projectDirectory))
                         ProjHandle.LoadEZCADProj();
                     else if ((SoftwareFilterImplant.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.implant_projectDirectory))
-                        ProjHandle.LoadImplantProj();
+                        ProjHandle.LoadImplantProjV2();
                     else if ((SoftwareFilterOrtho.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.ortho_projectDirectory))
                         ProjHandle.LoadOrthoProj();
                     else if ((SoftwareFilterTray.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.tray_projectDirectory))
@@ -397,6 +397,10 @@ namespace OrderManagerNew
                             Properties.OrderManagerProps.Default.systemDisk = "";
                             Properties.Settings.Default.engineerMode = false;
                             Properties.Settings.Default.PingTime = 5;
+                            Properties.Settings.Default.FullRecord = false;
+                            Properties.Settings.Default.LastSoftwareFilter = -1;
+                            Properties.Settings.Default.AirdentalAcc = "";
+                            Properties.Settings.Default.AirdentalCookie = "";
                             Properties.Settings.Default.Save();
 
                             Properties.OrderManagerProps.Default.cad_projectDirectory = "";
@@ -407,6 +411,8 @@ namespace OrderManagerNew
                             Properties.OrderManagerProps.Default.DateFilter = (int)_DateFilter.All;
                             Properties.OrderManagerProps.Default.PatientNameFilter = "";
                             Properties.OrderManagerProps.Default.CaseNameFilter = "";
+                            Properties.OrderManagerProps.Default.mostsoftwareDisk = "";
+                            Properties.OrderManagerProps.Default.systemDisk = "";
 
                             Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
                             Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
@@ -467,12 +473,6 @@ namespace OrderManagerNew
                         }
                     case "DevBtn6":
                         {
-                            //Splint Download
-                            SetAllSoftwareTableDownloadisEnable(false);
-                            DialogBeforeDownload = new BeforeDownload();
-                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
-                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            DialogBeforeDownload.GethttpResoponse(@"https://www.dropbox.com/s/dj6p305a3ckkjxz/EZCAD.Splint_1.0.20214.0.exe?dl=1", (int)_softwareID.Splint);
 
                             break;
                         }
@@ -659,14 +659,23 @@ namespace OrderManagerNew
                 {
                     Owner = this
                 };
-                DialogLogin.ShowDialog();
+                var dialogResult = DialogLogin.ShowDialog();
+                if (dialogResult == true)
+                {
+                    usercontrolUserDetail.UserName = DialogLogin._UserName;
+                    usercontrolUserDetail.UserMail = DialogLogin._UserEmail;
+                    usercontrolUserDetail.SetUserPic(@"https://airdental.inteware.com.tw/api/v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
+                    loginStatus = true;
+                }
                 this.Effect = null;
                 this.OpacityMask = null;
             }
             else
             {
                 if (showUserDetail == false)
+                {
                     UserDetailshow(true);
+                }
                 else
                     UserDetailshow(false);
             }
@@ -1954,7 +1963,7 @@ namespace OrderManagerNew
             if (SoftwareFilterCAD.IsChecked == true)
                 ProjHandle.LoadEZCADProj();
             else if (SoftwareFilterImplant.IsChecked == true)
-                ProjHandle.LoadImplantProj();
+                ProjHandle.LoadImplantProjV2();
             else if (SoftwareFilterOrtho.IsChecked == true)
                 ProjHandle.LoadOrthoProj();
             else if (SoftwareFilterTray.IsChecked == true)
@@ -2068,7 +2077,7 @@ namespace OrderManagerNew
                     case "SoftwareFilterImplant":
                         {
                             Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.Implant;
-                            ProjHandle.LoadImplantProj();
+                            ProjHandle.LoadImplantProjV2();
                             break;
                         }
                     case "SoftwareFilterOrtho":
@@ -2196,6 +2205,7 @@ namespace OrderManagerNew
                             {
                                 UserControls.Order_implantBase Order_Implant = new UserControls.Order_implantBase();
                                 Order_Implant.SetBaseProjectShow += CaseHandler_Implant_showSingleProject;
+                                Order_Implant.SetSmallProjectDetailShow += CaseHandler_Implant_showDetail;
                                 Order_Implant.SetCaseInfo(implantInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_Implant);
                                 countIndex++;
@@ -2261,7 +2271,6 @@ namespace OrderManagerNew
                     }
             }
         }
-
         private void CaseHandler_EZCAD_showSingleProject(int projectIndex)
         {
             StackPanel_Detail.Children.Clear();
@@ -2279,9 +2288,9 @@ namespace OrderManagerNew
                 ((UserControls.Order_cadBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
             }
         }
-
         private void CaseHandler_Implant_showSingleProject(int projectIndex)
         {
+            StackPanel_Detail.Children.Clear();
             for (int i = 0; i < StackPanel_Local.Children.Count; i++)
             {
                 if (i == projectIndex)
@@ -2292,6 +2301,7 @@ namespace OrderManagerNew
         }
         private void CaseHandler_Ortho_showSingleProject(int projectIndex)
         {
+            StackPanel_Detail.Children.Clear();
             for (int i = 0; i < StackPanel_Local.Children.Count; i++)
             {
                 if (i == projectIndex)
@@ -2326,7 +2336,22 @@ namespace OrderManagerNew
                 ((UserControls.Order_tsBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
             }
         }
-
+        private void CaseHandler_Implant_showDetail(int BaseCaseIndex, int SmallCaseIndex)
+        {
+            StackPanel_Detail.Children.Clear();
+            if (StackPanel_Local.Children[BaseCaseIndex] is UserControls.Order_implantBase)
+            {
+                if (((UserControls.Order_implantBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Implant.Children[SmallCaseIndex + 1] is UserControls.Order_ImplantSmallcase tmpImplnatSmall)
+                {
+                    if (tmpImplnatSmall.IsFocusSmallCase == false)
+                    {
+                        UserControls.Detail_implantV2 detail_implant = new UserControls.Detail_implantV2();
+                        detail_implant.SetDetailInfo(((UserControls.Order_implantBase)StackPanel_Local.Children[BaseCaseIndex]).implantInfo, tmpImplnatSmall.implantsmallcaseInfo);
+                        StackPanel_Detail.Children.Add(detail_implant);
+                    }
+                }
+            }
+        }
         private void CaseHandler_Ortho_showDetail(int BaseCaseIndex, int SmallCaseIndex)
         {
             StackPanel_Detail.Children.Clear();

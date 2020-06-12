@@ -26,8 +26,8 @@ namespace OrderManagerNew.UserControls
         public delegate void implantSmallCaseEventHandler(int projectIndex);
         public event implantSmallCaseEventHandler SetsmallCaseShow;
 
-        private ImplantSmallCaseInformation implantsmallcaseInfo;
-        private bool IsFocusSmallCase;
+        public ImplantSmallCaseInformation implantsmallcaseInfo;
+        public bool IsFocusSmallCase;
         private int ItemIndex;
 
         public class ImplantSmallCaseInformation

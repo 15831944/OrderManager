@@ -117,8 +117,8 @@
     <Compile Include="UserControls\Detail_cad.xaml.cs">
       <DependentUpon>Detail_cad.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Detail_implant.xaml.cs">
-      <DependentUpon>Detail_implant.xaml</DependentUpon>
+    <Compile Include="UserControls\Detail_implantV2.xaml.cs">
+      <DependentUpon>Detail_implantV2.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Detail_ortho.xaml.cs">
       <DependentUpon>Detail_ortho.xaml</DependentUpon>
@@ -194,7 +194,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Detail_implant.xaml">
+    <Page Include="UserControls\Detail_implantV2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -4,8 +4,9 @@
   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:OrderManagerNew.UserControls"
   Title="OrderManager" Width="1310" Height="768"
   MinWidth="1280" MinHeight="768" Background="#FF353531"
-  Closing="Closing_MainWindow" Loaded="Loaded_MainWindow" StateChanged="Window_StateChanged"
-  WindowStartupLocation="CenterScreen" WindowStyle="None" mc:Ignorable="d" KeyUp="KeyUp_MainWindow">
+  Closing="Closing_MainWindow" KeyUp="KeyUp_MainWindow" Loaded="Loaded_MainWindow"
+  StateChanged="Window_StateChanged" WindowStartupLocation="CenterScreen" WindowStyle="None"
+  mc:Ignorable="d">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -402,7 +403,7 @@
                     <uc:AirdentalUserDetail
                       Grid.Column="2" x:Name="usercontrolUserDetail" HorizontalAlignment="Right"
                       VerticalAlignment="Top" Panel.ZIndex="1" LogoutClick="Click_UserDetail_Logout"
-                      UserMail="bai123456@inteware.com.tw" UserName="Alex Bai" UserPoints="987654">
+                      UserPoints="0">
                         <uc:AirdentalUserDetail.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform />
@@ -464,7 +465,7 @@
                           Content="LoginStatus" />
                         <Button
                           Grid.Row="0" Grid.Column="5" x:Name="DevBtn6"
-                          Content="Splint Download" />
+                          Content="" />
                         <Button
                           Grid.Row="0" Grid.Column="6" x:Name="DevBtn7"
                           Content="AutoDetectEXE" />
@@ -567,7 +568,7 @@
                       Grid.Column="1"
                       Background="{StaticResource background_SuperDarkCaseTable}"
                       BorderBrush="{StaticResource background_SuperDarkCaseTable}"
-                      BorderThickness="1">
+                      BorderThickness="1" Focusable="False">
                         <TabItem Header="{local:LocExtension Local}" Style="{StaticResource CaseTabItem}">
                             <Border Background="#FFEDEDE2">
                                 <ScrollViewer x:Name="scrollbar_local">

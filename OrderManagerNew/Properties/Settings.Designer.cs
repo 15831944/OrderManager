@@ -178,5 +178,17 @@ namespace OrderManagerNew.Properties {
                 this["AirdentalAcc"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AirdentalCookie {
+            get {
+                return ((string)(this["AirdentalCookie"]));
+            }
+            set {
+                this["AirdentalCookie"] = value;
+            }
+        }
     }
 }

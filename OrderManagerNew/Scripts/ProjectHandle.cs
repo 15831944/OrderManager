@@ -169,7 +169,7 @@ namespace OrderManagerNew
         /// <summary>
         /// 讀取ImplantPlanning專案
         /// </summary>
-        public void LoadImplantProj()
+        public void LoadImplantProjV2()
         {
             string implant_projectDirectory = Properties.OrderManagerProps.Default.implant_projectDirectory;
             string implant_exePath = Properties.Settings.Default.implant_exePath;
@@ -325,7 +325,17 @@ namespace OrderManagerNew
                                 CreateDate = fInfo.CreationTime,
                                 ModifyDate = fInfo.LastWriteTime
                             };
-                            
+                            try
+                            {
+                                if (xml.Element("OrderInfo").Element("PatientGender").Value.ToLower() == "male")
+                                    tmpImpOuterInfo.Gender = true;
+                                else
+                                    tmpImpOuterInfo.Gender = false;
+                            }
+                            catch
+                            {
+                                tmpImpOuterInfo.Gender = false;
+                            }
                             try
                             {
                                 string pbirthday = xml.Element("OrderInfo").Element("PatientBirthday").Value + "T00:00:00";
@@ -337,6 +347,12 @@ namespace OrderManagerNew
                             }
                             try { tmpImpOuterInfo.Clinic = xml.Element("OrderInfo").Element("Clinic").Value; } catch { tmpImpOuterInfo.Clinic = ""; }
                             try { tmpImpOuterInfo.Note = xml.Element("OrderInfo").Element("Note").Value; } catch { tmpImpOuterInfo.Note = ""; }
+
+                            try { tmpImpOuterInfo.SurgicalGoal = xml.Element("CaseInfo").Element("SurgicalGoal").Value; } catch { tmpImpOuterInfo.SurgicalGoal = ""; }
+                            try { tmpImpOuterInfo.SurgicalGuide = xml.Element("CaseInfo").Element("SurgicalGuide").Value; } catch { tmpImpOuterInfo.SurgicalGuide = ""; }
+                            try { tmpImpOuterInfo.SurgicalOption = xml.Element("CaseInfo").Element("SurgicalOption").Value; } catch { tmpImpOuterInfo.SurgicalOption = ""; }
+                            try { tmpImpOuterInfo.Surgicalkit = xml.Element("CaseInfo").Element("Surgicalkit").Value; } catch { tmpImpOuterInfo.Surgicalkit = ""; }
+
                             try { tmpImpOuterInfo.CBCTPath = xml.Element("ImageData").Element("CBCTPath").Value; } catch { tmpImpOuterInfo.CBCTPath = ""; }
                             try { tmpImpOuterInfo.JawPath = xml.Element("ImageData").Element("JawPath").Value; } catch { tmpImpOuterInfo.JawPath = ""; }
                             try { tmpImpOuterInfo.JawTrayPath = xml.Element("ImageData").Element("JawTrayPath").Value; } catch { tmpImpOuterInfo.JawTrayPath = ""; }

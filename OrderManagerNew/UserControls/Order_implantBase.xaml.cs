@@ -27,10 +27,13 @@ namespace OrderManagerNew.UserControls
         //委派到MainWindow.xaml.cs裡面的CaseHandler_Implant_showSingleProject()
         public delegate void implantBaseEventHandler(int projectIndex);
         public event implantBaseEventHandler SetBaseProjectShow;
+        //委派到MainWindow.xaml.cs裡面的CaseHandler_Ortho_showDetail()
+        public delegate void implantBaseEventHandler2(int BaseCaseIndex, int SmallCaseIndex);
+        public event implantBaseEventHandler2 SetSmallProjectDetailShow;
 
-        private ImplantOuterInformation implantInfo;
+        public ImplantOuterInformation implantInfo;
         private bool IsFocusCase;
-        private int ItemIndex;
+        public int BaseCaseIndex;
         /// <summary>
         /// ImplantPlanning專案資訊
         /// </summary>
@@ -38,10 +41,16 @@ namespace OrderManagerNew.UserControls
         {
             public string OrderNumber { get; set; }
             public string PatientName { get; set; }
+            public bool Gender { get; set; }
             public DateTime PatientBirth { get; set; }
             public DateTime CreateDate { get; set; }
             public DateTime ModifyDate { get; set; }
             public string CaseDirectoryPath { get; set; }
+
+            public string SurgicalGoal { get; set; }
+            public string SurgicalGuide { get; set; }
+            public string SurgicalOption { get; set; }
+            public string Surgicalkit { get; set; }
 
             public string Clinic { get; set; }
             public string Note { get; set; }
@@ -55,10 +64,16 @@ namespace OrderManagerNew.UserControls
             {
                 OrderNumber = "";
                 PatientName = "";
+                Gender = false;
                 PatientBirth = new DateTime();
                 CreateDate = new DateTime();
                 ModifyDate = new DateTime();
                 CaseDirectoryPath = "";
+
+                SurgicalGoal = "";
+                SurgicalGuide = "";
+                SurgicalOption = "";
+                Surgicalkit = "";
 
                 Clinic = "";
                 Note = "";
@@ -78,7 +93,7 @@ namespace OrderManagerNew.UserControls
             label_designStep.Content = "";
             label_createDate.Content = "";
             IsFocusCase = false;
-            ItemIndex = -1;
+            BaseCaseIndex = -1;
         }
 
         /// <summary>
@@ -98,7 +113,7 @@ namespace OrderManagerNew.UserControls
                 label_patientName.ToolTip = OrderManagerNew.TranslationSource.Instance["PatientNameWithAge"];
             }   
             label_createDate.Content = implantInfo.CreateDate.ToLongDateString();
-            ItemIndex = Index;
+            BaseCaseIndex = Index;
         }
 
         /// <summary>
@@ -114,7 +129,7 @@ namespace OrderManagerNew.UserControls
                 //找有幾個tii檔就等於有幾個Implant要給Guide的檔
                 if (Path.GetExtension(filename).ToLower() == ".tii")
                 {
-                    OrderManagerNew.UserControls.Order_ImplantSmallcase ImplantSmallCase = new OrderManagerNew.UserControls.Order_ImplantSmallcase();
+                    Order_ImplantSmallcase ImplantSmallCase = new Order_ImplantSmallcase();
                     ImplantSmallCase.SetsmallCaseShow += SmallCaseHandler;
                     //記錄內部專案資料夾名稱(就是OrderName)、Guide專案資料夾路徑和檢查是否有從Guide輸出的模型
                     ImplantSmallCaseInformation impInfo = new ImplantSmallCaseInformation
@@ -145,6 +160,7 @@ namespace OrderManagerNew.UserControls
 
         private void SmallCaseHandler(int SmallcaseIndex)
         {
+            SetSmallProjectDetailShow(BaseCaseIndex, SmallcaseIndex);  //MainWindow顯示Small Case Detail
             for (int i = 0; i < implantInfo.List_smallcase.Count; i++)
             {
                 if (i == SmallcaseIndex)
@@ -222,7 +238,7 @@ namespace OrderManagerNew.UserControls
             }
             else
             {
-                SetBaseProjectShow(ItemIndex);
+                SetBaseProjectShow(BaseCaseIndex);
                 if (IsFocusCase == false)
                 {
                     SetCaseFocusStatus(true);
