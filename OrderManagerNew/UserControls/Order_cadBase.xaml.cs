@@ -104,44 +104,38 @@ namespace OrderManagerNew.UserControls
         {
             string ShowStep = OrderManagerNew.TranslationSource.Instance["CurrentStep"];
 
-            if ((cadInfoDesignStep & (int)EZCADStep.DDS_ZAXIS) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ZAXIS"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_MARGIN) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_MARGIN"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_INSERTION) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_INSERTION"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_INNER) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_INNER"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_PRECROWN) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_PRECROWN"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_CROWN) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_CROWN"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_COPING) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_COPING"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_CONNECTOR) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_CONNECTOR"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_FINAL) == 0)
+            if ((cadInfoDesignStep & (int)EZCADStep.DDS_FINAL) != 0)
                 ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_FINAL"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_JIG_POSITION) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_JIG_POSITION"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ABUTMENT) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ABUTMENT"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_CURBACK) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_CURBACK"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_TEMPCROWN) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_TEMPCROWN"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_EMODEL_MARGIN) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_EMODEL_MARGIN"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_CUTBACK) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_CUTBACK"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_CUSTOM_CROWN_DATABASE) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_CUSTOM_CROWN_DATABASE"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ABUTMENT_DEFORM) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ABUTMENT_DEFORM"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ABUTMENT_CUTBACK) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ABUTMENT_CUTBACK"];
-            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ABUTMENT_SCREW) == 0)
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ABUTMENT_SCREW) != 0)
                 ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ABUTMENT_SCREW"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_CONNECTOR) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_CONNECTOR"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_COPING) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_COPING"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_CUTBACK) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_CUTBACK"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_TEMPCROWN) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_TEMPCROWN"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_CROWN) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_CROWN"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_INNER) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_INNER"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ABUTMENT_DEFORM) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ABUTMENT_DEFORM"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ABUTMENT_CUTBACK) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ABUTMENT_CUTBACK"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ABUTMENT) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ABUTMENT"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_PRECROWN) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_PRECROWN"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_INSERTION) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_INSERTION"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_MARGIN) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_MARGIN"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_JIG_POSITION) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_JIG_POSITION"];
+            else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ZAXIS) != 0)
+                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ZAXIS"];
             else
                 ShowStep += OrderManagerNew.TranslationSource.Instance["None"];
 

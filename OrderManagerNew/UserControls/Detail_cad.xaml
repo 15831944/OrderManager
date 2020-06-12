@@ -80,9 +80,13 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
+                <TextBlock
+                  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                  FontSize="26" FontWeight="Bold" Text="Image not found"
+                  TextWrapping="Wrap" />
                 <Image
                   Grid.Column="0" x:Name="image_toothJPG" Margin="3"
-                  Source="/ImageSource/DetailTable/cadDemo.jpg" />
+                  Panel.ZIndex="1" Source="/ImageSource/DetailTable/cadDemo.jpg" />
                 <TextBox
                   Grid.Column="1" x:Name="textbox_toothProductInfo" Height="236"
                   MaxHeight="236" Margin="0,3,3,3"

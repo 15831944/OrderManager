@@ -38,7 +38,11 @@ namespace OrderManagerNew
 {
     public partial class MainWindow : Window
     {
-#region 變數宣告
+        #region 變數宣告
+        /// <summary>
+        /// AirDental DLL
+        /// </summary>
+        Dll_Airdental.Main Airdental;
         /// <summary>
         /// 日誌檔cs
         /// </summary>
@@ -119,6 +123,7 @@ namespace OrderManagerNew
                 }
             }
 
+            Airdental = new Dll_Airdental.Main();
             //初始化LogRecorder
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
@@ -347,7 +352,7 @@ namespace OrderManagerNew
         }
         #endregion
 
-        #region WindowFrame
+#region WindowFrame
         private void KeyUp_MainWindow(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F5)
@@ -637,7 +642,43 @@ namespace OrderManagerNew
         {
             GoToSetting(-1);
         }
-        
+
+        private void Click_FunctionTable_User(object sender, RoutedEventArgs e)
+        {
+            if (Airdental.CheckServerStatus() != true)
+            {
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Click_FunctionTable_User", "Connection error"); //TODO 多國語系
+                return;
+            }
+
+            if (loginStatus == false)
+            {
+                var blur = new BlurEffect();
+                this.Effect = blur;
+                UserLogin DialogLogin = new UserLogin
+                {
+                    Owner = this
+                };
+                DialogLogin.ShowDialog();
+                this.Effect = null;
+                this.OpacityMask = null;
+            }
+            else
+            {
+                if (showUserDetail == false)
+                    UserDetailshow(true);
+                else
+                    UserDetailshow(false);
+            }
+        }
+
+        private void Click_UserDetail_Logout(object sender, RoutedEventArgs e)
+        {
+            UserDetailshow(false);
+            loginStatus = false;
+            SnackBarShow("Logout");
+        }
+
         /// <summary>
         /// 設定SofttwareTable各Icon顯示狀態
         /// </summary>
@@ -1834,32 +1875,6 @@ namespace OrderManagerNew
 
             if (DownloadStart == true)
                 UpdateFunc.StartDownloadSoftware();
-        }
-        
-        private void Click_FunctionTable_User(object sender, RoutedEventArgs e)
-        {
-            if (loginStatus == false)
-            {
-                AirdentalLogin DialogLogin = new AirdentalLogin
-                {
-                    Owner = this
-                };
-                DialogLogin.ShowDialog();
-            }
-            else
-            {
-                if (showUserDetail == false)
-                    UserDetailshow(true);
-                else
-                    UserDetailshow(false);
-            }
-        }
-        
-        private void Click_UserDetail_Logout(object sender, RoutedEventArgs e)
-        {
-            UserDetailshow(false);
-            loginStatus = false;
-            SnackBarShow("Logout");
         }
 
         private void GoToSetting(int softwareID)

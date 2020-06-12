@@ -87,8 +87,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AirdentalLogin.xaml.cs">
-      <DependentUpon>AirdentalLogin.xaml</DependentUpon>
+    <Compile Include="UserLogin.xaml.cs">
+      <DependentUpon>UserLogin.xaml</DependentUpon>
     </Compile>
     <Compile Include="BeforeDownload.xaml.cs">
       <DependentUpon>BeforeDownload.xaml</DependentUpon>
@@ -144,7 +144,7 @@
     <Compile Include="UserControls\Order_tsBase.xaml.cs">
       <DependentUpon>Order_tsBase.xaml</DependentUpon>
     </Compile>
-    <Page Include="AirdentalLogin.xaml">
+    <Page Include="UserLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -292,6 +292,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ImageSource\DetailTable\cadDemo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AirDental\Dll_Airdental.csproj">
+      <Project>{f843136f-6291-435d-9038-dc79401e7dcb}</Project>
+      <Name>Dll_Airdental</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

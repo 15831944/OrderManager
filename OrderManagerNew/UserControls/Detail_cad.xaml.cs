@@ -125,9 +125,9 @@ namespace OrderManagerNew.UserControls
                 image_toothJPG.Source = new BitmapImage(new Uri(imgPath, UriKind.RelativeOrAbsolute));
                 image_toothJPG.EndInit();
             }
-            catch(Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);//TODO Log記錄
+
             }
             try
             {

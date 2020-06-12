@@ -741,6 +741,7 @@
         <Setter Property="Foreground" Value="{DynamicResource Common_DarkBrown}" />
     </Style>
     <Style x:Key="textbox_detail" BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
+        <Setter Property="FontFamily" Value="Arial" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="White" />
         <Setter Property="Foreground" Value="{StaticResource Common_DarkBrown}" />
