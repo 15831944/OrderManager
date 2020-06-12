@@ -662,8 +662,8 @@ namespace OrderManagerNew
                 var dialogResult = DialogLogin.ShowDialog();
                 if (dialogResult == true)
                 {
-                    usercontrolUserDetail.UserName = DialogLogin._UserName;
-                    usercontrolUserDetail.UserMail = DialogLogin._UserEmail;
+                    usercontrolUserDetail.UserMail = DialogLogin.UserDetail[(int)_AirD_LoginDetail.EMAIL];
+                    usercontrolUserDetail.UserName = DialogLogin.UserDetail[(int)_AirD_LoginDetail.USERNAME];
                     usercontrolUserDetail.SetUserPic(@"https://airdental.inteware.com.tw/api/v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
                     loginStatus = true;
                 }

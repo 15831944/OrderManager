@@ -27,19 +27,19 @@ namespace Dll_Airdental
         private class _Login_UserInfo
         {
             [JsonProperty("user_id")]
-            public string user_id { get; set; }
+            public string User_id { get; set; }
 
             [JsonProperty("lastlogin")]
-            public long lastlogin { get; set; }
+            public long Lastlogin { get; set; }
 
             [JsonProperty("usergroup")]
-            public string usergroup { get; set; }
+            public string Usergroup { get; set; }
 
             _Login_UserInfo()
             {
-                user_id = "";
-                lastlogin = -1;
-                usergroup = "";
+                User_id = "";
+                Lastlogin = -1;
+                Usergroup = "";
             }
         }
         /// <summary>
@@ -48,17 +48,17 @@ namespace Dll_Airdental
         private class _UserDetail
         {
             [JsonProperty("uid")]
-            public string uid { get; set; }
+            public string Uid { get; set; }
             [JsonProperty("email")]
-            public string email { get; set; }
+            public string Email { get; set; }
             [JsonProperty("name")]
-            public string name { get; set; }
+            public string Name { get; set; }
 
             _UserDetail()
             {
-                uid = "";
-                email = "";
-                name = "";
+                Uid = "";
+                Email = "";
+                Name = "";
             }
         }
 
@@ -108,20 +108,20 @@ namespace Dll_Airdental
         }
 
         /// <summary>
-        /// 登入
+        /// AirDental登入
         /// </summary>
-        /// <param name="id">帳號</param>
-        /// <param name="passwd">密碼</param>
-        /// <param name="uid">uid</param>
-        /// <param name="mail">email</param>
-        /// <param name="UserName">user名稱</param>
-        /// <param name="except">例外</param>
+        /// <param name="loginData">[0]:API網址 [1]:帳號 [2]:密碼</param>
+        /// <param name="userDetail">[0]:uid [1]:mail [2]:userName</param>
+        /// <param name="except"></param>
         /// <returns></returns>
-        public bool Login(string id, string passwd,ref string uid, ref string mail, ref string UserName, ref WebException except)
+        public bool Login(string[] loginData,ref string[] userDetail, ref WebException except)
         {
+            if (loginData[0] != "")
+                APIPortal = loginData[0];
+
             try
             {
-                byte[] bytes = Encoding.UTF8.GetBytes("account=" + id + "&password=" + passwd);
+                byte[] bytes = Encoding.UTF8.GetBytes("account=" + loginData[1] + "&password=" + loginData[2]);
                 string web_login = APIPortal + "login";
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(web_login);
@@ -138,7 +138,7 @@ namespace Dll_Airdental
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 string WebContent = new StreamReader(response.GetResponseStream()).ReadToEnd();
                 response.Close();
-                UserDetailInfo(ref uid, ref mail, ref UserName);
+                UserDetailInfo(ref userDetail[0], ref userDetail[1], ref userDetail[2]);
 
                 return true;
             }
@@ -164,9 +164,9 @@ namespace Dll_Airdental
             response.Close();
             //CloudFileConnector.OrderLists json = JsonConvert.DeserializeObject<CloudFileConnector.OrderLists>(end);
             _UserDetail json = JsonConvert.DeserializeObject<_UserDetail>(WebContent);
-            _uid = json.uid;
-            _mail = json.email;
-            _UserName = json.name;
+            _uid = json.Uid;
+            _mail = json.Email;
+            _UserName = json.Name;
         }
     }
 }

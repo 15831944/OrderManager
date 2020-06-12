@@ -112,4 +112,13 @@ namespace OrderManagerNew
         ThisWeek,
         LastTwoWeek
     }
+    /// <summary>
+    /// 登入時傳回的字串
+    /// </summary>
+    public enum _AirD_LoginDetail : int
+    {
+        UID = 0,
+        EMAIL,
+        USERNAME
+    }
 }

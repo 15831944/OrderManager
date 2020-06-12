@@ -22,8 +22,10 @@ namespace OrderManagerNew
     public partial class UserLogin : Window
     {
         LogRecorder log;    //日誌檔cs
-        public string _UserEmail = "";
-        public string _UserName = "";
+        /// <summary>
+        /// uid、mail、userName
+        /// </summary>
+        public string[] UserDetail;
         public UserLogin()
         {
             InitializeComponent();
@@ -72,14 +74,15 @@ namespace OrderManagerNew
 
             Dll_Airdental.Main Airdental = new Dll_Airdental.Main();
             WebException ex = new WebException();
-            string _UserUid = "";
-            if (Airdental.Login(textbox_Account.Text, passwordbox_PWD.Password, ref _UserUid, ref _UserEmail, ref _UserName, ref ex) == true)
+            string[] LoginData = new string[3]{ @"https://airdental.inteware.com.tw/api/", textbox_Account.Text, passwordbox_PWD.Password};//API網址、帳號、密碼
+            UserDetail = new string[3] { "", "", "" };//uid、mail、userName
+            if (Airdental.Login(LoginData, ref UserDetail, ref ex) == true)
             {
                 Properties.Settings.Default.AirdentalAcc = textbox_Account.Text;
                 Properties.Settings.Default.Save();
-                if(_UserUid != "")
+                if(UserDetail[(int)_AirD_LoginDetail.UID] != "")
                 {
-                    Properties.OrderManagerProps.Default.AirD_uid = _UserUid;
+                    Properties.OrderManagerProps.Default.AirD_uid = UserDetail[(int)_AirD_LoginDetail.UID];
                     DialogResult = true;
                 }
                 else
