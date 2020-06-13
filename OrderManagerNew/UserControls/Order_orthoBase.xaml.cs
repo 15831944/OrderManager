@@ -91,7 +91,7 @@ namespace OrderManagerNew.UserControls
             {
                 int patientAge = DateTime.Today.Year - orthoInfo.PatientBirth.Year;
                 label_patientName.Content += "(" + patientAge.ToString() + ")";
-                label_patientName.ToolTip = OrderManagerNew.TranslationSource.Instance["PatientNameWithAge"];
+                label_patientName.ToolTip = TranslationSource.Instance["PatientNameWithAge"];
             }
             label_createDate.Content = orthoInfo.CreateDate.ToLongDateString();
             BaseCaseIndex = Index;
@@ -141,7 +141,7 @@ namespace OrderManagerNew.UserControls
                             ModifyTime = fInfo.LastWriteTime,
                             SmallCaseXmlPath = SmallXmlPath,
 
-                            ProductTypeString = OrderManagerNew.TranslationSource.Instance["ClearAligner"],
+                            ProductTypeString = TranslationSource.Instance["ClearAligner"],
                             Name = orthodata.patientInformation.m_PatientName,
                             OrderID = orthodata.patientInformation.m_PatientID,
                             Gender = orthodata.patientInformation.m_PatientSex ? TranslationSource.Instance["Male"] : TranslationSource.Instance["Female"],

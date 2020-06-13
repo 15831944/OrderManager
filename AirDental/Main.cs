@@ -20,7 +20,10 @@ namespace Dll_Airdental
         /// Airdental API網址
         /// </summary>
         public string APIPortal;
-        public static CookieContainer cookies = new CookieContainer();
+        /// <summary>
+        /// Airdental Cookie
+        /// </summary>
+        private string CookieStr;
         /// <summary>
         /// 登入後顯示UserInfo
         /// </summary>
@@ -108,13 +111,13 @@ namespace Dll_Airdental
         }
 
         /// <summary>
-        /// AirDental登入
+        /// AirDental 登入
         /// </summary>
         /// <param name="loginData">[0]:API網址 [1]:帳號 [2]:密碼</param>
         /// <param name="userDetail">[0]:uid [1]:mail [2]:userName</param>
-        /// <param name="except"></param>
+        /// <param name="except">例外</param>
         /// <returns></returns>
-        public bool Login(string[] loginData,ref string[] userDetail, ref WebException except)
+        public bool Login(string[] loginData,ref string[] userDetail, ref string Importcookie, ref WebException except)
         {
             if (loginData[0] != "")
                 APIPortal = loginData[0];
@@ -130,7 +133,7 @@ namespace Dll_Airdental
                 request.Method = "POST";
                 request.ContentLength = (long)bytes.Length;
                 request.ContentType = "application/x-www-form-urlencoded";
-                request.CookieContainer = cookies;
+                request.CookieContainer = new CookieContainer();
                 Stream requestStream = request.GetRequestStream();
                 requestStream.Write(bytes, 0, bytes.Length);
                 requestStream.Close();
@@ -138,9 +141,12 @@ namespace Dll_Airdental
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 string WebContent = new StreamReader(response.GetResponseStream()).ReadToEnd();
                 response.Close();
-                UserDetailInfo(ref userDetail[0], ref userDetail[1], ref userDetail[2]);
-
-                return true;
+                string cookiesstr = request.CookieContainer.GetCookieHeader(request.RequestUri);
+                Importcookie = cookiesstr;
+                if (UserDetailInfo(ref userDetail, cookiesstr, ref except) == true)
+                    return true;
+                else
+                    return false;
             }
             catch (WebException ex)
             {
@@ -149,24 +155,68 @@ namespace Dll_Airdental
             }
         }
 
-        private void UserDetailInfo(ref string _uid, ref string _mail, ref string _UserName)
+        /// <summary>
+        /// User詳細資料
+        /// </summary>
+        /// <param name="userDetail">[0]:uid [1]:mail [2]:userName</param>
+        public bool UserDetailInfo(ref string[] userDetail,string ImportCookie,ref WebException except)
         {
-            //https://airdental.inteware.com.tw/api/userinfo
-            string web_Detail = APIPortal + "userinfo";
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(web_Detail);
-            request.Credentials = CredentialCache.DefaultCredentials;
-            request.CookieContainer = cookies;
-            request.UserAgent = ".NET Framework Example Client";
-            request.Method = "GET";
-            //Response資料
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            string WebContent = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            response.Close();
-            //CloudFileConnector.OrderLists json = JsonConvert.DeserializeObject<CloudFileConnector.OrderLists>(end);
-            _UserDetail json = JsonConvert.DeserializeObject<_UserDetail>(WebContent);
-            _uid = json.Uid;
-            _mail = json.Email;
-            _UserName = json.Name;
+            try
+            {
+                //https://airdental.inteware.com.tw/api/userinfo
+                string web_Detail = APIPortal + "userinfo";
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(web_Detail);
+                request.Credentials = CredentialCache.DefaultCredentials;
+                //request.CookieContainer = ImportCookie;
+                //string cookiesstr = request.CookieContainer.GetCookieHeader(request.RequestUri);
+                request.Headers.Add("Cookie", ImportCookie);
+                request.UserAgent = ".NET Framework Example Client";
+                request.Method = "GET";
+                //Response資料
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string WebContent = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                response.Close();
+                _UserDetail json = JsonConvert.DeserializeObject<_UserDetail>(WebContent);
+                userDetail[0] = json.Uid;
+                userDetail[1] = json.Email;
+                userDetail[2] = json.Name;
+                //儲存Cookie
+                CookieStr = ImportCookie;
+                return true;
+            }
+            catch(WebException ex)
+            {
+                except = ex;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Airdental 登出
+        /// </summary>
+        /// <param name="except">例外</param>
+        /// <returns></returns>
+        public bool Logout(ref WebException except)
+        {
+            try
+            {
+                string web_logout = APIPortal + "logout";
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(web_logout);
+                request.Credentials = CredentialCache.DefaultCredentials;
+                request.UserAgent = ".NET Framework Example Client";
+                request.Method = "DELETE";
+                request.Headers.Add("Cookie", CookieStr);
+                //Response資料
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                response.Close();
+                return true;
+            }
+            catch(WebException ex)
+            {
+                except = ex;
+                return false;
+            }
         }
     }
 }

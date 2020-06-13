@@ -146,19 +146,19 @@ namespace OrderManagerNew.UserControls
             string ShowStep = "";
 
             if ((trayDesignStep & (int)TrayStep.GDS_MODELEDIT) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_MODELEDIT"];
+                ShowStep += TranslationSource.Instance["GDS_MODELEDIT"];
             else if((trayDesignStep & (int)TrayStep.GDS_BLOCKOUT) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_BLOCKOUT"];
+                ShowStep += TranslationSource.Instance["GDS_BLOCKOUT"];
             else if ((trayDesignStep & (int)TrayStep.GDS_MARGIN) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_MARGIN"];
+                ShowStep += TranslationSource.Instance["GDS_MARGIN"];
             else if ((trayDesignStep & (int)TrayStep.GDS_GUIDECREATE_T) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_GUIDECREATE_T"];
+                ShowStep += TranslationSource.Instance["GDS_GUIDECREATE_T"];
             else if ((trayDesignStep & (int)TrayStep.GDS_POSTPROCESS) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_POSTPROCESS"];
+                ShowStep += TranslationSource.Instance["GDS_POSTPROCESS"];
             else if ((trayDesignStep & (int)TrayStep.GDS_OUTPUT) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_OUTPUT"];
+                ShowStep += TranslationSource.Instance["GDS_OUTPUT"];
             else
-                ShowStep += OrderManagerNew.TranslationSource.Instance["None"];
+                ShowStep += TranslationSource.Instance["None"];
 
             return ShowStep;
         }
@@ -173,23 +173,23 @@ namespace OrderManagerNew.UserControls
             string ShowStep = "";
 
             if ((splintDesignStep & (int)SplintStep.GDS_MODELEDIT) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_MODELEDIT"];
+                ShowStep += TranslationSource.Instance["GDS_MODELEDIT"];
             else if ((splintDesignStep & (int)SplintStep.GDS_BLOCKOUT) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_BLOCKOUT"];
+                ShowStep += TranslationSource.Instance["GDS_BLOCKOUT"];
             else if ((splintDesignStep & (int)SplintStep.GDS_MARGIN) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_MARGIN"];
+                ShowStep += TranslationSource.Instance["GDS_MARGIN"];
             else if ((splintDesignStep & (int)SplintStep.GDS_GUIDECREATE_S) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_GUIDECREATE_S"];
+                ShowStep += TranslationSource.Instance["GDS_GUIDECREATE_S"];
             else if ((splintDesignStep & (int)SplintStep.GDS_POSTPROCESS) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_POSTPROCESS"];
+                ShowStep += TranslationSource.Instance["GDS_POSTPROCESS"];
             else if ((splintDesignStep & (int)SplintStep.GDS_OUTPUT) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_OUTPUT"];
+                ShowStep += TranslationSource.Instance["GDS_OUTPUT"];
             else if ((splintDesignStep & (int)SplintStep.GDS_SPLINT_CREATION) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_SPLINT_CREATION"];
+                ShowStep += TranslationSource.Instance["GDS_SPLINT_CREATION"];
             else if ((splintDesignStep & (int)SplintStep.GDS_SPLINT_TOOLKIT) == 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["GDS_SPLINT_TOOLKIT"];
+                ShowStep += TranslationSource.Instance["GDS_SPLINT_TOOLKIT"];
             else
-                ShowStep += OrderManagerNew.TranslationSource.Instance["None"];
+                ShowStep += TranslationSource.Instance["None"];
 
             return ShowStep;
         }
@@ -204,7 +204,7 @@ namespace OrderManagerNew.UserControls
             trayInfo = Import;
             trayInfo.DesignStepString = GetTrayDesignStep((int)trayInfo.DesignStep);
             label_orderID.Content = trayInfo.OrderID.Substring(trayInfo.OrderID.IndexOf('-') + 1);
-            label_designStep.Content = OrderManagerNew.TranslationSource.Instance["CurrentStep"] + trayInfo.DesignStepString;
+            label_designStep.Content = TranslationSource.Instance["CurrentStep"] + trayInfo.DesignStepString;
             label_createDate.Content = trayInfo.CreateDate.ToLongDateString();
             ItemIndex = Index;
         }
@@ -225,7 +225,7 @@ namespace OrderManagerNew.UserControls
             splintInfo = Import;
             splintInfo.DesignStepString = GetSplintDesignStep((int)splintInfo.DesignStep);
             label_orderID.Content = splintInfo.OrderID.Substring(splintInfo.OrderID.IndexOf('-') + 1);
-            label_designStep.Content = OrderManagerNew.TranslationSource.Instance["CurrentStep"] + splintInfo.DesignStepString;
+            label_designStep.Content = TranslationSource.Instance["CurrentStep"] + splintInfo.DesignStepString;
             label_createDate.Content = splintInfo.CreateDate.ToLongDateString();
             ItemIndex = Index;
         }

@@ -223,7 +223,7 @@
     <value>隱藏密碼</value>
   </data>
   <data name="Logout" xml:space="preserve">
-    <value>登出</value>
+    <value>登出 </value>
   </data>
   <data name="Downloadpath" xml:space="preserve">
     <value>下載資料夾</value>
@@ -542,5 +542,8 @@
   </data>
   <data name="SurgicalKit" xml:space="preserve">
     <value>手術器械</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>你好! </value>
   </data>
 </root>

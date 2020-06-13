@@ -110,7 +110,7 @@ namespace OrderManagerNew.UserControls
             {
                 int patientAge = DateTime.Today.Year - implantInfo.PatientBirth.Year;
                 label_patientName.Content += "(" + patientAge.ToString() + ")";
-                label_patientName.ToolTip = OrderManagerNew.TranslationSource.Instance["PatientNameWithAge"];
+                label_patientName.ToolTip = TranslationSource.Instance["PatientNameWithAge"];
             }   
             label_createDate.Content = implantInfo.CreateDate.ToLongDateString();
             BaseCaseIndex = Index;
@@ -173,7 +173,7 @@ namespace OrderManagerNew.UserControls
         private void Click_OpenDir(object sender, RoutedEventArgs e)
         {
             OrderManagerFunctions omFunc = new OrderManagerFunctions();
-            omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + System.IO.Path.GetDirectoryName(implantInfo.CaseDirectoryPath) + "\"");
+            omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + Path.GetDirectoryName(implantInfo.CaseDirectoryPath) + "\"");
         }
 
         /// <summary>

@@ -102,42 +102,42 @@ namespace OrderManagerNew.UserControls
         /// <returns></returns>
         private string GetDesignStep(int cadInfoDesignStep)
         {
-            string ShowStep = OrderManagerNew.TranslationSource.Instance["CurrentStep"];
+            string ShowStep = TranslationSource.Instance["CurrentStep"];
 
             if ((cadInfoDesignStep & (int)EZCADStep.DDS_FINAL) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_FINAL"];
+                ShowStep += TranslationSource.Instance["DDS_FINAL"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ABUTMENT_SCREW) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ABUTMENT_SCREW"];
+                ShowStep += TranslationSource.Instance["DDS_ABUTMENT_SCREW"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_CONNECTOR) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_CONNECTOR"];
+                ShowStep += TranslationSource.Instance["DDS_CONNECTOR"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_COPING) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_COPING"];
+                ShowStep += TranslationSource.Instance["DDS_COPING"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_CUTBACK) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_CUTBACK"];
+                ShowStep += TranslationSource.Instance["DDS_CUTBACK"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_TEMPCROWN) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_TEMPCROWN"];
+                ShowStep += TranslationSource.Instance["DDS_TEMPCROWN"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_CROWN) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_CROWN"];
+                ShowStep += TranslationSource.Instance["DDS_CROWN"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_INNER) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_INNER"];
+                ShowStep += TranslationSource.Instance["DDS_INNER"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ABUTMENT_DEFORM) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ABUTMENT_DEFORM"];
+                ShowStep += TranslationSource.Instance["DDS_ABUTMENT_DEFORM"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ABUTMENT_CUTBACK) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ABUTMENT_CUTBACK"];
+                ShowStep += TranslationSource.Instance["DDS_ABUTMENT_CUTBACK"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ABUTMENT) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ABUTMENT"];
+                ShowStep += TranslationSource.Instance["DDS_ABUTMENT"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_PRECROWN) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_PRECROWN"];
+                ShowStep += TranslationSource.Instance["DDS_PRECROWN"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_INSERTION) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_INSERTION"];
+                ShowStep += TranslationSource.Instance["DDS_INSERTION"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_MARGIN) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_MARGIN"];
+                ShowStep += TranslationSource.Instance["DDS_MARGIN"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_JIG_POSITION) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_JIG_POSITION"];
+                ShowStep += TranslationSource.Instance["DDS_JIG_POSITION"];
             else if ((cadInfoDesignStep & (int)EZCADStep.DDS_ZAXIS) != 0)
-                ShowStep += OrderManagerNew.TranslationSource.Instance["DDS_ZAXIS"];
+                ShowStep += TranslationSource.Instance["DDS_ZAXIS"];
             else
-                ShowStep += OrderManagerNew.TranslationSource.Instance["None"];
+                ShowStep += TranslationSource.Instance["None"];
 
             return ShowStep;
         }

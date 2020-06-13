@@ -140,8 +140,8 @@ namespace OrderManagerNew
                 BackgroundWorker bw = sender as BackgroundWorker;
 
                 //跳過https檢測 & Win7 相容
-                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-                System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
 
                 //Request資料
                 HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(readyInstallSoftwareInfo.softwareDownloadLink);
@@ -161,14 +161,14 @@ namespace OrderManagerNew
 
                         if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == false)
                         {
-                            Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + "IntewareTempFile\\";
+                            Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + "IntewareTempFile\\";
                             Properties.Settings.Default.Save();
-                            System.IO.Directory.CreateDirectory(Properties.Settings.Default.DownloadFolder);
+                            Directory.CreateDirectory(Properties.Settings.Default.DownloadFolder);
                         }
 
                         // 取得下載的檔名
                         Uri uri = new Uri(readyInstallSoftwareInfo.softwareDownloadLink);
-                        downloadfilepath = Properties.Settings.Default.DownloadFolder + @"\" + System.IO.Path.GetFileName(uri.LocalPath);
+                        downloadfilepath = Properties.Settings.Default.DownloadFolder + @"\" + Path.GetFileName(uri.LocalPath);
                         Stream netStream = httpResponse.GetResponseStream();
                         Stream fileStream = new FileStream(downloadfilepath, FileMode.Create);
                         byte[] read = new byte[1024];
@@ -261,8 +261,8 @@ namespace OrderManagerNew
         /// </summary>
         public void LoadHLXml()
         {
-            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
 
             XDocument xDoc;
             try

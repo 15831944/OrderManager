@@ -103,9 +103,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-            <Image
-              Grid.Column="0" Height="38"
-              Source="{DynamicResource icon_pointsDrawingImage}" />
+            <Image Grid.Column="0" Height="38" Source="{DynamicResource icon_pointsDrawingImage}" />
             <Label
               Grid.Column="1" x:Name="lb_points"
               Content="{Binding UserPoints}"
@@ -114,7 +112,7 @@
         <Button
           Grid.Row="4" Height="36" Click="BtnClick_Logout"
           Content="{local:LocExtension Logout}"
-          FontSize="18"
+          Focusable="False" FontSize="18"
           Style="{DynamicResource OkButton}" />
     </Grid>
 </UserControl>

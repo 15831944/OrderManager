@@ -152,7 +152,7 @@ namespace OrderManagerNew
             {
                 if (Directory.Exists(Drive) == false)
                 {
-                    System.IO.Directory.CreateDirectory(Drive);
+                    Directory.CreateDirectory(Drive);
                 }
 
                 string str = Path.GetPathRoot(Drive);
@@ -225,8 +225,8 @@ namespace OrderManagerNew
         void DoWork(object sender, DoWorkEventArgs e)
         {
             //跳過https檢測 & Win7 相容
-            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
 
             //Request資料
             try
@@ -290,8 +290,8 @@ namespace OrderManagerNew
                 return false;
             }
             string[] SoftwareNameArray = new string[6] { "EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD tray", "EZCAD splint", "EZCAD guide" };
-            label_TitleBar.Content = OrderManagerNew.TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
-            label_Header.Content = OrderManagerNew.TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
+            label_TitleBar.Content = TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
+            label_Header.Content = TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             if(Properties.OrderManagerProps.Default.mostsoftwareDisk != "")
                 textbox_InstallPath.Text = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
             else if(Properties.OrderManagerProps.Default.systemDisk != "")
@@ -306,7 +306,7 @@ namespace OrderManagerNew
                 {
                     // 取得下載的檔名
                     Uri uri = new Uri(http_url);
-                    string downloadfileRealName = System.IO.Path.GetFileName(uri.LocalPath);
+                    string downloadfileRealName = Path.GetFileName(uri.LocalPath);
                     label_DownloadFileName.Content = "(" + downloadfileRealName + ")";
 
                     if (RemainingSpace(textbox_InstallPath.Text) == true)  //客戶電腦剩餘空間
@@ -327,7 +327,7 @@ namespace OrderManagerNew
                         else
                         {
                             label_AvailableSpace.Foreground = Brushes.White;
-                            label_AvailableSpace.ToolTip = OrderManagerNew.TranslationSource.Instance["SpaceAvailable"];
+                            label_AvailableSpace.ToolTip = TranslationSource.Instance["SpaceAvailable"];
                         }
                     }
                     else

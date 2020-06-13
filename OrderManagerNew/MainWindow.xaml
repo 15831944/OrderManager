@@ -4,9 +4,9 @@
   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:OrderManagerNew.UserControls"
   Title="OrderManager" Width="1310" Height="768"
   MinWidth="1280" MinHeight="768" Background="#FF353531"
-  Closing="Closing_MainWindow" KeyUp="KeyUp_MainWindow" Loaded="Loaded_MainWindow"
-  StateChanged="Window_StateChanged" WindowStartupLocation="CenterScreen" WindowStyle="None"
-  mc:Ignorable="d">
+  Closing="Closing_MainWindow" Focusable="false" KeyUp="KeyUp_MainWindow"
+  Loaded="Loaded_MainWindow" StateChanged="Window_StateChanged" WindowStartupLocation="CenterScreen"
+  WindowStyle="None" mc:Ignorable="d">
 
     <Window.Resources>
         <ResourceDictionary>

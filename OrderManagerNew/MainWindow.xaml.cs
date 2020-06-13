@@ -24,6 +24,7 @@ using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformatio
 using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
 using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
 using OrthoOuterInformation = OrderManagerNew.UserControls.Order_orthoBase.OrthoOuterInformation;
+using System.Net;
 //Mahapps套件(NuGet下載): MaterialDesignThemes.MahApps v0.0.12
 
 
@@ -109,7 +110,7 @@ namespace OrderManagerNew
             {
                 this.Hide();
 
-                if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["OMAlreadyRunning"], "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
+                if (MessageBox.Show(TranslationSource.Instance["OMAlreadyRunning"], "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
                 {
                     try
                     {
@@ -127,14 +128,14 @@ namespace OrderManagerNew
             //初始化LogRecorder
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
-            log.RecordConfigLog("OM Startup", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            log.RecordConfigLog("OM Startup", Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             //設定Snackbar顯示時間
             var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
             SnackbarMain.MessageQueue = myMessageQueue;
             MainsnackbarMessageQueue = SnackbarMain.MessageQueue;
 
-            MediaTimeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(1000));    //設定動畫流暢度
+            Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(1000));    //設定動畫流暢度
             LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
 
             ProjHandle = new ProjectHandle();
@@ -240,8 +241,8 @@ namespace OrderManagerNew
                         haveEXE = false;
                         watcher = new FileSystemWatcher();
                         Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
-                        string snackStr = OrderManagerNew.TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[UpdateFunc.readyInstallSoftwareInfo.softwareID] 
-                        + " " + OrderManagerNew.TranslationSource.Instance["Successfully"];
+                        string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[UpdateFunc.readyInstallSoftwareInfo.softwareID] 
+                        + " " + TranslationSource.Instance["Successfully"];
                         SnackBarShow(snackStr);
                         //System.Threading.Thread.Sleep(1000);
                     }));
@@ -265,8 +266,8 @@ namespace OrderManagerNew
                 {
                     HaveDeleted = true;
                     SetAllSoftwareTableDownloadisEnable(true);
-                    string snackStr = OrderManagerNew.TranslationSource.Instance["Uninstall"] + " " + OrderManagerFunc.SoftwareNameArray[UpdateFunc.readyUninstallSoftwareInfo.softwareID]
-                        + " " + OrderManagerNew.TranslationSource.Instance["Successfully"];
+                    string snackStr = TranslationSource.Instance["Uninstall"] + " " + OrderManagerFunc.SoftwareNameArray[UpdateFunc.readyUninstallSoftwareInfo.softwareID]
+                        + " " + TranslationSource.Instance["Successfully"];
                     SnackBarShow(snackStr);
                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
                     //System.Threading.Thread.Sleep(1000);
@@ -520,7 +521,7 @@ namespace OrderManagerNew
             UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
             OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
             DateFilterTW.IsChecked = true;
-            // CaseFilter RadioButton狀態處理
+            // CaseFilter 復原之前最後選擇的軟體排序
             if (Properties.Settings.Default.LastSoftwareFilter >= (int)_softwareID.EZCAD && Properties.Settings.Default.LastSoftwareFilter < (int)_softwareID.All)
             {
                 switch (Properties.Settings.Default.LastSoftwareFilter)
@@ -528,51 +529,69 @@ namespace OrderManagerNew
                     case (int)_softwareID.EZCAD:
                         {
                             if (SoftwareFilterCAD.IsEnabled == true)
-                            {
                                 SoftwareFilterCAD.IsChecked = true;
-                                return;
-                            }
+                            else
+                                ChangeSoftwareFilter();
                             break;
                         }
                     case (int)_softwareID.Implant:
                         {
                             if (SoftwareFilterImplant.IsEnabled == true)
-                            {
                                 SoftwareFilterImplant.IsChecked = true;
-                                return;
-                            }
+                            else
+                                ChangeSoftwareFilter();
                             break;
                         }
                     case (int)_softwareID.Ortho:
                         {
                             if (SoftwareFilterOrtho.IsEnabled == true)
-                            {
                                 SoftwareFilterOrtho.IsChecked = true;
-                                return;
-                            }
+                            else
+                                ChangeSoftwareFilter();
                             break;
                         }
                     case (int)_softwareID.Tray:
                         {
                             if (SoftwareFilterTray.IsEnabled == true)
-                            {
                                 SoftwareFilterTray.IsChecked = true;
-                                return;
-                            }
+                            else
+                                ChangeSoftwareFilter();
                             break;
                         }
                     case (int)_softwareID.Splint:
                         {
                             if (SoftwareFilterSplint.IsEnabled == true)
-                            {
                                 SoftwareFilterSplint.IsChecked = true;
-                                return;
-                            }
+                            else
+                                ChangeSoftwareFilter();
                             break;
                         }
                 }
             }
-            ChangeSoftwareFilter();
+            else
+                ChangeSoftwareFilter();
+
+            string[] uInfo = new string[3] { "","",""};
+            WebException ex = new WebException();
+            if (Properties.Settings.Default.AirdentalCookie != "" && Airdental.UserDetailInfo(ref uInfo, Properties.Settings.Default.AirdentalCookie, ref ex) == true)
+            {
+                //Cookie還可以用
+                LoginSuccess(uInfo);
+            }
+            else
+            {
+                Properties.Settings.Default.AirdentalCookie = "";
+                Properties.Settings.Default.Save();
+            }   
+        }
+
+        private void LoginSuccess(string[] UserDetail)
+        {
+            usercontrolUserDetail.UserMail = UserDetail[(int)_AirD_LoginDetail.EMAIL];
+            usercontrolUserDetail.UserName = UserDetail[(int)_AirD_LoginDetail.USERNAME];
+            usercontrolUserDetail.SetUserPic(@"https://airdental.inteware.com.tw/api/v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
+            loginStatus = true;
+            SnackBarShow(TranslationSource.Instance["Hello"] + usercontrolUserDetail.UserName);
         }
 #endregion
 
@@ -642,7 +661,6 @@ namespace OrderManagerNew
         {
             GoToSetting(-1);
         }
-
         private void Click_FunctionTable_User(object sender, RoutedEventArgs e)
         {
             if (Airdental.CheckServerStatus() != true)
@@ -657,15 +675,13 @@ namespace OrderManagerNew
                 this.Effect = blur;
                 UserLogin DialogLogin = new UserLogin
                 {
+                    Airdental_main = Airdental,
                     Owner = this
                 };
                 var dialogResult = DialogLogin.ShowDialog();
                 if (dialogResult == true)
                 {
-                    usercontrolUserDetail.UserMail = DialogLogin.UserDetail[(int)_AirD_LoginDetail.EMAIL];
-                    usercontrolUserDetail.UserName = DialogLogin.UserDetail[(int)_AirD_LoginDetail.USERNAME];
-                    usercontrolUserDetail.SetUserPic(@"https://airdental.inteware.com.tw/api/v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
-                    loginStatus = true;
+                    LoginSuccess(DialogLogin.UserDetail);
                 }
                 this.Effect = null;
                 this.OpacityMask = null;
@@ -681,13 +697,30 @@ namespace OrderManagerNew
             }
         }
 
+        private void CookieExpire()
+        {
+            loginStatus = false;
+            Properties.Settings.Default.AirdentalCookie = "";
+            Properties.Settings.Default.Save();
+        }
+
         private void Click_UserDetail_Logout(object sender, RoutedEventArgs e)
         {
             UserDetailshow(false);
-            loginStatus = false;
-            SnackBarShow("Logout");
+            WebException ex = new WebException();
+            if(Airdental.Logout(ref ex) == true)
+            {
+                CookieExpire();
+                SnackBarShow(TranslationSource.Instance["Logout"] + TranslationSource.Instance["Successfully"]);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Click_UserDetail_Logout", "Success");
+            }
+            else
+            {
+                CookieExpire();
+                SnackBarShow(TranslationSource.Instance["Logout"] + TranslationSource.Instance["Successfully"] + "-Cookie error");
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Click_UserDetail_Logout", "cookie error");
+            }
         }
-
         /// <summary>
         /// 設定SofttwareTable各Icon顯示狀態
         /// </summary>
@@ -1135,7 +1168,6 @@ namespace OrderManagerNew
                     }
             }
         }
-
         /// <summary>
         /// 設定各單機軟體更新Button的isEnable狀態
         /// </summary>
@@ -1251,7 +1283,6 @@ namespace OrderManagerNew
             }
             
         }
-        
         /// <summary>
         /// 設定SofttwareTable的PopupBox事件
         /// </summary>
@@ -1330,7 +1361,7 @@ namespace OrderManagerNew
                     case "cad_unInstall":
                         {
                             //TODO 多國語系
-                            if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "EZCAD?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                            if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.cad_exePath) == ".exe")
                                 {
@@ -1413,7 +1444,7 @@ namespace OrderManagerNew
                         }
                     case "implant_unInstall":
                         {
-                            if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "ImplantPlanning?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                            if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "ImplantPlanning?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.implant_exePath) == ".exe")
                                 {
@@ -1481,7 +1512,7 @@ namespace OrderManagerNew
                         }
                     case "ortho_unInstall":
                         {
-                            if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "OrthoAnalysis?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                            if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "OrthoAnalysis?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.ortho_exePath) == ".exe")
                                 {
@@ -1564,7 +1595,7 @@ namespace OrderManagerNew
                         }
                     case "tray_unInstall":
                         {
-                            if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.tray?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                            if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.tray?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.tray_exePath) == ".exe")
                                 {
@@ -1647,7 +1678,7 @@ namespace OrderManagerNew
                         }
                     case "splint_unInstall":
                         {
-                            if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.splint?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                            if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.splint?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.splint_exePath) == ".exe")
                                 {
@@ -1731,7 +1762,7 @@ namespace OrderManagerNew
                         }
                     case "guide_unInstall":
                         {
-                            if (MessageBox.Show(OrderManagerNew.TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.guide?", OrderManagerNew.TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                            if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.guide?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.guide_exePath) == ".exe")
                                 {
@@ -1753,7 +1784,6 @@ namespace OrderManagerNew
                 }
             }
         }
-
         /// <summary>
         /// 設定各軟體Popupbox內"下載軟體"的isEnable屬性
         /// </summary>
@@ -1774,7 +1804,6 @@ namespace OrderManagerNew
             splint_unInstall.IsEnabled = enable;
             guide_unInstall.IsEnabled = enable;
         }
-
         /// <summary>
         /// 開始軟體更新流程
         /// </summary>
@@ -1852,7 +1881,6 @@ namespace OrderManagerNew
                 Handler_setSoftwareShow(CheckedSoftwareID, (int)_softwareStatus.Installed, 0);
             }
         }
-
         /// <summary>
         /// 從網上獲取下載資料成功就顯示BeforeDownload頁面
         /// </summary>
@@ -1885,7 +1913,6 @@ namespace OrderManagerNew
             if (DownloadStart == true)
                 UpdateFunc.StartDownloadSoftware();
         }
-
         private void GoToSetting(int softwareID)
         {
             //主視窗羽化
@@ -1912,7 +1939,6 @@ namespace OrderManagerNew
             this.Effect = null;
             this.OpacityMask = null;
         }
-
         /// <summary>
         /// 是否顯示UserDetail
         /// </summary>

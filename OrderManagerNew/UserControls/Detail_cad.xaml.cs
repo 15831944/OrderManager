@@ -71,7 +71,7 @@ namespace OrderManagerNew.UserControls
         {
             try
             {
-                return OrderManagerNew.TranslationSource.Instance[str];
+                return TranslationSource.Instance[str];
             }
             catch(Exception ex)
             {

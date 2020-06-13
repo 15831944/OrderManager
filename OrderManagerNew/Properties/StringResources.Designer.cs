@@ -763,6 +763,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Hello!  的當地語系化字串。
+        /// </summary>
+        internal static string Hello {
+            get {
+                return ResourceManager.GetString("Hello", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Hide password 的當地語系化字串。
         /// </summary>
         internal static string HidePWD {
@@ -844,7 +853,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Log out 的當地語系化字串。
+        ///   查詢類似 Log out  的當地語系化字串。
         /// </summary>
         internal static string Logout {
             get {

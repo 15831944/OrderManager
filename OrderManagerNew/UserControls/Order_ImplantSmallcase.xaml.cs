@@ -65,7 +65,7 @@ namespace OrderManagerNew.UserControls
             else
             {
                 button_GuideModelDir.IsEnabled = true;
-                button_GuideModelDir.ToolTip = OrderManagerNew.TranslationSource.Instance["GuideModel"];
+                button_GuideModelDir.ToolTip = TranslationSource.Instance["GuideModel"];
             }
             ItemIndex = Index;
         }

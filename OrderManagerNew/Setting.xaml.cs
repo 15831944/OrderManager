@@ -79,7 +79,7 @@ namespace OrderManagerNew
             if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == true)
                 OriginalSet.DownloadFolder = Properties.Settings.Default.DownloadFolder;
             else
-                OriginalSet.DownloadFolder = Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + @"IntewareTempFile\";
+                OriginalSet.DownloadFolder = Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + @"IntewareTempFile\";
             if (Properties.Settings.Default.sysLanguage == "zh-TW")
                 OriginalSet.Language = (int)_langSupport.zhTW;
             else
@@ -209,7 +209,7 @@ namespace OrderManagerNew
                                 Properties.Settings.Default.DownloadFolder = textbox_Download.Text;
                             else
                             {
-                                Properties.Settings.Default.DownloadFolder = System.IO.Path.GetTempPath() + "IntewareTempFile\\";
+                                Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + "IntewareTempFile\\";
 
                                 /*if (Directory.Exists(System.IO.Path.GetTempPath() + "IntewareTempFile\\") == false)
                                 {
@@ -292,7 +292,7 @@ namespace OrderManagerNew
             };
 
             if (File.Exists(originPah) == true)
-                Dlg.InitialDirectory = System.IO.Path.GetDirectoryName(originPah);
+                Dlg.InitialDirectory = Path.GetDirectoryName(originPah);
             else if (Directory.Exists(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareInc\") == true)
                 Dlg.InitialDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareInc\";
             else

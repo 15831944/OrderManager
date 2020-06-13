@@ -57,7 +57,7 @@ namespace OrderManagerNew.UserControls
         {
             orthoInfo = Import;
             textbox_ProductType.Text = orthoInfo.ProductTypeString;
-            textbox_Workflow.Text = OrderManagerNew.TranslationSource.Instance[Enum.GetName(typeof(OrthoWorkFlow), orthoInfo.WorkflowStep)];
+            textbox_Workflow.Text = TranslationSource.Instance[Enum.GetName(typeof(OrthoWorkFlow), orthoInfo.WorkflowStep)];
             textbox_Name.Text = orthoInfo.Name;
             textbox_OrderID.Text = orthoInfo.OrderID;
             textbox_Gender.Text = orthoInfo.Gender;

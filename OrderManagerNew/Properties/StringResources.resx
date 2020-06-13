@@ -255,7 +255,7 @@
     <comment>Login</comment>
   </data>
   <data name="Logout" xml:space="preserve">
-    <value>Log out</value>
+    <value>Log out </value>
     <comment>Login</comment>
   </data>
   <data name="Downloadpath" xml:space="preserve">
@@ -651,6 +651,7 @@
   <data name="Clinic" xml:space="preserve">
     <value>Clinic</value>
     
+    <comment>Detail_Ortho</comment>
   </data>
   <data name="Dentist" xml:space="preserve">
     <value>Dentist</value>
@@ -683,5 +684,9 @@
   <data name="SurgicalKit" xml:space="preserve">
     <value>Surgical kit</value>
     <comment>Detail_Implant</comment>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Hello! </value>
+    <comment>UI</comment>
   </data>
 </root>

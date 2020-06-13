@@ -22,6 +22,7 @@ namespace OrderManagerNew
     public partial class UserLogin : Window
     {
         LogRecorder log;    //日誌檔cs
+        public Dll_Airdental.Main Airdental_main;
         /// <summary>
         /// uid、mail、userName
         /// </summary>
@@ -29,7 +30,7 @@ namespace OrderManagerNew
         public UserLogin()
         {
             InitializeComponent();
-            label_forgotPWD.AddHandler(Button.MouseLeftButtonUpEvent, new MouseButtonEventHandler(MouseLeftButtonUp_ForgotPWD), true);
+            label_forgotPWD.AddHandler(MouseLeftButtonUpEvent, new MouseButtonEventHandler(MouseLeftButtonUp_ForgotPWD), true);
 
             log = new LogRecorder();
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UserLogin.cs", "Initial Start");
@@ -71,13 +72,15 @@ namespace OrderManagerNew
                 textbox_PWD.BorderBrush = Brushes.Red;
                 return;
             }
-
-            Dll_Airdental.Main Airdental = new Dll_Airdental.Main();
+            
             WebException ex = new WebException();
             string[] LoginData = new string[3]{ @"https://airdental.inteware.com.tw/api/", textbox_Account.Text, passwordbox_PWD.Password};//API網址、帳號、密碼
             UserDetail = new string[3] { "", "", "" };//uid、mail、userName
-            if (Airdental.Login(LoginData, ref UserDetail, ref ex) == true)
+            string NewCookie = "";
+
+            if (Airdental_main.Login(LoginData, ref UserDetail,ref NewCookie, ref ex) == true)
             {
+                Properties.Settings.Default.AirdentalCookie = NewCookie;
                 Properties.Settings.Default.AirdentalAcc = textbox_Account.Text;
                 Properties.Settings.Default.Save();
                 if(UserDetail[(int)_AirD_LoginDetail.UID] != "")
