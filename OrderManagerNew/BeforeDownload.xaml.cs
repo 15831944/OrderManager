@@ -19,6 +19,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.ComponentModel;
 using System.Timers;  // 名稱空間是 Timers 而不是 Threading
+using System.Diagnostics;
 
 namespace OrderManagerNew
 {
@@ -44,12 +45,14 @@ namespace OrderManagerNew
         string http_url;                            //下載網址
         Timer tmr;                                  //計時器(用在GetResponse)
         int currentSoftwareID;                      //軟體ID
+        LogRecorder Log;
 
         public BeforeDownload()
         {
             InitializeComponent();
             http_url = "";
             currentSoftwareID = -1;
+            Log = new LogRecorder();
         }
 
         private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
@@ -221,20 +224,6 @@ namespace OrderManagerNew
         #region 多執行緒處理接收網路下載資料內容
         void DoWork(object sender, DoWorkEventArgs e)
         {
-            //倒數計時3秒
-            tmr = new Timer();
-            if(Properties.Settings.Default.PingTime != 0)
-                tmr.Interval = Properties.Settings.Default.PingTime * 1000;
-            else
-            {
-                tmr.Interval = 5000;
-                Properties.Settings.Default.PingTime = 5;
-                Properties.Settings.Default.Save();
-            }
-                
-            tmr.Elapsed += Tmr_Elapsed;  // 使用事件代替委託
-            tmr.Start();          // 重啟定時器
-
             //跳過https檢測 & Win7 相容
             System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             System.Net.ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
@@ -247,13 +236,15 @@ namespace OrderManagerNew
                 httpRequest.Credentials = CredentialCache.DefaultCredentials;
                 httpRequest.UserAgent = ".NET Framework Example Client";
                 httpRequest.Method = "GET";
+                httpRequest.Timeout = Properties.Settings.Default.PingTime * 1000;
 
                 Handler_snackbarShow("Get httpRequest Response Start..."); //開始取得資料 //TODO 多國語系
                 httpResponse = (HttpWebResponse)httpRequest.GetResponse();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Network error");   //網路連線異常or載點掛掉 //TODO 多國語系
+                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload.xaml.cs_DoWork()_exception", ex.Message);
+                //MessageBox.Show(ex.Message, "Network error");   //網路連線異常or載點掛掉 //TODO 多國語系 這邊目前會出現2次Messagebox，之後要刪掉一個
                 e.Cancel = true;
             }
         }
@@ -264,12 +255,12 @@ namespace OrderManagerNew
             if (e.Error != null)
             {
                 tmr.Stop();
-                MessageBox.Show("Error");   //錯誤 //TODO 多國語系
+                //MessageBox.Show("Error");   //錯誤 //TODO 多國語系
             }
             else if (e.Cancelled)
             {
                 tmr.Stop();
-                MessageBox.Show("Canceled");    //取消 //TODO 多國語系
+                //MessageBox.Show("Canceled");    //取消(超過時間，也許再讓使用者可以自行增加秒數?) //TODO 多國語系
             }
             else
             {
@@ -283,7 +274,7 @@ namespace OrderManagerNew
         /// </summary>
         void Tmr_Elapsed(object sender, EventArgs e)
         {
-            Handler_snackbarShow("can't get network response, please restart ordermanager and try again"); //超過5秒回應時間 //TODO 多國語系
+            Handler_snackbarShow("can't get network response"); //超過回應時間 //TODO 多國語系
             tmr.Stop();
         }
         #endregion
@@ -376,6 +367,19 @@ namespace OrderManagerNew
                 WorkerReportsProgress = false, // 設定可以通告進度
                 WorkerSupportsCancellation = true // 設定可以取消
             }; // 例項化後臺物件
+
+            //倒數計時
+            tmr = new Timer();
+            if (Properties.Settings.Default.PingTime <= 0)
+            {
+                Properties.Settings.Default.PingTime = 5;
+                Properties.Settings.Default.Save();
+            }
+
+            tmr.Interval = Properties.Settings.Default.PingTime * 1000;
+
+            tmr.Elapsed += Tmr_Elapsed;  // 使用事件代替委託
+            tmr.Start();          // 重啟定時器
 
             m_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork);
             m_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork);

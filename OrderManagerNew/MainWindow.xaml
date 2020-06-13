@@ -416,7 +416,8 @@
 
                     <materialDesign:Snackbar
                       Grid.Column="0" Grid.ColumnSpan="3" x:Name="SnackbarMain"
-                      HorizontalAlignment="Stretch" Panel.ZIndex="10"
+                      Margin="12,0" HorizontalAlignment="Stretch" Panel.ZIndex="10"
+                      Background="{DynamicResource Common_OrangeTitleBar}"
                       MessageQueue="{materialDesign:MessageQueue}" />
 
                     <Grid
