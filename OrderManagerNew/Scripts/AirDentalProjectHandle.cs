@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -20,7 +21,8 @@ namespace OrderManagerNew
         /// </summary>
         LogRecorder Log;
         Dll_Airdental.Main.OrthoProject TotalOrthoProject;
-
+        BackgroundWorker ortho_BackgroundWorker;
+        WebException Exception_ortho;
         /// <summary>
         /// 訂單清單分頁資料
         /// </summary>
@@ -98,6 +100,32 @@ namespace OrderManagerNew
         public AirDentalProjectHandle()
         {
             Log = new LogRecorder();
+            Exception_ortho = null;
+        }
+
+        void DoWork_ortho(object sender, DoWorkEventArgs e)
+        {
+            Exception_ortho = Airdental.GetOrthoProject(ref TotalOrthoProject);
+            if (Exception_ortho == null)
+            {
+
+            }
+            else
+            {
+                if (Exception_ortho.Message != "")
+                    Handler_snackbarShow(Exception_ortho.Message);
+            }
+        }
+        void CompletedWork_ortho(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                
+            }
+            else
+            {
+                
+            }
         }
 
         /// <summary>
@@ -143,16 +171,10 @@ namespace OrderManagerNew
 
         public void LoadorthoProjects()
         {
-            WebException ex;
-            ex = Airdental.GetOrthoProject(ref TotalOrthoProject);
-            if(ex == null)
-            {
-
-            }
-            else
-            {
-                Handler_snackbarShow(ex.Message);
-            }
+            ortho_BackgroundWorker = new BackgroundWorker();
+            ortho_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork_ortho);
+            ortho_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_ortho);
+            ortho_BackgroundWorker.RunWorkerAsync(this);
         }
     }
 }
