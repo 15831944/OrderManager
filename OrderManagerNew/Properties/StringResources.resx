@@ -689,4 +689,8 @@
     <value>Hello! </value>
     <comment>UI</comment>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>error</value>
+    <comment>Login</comment>
+  </data>
 </root>

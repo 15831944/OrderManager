@@ -628,6 +628,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 error 的當地語系化字串。
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 exePath conflict 的當地語系化字串。
         /// </summary>
         internal static string exePathConflict {

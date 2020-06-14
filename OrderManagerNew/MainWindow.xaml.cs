@@ -24,7 +24,6 @@ using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformatio
 using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
 using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
 using OrthoOuterInformation = OrderManagerNew.UserControls.Order_orthoBase.OrthoOuterInformation;
-using System.Net;
 //Mahapps套件(NuGet下載): MaterialDesignThemes.MahApps v0.0.12
 
 
@@ -40,10 +39,6 @@ namespace OrderManagerNew
     public partial class MainWindow : Window
     {
 #region 變數宣告
-        /// <summary>
-        /// AirDental DLL
-        /// </summary>
-        Dll_Airdental.Main Airdental;
         /// <summary>
         /// 日誌檔cs
         /// </summary>
@@ -64,6 +59,10 @@ namespace OrderManagerNew
         /// 專案Case的函式
         /// </summary>
         ProjectHandle ProjHandle;
+        /// <summary>
+        /// Airdental通道
+        /// </summary>
+        AirDentalProjectHandle AirDentalProjHandle;
         /// <summary>
         /// 開發者模式
         /// </summary>
@@ -91,18 +90,19 @@ namespace OrderManagerNew
         public MainWindow()
         {
             InitializeComponent();
+            CheckedSoftwareID = -1;
             string[] args;
             args = Environment.GetCommandLineArgs();
             if(args != null && args.Length > 1)
             {
                 foreach(string argument in args)
                 {
-                    if (argument == "-Rec")
+                    if (argument == "-Rec") //完整記錄模式
                         Properties.Settings.Default.FullRecord = true;
                 }
             }
             
-            CheckedSoftwareID = -1;
+            LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
 
             //OrderManager不能多開
             Process[] MyProcess = Process.GetProcessesByName("OrderManager");
@@ -123,8 +123,7 @@ namespace OrderManagerNew
                     this.Close();
                 }
             }
-
-            Airdental = new Dll_Airdental.Main();
+            
             //初始化LogRecorder
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
@@ -134,21 +133,26 @@ namespace OrderManagerNew
             var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
             SnackbarMain.MessageQueue = myMessageQueue;
             MainsnackbarMessageQueue = SnackbarMain.MessageQueue;
-
-            Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(1000));    //設定動畫流暢度
-            LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
-
+            Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(500));    //設定動畫流暢度
+            //專案Function
             ProjHandle = new ProjectHandle();
             ProjHandle.CaseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
-
+            //OrderManager常用Function
             OrderManagerFunc = new OrderManagerFunctions();
             OrderManagerFunc.SoftwareLogoShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler(Handler_setSoftwareShow);
-
+            //更新Function
             UpdateFunc = new UpdateFunction();
             UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
             UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
             UpdateFunc.SoftwareUpdateEvent += new UpdateFunction.softwareUpdateStatusHandler(Handler_SetSoftwareUpdateButtonStatus);
-            
+            //Airdental通道
+            AirDentalProjHandle = new AirDentalProjectHandle
+            {
+                Airdental = new Dll_Airdental.Main()
+            };
+            AirDentalProjHandle.Handler_snackbarShow += new AirDentalProjectHandle.AirDentalProjHandleEventHandler_snackbar(SnackBarShow);
+
+
             //工程師模式切換
             if (developerMode == true)
             {
@@ -171,7 +175,67 @@ namespace OrderManagerNew
             }
         }
 
-#region Watcher事件
+        private void Loaded_MainWindow(object sender, RoutedEventArgs e)
+        {
+            UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
+            OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
+            DateFilterTW.IsChecked = true;
+            // CaseFilter 復原之前最後選擇的軟體排序
+            if (Properties.Settings.Default.LastSoftwareFilter >= (int)_softwareID.EZCAD && Properties.Settings.Default.LastSoftwareFilter < (int)_softwareID.All)
+            {
+                switch (Properties.Settings.Default.LastSoftwareFilter)
+                {
+                    case (int)_softwareID.EZCAD:
+                        {
+                            if (SoftwareFilterCAD.IsEnabled == true)
+                                SoftwareFilterCAD.IsChecked = true;
+                            else
+                                ChangeSoftwareFilter();
+                            break;
+                        }
+                    case (int)_softwareID.Implant:
+                        {
+                            if (SoftwareFilterImplant.IsEnabled == true)
+                                SoftwareFilterImplant.IsChecked = true;
+                            else
+                                ChangeSoftwareFilter();
+                            break;
+                        }
+                    case (int)_softwareID.Ortho:
+                        {
+                            if (SoftwareFilterOrtho.IsEnabled == true)
+                                SoftwareFilterOrtho.IsChecked = true;
+                            else
+                                ChangeSoftwareFilter();
+                            break;
+                        }
+                    case (int)_softwareID.Tray:
+                        {
+                            if (SoftwareFilterTray.IsEnabled == true)
+                                SoftwareFilterTray.IsChecked = true;
+                            else
+                                ChangeSoftwareFilter();
+                            break;
+                        }
+                    case (int)_softwareID.Splint:
+                        {
+                            if (SoftwareFilterSplint.IsEnabled == true)
+                                SoftwareFilterSplint.IsChecked = true;
+                            else
+                                ChangeSoftwareFilter();
+                            break;
+                        }
+                }
+            }
+            else
+                ChangeSoftwareFilter();
+            //檢查Cookie是否還可以用
+            string[] uInfo = new string[3];
+            if (AirDentalProjHandle.OrderManagerLoginCheck(ref uInfo) == true)
+                LoginSuccess(uInfo);
+        }
+
+        #region Watcher事件
         /// <summary>
         /// 安裝軟體時或是刪除軟體時監看軟體資料夾
         /// </summary>
@@ -516,75 +580,6 @@ namespace OrderManagerNew
                     UserDetailshow(false);
             }
         }
-        private void Loaded_MainWindow(object sender, RoutedEventArgs e)
-        {
-            UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
-            OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
-            DateFilterTW.IsChecked = true;
-            // CaseFilter 復原之前最後選擇的軟體排序
-            if (Properties.Settings.Default.LastSoftwareFilter >= (int)_softwareID.EZCAD && Properties.Settings.Default.LastSoftwareFilter < (int)_softwareID.All)
-            {
-                switch (Properties.Settings.Default.LastSoftwareFilter)
-                {
-                    case (int)_softwareID.EZCAD:
-                        {
-                            if (SoftwareFilterCAD.IsEnabled == true)
-                                SoftwareFilterCAD.IsChecked = true;
-                            else
-                                ChangeSoftwareFilter();
-                            break;
-                        }
-                    case (int)_softwareID.Implant:
-                        {
-                            if (SoftwareFilterImplant.IsEnabled == true)
-                                SoftwareFilterImplant.IsChecked = true;
-                            else
-                                ChangeSoftwareFilter();
-                            break;
-                        }
-                    case (int)_softwareID.Ortho:
-                        {
-                            if (SoftwareFilterOrtho.IsEnabled == true)
-                                SoftwareFilterOrtho.IsChecked = true;
-                            else
-                                ChangeSoftwareFilter();
-                            break;
-                        }
-                    case (int)_softwareID.Tray:
-                        {
-                            if (SoftwareFilterTray.IsEnabled == true)
-                                SoftwareFilterTray.IsChecked = true;
-                            else
-                                ChangeSoftwareFilter();
-                            break;
-                        }
-                    case (int)_softwareID.Splint:
-                        {
-                            if (SoftwareFilterSplint.IsEnabled == true)
-                                SoftwareFilterSplint.IsChecked = true;
-                            else
-                                ChangeSoftwareFilter();
-                            break;
-                        }
-                }
-            }
-            else
-                ChangeSoftwareFilter();
-
-            string[] uInfo = new string[3] { "","",""};
-            WebException ex = new WebException();
-            if (Properties.Settings.Default.AirdentalCookie != "" && Airdental.UserDetailInfo(ref uInfo, Properties.Settings.Default.AirdentalCookie, ref ex) == true)
-            {
-                //Cookie還可以用
-                LoginSuccess(uInfo);
-            }
-            else
-            {
-                Properties.Settings.Default.AirdentalCookie = "";
-                Properties.Settings.Default.Save();
-            }   
-        }
-
         private void LoginSuccess(string[] UserDetail)
         {
             usercontrolUserDetail.UserMail = UserDetail[(int)_AirD_LoginDetail.EMAIL];
@@ -592,6 +587,7 @@ namespace OrderManagerNew
             usercontrolUserDetail.SetUserPic(@"https://airdental.inteware.com.tw/api/v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
             loginStatus = true;
             SnackBarShow(TranslationSource.Instance["Hello"] + usercontrolUserDetail.UserName);
+            AirDentalProjHandle.LoadorthoProjects();//TODO之後要移除
         }
 #endregion
 
@@ -663,7 +659,7 @@ namespace OrderManagerNew
         }
         private void Click_FunctionTable_User(object sender, RoutedEventArgs e)
         {
-            if (Airdental.CheckServerStatus() != true)
+            if (AirDentalProjHandle.Airdental.CheckServerStatus() != true)
             {
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Click_FunctionTable_User", "Connection error"); //TODO 多國語系
                 return;
@@ -675,7 +671,7 @@ namespace OrderManagerNew
                 this.Effect = blur;
                 UserLogin DialogLogin = new UserLogin
                 {
-                    Airdental_main = Airdental,
+                    Airdental_main = AirDentalProjHandle.Airdental,
                     Owner = this
                 };
                 var dialogResult = DialogLogin.ShowDialog();
@@ -696,30 +692,13 @@ namespace OrderManagerNew
                     UserDetailshow(false);
             }
         }
-
-        private void CookieExpire()
-        {
-            loginStatus = false;
-            Properties.Settings.Default.AirdentalCookie = "";
-            Properties.Settings.Default.Save();
-        }
-
+        
         private void Click_UserDetail_Logout(object sender, RoutedEventArgs e)
         {
             UserDetailshow(false);
-            WebException ex = new WebException();
-            if(Airdental.Logout(ref ex) == true)
-            {
-                CookieExpire();
-                SnackBarShow(TranslationSource.Instance["Logout"] + TranslationSource.Instance["Successfully"]);
-                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Click_UserDetail_Logout", "Success");
-            }
-            else
-            {
-                CookieExpire();
-                SnackBarShow(TranslationSource.Instance["Logout"] + TranslationSource.Instance["Successfully"] + "-Cookie error");
-                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Click_UserDetail_Logout", "cookie error");
-            }
+            AirDentalProjHandle.UserLogout();
+            StackPanel_Cloud.Children.Clear();
+            loginStatus = false;
         }
         /// <summary>
         /// 設定SofttwareTable各Icon顯示狀態

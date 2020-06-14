@@ -580,7 +580,7 @@
                         <TabItem Header="Airdental" Style="{StaticResource CaseTabItem}">
                             <Border Background="#FFEDEDE2">
                                 <ScrollViewer>
-                                    <StackPanel Orientation="Vertical" />
+                                    <StackPanel x:Name="StackPanel_Cloud" Orientation="Vertical" />
                                 </ScrollViewer>
                             </Border>
                         </TabItem>

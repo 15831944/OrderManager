@@ -73,12 +73,12 @@ namespace OrderManagerNew
                 return;
             }
             
-            WebException ex = new WebException();
             string[] LoginData = new string[3]{ @"https://airdental.inteware.com.tw/api/", textbox_Account.Text, passwordbox_PWD.Password};//API網址、帳號、密碼
-            UserDetail = new string[3] { "", "", "" };//uid、mail、userName
+            UserDetail = new string[3] { "", "", "" };
             string NewCookie = "";
 
-            if (Airdental_main.Login(LoginData, ref UserDetail,ref NewCookie, ref ex) == true)
+            WebException _exception = Airdental_main.Login(LoginData, ref UserDetail, ref NewCookie);
+            if (_exception == null)
             {
                 Properties.Settings.Default.AirdentalCookie = NewCookie;
                 Properties.Settings.Default.AirdentalAcc = textbox_Account.Text;
@@ -95,10 +95,10 @@ namespace OrderManagerNew
             }
             else
             {
-                if (ex.Status == WebExceptionStatus.ProtocolError)
+                if (_exception.Status == WebExceptionStatus.ProtocolError)
                 {
                     string errMessage = "";
-                    if (ex.Response is HttpWebResponse response)
+                    if (_exception.Response is HttpWebResponse response)
                     {
                         switch (response.StatusCode)
                         {
@@ -120,10 +120,13 @@ namespace OrderManagerNew
                         }
                     }
                     else
-                        errMessage = ex.ToString();
+                        errMessage = _exception.ToString();
 
                     if (errMessage != "")
-                        MessageBox.Show(errMessage);
+                    {
+                        MessageBox.Show(errMessage, TranslationSource.Instance["Login"] + " " + TranslationSource.Instance["Error"]);//TODO要再細分哪種登入錯誤
+                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UserLogin.xaml.cs_ClickOK_exception", errMessage);
+                    }   
                 }
             }
         }
