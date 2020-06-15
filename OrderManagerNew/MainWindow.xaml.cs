@@ -151,6 +151,7 @@ namespace OrderManagerNew
                 Airdental = new Dll_Airdental.Main()
             };
             AirDentalProjHandle.Handler_snackbarShow += new AirDentalProjectHandle.AirDentalProjHandleEventHandler_snackbar(SnackBarShow);
+            AirDentalProjHandle.CaseShowEvent += new AirDentalProjectHandle.caseShowEventHandler(Handler_SetCaseShow_Airdental);
 
 
             //工程師模式切換
@@ -235,7 +236,7 @@ namespace OrderManagerNew
                 LoginSuccess(uInfo);
         }
 
-        #region Watcher事件
+#region Watcher事件
         /// <summary>
         /// 安裝軟體時或是刪除軟體時監看軟體資料夾
         /// </summary>
@@ -415,7 +416,7 @@ namespace OrderManagerNew
                 }
             }));
         }
-        #endregion
+#endregion
 
 #region WindowFrame
         private void KeyUp_MainWindow(object sender, KeyEventArgs e)
@@ -588,7 +589,7 @@ namespace OrderManagerNew
             usercontrolUserDetail.SetUserPic(@"https://airdental.inteware.com.tw/api/v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
             loginStatus = true;
             SnackBarShow(TranslationSource.Instance["Hello"] + usercontrolUserDetail.UserName);
-            AirDentalProjHandle.LoadorthoProjects();//TODO之後要移除
+            AirDentalProjHandle.ReceiveOrthoProjects();//TODO之後要移除
         }
 #endregion
 
@@ -1993,7 +1994,6 @@ namespace OrderManagerNew
             else
                 StackPanel_Local.Children.Clear();
         }
-
         private void TextChanged_SortTable(object sender, TextChangedEventArgs e)
         {
             if(sender is TextBox)
@@ -2055,7 +2055,6 @@ namespace OrderManagerNew
                 ChooseToLoadProj();
             }
         }
-
         private void Checked_SortTable_Filter(object sender, RoutedEventArgs e)
         {
             if(sender is RadioButton)
@@ -2145,7 +2144,6 @@ namespace OrderManagerNew
                 ChooseToLoadProj();
             }
         }
-
         /// <summary>
         /// 由程式判斷並切換顯示哪個軟體Case(目前用到只有Loaded和刪除軟體時)
         /// </summary>
@@ -2186,7 +2184,7 @@ namespace OrderManagerNew
         }
 #endregion
 
-#region CaseTable事件
+#region CaseTable_Local事件
         /// <summary>
         /// 顯示Case
         /// </summary>
@@ -2388,6 +2386,36 @@ namespace OrderManagerNew
                 }
             }
         }
-        #endregion
+#endregion
+
+#region CaseTable_Airdental事件
+        public void Handler_SetCaseShow_Airdental(int SoftwareID)
+        {
+            StackPanel_Cloud.Children.Clear();
+            StackPanel_Detail.Children.Clear();
+            switch(SoftwareID)
+            {
+                case (int)_softwareID.EZCAD:
+                    {
+                        break;
+                    }
+                case (int)_softwareID.Implant:
+                    {
+                        break;
+                    }
+                case (int)_softwareID.Ortho:
+                    {
+                        if (AirDentalProjHandle.Projectlist_Ortho.Count > 0)
+                        {
+                            foreach(AirDental_UserControls.AirD_orthoBase orthoProject in AirDentalProjHandle.Projectlist_Ortho)
+                            {
+                                StackPanel_Cloud.Children.Add(orthoProject);
+                            }
+                        }
+                        break;
+                    }
+            }
+        }
+#endregion
     }
 }

@@ -570,4 +570,7 @@
   <data name="litedoctor" xml:space="preserve">
     <value>醫師</value>
   </data>
+  <data name="SerialNumber" xml:space="preserve">
+    <value>流水號</value>
+  </data>
 </root>

@@ -721,4 +721,8 @@
     <value>Quality</value>
     <comment>usergroup</comment>
   </data>
+  <data name="SerialNumber" xml:space="preserve">
+    <value>Serial Number</value>
+    <comment>AirDental_Case</comment>
+  </data>
 </root>

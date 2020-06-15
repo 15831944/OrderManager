@@ -1249,6 +1249,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Serial Number 的當地語系化字串。
+        /// </summary>
+        internal static string SerialNumber {
+            get {
+                return ResourceManager.GetString("SerialNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Setting 的當地語系化字串。
         /// </summary>
         internal static string Setting {

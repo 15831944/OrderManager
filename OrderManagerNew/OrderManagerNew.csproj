@@ -87,6 +87,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AirDental_UserControls\AirD_orthoBase.xaml.cs">
+      <DependentUpon>AirD_orthoBase.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Scripts\AirDentalProjectHandle.cs" />
     <Compile Include="UserLogin.xaml.cs">
       <DependentUpon>UserLogin.xaml</DependentUpon>
@@ -145,6 +148,10 @@
     <Compile Include="UserControls\Order_tsBase.xaml.cs">
       <DependentUpon>Order_tsBase.xaml</DependentUpon>
     </Compile>
+    <Page Include="AirDental_UserControls\AirD_orthoBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -91,7 +91,7 @@ namespace Dll_Airdental
         /// <summary>
         /// orthoCase
         /// </summary>
-        public class _orthoCase
+        public class _orthoProject
         {
             [JsonProperty("key")]
             public string _Key { get; set; }
@@ -128,7 +128,7 @@ namespace Dll_Airdental
             [JsonProperty("productType")]
             public string _ProductType { get; set; }
 
-            public _orthoCase()
+            public _orthoProject()
             {
                 _Key = "";
                 _Group = "";
@@ -152,16 +152,16 @@ namespace Dll_Airdental
         /// <summary>
         /// ortho專案
         /// </summary>
-        public class OrthoProject
+        public class OrthoTotalProjects
         {
             [JsonProperty("pagination")]
             public _Pagination Pagination { get; set; }
             [JsonProperty("projects")]
-            public _orthoCase[] List_orthoCase { get; set; }
-            public OrthoProject()
+            public _orthoProject[] List_orthoProjects { get; set; }
+            public OrthoTotalProjects()
             {
                 Pagination = new _Pagination();
-                List_orthoCase = null;
+                List_orthoProjects = null;
             }
         }
 
@@ -330,7 +330,7 @@ namespace Dll_Airdental
         /// 取得Ortho專案清單
         /// </summary>
         /// <returns></returns>
-        public WebException GetOrthoProject(ref OrthoProject Import)
+        public WebException GetOrthoProject(ref OrthoTotalProjects Import)
         {
             //https://airdental.inteware.com.tw/api/project/ortho?limit=100
             try
@@ -345,7 +345,7 @@ namespace Dll_Airdental
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 string WebContent = new StreamReader(response.GetResponseStream()).ReadToEnd();
                 response.Close();
-                Import = JsonConvert.DeserializeObject<OrthoProject>(WebContent);
+                Import = JsonConvert.DeserializeObject<OrthoTotalProjects>(WebContent);
                 return null;
             }
             catch(WebException ex)

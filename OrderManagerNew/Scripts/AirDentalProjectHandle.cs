@@ -15,18 +15,23 @@ namespace OrderManagerNew
         public delegate void AirDentalProjHandleEventHandler_snackbar(string message);
         public event AirDentalProjHandleEventHandler_snackbar Handler_snackbarShow;
 
+        public delegate void caseShowEventHandler(int softwareID);
+        public event caseShowEventHandler CaseShowEvent;
+
         public Dll_Airdental.Main Airdental;
+        public List<AirDental_UserControls.AirD_orthoBase> Projectlist_Ortho;
         /// <summary>
         /// 日誌檔cs
         /// </summary>
         LogRecorder Log;
-        Dll_Airdental.Main.OrthoProject TotalOrthoProject;
+        Dll_Airdental.Main.OrthoTotalProjects TotalOrthoProjects;
         BackgroundWorker ortho_BackgroundWorker;
         WebException Exception_ortho;
+        bool ReceiveOrtho;
         /// <summary>
         /// 訂單清單分頁資料
         /// </summary>
-        public class _Pagination
+        /*public class _Pagination
         {
             public int Total { get; set; }
             public int Current { get; set; }
@@ -95,20 +100,21 @@ namespace OrderManagerNew
                 Pagination = new _Pagination();
                 List_orthoCase = null;
             }
-        }
+        }*/
 
         public AirDentalProjectHandle()
         {
             Log = new LogRecorder();
             Exception_ortho = null;
+            ReceiveOrtho = false;
         }
 
         void DoWork_ortho(object sender, DoWorkEventArgs e)
         {
-            Exception_ortho = Airdental.GetOrthoProject(ref TotalOrthoProject);
+            Exception_ortho = Airdental.GetOrthoProject(ref TotalOrthoProjects);
             if (Exception_ortho == null)
             {
-
+                ReceiveOrtho = true;
             }
             else
             {
@@ -120,7 +126,8 @@ namespace OrderManagerNew
         {
             if (e.Error == null)
             {
-                
+                if(ReceiveOrtho == true)
+                    LoadOrthoProjects();
             }
             else
             {
@@ -149,6 +156,22 @@ namespace OrderManagerNew
                 return false;
             }
         }
+
+        private void LoadOrthoProjects()
+        {
+            int count = 0;
+            Projectlist_Ortho = new List<AirDental_UserControls.AirD_orthoBase>();
+            foreach (var orthoProject in TotalOrthoProjects.List_orthoProjects)
+            {
+                AirDental_UserControls.AirD_orthoBase UserControl_orthoProject = new AirDental_UserControls.AirD_orthoBase();
+                UserControl_orthoProject.SetProjectInfo(orthoProject, count);
+                Projectlist_Ortho.Add(UserControl_orthoProject);
+                count++;
+            }
+
+            CaseShowEvent((int)_softwareID.Ortho);
+        }
+
         /// <summary>
         /// 登出
         /// </summary>
@@ -169,7 +192,7 @@ namespace OrderManagerNew
             Properties.Settings.Default.Save();
         }
 
-        public void LoadorthoProjects()
+        public void ReceiveOrthoProjects()
         {
             ortho_BackgroundWorker = new BackgroundWorker();
             ortho_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork_ortho);
