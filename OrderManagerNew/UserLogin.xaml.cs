@@ -74,7 +74,7 @@ namespace OrderManagerNew
             }
             
             string[] LoginData = new string[3]{ @"https://airdental.inteware.com.tw/api/", textbox_Account.Text, passwordbox_PWD.Password};//API網址、帳號、密碼
-            UserDetail = new string[3] { "", "", "" };
+            UserDetail = new string[4] { "", "", "" , ""};
             string NewCookie = "";
 
             WebException _exception = Airdental_main.Login(LoginData, ref UserDetail, ref NewCookie);

@@ -693,4 +693,32 @@
     <value>error</value>
     <comment>Login</comment>
   </data>
+  <data name="litelab" xml:space="preserve">
+    <value>Lab</value>
+    <comment>usergroup</comment>
+  </data>
+  <data name="liteclinic" xml:space="preserve">
+    <value>Clinic</value>
+    <comment>usergroup</comment>
+  </data>
+  <data name="litedesign" xml:space="preserve">
+    <value>Designer</value>
+    <comment>usergroup</comment>
+  </data>
+  <data name="litedoctor" xml:space="preserve">
+    <value>Doctor</value>
+    <comment>usergroup</comment>
+  </data>
+  <data name="litedealer" xml:space="preserve">
+    <value>Dealer</value>
+    <comment>usergroup</comment>
+  </data>
+  <data name="litesuperuser" xml:space="preserve">
+    <value>SuperUser</value>
+    <comment>usergroup</comment>
+  </data>
+  <data name="litequality" xml:space="preserve">
+    <value>Quality</value>
+    <comment>usergroup</comment>
+  </data>
 </root>

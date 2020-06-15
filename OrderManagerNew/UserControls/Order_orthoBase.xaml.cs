@@ -209,6 +209,7 @@ namespace OrderManagerNew.UserControls
                         }
                         else
                         {
+                            //第一次攤開
                             Mouse.OverrideCursor = Cursors.Wait;
                             LoadSmallCase();
                             Mouse.OverrideCursor = Cursors.Arrow;

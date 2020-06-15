@@ -549,4 +549,25 @@
   <data name="Error" xml:space="preserve">
     <value>錯誤</value>
   </data>
+  <data name="litesuperuser" xml:space="preserve">
+    <value>超級使用者</value>
+  </data>
+  <data name="litedealer" xml:space="preserve">
+    <value>代理商</value>
+  </data>
+  <data name="litelab" xml:space="preserve">
+    <value>牙技所</value>
+  </data>
+  <data name="litedesign" xml:space="preserve">
+    <value>設計師</value>
+  </data>
+  <data name="litequality" xml:space="preserve">
+    <value>品管</value>
+  </data>
+  <data name="liteclinic" xml:space="preserve">
+    <value>診所</value>
+  </data>
+  <data name="litedoctor" xml:space="preserve">
+    <value>醫師</value>
+  </data>
 </root>

@@ -826,6 +826,69 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Clinic 的當地語系化字串。
+        /// </summary>
+        internal static string liteclinic {
+            get {
+                return ResourceManager.GetString("liteclinic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Dealer 的當地語系化字串。
+        /// </summary>
+        internal static string litedealer {
+            get {
+                return ResourceManager.GetString("litedealer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Designer 的當地語系化字串。
+        /// </summary>
+        internal static string litedesign {
+            get {
+                return ResourceManager.GetString("litedesign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Doctor 的當地語系化字串。
+        /// </summary>
+        internal static string litedoctor {
+            get {
+                return ResourceManager.GetString("litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Lab 的當地語系化字串。
+        /// </summary>
+        internal static string litelab {
+            get {
+                return ResourceManager.GetString("litelab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Quality 的當地語系化字串。
+        /// </summary>
+        internal static string litequality {
+            get {
+                return ResourceManager.GetString("litequality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 SuperUser 的當地語系化字串。
+        /// </summary>
+        internal static string litesuperuser {
+            get {
+                return ResourceManager.GetString("litesuperuser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Load Project 的當地語系化字串。
         /// </summary>
         internal static string LoadProj {

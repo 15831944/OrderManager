@@ -230,7 +230,7 @@ namespace OrderManagerNew
             else
                 ChangeSoftwareFilter();
             //檢查Cookie是否還可以用
-            string[] uInfo = new string[3];
+            string[] uInfo = new string[4];
             if (AirDentalProjHandle.OrderManagerLoginCheck(ref uInfo) == true)
                 LoginSuccess(uInfo);
         }
@@ -582,6 +582,7 @@ namespace OrderManagerNew
         }
         private void LoginSuccess(string[] UserDetail)
         {
+            usercontrolUserDetail.Usergroup = UserDetail[(int)_AirD_LoginDetail.USERGROUP];
             usercontrolUserDetail.UserMail = UserDetail[(int)_AirD_LoginDetail.EMAIL];
             usercontrolUserDetail.UserName = UserDetail[(int)_AirD_LoginDetail.USERNAME];
             usercontrolUserDetail.SetUserPic(@"https://airdental.inteware.com.tw/api/v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
@@ -1911,6 +1912,20 @@ namespace OrderManagerNew
             if (DialogSetting.DialogResult == true)
             {
                 OrderManagerFunc.DoubleCheckEXEexist();
+                usercontrolUserDetail.RefreshData();    //usergroup是多國語系
+
+                //專案重新整理(流程是多國語系)
+                if (SoftwareFilterCAD.IsChecked == true)
+                    ProjHandle.LoadEZCADProj();
+                else if (SoftwareFilterImplant.IsChecked == true)
+                    ProjHandle.LoadImplantProjV2();
+                else if (SoftwareFilterOrtho.IsChecked == true)
+                    ProjHandle.LoadOrthoProj();
+                else if (SoftwareFilterTray.IsChecked == true)
+                    ProjHandle.LoadTrayProj();
+                else if (SoftwareFilterSplint.IsChecked == true)
+                    ProjHandle.LoadSplintProj();
+
                 log.RecordConfigLog("Click_FunctionTable_Setting()", "Config changed");
             }
 

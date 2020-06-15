@@ -118,6 +118,7 @@ namespace OrderManagerNew
     public enum _AirD_LoginDetail : int
     {
         UID = 0,
+        USERGROUP,
         EMAIL,
         USERNAME
     }

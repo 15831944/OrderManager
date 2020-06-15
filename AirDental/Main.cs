@@ -54,6 +54,8 @@ namespace Dll_Airdental
         {
             [JsonProperty("uid")]
             public string Uid { get; set; }
+            [JsonProperty("usergroup")]
+            public string Usergroup { get; set; }
             [JsonProperty("email")]
             public string Email { get; set; }
             [JsonProperty("name")]
@@ -62,6 +64,7 @@ namespace Dll_Airdental
             public _UserDetail()
             {
                 Uid = "";
+                Usergroup = "";
                 Email = "";
                 Name = "";
             }
@@ -273,8 +276,9 @@ namespace Dll_Airdental
                 response.Close();
                 _UserDetail json = JsonConvert.DeserializeObject<_UserDetail>(WebContent);
                 userDetail[0] = json.Uid;
-                userDetail[1] = json.Email;
-                userDetail[2] = json.Name;
+                userDetail[1] = json.Usergroup;
+                userDetail[2] = json.Email;
+                userDetail[3] = json.Name;
                 //儲存Cookie
                 CookieStr = ImportCookie;
                 return null;

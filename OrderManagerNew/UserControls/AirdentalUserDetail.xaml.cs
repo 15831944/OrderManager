@@ -56,6 +56,10 @@ namespace OrderManagerNew.UserControls
         /// </summary>
         public string UserMail { get; set; }
         /// <summary>
+        /// 使用者類(醫師、設計師...)
+        /// </summary>
+        public string Usergroup { get; set; }
+        /// <summary>
         /// 使用者點數
         /// </summary>
         public long UserPoints { get; set; }
@@ -69,6 +73,7 @@ namespace OrderManagerNew.UserControls
             InitializeComponent();
             UserName = "";
             UserPicName = "";
+            Usergroup = "";
             UserMail = "";
             UserPoints = 0;
             UserPicSource = "";
@@ -92,6 +97,31 @@ namespace OrderManagerNew.UserControls
                 Panel.SetZIndex(image_user, -1);
             }
             lb_userName.Content = UserName;
+            lb_Usergroup.Content = TranslationSource.Instance[Usergroup];
+            lb_userMail.Content = UserMail;
+            lb_points.Content = UserPoints;
+        }
+
+        /// <summary>
+        /// 重新整理頁面
+        /// </summary>
+        public void RefreshData()
+        {
+            try
+            {
+                image_user.BeginInit();
+                image_user.Source = new BitmapImage(new Uri(UserPicSource, UriKind.RelativeOrAbsolute));
+                image_user.EndInit();
+
+                Panel.SetZIndex(image_user, 1);
+            }
+            catch
+            {
+                UserPicSource = "";
+                Panel.SetZIndex(image_user, -1);
+            }
+            lb_userName.Content = UserName;
+            lb_Usergroup.Content = TranslationSource.Instance[Usergroup];
             lb_userMail.Content = UserMail;
             lb_points.Content = UserPoints;
         }
