@@ -18,6 +18,10 @@ namespace OrderManagerNew
         public delegate void caseShowEventHandler(int softwareID);
         public event caseShowEventHandler CaseShowEvent;
 
+        //委派到MainWindow.xaml.cs裡面CaseHandler_Ortho_showSingleProject()
+        public delegate void AirD_orthoBaseEventHandler(int projectIndex);
+        public event AirD_orthoBaseEventHandler mainSetAirDentalProjectShow;
+
         public Dll_Airdental.Main Airdental;
         public List<AirDental_UserControls.AirD_orthoBase> Projectlist_Ortho;
         /// <summary>
@@ -163,7 +167,11 @@ namespace OrderManagerNew
             Projectlist_Ortho = new List<AirDental_UserControls.AirD_orthoBase>();
             foreach (var orthoProject in TotalOrthoProjects.List_orthoProjects)
             {
-                AirDental_UserControls.AirD_orthoBase UserControl_orthoProject = new AirDental_UserControls.AirD_orthoBase();
+                AirDental_UserControls.AirD_orthoBase UserControl_orthoProject = new AirDental_UserControls.AirD_orthoBase
+                {
+                    orthoBase_AirDental = Airdental
+                };
+                UserControl_orthoProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler(mainSetAirDentalProjectShow);
                 UserControl_orthoProject.SetProjectInfo(orthoProject, count);
                 Projectlist_Ortho.Add(UserControl_orthoProject);
                 count++;

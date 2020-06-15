@@ -16,7 +16,7 @@ namespace Dll_Airdental
     {
         static private bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {return true; }// Always accept
-
+#region 變數
         /// <summary>
         /// Airdental API網址
         /// </summary>
@@ -26,6 +26,9 @@ namespace Dll_Airdental
         /// Airdental Cookie
         /// </summary>
         private string CookieStr;
+#endregion
+
+#region Class宣告
         /// <summary>
         /// 登入後顯示UserInfo
         /// </summary>
@@ -39,13 +42,6 @@ namespace Dll_Airdental
 
             [JsonProperty("usergroup")]
             public string Usergroup { get; set; }
-
-            public _Login_UserInfo()
-            {
-                User_id = "";
-                Lastlogin = -1;
-                Usergroup = "";
-            }
         }
         /// <summary>
         /// User詳細訊息
@@ -60,14 +56,6 @@ namespace Dll_Airdental
             public string Email { get; set; }
             [JsonProperty("name")]
             public string Name { get; set; }
-
-            public _UserDetail()
-            {
-                Uid = "";
-                Usergroup = "";
-                Email = "";
-                Name = "";
-            }
         }
         /// <summary>
         /// 訂單清單分頁資料
@@ -80,16 +68,59 @@ namespace Dll_Airdental
             public int Current { get; set; }
             [JsonProperty("pageSize")]
             public int PageSize { get; set; }
-
-            public _Pagination()
-            {
-                Total = -1;
-                Current = -1;
-                PageSize = -1;
-            }
         }
         /// <summary>
-        /// orthoCase
+        /// Ortho訂單
+        /// </summary>
+        public class _orthoOrder
+        {
+            [JsonProperty("key")]
+            public string _Key { get; set; }
+            [JsonProperty("group")]
+            public string _group { get; set; }
+            [JsonProperty("isAuthor")]
+            public bool _isAuthor { get; set; }
+            [JsonProperty("stage")]
+            public string _stage { get; set; }
+            [JsonProperty("stageKey")]
+            public string _stageKey { get; set; }
+            [JsonProperty("stageOrig")]
+            public string _stageOrig { get; set; }
+            [JsonProperty("action")]
+            public string _action { get; set; }
+            [JsonProperty("actionKey")]
+            public string _actionKey { get; set; }
+            [JsonProperty("instruction")]
+            public string _instruction { get; set; }
+            [JsonProperty("date")]
+            public DateTimeOffset _date { get; set; }
+            [JsonProperty("showViewer")]
+            public string _showViewer { get; set; }
+            [JsonProperty("viewerurl")]
+            public string _viewerurl { get; set; }
+            [JsonProperty("showRetakes")]
+            public bool showRetakes { get; set; }
+            [JsonProperty("showDraftEdit")]
+            public bool _showDraftEdit { get; set; }
+            [JsonProperty("showDetail")]
+            public bool _showDetail { get; set; }
+            [JsonProperty("showDispatch")]
+            public bool _showDispatch { get; set; }
+            [JsonProperty("showManufacture")]
+            public bool _showManufacture { get; set; }
+            [JsonProperty("showBraces")]
+            public bool _showBraces { get; set; }
+            [JsonProperty("showShip")]
+            public bool _showShip { get; set; }
+            [JsonProperty("showTransport")]
+            public bool _showTransport { get; set; }
+            [JsonProperty("showPhotoEdit")]
+            public bool _showPhotoEdit { get; set; }
+            [JsonProperty("showMeasurement")]
+            public bool _showMeasurement { get; set; }
+        }
+        /// <summary>
+        /// ortho專案
         /// </summary>
         public class _orthoProject
         {
@@ -127,30 +158,9 @@ namespace Dll_Airdental
             public string _TxTreatedArch { get; set; }
             [JsonProperty("productType")]
             public string _ProductType { get; set; }
-
-            public _orthoProject()
-            {
-                _Key = "";
-                _Group = "";
-                _SerialNumber = "";
-                _CustomSerialNumber = "";
-                _Patient = "";
-                _Clinic = "";
-                _Action = "";
-                _ActionKey = "";
-                _Stage = "";
-                _StageKey = "";
-                _Status = "";
-                _Doctor = "";
-                _Date = new DateTimeOffset();
-                _Instruction = "";
-                _PatientAvatar = "";
-                _TxTreatedArch = "";
-                _ProductType = "";
-            }
         }
         /// <summary>
-        /// ortho專案
+        /// ortho專案總覽
         /// </summary>
         public class OrthoTotalProjects
         {
@@ -158,12 +168,9 @@ namespace Dll_Airdental
             public _Pagination Pagination { get; set; }
             [JsonProperty("projects")]
             public _orthoProject[] List_orthoProjects { get; set; }
-            public OrthoTotalProjects()
-            {
-                Pagination = new _Pagination();
-                List_orthoProjects = null;
-            }
         }
+
+#endregion
 
         public Main()
         {
@@ -329,6 +336,7 @@ namespace Dll_Airdental
         /// <summary>
         /// 取得Ortho專案清單
         /// </summary>
+        /// <param name="Import">參考的OrthoTotalProjects</param>
         /// <returns></returns>
         public WebException GetOrthoProject(ref OrthoTotalProjects Import)
         {
@@ -353,7 +361,35 @@ namespace Dll_Airdental
                 return ex;
             }
         }
-
+        /// <summary>
+        /// 取得Ortho訂單清單
+        /// </summary>
+        /// <param name="Import">參考的OrderTotalOrders</param>
+        /// <param name="pid">Pid</param>
+        /// <returns></returns>
+        public WebException GetOrthoOrder(ref List<_orthoOrder> Import, string pid)
+        {
+            //https://airdental.inteware.com.tw/api/project/ortho/history/5dfae5cb7d81ab1580c89922
+            try
+            {
+                string web_orthoOrderLoad = APIPortal + @"project/ortho/history/" + pid;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(web_orthoOrderLoad);
+                request.Credentials = CredentialCache.DefaultCredentials;
+                request.Headers.Add("Cookie", CookieStr);
+                request.UserAgent = ".NET Framework Example Client";
+                request.Method = "GET";
+                //Response資料
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string WebContent = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                response.Close();
+                Import = JsonConvert.DeserializeObject<List<_orthoOrder>>(WebContent);
+                return null;
+            }
+            catch(WebException ex)
+            {
+                return ex;
+            }
+        }
 #endregion
     }
 }

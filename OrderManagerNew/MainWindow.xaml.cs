@@ -152,7 +152,7 @@ namespace OrderManagerNew
             };
             AirDentalProjHandle.Handler_snackbarShow += new AirDentalProjectHandle.AirDentalProjHandleEventHandler_snackbar(SnackBarShow);
             AirDentalProjHandle.CaseShowEvent += new AirDentalProjectHandle.caseShowEventHandler(Handler_SetCaseShow_Airdental);
-
+            AirDentalProjHandle.mainSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler(CloudCaseHandler_Ortho_showSingleProject);
 
             //工程師模式切換
             if (developerMode == true)
@@ -2415,6 +2415,11 @@ namespace OrderManagerNew
                         break;
                     }
             }
+        }
+
+        private void CloudCaseHandler_Ortho_showSingleProject(int projectIndex)
+        {
+
         }
 #endregion
     }

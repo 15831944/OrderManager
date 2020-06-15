@@ -20,9 +20,15 @@ namespace OrderManagerNew.AirDental_UserControls
     /// </summary>
     public partial class AirD_orthoBase : UserControl
     {
+        //委派到MainWindow.xaml.cs裡面CaseHandler_Ortho_showSingleProject()
+        public delegate void AirD_orthoBaseEventHandler(int projectIndex);
+        public event AirD_orthoBaseEventHandler SetAirDentalProjectShow;
 
-        private AirD_orthoProject orthoProjectInfo;
+        public Dll_Airdental.Main orthoBase_AirDental;
+        public List<Dll_Airdental.Main._orthoOrder> Orderlist_Ortho;
         public int orthoProjectIndex;
+        AirD_orthoProject orthoProjectInfo;
+        bool IsFocusCase = false;   //smallCase目前是否為攤開狀態
 
         public class AirD_orthoOrder
         {
@@ -103,6 +109,22 @@ namespace OrderManagerNew.AirDental_UserControls
             label_designStep.Content = "";
             label_modifyDate.Content = "";
             orthoProjectIndex = -1;
+            IsFocusCase = false;
+        }
+
+        private void GetOrthoOrder()
+        {
+            Orderlist_Ortho = new List<Dll_Airdental.Main._orthoOrder>();
+            System.Net.WebException Exception_ortho = orthoBase_AirDental.GetOrthoOrder(ref Orderlist_Ortho, orthoProjectInfo.Pid);
+            if(Exception_ortho == null)
+            {
+                LoadOrthoOrders();
+            }
+        }
+
+        private void LoadOrthoOrders()
+        {
+            //TODO明天繼續
         }
 
         public void SetProjectInfo(Dll_Airdental.Main._orthoProject Import, int Index)
@@ -148,7 +170,82 @@ namespace OrderManagerNew.AirDental_UserControls
             }*/
         }
 
+        /// <summary>
+        /// 設定Case的Focus狀態
+        /// </summary>
+        /// <param name="isFocused">是否要Focus</param>
+        public void SetCaseFocusStatus(bool isFocused)
+        {
+            switch (isFocused)
+            {
+                case true:
+                    {
+                        background_orthoBase.Fill = this.FindResource("background_FocusedCase") as SolidColorBrush;
+                        //執行攤開
+                        if (orthoProjectInfo.List_orthoOrder != null)
+                        {
+                            /*foreach (Order_orthoSmallcase OrthoCase in orthoInfo.List_smallcase)
+                            {
+                                stackpanel_Ortho.Children.Add(OrthoCase);
+                            }*/
+                        }
+                        else
+                        {
+                            //第一次攤開
+                            Mouse.OverrideCursor = Cursors.Wait;
+                            GetOrthoOrder();
+                            Mouse.OverrideCursor = Cursors.Arrow;
+                            /*if (orthoInfo.List_smallcase.Count > 0)
+                            {
+                                foreach (Order_orthoSmallcase OrthoCase in orthoInfo.List_smallcase)
+                                {
+                                    stackpanel_Ortho.Children.Add(OrthoCase);
+                                }
+                            }*/
+                        }
+                        IsFocusCase = true;
+                        break;
+                    }
+                case false:
+                    {
+                        background_orthoBase.Fill = Brushes.White;
+                        //收回
+                        /*if (orthoProjectInfo.List_orthoOrder.Length > 0)
+                        {
+                            for (int i = 1; i < stackpanel_Ortho.Children.Count; i++)
+                            {
+                                ((Order_orthoSmallcase)stackpanel_Ortho.Children[i]).SetCaseFocusStatus(false);
+                            }
+
+                            stackpanel_Ortho.Children.RemoveRange(1, (stackpanel_Ortho.Children.Count - 1));
+                        }*/
+                        IsFocusCase = false;
+                        break;
+                    }
+            }
+        }
+
         private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Source is Button)
+            {
+                Click_AirdentalWeb(e.Source, e);
+            }
+            else
+            {
+                SetAirDentalProjectShow(orthoProjectIndex);
+                if (IsFocusCase == false)
+                {
+                    SetCaseFocusStatus(true);
+                }
+                else
+                {
+                    SetCaseFocusStatus(false);
+                }
+            }
+        }
+
+        private void Click_AirdentalWeb(object sender, RoutedEventArgs e)
         {
 
         }
