@@ -152,8 +152,8 @@ namespace OrderManagerNew
             };
             AirDentalProjHandle.Handler_snackbarShow += new AirDentalProjectHandle.AirDentalProjHandleEventHandler_snackbar(SnackBarShow);
             AirDentalProjHandle.AirdentalProjectShowEvent += new AirDentalProjectHandle.caseShowEventHandler(Handler_SetCaseShow_Airdental);
-            AirDentalProjHandle.mainSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler(CloudCaseHandler_Ortho_showSingleProject);
-            AirDentalProjHandle.mainSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler2(CloudCaseHandler_Ortho_showDetail);
+            AirDentalProjHandle.MainSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler(CloudCaseHandler_Ortho_showSingleProject);
+            AirDentalProjHandle.MainSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler2(CloudCaseHandler_Ortho_showDetail);
 
             //工程師模式切換
             if (developerMode == true)

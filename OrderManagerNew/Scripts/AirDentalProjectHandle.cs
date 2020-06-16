@@ -21,10 +21,10 @@ namespace OrderManagerNew
 
         //委派到MainWindow.xaml.cs裡面CloudCaseHandler_Ortho_showSingleProject()
         public delegate void AirD_orthoBaseEventHandler(int projectIndex);
-        public event AirD_orthoBaseEventHandler mainSetAirDentalProjectShow;
+        public event AirD_orthoBaseEventHandler MainSetAirDentalProjectShow;
         //委派到MainWindow.xaml.cs裡面的CloudCaseHandler_Ortho_showDetail()
         public delegate void AirD_orthoBaseEventHandler2(int BaseCaseIndex, int SmallCaseIndex);
-        public event AirD_orthoBaseEventHandler2 mainSetSmallOrderDetailShow;
+        public event AirD_orthoBaseEventHandler2 MainSetSmallOrderDetailShow;
 
         public Dll_Airdental.Main Airdental;
         public List<AirDental_UserControls.AirD_orthoBase> Projectlist_Ortho;
@@ -210,8 +210,8 @@ namespace OrderManagerNew
                 {
                     orthoBase_AirDental = Airdental
                 };
-                UserControl_orthoProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler(mainSetAirDentalProjectShow);
-                UserControl_orthoProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler2(mainSetSmallOrderDetailShow);
+                UserControl_orthoProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler(MainSetAirDentalProjectShow);
+                UserControl_orthoProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler2(MainSetSmallOrderDetailShow);
                 UserControl_orthoProject.SetProjectInfo(orthoProject, count);
                 Projectlist_Ortho.Add(UserControl_orthoProject);
                 count++;

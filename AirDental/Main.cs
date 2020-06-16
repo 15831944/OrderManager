@@ -99,7 +99,7 @@ namespace Dll_Airdental
             [JsonProperty("viewerurl")]
             public string _viewerurl { get; set; }
             [JsonProperty("showRetakes")]
-            public bool showRetakes { get; set; }
+            public bool _showRetakes { get; set; }
             [JsonProperty("showDraftEdit")]
             public bool _showDraftEdit { get; set; }
             [JsonProperty("showDetail")]
