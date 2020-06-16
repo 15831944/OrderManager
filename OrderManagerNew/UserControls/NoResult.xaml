@@ -1,0 +1,15 @@
+﻿<UserControl
+  x:Class="OrderManagerNew.UserControls.NoResult" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OrderManagerNew.UserControls" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  d:DesignHeight="300" d:DesignWidth="700" mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary Source="/StyleDictionary.xaml" />
+    </UserControl.Resources>
+    <Grid>
+        <Label
+          Grid.Column="1" x:Name="label_noData" Margin="0,42,0,0"
+          HorizontalAlignment="Center" VerticalAlignment="Top" Panel.ZIndex="2"
+          Content="查無資料" Focusable="False" FontSize="64"
+          IsEnabled="False" />
+    </Grid>
+</UserControl>

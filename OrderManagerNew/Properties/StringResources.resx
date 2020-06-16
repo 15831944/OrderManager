@@ -725,4 +725,8 @@
     <value>Serial Number</value>
     <comment>AirDental_Case</comment>
   </data>
+  <data name="AirDUpdateDate" xml:space="preserve">
+    <value>Last Update</value>
+    <comment>AirDental_Case</comment>
+  </data>
 </root>

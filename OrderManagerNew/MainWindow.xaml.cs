@@ -151,8 +151,9 @@ namespace OrderManagerNew
                 Airdental = new Dll_Airdental.Main()
             };
             AirDentalProjHandle.Handler_snackbarShow += new AirDentalProjectHandle.AirDentalProjHandleEventHandler_snackbar(SnackBarShow);
-            AirDentalProjHandle.CaseShowEvent += new AirDentalProjectHandle.caseShowEventHandler(Handler_SetCaseShow_Airdental);
+            AirDentalProjHandle.AirdentalProjectShowEvent += new AirDentalProjectHandle.caseShowEventHandler(Handler_SetCaseShow_Airdental);
             AirDentalProjHandle.mainSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler(CloudCaseHandler_Ortho_showSingleProject);
+            AirDentalProjHandle.mainSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler2(CloudCaseHandler_Ortho_showDetail);
 
             //工程師模式切換
             if (developerMode == true)
@@ -178,6 +179,11 @@ namespace OrderManagerNew
 
         private void Loaded_MainWindow(object sender, RoutedEventArgs e)
         {
+            //檢查Cookie是否還可以用
+            string[] uInfo = new string[4];
+            if (AirDentalProjHandle.OrderManagerLoginCheck(ref uInfo) == true)
+                LoginSuccess(uInfo);
+
             UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
             OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
             DateFilterTW.IsChecked = true;
@@ -230,10 +236,6 @@ namespace OrderManagerNew
             }
             else
                 ChangeSoftwareFilter();
-            //檢查Cookie是否還可以用
-            string[] uInfo = new string[4];
-            if (AirDentalProjHandle.OrderManagerLoginCheck(ref uInfo) == true)
-                LoginSuccess(uInfo);
         }
 
 #region Watcher事件
@@ -589,11 +591,19 @@ namespace OrderManagerNew
             usercontrolUserDetail.SetUserPic(@"https://airdental.inteware.com.tw/api/v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
             loginStatus = true;
             SnackBarShow(TranslationSource.Instance["Hello"] + usercontrolUserDetail.UserName);
-            AirDentalProjHandle.ReceiveOrthoProjects();//TODO之後要移除
         }
-#endregion
+        /// <summary>
+        /// 跳出Snackbar訊息
+        /// </summary>
+        /// <param name="Message"> 要顯示的訊息</param>
+        /// <returns></returns>
+        private void SnackBarShow(string Message)
+        {
+            Task.Factory.StartNew(() => MainsnackbarMessageQueue.Enqueue(Message));
+        }
+        #endregion
 
-#region TitleBar事件
+        #region TitleBar事件
         private Point startPos;
 
         [DllImport("user32.dll")]
@@ -1966,21 +1976,13 @@ namespace OrderManagerNew
         }
 #endregion
 
-#region SortTable事件
-        /// <summary>
-        /// 跳出Snackbar訊息
-        /// </summary>
-        /// <param name="Message"> 要顯示的訊息</param>
-        /// <returns></returns>
-        private void SnackBarShow(string Message)
-        {
-            Task.Factory.StartNew(() => MainsnackbarMessageQueue.Enqueue(Message));
-        }
+#region FilterTable事件
         /// <summary>
         /// F5重新整理專案
         /// </summary>
         private void ChooseToLoadProj() //日期過濾要加
         {
+            //本地端
             if (SoftwareFilterCAD.IsChecked == true)
                 ProjHandle.LoadEZCADProj();
             else if (SoftwareFilterImplant.IsChecked == true)
@@ -1993,6 +1995,16 @@ namespace OrderManagerNew
                 ProjHandle.LoadSplintProj();
             else
                 StackPanel_Local.Children.Clear();
+
+            //AirDental端
+            if (SoftwareFilterCAD.IsChecked == true)
+                StackPanel_Cloud.Children.Clear();
+            else if (SoftwareFilterImplant.IsChecked == true)
+                StackPanel_Cloud.Children.Clear();
+            else if (SoftwareFilterOrtho.IsChecked == true)
+                AirDentalProjHandle.ReceiveOrthoProjects();
+            else
+                StackPanel_Cloud.Children.Clear();
         }
         private void TextChanged_SortTable(object sender, TextChangedEventArgs e)
         {
@@ -2060,6 +2072,7 @@ namespace OrderManagerNew
             if(sender is RadioButton)
             {
                 StackPanel_Local.Children.Clear();
+                StackPanel_Cloud.Children.Clear();
                 RadioButton radioBtn = sender as RadioButton;
                 switch (radioBtn.Name)
                 {
@@ -2103,6 +2116,7 @@ namespace OrderManagerNew
                         {
                             Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.Ortho;
                             ProjHandle.LoadOrthoProj();
+                            AirDentalProjHandle.ReceiveOrthoProjects();
                             break;
                         }
                     case "SoftwareFilterTray":
@@ -2211,6 +2225,8 @@ namespace OrderManagerNew
                             }
                             Watcher_CaseProject(_watcherEZCAD, Properties.OrderManagerProps.Default.cad_projectDirectory);
                         }
+                        else
+                            StackPanel_Local.Children.Add(new UserControls.NoResult());
                         break;
                     }
                 case (int)_softwareID.Implant:
@@ -2230,6 +2246,8 @@ namespace OrderManagerNew
                             }
                             Watcher_CaseProject(_watcherImplant, Properties.OrderManagerProps.Default.implant_projectDirectory);
                         }
+                        else
+                            StackPanel_Local.Children.Add(new UserControls.NoResult());
                         break;
                     }
                 case (int)_softwareID.Ortho:
@@ -2249,6 +2267,8 @@ namespace OrderManagerNew
                             }
                             Watcher_CaseProject(_watcherOrtho, Properties.OrderManagerProps.Default.ortho_projectDirectory);
                         }
+                        else
+                            StackPanel_Local.Children.Add(new UserControls.NoResult());
                         break;
                     }
                 case (int)_softwareID.Tray:
@@ -2267,6 +2287,8 @@ namespace OrderManagerNew
                             }
                             Watcher_CaseProject(_watcherTray, Properties.OrderManagerProps.Default.tray_projectDirectory);
                         }
+                        else
+                            StackPanel_Local.Children.Add(new UserControls.NoResult());
                         break;
                     }
                 case (int)_softwareID.Splint:
@@ -2285,6 +2307,8 @@ namespace OrderManagerNew
                             }
                             Watcher_CaseProject(_watcherSplint, Properties.OrderManagerProps.Default.splint_projectDirectory);
                         }
+                        else
+                            StackPanel_Local.Children.Add(new UserControls.NoResult());
                         break;
                     }
             }
@@ -2407,11 +2431,13 @@ namespace OrderManagerNew
                     {
                         if (AirDentalProjHandle.Projectlist_Ortho.Count > 0)
                         {
-                            foreach(AirDental_UserControls.AirD_orthoBase orthoProject in AirDentalProjHandle.Projectlist_Ortho)
+                            foreach (AirDental_UserControls.AirD_orthoBase orthoProject in AirDentalProjHandle.Projectlist_Ortho)
                             {
                                 StackPanel_Cloud.Children.Add(orthoProject);
                             }
                         }
+                        else
+                            StackPanel_Cloud.Children.Add(new UserControls.NoResult());
                         break;
                     }
             }
@@ -2419,8 +2445,32 @@ namespace OrderManagerNew
 
         private void CloudCaseHandler_Ortho_showSingleProject(int projectIndex)
         {
+            StackPanel_Detail.Children.Clear();
+            for (int i = 0; i < StackPanel_Cloud.Children.Count; i++)
+            {
+                if (i == projectIndex)
+                    continue;
 
+                ((AirDental_UserControls.AirD_orthoBase)StackPanel_Cloud.Children[i]).SetCaseFocusStatus(false);
+            }
         }
-#endregion
+
+        private void CloudCaseHandler_Ortho_showDetail(int BaseCaseIndex, int SmallCaseIndex)
+        {
+            StackPanel_Detail.Children.Clear();
+            /*if (StackPanel_Local.Children[BaseCaseIndex] is UserControls.Order_orthoBase)
+            {
+                if (((UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex + 1] is UserControls.Order_orthoSmallcase tmpOrthoSmall)
+                {
+                    if (tmpOrthoSmall.IsFocusSmallCase == false)
+                    {
+                        UserControls.Detail_ortho detail_ortho = new UserControls.Detail_ortho();
+                        detail_ortho.SetDetailInfo(tmpOrthoSmall.orthosmallcaseInfo);
+                        StackPanel_Detail.Children.Add(detail_ortho);
+                    }
+                }
+            }*/
+        }
+        #endregion
     }
 }

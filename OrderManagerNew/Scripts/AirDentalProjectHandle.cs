@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace OrderManagerNew
 {
@@ -14,13 +15,16 @@ namespace OrderManagerNew
         //委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
         public delegate void AirDentalProjHandleEventHandler_snackbar(string message);
         public event AirDentalProjHandleEventHandler_snackbar Handler_snackbarShow;
-
+        //委派到MainWindow.xaml.cs裡面的Handler_SetCaseShow_Airdental
         public delegate void caseShowEventHandler(int softwareID);
-        public event caseShowEventHandler CaseShowEvent;
+        public event caseShowEventHandler AirdentalProjectShowEvent;
 
-        //委派到MainWindow.xaml.cs裡面CaseHandler_Ortho_showSingleProject()
+        //委派到MainWindow.xaml.cs裡面CloudCaseHandler_Ortho_showSingleProject()
         public delegate void AirD_orthoBaseEventHandler(int projectIndex);
         public event AirD_orthoBaseEventHandler mainSetAirDentalProjectShow;
+        //委派到MainWindow.xaml.cs裡面的CloudCaseHandler_Ortho_showDetail()
+        public delegate void AirD_orthoBaseEventHandler2(int BaseCaseIndex, int SmallCaseIndex);
+        public event AirD_orthoBaseEventHandler2 mainSetSmallOrderDetailShow;
 
         public Dll_Airdental.Main Airdental;
         public List<AirDental_UserControls.AirD_orthoBase> Projectlist_Ortho;
@@ -167,17 +171,54 @@ namespace OrderManagerNew
             Projectlist_Ortho = new List<AirDental_UserControls.AirD_orthoBase>();
             foreach (var orthoProject in TotalOrthoProjects.List_orthoProjects)
             {
+                //日期過濾
+                switch(Properties.OrderManagerProps.Default.DateFilter)
+                {
+                    case (int)_DateFilter.Today:
+                        {
+                            if(orthoProject._Date.DateTime.ToLongDateString() != DateTime.Today.ToLongDateString())
+                                continue;
+                            break;
+                        }
+                    case (int)_DateFilter.ThisWeek:
+                        {
+                            if (orthoProject._Date.DateTime < DateTime.Today.AddDays(-7))
+                                continue;
+                            break;
+                        }
+                    case (int)_DateFilter.LastTwoWeek:
+                        {
+                            if (orthoProject._Date.DateTime < DateTime.Today.AddDays(-14))
+                                continue;
+                            break;
+                        }
+                }
+                if(Properties.OrderManagerProps.Default.PatientNameFilter != "")
+                {
+                    //姓名過濾
+                    if (orthoProject._Patient.ToLower().IndexOf(Properties.OrderManagerProps.Default.PatientNameFilter.ToLower()) == -1)
+                        continue;
+                }
+                else if(Properties.OrderManagerProps.Default.CaseNameFilter != "")
+                {
+                    //Case名稱過濾
+                    if (orthoProject._SerialNumber.ToLower().IndexOf(Properties.OrderManagerProps.Default.CaseNameFilter.ToLower()) == -1)
+                        continue;
+                }
+                
                 AirDental_UserControls.AirD_orthoBase UserControl_orthoProject = new AirDental_UserControls.AirD_orthoBase
                 {
                     orthoBase_AirDental = Airdental
                 };
                 UserControl_orthoProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler(mainSetAirDentalProjectShow);
+                UserControl_orthoProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler2(mainSetSmallOrderDetailShow);
                 UserControl_orthoProject.SetProjectInfo(orthoProject, count);
                 Projectlist_Ortho.Add(UserControl_orthoProject);
                 count++;
             }
 
-            CaseShowEvent((int)_softwareID.Ortho);
+            AirdentalProjectShowEvent((int)_softwareID.Ortho);
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         /// <summary>
@@ -202,6 +243,7 @@ namespace OrderManagerNew
 
         public void ReceiveOrthoProjects()
         {
+            Mouse.OverrideCursor = Cursors.Wait;
             ortho_BackgroundWorker = new BackgroundWorker();
             ortho_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork_ortho);
             ortho_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_ortho);

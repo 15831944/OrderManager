@@ -56,8 +56,8 @@
                   ToolTip="{local1:LocExtension DesignStep}" />
                 <Label
                   Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
-                  x:Name="label_modifyDate" Content="ModifyDate"
-                  ToolTip="{local1:LocExtension ModifyDate}" />
+                  x:Name="label_modifyDate" Content="LastUpdate"
+                  ToolTip="{local1:LocExtension AirDUpdateDate}" />
 
                 <Image
                   Grid.Row="0" Grid.RowSpan="2" x:Name="image_patient"

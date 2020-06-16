@@ -133,6 +133,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Last Update 的當地語系化字串。
+        /// </summary>
+        internal static string AirDUpdateDate {
+            get {
+                return ResourceManager.GetString("AirDUpdateDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 ALL 的當地語系化字串。
         /// </summary>
         internal static string All {

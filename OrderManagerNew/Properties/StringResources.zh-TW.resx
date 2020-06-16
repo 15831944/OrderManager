@@ -573,4 +573,7 @@
   <data name="SerialNumber" xml:space="preserve">
     <value>流水號</value>
   </data>
+  <data name="AirDUpdateDate" xml:space="preserve">
+    <value>更新日期</value>
+  </data>
 </root>

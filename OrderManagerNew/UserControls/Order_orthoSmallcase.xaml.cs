@@ -22,8 +22,8 @@ namespace OrderManagerNew.UserControls
     public partial class Order_orthoSmallcase : UserControl
     {
         //委派到Order_orthoBase.xaml.cs裡面的SmallCaseHandler()
-        public delegate void implantSmallCaseEventHandler(int projectIndex);
-        public event implantSmallCaseEventHandler SetsmallCaseShow;
+        public delegate void orthoSmallCaseEventHandler(int projectIndex);
+        public event orthoSmallCaseEventHandler SetsmallCaseShow;
         public OrthoSmallCaseInformation orthosmallcaseInfo;
         public bool IsFocusSmallCase;
         private int ItemIndex;
