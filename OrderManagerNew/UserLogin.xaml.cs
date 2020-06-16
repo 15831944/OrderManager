@@ -73,7 +73,7 @@ namespace OrderManagerNew
                 return;
             }
             
-            string[] LoginData = new string[3]{ @"https://airdental.inteware.com.tw/api/", textbox_Account.Text, passwordbox_PWD.Password};//API網址、帳號、密碼
+            string[] LoginData = new string[3]{Airdental_main.APIPortal, textbox_Account.Text, passwordbox_PWD.Password};//API網址、帳號、密碼
             UserDetail = new string[4] { "", "", "" , ""};
             string NewCookie = "";
 

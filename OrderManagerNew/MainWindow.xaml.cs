@@ -588,7 +588,7 @@ namespace OrderManagerNew
             usercontrolUserDetail.Usergroup = UserDetail[(int)_AirD_LoginDetail.USERGROUP];
             usercontrolUserDetail.UserMail = UserDetail[(int)_AirD_LoginDetail.EMAIL];
             usercontrolUserDetail.UserName = UserDetail[(int)_AirD_LoginDetail.USERNAME];
-            usercontrolUserDetail.SetUserPic(@"https://airdental.inteware.com.tw/api/v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
+            usercontrolUserDetail.SetUserPic(AirDentalProjHandle.APIPortal + @"v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
             loginStatus = true;
             SnackBarShow(TranslationSource.Instance["Hello"] + usercontrolUserDetail.UserName);
         }

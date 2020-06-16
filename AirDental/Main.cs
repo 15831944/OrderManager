@@ -251,7 +251,7 @@ namespace Dll_Airdental
                 response.Close();
                 string cookiesstr = request.CookieContainer.GetCookieHeader(request.RequestUri);
                 Importcookie = cookiesstr;
-                WebException _exception = UserDetailInfo(ref userDetail, cookiesstr);
+                WebException _exception = UserDetailInfo(APIPortal, ref userDetail, cookiesstr);
                 if (_exception == null)
                     return null;
                 else
@@ -266,9 +266,13 @@ namespace Dll_Airdental
         /// User詳細資料
         /// </summary>
         /// <param name="userDetail">[0]:uid [1]:mail [2]:userName</param>
-        public WebException UserDetailInfo(ref string[] userDetail,string ImportCookie)
+        public WebException UserDetailInfo(string ImportAPIPortal, ref string[] userDetail,string ImportCookie)
         {
             //https://airdental.inteware.com.tw/api/userinfo
+
+            if (ImportAPIPortal != APIPortal)
+                APIPortal = ImportAPIPortal;
+
             try
             {   
                 string web_Detail = APIPortal + "userinfo";

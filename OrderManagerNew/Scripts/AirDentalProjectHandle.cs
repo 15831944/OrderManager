@@ -26,6 +26,7 @@ namespace OrderManagerNew
         public delegate void AirD_orthoBaseEventHandler2(int BaseCaseIndex, int SmallCaseIndex);
         public event AirD_orthoBaseEventHandler2 MainSetSmallOrderDetailShow;
 
+        public string APIPortal = "https://airdental.inteware.com.tw/api/";
         public Dll_Airdental.Main Airdental;
         public List<AirDental_UserControls.AirD_orthoBase> Projectlist_Ortho;
         /// <summary>
@@ -150,7 +151,7 @@ namespace OrderManagerNew
         /// <returns></returns>
         public bool OrderManagerLoginCheck(ref string[] uInfo)
         {
-            WebException _exception = Airdental.UserDetailInfo(ref uInfo, Properties.Settings.Default.AirdentalCookie);
+            WebException _exception = Airdental.UserDetailInfo(APIPortal, ref uInfo, Properties.Settings.Default.AirdentalCookie);
             if (Properties.Settings.Default.AirdentalCookie != "" && _exception == null)
             {
                 //Cookie還可以用
