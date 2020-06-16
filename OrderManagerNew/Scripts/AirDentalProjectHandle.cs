@@ -29,118 +29,72 @@ namespace OrderManagerNew
         public string APIPortal = "https://airdental.inteware.com.tw/api/";
         public Dll_Airdental.Main Airdental;
         public List<AirDental_UserControls.AirD_orthoBase> Projectlist_Ortho;
+        public List<AirDental_UserControls.AirD_implantBase> Projectlist_Implant;
         /// <summary>
         /// 日誌檔cs
         /// </summary>
         LogRecorder Log;
         Dll_Airdental.Main.OrthoTotalProjects TotalOrthoProjects;
-        BackgroundWorker ortho_BackgroundWorker;
-        WebException Exception_ortho;
-        bool ReceiveOrtho;
-        /// <summary>
-        /// 訂單清單分頁資料
-        /// </summary>
-        /*public class _Pagination
-        {
-            public int Total { get; set; }
-            public int Current { get; set; }
-            public int PageSize { get; set; }
-
-            public _Pagination()
-            {
-                Total = -1;
-                Current = -1;
-                PageSize = -1;
-            }
-        }
-        /// <summary>
-        /// orthoCase
-        /// </summary>
-        public class _orthoCase
-        {
-            public string _Key { get; set; }
-            public string _Group { get; set; }
-            public string _SerialNumber { get; set; }
-            public string _CustomSerialNumber { get; set; }
-            public string _Patient { get; set; }
-            public string _Clinic { get; set; }
-            public string _Action { get; set; }
-            public string _ActionKey { get; set; }
-            public string _Stage { get; set; }
-            public string _StageKey { get; set; }
-            public string _Status { get; set; }
-            public string _Doctor { get; set; }
-            public DateTimeOffset _Date { get; set; }
-            public string _Instruction { get; set; }
-            public string _PatientAvatar { get; set; }
-            public string _TxTreatedArch { get; set; }
-            public string _ProductType { get; set; }
-
-            public _orthoCase()
-            {
-                _Key = "";
-                _Group = "";
-                _SerialNumber = "";
-                _CustomSerialNumber = "";
-                _Patient = "";
-                _Clinic = "";
-                _Action = "";
-                _ActionKey = "";
-                _Stage = "";
-                _StageKey = "";
-                _Status = "";
-                _Doctor = "";
-                _Date = new DateTimeOffset();
-                _Instruction = "";
-                _PatientAvatar = "";
-                _TxTreatedArch = "";
-                _ProductType = "";
-            }
-        }
-        /// <summary>
-        /// ortho專案
-        /// </summary>
-        public class OrthoProject
-        {
-            public _Pagination Pagination { get; set; }
-            public _orthoCase[] List_orthoCase { get; set; }
-            public OrthoProject()
-            {
-                Pagination = new _Pagination();
-                List_orthoCase = null;
-            }
-        }*/
+        Dll_Airdental.Main.ImplantTotalProjects TotalImplantProjects;
+        BackgroundWorker AirD_BackgroundWorker;
+        WebException AirD_Exception;
+        bool RogerRoger;
 
         public AirDentalProjectHandle()
         {
             Log = new LogRecorder();
-            Exception_ortho = null;
-            ReceiveOrtho = false;
+            AirD_Exception = null;
+            RogerRoger = false;
         }
 
         void DoWork_ortho(object sender, DoWorkEventArgs e)
         {
-            Exception_ortho = Airdental.GetOrthoProject(ref TotalOrthoProjects);
-            if (Exception_ortho == null)
+            AirD_Exception = Airdental.GetOrthoProject(ref TotalOrthoProjects);
+            if (AirD_Exception == null)
             {
-                ReceiveOrtho = true;
+                RogerRoger = true;
             }
             else
             {
-                if (Exception_ortho.Message != "")
-                    Handler_snackbarShow(Exception_ortho.Message);
+                if (AirD_Exception.Message != "")
+                    Handler_snackbarShow(AirD_Exception.Message);
             }
         }
         void CompletedWork_ortho(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Error == null)
             {
-                if(ReceiveOrtho == true)
+                if(RogerRoger == true)
                     LoadOrthoProjects();
             }
             else
             {
                 
+            }
+        }
+        void DoWork_implant(object sender, DoWorkEventArgs e)
+        {
+            AirD_Exception = Airdental.GetImplantProject(ref TotalImplantProjects);
+            if (AirD_Exception == null)
+            {
+                RogerRoger = true;
+            }
+            else
+            {
+                if (AirD_Exception.Message != "")
+                    Handler_snackbarShow(AirD_Exception.Message);
+            }
+        }
+        void CompletedWork_implant(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                if (RogerRoger == true)
+                    LoadOrthoProjects();
+            }
+            else
+            {
+
             }
         }
 
@@ -207,18 +161,74 @@ namespace OrderManagerNew
                         continue;
                 }
                 
-                AirDental_UserControls.AirD_orthoBase UserControl_orthoProject = new AirDental_UserControls.AirD_orthoBase
+                AirDental_UserControls.AirD_orthoBase tmpUserControl_orthoProject = new AirDental_UserControls.AirD_orthoBase
                 {
                     orthoBase_AirDental = Airdental
                 };
-                UserControl_orthoProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler(MainSetAirDentalProjectShow);
-                UserControl_orthoProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler2(MainSetSmallOrderDetailShow);
-                UserControl_orthoProject.SetProjectInfo(orthoProject, count);
-                Projectlist_Ortho.Add(UserControl_orthoProject);
+                tmpUserControl_orthoProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler(MainSetAirDentalProjectShow);
+                tmpUserControl_orthoProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler2(MainSetSmallOrderDetailShow);
+                tmpUserControl_orthoProject.SetProjectInfo(orthoProject, count);
+                Projectlist_Ortho.Add(tmpUserControl_orthoProject);
                 count++;
             }
 
             AirdentalProjectShowEvent((int)_softwareID.Ortho);
+            Mouse.OverrideCursor = Cursors.Arrow;
+        }
+
+        private void LoadImplantProjects()
+        {
+            int count = 0;
+            Projectlist_Implant = new List<AirDental_UserControls.AirD_implantBase>();
+            foreach (var implantProject in TotalImplantProjects.List_implantProjects)
+            {
+                //日期過濾
+                switch (Properties.OrderManagerProps.Default.DateFilter)
+                {
+                    case (int)_DateFilter.Today:
+                        {
+                            if (implantProject._Date.DateTime.ToLongDateString() != DateTime.Today.ToLongDateString())
+                                continue;
+                            break;
+                        }
+                    case (int)_DateFilter.ThisWeek:
+                        {
+                            if (implantProject._Date.DateTime < DateTime.Today.AddDays(-7))
+                                continue;
+                            break;
+                        }
+                    case (int)_DateFilter.LastTwoWeek:
+                        {
+                            if (implantProject._Date.DateTime < DateTime.Today.AddDays(-14))
+                                continue;
+                            break;
+                        }
+                }
+                if (Properties.OrderManagerProps.Default.PatientNameFilter != "")
+                {
+                    //姓名過濾
+                    if (implantProject._Patient.ToLower().IndexOf(Properties.OrderManagerProps.Default.PatientNameFilter.ToLower()) == -1)
+                        continue;
+                }
+                else if (Properties.OrderManagerProps.Default.CaseNameFilter != "")
+                {
+                    //Case名稱過濾
+                    if (implantProject._SerialNumber.ToLower().IndexOf(Properties.OrderManagerProps.Default.CaseNameFilter.ToLower()) == -1)
+                        continue;
+                }
+
+                AirDental_UserControls.AirD_implantBase tmpUserControl_implantProject = new AirDental_UserControls.AirD_implantBase
+                {
+                    implantBase_AirDental = Airdental
+                };
+                tmpUserControl_implantProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_implantBase.AirD_implantBaseEventHandler(MainSetAirDentalProjectShow);
+                tmpUserControl_implantProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_implantBase.AirD_implantBaseEventHandler2(MainSetSmallOrderDetailShow);
+                tmpUserControl_implantProject.SetProjectInfo(implantProject, count);
+                Projectlist_Implant.Add(tmpUserControl_implantProject);
+                count++;
+            }
+
+            AirdentalProjectShowEvent((int)_softwareID.Implant);
             Mouse.OverrideCursor = Cursors.Arrow;
         }
 
@@ -244,11 +254,24 @@ namespace OrderManagerNew
 
         public void ReceiveOrthoProjects()
         {
+            AirD_Exception = null;
+            RogerRoger = false;
             Mouse.OverrideCursor = Cursors.Wait;
-            ortho_BackgroundWorker = new BackgroundWorker();
-            ortho_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork_ortho);
-            ortho_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_ortho);
-            ortho_BackgroundWorker.RunWorkerAsync(this);
+            AirD_BackgroundWorker = new BackgroundWorker();
+            AirD_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork_ortho);
+            AirD_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_ortho);
+            AirD_BackgroundWorker.RunWorkerAsync(this);
+        }
+
+        public void ReceiveImplantProjects()
+        {
+            AirD_Exception = null;
+            RogerRoger = false;
+            Mouse.OverrideCursor = Cursors.Wait;
+            AirD_BackgroundWorker = new BackgroundWorker();
+            AirD_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork_implant);
+            AirD_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_implant);
+            AirD_BackgroundWorker.RunWorkerAsync(this);
         }
     }
 }

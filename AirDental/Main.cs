@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Dll_Airdental
 {
+    /// <summary>
+    /// 2020/06 howwming-AirDental DLL
+    /// </summary>
     public class Main
     {
         static private bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
@@ -169,7 +172,83 @@ namespace Dll_Airdental
             [JsonProperty("projects")]
             public _orthoProject[] List_orthoProjects { get; set; }
         }
-        
+        /// <summary>
+        /// Implant訂單
+        /// </summary>
+        public class _implantOrder
+        {
+            [JsonProperty("key")]
+            public string _Key { get; set; }
+            [JsonProperty("group")]
+            public string _group { get; set; }
+            [JsonProperty("isAuthor")]
+            public bool _isAuthor { get; set; }
+            [JsonProperty("stage")]
+            public string _stage { get; set; }
+            [JsonProperty("stageKey")]
+            public string _stageKey { get; set; }
+            [JsonProperty("action")]
+            public string _action { get; set; }
+            [JsonProperty("actionKey")]
+            public string _actionKey { get; set; }
+            [JsonProperty("instruction")]
+            public string _instruction { get; set; }
+            [JsonProperty("date")]
+            public DateTimeOffset _date { get; set; }
+            [JsonProperty("showViewer")]
+            public string _showViewer { get; set; }
+            [JsonProperty("viewerurl")]
+            public string _viewerurl { get; set; }
+            [JsonProperty("showDraftEdit")]
+            public bool _showDraftEdit { get; set; }
+            [JsonProperty("showGuideDownload")]
+            public bool _showGuideDownload { get; set; }
+        }
+        /// <summary>
+        /// implant專案
+        /// </summary>
+        public class _implantProject
+        {
+            [JsonProperty("key")]
+            public string _Key { get; set; }
+            [JsonProperty("group")]
+            public string _Group { get; set; }
+            [JsonProperty("serialnum")]
+            public string _SerialNumber { get; set; }
+            [JsonProperty("patient")]
+            public string _Patient { get; set; }
+            [JsonProperty("clinic")]
+            public string _Clinic { get; set; }
+            [JsonProperty("action")]
+            public string _Action { get; set; }
+            [JsonProperty("actionKey")]
+            public string _ActionKey { get; set; }
+            [JsonProperty("stage")]
+            public string _Stage { get; set; }
+            [JsonProperty("stageKey")]
+            public string _StageKey { get; set; }
+            [JsonProperty("status")]
+            public string _Status { get; set; }
+            [JsonProperty("doctor")]
+            public string _Doctor { get; set; }
+            [JsonProperty("date")]
+            public DateTimeOffset _Date { get; set; }
+            [JsonProperty("instruction")]
+            public string _Instruction { get; set; }
+            [JsonProperty("patientAvatar")]
+            public string _PatientAvatar { get; set; }
+        }
+        /// <summary>
+        /// implant專案總覽
+        /// </summary>
+        public class ImplantTotalProjects
+        {
+            [JsonProperty("pagination")]
+            public _Pagination Pagination { get; set; }
+            [JsonProperty("projects")]
+            public _implantProject[] List_implantProjects { get; set; }
+        }
+
 #endregion
 
         public Main()
@@ -394,6 +473,63 @@ namespace Dll_Airdental
                 return ex;
             }
         }
-#endregion
+        /// <summary>
+        /// 取得Implant專案清單
+        /// </summary>
+        /// <param name="Import">參考的ImplantTotalProjects</param>
+        /// <returns></returns>
+        public WebException GetImplantProject(ref ImplantTotalProjects Import)
+        {
+            //https://airdental.inteware.com.tw/api/project/implant?limit=100
+            try
+            {
+                string web_implantProjectLoad = APIPortal + "project/implant" + ProjectLimit;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(web_implantProjectLoad);
+                request.Credentials = CredentialCache.DefaultCredentials;
+                request.Headers.Add("Cookie", CookieStr);
+                request.UserAgent = ".NET Framework Example Client";
+                request.Method = "GET";
+                //Response資料
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string WebContent = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                response.Close();
+                Import = JsonConvert.DeserializeObject<ImplantTotalProjects>(WebContent);
+                return null;
+            }
+            catch (WebException ex)
+            {
+                return ex;
+            }
+        }
+        /// <summary>
+        /// 取得Implant訂單清單
+        /// </summary>
+        /// <param name="Import">參考的OrderTotalOrders</param>
+        /// <param name="pid">Pid</param>
+        /// <returns></returns>
+        public WebException GetImplantOrder(ref List<_implantOrder> Import, string pid)
+        {
+            //https://airdental.inteware.com.tw/api/project/implant/history/5dfae5cb7d81ab1580c89922
+            try
+            {
+                string web_implantOrderLoad = APIPortal + @"project/implant/history/" + pid;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(web_implantOrderLoad);
+                request.Credentials = CredentialCache.DefaultCredentials;
+                request.Headers.Add("Cookie", CookieStr);
+                request.UserAgent = ".NET Framework Example Client";
+                request.Method = "GET";
+                //Response資料
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string WebContent = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                response.Close();
+                Import = JsonConvert.DeserializeObject<List<_implantOrder>>(WebContent);
+                return null;
+            }
+            catch (WebException ex)
+            {
+                return ex;
+            }
+        }
+        #endregion
     }
 }

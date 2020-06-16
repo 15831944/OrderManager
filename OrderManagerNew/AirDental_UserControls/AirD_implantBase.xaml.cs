@@ -16,24 +16,24 @@ using System.Windows.Shapes;
 namespace OrderManagerNew.AirDental_UserControls
 {
     /// <summary>
-    /// AirD_orthoBase.xaml 的互動邏輯
+    /// AirD_implantBase.xaml 的互動邏輯
     /// </summary>
-    public partial class AirD_orthoBase : UserControl
+    public partial class AirD_implantBase : UserControl
     {
         //委派到MainWindow.xaml.cs裡面CaseHandler_Ortho_showSingleProject()
-        public delegate void AirD_orthoBaseEventHandler(int projectIndex);
-        public event AirD_orthoBaseEventHandler SetAirDentalProjectShow;
+        public delegate void AirD_implantBaseEventHandler(int projectIndex);
+        public event AirD_implantBaseEventHandler SetAirDentalProjectShow;
         //委派到MainWindow.xaml.cs裡面的CaseHandler_Ortho_showDetail()
-        public delegate void AirD_orthoBaseEventHandler2(int BaseCaseIndex, int SmallCaseIndex);
-        public event AirD_orthoBaseEventHandler2 SetSmallOrderDetailShow;
+        public delegate void AirD_implantBaseEventHandler2(int BaseCaseIndex, int SmallCaseIndex);
+        public event AirD_implantBaseEventHandler2 SetSmallOrderDetailShow;
 
-        public Dll_Airdental.Main orthoBase_AirDental;
-        public List<Dll_Airdental.Main._orthoOrder> Orderlist_Ortho;
-        public int orthoProjectIndex;
-        AirD_orthoProject orthoProjectInfo;
+        public Dll_Airdental.Main implantBase_AirDental;
+        public List<Dll_Airdental.Main._implantOrder> Orderlist_Implant;
+        public int implantProjectIndex;
+        AirD_implantProject implantProjectInfo;
         bool IsFocusCase = false;   //smallCase目前是否為攤開狀態
-        
-        public class AirD_orthoProject
+
+        public class AirD_implantProject
         {
             //外部專案Pid
             public string Pid { get; set; }
@@ -45,15 +45,14 @@ namespace OrderManagerNew.AirDental_UserControls
             public string ActionKey { get; set; }
             public string Stage_String { get; set; }
             public string StageKey { get; set; }
+            public string Status { get; set; }
             public string Doctor { get; set; }
             public DateTimeOffset ModifyDate { get; set; }
             public string Instruction { get; set; }
             public string PatientAvatar { get; set; }
-            public string TxTreatedArch { get; set; }
-            public string ProductType { get; set; }
-            public List<AirD_orthoSmallOrder> List_orthoOrder { get; set; }
+            public List<AirD_implantSmallOrder> List_implantOrder { get; set; }
 
-            public AirD_orthoProject()
+            public AirD_implantProject()
             {
                 Pid = "";
                 Group = "";
@@ -64,61 +63,54 @@ namespace OrderManagerNew.AirDental_UserControls
                 ActionKey = "";
                 Stage_String = "";
                 StageKey = "";
+                Status = "";
                 Doctor = "";
                 ModifyDate = new DateTimeOffset();
                 Instruction = "";
                 PatientAvatar = "";
-                TxTreatedArch = "";
-                ProductType = "";
-                List_orthoOrder = null;
+                List_implantOrder = null;
             }
         }
-        
-        public AirD_orthoBase()
+
+        public AirD_implantBase()
         {
             InitializeComponent();
-            label_orderID.Content = "";
-            label_patientName.Content = "";
-            label_designStep.Content = "";
-            label_modifyDate.Content = "";
-            orthoProjectIndex = -1;
-            IsFocusCase = false;
         }
 
-        private void GetOrthoOrder()
+        private void GetImplantOrder()
         {
-            Orderlist_Ortho = new List<Dll_Airdental.Main._orthoOrder>();
-            System.Net.WebException Exception_ortho = orthoBase_AirDental.GetOrthoOrder(ref Orderlist_Ortho, orthoProjectInfo.Pid);
-            if(Exception_ortho == null)
+            Orderlist_Implant = new List<Dll_Airdental.Main._implantOrder>();
+            System.Net.WebException Exception_implant = implantBase_AirDental.GetImplantOrder(ref Orderlist_Implant, implantProjectInfo.Pid);
+            if (Exception_implant == null)
             {
-                LoadOrthoOrders();
+                LoadImplantOrders();
             }
         }
 
-        private void LoadOrthoOrders()
+        private void LoadImplantOrders()
         {
-            orthoProjectInfo.List_orthoOrder = new List<AirD_orthoSmallOrder>();
+            implantProjectInfo.List_implantOrder = new List<AirD_implantSmallOrder>();
             if (Properties.Settings.Default.showCloudOrderNumbers < 1)
                 Properties.Settings.Default.showCloudOrderNumbers = 5;
 
             int totalCount = -1;
-            if (Orderlist_Ortho.Count < Properties.Settings.Default.showCloudOrderNumbers)
-                totalCount = Orderlist_Ortho.Count;
+            if (Orderlist_Implant.Count < Properties.Settings.Default.showCloudOrderNumbers)
+                totalCount = Orderlist_Implant.Count;
             else
                 totalCount = Properties.Settings.Default.showCloudOrderNumbers;
 
-            for(int i=0; i<totalCount; i++)
+            for (int i = 0; i < totalCount; i++)
             {
-                AirDental_UserControls.AirD_orthoSmallOrder TmpOrthoSmallOrder = new AirD_orthoSmallOrder();
+                /*AirDental_UserControls.AirD_orthoSmallOrder TmpOrthoSmallOrder = new AirD_orthoSmallOrder();//TODO
                 TmpOrthoSmallOrder.SetOrderCaseShow += new AirD_orthoSmallOrder.orthoOrderEventHandler(SmallOrderHandler);
                 TmpOrthoSmallOrder.SetOrderInfo(Orderlist_Ortho[i], i);
-                orthoProjectInfo.List_orthoOrder.Add(TmpOrthoSmallOrder);
+                orthoProjectInfo.List_orthoOrder.Add(TmpOrthoSmallOrder);*/
             }
         }
 
-        public void SetProjectInfo(Dll_Airdental.Main._orthoProject Import, int Index)
+        public void SetProjectInfo(Dll_Airdental.Main._implantProject Import, int Index)
         {
-            orthoProjectInfo = new AirD_orthoProject
+            implantProjectInfo = new AirD_implantProject
             {
                 Pid = Import._Key,
                 Group = Import._Group,
@@ -129,19 +121,18 @@ namespace OrderManagerNew.AirDental_UserControls
                 ActionKey = Import._ActionKey,
                 Stage_String = Import._Stage,
                 StageKey = Import._StageKey,
+                Status = Import._Status,
                 Doctor = Import._Doctor,
                 ModifyDate = Import._Date,
                 Instruction = Import._Instruction,
                 PatientAvatar = Import._PatientAvatar,
-                TxTreatedArch = Import._TxTreatedArch,
-                ProductType = Import._ProductType
             };
-            orthoProjectIndex = Index;
+            implantProjectIndex = Index;
 
-            label_orderID.Content = orthoProjectInfo.SerialNumber;
-            label_designStep.Content = TranslationSource.Instance[orthoProjectInfo.Group] + orthoProjectInfo.Action_String + orthoProjectInfo.Stage_String;
-            label_patientName.Content = orthoProjectInfo.Patient;
-            label_modifyDate.Content = orthoProjectInfo.ModifyDate.DateTime.ToLongDateString() + orthoProjectInfo.ModifyDate.DateTime.ToLongTimeString();
+            label_orderID.Content = implantProjectInfo.SerialNumber;
+            label_designStep.Content = TranslationSource.Instance[implantProjectInfo.Group] + implantProjectInfo.Action_String + implantProjectInfo.Stage_String;
+            label_patientName.Content = implantProjectInfo.Patient;
+            label_modifyDate.Content = implantProjectInfo.ModifyDate.DateTime.ToLongDateString() + implantProjectInfo.ModifyDate.DateTime.ToLongTimeString();
 
             /*try
             {
@@ -165,13 +156,13 @@ namespace OrderManagerNew.AirDental_UserControls
         /// <param name="SmallcaseIndex">SmallCase的Index</param>
         private void SmallOrderHandler(int SmallorderIndex)
         {
-            SetSmallOrderDetailShow(orthoProjectIndex, SmallorderIndex);  //MainWindow顯示Small Case Detail
-            for (int i = 0; i < orthoProjectInfo.List_orthoOrder.Count; i++)
+            SetSmallOrderDetailShow(implantProjectIndex, SmallorderIndex);  //MainWindow顯示Small Case Detail
+            for (int i = 0; i < implantProjectInfo.List_implantOrder.Count; i++)
             {
                 if (i == SmallorderIndex)
                     continue;
 
-                orthoProjectInfo.List_orthoOrder[i].SetCaseFocusStatus(false);
+                //implantProjectInfo.List_implantOrder[i].SetCaseFocusStatus(false);//TODO
             }
         }
 
@@ -187,24 +178,24 @@ namespace OrderManagerNew.AirDental_UserControls
                     {
                         background_orthoBase.Fill = this.FindResource("background_FocusedCase") as SolidColorBrush;
                         //執行攤開
-                        if (orthoProjectInfo.List_orthoOrder != null)
+                        if (implantProjectInfo.List_implantOrder != null)
                         {
-                            foreach (AirD_orthoSmallOrder OrthoOrder in orthoProjectInfo.List_orthoOrder)
+                            foreach (AirD_implantSmallOrder implantOrder in implantProjectInfo.List_implantOrder)
                             {
-                                stackpanel_Ortho.Children.Add(OrthoOrder);
+                                stackpanel_Ortho.Children.Add(implantOrder);
                             }
                         }
                         else
                         {
                             //第一次攤開
                             Mouse.OverrideCursor = Cursors.Wait;
-                            GetOrthoOrder();
+                            GetImplantOrder();
                             Mouse.OverrideCursor = Cursors.Arrow;
-                            if (orthoProjectInfo.List_orthoOrder != null)
+                            if (implantProjectInfo.List_implantOrder != null)
                             {
-                                foreach (AirD_orthoSmallOrder OrthoOrder in orthoProjectInfo.List_orthoOrder)
+                                foreach (AirD_implantSmallOrder implantOrder in implantProjectInfo.List_implantOrder)
                                 {
-                                    stackpanel_Ortho.Children.Add(OrthoOrder);
+                                    stackpanel_Ortho.Children.Add(implantOrder);
                                 }
                             }
                         }
@@ -215,11 +206,11 @@ namespace OrderManagerNew.AirDental_UserControls
                     {
                         background_orthoBase.Fill = Brushes.White;
                         //收回
-                        if (orthoProjectInfo.List_orthoOrder != null)
+                        if (implantProjectInfo.List_implantOrder != null)
                         {
                             for (int i = 1; i < stackpanel_Ortho.Children.Count; i++)
                             {
-                                ((AirD_orthoSmallOrder)stackpanel_Ortho.Children[i]).SetCaseFocusStatus(false);
+                                //((AirD_implantSmallOrder)stackpanel_Ortho.Children[i]).SetCaseFocusStatus(false);//TODO
                             }
 
                             stackpanel_Ortho.Children.RemoveRange(1, (stackpanel_Ortho.Children.Count - 1));
@@ -229,7 +220,7 @@ namespace OrderManagerNew.AirDental_UserControls
                     }
             }
         }
-        
+
 
         private void Click_AirdentalWeb(object sender, RoutedEventArgs e)
         {
@@ -244,7 +235,7 @@ namespace OrderManagerNew.AirDental_UserControls
             }
             else
             {
-                SetAirDentalProjectShow(orthoProjectIndex);
+                SetAirDentalProjectShow(implantProjectIndex);
                 if (IsFocusCase == false)
                 {
                     SetCaseFocusStatus(true);
