@@ -84,7 +84,6 @@ namespace OrderManagerNew
         /// </summary>
         int CheckedSoftwareID;
         MaterialDesignThemes.Wpf.SnackbarMessageQueue MainsnackbarMessageQueue; //Snackbar
-        FileSystemWatcher _watcherEZCAD, _watcherImplant, _watcherOrtho, _watcherTray, _watcherSplint;
 #endregion
         
         public MainWindow()
@@ -358,15 +357,18 @@ namespace OrderManagerNew
             if (Directory.Exists(Path) == false)
                 return;
 
-            Watcher.Path = Path;
-            //設定所要監控的變更類型
-            Watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            Watcher = new FileSystemWatcher
+            {
+                Path = Path,
+                //設定所要監控的變更類型
+                NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName,
 
-            //設定是否監控子資料夾
-            Watcher.IncludeSubdirectories = true;
+                //設定是否監控子資料夾
+                IncludeSubdirectories = true,
 
-            //設定是否啟動元件，此部分必須要設定為 true，不然事件是不會被觸發的
-            Watcher.EnableRaisingEvents = true;
+                //設定是否啟動元件，此部分必須要設定為 true，不然事件是不會被觸發的
+                EnableRaisingEvents = true
+            };
 
             //設定觸發事件
             Watcher.Created += new FileSystemEventHandler(Watcher_ProjectCreated);
@@ -393,6 +395,17 @@ namespace OrderManagerNew
                 catch (Exception ex)
                 {
                     log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Watcher_ProjectCreated_exception", ex.Message);
+
+                    if(SoftwareFilterCAD.IsChecked == true)
+                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.cad_projectDirectory);
+                    else if(SoftwareFilterImplant.IsChecked == true)
+                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.implant_projectDirectory);
+                    else if (SoftwareFilterOrtho.IsChecked == true)
+                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.ortho_projectDirectory);
+                    else if (SoftwareFilterTray.IsChecked == true)
+                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.tray_projectDirectory);
+                    else if (SoftwareFilterSplint.IsChecked == true)
+                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.splint_projectDirectory);
                 }
             }));
 
@@ -418,6 +431,17 @@ namespace OrderManagerNew
                 catch (Exception ex)
                 {
                     log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Watcher_ProjectDeleted_exception", ex.Message);
+
+                    if (SoftwareFilterCAD.IsChecked == true)
+                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.cad_projectDirectory);
+                    else if (SoftwareFilterImplant.IsChecked == true)
+                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.implant_projectDirectory);
+                    else if (SoftwareFilterOrtho.IsChecked == true)
+                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.ortho_projectDirectory);
+                    else if (SoftwareFilterTray.IsChecked == true)
+                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.tray_projectDirectory);
+                    else if (SoftwareFilterSplint.IsChecked == true)
+                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.splint_projectDirectory);
                 }
             }));
         }
@@ -749,7 +773,6 @@ namespace OrderManagerNew
                                     cad_troubleShooting.Visibility = Visibility.Collapsed;
                                     cad_buyLic.Visibility = Visibility.Collapsed;
                                     cad_unInstall.Visibility = Visibility.Collapsed;
-                                    _watcherEZCAD = new FileSystemWatcher();
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
@@ -817,7 +840,6 @@ namespace OrderManagerNew
                                     implant_troubleShooting.Visibility = Visibility.Collapsed;
                                     implant_buyLic.Visibility = Visibility.Collapsed;
                                     implant_unInstall.Visibility = Visibility.Collapsed;
-                                    _watcherImplant = new FileSystemWatcher();
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
@@ -885,7 +907,6 @@ namespace OrderManagerNew
                                     ortho_troubleShooting.Visibility = Visibility.Collapsed;
                                     ortho_buyLic.Visibility = Visibility.Collapsed;
                                     ortho_unInstall.Visibility = Visibility.Collapsed;
-                                    _watcherOrtho = new FileSystemWatcher();
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
@@ -953,7 +974,6 @@ namespace OrderManagerNew
                                     tray_troubleShooting.Visibility = Visibility.Collapsed;
                                     tray_buyLic.Visibility = Visibility.Collapsed;
                                     tray_unInstall.Visibility = Visibility.Collapsed;
-                                    _watcherTray = new FileSystemWatcher();
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
@@ -1021,7 +1041,6 @@ namespace OrderManagerNew
                                     splint_troubleShooting.Visibility = Visibility.Collapsed;
                                     splint_buyLic.Visibility = Visibility.Collapsed;
                                     splint_unInstall.Visibility = Visibility.Collapsed;
-                                    _watcherSplint = new FileSystemWatcher();
                                     break;
                                 }
                             case (int)_softwareStatus.Downloading:
@@ -2230,7 +2249,6 @@ namespace OrderManagerNew
             {
                 case (int)_softwareID.EZCAD:
                     {
-                        _watcherEZCAD = new FileSystemWatcher();
                         if (ProjHandle.Caselist_EZCAD != null && ProjHandle.Caselist_EZCAD.Count > 0)
                         {
                             int countIndex = 0;
@@ -2242,7 +2260,7 @@ namespace OrderManagerNew
                                 StackPanel_Local.Children.Add(Order_CAD);
                                 countIndex++;
                             }
-                            Watcher_CaseProject(_watcherEZCAD, Properties.OrderManagerProps.Default.cad_projectDirectory);
+                            Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.cad_projectDirectory);
                         }
                         else
                             StackPanel_Local.Children.Add(new UserControls.NoResult());
@@ -2250,7 +2268,6 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Implant:
                     {
-                        _watcherImplant = new FileSystemWatcher();
                         int countIndex = 0;
                         if (ProjHandle.Caselist_ImplantOuterCase != null && ProjHandle.Caselist_ImplantOuterCase.Count > 0)
                         {
@@ -2263,7 +2280,7 @@ namespace OrderManagerNew
                                 StackPanel_Local.Children.Add(Order_Implant);
                                 countIndex++;
                             }
-                            Watcher_CaseProject(_watcherImplant, Properties.OrderManagerProps.Default.implant_projectDirectory);
+                            Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.implant_projectDirectory);
                         }
                         else
                             StackPanel_Local.Children.Add(new UserControls.NoResult());
@@ -2271,7 +2288,6 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Ortho:
                     {
-                        _watcherOrtho = new FileSystemWatcher();
                         int countIndex = 0;
                         if (ProjHandle.Caselist_OrthoOuterCase != null && ProjHandle.Caselist_OrthoOuterCase.Count > 0)
                         {
@@ -2284,7 +2300,7 @@ namespace OrderManagerNew
                                 StackPanel_Local.Children.Add(Order_Ortho);
                                 countIndex++;
                             }
-                            Watcher_CaseProject(_watcherOrtho, Properties.OrderManagerProps.Default.ortho_projectDirectory);
+                            Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.ortho_projectDirectory);
                         }
                         else
                             StackPanel_Local.Children.Add(new UserControls.NoResult());
@@ -2292,7 +2308,6 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Tray:
                     {
-                        _watcherTray = new FileSystemWatcher();
                         int countIndex = 0;
                         if (ProjHandle.Caselist_Tray != null && ProjHandle.Caselist_Tray.Count > 0)
                         {
@@ -2304,7 +2319,7 @@ namespace OrderManagerNew
                                 StackPanel_Local.Children.Add(Order_Tray);
                                 countIndex++;
                             }
-                            Watcher_CaseProject(_watcherTray, Properties.OrderManagerProps.Default.tray_projectDirectory);
+                            Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.tray_projectDirectory);
                         }
                         else
                             StackPanel_Local.Children.Add(new UserControls.NoResult());
@@ -2312,7 +2327,6 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Splint:
                     {
-                        _watcherSplint = new FileSystemWatcher();
                         int countIndex = 0;
                         if (ProjHandle.Caselist_Splint != null && ProjHandle.Caselist_Splint.Count > 0)
                         {
@@ -2324,7 +2338,7 @@ namespace OrderManagerNew
                                 StackPanel_Local.Children.Add(Order_Splint);
                                 countIndex++;
                             }
-                            Watcher_CaseProject(_watcherSplint, Properties.OrderManagerProps.Default.splint_projectDirectory);
+                            Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.splint_projectDirectory);
                         }
                         else
                             StackPanel_Local.Children.Add(new UserControls.NoResult());
