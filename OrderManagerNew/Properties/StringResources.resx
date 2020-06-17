@@ -500,7 +500,7 @@
     <value>Design Setting</value>
     <comment>Detail_CAD</comment>
   </data>
-  <data name="Order" xml:space="preserve">
+  <data name="mainOrder" xml:space="preserve">
     <value>Order</value>
     <comment>Detail_CAD</comment>
   </data>
@@ -728,5 +728,406 @@
   <data name="AirDUpdateDate" xml:space="preserve">
     <value>Last Update</value>
     <comment>AirDental_Case</comment>
+  </data>
+  <data name="drafted" xml:space="preserve">
+    <value>Draft Created</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="drafted_litedoctor" xml:space="preserve">
+    <value>Reject to redraft</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="order_digital" xml:space="preserve">
+    <value>Order Created</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="order_consultant" xml:space="preserve">
+    <value>Order Created</value>
+    
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="order_digital_consultant" xml:space="preserve">
+    <value>Order Created</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="order_ezmdoctor" xml:space="preserve">
+    <value>Order Created</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="order_implant_litelab" xml:space="preserve">
+    <value>Order Created</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="order_litedoctor" xml:space="preserve">
+    <value>Order Created</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="checked" xml:space="preserve">
+    <value>Patient data received</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="checked_ezmdoctor" xml:space="preserve">
+    <value>Patient data received</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_plan" xml:space="preserve">
+    <value>Designing</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_plan_guide_litelab" xml:space="preserve">
+    <value>Guide Designing</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_plan_litedoctor" xml:space="preserve">
+    <value>Patient data received</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_release" xml:space="preserve">
+    <value>Design uploaded</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_release_ezmdoctor" xml:space="preserve">
+    <value>Reject to redesign</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_release_litedoctor" xml:space="preserve">
+    <value>Reject to redesign</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_release_guide_litelab" xml:space="preserve">
+    <value>Guide Design uploaded</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_complete" xml:space="preserve">
+    <value>Design approved</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_complete_ezmdoctor" xml:space="preserve">
+    <value>Treatment plan waiting for confirmation</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_complete_ortho_litedoctor" xml:space="preserve">
+    <value>Design waiting for confirmation</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_complete_implant_litedoctor" xml:space="preserve">
+    <value>Design waiting for confirmation</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_complete_prostheses_litedoctor" xml:space="preserve">
+    <value>Design waiting for confirmation</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_complete_esthetic_litedoctor" xml:space="preserve">
+    <value>Design waiting for confirmation</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="file_conversion" xml:space="preserve">
+    <value>Design waiting for file conversion</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="file_conversion_ortho_litedoctor" xml:space="preserve">
+    <value>File conversion</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="upload_model_file" xml:space="preserve">
+    <value>Design waiting for model upload</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="upload_model_file_litedoctor" xml:space="preserve">
+    <value>File conversion</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_finish" xml:space="preserve">
+    <value>Design Confirmed</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_finish_ezmdoctor" xml:space="preserve">
+    <value>Design completed and start manufacturing</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_finish_ortho_ezmlab" xml:space="preserve">
+    <value>Design completed waiting for print</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_finish_ortho_litelab" xml:space="preserve">
+    <value>Design converted waiting for select braces</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_finish_ortho_litedoctor" xml:space="preserve">
+    <value>Products are available for selection</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_finish_litedoctor" xml:space="preserve">
+    <value>Design completed</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_finish_guide_litelab" xml:space="preserve">
+    <value>Guide Design Confirmed</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_finish_guide_litedoctor" xml:space="preserve">
+    <value>Guide Design Confirmed</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_finish_prostheses_litelab" xml:space="preserve">
+    <value>Design converted waiting for select</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_finish_prostheses_litedoctor" xml:space="preserve">
+    <value>Design Confirmed, Please proceed to purchase</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_finish_esthetic_litelab" xml:space="preserve">
+    <value>Design converted waiting for select</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_finish_esthetic_litedoctor" xml:space="preserve">
+    <value>Design Confirmed, Please proceed to purchase</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="design_plan_guide_litedoctor" xml:space="preserve">
+    <value>Guide designing</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="manufacturing" xml:space="preserve">
+    <value>Waiting for manufacturing</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="manufacturing_ortho_litedoctor" xml:space="preserve">
+    <value>Manufacturing</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="manufacturing_prostheses_litedoctor" xml:space="preserve">
+    <value>Manufacturing</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="manufacturing_esthetic_litedoctor" xml:space="preserve">
+    <value>Manufacturing</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="printed" xml:space="preserve">
+    <value>Printed</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="marked" xml:space="preserve">
+    <value>Marked</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="cut" xml:space="preserve">
+    <value>Cut</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="cleaned" xml:space="preserve">
+    <value>Cleaned</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="packaged" xml:space="preserve">
+    <value>Packaged</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="sealed" xml:space="preserve">
+    <value>Sealed</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="manufacturing_guide_litelab" xml:space="preserve">
+    <value>Waiting for manufacturing</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="manufacturing_guide_litedoctor" xml:space="preserve">
+    <value>Manufacturing</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="shipped_digital_guide_litedoctor" xml:space="preserve">
+    <value>Guide file shipped</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="shipped" xml:space="preserve">
+    <value>Order Shipped</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="shipped_digital_guide_litelab" xml:space="preserve">
+    <value>Guide file shipped</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="shipped_ezmdoctor" xml:space="preserve">
+    <value>Order Shipped</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="shipped_litedoctor" xml:space="preserve">
+    <value>Order Shipped</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="shipped_guide_litelab" xml:space="preserve">
+    <value>Guide Order Shipped</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="shipped_guide_litedoctor" xml:space="preserve">
+    <value>Guide Order Shipped</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="shipped_digital" xml:space="preserve">
+    <value>Aligner file selected</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="shipped_digital_ortho_litedoctor" xml:space="preserve">
+    <value>Aligner file selected</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="shipped_digital_prostheses_litedoctor" xml:space="preserve">
+    <value>Model file Shipped</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="shipped_digital_esthetic_litedoctor" xml:space="preserve">
+    <value>Model file Shipped</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="retaken" xml:space="preserve">
+    <value>Order Retaken</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="retaken_ezmdoctor" xml:space="preserve">
+    <value>Draft(Retaken)</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="retaken_litedoctor" xml:space="preserve">
+    <value>Draft(Retaken)</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="archived" xml:space="preserve">
+    <value>Archived</value>
+    <comment>AirD_stage</comment>
+  </data>
+  <data name="draft" xml:space="preserve">
+    <value>Created</value>
+    <comment>AirD_action</comment>
+  </data>
+  <data name="create" xml:space="preserve">
+    <value>Create</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="receive" xml:space="preserve">
+    <value>Receive order</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="order_ng" xml:space="preserve">
+    <value>Reject order</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="release" xml:space="preserve">
+    <value>Upload project file(*.zip)</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="release_approve" xml:space="preserve">
+    <value>Approve the design. Wait for Doctor to confirm</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="release_ng" xml:space="preserve">
+    <value>Reject the design.  Order is returned to Designer</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="plan_approve" xml:space="preserve">
+    <value>Plan Approve</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="plan_ng" xml:space="preserve">
+    <value>Reject plan</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="plan_approve_osp" xml:space="preserve">
+    <value>Plan Approve and upload zip</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="plan_ng_osp" xml:space="preserve">
+    <value>Reject plan  and upload zip</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="doctor_complete" xml:space="preserve">
+    <value>Doctor planning</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="quality_release" xml:space="preserve">
+    <value>Upload project file(*.zip)</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="manufacture_select" xml:space="preserve">
+    <value>Selected</value>
+    <comment>AirD_action</comment>
+  </data>
+  <data name="ship" xml:space="preserve">
+    <value>Set the status as shipped</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="ship_digital" xml:space="preserve">
+    <value>Digital Shipped</value>
+    <comment>AirD_action</comment>
+  </data>
+  <data name="archive" xml:space="preserve">
+    <value>Archive</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="restart" xml:space="preserve">
+    <value>Return to Draft</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="create_digital" xml:space="preserve">
+    <value>Created</value>
+    <comment>AirD_action</comment>
+  </data>
+  <data name="create_consultant" xml:space="preserve">
+    <value>Created</value>
+    <comment>AirD_action</comment>
+  </data>
+  <data name="create_digital_consultant" xml:space="preserve">
+    <value>Created</value>
+    <comment>AirD_action</comment>
+  </data>
+  <data name="check" xml:space="preserve">
+    <value>Data complete</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="release_ng_osp" xml:space="preserve">
+    <value>Modify the design and return order to Designer</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="print" xml:space="preserve">
+    <value>Printed</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="mark" xml:space="preserve">
+    <value>Marked</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="clean" xml:space="preserve">
+    <value>Cleaned</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="package" xml:space="preserve">
+    <value>Packaged</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="seal" xml:space="preserve">
+    <value>Sealed</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="braces_select" xml:space="preserve">
+    <value>Braces selected</value>
+    <comment>AirD_action</comment>
+  </data>
+  <data name="retakes" xml:space="preserve">
+    <value>Retakes</value>
+    <comment>AirD_action</comment>
+  </data>
+  <data name="file_convert" xml:space="preserve">
+    <value>Upload model file</value>
+    <comment>AirD_action_ask</comment>
+  </data>
+  <data name="model_select" xml:space="preserve">
+    <value>Selected</value>
+    <comment>AirD_action</comment>
+  </data>
+  <data name="order" xml:space="preserve">
+    <value>Order Created</value>
+    <comment>AirD_stage</comment>
   </data>
 </root>

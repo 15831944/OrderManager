@@ -45,7 +45,7 @@
                   Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
                   x:Name="label_orderID" Content="OrderID"
                   Style="{DynamicResource OrderBase_OrderIDlabel}"
-                  ToolTip="{local1:LocExtension OrderID}" />
+                  ToolTip="{local1:LocExtension mainOrderID}" />
                 <Label
                   Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
                   x:Name="label_patientName" Content="PatientName"

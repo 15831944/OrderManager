@@ -405,7 +405,7 @@
   <data name="DesignSetting" xml:space="preserve">
     <value>齒位資訊</value>
   </data>
-  <data name="Order" xml:space="preserve">
+  <data name="mainOrder" xml:space="preserve">
     <value>工單</value>
   </data>
   <data name="Client" xml:space="preserve">
@@ -575,5 +575,305 @@
   </data>
   <data name="AirDUpdateDate" xml:space="preserve">
     <value>更新日期</value>
+  </data>
+  <data name="drafted" xml:space="preserve">
+    <value>草稿</value>
+  </data>
+  <data name="drafted_litedoctor" xml:space="preserve">
+    <value>訂單駁回，請重新補齊資料</value>
+  </data>
+  <data name="order_digital" xml:space="preserve">
+    <value>新訂單，等待入檢專員接單中</value>
+  </data>
+  <data name="order_consultant" xml:space="preserve">
+    <value>新訂單，等待入檢專員接單中</value>
+  </data>
+  <data name="order_digital_consultant" xml:space="preserve">
+    <value>新訂單，等待入檢專員接單中</value>
+  </data>
+  <data name="order_ezmdoctor" xml:space="preserve">
+    <value>新訂單</value>
+  </data>
+  <data name="order_implant_litelab" xml:space="preserve">
+    <value>新訂單，等待設計師接受中</value>
+  </data>
+  <data name="order_litedoctor" xml:space="preserve">
+    <value>新訂單</value>
+  </data>
+  <data name="checked" xml:space="preserve">
+    <value>患者資料，等待設計師接受中</value>
+  </data>
+  <data name="checked_ezmdoctor" xml:space="preserve">
+    <value>患者資料已收齊</value>
+  </data>
+  <data name="design_plan" xml:space="preserve">
+    <value>訂單，等待設計師設計中</value>
+  </data>
+  <data name="design_plan_guide_litelab" xml:space="preserve">
+    <value>導板設計，等待設計師設計中</value>
+  </data>
+  <data name="design_plan_litedoctor" xml:space="preserve">
+    <value>訂單已受理</value>
+  </data>
+  <data name="design_release" xml:space="preserve">
+    <value>設計，等待技術主管確認中</value>
+  </data>
+  <data name="design_release_ezmdoctor" xml:space="preserve">
+    <value>已駁回重新設計</value>
+  </data>
+  <data name="design_release_litedoctor" xml:space="preserve">
+    <value>已駁回重新設計</value>
+  </data>
+  <data name="design_release_guide_litelab" xml:space="preserve">
+    <value>導板設計，等待技術主管確認中</value>
+  </data>
+  <data name="design_complete" xml:space="preserve">
+    <value>設計，等待醫師確認中</value>
+  </data>
+  <data name="design_complete_ezmdoctor" xml:space="preserve">
+    <value>臨床治療方案等待確認中</value>
+  </data>
+  <data name="design_complete_ortho_litedoctor" xml:space="preserve">
+    <value>矯正設計等待確認中</value>
+  </data>
+  <data name="design_complete_implant_litedoctor" xml:space="preserve">
+    <value>植牙設計等待確認中</value>
+  </data>
+  <data name="design_complete_prostheses_litedoctor" xml:space="preserve">
+    <value>假牙設計等待確認中</value>
+  </data>
+  <data name="design_complete_esthetic_litedoctor" xml:space="preserve">
+    <value>美齒設計等待確認中</value>
+  </data>
+  <data name="file_conversion" xml:space="preserve">
+    <value>設計，等待上傳牙套檔案</value>
+  </data>
+  <data name="file_conversion_ortho_litedoctor" xml:space="preserve">
+    <value>檔案轉換中</value>
+  </data>
+  <data name="upload_model_file" xml:space="preserve">
+    <value>設計，等待上傳模型檔案</value>
+  </data>
+  <data name="upload_model_file_litedoctor" xml:space="preserve">
+    <value>檔案轉換中</value>
+  </data>
+  <data name="design_finish" xml:space="preserve">
+    <value>設計，等待醫生選擇生產項目中</value>
+  </data>
+  <data name="design_finish_ezmdoctor" xml:space="preserve">
+    <value>設計結束開始製作</value>
+  </data>
+  <data name="design_finish_ortho_ezmlab" xml:space="preserve">
+    <value>設計，等待作業員製作中</value>
+  </data>
+  <data name="design_finish_ortho_litelab" xml:space="preserve">
+    <value>設計，等待醫生選擇生產項目中</value>
+  </data>
+  <data name="design_finish_ortho_litedoctor" xml:space="preserve">
+    <value>請選擇牙套</value>
+  </data>
+  <data name="design_finish_litedoctor" xml:space="preserve">
+    <value>植牙規劃完成</value>
+  </data>
+  <data name="design_finish_guide_litelab" xml:space="preserve">
+    <value>導板設計，等待醫生選擇生產項目中</value>
+  </data>
+  <data name="design_finish_guide_litedoctor" xml:space="preserve">
+    <value>導板設計完成</value>
+  </data>
+  <data name="design_finish_prostheses_litelab" xml:space="preserve">
+    <value>設計，等待醫生選擇生產項目中</value>
+  </data>
+  <data name="design_finish_prostheses_litedoctor" xml:space="preserve">
+    <value>請選擇產品購買</value>
+  </data>
+  <data name="design_finish_esthetic_litelab" xml:space="preserve">
+    <value>設計，等待醫生選擇生產項目中</value>
+  </data>
+  <data name="design_finish_esthetic_litedoctor" xml:space="preserve">
+    <value>請選擇產品購買</value>
+  </data>
+  <data name="design_plan_guide_litedoctor" xml:space="preserve">
+    <value>導板設計中</value>
+  </data>
+  <data name="manufacturing" xml:space="preserve">
+    <value>牙套，等待生產中</value>
+  </data>
+  <data name="manufacturing_ortho_litedoctor" xml:space="preserve">
+    <value>生產中</value>
+  </data>
+  <data name="manufacturing_prostheses_litedoctor" xml:space="preserve">
+    <value>生產中</value>
+  </data>
+  <data name="manufacturing_esthetic_litedoctor" xml:space="preserve">
+    <value>生產中</value>
+  </data>
+  <data name="printed" xml:space="preserve">
+    <value>模型，等待作業員打標中</value>
+  </data>
+  <data name="marked" xml:space="preserve">
+    <value>模型，等待作業員裁切中</value>
+  </data>
+  <data name="cut" xml:space="preserve">
+    <value>已牙套已裁切完成</value>
+  </data>
+  <data name="cleaned" xml:space="preserve">
+    <value>牙套，等待作業員封裝中</value>
+  </data>
+  <data name="packaged" xml:space="preserve">
+    <value>牙套，等待作業員盒裝、文件、品檢中</value>
+  </data>
+  <data name="sealed" xml:space="preserve">
+    <value>產品，等待作業員出貨中</value>
+  </data>
+  <data name="manufacturing_guide_litelab" xml:space="preserve">
+    <value>產品，等待生產中</value>
+  </data>
+  <data name="manufacturing_guide_litedoctor" xml:space="preserve">
+    <value>生產中</value>
+  </data>
+  <data name="shipped_digital_guide_litedoctor" xml:space="preserve">
+    <value>數位訂單已出貨</value>
+  </data>
+  <data name="shipped" xml:space="preserve">
+    <value>訂單，流程結束</value>
+  </data>
+  <data name="shipped_digital_guide_litelab" xml:space="preserve">
+    <value>訂單，流程結束</value>
+  </data>
+  <data name="shipped_ezmdoctor" xml:space="preserve">
+    <value>訂單已出貨</value>
+  </data>
+  <data name="shipped_litedoctor" xml:space="preserve">
+    <value>訂單已出貨</value>
+  </data>
+  <data name="shipped_guide_litelab" xml:space="preserve">
+    <value>導板，流程結束</value>
+  </data>
+  <data name="shipped_guide_litedoctor" xml:space="preserve">
+    <value>導板已出貨</value>
+  </data>
+  <data name="shipped_digital" xml:space="preserve">
+    <value>訂單，流程結束</value>
+  </data>
+  <data name="shipped_digital_ortho_litedoctor" xml:space="preserve">
+    <value>數位訂單已出貨</value>
+  </data>
+  <data name="shipped_digital_prostheses_litedoctor" xml:space="preserve">
+    <value>數位訂單已出貨</value>
+  </data>
+  <data name="shipped_digital_esthetic_litedoctor" xml:space="preserve">
+    <value>數位訂單已出貨</value>
+  </data>
+  <data name="retaken" xml:space="preserve">
+    <value>訂單，等待更新資訊中</value>
+  </data>
+  <data name="retaken_ezmdoctor" xml:space="preserve">
+    <value>草稿(重新取模)</value>
+  </data>
+  <data name="retaken_litedoctor" xml:space="preserve">
+    <value>草稿(重新取模)</value>
+  </data>
+  <data name="archived" xml:space="preserve">
+    <value>封存</value>
+  </data>
+  <data name="draft" xml:space="preserve">
+    <value>已建立</value>
+  </data>
+  <data name="create" xml:space="preserve">
+    <value>已建立訂單</value>
+  </data>
+  <data name="receive" xml:space="preserve">
+    <value>已接受此訂單</value>
+  </data>
+  <data name="order_ng" xml:space="preserve">
+    <value>已駁回此訂單</value>
+  </data>
+  <data name="release" xml:space="preserve">
+    <value>已發佈新規劃</value>
+  </data>
+  <data name="release_approve" xml:space="preserve">
+    <value>已批准此規劃的發佈</value>
+  </data>
+  <data name="release_ng" xml:space="preserve">
+    <value>已駁回此規劃的發佈</value>
+  </data>
+  <data name="plan_approve" xml:space="preserve">
+    <value>已批准此規劃結果</value>
+  </data>
+  <data name="plan_ng" xml:space="preserve">
+    <value>已駁回重新設計</value>
+  </data>
+  <data name="plan_approve_osp" xml:space="preserve">
+    <value>已批准此規劃結果並上傳專案</value>
+  </data>
+  <data name="plan_ng_osp" xml:space="preserve">
+    <value>已駁回此規劃結果並上傳專案</value>
+  </data>
+  <data name="doctor_complete" xml:space="preserve">
+    <value>已自行規劃結果</value>
+  </data>
+  <data name="quality_release" xml:space="preserve">
+    <value>自行發佈規劃</value>
+  </data>
+  <data name="manufacture_select" xml:space="preserve">
+    <value>已選擇</value>
+  </data>
+  <data name="ship" xml:space="preserve">
+    <value>已出貨</value>
+  </data>
+  <data name="ship_digital" xml:space="preserve">
+    <value>已數位出貨</value>
+  </data>
+  <data name="archive" xml:space="preserve">
+    <value>封存</value>
+  </data>
+  <data name="restart" xml:space="preserve">
+    <value>醫師要求退回草稿</value>
+  </data>
+  <data name="create_digital" xml:space="preserve">
+    <value>已建立</value>
+  </data>
+  <data name="create_consultant" xml:space="preserve">
+    <value>已建立</value>
+  </data>
+  <data name="create_digital_consultant" xml:space="preserve">
+    <value>已建立</value>
+  </data>
+  <data name="check" xml:space="preserve">
+    <value>品質已確認完成</value>
+  </data>
+  <data name="release_ng_osp" xml:space="preserve">
+    <value>微調並轉交設計師重新設計</value>
+  </data>
+  <data name="print" xml:space="preserve">
+    <value>模型已列印完成</value>
+  </data>
+  <data name="mark" xml:space="preserve">
+    <value>模型已雷射打標完成</value>
+  </data>
+  <data name="clean" xml:space="preserve">
+    <value>牙套已清潔完成</value>
+  </data>
+  <data name="package" xml:space="preserve">
+    <value>牙套已封裝完成</value>
+  </data>
+  <data name="seal" xml:space="preserve">
+    <value>盒裝、文件、品檢已完成</value>
+  </data>
+  <data name="braces_select" xml:space="preserve">
+    <value>已選擇</value>
+  </data>
+  <data name="retakes" xml:space="preserve">
+    <value>已重新取模</value>
+  </data>
+  <data name="file_convert" xml:space="preserve">
+    <value>上傳模型壓縮檔</value>
+  </data>
+  <data name="model_select" xml:space="preserve">
+    <value>已選擇</value>
+  </data>
+  <data name="order" xml:space="preserve">
+    <value>新訂單，等待入檢專員接單中</value>
   </data>
 </root>

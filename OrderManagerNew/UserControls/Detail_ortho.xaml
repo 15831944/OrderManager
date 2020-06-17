@@ -22,7 +22,7 @@
 
             <Label
               Grid.Row="0" Margin="-6,0,0,0"
-              Content="{local1:LocExtension OrderInfo}"
+              Content="{local1:LocExtension mainOrderInfo}"
               FontSize="16" Foreground="White" />
             <Grid Grid.Row="1" Background="{DynamicResource background_WhiteCaseTable}">
                 <Grid.RowDefinitions>
@@ -45,7 +45,7 @@
                 <Label Grid.Row="0" Grid.Column="0" Content="{local1:LocExtension ProductType}" />
                 <Label Grid.Row="1" Grid.Column="0" Content="{local1:LocExtension Workflow}" />
                 <Label Grid.Row="2" Grid.Column="0" Content="{local1:LocExtension Name}" />
-                <Label Grid.Row="3" Grid.Column="0" Content="{local1:LocExtension OrderID}" />
+                <Label Grid.Row="3" Grid.Column="0" Content="{local1:LocExtension mainOrderID}" />
                 <Label Grid.Row="4" Grid.Column="0" Content="{local1:LocExtension Gender}" />
                 <Label Grid.Row="5" Grid.Column="0" Content="{local1:LocExtension Age}" />
                 <Label Grid.Row="6" Grid.Column="0" Content="{local1:LocExtension CreateDate}" />

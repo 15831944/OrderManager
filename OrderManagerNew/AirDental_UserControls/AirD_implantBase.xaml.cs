@@ -130,10 +130,12 @@ namespace OrderManagerNew.AirDental_UserControls
             implantProjectIndex = Index;
 
             label_orderID.Content = implantProjectInfo.SerialNumber;
-            label_designStep.Content = TranslationSource.Instance[implantProjectInfo.Group] + implantProjectInfo.Action_String + implantProjectInfo.Stage_String;
+            if (implantProjectInfo.StageKey.IndexOf("guide_") == 0)
+                implantProjectInfo.StageKey = implantProjectInfo.StageKey.Remove(0, 6);
+            label_designStep.Content = TranslationSource.Instance[implantProjectInfo.Group] + " " + TranslationSource.Instance[implantProjectInfo.ActionKey] + TranslationSource.Instance[implantProjectInfo.StageKey];
             label_patientName.Content = implantProjectInfo.Patient;
             label_modifyDate.Content = implantProjectInfo.ModifyDate.DateTime.ToLongDateString() + implantProjectInfo.ModifyDate.DateTime.ToLongTimeString();
-
+            label_designStep.ToolTip = label_designStep.Content;
             /*try
             {
                 Dll_Airdental.Main Airdental = new Dll_Airdental.Main();

@@ -99,6 +99,11 @@
     <Compile Include="AirDental_UserControls\AirD_orthoSmallOrder.xaml.cs">
       <DependentUpon>AirD_orthoSmallOrder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\StringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Scripts\AirDentalProjectHandle.cs" />
     <Compile Include="UserControls\NoResult.xaml.cs">
       <DependentUpon>NoResult.xaml</DependentUpon>
@@ -271,11 +276,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\StringResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StringResources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -283,6 +283,7 @@
     </Compile>
     <EmbeddedResource Include="Properties\StringResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\StringResources.zh-TW.resx" />

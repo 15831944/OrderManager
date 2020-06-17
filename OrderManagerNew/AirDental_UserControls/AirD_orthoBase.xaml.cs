@@ -138,11 +138,12 @@ namespace OrderManagerNew.AirDental_UserControls
             };
             orthoProjectIndex = Index;
 
-            label_orderID.Content = orthoProjectInfo.SerialNumber;
-            label_designStep.Content = TranslationSource.Instance[orthoProjectInfo.Group] + orthoProjectInfo.Action_String + orthoProjectInfo.Stage_String;
+            if (orthoProjectInfo.StageKey.IndexOf("ortho_") == 0)
+                orthoProjectInfo.StageKey = orthoProjectInfo.StageKey.Remove(0, 6);
+            label_designStep.Content = TranslationSource.Instance[orthoProjectInfo.Group] + " " + TranslationSource.Instance[orthoProjectInfo.ActionKey] + TranslationSource.Instance[orthoProjectInfo.StageKey];
             label_patientName.Content = orthoProjectInfo.Patient;
             label_modifyDate.Content = orthoProjectInfo.ModifyDate.DateTime.ToLongDateString() + orthoProjectInfo.ModifyDate.DateTime.ToLongTimeString();
-
+            label_designStep.ToolTip = label_designStep.Content;
             /*try
             {
                 Dll_Airdental.Main Airdental = new Dll_Airdental.Main();

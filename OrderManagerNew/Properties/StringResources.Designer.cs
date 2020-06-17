@@ -61,6 +61,24 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Patient data received 的當地語系化字串。
+        /// </summary>
+        internal static string _checked {
+            get {
+                return ResourceManager.GetString("checked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Sealed 的當地語系化字串。
+        /// </summary>
+        internal static string _sealed {
+            get {
+                return ResourceManager.GetString("sealed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 You are about to install  的當地語系化字串。
         /// </summary>
         internal static string AboutToInstall {
@@ -205,6 +223,24 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Archive 的當地語系化字串。
+        /// </summary>
+        internal static string archive {
+            get {
+                return ResourceManager.GetString("archive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Archived 的當地語系化字串。
+        /// </summary>
+        internal static string archived {
+            get {
+                return ResourceManager.GetString("archived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Are you sure to uninstall  的當地語系化字串。
         /// </summary>
         internal static string AreyousureUninstall {
@@ -219,6 +255,15 @@ namespace OrderManagerNew.Properties {
         internal static string AutoDetect {
             get {
                 return ResourceManager.GetString("AutoDetect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Braces selected 的當地語系化字串。
+        /// </summary>
+        internal static string braces_select {
+            get {
+                return ResourceManager.GetString("braces_select", resourceCulture);
             }
         }
         
@@ -286,11 +331,47 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Data complete 的當地語系化字串。
+        /// </summary>
+        internal static string check {
+            get {
+                return ResourceManager.GetString("check", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Patient data received 的當地語系化字串。
+        /// </summary>
+        internal static string checked_ezmdoctor {
+            get {
+                return ResourceManager.GetString("checked_ezmdoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Choose location for install: 的當地語系化字串。
         /// </summary>
         internal static string ChooseLocationToInstall {
             get {
                 return ResourceManager.GetString("ChooseLocationToInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Cleaned 的當地語系化字串。
+        /// </summary>
+        internal static string clean {
+            get {
+                return ResourceManager.GetString("clean", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Cleaned 的當地語系化字串。
+        /// </summary>
+        internal static string cleaned {
+            get {
+                return ResourceManager.GetString("cleaned", resourceCulture);
             }
         }
         
@@ -349,6 +430,42 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Create 的當地語系化字串。
+        /// </summary>
+        internal static string create {
+            get {
+                return ResourceManager.GetString("create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Created 的當地語系化字串。
+        /// </summary>
+        internal static string create_consultant {
+            get {
+                return ResourceManager.GetString("create_consultant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Created 的當地語系化字串。
+        /// </summary>
+        internal static string create_digital {
+            get {
+                return ResourceManager.GetString("create_digital", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Created 的當地語系化字串。
+        /// </summary>
+        internal static string create_digital_consultant {
+            get {
+                return ResourceManager.GetString("create_digital_consultant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Create Date 的當地語系化字串。
         /// </summary>
         internal static string CreateDate {
@@ -390,6 +507,15 @@ namespace OrderManagerNew.Properties {
         internal static string CurrentStep {
             get {
                 return ResourceManager.GetString("CurrentStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Cut 的當地語系化字串。
+        /// </summary>
+        internal static string cut {
+            get {
+                return ResourceManager.GetString("cut", resourceCulture);
             }
         }
         
@@ -583,6 +709,240 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Design approved 的當地語系化字串。
+        /// </summary>
+        internal static string design_complete {
+            get {
+                return ResourceManager.GetString("design_complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design waiting for confirmation 的當地語系化字串。
+        /// </summary>
+        internal static string design_complete_esthetic_litedoctor {
+            get {
+                return ResourceManager.GetString("design_complete_esthetic_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Treatment plan waiting for confirmation 的當地語系化字串。
+        /// </summary>
+        internal static string design_complete_ezmdoctor {
+            get {
+                return ResourceManager.GetString("design_complete_ezmdoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design waiting for confirmation 的當地語系化字串。
+        /// </summary>
+        internal static string design_complete_implant_litedoctor {
+            get {
+                return ResourceManager.GetString("design_complete_implant_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design waiting for confirmation 的當地語系化字串。
+        /// </summary>
+        internal static string design_complete_ortho_litedoctor {
+            get {
+                return ResourceManager.GetString("design_complete_ortho_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design waiting for confirmation 的當地語系化字串。
+        /// </summary>
+        internal static string design_complete_prostheses_litedoctor {
+            get {
+                return ResourceManager.GetString("design_complete_prostheses_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design Confirmed 的當地語系化字串。
+        /// </summary>
+        internal static string design_finish {
+            get {
+                return ResourceManager.GetString("design_finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design Confirmed, Please proceed to purchase 的當地語系化字串。
+        /// </summary>
+        internal static string design_finish_esthetic_litedoctor {
+            get {
+                return ResourceManager.GetString("design_finish_esthetic_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design converted waiting for select 的當地語系化字串。
+        /// </summary>
+        internal static string design_finish_esthetic_litelab {
+            get {
+                return ResourceManager.GetString("design_finish_esthetic_litelab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design completed and start manufacturing 的當地語系化字串。
+        /// </summary>
+        internal static string design_finish_ezmdoctor {
+            get {
+                return ResourceManager.GetString("design_finish_ezmdoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Guide Design Confirmed 的當地語系化字串。
+        /// </summary>
+        internal static string design_finish_guide_litedoctor {
+            get {
+                return ResourceManager.GetString("design_finish_guide_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Guide Design Confirmed 的當地語系化字串。
+        /// </summary>
+        internal static string design_finish_guide_litelab {
+            get {
+                return ResourceManager.GetString("design_finish_guide_litelab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design completed 的當地語系化字串。
+        /// </summary>
+        internal static string design_finish_litedoctor {
+            get {
+                return ResourceManager.GetString("design_finish_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design completed waiting for print 的當地語系化字串。
+        /// </summary>
+        internal static string design_finish_ortho_ezmlab {
+            get {
+                return ResourceManager.GetString("design_finish_ortho_ezmlab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Products are available for selection 的當地語系化字串。
+        /// </summary>
+        internal static string design_finish_ortho_litedoctor {
+            get {
+                return ResourceManager.GetString("design_finish_ortho_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design converted waiting for select braces 的當地語系化字串。
+        /// </summary>
+        internal static string design_finish_ortho_litelab {
+            get {
+                return ResourceManager.GetString("design_finish_ortho_litelab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design Confirmed, Please proceed to purchase 的當地語系化字串。
+        /// </summary>
+        internal static string design_finish_prostheses_litedoctor {
+            get {
+                return ResourceManager.GetString("design_finish_prostheses_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design converted waiting for select 的當地語系化字串。
+        /// </summary>
+        internal static string design_finish_prostheses_litelab {
+            get {
+                return ResourceManager.GetString("design_finish_prostheses_litelab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Designing 的當地語系化字串。
+        /// </summary>
+        internal static string design_plan {
+            get {
+                return ResourceManager.GetString("design_plan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Guide designing 的當地語系化字串。
+        /// </summary>
+        internal static string design_plan_guide_litedoctor {
+            get {
+                return ResourceManager.GetString("design_plan_guide_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Guide Designing 的當地語系化字串。
+        /// </summary>
+        internal static string design_plan_guide_litelab {
+            get {
+                return ResourceManager.GetString("design_plan_guide_litelab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Patient data received 的當地語系化字串。
+        /// </summary>
+        internal static string design_plan_litedoctor {
+            get {
+                return ResourceManager.GetString("design_plan_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design uploaded 的當地語系化字串。
+        /// </summary>
+        internal static string design_release {
+            get {
+                return ResourceManager.GetString("design_release", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Reject to redesign 的當地語系化字串。
+        /// </summary>
+        internal static string design_release_ezmdoctor {
+            get {
+                return ResourceManager.GetString("design_release_ezmdoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Guide Design uploaded 的當地語系化字串。
+        /// </summary>
+        internal static string design_release_guide_litelab {
+            get {
+                return ResourceManager.GetString("design_release_guide_litelab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Reject to redesign 的當地語系化字串。
+        /// </summary>
+        internal static string design_release_litedoctor {
+            get {
+                return ResourceManager.GetString("design_release_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Design Setting 的當地語系化字串。
         /// </summary>
         internal static string DesignSetting {
@@ -619,6 +979,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Doctor planning 的當地語系化字串。
+        /// </summary>
+        internal static string doctor_complete {
+            get {
+                return ResourceManager.GetString("doctor_complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Download Directory 的當地語系化字串。
         /// </summary>
         internal static string Downloadpath {
@@ -633,6 +1002,33 @@ namespace OrderManagerNew.Properties {
         internal static string DownloadSoftware {
             get {
                 return ResourceManager.GetString("DownloadSoftware", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Created 的當地語系化字串。
+        /// </summary>
+        internal static string draft {
+            get {
+                return ResourceManager.GetString("draft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Draft Created 的當地語系化字串。
+        /// </summary>
+        internal static string drafted {
+            get {
+                return ResourceManager.GetString("drafted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Reject to redraft 的當地語系化字串。
+        /// </summary>
+        internal static string drafted_litedoctor {
+            get {
+                return ResourceManager.GetString("drafted_litedoctor", resourceCulture);
             }
         }
         
@@ -669,6 +1065,33 @@ namespace OrderManagerNew.Properties {
         internal static string Female {
             get {
                 return ResourceManager.GetString("Female", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design waiting for file conversion 的當地語系化字串。
+        /// </summary>
+        internal static string file_conversion {
+            get {
+                return ResourceManager.GetString("file_conversion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 File conversion 的當地語系化字串。
+        /// </summary>
+        internal static string file_conversion_ortho_litedoctor {
+            get {
+                return ResourceManager.GetString("file_conversion_ortho_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Upload model file 的當地語系化字串。
+        /// </summary>
+        internal static string file_convert {
+            get {
+                return ResourceManager.GetString("file_convert", resourceCulture);
             }
         }
         
@@ -943,11 +1366,101 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Order 的當地語系化字串。
+        /// </summary>
+        internal static string mainOrder {
+            get {
+                return ResourceManager.GetString("mainOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Male 的當地語系化字串。
         /// </summary>
         internal static string Male {
             get {
                 return ResourceManager.GetString("Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Selected 的當地語系化字串。
+        /// </summary>
+        internal static string manufacture_select {
+            get {
+                return ResourceManager.GetString("manufacture_select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Waiting for manufacturing 的當地語系化字串。
+        /// </summary>
+        internal static string manufacturing {
+            get {
+                return ResourceManager.GetString("manufacturing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Manufacturing 的當地語系化字串。
+        /// </summary>
+        internal static string manufacturing_esthetic_litedoctor {
+            get {
+                return ResourceManager.GetString("manufacturing_esthetic_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Manufacturing 的當地語系化字串。
+        /// </summary>
+        internal static string manufacturing_guide_litedoctor {
+            get {
+                return ResourceManager.GetString("manufacturing_guide_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Waiting for manufacturing 的當地語系化字串。
+        /// </summary>
+        internal static string manufacturing_guide_litelab {
+            get {
+                return ResourceManager.GetString("manufacturing_guide_litelab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Manufacturing 的當地語系化字串。
+        /// </summary>
+        internal static string manufacturing_ortho_litedoctor {
+            get {
+                return ResourceManager.GetString("manufacturing_ortho_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Manufacturing 的當地語系化字串。
+        /// </summary>
+        internal static string manufacturing_prostheses_litedoctor {
+            get {
+                return ResourceManager.GetString("manufacturing_prostheses_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Marked 的當地語系化字串。
+        /// </summary>
+        internal static string mark {
+            get {
+                return ResourceManager.GetString("mark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Marked 的當地語系化字串。
+        /// </summary>
+        internal static string marked {
+            get {
+                return ResourceManager.GetString("marked", resourceCulture);
             }
         }
         
@@ -975,6 +1488,15 @@ namespace OrderManagerNew.Properties {
         internal static string Model_Position {
             get {
                 return ResourceManager.GetString("Model_Position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Selected 的當地語系化字串。
+        /// </summary>
+        internal static string model_select {
+            get {
+                return ResourceManager.GetString("model_select", resourceCulture);
             }
         }
         
@@ -1105,11 +1627,74 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Order 的當地語系化字串。
+        ///   查詢類似 Order Created 的當地語系化字串。
         /// </summary>
-        internal static string Order {
+        internal static string order {
             get {
-                return ResourceManager.GetString("Order", resourceCulture);
+                return ResourceManager.GetString("order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Order Created 的當地語系化字串。
+        /// </summary>
+        internal static string order_consultant {
+            get {
+                return ResourceManager.GetString("order_consultant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Order Created 的當地語系化字串。
+        /// </summary>
+        internal static string order_digital {
+            get {
+                return ResourceManager.GetString("order_digital", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Order Created 的當地語系化字串。
+        /// </summary>
+        internal static string order_digital_consultant {
+            get {
+                return ResourceManager.GetString("order_digital_consultant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Order Created 的當地語系化字串。
+        /// </summary>
+        internal static string order_ezmdoctor {
+            get {
+                return ResourceManager.GetString("order_ezmdoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Order Created 的當地語系化字串。
+        /// </summary>
+        internal static string order_implant_litelab {
+            get {
+                return ResourceManager.GetString("order_implant_litelab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Order Created 的當地語系化字串。
+        /// </summary>
+        internal static string order_litedoctor {
+            get {
+                return ResourceManager.GetString("order_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Reject order 的當地語系化字串。
+        /// </summary>
+        internal static string order_ng {
+            get {
+                return ResourceManager.GetString("order_ng", resourceCulture);
             }
         }
         
@@ -1128,6 +1713,24 @@ namespace OrderManagerNew.Properties {
         internal static string OrderInfo {
             get {
                 return ResourceManager.GetString("OrderInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Packaged 的當地語系化字串。
+        /// </summary>
+        internal static string package {
+            get {
+                return ResourceManager.GetString("package", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Packaged 的當地語系化字串。
+        /// </summary>
+        internal static string packaged {
+            get {
+                return ResourceManager.GetString("packaged", resourceCulture);
             }
         }
         
@@ -1164,6 +1767,60 @@ namespace OrderManagerNew.Properties {
         internal static string PatientNameWithAge {
             get {
                 return ResourceManager.GetString("PatientNameWithAge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Plan Approve 的當地語系化字串。
+        /// </summary>
+        internal static string plan_approve {
+            get {
+                return ResourceManager.GetString("plan_approve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Plan Approve and upload zip 的當地語系化字串。
+        /// </summary>
+        internal static string plan_approve_osp {
+            get {
+                return ResourceManager.GetString("plan_approve_osp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Reject plan 的當地語系化字串。
+        /// </summary>
+        internal static string plan_ng {
+            get {
+                return ResourceManager.GetString("plan_ng", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Reject plan  and upload zip 的當地語系化字串。
+        /// </summary>
+        internal static string plan_ng_osp {
+            get {
+                return ResourceManager.GetString("plan_ng_osp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Printed 的當地語系化字串。
+        /// </summary>
+        internal static string print {
+            get {
+                return ResourceManager.GetString("print", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Printed 的當地語系化字串。
+        /// </summary>
+        internal static string printed {
+            get {
+                return ResourceManager.GetString("printed", resourceCulture);
             }
         }
         
@@ -1213,6 +1870,24 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Upload project file(*.zip) 的當地語系化字串。
+        /// </summary>
+        internal static string quality_release {
+            get {
+                return ResourceManager.GetString("quality_release", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Receive order 的當地語系化字串。
+        /// </summary>
+        internal static string receive {
+            get {
+                return ResourceManager.GetString("receive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Reduced Pontic 的當地語系化字串。
         /// </summary>
         internal static string Reduced_Pontic {
@@ -1222,11 +1897,92 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Upload project file(*.zip) 的當地語系化字串。
+        /// </summary>
+        internal static string release {
+            get {
+                return ResourceManager.GetString("release", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Approve the design. Wait for Doctor to confirm 的當地語系化字串。
+        /// </summary>
+        internal static string release_approve {
+            get {
+                return ResourceManager.GetString("release_approve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Reject the design.  Order is returned to Designer 的當地語系化字串。
+        /// </summary>
+        internal static string release_ng {
+            get {
+                return ResourceManager.GetString("release_ng", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Modify the design and return order to Designer 的當地語系化字串。
+        /// </summary>
+        internal static string release_ng_osp {
+            get {
+                return ResourceManager.GetString("release_ng_osp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Return to Draft 的當地語系化字串。
+        /// </summary>
+        internal static string restart {
+            get {
+                return ResourceManager.GetString("restart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Restore 的當地語系化字串。
         /// </summary>
         internal static string Restore_titlebar {
             get {
                 return ResourceManager.GetString("Restore_titlebar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Order Retaken 的當地語系化字串。
+        /// </summary>
+        internal static string retaken {
+            get {
+                return ResourceManager.GetString("retaken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Draft(Retaken) 的當地語系化字串。
+        /// </summary>
+        internal static string retaken_ezmdoctor {
+            get {
+                return ResourceManager.GetString("retaken_ezmdoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Draft(Retaken) 的當地語系化字串。
+        /// </summary>
+        internal static string retaken_litedoctor {
+            get {
+                return ResourceManager.GetString("retaken_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Retakes 的當地語系化字串。
+        /// </summary>
+        internal static string retakes {
+            get {
+                return ResourceManager.GetString("retakes", resourceCulture);
             }
         }
         
@@ -1245,6 +2001,15 @@ namespace OrderManagerNew.Properties {
         internal static string Screw_Retained_Abutment__Anatomic_Crown_ {
             get {
                 return ResourceManager.GetString("Screw Retained Abutment (Anatomic Crown)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Sealed 的當地語系化字串。
+        /// </summary>
+        internal static string seal {
+            get {
+                return ResourceManager.GetString("seal", resourceCulture);
             }
         }
         
@@ -1281,6 +2046,123 @@ namespace OrderManagerNew.Properties {
         internal static string SetupManage {
             get {
                 return ResourceManager.GetString("SetupManage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Set the status as shipped 的當地語系化字串。
+        /// </summary>
+        internal static string ship {
+            get {
+                return ResourceManager.GetString("ship", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Digital Shipped 的當地語系化字串。
+        /// </summary>
+        internal static string ship_digital {
+            get {
+                return ResourceManager.GetString("ship_digital", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Order Shipped 的當地語系化字串。
+        /// </summary>
+        internal static string shipped {
+            get {
+                return ResourceManager.GetString("shipped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Aligner file selected 的當地語系化字串。
+        /// </summary>
+        internal static string shipped_digital {
+            get {
+                return ResourceManager.GetString("shipped_digital", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Model file Shipped 的當地語系化字串。
+        /// </summary>
+        internal static string shipped_digital_esthetic_litedoctor {
+            get {
+                return ResourceManager.GetString("shipped_digital_esthetic_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Guide file shipped 的當地語系化字串。
+        /// </summary>
+        internal static string shipped_digital_guide_litedoctor {
+            get {
+                return ResourceManager.GetString("shipped_digital_guide_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Guide file shipped 的當地語系化字串。
+        /// </summary>
+        internal static string shipped_digital_guide_litelab {
+            get {
+                return ResourceManager.GetString("shipped_digital_guide_litelab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Aligner file selected 的當地語系化字串。
+        /// </summary>
+        internal static string shipped_digital_ortho_litedoctor {
+            get {
+                return ResourceManager.GetString("shipped_digital_ortho_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Model file Shipped 的當地語系化字串。
+        /// </summary>
+        internal static string shipped_digital_prostheses_litedoctor {
+            get {
+                return ResourceManager.GetString("shipped_digital_prostheses_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Order Shipped 的當地語系化字串。
+        /// </summary>
+        internal static string shipped_ezmdoctor {
+            get {
+                return ResourceManager.GetString("shipped_ezmdoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Guide Order Shipped 的當地語系化字串。
+        /// </summary>
+        internal static string shipped_guide_litedoctor {
+            get {
+                return ResourceManager.GetString("shipped_guide_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Guide Order Shipped 的當地語系化字串。
+        /// </summary>
+        internal static string shipped_guide_litelab {
+            get {
+                return ResourceManager.GetString("shipped_guide_litelab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Order Shipped 的當地語系化字串。
+        /// </summary>
+        internal static string shipped_litedoctor {
+            get {
+                return ResourceManager.GetString("shipped_litedoctor", resourceCulture);
             }
         }
         
@@ -1407,6 +2289,24 @@ namespace OrderManagerNew.Properties {
         internal static string Uninstall {
             get {
                 return ResourceManager.GetString("Uninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Design waiting for model upload 的當地語系化字串。
+        /// </summary>
+        internal static string upload_model_file {
+            get {
+                return ResourceManager.GetString("upload_model_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 File conversion 的當地語系化字串。
+        /// </summary>
+        internal static string upload_model_file_litedoctor {
+            get {
+                return ResourceManager.GetString("upload_model_file_litedoctor", resourceCulture);
             }
         }
         

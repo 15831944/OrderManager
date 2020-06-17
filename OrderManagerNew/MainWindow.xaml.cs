@@ -1938,6 +1938,16 @@ namespace OrderManagerNew
                 else if (SoftwareFilterSplint.IsChecked == true)
                     ProjHandle.LoadSplintProj();
 
+                //AirDental端
+                if (SoftwareFilterCAD.IsChecked == true)
+                    StackPanel_Cloud.Children.Clear();
+                else if (SoftwareFilterImplant.IsChecked == true)
+                    AirDentalProjHandle.ReceiveImplantProjects();
+                else if (SoftwareFilterOrtho.IsChecked == true)
+                    AirDentalProjHandle.ReceiveOrthoProjects();
+                else
+                    StackPanel_Cloud.Children.Clear();
+
                 log.RecordConfigLog("Click_FunctionTable_Setting()", "Config changed");
             }
 

@@ -36,7 +36,9 @@ namespace OrderManagerNew.AirDental_UserControls
         public void SetOrderInfo(Dll_Airdental.Main._implantOrder Import, int Index)
         {
             OrderInfo = Import;
-            label_ProjectName.Content = TranslationSource.Instance[Import._group] + Import._action + Import._stage;
+            if (Import._stageKey.IndexOf("guide_") == 0)
+                Import._stageKey = Import._stageKey.Remove(0, 6);
+            label_ProjectName.Content = TranslationSource.Instance[Import._group] + " " + TranslationSource.Instance[Import._actionKey] + TranslationSource.Instance[Import._stageKey];
             label_ProjectName.ToolTip = Import._date.DateTime.ToLongDateString() + Import._date.DateTime.ToLongTimeString();
             ItemIndex = Index;
         }
