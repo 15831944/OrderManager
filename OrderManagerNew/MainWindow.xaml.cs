@@ -152,9 +152,10 @@ namespace OrderManagerNew
             };
             AirDentalProjHandle.Handler_snackbarShow += new AirDentalProjectHandle.AirDentalProjHandleEventHandler_snackbar(SnackBarShow);
             AirDentalProjHandle.AirdentalProjectShowEvent += new AirDentalProjectHandle.caseShowEventHandler(Handler_SetCaseShow_Airdental);
-            AirDentalProjHandle.MainSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler(CloudCaseHandler_Ortho_showSingleProject);
-            AirDentalProjHandle.MainSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler2(CloudCaseHandler_Ortho_showDetail);
-
+            AirDentalProjHandle.Main_orthoSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler(CloudCaseHandler_Ortho_showSingleProject);
+            AirDentalProjHandle.Main_orthoSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler2(CloudCaseHandler_Ortho_showDetail);
+            AirDentalProjHandle.Main_implantSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_implantBaseEventHandler(CloudCaseHandler_Implant_showSingleProject);
+            AirDentalProjHandle.Main_implantSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_implantBaseEventHandler2(CloudCaseHandler_Implant_showDetail);
             //工程師模式切換
             if (developerMode == true)
             {
@@ -2000,7 +2001,7 @@ namespace OrderManagerNew
             if (SoftwareFilterCAD.IsChecked == true)
                 StackPanel_Cloud.Children.Clear();
             else if (SoftwareFilterImplant.IsChecked == true)
-                StackPanel_Cloud.Children.Clear();
+                AirDentalProjHandle.ReceiveImplantProjects();
             else if (SoftwareFilterOrtho.IsChecked == true)
                 AirDentalProjHandle.ReceiveOrthoProjects();
             else
@@ -2110,6 +2111,7 @@ namespace OrderManagerNew
                         {
                             Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.Implant;
                             ProjHandle.LoadImplantProjV2();
+                            AirDentalProjHandle.ReceiveImplantProjects();
                             break;
                         }
                     case "SoftwareFilterOrtho":
@@ -2425,11 +2427,20 @@ namespace OrderManagerNew
                     }
                 case (int)_softwareID.Implant:
                     {
+                        if (AirDentalProjHandle.Projectlist_Implant != null && AirDentalProjHandle.Projectlist_Implant.Count > 0)
+                        {
+                            foreach (AirDental_UserControls.AirD_implantBase implantProject in AirDentalProjHandle.Projectlist_Implant)
+                            {
+                                StackPanel_Cloud.Children.Add(implantProject);
+                            }
+                        }
+                        else
+                            StackPanel_Cloud.Children.Add(new UserControls.NoResult());
                         break;
                     }
                 case (int)_softwareID.Ortho:
                     {
-                        if (AirDentalProjHandle.Projectlist_Ortho.Count > 0)
+                        if (AirDentalProjHandle.Projectlist_Ortho != null && AirDentalProjHandle.Projectlist_Ortho.Count > 0)
                         {
                             foreach (AirDental_UserControls.AirD_orthoBase orthoProject in AirDentalProjHandle.Projectlist_Ortho)
                             {
@@ -2455,7 +2466,36 @@ namespace OrderManagerNew
             }
         }
 
+        private void CloudCaseHandler_Implant_showSingleProject(int projectIndex)
+        {
+            StackPanel_Detail.Children.Clear();
+            for (int i = 0; i < StackPanel_Cloud.Children.Count; i++)
+            {
+                if (i == projectIndex)
+                    continue;
+
+                ((AirDental_UserControls.AirD_implantBase)StackPanel_Cloud.Children[i]).SetCaseFocusStatus(false);
+            }
+        }
+
         private void CloudCaseHandler_Ortho_showDetail(int BaseCaseIndex, int SmallCaseIndex)
+        {
+            StackPanel_Detail.Children.Clear();
+            /*if (StackPanel_Local.Children[BaseCaseIndex] is UserControls.Order_orthoBase)
+            {
+                if (((UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex + 1] is UserControls.Order_orthoSmallcase tmpOrthoSmall)
+                {
+                    if (tmpOrthoSmall.IsFocusSmallCase == false)
+                    {
+                        UserControls.Detail_ortho detail_ortho = new UserControls.Detail_ortho();
+                        detail_ortho.SetDetailInfo(tmpOrthoSmall.orthosmallcaseInfo);
+                        StackPanel_Detail.Children.Add(detail_ortho);
+                    }
+                }
+            }*/
+        }
+
+        private void CloudCaseHandler_Implant_showDetail(int BaseCaseIndex, int SmallCaseIndex)
         {
             StackPanel_Detail.Children.Clear();
             /*if (StackPanel_Local.Children[BaseCaseIndex] is UserControls.Order_orthoBase)

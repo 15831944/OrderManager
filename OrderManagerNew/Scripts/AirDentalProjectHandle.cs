@@ -21,10 +21,16 @@ namespace OrderManagerNew
 
         //委派到MainWindow.xaml.cs裡面CloudCaseHandler_Ortho_showSingleProject()
         public delegate void AirD_orthoBaseEventHandler(int projectIndex);
-        public event AirD_orthoBaseEventHandler MainSetAirDentalProjectShow;
+        public event AirD_orthoBaseEventHandler Main_orthoSetAirDentalProjectShow;
         //委派到MainWindow.xaml.cs裡面的CloudCaseHandler_Ortho_showDetail()
         public delegate void AirD_orthoBaseEventHandler2(int BaseCaseIndex, int SmallCaseIndex);
-        public event AirD_orthoBaseEventHandler2 MainSetSmallOrderDetailShow;
+        public event AirD_orthoBaseEventHandler2 Main_orthoSetSmallOrderDetailShow;
+        //委派到MainWindow.xaml.cs裡面CloudCaseHandler_Implant_showSingleProject()
+        public delegate void AirD_implantBaseEventHandler(int projectIndex);
+        public event AirD_implantBaseEventHandler Main_implantSetAirDentalProjectShow;
+        //委派到MainWindow.xaml.cs裡面的CloudCaseHandler_Implant_showDetail()
+        public delegate void AirD_implantBaseEventHandler2(int BaseCaseIndex, int SmallCaseIndex);
+        public event AirD_implantBaseEventHandler2 Main_implantSetSmallOrderDetailShow;
 
         public string APIPortal = "https://airdental.inteware.com.tw/api/";
         public Dll_Airdental.Main Airdental;
@@ -60,18 +66,6 @@ namespace OrderManagerNew
                     Handler_snackbarShow(AirD_Exception.Message);
             }
         }
-        void CompletedWork_ortho(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Error == null)
-            {
-                if(RogerRoger == true)
-                    LoadOrthoProjects();
-            }
-            else
-            {
-                
-            }
-        }
         void DoWork_implant(object sender, DoWorkEventArgs e)
         {
             AirD_Exception = Airdental.GetImplantProject(ref TotalImplantProjects);
@@ -85,12 +79,24 @@ namespace OrderManagerNew
                     Handler_snackbarShow(AirD_Exception.Message);
             }
         }
+        void CompletedWork_ortho(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                if(RogerRoger == true)
+                    LoadOrthoProjects();
+            }
+            else
+            {
+                
+            }
+        }
         void CompletedWork_implant(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Error == null)
             {
                 if (RogerRoger == true)
-                    LoadOrthoProjects();
+                    LoadImplantProjects();
             }
             else
             {
@@ -165,8 +171,8 @@ namespace OrderManagerNew
                 {
                     orthoBase_AirDental = Airdental
                 };
-                tmpUserControl_orthoProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler(MainSetAirDentalProjectShow);
-                tmpUserControl_orthoProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler2(MainSetSmallOrderDetailShow);
+                tmpUserControl_orthoProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler(Main_orthoSetAirDentalProjectShow);
+                tmpUserControl_orthoProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler2(Main_orthoSetSmallOrderDetailShow);
                 tmpUserControl_orthoProject.SetProjectInfo(orthoProject, count);
                 Projectlist_Ortho.Add(tmpUserControl_orthoProject);
                 count++;
@@ -221,8 +227,8 @@ namespace OrderManagerNew
                 {
                     implantBase_AirDental = Airdental
                 };
-                tmpUserControl_implantProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_implantBase.AirD_implantBaseEventHandler(MainSetAirDentalProjectShow);
-                tmpUserControl_implantProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_implantBase.AirD_implantBaseEventHandler2(MainSetSmallOrderDetailShow);
+                tmpUserControl_implantProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_implantBase.AirD_implantBaseEventHandler(Main_implantSetAirDentalProjectShow);
+                tmpUserControl_implantProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_implantBase.AirD_implantBaseEventHandler2(Main_implantSetSmallOrderDetailShow);
                 tmpUserControl_implantProject.SetProjectInfo(implantProject, count);
                 Projectlist_Implant.Add(tmpUserControl_implantProject);
                 count++;

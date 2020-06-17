@@ -101,10 +101,10 @@ namespace OrderManagerNew.AirDental_UserControls
 
             for (int i = 0; i < totalCount; i++)
             {
-                /*AirDental_UserControls.AirD_orthoSmallOrder TmpOrthoSmallOrder = new AirD_orthoSmallOrder();//TODO
-                TmpOrthoSmallOrder.SetOrderCaseShow += new AirD_orthoSmallOrder.orthoOrderEventHandler(SmallOrderHandler);
-                TmpOrthoSmallOrder.SetOrderInfo(Orderlist_Ortho[i], i);
-                orthoProjectInfo.List_orthoOrder.Add(TmpOrthoSmallOrder);*/
+                AirDental_UserControls.AirD_implantSmallOrder TmpImplantSmallOrder = new AirD_implantSmallOrder();
+                TmpImplantSmallOrder.SetOrderCaseShow += new AirD_implantSmallOrder.implantOrderEventHandler(SmallOrderHandler);
+                TmpImplantSmallOrder.SetOrderInfo(Orderlist_Implant[i], i);
+                implantProjectInfo.List_implantOrder.Add(TmpImplantSmallOrder);
             }
         }
 
@@ -162,7 +162,7 @@ namespace OrderManagerNew.AirDental_UserControls
                 if (i == SmallorderIndex)
                     continue;
 
-                //implantProjectInfo.List_implantOrder[i].SetCaseFocusStatus(false);//TODO
+                implantProjectInfo.List_implantOrder[i].SetCaseFocusStatus(false);
             }
         }
 
@@ -210,7 +210,7 @@ namespace OrderManagerNew.AirDental_UserControls
                         {
                             for (int i = 1; i < stackpanel_Ortho.Children.Count; i++)
                             {
-                                //((AirD_implantSmallOrder)stackpanel_Ortho.Children[i]).SetCaseFocusStatus(false);//TODO
+                                ((AirD_implantSmallOrder)stackpanel_Ortho.Children[i]).SetCaseFocusStatus(false);
                             }
 
                             stackpanel_Ortho.Children.RemoveRange(1, (stackpanel_Ortho.Children.Count - 1));
