@@ -65,6 +65,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -170,6 +171,16 @@
     </Compile>
     <Compile Include="UserControls\Order_tsBase.xaml.cs">
       <DependentUpon>Order_tsBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="V2Implant\ToothChart.xaml.cs">
+      <DependentUpon>ToothChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="V2Implant\ToothType.cs" />
+    <Compile Include="V2Implant\ImplantV2NewOrder.xaml.cs">
+      <DependentUpon>ImplantV2NewOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="V2Implant\uctoothtypebase.xaml.cs">
+      <DependentUpon>uctoothtypebase.xaml</DependentUpon>
     </Compile>
     <Page Include="AirDental_UserControls\AirD_cadBase.xaml">
       <SubType>Designer</SubType>
@@ -285,6 +296,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="V2Implant\ToothChart.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="V2Implant\ImplantV2NewOrder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="V2Implant\uctoothtypebase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -349,6 +372,149 @@
       <Project>{f843136f-6291-435d-9038-dc79401e7dcb}</Project>
       <Name>Dll_Airdental</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="V2Implant\ToothImg\Coping\T11.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T12.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T13.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T14.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T15.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T16.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T17.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T18.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T21.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T22.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T23.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T24.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T25.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T26.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T27.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T28.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T31.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T32.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T33.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T34.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T35.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T36.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T37.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T38.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T41.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T42.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T43.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T44.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T45.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T46.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T47.png" />
+    <Resource Include="V2Implant\ToothImg\Coping\T48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="V2Implant\ToothImg\Neighbor\T11.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T12.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T13.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T14.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T15.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T16.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T17.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T18.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T21.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T22.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T23.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T24.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T25.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T26.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T27.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T28.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T31.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T32.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T33.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T34.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T35.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T36.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T37.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T38.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T41.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T42.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T43.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T44.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T45.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T46.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T47.png" />
+    <Resource Include="V2Implant\ToothImg\Neighbor\T48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="V2Implant\ToothImg\None\T11.png" />
+    <Resource Include="V2Implant\ToothImg\None\T12.png" />
+    <Resource Include="V2Implant\ToothImg\None\T13.png" />
+    <Resource Include="V2Implant\ToothImg\None\T14.png" />
+    <Resource Include="V2Implant\ToothImg\None\T15.png" />
+    <Resource Include="V2Implant\ToothImg\None\T16.png" />
+    <Resource Include="V2Implant\ToothImg\None\T17.png" />
+    <Resource Include="V2Implant\ToothImg\None\T18.png" />
+    <Resource Include="V2Implant\ToothImg\None\T21.png" />
+    <Resource Include="V2Implant\ToothImg\None\T22.png" />
+    <Resource Include="V2Implant\ToothImg\None\T23.png" />
+    <Resource Include="V2Implant\ToothImg\None\T24.png" />
+    <Resource Include="V2Implant\ToothImg\None\T25.png" />
+    <Resource Include="V2Implant\ToothImg\None\T26.png" />
+    <Resource Include="V2Implant\ToothImg\None\T27.png" />
+    <Resource Include="V2Implant\ToothImg\None\T28.png" />
+    <Resource Include="V2Implant\ToothImg\None\T31.png" />
+    <Resource Include="V2Implant\ToothImg\None\T32.png" />
+    <Resource Include="V2Implant\ToothImg\None\T33.png" />
+    <Resource Include="V2Implant\ToothImg\None\T34.png" />
+    <Resource Include="V2Implant\ToothImg\None\T35.png" />
+    <Resource Include="V2Implant\ToothImg\None\T36.png" />
+    <Resource Include="V2Implant\ToothImg\None\T37.png" />
+    <Resource Include="V2Implant\ToothImg\None\T38.png" />
+    <Resource Include="V2Implant\ToothImg\None\T41.png" />
+    <Resource Include="V2Implant\ToothImg\None\T42.png" />
+    <Resource Include="V2Implant\ToothImg\None\T43.png" />
+    <Resource Include="V2Implant\ToothImg\None\T44.png" />
+    <Resource Include="V2Implant\ToothImg\None\T45.png" />
+    <Resource Include="V2Implant\ToothImg\None\T46.png" />
+    <Resource Include="V2Implant\ToothImg\None\T47.png" />
+    <Resource Include="V2Implant\ToothImg\None\T48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="V2Implant\ToothImg\Pontic\T11.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T12.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T13.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T14.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T15.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T16.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T17.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T18.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T21.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T22.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T23.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T24.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T25.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T26.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T27.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T28.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T31.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T32.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T33.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T34.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T35.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T36.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T37.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T38.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T41.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T42.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T43.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T44.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T45.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T46.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T47.png" />
+    <Resource Include="V2Implant\ToothImg\Pontic\T48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="V2Implant\ToothImg\ttype_no.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="V2Implant\ToothImg\icon_implant-delete.png" />
+    <Resource Include="V2Implant\ToothImg\icon_implant.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

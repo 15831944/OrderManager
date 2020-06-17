@@ -351,3 +351,4 @@ MigrationBackup/
 
 #Ignore Things
 !/OrderManagerNew/ExtDLL/*
+!/OrderManagerNew/bin/*.xml

@@ -1,0 +1,17 @@
+﻿<UserControl
+  x:Class="OrderManagerNew.V2Implant.UCToothTypeBase" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="26"
+  d:DesignWidth="300" mc:Ignorable="d">
+    <Grid MouseEnter="Base_MouseEnter" MouseLeave="Base_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="26" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Image
+          x:Name="ToothTypeImage" Width="24" Height="24"
+          Source="ToothImg\icon_implant.png" />
+        <Label
+          Grid.Column="1" x:Name="ToothTypeName" Margin="5,0,0,0"
+          VerticalAlignment="Center" Content="Coping" />
+    </Grid>
+</UserControl>

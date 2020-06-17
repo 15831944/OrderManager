@@ -1,0 +1,905 @@
+﻿<UserControl
+  x:Class="OrderManagerNew.V2Implant.ToothChart" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="440"
+  d:DesignWidth="250" mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="DisToothConnect" TargetType="Ellipse">
+            <Setter Property="Visibility" Value="Visible" />
+            <Setter Property="Width" Value="10" />
+            <Setter Property="Height" Value="10" />
+            <Setter Property="Stroke" Value="DarkGray" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="Fill">
+                <Setter.Value>
+                    <RadialGradientBrush>
+                        <GradientStop Offset="0.8" Color="DarkGray" />
+                        <GradientStop Color="White" />
+                    </RadialGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ToothConnect" TargetType="Ellipse">
+            <Setter Property="Visibility" Value="Visible" />
+            <Setter Property="Width" Value="10" />
+            <Setter Property="Height" Value="10" />
+            <Setter Property="Stroke" Value="DarkGray" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="Fill">
+                <Setter.Value>
+                    <RadialGradientBrush>
+                        <GradientStop Offset="0.7" Color="Orange" />
+                        <GradientStop Color="White" />
+                    </RadialGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SetToothConnect" TargetType="Ellipse">
+            <Setter Property="Visibility" Value="Visible" />
+            <Setter Property="Width" Value="10" />
+            <Setter Property="Height" Value="10" />
+            <Setter Property="Stroke" Value="DarkGray" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="Fill">
+                <Setter.Value>
+                    <RadialGradientBrush>
+                        <GradientStop Offset="0.7" Color="Orange" />
+                        <GradientStop Color="White" />
+                    </RadialGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="UnSetToothConnect" TargetType="Ellipse">
+            <Setter Property="Visibility" Value="Visible" />
+            <Setter Property="Width" Value="10" />
+            <Setter Property="Height" Value="10" />
+            <Setter Property="Stroke" Value="DarkGray" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="Fill">
+                <Setter.Value>
+                    <RadialGradientBrush>
+                        <GradientStop Offset="0.8" Color="DarkGray" />
+                        <GradientStop Color="White" />
+                    </RadialGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Storyboard x:Key="OnMouseEnter">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1.15" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1.15" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1.0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1.0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Style x:Key="ToothSelect" TargetType="Image">
+            <Setter Property="Opacity" Value="1.0" />
+        </Style>
+
+        <Style x:Key="DisToothSelect" TargetType="Image">
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="188" />
+            <RowDefinition Height="20" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Rectangle
+          Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
+          Grid.ColumnSpan="2" d:IsLocked="True" Fill="White"
+          MouseLeftButtonDown="ToothImg_MouseLBtnDown" Opacity="0.1" />
+
+        <!--  <Image Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Source="ToothChart.bmp" /> -->
+
+        <Canvas
+          Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+          x:Name="canvas1" d:IsLocked="True">
+
+            <Image
+              x:Name="tcT11" Canvas.Left="94" Canvas.Top="5"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T11.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT12" Canvas.Left="72" Canvas.Top="14"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T12.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT13" Canvas.Left="52" Canvas.Top="30"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T13.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT14" Canvas.Left="36" Canvas.Top="54"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T14.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT15" Canvas.Left="26" Canvas.Top="78"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T15.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT16" Canvas.Left="16" Canvas.Top="106"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T16.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT17" Canvas.Left="12" Canvas.Top="147"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T17.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT18" Canvas.Left="9" Canvas.Top="183"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T18.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+        </Canvas>
+        <Canvas
+          Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
+          x:Name="canvas2" Margin="2,0,-2,0" d:IsLocked="True">
+            <Image
+              x:Name="tcT21" Canvas.Left="1" Canvas.Top="5"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T21.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT22" Canvas.Left="26" Canvas.Top="14"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T22.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT23" Canvas.Left="40" Canvas.Top="30"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T23.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT24" Canvas.Left="56" Canvas.Top="54"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T24.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT25" Canvas.Left="62" Canvas.Top="78"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T25.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT26" Canvas.Left="65" Canvas.Top="105"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T26.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT27" Canvas.Left="71" Canvas.Top="147"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T27.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT28" Canvas.Left="76" Canvas.Top="183"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T28.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+        </Canvas>
+        <Canvas
+          Grid.Row="2" Grid.Column="1" x:Name="canvas3"
+          Margin="3,0,-3,0">
+            <Image
+              x:Name="tcT31" Canvas.Top="205" MouseEnter="ToothImg_MouseEnter"
+              MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown" RenderTransformOrigin="0.5,0.5"
+              Source="ToothImg\None\T31.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT32" Canvas.Left="19" Canvas.Top="199"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T32.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT33" Canvas.Left="32" Canvas.Top="184"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T33.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT34" Canvas.Left="43" Canvas.Top="165"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T34.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT35" Canvas.Left="52" Canvas.Top="139"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T35.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT36" Canvas.Left="61" Canvas.Top="102"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T36.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT37" Canvas.Left="69" Canvas.Top="64"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T37.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT38" Canvas.Left="72" Canvas.Top="25"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T38.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+
+        </Canvas>
+        <Canvas
+          Grid.Row="2" Grid.Column="0" x:Name="canvas4"
+          d:IsLocked="True">
+            <Image
+              x:Name="tcT41" Canvas.Left="104" Canvas.Top="205"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T41.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT42" Canvas.Left="85" Canvas.Top="199"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T42.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT43" Canvas.Left="67" Canvas.Top="184"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T43.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT44" Canvas.Left="53" Canvas.Top="165"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T44.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT45" Canvas.Left="40" Canvas.Top="139"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T45.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT46" Canvas.Left="26" Canvas.Top="102"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T46.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT47" Canvas.Left="18" Canvas.Top="64"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T47.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image
+              x:Name="tcT48" Canvas.Left="15" Canvas.Top="25"
+              MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
+              RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T48.png" Stretch="None"
+              Style="{StaticResource DisToothSelect}"
+              Tag="1">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+        </Canvas>
+
+        <Canvas
+          Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+          Grid.ColumnSpan="2" x:Name="canvas_connector" />
+
+        <Canvas
+          Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+          Grid.ColumnSpan="2" x:Name="canvas_type">
+            <Image
+              x:Name="T18_Type" Canvas.Left="-12" Canvas.Top="191"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T17_Type" Canvas.Left="-10" Canvas.Top="154"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T16_Type" Canvas.Left="-6" Canvas.Top="111"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T15_Type" Canvas.Left="6" Canvas.Top="77"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T14_Type" Canvas.Left="15" Canvas.Top="48"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T13_Type" Canvas.Left="35" Canvas.Top="19"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T12_Type" Canvas.Left="64" Canvas.Top="1"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T11_Type" Canvas.Left="99" Canvas.Top="-13"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T21_Type" Canvas.Left="135" Canvas.Top="-13"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T22_Type" Canvas.Left="170" Canvas.Top="1"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T23_Type" Canvas.Left="199" Canvas.Top="19"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T24_Type" Canvas.Left="219" Canvas.Top="48"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T25_Type" Canvas.Left="229" Canvas.Top="77"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T26_Type" Canvas.Left="240" Canvas.Top="111"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T27_Type" Canvas.Left="245" Canvas.Top="154"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T28_Type" Canvas.Left="246" Canvas.Top="191"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T38_Type" Canvas.Left="240" Canvas.Top="248"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T37_Type" Canvas.Left="237" Canvas.Top="290"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T36_Type" Canvas.Left="229" Canvas.Top="329"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T35_Type" Canvas.Left="214" Canvas.Top="355"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T34_Type" Canvas.Left="198" Canvas.Top="386"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T33_Type" Canvas.Left="181" Canvas.Top="412"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T32_Type" Canvas.Left="156" Canvas.Top="432"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T31_Type" Canvas.Left="130" Canvas.Top="440"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T41_Type" Canvas.Left="103" Canvas.Top="440"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T42_Type" Canvas.Left="78" Canvas.Top="431"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T43_Type" Canvas.Left="55" Canvas.Top="411"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T44_Type" Canvas.Left="36" Canvas.Top="387"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T45_Type" Canvas.Left="21" Canvas.Top="363"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T46_Type" Canvas.Left="8" Canvas.Top="329"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T47_Type" Canvas.Left="-1" Canvas.Top="290"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+            <Image
+              x:Name="T48_Type" Canvas.Left="-5" Canvas.Top="248"
+              Width="15" Height="15" Source="ToothImg\ttype_no.png"
+              Tag="100" />
+
+            <Ellipse
+              x:Name="C01" Canvas.Left="55" Canvas.Top="185"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C02" Canvas.Left="58" Canvas.Top="145"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C03" Canvas.Left="65" Canvas.Top="107"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C04" Canvas.Left="70" Canvas.Top="85"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C05" Canvas.Left="78" Canvas.Top="68"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C06" Canvas.Left="88" Canvas.Top="48"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C07" Canvas.Left="100" Canvas.Top="36"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C08" Canvas.Left="120" Canvas.Top="33"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C09" Canvas.Left="140" Canvas.Top="36"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C10" Canvas.Left="153" Canvas.Top="48"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C11" Canvas.Left="162" Canvas.Top="68"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C12" Canvas.Left="170" Canvas.Top="85"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C13" Canvas.Left="175" Canvas.Top="107"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C14" Canvas.Left="183" Canvas.Top="145"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C15" Canvas.Left="185" Canvas.Top="185"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C17" Canvas.Left="185" Canvas.Top="264"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C18" Canvas.Left="178" Canvas.Top="301"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C19" Canvas.Left="170" Canvas.Top="336"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C20" Canvas.Left="164" Canvas.Top="358"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C21" Canvas.Left="155" Canvas.Top="376"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C22" Canvas.Left="145" Canvas.Top="391"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C23" Canvas.Left="134" Canvas.Top="399"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C24" Canvas.Left="120" Canvas.Top="403"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C25" Canvas.Left="106" Canvas.Top="399"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C26" Canvas.Left="95" Canvas.Top="391"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C27" Canvas.Left="85" Canvas.Top="376"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C28" Canvas.Left="77" Canvas.Top="358"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C29" Canvas.Left="70" Canvas.Top="336"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C30" Canvas.Left="63" Canvas.Top="301"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+            <Ellipse
+              x:Name="C31" Canvas.Left="55" Canvas.Top="264"
+              MouseLeftButtonDown="Connector_MouseLBtnDown"
+              Style="{StaticResource DisToothConnect}"
+              Tag="0" />
+
+
+
+        </Canvas>
+    </Grid>
+</UserControl>

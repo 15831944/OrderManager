@@ -1,0 +1,986 @@
+﻿<Window
+  x:Class="OrderManagerNew.V2Implant.ImplantV2NewOrder" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:OrderManagerNew" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:v2implant="clr-namespace:OrderManagerNew.V2Implant"
+  Title="Create Order" Width="840" Height="793"
+  AllowsTransparency="True" ResizeMode="NoResize" ShowInTaskbar="False"
+  WindowStartupLocation="CenterOwner" WindowStyle="None">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/StyleDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="MyGroupBox" TargetType="{x:Type GroupBox}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GroupBox">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0">
+                                    <HeaderedContentControl>
+                                        <ContentPresenter Margin="-5,5,0,0" ContentSource="Header" RecognizesAccessKey="True" />
+                                    </HeaderedContentControl>
+                                </Border>
+                                <Border Grid.Row="1" Margin="0,0" Background="#FFEDEDE3">
+                                    <ContentPresenter />
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="CreatLabel" TargetType="Label">
+                <Setter Property="Foreground" Value="#FF483E34" />
+            </Style>
+            <Style x:Key="CreatTextBox" TargetType="{x:Type TextBox}">
+                <Setter Property="BorderBrush" Value="#FFB3B3B3" />
+                <Setter Property="Foreground" Value="#FF483E34" />
+                <Setter Property="Height" Value="22" />
+            </Style>
+            <Style x:Key="CreatRadioButton" TargetType="{x:Type RadioButton}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type RadioButton}">
+                            <ControlTemplate.Resources>
+                                <Storyboard x:Key="Click">
+                                    <!--  Value是水波紋大小  -->
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(FrameworkElement.Width)">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="40" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(FrameworkElement.Height)">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="40" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-20" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-20" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </ControlTemplate.Resources>
+                            <BulletDecorator
+                              Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                              Background="Transparent" Cursor="Hand">
+                                <BulletDecorator.Bullet>
+                                    <Grid Width="12" Height="12">
+                                        <!--  Define size of the Bullet  -->
+                                        <!--  The two borders  -->
+                                        <Border
+                                          Name="RadioOuter" Background="White" BorderBrush="#FFB3B3B3"
+                                          BorderThickness="1" CornerRadius="20" />
+                                        <Border
+                                          Name="RadioMark" Margin="3" Background="#FFF6AA00"
+                                          CornerRadius="20" Visibility="Hidden" />
+                                        <Canvas
+                                          Width="20" Height="20" HorizontalAlignment="Center"
+                                          VerticalAlignment="Center">
+                                            <Ellipse
+                                              x:Name="InteractionEllipse" Canvas.Left="10" Canvas.Top="10"
+                                              Width="0" Height="0"
+                                              Fill="{TemplateBinding Foreground}"
+                                              Opacity="0" RenderTransformOrigin="0.5,0.5">
+                                                <Ellipse.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform />
+                                                        <SkewTransform />
+                                                        <RotateTransform />
+                                                        <TranslateTransform />
+                                                    </TransformGroup>
+                                                </Ellipse.RenderTransform>
+                                            </Ellipse>
+                                        </Canvas>
+                                    </Grid>
+                                </BulletDecorator.Bullet>
+                                <!--  Text element  -->
+                                <TextBlock
+                                  Margin="10,0,0,0" FontFamily="Segoe UI" FontSize="14"
+                                  Foreground="#FF483E34">
+                                    <ContentPresenter />
+                                </TextBlock>
+                            </BulletDecorator>
+                            <!--  If item is checked, trigger the visibility of the mark  -->
+                            <ControlTemplate.Triggers>
+                                <EventTrigger RoutedEvent="ButtonBase.Click">
+                                    <BeginStoryboard Storyboard="{StaticResource Click}" />
+                                </EventTrigger>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <!--  If item is checked, trigger the visibility of the mark and change the color of the selected bullet into a darker gray for better highlighting  -->
+                                    <Setter TargetName="RadioMark" Property="Visibility" Value="Visible" />
+                                    <Setter TargetName="RadioOuter" Property="BorderBrush" Value="#FFADADAD" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="CreatCheckbox" TargetType="{x:Type CheckBox}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Foreground" Value="#FF483E34" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type CheckBox}">
+                            <ControlTemplate.Resources>
+                                <Storyboard x:Key="Click">
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(FrameworkElement.Width)">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="60" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(FrameworkElement.Height)">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="60" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-30" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-30" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="InteractionEllipse" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                        <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </ControlTemplate.Resources>
+                            <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Viewbox Width="16" Height="16" FlowDirection="LeftToRight">
+                                    <Canvas Width="26" Height="26">
+                                        <Rectangle
+                                          x:Name="box" Width="22" Height="22"
+                                          Fill="#FFF4F4F5" Stroke="#FF483E34" />
+                                        <Path
+                                          x:Name="path" Data="" Stretch="Fill"
+                                          Stroke="Red" StrokeThickness="3" />
+                                        <Ellipse
+                                          x:Name="InteractionEllipse" Canvas.Left="12" Canvas.Top="12"
+                                          Width="0" Height="0"
+                                          Fill="{TemplateBinding Foreground}"
+                                          IsHitTestVisible="False" Opacity="0" RenderTransformOrigin="0.5,0.5">
+                                            <Ellipse.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform />
+                                                    <SkewTransform />
+                                                    <RotateTransform />
+                                                    <TranslateTransform />
+                                                </TransformGroup>
+                                            </Ellipse.RenderTransform>
+                                        </Ellipse>
+                                    </Canvas>
+                                </Viewbox>
+                                <ContentPresenter
+                                  Grid.Column="1" x:Name="contentPresenter"
+                                  Margin="{TemplateBinding Padding}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  Focusable="False" RecognizesAccessKey="True"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <EventTrigger RoutedEvent="ButtonBase.Click">
+                                    <BeginStoryboard Storyboard="{StaticResource Click}" />
+                                </EventTrigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="path" Property="Opacity" Value=".26" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="true" />
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter TargetName="path" Property="Data" Value="M25,0 L10,18 L2,10" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="ClearButton" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="White" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Foreground" Value="Red" />
+                <Setter Property="Width" Value="20" />
+                <Setter Property="Height" Value="20" />
+                <Setter Property="Content" Value="X" />
+                <Setter Property="Margin" Value="0,0,1,0" />
+            </Style>
+            <Style x:Key="FloderButton" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+            <Style x:Key="OkButton" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#FF756550" />
+                <Setter Property="Foreground" Value="#FFF4E9DC" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#FFFFB14A" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="CancelButton" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#FF756550" />
+                <Setter Property="Foreground" Value="#FFF4E9DC" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#FFFFB14A" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="#FFEEEEEE" />
+            <GradientStop Offset="0.217" Color="White" />
+        </LinearGradientBrush>
+    </Window.Background>
+    <Border
+      Name="main" Margin="0" BorderBrush="Gray"
+      BorderThickness="1">
+        <DockPanel>
+            <!--  Title Bar Area  -->
+            <Border
+              Name="border" Height="30" Background="#FFE08A1E"
+              DockPanel.Dock="Top">
+
+                <Grid>
+                    <Label
+                      Margin="23,0,35,0" VerticalContentAlignment="Center" PreviewMouseDown="System_MouseDown"
+                      PreviewMouseMove="System_MouseMove">
+                        <TextBlock
+                          FontFamily="Arial" FontSize="15" Foreground="#FFFFFFFF"
+                          Text="{Binding Title, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" />
+                    </Label>
+
+                    <!--  System Button Area  -->
+                    <StackPanel HorizontalAlignment="Right" Background="#FFE08A1E" Orientation="Horizontal">
+
+                        <StackPanel.Resources>
+                            <Style x:Key="systemButton" TargetType="{x:Type Button}">
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Width" Value="35" />
+                                <Setter Property="Height" Value="25" />
+                                <Setter Property="HorizontalAlignment" Value="Right" />
+                                <Setter Property="VerticalAlignment" Value="Top" />
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}" BorderThickness="0">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="Button.IsMouseOver" Value="True">
+                                        <Setter Property="Button.Background" Value="LightGray" />
+                                    </Trigger>
+                                </Style.Triggers>
+
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button Click="Close_Click" Style="{DynamicResource systemButton_close}" />
+
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Grid Background="#FF353631">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="180" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="350" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="5" />
+                </Grid.ColumnDefinitions>
+
+                <GroupBox
+                  Grid.Row="0" Grid.Column="0" Margin="7,0,3,0"
+                  Style="{StaticResource MyGroupBox}">
+                    <GroupBox.Header>
+                        <Label Content="1. Order Information" FontWeight="Bold" Foreground="White" />
+                    </GroupBox.Header>
+                    <StackPanel Margin="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="26" />
+                                <RowDefinition Height="26" />
+                                <RowDefinition Height="26" />
+                                <RowDefinition Height="26" />
+                                <RowDefinition Height="26" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Label
+                              Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"
+                              Content="Order Number"
+                              Style="{StaticResource CreatLabel}" />
+                            <Label
+                              Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"
+                              Content="Patient Name"
+                              Style="{StaticResource CreatLabel}" />
+                            <Label
+                              Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left"
+                              Content="Patient Gender"
+                              Style="{StaticResource CreatLabel}" />
+                            <Label
+                              Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left"
+                              Content="Patient Birthday"
+                              Style="{StaticResource CreatLabel}" />
+                            <Label
+                              Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left"
+                              Content="Clinic Name"
+                              Style="{StaticResource CreatLabel}" />
+
+                            <TextBox
+                              Grid.Row="0" Grid.Column="1" x:Name="m_order_num"
+                              IsReadOnly="True" Opacity="0.5"
+                              Style="{StaticResource CreatTextBox}"
+                              Text="" />
+                            <TextBox
+                              Grid.Row="1" Grid.Column="1" x:Name="m_patient_name"
+                              Style="{StaticResource CreatTextBox}"
+                              Text="" />
+                            <TextBox
+                              Grid.Row="4" Grid.Column="1" x:Name="m_lab_name"
+                              Style="{StaticResource CreatTextBox}"
+                              Text="" />
+
+                            <RadioButton
+                              Grid.Row="2" Grid.Column="1" x:Name="m_patient_male"
+                              Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                              Click="MaterialRadioBtnClick" Content="Male" IsChecked="True"
+                              Style="{StaticResource CreatRadioButton}" />
+                            <RadioButton
+                              Grid.Row="2" Grid.Column="1" x:Name="m_patient_female"
+                              Margin="50,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                              Click="MaterialRadioBtnClick" Content="Female"
+                              Style="{StaticResource CreatRadioButton}" />
+                            <DatePicker
+                              Grid.Row="3" Grid.Column="1" x:Name="m_patient_birthday"
+                              Margin="0,0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                              Background="White" BorderBrush="#FFB3B3B3" Foreground="#FF483E34"
+                              SelectedDateFormat="Long" />
+
+                            <Button
+                              Grid.Row="3" Grid.Column="1" Margin="116,0,0,0"
+                              Click="Click_Test" Visibility="Hidden" />
+                        </Grid>
+                    </StackPanel>
+
+                </GroupBox>
+
+                <GroupBox
+                  Grid.Row="0" Grid.Column="1" Margin="3,0,3,0"
+                  Style="{StaticResource MyGroupBox}">
+                    <GroupBox.Header>
+                        <Label Content="3. Image Data" FontWeight="Bold" Foreground="White" />
+                    </GroupBox.Header>
+                    <StackPanel Margin="3">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="37" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
+
+                            <CheckBox
+                              Grid.Row="0" Grid.Column="0" x:Name="m_ct_path_check"
+                              VerticalAlignment="Center" Checked="CheckBox_Checked" Content="C.B.C.T folder"
+                              IsEnabled="False"
+                              Style="{StaticResource CreatCheckbox}"
+                              Unchecked="M_ct_path_check_Unchecked" />
+                            <CheckBox
+                              Grid.Row="1" Grid.Column="0" x:Name="m_upperjaw_path_check"
+                              VerticalAlignment="Center" Checked="M_upperjaw_path_check_Checked" Content="Jaw(*.stl)"
+                              Style="{StaticResource CreatCheckbox}"
+                              Unchecked="M_upperjaw_path_check_Unchecked" />
+
+
+                            <CheckBox
+                              Grid.Row="2" Grid.Column="0" x:Name="m_lowerjaw_path_check"
+                              VerticalAlignment="Center" Checked="M_lowerjaw_path_check_Checked" Content="Jaw Tray(*.stl)"
+                              Style="{StaticResource CreatCheckbox}"
+                              Unchecked="M_lowerjaw_path_check_Unchecked" />
+                            <CheckBox
+                              Grid.Row="3" Grid.Column="0" x:Name="m_othermodel_path_check"
+                              VerticalAlignment="Center" Checked="M_othermodel_path_check_Checked" Content="Denture(*.stl)"
+                              Style="{StaticResource CreatCheckbox}"
+                              Unchecked="M_othermodel_path_check_Unchecked" />
+
+                            <CheckBox
+                              Grid.Row="0" Grid.Column="0" Margin="0,4,0,0"
+                              VerticalAlignment="Center" Content="Implant Plan" Visibility="Hidden" />
+                            <CheckBox
+                              Grid.Row="1" Grid.Column="0" Margin="0,4,0,0"
+                              VerticalAlignment="Center" Content="Dent Design" Visibility="Hidden" />
+                            <CheckBox
+                              Grid.Row="2" Grid.Column="0" Margin="0,4,0,0"
+                              VerticalAlignment="Center" Content="Bar Design" Visibility="Hidden" />
+
+                            <TextBox
+                              Grid.Row="0" Grid.Column="1" x:Name="m_implant_path"
+                              IsReadOnly="True"
+                              Style="{StaticResource CreatTextBox}"
+                              Text="" Visibility="Hidden" />
+                            <TextBox
+                              Grid.Row="0" Grid.Column="1" x:Name="m_ct_path"
+                              IsReadOnly="True"
+                              Style="{StaticResource CreatTextBox}"
+                              Text="" />
+                            <Button
+                              Grid.Row="0" Grid.Column="1" x:Name="m_ct_path_clear"
+                              HorizontalAlignment="Right" Click="M_ct_path_clear_Click"
+                              Style="{StaticResource ClearButton}" />
+
+                            <TextBox
+                              Grid.Row="1" Grid.Column="1" x:Name="m_dent_path"
+                              IsReadOnly="True"
+                              Style="{StaticResource CreatTextBox}"
+                              Text="" Visibility="Hidden" />
+                            <TextBox
+                              Grid.Row="1" Grid.Column="1" x:Name="m_upperjaw_path"
+                              IsReadOnly="True"
+                              Style="{StaticResource CreatTextBox}"
+                              Text="" />
+                            <Button
+                              Grid.Row="1" Grid.Column="1" x:Name="m_upperjaw_path_clear"
+                              HorizontalAlignment="Right" Click="M_upperjaw_path_clear_Click"
+                              Style="{StaticResource ClearButton}" />
+
+                            <TextBox
+                              Grid.Row="2" Grid.Column="1" x:Name="m_bar_path"
+                              IsReadOnly="True"
+                              Style="{StaticResource CreatTextBox}"
+                              Text="" Visibility="Hidden" />
+                            <TextBox
+                              Grid.Row="2" Grid.Column="1" x:Name="m_lowerjaw_path"
+                              IsReadOnly="True"
+                              Style="{StaticResource CreatTextBox}"
+                              Text="" />
+                            <Button
+                              Grid.Row="2" Grid.Column="1" x:Name="m_lowerjaw_path_clear"
+                              HorizontalAlignment="Right" Click="M_lowerjaw_path_clear_Click"
+                              Style="{StaticResource ClearButton}" />
+
+                            <TextBox
+                              Grid.Row="3" Grid.Column="1" x:Name="m_othermodel_path"
+                              IsReadOnly="True"
+                              Style="{StaticResource CreatTextBox}"
+                              Text="" />
+                            <Button
+                              Grid.Row="3" Grid.Column="1" x:Name="m_othermodel_path_clear"
+                              HorizontalAlignment="Right" Click="M_othermodel_path_clear_Click"
+                              Style="{StaticResource ClearButton}" />
+
+                            <Button
+                              Grid.Row="0" Grid.Column=" 2" x:Name="browct"
+                              Click="Browct_Click"
+                              Style="{StaticResource FloderButton}">
+                                <Image Source="{DynamicResource icon_folderDrawingImage}" />
+                            </Button>
+                            <Button
+                              Grid.Row="1" Grid.Column=" 2" x:Name="broupper"
+                              Click="Button_Click"
+                              Style="{StaticResource FloderButton}">
+                                <Image Source="{DynamicResource icon_folderDrawingImage}" />
+                            </Button>
+                            <Button
+                              Grid.Row="2" Grid.Column=" 2" x:Name="brolower"
+                              Click="Brolower_Click"
+                              Style="{StaticResource FloderButton}">
+                                <Image Source="{DynamicResource icon_folderDrawingImage}" />
+                            </Button>
+                            <Button
+                              Grid.Row="3" Grid.Column=" 2" x:Name="broother"
+                              Click="Broother_Click"
+                              Style="{StaticResource FloderButton}">
+                                <Image Source="{DynamicResource icon_folderDrawingImage}" />
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="350" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,5">
+                            <GroupBox
+                              Grid.Row="0" Grid.Column="1" Margin="7,0,3,0"
+                              Style="{StaticResource MyGroupBox}">
+                                <GroupBox.Header>
+                                    <Label Content="2. Case Information" FontWeight="Bold" Foreground="White" />
+                                </GroupBox.Header>
+                                <StackPanel Margin="3">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="26" />
+                                            <RowDefinition Height="26" />
+                                            <RowDefinition Height="26" />
+                                            <RowDefinition Height="26" />
+                                            <RowDefinition Height="26" />
+                                            <RowDefinition Height="26" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Label
+                                          Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"
+                                          Content="Implant Type" Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="0" Grid.Column="2" x:Name="m_implanttype_partial"
+                                          Margin="10,6,0,6" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                          Click="MaterialRadioBtnClick" Content="Partially" GroupName="type"
+                                          IsChecked="True" Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="0" Grid.Column="3" x:Name="m_implanttype_full"
+                                          Margin="0,6" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                          Click="MaterialRadioBtnClick" Content="Full Edentulous" GroupName="type"
+                                          Visibility="Hidden" />
+
+                                        <Label
+                                          Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"
+                                          Content="Natural Teeth" Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="1" Grid.Column="2" x:Name="m_naturalteeth_more"
+                                          Margin="10,6,0,6" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                          Click="MaterialRadioBtnClick" Content="More than six" GroupName="teeth"
+                                          IsChecked="True" Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="1" Grid.Column="3" x:Name="m_naturalteeth_less"
+                                          Margin="0,6" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                          Click="MaterialRadioBtnClick" Content="Less than six" GroupName="teeth"
+                                          Visibility="Hidden" />
+
+                                        <Label
+                                          Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left"
+                                          Content="Metal Artifact" Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="2" Grid.Column="2" x:Name="m_metalartifact_yes"
+                                          Margin="10,6,0,6" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                          Click="MaterialRadioBtnClick" Content="Yes" GroupName="artifact"
+                                          Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="2" Grid.Column="3" x:Name="m_metalartifact_no"
+                                          Margin="0,6" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                          Click="MaterialRadioBtnClick" Content="No" GroupName="artifact"
+                                          IsChecked="True" Visibility="Hidden" />
+
+                                        <Label
+                                          Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"
+                                          VerticalAlignment="Center" Content="Surgical Goal"
+                                          Style="{StaticResource CreatLabel}"
+                                          Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="0" Grid.Column="2" x:Name="m_goal_guide"
+                                          HorizontalAlignment="Left" VerticalAlignment="Center" Click="MaterialRadioBtnClick"
+                                          Content="Guide" GroupName="goal" IsChecked="True"
+                                          Style="{StaticResource CreatRadioButton}"
+                                          Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
+                                          x:Name="m_goal_oneday" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                          Click="MaterialRadioBtnClick" Content="ONE-DAY Implant" GroupName="goal"
+                                          IsChecked="True"
+                                          Style="{StaticResource CreatRadioButton}"
+                                          Visibility="Hidden" />
+
+                                        <Label
+                                          Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"
+                                          VerticalAlignment="Center" Content="Surgical Guide"
+                                          Style="{StaticResource CreatLabel}" />
+                                        <RadioButton
+                                          Grid.Row="0" Grid.Column="2" x:Name="m_guide_standard"
+                                          HorizontalAlignment="Left" VerticalAlignment="Center" Click="SurgicalGuideRadioBtnClick"
+                                          Content="Standard" GroupName="guide" IsChecked="True"
+                                          Style="{StaticResource CreatRadioButton}" />
+                                        <RadioButton
+                                          Grid.Row="0" Grid.Column="3" x:Name="m_guide_vacuum"
+                                          HorizontalAlignment="Left" VerticalAlignment="Center" Click="SurgicalGuideRadioBtnClick"
+                                          Content="Vacuum" GroupName="guide"
+                                          Style="{StaticResource CreatRadioButton}" />
+                                        <RadioButton
+                                          Grid.Row="1" Grid.Column="2" x:Name="m_guide_denture"
+                                          HorizontalAlignment="Left" VerticalAlignment="Center" Click="SurgicalGuideRadioBtnClick"
+                                          Content="Denture" GroupName="guide"
+                                          Style="{StaticResource CreatRadioButton}" />
+                                        <RadioButton
+                                          Grid.Row="1" Grid.Column="3" x:Name="m_guide_mi"
+                                          HorizontalAlignment="Left" VerticalAlignment="Center" Click="SurgicalGuideRadioBtnClick"
+                                          Content="MI" GroupName="guide"
+                                          Style="{StaticResource CreatRadioButton}" />
+
+                                        <Label
+                                          Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left"
+                                          Content="Surgical Kit" Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="4" Grid.Column="2" x:Name="m_kit_inteware"
+                                          Margin="10,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                          Click="MaterialRadioBtnClick" Content="INTEWARE" GroupName="kit"
+                                          IsChecked="True" Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="4" Grid.Column="3" x:Name="m_kit_drkul"
+                                          Margin="0,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                          Click="MaterialRadioBtnClick" Content="DR.KUL" GroupName="kit"
+                                          Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="4" Grid.Column="3" x:Name="m_kit_other"
+                                          Margin="0,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                          Click="MaterialRadioBtnClick" Content="Others" GroupName="kit"
+                                          Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="4" Grid.Column="2" x:Name="m_kit_ray"
+                                          Margin="10,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                          Click="MaterialRadioBtnClick" Content="Ray" GroupName="kit"
+                                          Visibility="Hidden" />
+
+                                        <Label
+                                          Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                                          HorizontalAlignment="Left" VerticalAlignment="Center" Content="Surgery Option"
+                                          Style="{StaticResource CreatLabel}"
+                                          Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="4" Grid.Column="2" x:Name="m_surgery_flap"
+                                          HorizontalAlignment="Left" VerticalAlignment="Center" Click="MaterialRadioBtnClick"
+                                          Content="Flap open" GroupName="surgery" IsChecked="True"
+                                          Style="{StaticResource CreatRadioButton}"
+                                          Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="4" Grid.Column="3" x:Name="m_surgery_mini"
+                                          HorizontalAlignment="Left" VerticalAlignment="Center" Click="MaterialRadioBtnClick"
+                                          Content="Flapless" GroupName="surgery"
+                                          Style="{StaticResource CreatRadioButton}"
+                                          Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="5" Grid.Column="2" x:Name="m_surgery_immediate"
+                                          HorizontalAlignment="Left" VerticalAlignment="Center" Click="MaterialRadioBtnClick"
+                                          Content="Immediate" GroupName="surgery"
+                                          Style="{StaticResource CreatRadioButton}"
+                                          Visibility="Hidden" />
+                                        <RadioButton
+                                          Grid.Row="5" Grid.Column="3" x:Name="m_surgery_undecided"
+                                          HorizontalAlignment="Left" VerticalAlignment="Center" Click="MaterialRadioBtnClick"
+                                          Content="Undecided" GroupName="surgery"
+                                          Style="{StaticResource CreatRadioButton}"
+                                          Visibility="Hidden" />
+
+                                        <GroupBox
+                                          Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4"
+                                          Margin="5,0"
+                                          Style="{StaticResource MyGroupBox}"
+                                          Visibility="Hidden">
+                                            <GroupBox.Header>
+                                                <Label Content="Instruction" FontWeight="Bold" Foreground="#FF483E34" />
+                                            </GroupBox.Header>
+                                            <StackPanel>
+                                                <ScrollViewer Height="302" Margin="7,0,7,9" VerticalScrollBarVisibility="Auto">
+                                                    <TextBox
+                                                      x:Name="m_instruction" Height="292" Background="#FFFAFAFA"
+                                                      BorderBrush="#FFB3B3B3" Foreground="#FF483E34" TextWrapping="Wrap" />
+                                                </ScrollViewer>
+                                            </StackPanel>
+                                        </GroupBox>
+                                    </Grid>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,0">
+                            <Grid Height="540">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="5" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="110" />
+                                    <RowDefinition Height="55" />
+                                    <RowDefinition Height="55" />
+                                    <RowDefinition Height="100" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <GroupBox
+                                  Grid.Row="0" Grid.RowSpan="6" Grid.Column="0"
+                                  Margin="3,0,0,5"
+                                  Style="{StaticResource MyGroupBox}">
+                                    <GroupBox.Header>
+                                        <Label Content="4. Implant Information" FontWeight="Bold" Foreground="White" />
+                                    </GroupBox.Header>
+                                    <v2implant:ToothChart
+                                      Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"
+                                      x:Name="toothImg" Width="250" Height="440"
+                                      Margin="0,20,0,0" />
+
+                                </GroupBox>
+                                <ListBox
+                                  Grid.Row="1" Grid.RowSpan="1" Grid.Column="0"
+                                  x:Name="listbox1" Margin="0,10,0,0" FontSize="14"
+                                  SelectionChanged="Listbox1_SelectionChanged" Visibility="Hidden" />
+
+                                <GroupBox
+                                  Grid.Row="0" Grid.Column="1" Margin="7,0,3,0"
+                                  Style="{StaticResource MyGroupBox}">
+                                    <GroupBox.Header>
+                                        <Label Content="Information" FontWeight="Bold" Foreground="White" />
+                                    </GroupBox.Header>
+
+                                    <StackPanel>
+                                        <Grid Height="115" Margin="3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5" />
+                                                <ColumnDefinition Width="75" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="26" />
+                                                <RowDefinition Height="26" />
+                                                <RowDefinition Height="26" />
+                                                <RowDefinition Height="10" />
+                                                <RowDefinition Height="26" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <ListBox
+                                              Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
+                                              Grid.ColumnSpan="3" x:Name="listbox2" Margin="3"
+                                              Background="Transparent" BorderThickness="0" MouseDown="Listbox2_MouseDown"
+                                              SelectionChanged="Listbox2_SelectionChanged" />
+                                            <RadioButton
+                                              Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                              x:Name="Radio_Mat_Ceramic" Margin="0,6" VerticalAlignment="Center"
+                                              Click="MaterialRadioBtnClick" Content="Ceramic" IsChecked="True"
+                                              Visibility="Hidden" />
+                                            <RadioButton
+                                              Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                              x:Name="Radio_Mat_Metal" Margin="0,6" VerticalAlignment="Center"
+                                              Click="MaterialRadioBtnClick" Content="Metal" Visibility="Hidden" />
+                                            <RadioButton
+                                              Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                              x:Name="Radio_Mat_Other" Margin="0,6" VerticalAlignment="Center"
+                                              Click="MaterialRadioBtnClick" Content="Other" Visibility="Hidden" />
+
+                                            <Canvas
+                                              Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+                                              Visibility="Hidden">
+                                                <Line
+                                                  Canvas.Left="0" Canvas.Top="5" Stroke="#FFE0E0E0"
+                                                  StrokeThickness="2" X1="0" X2="235" />
+                                            </Canvas>
+
+                                            <Label
+                                              Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                                              Content="Shade Color" Visibility="Hidden" />
+
+                                            <ComboBox
+                                              Grid.Row="0" Grid.Column="2" x:Name="comboCeramic"
+                                              Margin="3" SelectionChanged="ComboCeramic_SelectionChanged" Visibility="Hidden" />
+                                            <ComboBox
+                                              Grid.Row="1" Grid.Column="2" x:Name="comboMetal"
+                                              Margin="3" SelectionChanged="ComboMetal_SelectionChanged" Visibility="Hidden" />
+                                            <ComboBox
+                                              Grid.Row="2" Grid.Column="2" x:Name="comboOther"
+                                              Margin="3" SelectionChanged="ComboOther_SelectionChanged" Visibility="Hidden" />
+                                            <ComboBox
+                                              Grid.Row="4" Grid.Column="2" x:Name="comboColor"
+                                              Margin="3" SelectionChanged="ComboColor_SelectionChanged" Visibility="Hidden" />
+                                        </Grid>
+                                    </StackPanel>
+
+                                </GroupBox>
+
+                                <GroupBox
+                                  Grid.Row="1" Grid.RowSpan="2" Grid.Column="1"
+                                  Margin="7,0,3,0"
+                                  Style="{StaticResource MyGroupBox}">
+                                    <GroupBox.Header>
+                                        <Label Content="Implant Data" FontWeight="Bold" Foreground="White" />
+                                    </GroupBox.Header>
+
+                                    <StackPanel>
+                                        <Grid Height="130" Margin="3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="26" />
+                                                <RowDefinition Height="26" />
+                                                <RowDefinition Height="26" />
+                                                <RowDefinition Height="26" />
+                                                <RowDefinition Height="26" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+
+                                            <Label
+                                              Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1"
+                                              x:Name="label_brand" VerticalAlignment="Center" Content="Brand"
+                                              Style="{StaticResource CreatLabel}" />
+                                            <Label
+                                              Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1"
+                                              x:Name="label_system" VerticalAlignment="Center" Content="System"
+                                              Style="{StaticResource CreatLabel}" />
+                                            <Label
+                                              Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                              VerticalAlignment="Center" Content="Diameter" Visibility="Hidden" />
+                                            <Label
+                                              Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                                              VerticalAlignment="Center" Content="Length" Visibility="Hidden" />
+                                            <Label
+                                              Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                                              VerticalAlignment="Center" Content="Scan Body" Visibility="Hidden" />
+
+                                            <ComboBox
+                                              Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                                              x:Name="comboImplantBrand" Margin="3" SelectionChanged="ComboImplantBrand_SelectionChanged" />
+                                            <ComboBox
+                                              Grid.Row="1" Grid.Column="2" x:Name="comboImplantModel"
+                                              Margin="3" SelectionChanged="ComboImplantModel_SelectionChanged" Visibility="Hidden" />
+                                            <ComboBox
+                                              Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                                              x:Name="comboImplantSystem" Margin="3" SelectionChanged="ComboImplantModel_SelectionChanged" />
+                                            <ComboBox
+                                              Grid.Row="2" Grid.Column="2" x:Name="comboImplantMaterial"
+                                              Margin="3" SelectionChanged="ComboImplantMaterial_SelectionChanged" Visibility="Hidden" />
+                                            <ComboBox
+                                              Grid.Row="2" Grid.Column="2" x:Name="comboImplantDiameter"
+                                              Margin="3" SelectionChanged="ComboImplantMaterial_SelectionChanged" Visibility="Hidden" />
+                                            <ComboBox
+                                              Grid.Row="3" Grid.Column="2" x:Name="comboImplantScrew"
+                                              Margin="3" SelectionChanged="ComboImplantScrew_SelectionChanged" Visibility="Hidden" />
+                                            <ComboBox
+                                              Grid.Row="3" Grid.Column="2" x:Name="comboImplantLength"
+                                              Margin="3" SelectionChanged="ComboImplantScrew_SelectionChanged" Visibility="Hidden" />
+                                            <ComboBox
+                                              Grid.Row="4" Grid.Column="2" x:Name="comboImplantScanBody"
+                                              Margin="3" SelectionChanged="ComboImolantScanBody_SelectionChanged" Visibility="Hidden" />
+                                        </Grid>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <GroupBox
+                                  Grid.Row="3" Grid.Column="1" Margin="7,0,3,35"
+                                  Style="{StaticResource MyGroupBox}">
+                                    <GroupBox.Header>
+                                        <Label Content="Surgical Kit" FontWeight="Bold" Foreground="White" />
+                                    </GroupBox.Header>
+                                    <StackPanel>
+                                        <ComboBox
+                                          Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                                          x:Name="comboSurgicalKit" Margin="3" />
+
+                                        <ScrollViewer Height="75" Margin="7,4,7,0" VerticalScrollBarVisibility="Auto">
+                                            <TextBox
+                                              x:Name="m_note" Background="#FFFAFAFA" BorderBrush="#FFD4D4D4"
+                                              TextWrapping="Wrap" Visibility="Hidden" />
+                                        </ScrollViewer>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <StackPanel
+                                  Grid.Row="5" Grid.Column="1" Margin="10,5,0,0"
+                                  VerticalAlignment="Bottom">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button
+                                          Grid.Column="0" x:Name="BtnOK" Height="32"
+                                          Margin="5,0,5,5" Click="BtnOK_Click" Content="Submit"
+                                          Style="{StaticResource OkButton}" />
+                                        <Button
+                                          Grid.Column="1" x:Name="BtnCancel" Margin="5,0,5,5"
+                                          Click="BtnCancel_Click" Content="Cancel"
+                                          Style="{StaticResource CancelButton}" />
+
+                                    </Grid>
+                                </StackPanel>
+
+                            </Grid>
+                        </StackPanel>
+
+                        <ScrollViewer
+                          Grid.Row="1" Grid.Column="1" Height="390"
+                          VerticalScrollBarVisibility="Auto" Visibility="Hidden">
+                            <StackPanel x:Name="ProductTypePanel" Orientation="Vertical" />
+                        </ScrollViewer>
+
+
+                    </Grid>
+                    <ProgressBar
+                      x:Name="Process_Neworder" Height="25" Margin="7,5,10,0"
+                      MouseEnter="O" SmallChange="0" ValueChanged="Process_Neworder_ValueChanged"
+                      Visibility="Visible" />
+                </StackPanel>
+            </Grid>
+
+        </DockPanel>
+    </Border>
+</Window>

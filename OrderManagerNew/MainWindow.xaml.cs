@@ -1419,9 +1419,24 @@ namespace OrderManagerNew
                         }
                     case "implant_create":
                         {
-                            QueryProductState qPS = new QueryProductState();
+                            /*QueryProductState qPS = new QueryProductState();
                             if (qPS.CheckSoftwareVC((int)_softwareID.Implant) == true)
-                                OrderManagerFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");
+                                OrderManagerFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");*/
+
+                            //-2019/0408-handtan
+                            var blur = new BlurEffect();
+                            this.Effect = blur;
+                            V2Implant.ImplantV2NewOrder w1 = new V2Implant.ImplantV2NewOrder
+                            {
+                                Owner = this,
+                                ShowActivated = true,
+                                m_ImplantRoot = Properties.OrderManagerProps.Default.implant_projectDirectory,
+                                Selected_folder_path = Properties.OrderManagerProps.Default.implant_projectDirectory
+                            };
+                            w1.NewOrderStatusUpdated += OrderEventHandlerFunction_StatusUpdated;
+                            w1.ShowDialog();
+                            this.Effect = null;
+                            this.OpacityMask = null;
                             break;
                         }
                     case "implant_webIntro":
@@ -1778,6 +1793,16 @@ namespace OrderManagerNew
                 }
             }
         }
+        public void OrderEventHandlerFunction_StatusUpdated(object sender, EventArgs e)
+        {
+            if (sender is V2Implant.ImplantV2NewOrder wnewoder)
+            {
+                string dirPath = Properties.OrderManagerProps.Default.implant_projectDirectory + wnewoder.m_order_num.Text;
+                string Args = "\"readct\" \"" + dirPath + "\"";
+                OrderManagerFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, Args);
+            }
+        }
+
         /// <summary>
         /// 設定各軟體Popupbox內"下載軟體"的isEnable屬性
         /// </summary>
