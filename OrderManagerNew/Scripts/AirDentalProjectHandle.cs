@@ -31,17 +31,25 @@ namespace OrderManagerNew
         //委派到MainWindow.xaml.cs裡面的CloudCaseHandler_Implant_showDetail()
         public delegate void AirD_implantBaseEventHandler2(int BaseCaseIndex, int SmallCaseIndex);
         public event AirD_implantBaseEventHandler2 Main_implantSetSmallOrderDetailShow;
+        //委派到MainWindow.xaml.cs裡面CloudCaseHandler_CAD_showSingleProject()
+        public delegate void AirD_cadBaseEventHandler(int projectIndex);
+        public event AirD_cadBaseEventHandler Main_cadSetAirDentalProjectShow;
+        //委派到MainWindow.xaml.cs裡面的CloudCaseHandler_CAD_showDetail()
+        public delegate void AirD_cadBaseEventHandler2(int BaseCaseIndex, int SmallCaseIndex);
+        public event AirD_cadBaseEventHandler2 Main_cadSetSmallOrderDetailShow;
 
         public string APIPortal = "https://airdental.inteware.com.tw/api/";
         public Dll_Airdental.Main Airdental;
         public List<AirDental_UserControls.AirD_orthoBase> Projectlist_Ortho;
         public List<AirDental_UserControls.AirD_implantBase> Projectlist_Implant;
+        public List<AirDental_UserControls.AirD_cadBase> Projectlist_CAD;
         /// <summary>
         /// 日誌檔cs
         /// </summary>
         LogRecorder Log;
         Dll_Airdental.Main.OrthoTotalProjects TotalOrthoProjects;
         Dll_Airdental.Main.ImplantTotalProjects TotalImplantProjects;
+        Dll_Airdental.Main.CADTotalProjects TotalCADProjects;
         BackgroundWorker AirD_BackgroundWorker;
         WebException AirD_Exception;
         bool RogerRoger;
@@ -79,6 +87,19 @@ namespace OrderManagerNew
                     Handler_snackbarShow(AirD_Exception.Message);
             }
         }
+        void DoWork_cad(object sender, DoWorkEventArgs e)
+        {
+            AirD_Exception = Airdental.GetCADProject(ref TotalCADProjects);
+            if (AirD_Exception == null)
+            {
+                RogerRoger = true;
+            }
+            else
+            {
+                if (AirD_Exception.Message != "")
+                    Handler_snackbarShow(AirD_Exception.Message);
+            }
+        }
         void CompletedWork_ortho(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Error == null)
@@ -97,6 +118,18 @@ namespace OrderManagerNew
             {
                 if (RogerRoger == true)
                     LoadImplantProjects();
+            }
+            else
+            {
+
+            }
+        }
+        void CompletedWork_cad(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                if (RogerRoger == true)
+                    LoadCADProjects();
             }
             else
             {
@@ -238,6 +271,62 @@ namespace OrderManagerNew
             Mouse.OverrideCursor = Cursors.Arrow;
         }
 
+        private void LoadCADProjects()
+        {
+            int count = 0;
+            Projectlist_CAD = new List<AirDental_UserControls.AirD_cadBase>();
+            foreach (var cadProject in TotalCADProjects.List_cadProjects)
+            {
+                //日期過濾
+                switch (Properties.OrderManagerProps.Default.DateFilter)
+                {
+                    case (int)_DateFilter.Today:
+                        {
+                            if (cadProject._Date.DateTime.ToLongDateString() != DateTime.Today.ToLongDateString())
+                                continue;
+                            break;
+                        }
+                    case (int)_DateFilter.ThisWeek:
+                        {
+                            if (cadProject._Date.DateTime < DateTime.Today.AddDays(-7))
+                                continue;
+                            break;
+                        }
+                    case (int)_DateFilter.LastTwoWeek:
+                        {
+                            if (cadProject._Date.DateTime < DateTime.Today.AddDays(-14))
+                                continue;
+                            break;
+                        }
+                }
+                if (Properties.OrderManagerProps.Default.PatientNameFilter != "")
+                {
+                    //姓名過濾
+                    if (cadProject._Patient.ToLower().IndexOf(Properties.OrderManagerProps.Default.PatientNameFilter.ToLower()) == -1)
+                        continue;
+                }
+                else if (Properties.OrderManagerProps.Default.CaseNameFilter != "")
+                {
+                    //Case名稱過濾
+                    if (cadProject._SerialNumber.ToLower().IndexOf(Properties.OrderManagerProps.Default.CaseNameFilter.ToLower()) == -1)
+                        continue;
+                }
+
+                AirDental_UserControls.AirD_cadBase tmpUserControl_cadProject = new AirDental_UserControls.AirD_cadBase
+                {
+                    cadBase_AirDental = Airdental
+                };
+                tmpUserControl_cadProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_cadBase.AirD_cadBaseEventHandler(Main_cadSetAirDentalProjectShow);
+                tmpUserControl_cadProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_cadBase.AirD_cadBaseEventHandler2(Main_cadSetSmallOrderDetailShow);
+                tmpUserControl_cadProject.SetProjectInfo(cadProject, count);
+                Projectlist_CAD.Add(tmpUserControl_cadProject);
+                count++;
+            }
+
+            AirdentalProjectShowEvent((int)_softwareID.EZCAD);
+            Mouse.OverrideCursor = Cursors.Arrow;
+        }
+
         /// <summary>
         /// 登出
         /// </summary>
@@ -277,6 +366,17 @@ namespace OrderManagerNew
             AirD_BackgroundWorker = new BackgroundWorker();
             AirD_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork_implant);
             AirD_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_implant);
+            AirD_BackgroundWorker.RunWorkerAsync(this);
+        }
+
+        public void ReceiveCADProjects()
+        {
+            AirD_Exception = null;
+            RogerRoger = false;
+            Mouse.OverrideCursor = Cursors.Wait;
+            AirD_BackgroundWorker = new BackgroundWorker();
+            AirD_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork_cad);
+            AirD_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_cad);
             AirD_BackgroundWorker.RunWorkerAsync(this);
         }
     }

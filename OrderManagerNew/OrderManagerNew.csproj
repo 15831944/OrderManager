@@ -87,6 +87,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AirDental_UserControls\AirD_cadBase.xaml.cs">
+      <DependentUpon>AirD_cadBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AirDental_UserControls\AirD_cadSmallOrder.xaml.cs">
+      <DependentUpon>AirD_cadSmallOrder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AirDental_UserControls\AirD_implantBase.xaml.cs">
       <DependentUpon>AirD_implantBase.xaml</DependentUpon>
     </Compile>
@@ -165,6 +171,14 @@
     <Compile Include="UserControls\Order_tsBase.xaml.cs">
       <DependentUpon>Order_tsBase.xaml</DependentUpon>
     </Compile>
+    <Page Include="AirDental_UserControls\AirD_cadBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AirDental_UserControls\AirD_cadSmallOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AirDental_UserControls\AirD_implantBase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

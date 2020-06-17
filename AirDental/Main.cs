@@ -298,6 +298,11 @@ namespace Dll_Airdental
             [JsonProperty("date")]
             public DateTimeOffset _date { get; set; }
         }
+        public class _cadOrders
+        {
+            [JsonProperty("projects")]
+            public _cadOrder[] _Orders { get; set; }
+        }
         /// <summary>
         /// cad專案
         /// </summary>
@@ -680,7 +685,16 @@ namespace Dll_Airdental
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 string WebContent = new StreamReader(response.GetResponseStream()).ReadToEnd();
                 response.Close();
-                Import = JsonConvert.DeserializeObject<List<_cadOrder>>(WebContent);
+                _cadOrders tmpCADOrders = new _cadOrders();
+                tmpCADOrders = JsonConvert.DeserializeObject<_cadOrders>(WebContent);
+                if(tmpCADOrders._Orders != null && tmpCADOrders._Orders.Length > 0)
+                {
+                    Import = new List<_cadOrder>();
+                    foreach(_cadOrder tmpCADOrder in tmpCADOrders._Orders)
+                    {
+                        Import.Add(tmpCADOrder);
+                    }
+                }
                 return null;
             }
             catch (WebException ex)
