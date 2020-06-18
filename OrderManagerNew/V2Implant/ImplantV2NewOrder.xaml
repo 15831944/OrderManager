@@ -757,7 +757,7 @@
                                     <ColumnDefinition Width="5" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="110" />
+                                    <RowDefinition Height="130" />
                                     <RowDefinition Height="55" />
                                     <RowDefinition Height="55" />
                                     <RowDefinition Height="100" />
@@ -767,15 +767,17 @@
 
                                 <GroupBox
                                   Grid.Row="0" Grid.RowSpan="6" Grid.Column="0"
-                                  Margin="3,0,0,5"
+                                  Margin="3,0,0,5" Background="#FFEFEFE6"
                                   Style="{StaticResource MyGroupBox}">
                                     <GroupBox.Header>
                                         <Label Content="4. Implant Information" FontWeight="Bold" Foreground="White" />
                                     </GroupBox.Header>
-                                    <v2implant:ToothChart
+                                    <StackPanel
                                       Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"
-                                      x:Name="toothImg" Width="250" Height="440"
-                                      Margin="0,20,0,0" />
+                                      x:Name="sp_tooth" Width="250" Height="440"
+                                      Background="#FFEDEDE3">
+                                        <v2implant:ToothChart x:Name="toothImg" Background="#FFEDEDE3" />
+                                    </StackPanel>
 
                                 </GroupBox>
                                 <ListBox
@@ -897,13 +899,15 @@
 
                                             <ComboBox
                                               Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
-                                              x:Name="comboImplantBrand" Margin="3" SelectionChanged="ComboImplantBrand_SelectionChanged" />
+                                              x:Name="comboImplantBrand" Margin="3" SelectionChanged="ComboImplantBrand_SelectionChanged"
+                                              Style="{x:Null}" />
                                             <ComboBox
                                               Grid.Row="1" Grid.Column="2" x:Name="comboImplantModel"
                                               Margin="3" SelectionChanged="ComboImplantModel_SelectionChanged" Visibility="Hidden" />
                                             <ComboBox
                                               Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                                              x:Name="comboImplantSystem" Margin="3" SelectionChanged="ComboImplantModel_SelectionChanged" />
+                                              x:Name="comboImplantSystem" Margin="3" SelectionChanged="ComboImplantModel_SelectionChanged"
+                                              Style="{x:Null}" />
                                             <ComboBox
                                               Grid.Row="2" Grid.Column="2" x:Name="comboImplantMaterial"
                                               Margin="3" SelectionChanged="ComboImplantMaterial_SelectionChanged" Visibility="Hidden" />
@@ -932,7 +936,8 @@
                                     <StackPanel>
                                         <ComboBox
                                           Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
-                                          x:Name="comboSurgicalKit" Margin="3" />
+                                          x:Name="comboSurgicalKit" Margin="3"
+                                          Style="{x:Null}" />
 
                                         <ScrollViewer Height="75" Margin="7,4,7,0" VerticalScrollBarVisibility="Auto">
                                             <TextBox

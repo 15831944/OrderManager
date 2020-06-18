@@ -30,6 +30,7 @@ namespace OrderManagerNew.UserControls
         {
             InitializeComponent();
             implantInfo = new ImplantSmallCaseInformation();
+            image_toothJPG.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -53,6 +54,19 @@ namespace OrderManagerNew.UserControls
             textbox_Clinic.Text = implantOuterInfo.Clinic;
             textbox_SurgicalGT.Text = implantOuterInfo.SurgicalGuide;
             textbox_SurgicalKit.Text = implantOuterInfo.Surgicalkit;
+
+            string JpgPath = importOuter.XmlfilePath.Remove(importOuter.XmlfilePath.Length - 4) + ".jpg";
+            if (File.Exists(JpgPath) == true)
+            {
+                image_toothJPG.BeginInit();
+                image_toothJPG.Source = new BitmapImage(new Uri(JpgPath, UriKind.RelativeOrAbsolute));
+                image_toothJPG.EndInit();
+                image_toothJPG.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                image_toothJPG.Visibility = Visibility.Hidden;
+            }
 
             if (File.Exists(implantInfo.GuideModelPath) != true)
                 button_openDir.IsEnabled = false;
@@ -86,6 +100,11 @@ namespace OrderManagerNew.UserControls
                     case "button_openDir":
                         {
                             omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + System.IO.Path.GetDirectoryName(implantInfo.GuideModelPath) + @"\" + "\"");
+                            break;
+                        }
+                    case "button_openPDF":
+                        {
+
                             break;
                         }
                 }

@@ -40,6 +40,7 @@ namespace OrderManagerNew.UserControls
             image_toothJPG.Source = null;
             textbox_toothProductInfo.Text = "";
             ToothSystem = true;
+            image_toothJPG.Visibility = Visibility.Hidden;
 
             FDI[0] = "T18"; FDI[1] = "T17";
             FDI[2] = "T16"; FDI[3] = "T15";
@@ -124,10 +125,11 @@ namespace OrderManagerNew.UserControls
                 image_toothJPG.BeginInit();
                 image_toothJPG.Source = new BitmapImage(new Uri(imgPath, UriKind.RelativeOrAbsolute));
                 image_toothJPG.EndInit();
+                image_toothJPG.Visibility = Visibility.Visible;
             }
             catch
             {
-
+                image_toothJPG.Visibility = Visibility.Hidden;
             }
             try
             {

@@ -109,6 +109,9 @@
             <Button
               Grid.Column="0" x:Name="button_openDir" Margin="0,0,3,0"
               Click="Click_systemButton" Content="GuideModel Path" />
+            <Button
+              Grid.Column="1" x:Name="button_openPDF" Margin="3,0,0,0"
+              Click="Click_systemButton" Content="Open PDF" />
         </Grid>
     </StackPanel>
 </UserControl>

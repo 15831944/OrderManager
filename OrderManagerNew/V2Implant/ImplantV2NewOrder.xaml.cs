@@ -162,92 +162,92 @@ namespace OrderManagerNew.V2Implant
 			switch (index)
 			{
 				case (int)ToothType.ToothTypeList.NON_TOOTH:
-					ImgString = "ToothTypeImg\\icon_implant-delete.png";
+					ImgString = "ToothImg\\icon_implant-delete.png";
 					NameString = "Cancel";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.NON_TOOTH;
 					break;
 				case (int)ToothType.ToothTypeList.OFFSET_COPING:
-					ImgString = "ToothTypeImg\\ttype_co.png";
+					ImgString = "ToothImg\\ttype_co.png";
 					NameString = "Offset Coping";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.OFFSET_COPING;
 					break;
 				case (int)ToothType.ToothTypeList.ANATOMIC_COPING:
-					ImgString = "ToothTypeImg\\ttype_co.png";
+					ImgString = "ToothImg\\ttype_co.png";
 					NameString = "Anatomic Coping";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.ANATOMIC_COPING;
 					break;
 				case (int)ToothType.ToothTypeList.ANATOMIC_CROWN:
-					ImgString = "ToothTypeImg\\ttype_cr.png";
+					ImgString = "ToothImg\\ttype_cr.png";
 					NameString = "Anatomic Crown";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.ANATOMIC_CROWN;
 					break;
 				case (int)ToothType.ToothTypeList.OFFSET_PONTIC:
-					ImgString = "ToothTypeImg\\ttype_poco.png";
+					ImgString = "ToothImg\\ttype_poco.png";
 					NameString = "Core Pontic";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.OFFSET_PONTIC;
 					break;
 				case (int)ToothType.ToothTypeList.REDUCED_PONTIC:
-					ImgString = "ToothTypeImg\\ttype_poco.png";
+					ImgString = "ToothImg\\ttype_poco.png";
 					NameString = "Reduced Pontic";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.REDUCED_PONTIC;
 					break;
 				case (int)ToothType.ToothTypeList.ANATOMIC_PONTIC:
-					ImgString = "ToothTypeImg\\ttype_pocr.png";
+					ImgString = "ToothImg\\ttype_pocr.png";
 					NameString = "Anatomic Pontic";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.ANATOMIC_PONTIC;
 					break;
 				case (int)ToothType.ToothTypeList.VENEER:
-					ImgString = "ToothTypeImg\\ttype_ve.png";
+					ImgString = "ToothImg\\ttype_ve.png";
 					NameString = "Veneer";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.VENEER;
 					break;
 				case (int)ToothType.ToothTypeList.INLAYONLAY:
-					ImgString = "ToothTypeImg\\ttype_in.png";
+					ImgString = "ToothImg\\ttype_in.png";
 					NameString = "Inlay / Onlay";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.INLAYONLAY;
 					break;
 				case (int)ToothType.ToothTypeList.ABUTMENT:
-					ImgString = "ToothTypeImg\\ttype_ia.png";
+					ImgString = "ToothImg\\ttype_ia.png";
 					NameString = "Abutment";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.ABUTMENT;
 					break;
 				case (int)ToothType.ToothTypeList.ABUTMENT_OFFSET_COPING:
-					ImgString = "ToothTypeImg\\ttype_ia_co.png";
+					ImgString = "ToothImg\\ttype_ia_co.png";
 					NameString = "Abut. + Offset Coping";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.ABUTMENT_OFFSET_COPING;
 					break;
 				case (int)ToothType.ToothTypeList.ABUTMENT_ANATOMIC_COPING:
-					ImgString = "ToothTypeImg\\ttype_ia_co.png";
+					ImgString = "ToothImg\\ttype_ia_co.png";
 					NameString = "Abut. + Anatomic Coping";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.ABUTMENT_ANATOMIC_COPING;
 					break;
 				case (int)ToothType.ToothTypeList.ABUTMENT_ANATOMIC_CROWN:
-					ImgString = "ToothTypeImg\\ttype_ia_cr.png";
+					ImgString = "ToothImg\\ttype_ia_cr.png";
 					NameString = "Abut. + Anatomic Crown";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.ABUTMENT_ANATOMIC_CROWN;
 					break;
 				case (int)ToothType.ToothTypeList.ABUTMENT_TEMP:
-					ImgString = "ToothTypeImg\\ttype_ia_cr.png";
+					ImgString = "ToothImg\\ttype_ia_cr.png";
 					NameString = "Abut. + Temp Crown";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.ABUTMENT_TEMP;
 					break;
 				case (int)ToothType.ToothTypeList.SRIA:
-					ImgString = "ToothTypeImg\\ttype_sria.png";
+					ImgString = "ToothImg\\ttype_sria.png";
 					NameString = "Screw Retain Abutment";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.SRIA;
 					break;
 				case (int)ToothType.ToothTypeList.SRIA_CROWN:
-					ImgString = "ToothTypeImg\\ttype_sria_cr.png";
+					ImgString = "ToothImg\\ttype_sria_cr.png";
 					NameString = "Screw Retain Abutment (Anatomic Crown)";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.SRIA_CROWN;
 					break;
 				case (int)ToothType.ToothTypeList.NEIGHBOR:
-					ImgString = "ToothTypeImg\\ttype_neighbor.png";
+					ImgString = "ToothImg\\ttype_neighbor.png";
 					NameString = "Neighbor Tooth";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.NEIGHBOR;
 					break;
                 case (int)ToothType.ToothTypeList.IMPLANT:
-                    ImgString = "ToothTypeImg\\icon_implant.png";
+                    ImgString = "ToothImg\\icon_implant.png";
                     NameString = "Implant";
                     ToothTypeIdx = (int)ToothType.ToothTypeList.IMPLANT;
                     break;
@@ -259,7 +259,7 @@ namespace OrderManagerNew.V2Implant
 		public void SetDesignerGeneralProcuctType()
 		{
 			UCToothTypeBase uc1 = new UCToothTypeBase();
-			uc1.SetImage("ToothTypeImg\\ttype_no.png");
+			uc1.SetImage("ToothImg\\ttype_no.png");
 			uc1.ToothTypeName.Content = "Bridge / Copings";
 			uc1.ProductTypeIdx = 0;
 			uc1.SendClickEvent = true;
@@ -267,7 +267,7 @@ namespace OrderManagerNew.V2Implant
 			listbox1.Items.Add(uc1);
 
 			UCToothTypeBase uc2 = new UCToothTypeBase();
-			uc2.SetImage("ToothTypeImg\\ttype_no.png");
+			uc2.SetImage("ToothImg\\ttype_no.png");
 			uc2.ToothTypeName.Content = "Custom Abutment";
 			uc2.ProductTypeIdx = 0;
 			uc2.SendClickEvent = true;
@@ -275,7 +275,7 @@ namespace OrderManagerNew.V2Implant
 			listbox1.Items.Add(uc2);
 
 			UCToothTypeBase uc3 = new UCToothTypeBase();
-			uc3.SetImage("ToothTypeImg\\ttype_no.png");
+			uc3.SetImage("ToothImg\\ttype_no.png");
 			uc3.ToothTypeName.Content = "Screw Retain Abutment";
 			uc3.ProductTypeIdx = 0;
 			uc3.SendClickEvent = true;
@@ -283,7 +283,7 @@ namespace OrderManagerNew.V2Implant
 			listbox1.Items.Add(uc3);
 
 			UCToothTypeBase uc4 = new UCToothTypeBase();
-			uc4.SetImage("ToothTypeImg\\ttype_no.png");
+			uc4.SetImage("ToothImg\\ttype_no.png");
 			uc4.ToothTypeName.Content = "Neighbor";
 			uc4.ProductTypeIdx = 0;
 			uc4.SendClickEvent = true;
@@ -291,7 +291,7 @@ namespace OrderManagerNew.V2Implant
 			listbox1.Items.Add(uc4);
 
 			UCToothTypeBase uc5 = new UCToothTypeBase();
-			uc5.SetImage("ToothTypeImg\\ttype_no.png");
+			uc5.SetImage("ToothImg\\ttype_no.png");
 			uc5.ToothTypeName.Content = "Cancel Select";
 			uc5.ProductTypeIdx = 0;
 			uc5.SendClickEvent = true;
@@ -299,7 +299,7 @@ namespace OrderManagerNew.V2Implant
 			listbox1.Items.Add(uc5);
 
 			UCToothTypeBase uc6 = new UCToothTypeBase();
-			uc6.SetImage("ToothTypeImg\\ttype_no.png");
+			uc6.SetImage("ToothImg\\ttype_no.png");
 			uc6.ToothTypeName.Content = "Clear";
 			uc6.ProductTypeIdx = 0;
 			uc6.SendClickEvent = true;
@@ -691,7 +691,7 @@ namespace OrderManagerNew.V2Implant
             if (comboSurgicalKit.Items.Count > 0)
                 comboSurgicalKit.SelectedIndex = 0;
         }
-
+        
         public void LoadImplantInfor()
         {
             XDocument xDoc;
@@ -1312,6 +1312,8 @@ namespace OrderManagerNew.V2Implant
 
                 //改先存,取得植牙齒位上或下顎
                 SaveXml(targetdirectory);
+                string jpgFilePath = targetdirectory + "\\" + m_order_num.Text + ".jpg";
+                ExportToJpg(jpgFilePath);
 
                 if (m_ct_path_check.IsChecked.GetValueOrDefault())
                 {
@@ -1979,6 +1981,55 @@ namespace OrderManagerNew.V2Implant
         private void Window_StateChanged(object sender, EventArgs e)
         {
 
+        }
+
+        public void ExportToJpg(string path)
+        {
+            //toothImg.SetAllImageSelectStatus();
+            byte[] screenshot = GetJpgImage(sp_tooth, 90);
+            FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
+            BinaryWriter binaryWriter = new BinaryWriter(fileStream);
+            binaryWriter.Write(screenshot);
+            binaryWriter.Close();
+        }
+
+        public static byte[] GetJpgImage(UIElement source, int quality)
+        {
+            double scale = 1.0;
+            double actualHeight = source.RenderSize.Height;
+            double actualWidth = source.RenderSize.Width;
+
+            double renderHeight = actualHeight * scale;
+            double renderWidth = actualWidth * scale;
+
+            RenderTargetBitmap renderTarget = new RenderTargetBitmap((int)renderWidth, (int)renderHeight, 96, 96, PixelFormats.Pbgra32);
+            VisualBrush sourceBrush = new VisualBrush(source);
+
+            DrawingVisual drawingVisual = new DrawingVisual();
+            DrawingContext drawingContext = drawingVisual.RenderOpen();
+
+            using (drawingContext)
+            {
+                drawingContext.PushTransform(new ScaleTransform(scale, scale));
+                drawingContext.DrawRectangle(sourceBrush, null, new Rect(new Point(0, 0), new Point(actualWidth, actualHeight)));
+            }
+            renderTarget.Render(drawingVisual);
+
+            JpegBitmapEncoder jpgEncoder = new JpegBitmapEncoder
+            {
+                QualityLevel = quality
+            };
+            jpgEncoder.Frames.Add(BitmapFrame.Create(renderTarget));
+
+            Byte[] _imageArray;
+
+            using (MemoryStream outputStream = new MemoryStream())
+            {
+                jpgEncoder.Save(outputStream);
+                _imageArray = outputStream.ToArray();
+            }
+
+            return _imageArray;
         }
     }
 }

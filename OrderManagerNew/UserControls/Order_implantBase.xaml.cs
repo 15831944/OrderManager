@@ -58,6 +58,7 @@ namespace OrderManagerNew.UserControls
             public string JawPath { get; set; }
             public string JawTrayPath { get; set; }
             public string DenturePath { get; set; }
+            public string XmlfilePath { get; set; }
             public List<Order_ImplantSmallcase> List_smallcase { get; set; }
 
             public ImplantOuterInformation()
@@ -81,6 +82,7 @@ namespace OrderManagerNew.UserControls
                 JawPath = "";
                 JawTrayPath = "";
                 DenturePath = "";
+                XmlfilePath = "";
                 List_smallcase = new List<Order_ImplantSmallcase>();
             }
         }

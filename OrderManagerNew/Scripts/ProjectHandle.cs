@@ -357,7 +357,7 @@ namespace OrderManagerNew
                             try { tmpImpOuterInfo.JawPath = xml.Element("ImageData").Element("JawPath").Value; } catch { tmpImpOuterInfo.JawPath = ""; }
                             try { tmpImpOuterInfo.JawTrayPath = xml.Element("ImageData").Element("JawTrayPath").Value; } catch { tmpImpOuterInfo.JawTrayPath = ""; }
                             try { tmpImpOuterInfo.DenturePath = xml.Element("ImageData").Element("DenturePath").Value; } catch { tmpImpOuterInfo.DenturePath = ""; }
-                            
+                            tmpImpOuterInfo.XmlfilePath = XmlPath;
                             Caselist_ImplantOuterCase.Add(tmpImpOuterInfo);
 
                             return true;

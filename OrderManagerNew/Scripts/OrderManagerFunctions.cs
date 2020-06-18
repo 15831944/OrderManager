@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace OrderManagerNew
         /// 單機軟體全名
         /// </summary>
         public string[] SoftwareNameArray = new string[6] { "EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD.tray", "EZCAD.splint", "EZCAD.guide" };
+        BackgroundWorker OrderManagerFunc_BackgroundWorker;
         public OrderManagerFunctions()
         {
             log = new LogRecorder();
@@ -806,6 +808,19 @@ namespace OrderManagerNew
             log.RecordLogSaperate();
             Properties.Settings.Default.Save();
         }
+
+        class BackgroundArgs
+        {
+            public string FileName { get; set; }
+            public string Arguments { get; set; }
+
+            public BackgroundArgs()
+            {
+                FileName = "";
+                Arguments = "";
+            }
+        }
+
         /// <summary>
         /// CommandLine(命令提示字元)
         /// </summary>
@@ -813,13 +828,29 @@ namespace OrderManagerNew
         /// <param name="arguments">要傳進去的參數</param>
         public void RunCommandLine(string fileName, string arguments)
         {
+            OrderManagerFunc_BackgroundWorker = new BackgroundWorker();
+            OrderManagerFunc_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork_Cmd);
+            OrderManagerFunc_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_Cmd);
+            BackgroundArgs bgArgs = new BackgroundArgs
+            {
+                FileName = fileName,
+                Arguments = arguments
+            };
+            OrderManagerFunc_BackgroundWorker.RunWorkerAsync(bgArgs);
+        }
+
+        void DoWork_Cmd(object sender, DoWorkEventArgs e)
+        {
             try
             {
-                Process processer = new Process();
-                processer.StartInfo.FileName = fileName;
-                if (arguments != "")
-                    processer.StartInfo.Arguments = arguments;
-                processer.Start();
+                if(e.Argument is BackgroundArgs)
+                {
+                    Process processer = new Process();
+                    processer.StartInfo.FileName = ((BackgroundArgs)e.Argument).FileName;
+                    if (((BackgroundArgs)e.Argument).Arguments != "")
+                        processer.StartInfo.Arguments = ((BackgroundArgs)e.Argument).Arguments;
+                    processer.Start();
+                }
             }
             catch (Exception ex)
             {
@@ -827,6 +858,11 @@ namespace OrderManagerNew
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "RunCommandLine exception", ex.Message);
             }
         }
+        void CompletedWork_Cmd(object sender, RunWorkerCompletedEventArgs e)
+        {
+            OrderManagerFunc_BackgroundWorker = new BackgroundWorker();
+        }
+
         /// <summary>
         /// 取得往上第 n 個階層的目錄路徑
         /// </summary>
