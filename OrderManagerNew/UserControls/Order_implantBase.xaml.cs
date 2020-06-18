@@ -139,9 +139,9 @@ namespace OrderManagerNew.UserControls
                         OrderName = Path.GetFileNameWithoutExtension(filename),
                         ImplantTiiPath = filename
                     };
-                    impInfo.GuideCaseDir = implantInfo.CaseDirectoryPath + @"\" + impInfo.OrderName + @"\LinkStation\";
+                    impInfo.GuideCaseDir = implantInfo.CaseDirectoryPath + impInfo.OrderName + @"\LinkStation\";
                     //TODO 這邊會有bug
-                    string tmpGuideModelDir = implantInfo.CaseDirectoryPath + @"\" + impInfo.OrderName + @"\LinkStation\ManufacturingDir\";
+                    string tmpGuideModelDir = implantInfo.CaseDirectoryPath + impInfo.OrderName + @"\LinkStation\ManufacturingDir\";
                     if (Directory.Exists(tmpGuideModelDir) == true)
                     {
                         string[] guideModel = Directory.GetFiles(tmpGuideModelDir);
@@ -152,6 +152,18 @@ namespace OrderManagerNew.UserControls
                     }
                     else
                         impInfo.GuideModelPath = "";
+
+                    foreach(string searchPDF in Directory.GetFiles(implantInfo.CaseDirectoryPath  + impInfo.OrderName + @"\"))
+                    {
+                        if(Path.GetExtension(searchPDF).ToLower() == ".pdf")
+                        {
+                            if(searchPDF.ToLower().IndexOf("examination") != -1)
+                            {
+                                impInfo.PDFpath = searchPDF;
+                                break;
+                            }
+                        }
+                    }
 
                     ImplantSmallCase.SetImplantSmallCaseInfo(impInfo, itemIndex);
                     implantInfo.List_smallcase.Add(ImplantSmallCase);

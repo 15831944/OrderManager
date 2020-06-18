@@ -36,6 +36,7 @@ namespace OrderManagerNew.UserControls
             public string ImplantTiiPath { get; set; }
             public string GuideModelPath { get; set; }
             public string GuideCaseDir { get; set; }
+            public string PDFpath { get; set; }
 
             public ImplantSmallCaseInformation()
             {
@@ -43,6 +44,7 @@ namespace OrderManagerNew.UserControls
                 ImplantTiiPath = "";
                 GuideModelPath = "";
                 GuideCaseDir = "";
+                PDFpath = "";
             }
         }
 

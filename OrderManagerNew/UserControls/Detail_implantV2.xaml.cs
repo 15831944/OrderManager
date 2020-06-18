@@ -72,6 +72,11 @@ namespace OrderManagerNew.UserControls
                 button_openDir.IsEnabled = false;
             else
                 button_openDir.IsEnabled = true;
+
+            if (File.Exists(implantInfo.PDFpath) != true)
+                button_openPDF.IsEnabled = false;
+            else
+                button_openPDF.IsEnabled = true;
         }
 
         private void Click_systemButton(object sender, RoutedEventArgs e)
@@ -104,7 +109,7 @@ namespace OrderManagerNew.UserControls
                         }
                     case "button_openPDF":
                         {
-
+                            omFunc.RunCommandLine("\"" + implantInfo.PDFpath + "\"", "");
                             break;
                         }
                 }
