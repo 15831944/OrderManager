@@ -13,9 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 //Handling user control events in WPF: https://www.codeproject.com/Questions/424498/Handling-user-control-events-in-WPF
-
 namespace OrderManagerNew.UserControls
 {
     [ValueConversion(typeof(string), typeof(string))]

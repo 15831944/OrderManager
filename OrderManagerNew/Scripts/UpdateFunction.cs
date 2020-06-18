@@ -77,12 +77,10 @@ namespace OrderManagerNew
                 softwareDownloadLink = "";
             }
         }
-
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {   // 總是接受
             return true;
         }
-
         public UpdateFunction()
         {
             log = new LogRecorder();
@@ -113,8 +111,7 @@ namespace OrderManagerNew
                 log.RecordLogSaperate();
             }
         }
-
-        #region 多執行緒處理下載軟體
+#region 多執行緒處理下載軟體
         public void StartDownloadSoftware()
         {
             if (readyInstallSoftwareInfo.softwareID == -1)
@@ -132,7 +129,6 @@ namespace OrderManagerNew
             bgWorker_Download.WorkerSupportsCancellation = true;
             bgWorker_Download.RunWorkerAsync(this);
         }
-
         void DoWork_DownloadSoftware(object sender, DoWorkEventArgs e)
         {
             if(sender is BackgroundWorker)
@@ -200,13 +196,11 @@ namespace OrderManagerNew
                 }
             }
         }
-
         void UpdateProgress_DownloadSoftware(object sender, ProgressChangedEventArgs e)
         {
             int progress = e.ProgressPercentage;
             SoftwareLogoShowEvent(readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Downloading, (double)(progress/100.0));
         }
-
         void CompletedWork_DownloadSoftware(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Error != null)
@@ -228,7 +222,7 @@ namespace OrderManagerNew
                 omFunc.RunCommandLine(downloadfilepath, param);
             }
         }
-        #endregion
+#endregion
 
         /// <summary>
         /// 回傳軟體路徑
@@ -255,7 +249,6 @@ namespace OrderManagerNew
                     return "";
             }
         }
-
         /// <summary>
         /// 讀取HL.xml的詳細更新資訊
         /// </summary>
@@ -325,7 +318,6 @@ namespace OrderManagerNew
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs Initial exception", ex.Message);
             }
         }
-
         /// <summary>
         /// OrderManagerLoaded完再開始檢查是否有更新
         /// </summary>

@@ -41,7 +41,6 @@ namespace OrderManagerNew
             image_loginFail.Visibility = Visibility.Hidden;
             label_loginFail.Visibility = Visibility.Hidden;
         }
-
         private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
         {
             if(sender is Button)
@@ -54,7 +53,6 @@ namespace OrderManagerNew
                 }
             }
         }
-
         private void Click_OK(object sender, RoutedEventArgs e)
         {
             if(textbox_Account.Text == "")
@@ -130,7 +128,6 @@ namespace OrderManagerNew
                 }
             }
         }
-
         private void Keyup_PWD(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -138,28 +135,23 @@ namespace OrderManagerNew
             else
                 textbox_PWD.Text = passwordbox_PWD.Password;
         }
-
         private void Checked_ShowPWD(object sender, RoutedEventArgs e)
         {
             passwordbox_PWD.Visibility = Visibility.Hidden;
         }
-
         private void Unchecked_PWD(object sender, RoutedEventArgs e)
         {
             passwordbox_PWD.Visibility = Visibility.Visible;
         }
-
         private void KeyUp_textboxPWD(object sender, KeyEventArgs e)
         {
             passwordbox_PWD.Password = textbox_PWD.Text;
         }
-
         private void MouseLeftButtonUp_ForgotPWD(object sender, MouseButtonEventArgs e)
         {
             OrderManagerFunctions omFunc = new OrderManagerFunctions();
             omFunc.RunCommandLine(Properties.HyperLink.Default.ForgetAirdentalPassword, "");
         }
-
         private void GotFocus_Account(object sender, RoutedEventArgs e)
         {
             if (textbox_Account.BorderBrush == Brushes.Red)
@@ -174,7 +166,6 @@ namespace OrderManagerNew
                 label_loginFail.Visibility = Visibility.Hidden;
             }
         }
-
         private void GotFocus_PassWD(object sender, RoutedEventArgs e)
         {
             if(passwordbox_PWD.BorderBrush == Brushes.Red)
@@ -191,7 +182,6 @@ namespace OrderManagerNew
                 label_loginFail.Visibility = Visibility.Hidden;
             }
         }
-
         private void Loaded_UserLogin(object sender, RoutedEventArgs e)
         {
             if(textbox_Account.Text != "")

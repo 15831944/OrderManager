@@ -1130,4 +1130,8 @@
     <value>Order Created</value>
     <comment>AirD_stage</comment>
   </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+    <comment>Download</comment>
+  </data>
 </root>

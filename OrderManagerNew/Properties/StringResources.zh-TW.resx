@@ -876,4 +876,7 @@
   <data name="order" xml:space="preserve">
     <value>新訂單，等待入檢專員接單中</value>
   </data>
+  <data name="Download" xml:space="preserve">
+    <value>下載</value>
+  </data>
 </root>

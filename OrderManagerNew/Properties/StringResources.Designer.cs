@@ -988,6 +988,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Download 的當地語系化字串。
+        /// </summary>
+        internal static string Download {
+            get {
+                return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Download Directory 的當地語系化字串。
         /// </summary>
         internal static string Downloadpath {

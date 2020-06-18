@@ -149,6 +149,7 @@ namespace OrderManagerNew
             {
                 //Cookie還可以用
                 Properties.OrderManagerProps.Default.AirD_uid = uInfo[(int)_AirD_LoginDetail.UID];
+                Properties.OrderManagerProps.Default.AirDentalAPI = APIPortal;
                 return true;
             }
             else
@@ -158,7 +159,25 @@ namespace OrderManagerNew
                 return false;
             }
         }
-
+        /// <summary>
+        /// 登出
+        /// </summary>
+        public void UserLogout()
+        {
+            WebException _exception = Airdental.Logout();
+            if (_exception == null)
+            {
+                Handler_snackbarShow(TranslationSource.Instance["Logout"] + TranslationSource.Instance["Successfully"]);
+                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AirDentalProjectHandle_UserLogout()", "Success");
+            }
+            else
+            {
+                Handler_snackbarShow(TranslationSource.Instance["Logout"] + TranslationSource.Instance["Successfully"] + "-Cookie error");
+                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AirDentalProjectHandle_UserLogout()", "cookie error");
+            }
+            Properties.Settings.Default.AirdentalCookie = "";
+            Properties.Settings.Default.Save();
+        }
         private void LoadOrthoProjects()
         {
             int count = 0;
@@ -199,11 +218,12 @@ namespace OrderManagerNew
                     if (orthoProject._SerialNumber.ToLower().IndexOf(Properties.OrderManagerProps.Default.CaseNameFilter.ToLower()) == -1)
                         continue;
                 }
-                
+
                 AirDental_UserControls.AirD_orthoBase tmpUserControl_orthoProject = new AirDental_UserControls.AirD_orthoBase
                 {
                     orthoBase_AirDental = Airdental
                 };
+                tmpUserControl_orthoProject.ProjectHandler_snackbarShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseHandleEventHandler_snackbar(Handler_snackbarShow);
                 tmpUserControl_orthoProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler(Main_orthoSetAirDentalProjectShow);
                 tmpUserControl_orthoProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_orthoBase.AirD_orthoBaseEventHandler2(Main_orthoSetSmallOrderDetailShow);
                 tmpUserControl_orthoProject.SetProjectInfo(orthoProject, count);
@@ -214,7 +234,6 @@ namespace OrderManagerNew
             AirdentalProjectShowEvent((int)_softwareID.Ortho);
             Mouse.OverrideCursor = Cursors.Arrow;
         }
-
         private void LoadImplantProjects()
         {
             int count = 0;
@@ -270,7 +289,6 @@ namespace OrderManagerNew
             AirdentalProjectShowEvent((int)_softwareID.Implant);
             Mouse.OverrideCursor = Cursors.Arrow;
         }
-
         private void LoadCADProjects()
         {
             int count = 0;
@@ -326,27 +344,7 @@ namespace OrderManagerNew
             AirdentalProjectShowEvent((int)_softwareID.EZCAD);
             Mouse.OverrideCursor = Cursors.Arrow;
         }
-
-        /// <summary>
-        /// 登出
-        /// </summary>
-        public void UserLogout()
-        {
-            WebException _exception = Airdental.Logout();
-            if (_exception == null)
-            {
-                Handler_snackbarShow(TranslationSource.Instance["Logout"] + TranslationSource.Instance["Successfully"]);
-                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AirDentalProjectHandle_UserLogout()", "Success");
-            }
-            else
-            {
-                Handler_snackbarShow(TranslationSource.Instance["Logout"] + TranslationSource.Instance["Successfully"] + "-Cookie error");
-                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AirDentalProjectHandle_UserLogout()", "cookie error");
-            }
-            Properties.Settings.Default.AirdentalCookie = "";
-            Properties.Settings.Default.Save();
-        }
-
+        
         public void ReceiveOrthoProjects()
         {
             AirD_Exception = null;
@@ -357,7 +355,6 @@ namespace OrderManagerNew
             AirD_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_ortho);
             AirD_BackgroundWorker.RunWorkerAsync(this);
         }
-
         public void ReceiveImplantProjects()
         {
             AirD_Exception = null;
@@ -368,7 +365,6 @@ namespace OrderManagerNew
             AirD_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_implant);
             AirD_BackgroundWorker.RunWorkerAsync(this);
         }
-
         public void ReceiveCADProjects()
         {
             AirD_Exception = null;

@@ -615,6 +615,7 @@ namespace OrderManagerNew
             usercontrolUserDetail.Usergroup = UserDetail[(int)_AirD_LoginDetail.USERGROUP];
             usercontrolUserDetail.UserMail = UserDetail[(int)_AirD_LoginDetail.EMAIL];
             usercontrolUserDetail.UserName = UserDetail[(int)_AirD_LoginDetail.USERNAME];
+            Properties.OrderManagerProps.Default.AirDentalAPI = AirDentalProjHandle.APIPortal;
             usercontrolUserDetail.SetUserPic(AirDentalProjHandle.APIPortal + @"v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
             loginStatus = true;
             SnackBarShow(TranslationSource.Instance["Hello"] + usercontrolUserDetail.UserName);
@@ -698,7 +699,7 @@ namespace OrderManagerNew
         }
         private void Click_FunctionTable_User(object sender, RoutedEventArgs e)
         {
-            if (AirDentalProjHandle.Airdental.CheckServerStatus() != true)
+            if (AirDentalProjHandle.Airdental.CheckServerStatus(AirDentalProjHandle.APIPortal) != true)
             {
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Click_FunctionTable_User", "Connection error"); //TODO 多國語系
                 return;

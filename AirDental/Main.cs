@@ -373,10 +373,13 @@ namespace Dll_Airdental
         /// <summary>
         /// 檢查網路是否正常
         /// </summary>
-        public bool CheckServerStatus()
+        public bool CheckServerStatus(string APIurl)
         {
             try
             {
+                if (APIurl != APIPortal)
+                    APIPortal = APIurl;
+
                 byte[] bytes = Encoding.UTF8.GetBytes("account=a&password=a");
                 string web_login = APIPortal + "login";
 
@@ -701,6 +704,68 @@ namespace Dll_Airdental
             {
                 return ex;
             }
+        }
+        string GetFilename(string hreflink)
+        {
+            Uri uri = new Uri(hreflink);
+            string filename = System.IO.Path.GetFileName(uri.LocalPath);
+            return filename;
+        }
+        public string GetDownloadFileInfo(string http_url, string ImportCookiestr)
+        {
+            //https://airdental.inteware.com.tw/api/project/prostheses/download/5eccc648d6ea6e0b50f0239d
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(http_url);
+                request.Credentials = CredentialCache.DefaultCredentials;
+                request.Headers.Add("Cookie", ImportCookiestr);
+                request.UserAgent = ".NET Framework Example Client";
+                request.Method = "GET";
+                //Response資料
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string FileName = response.GetResponseHeader("Content-disposition");
+                FileName = FileName.Substring(FileName.LastIndexOf(@"'"));
+                FileName = UrlDecode(FileName.Replace(@"'", ""));
+                long FileSize = response.ContentLength;
+                return FileName;
+            }
+            catch(WebException ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public HttpWebResponse GetDownloadFileResponse(string http_url, string ImportCookiestr)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(http_url);
+                request.Credentials = CredentialCache.DefaultCredentials;
+                request.Headers.Add("Cookie", ImportCookiestr);
+                request.UserAgent = ".NET Framework Example Client";
+                request.Method = "GET";
+                //Response資料
+                return (HttpWebResponse)request.GetResponse();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        /// <summary>
+        /// Decoding a URL.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string UrlDecode(string input)
+        {
+            if (input == null)
+            {
+                throw new ArgumentNullException("input");
+            }
+            // Since Uri.UnescapeDataString() does not decode plus sign ('+') to space character, we do it manually. 
+            // Yes, System.Web.HttpUtility.UrlDecode() can do this, I just don't want to involve System.Web.dll here.
+            return Uri.UnescapeDataString(input.Replace('+', ' '));
         }
         #endregion
     }

@@ -47,6 +47,17 @@ namespace OrderManagerNew
                 SoftwareCount = 0;
             }
         }
+        class BackgroundArgs
+        {
+            public string FileName { get; set; }
+            public string Arguments { get; set; }
+
+            public BackgroundArgs()
+            {
+                FileName = "";
+                Arguments = "";
+            }
+        }
         /// <summary>
         /// 資料夾容量大小
         /// </summary>
@@ -808,19 +819,6 @@ namespace OrderManagerNew
             log.RecordLogSaperate();
             Properties.Settings.Default.Save();
         }
-
-        class BackgroundArgs
-        {
-            public string FileName { get; set; }
-            public string Arguments { get; set; }
-
-            public BackgroundArgs()
-            {
-                FileName = "";
-                Arguments = "";
-            }
-        }
-
         /// <summary>
         /// CommandLine(命令提示字元)
         /// </summary>
@@ -838,7 +836,27 @@ namespace OrderManagerNew
             };
             OrderManagerFunc_BackgroundWorker.RunWorkerAsync(bgArgs);
         }
+        /// <summary>
+        /// 取得往上第 n 個階層的目錄路徑
+        /// </summary>
+        /// <param name="path">檔案路徑</param>
+        /// <param name="upLevel">往上取幾個階層</param>
+        /// <returns></returns>
+        public string GetUpLevelDirectory(string path, int upLevel)
+        {
+            var directory = File.GetAttributes(path).HasFlag(FileAttributes.Directory)
+                ? path
+                : Path.GetDirectoryName(path);
 
+            upLevel = upLevel < 0 ? 0 : upLevel;
+
+            for (var i = 0; i < upLevel; i++)
+            {
+                directory = Path.GetDirectoryName(directory);
+            }
+
+            return directory;
+        }
         void DoWork_Cmd(object sender, DoWorkEventArgs e)
         {
             try
@@ -861,28 +879,6 @@ namespace OrderManagerNew
         void CompletedWork_Cmd(object sender, RunWorkerCompletedEventArgs e)
         {
             OrderManagerFunc_BackgroundWorker = new BackgroundWorker();
-        }
-
-        /// <summary>
-        /// 取得往上第 n 個階層的目錄路徑
-        /// </summary>
-        /// <param name="path">檔案路徑</param>
-        /// <param name="upLevel">往上取幾個階層</param>
-        /// <returns></returns>
-        public string GetUpLevelDirectory(string path, int upLevel)
-        {
-            var directory = File.GetAttributes(path).HasFlag(FileAttributes.Directory)
-                ? path
-                : Path.GetDirectoryName(path);
-
-            upLevel = upLevel < 0 ? 0 : upLevel;
-
-            for (var i = 0; i < upLevel; i++)
-            {
-                directory = Path.GetDirectoryName(directory);
-            }
-
-            return directory;
         }
     }
 }

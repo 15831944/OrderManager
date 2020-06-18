@@ -1,12 +1,8 @@
-﻿<UserControl x:Class="OrderManagerNew.AirDental_UserControls.AirD_orthoSmallOrder"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:OrderManagerNew.AirDental_UserControls"
-             xmlns:local1="clr-namespace:OrderManagerNew"
-             mc:Ignorable="d" BorderThickness="0"
-              d:DesignHeight="33" d:DesignWidth="500">
+﻿<UserControl
+  x:Class="OrderManagerNew.AirDental_UserControls.AirD_orthoSmallOrder" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OrderManagerNew.AirDental_UserControls" xmlns:local1="clr-namespace:OrderManagerNew"
+  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="33"
+  d:DesignWidth="500" BorderThickness="0" mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -50,6 +46,9 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
+        <ProgressBar
+          Grid.Column="1" x:Name="progressbar_download" Height="Auto"
+          Panel.ZIndex="-1" />
         <Rectangle
           Grid.Column="1" x:Name="background_orthoSmallcase"
           Fill="{DynamicResource background_SmallCase}"
@@ -68,10 +67,11 @@
               Style="{DynamicResource OrderSmallCase_OrderIDlabel}" />
             <Button
               Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
-              x:Name="button_LoadOrthoProject" Width="28" Click="Click_ButtonEvent"
+              x:Name="button_DownloadOrder" Width="28" Background="#FFBCB2AA"
+              Click="Click_ButtonEvent"
               Style="{StaticResource ImageButton}"
-              ToolTip="{local1:LocExtension LoadProject}">
-                <Image Source="/ImageSource/FunctionTable/icon_O.png" />
+              ToolTip="{local1:LocExtension Download}">
+                <materialDesign:PackIcon Width="28" Height="28" Kind="Download" />
             </Button>
         </Grid>
     </Grid>

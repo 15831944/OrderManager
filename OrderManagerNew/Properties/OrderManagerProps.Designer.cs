@@ -154,5 +154,17 @@ namespace OrderManagerNew.Properties {
                 this["AirD_uid"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AirDentalAPI {
+            get {
+                return ((string)(this["AirDentalAPI"]));
+            }
+            set {
+                this["AirDentalAPI"] = value;
+            }
+        }
     }
 }

@@ -563,9 +563,10 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,5">
+                        <StackPanel Grid.Row="1" Grid.Column="0">
                             <GroupBox
-                              Grid.Row="0" Grid.Column="1" Margin="7,0,3,0"
+                              Grid.Row="0" Grid.Column="1" Height="535"
+                              Margin="6,0,2,0"
                               Style="{StaticResource MyGroupBox}">
                                 <GroupBox.Header>
                                     <Label Content="2. Case Information" FontWeight="Bold" Foreground="White" />
@@ -767,7 +768,7 @@
 
                                 <GroupBox
                                   Grid.Row="0" Grid.RowSpan="6" Grid.Column="0"
-                                  Margin="3,0,0,5" Background="#FFEFEFE6"
+                                  Margin="3,0,0,5" Background="#FFEFEFE6" Foreground="#FFEDEDE3"
                                   Style="{StaticResource MyGroupBox}">
                                     <GroupBox.Header>
                                         <Label Content="4. Implant Information" FontWeight="Bold" Foreground="White" />
