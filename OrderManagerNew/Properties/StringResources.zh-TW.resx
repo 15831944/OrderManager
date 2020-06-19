@@ -879,4 +879,7 @@
   <data name="Download" xml:space="preserve">
     <value>下載</value>
   </data>
+  <data name="NoDataFound" xml:space="preserve">
+    <value>找不到符合資料</value>
+  </data>
 </root>

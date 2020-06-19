@@ -12,14 +12,7 @@
             <RowDefinition Height="72" />
             <RowDefinition Height="56" />
             <RowDefinition Height="40" />
-            <RowDefinition Height="40" />
-            <RowDefinition Height="40" />
-            <RowDefinition Height="40" />
-            <RowDefinition Height="52" />
-            <RowDefinition Height="52" />
-            <RowDefinition Height="52" />
-            <RowDefinition Height="52" />
-            <RowDefinition Height="52" />
+            <RowDefinition Height="80" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -244,5 +237,13 @@
                 <Image />
             </Viewbox>
         </StackPanel>
+        <StackPanel
+          Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top"
+          Orientation="Horizontal">
+            <Viewbox VerticalAlignment="Top">
+                <Image Source="{DynamicResource image_searchDrawingImage}" />
+            </Viewbox>
+        </StackPanel>
+        <StackPanel Grid.Row="5" />
     </Grid>
 </Window>

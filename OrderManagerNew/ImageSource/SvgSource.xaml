@@ -751,5 +751,41 @@
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
-
+    <DrawingImage x:Key="image_searchDrawingImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V85 H218.48 V0 H0 Z">
+                <DrawingGroup.Transform>
+                    <TranslateTransform X="0.00056962325470522046" Y="0" />
+                </DrawingGroup.Transform>
+                <GeometryDrawing Brush="#FFBCBBAD">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry RadiusX="5" RadiusY="5" Rect="22.23,1,65.94,78" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF999999" Geometry="F1 M218.48,85z M0,0z M83.17,80L27.23,80A6,6,0,0,1,21.23,74L21.23,6A6,6,0,0,1,27.23,0L83.17,0A6,6,0,0,1,89.17,6L89.17,74A6,6,0,0,1,83.17,80z M27.23,2A4,4,0,0,0,23.23,6L23.23,74A4,4,0,0,0,27.23,78L83.17,78A4,4,0,0,0,87.17,74L87.17,6A4,4,0,0,0,83.17,2z" />
+                <GeometryDrawing Brush="#FFFEFEFE">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry RadiusX="5" RadiusY="5" Rect="16.41,6,65.94,78" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF999999" Geometry="F1 M218.48,85z M0,0z M77.35,85L21.41,85A6,6,0,0,1,15.41,79L15.41,11A6,6,0,0,1,21.41,5L77.35,5A6,6,0,0,1,83.35,11L83.35,79A6,6,0,0,1,77.35,85z M21.41,7A4,4,0,0,0,17.41,11L17.41,79A4,4,0,0,0,21.41,83L77.35,83A4,4,0,0,0,81.35,79L81.35,11A4,4,0,0,0,77.35,7z" />
+                <GeometryDrawing Brush="#FF756450" Geometry="F1 M218.48,85z M0,0z M194.48,47L194.48,47A2.5,2.5,0,0,1,196.98,44.5L215.48,44.5A3,3,0,0,0,218.48,41.5L218.48,41.5A3,3,0,0,0,215.48,38.5L184,38.5A2.5,2.5,0,0,1,181.5,36L181.5,36A2.5,2.5,0,0,1,184,33.5L204.25,33.5A3.26,3.26,0,0,0,207.5,30.25L207.5,30.25A3.26,3.26,0,0,0,204.23,27L31.48,27A5,5,0,0,0,26.48,32L26.48,51A5,5,0,0,0,31.48,56L201.23,56A3.26,3.26,0,0,0,204.48,52.75L204.48,52.75A3.26,3.26,0,0,0,201.23,49.5L197,49.5A2.5,2.5,0,0,1,194.48,47z" />
+                <GeometryDrawing Brush="#FF353631" Geometry="F1 M218.48,85z M0,0z M41,68.5A4,4,0,0,1,38.17,67.33L29.17,58.33A4,4,0,0,1,34.83,52.67L43.83,61.67A4,4,0,0,1,41,68.5z" />
+                <DrawingGroup Opacity="0.60000002384185791">
+                    <GeometryDrawing Brush="#FF61B4FF">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="19.5,41.81" RadiusX="17" RadiusY="17" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+                <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M218.48,85z M0,0z M29.41,37.23A1.28,1.28,0,0,1,28.31,36.6A9.93,9.93,0,0,0,19.74,31.6A1.26,1.26,0,0,1,19.74,29.08A12.47,12.47,0,0,1,30.5,35.28A1.27,1.27,0,0,1,30,37.06A1.32,1.32,0,0,1,29.41,37.23z" />
+                <GeometryDrawing Brush="#FFFFFFFF">
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="30.79,40.81" RadiusX="1.68" RadiusY="1.68" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF353631" Geometry="F1 M218.48,85z M0,0z M19.5,61.31A19.5,19.5,0,1,1,39,41.81A19.53,19.53,0,0,1,19.5,61.31z M19.5,27.31A14.5,14.5,0,1,0,34,41.81A14.52,14.52,0,0,0,19.5,27.31z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
 </ResourceDictionary>

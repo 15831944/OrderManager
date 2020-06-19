@@ -1134,4 +1134,8 @@
     <value>Download</value>
     <comment>Download</comment>
   </data>
+  <data name="NoDataFound" xml:space="preserve">
+    <value>No results found</value>
+    <comment>UI</comment>
+  </data>
 </root>

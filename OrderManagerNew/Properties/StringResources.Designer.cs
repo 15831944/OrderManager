@@ -1537,6 +1537,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 No results found 的當地語系化字串。
+        /// </summary>
+        internal static string NoDataFound {
+            get {
+                return ResourceManager.GetString("NoDataFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 None 的當地語系化字串。
         /// </summary>
         internal static string None {

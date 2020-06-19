@@ -727,11 +727,12 @@ namespace Dll_Airdental
                 FileName = FileName.Substring(FileName.LastIndexOf(@"'"));
                 FileName = UrlDecode(FileName.Replace(@"'", ""));
                 long FileSize = response.ContentLength;
+                response.Close();
                 return FileName;
             }
-            catch(WebException ex)
+            catch
             {
-                return ex.Message;
+                return null;
             }
         }
 
