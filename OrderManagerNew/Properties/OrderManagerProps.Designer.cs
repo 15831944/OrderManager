@@ -166,5 +166,41 @@ namespace OrderManagerNew.Properties {
                 this["AirDentalAPI"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AirD_CAD_Dir {
+            get {
+                return ((string)(this["AirD_CAD_Dir"]));
+            }
+            set {
+                this["AirD_CAD_Dir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AirD_Implant_Dir {
+            get {
+                return ((string)(this["AirD_Implant_Dir"]));
+            }
+            set {
+                this["AirD_Implant_Dir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AirD_Ortho_Dir {
+            get {
+                return ((string)(this["AirD_Ortho_Dir"]));
+            }
+            set {
+                this["AirD_Ortho_Dir"] = value;
+            }
+        }
     }
 }

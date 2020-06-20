@@ -91,6 +91,7 @@ namespace OrderManagerNew.AirDental_UserControls
                     SetCaseFocusStatus(false);
                 }
             }
+            e.Handled = true;
         }
     }
 }

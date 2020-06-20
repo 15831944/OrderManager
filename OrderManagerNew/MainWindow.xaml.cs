@@ -181,14 +181,17 @@ namespace OrderManagerNew
 
         private void Loaded_MainWindow(object sender, RoutedEventArgs e)
         {
+            UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
+            OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
+
             //檢查Cookie是否還可以用
             string[] uInfo = new string[4];
             if (AirDentalProjHandle.OrderManagerLoginCheck(ref uInfo) == true)
+            {
                 LoginSuccess(uInfo);
-
-            UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
-            OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
-            DateFilterTW.IsChecked = true;
+                AirDentalProjHandle.CheckAirDentalDirExist();
+            }
+            DateFilterAll.IsChecked = true;
             // CaseFilter 復原之前最後選擇的軟體排序
             if (Properties.Settings.Default.LastSoftwareFilter >= (int)_softwareID.EZCAD && Properties.Settings.Default.LastSoftwareFilter < (int)_softwareID.All)
             {
@@ -631,7 +634,7 @@ namespace OrderManagerNew
         }
         #endregion
 
-        #region TitleBar事件
+#region TitleBar事件
         private Point startPos;
 
         [DllImport("user32.dll")]
@@ -1911,7 +1914,7 @@ namespace OrderManagerNew
             if(canUpdate == true)
             {
                 haveEXE = false;
-                SnackBarShow("Start Download"); //開始下載 //TODO 多國語系
+                SnackBarShow(TranslationSource.Instance["StartDownloading"]);
                 UpdateFunc.StartDownloadSoftware();
             }
             else
@@ -1938,7 +1941,7 @@ namespace OrderManagerNew
                 DialogBeforeDownload.ShowDialog();
                 if(DialogBeforeDownload.DialogResult == true)
                 {
-                    SnackBarShow("Start Download"); //開始下載 //TODO 多國語系
+                    SnackBarShow(TranslationSource.Instance["StartDownloading"]);
                     DownloadStart = true;
                 }
                 else

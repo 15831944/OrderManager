@@ -263,6 +263,7 @@ namespace OrderManagerNew.UserControls
                     SetCaseFocusStatus(false);
                 }
             }
+            e.Handled = true;
         }
     }
 }

@@ -12,6 +12,7 @@
             <RowDefinition Height="72" />
             <RowDefinition Height="56" />
             <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="80" />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -228,6 +229,30 @@
             </StackPanel.Resources>
 
             <Viewbox>
+                <Image Source="{DynamicResource icon_web_mouseDrawingImage}" />
+            </Viewbox>
+            <Viewbox>
+                <Image Source="{DynamicResource icon_webDrawingImage}" />
+            </Viewbox>
+            <Viewbox>
+                <Image Source="{DynamicResource icon_web_clickDrawingImage}" />
+            </Viewbox>
+            <Viewbox>
+                <Image Source="{DynamicResource icon_download_mouseDrawingImage}" />
+            </Viewbox>
+            <Viewbox>
+                <Image Source="{DynamicResource icon_downloadDrawingImage}" />
+            </Viewbox>
+            <Viewbox>
+                <Image Source="{DynamicResource icon_download_clickDrawingImage}" />
+            </Viewbox>
+            <Viewbox>
+                <Image />
+            </Viewbox>
+            <Viewbox>
+                <Image />
+            </Viewbox>
+            <Viewbox>
                 <Image />
             </Viewbox>
             <Viewbox>
@@ -238,7 +263,7 @@
             </Viewbox>
         </StackPanel>
         <StackPanel
-          Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top"
+          Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top"
           Orientation="Horizontal">
             <Viewbox VerticalAlignment="Top">
                 <Image Source="{DynamicResource image_searchDrawingImage}" />

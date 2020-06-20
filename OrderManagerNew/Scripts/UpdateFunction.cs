@@ -180,8 +180,8 @@ namespace OrderManagerNew
                             bw.ReportProgress(Convert.ToInt32(percent * 100));
                             realReadLen = netStream.Read(read, 0, read.Length);
                         }
-                        netStream.Close();
                         fileStream.Close();
+                        netStream.Close();
                     }
                     else
                     {
@@ -191,7 +191,7 @@ namespace OrderManagerNew
                 }
                 catch (Exception ex)
                 {
-                    Handler_snackbarShow(ex.Message);   //網路連線異常or載點掛掉 //TODO 多國語系
+                    Handler_snackbarShow(ex.Message);
                     e.Cancel = true;
                 }
             }
@@ -205,15 +205,15 @@ namespace OrderManagerNew
         {
             if (e.Error != null)
             {
-                Handler_snackbarShow("Error");   //錯誤 //TODO 多國語系
+                Handler_snackbarShow(TranslationSource.Instance["Download"] + TranslationSource.Instance["Error"]);
             }
             else if (e.Cancelled)
             {
-                Handler_snackbarShow("Canceled");    //取消 //TODO 多國語系
+                Handler_snackbarShow(TranslationSource.Instance["Download"] + TranslationSource.Instance["Cancel"]);
             }
             else
             {
-                Handler_snackbarShow("下載完成");   //下載完成  //TODO 多國語系
+                Handler_snackbarShow(TranslationSource.Instance["Order_DownloadCompleted"]);
                 SoftwareLogoShowEvent(readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installing, 0);
                 string downloadPath = GetSoftwarePath(readyInstallSoftwareInfo.softwareID);
 

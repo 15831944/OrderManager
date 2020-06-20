@@ -882,4 +882,16 @@
   <data name="NoDataFound" xml:space="preserve">
     <value>找不到符合資料</value>
   </data>
+  <data name="Order_Downloaded" xml:space="preserve">
+    <value>(已下載)</value>
+  </data>
+  <data name="Order_DownloadCompleted" xml:space="preserve">
+    <value>下載完成</value>
+  </data>
+  <data name="StartDownloading" xml:space="preserve">
+    <value>開始下載</value>
+  </data>
+  <data name="ViewDetail" xml:space="preserve">
+    <value>詳細資訊</value>
+  </data>
 </root>

@@ -46,7 +46,6 @@ namespace OrderManagerNew.AirDental_UserControls
         int ItemIndex;
         BackgroundWorker BgWorker_Download;
         string DownloadFileName;
-        bool haveDownolad = false;
 
         public AirD_orthoSmallOrder()
         {
@@ -127,6 +126,7 @@ namespace OrderManagerNew.AirDental_UserControls
                     SetCaseFocusStatus(false);
                 }
             }
+            e.Handled = true;
         }
 
         private void DownloadOrderFile()
@@ -137,17 +137,38 @@ namespace OrderManagerNew.AirDental_UserControls
             else if (Directory.Exists(Properties.OrderManagerProps.Default.ortho_projectDirectory) == false)
                 return;
 
-            progressbar_download.IsIndeterminate = true;
-
-            //檢查抓不抓得到下載檔名
-            string Downloadurl = Properties.OrderManagerProps.Default.AirDentalAPI + @"project/ortho/download/" + OrderInfo._Key;
-            AirDental = new Dll_Airdental.Main();
-            DownloadFileName = AirDental.GetDownloadFileInfo(Downloadurl, Properties.Settings.Default.AirdentalCookie);
+            string Downloadurl = "";
+            try
+            {
+                //檢查抓不抓得到下載檔名
+                Downloadurl = Properties.OrderManagerProps.Default.AirDentalAPI + @"project/ortho/download/" + OrderInfo._Key;
+                AirDental = new Dll_Airdental.Main();
+                DownloadFileName = AirDental.GetDownloadFileInfo(Downloadurl, Properties.Settings.Default.AirdentalCookie);
+            }
+            catch(Exception ex)
+            {
+                OrderHandler_snackbarShow(ex.Message);
+                return;
+            }
+            
             if(DownloadFileName != "")
             {
-                string readyDownloadFilePath = Properties.OrderManagerProps.Default.ortho_projectDirectory + DownloadFileName;
-                if (File.Exists(readyDownloadFilePath) == true)
-                    File.Delete(readyDownloadFilePath);
+                try
+                {
+                    string readyDownloadFilePath = Properties.OrderManagerProps.Default.AirD_Ortho_Dir + DownloadFileName;
+                    readyDownloadFilePath = readyDownloadFilePath.Insert(readyDownloadFilePath.LastIndexOf("."), "_" + (ItemIndex + 1).ToString());
+                    if (File.Exists(readyDownloadFilePath) == true)
+                        File.Delete(readyDownloadFilePath);
+                    progressbar_download.Value = 0.0;
+                    button_DownloadOrder.IsEnabled = false;
+                    if (((string)label_ProjectName.Content).IndexOf(TranslationSource.Instance["Order_Downloaded"]) != -1)
+                        label_ProjectName.Content = ((string)label_ProjectName.Content).Remove(((string)label_ProjectName.Content).IndexOf("(已下載)"));
+                }
+                catch(Exception ex)
+                {
+                    OrderHandler_snackbarShow(ex.Message);
+                    return;
+                }
 
                 //多執行緒下載
                 BgWorker_Download = new BackgroundWorker();
@@ -164,48 +185,44 @@ namespace OrderManagerNew.AirDental_UserControls
         {
             if(sender is BackgroundWorker)
             {
-                if(haveDownolad == false)
+                //跳過https檢測 & Win7 相容
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+
+                try
                 {
-                    haveDownolad = true;
-                    progressbar_download.IsIndeterminate = false;
-                    progressbar_download.Value = 0.0;
-                    //跳過https檢測 & Win7 相容
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-                    ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-
-                    try
+                    string fileUrl = Properties.OrderManagerProps.Default.AirDentalAPI + @"project/ortho/download/" + OrderInfo._Key;
+                    //Response資料
+                    HttpWebResponse response = AirDental.GetDownloadFileResponse(fileUrl, Properties.Settings.Default.AirdentalCookie);
+                    if(response != null)
                     {
-                        string fileUrl = Properties.OrderManagerProps.Default.AirDentalAPI + @"project/ortho/download/" + OrderInfo._Key;
-                        //Response資料
-                        HttpWebResponse response = AirDental.GetDownloadFileResponse(fileUrl, Properties.Settings.Default.AirdentalCookie);
-                        if(response != null)
+                        // 取得下載的檔名
+                        Uri uri = new Uri(fileUrl);
+                        string downloadfilepath = Properties.OrderManagerProps.Default.AirD_Ortho_Dir + DownloadFileName;
+                        downloadfilepath = downloadfilepath.Insert(downloadfilepath.LastIndexOf("."), "_" + (ItemIndex + 1).ToString());
+                        Stream netStream = response.GetResponseStream();
+                        Stream fileStream = new FileStream(downloadfilepath, FileMode.Create, FileAccess.Write);
+                        byte[] read = new byte[1024];
+                        long progressBarValue = 0;
+                        int realReadLen = netStream.Read(read, 0, read.Length);
+
+                        while (realReadLen > 0)
                         {
-                            // 取得下載的檔名
-                            Uri uri = new Uri(fileUrl);
-                            string downloadfilepath = Properties.OrderManagerProps.Default.ortho_projectDirectory + DownloadFileName;
-                            Stream netStream = response.GetResponseStream();
-                            Stream fileStream = new FileStream(downloadfilepath, FileMode.Create, FileAccess.Write);
-                            byte[] read = new byte[1024];
-                            long progressBarValue = 0;
-                            int realReadLen = netStream.Read(read, 0, read.Length);
-
-                            while (realReadLen > 0)
-                            {
-                                fileStream.Write(read, 0, realReadLen);
-                                //realReadLen 是一個封包大小，progressBarValue會一直累加
-                                progressBarValue += realReadLen;
-                                double percent = (double)progressBarValue / (double)response.ContentLength;
-                                ((BackgroundWorker)sender).ReportProgress(Convert.ToInt32(percent * 100));
-                                realReadLen = netStream.Read(read, 0, read.Length);
-                            }
+                            fileStream.Write(read, 0, realReadLen);
+                            progressBarValue += realReadLen;
+                            double percent = (double)progressBarValue / (double)response.ContentLength;
+                            ((BackgroundWorker)sender).ReportProgress(Convert.ToInt32(percent * 100));
+                            realReadLen = netStream.Read(read, 0, read.Length);
                         }
-                        response.Close();
+                        fileStream.Close();
+                        netStream.Close();
                     }
-                    catch (WebException ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        e.Cancel = true;
-                    }
+                    response.Close();
+                }
+                catch (WebException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    e.Cancel = true;
                 }
             }
         }
@@ -221,17 +238,18 @@ namespace OrderManagerNew.AirDental_UserControls
         {
             if (e.Error != null)
             {
-                OrderHandler_snackbarShow("Error");   //錯誤 //TODO 多國語系
+                OrderHandler_snackbarShow(TranslationSource.Instance["Download"] + TranslationSource.Instance["Error"]);
             }
             else if (e.Cancelled)
             {
-                OrderHandler_snackbarShow("Canceled");    //取消 //TODO 多國語系
+                OrderHandler_snackbarShow(TranslationSource.Instance["Download"] + TranslationSource.Instance["Cancel"]);
             }
             else
             {
-                OrderHandler_snackbarShow("下載完成");   //下載完成  //TODO 多國語系
-                label_ProjectName.Content += "(已下載)";
-                button_DownloadOrder.IsEnabled = false;
+                OrderHandler_snackbarShow(TranslationSource.Instance["Order_DownloadCompleted"]);
+                if(((string)label_ProjectName.Content).IndexOf(TranslationSource.Instance["Order_Downloaded"]) == -1)
+                    label_ProjectName.Content += TranslationSource.Instance["Order_Downloaded"];
+                button_DownloadOrder.IsEnabled = true;
             }
         }
     }

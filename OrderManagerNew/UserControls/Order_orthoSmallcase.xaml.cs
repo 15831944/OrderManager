@@ -88,7 +88,6 @@ namespace OrderManagerNew.UserControls
         {
             OrderManagerFunctions omFunc = new OrderManagerFunctions();
             omFunc.RunCommandLine(Properties.Settings.Default.ortho_exePath, "-rp \"" + orthosmallcaseInfo.SmallCaseXmlPath + "\"");
-            e.Handled = true;
         }
 
         /// <summary>
@@ -134,6 +133,7 @@ namespace OrderManagerNew.UserControls
                     SetCaseFocusStatus(false);
                 }
             }
+            e.Handled = true;
         }
     }
 }

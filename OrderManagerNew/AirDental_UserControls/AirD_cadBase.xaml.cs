@@ -140,20 +140,6 @@ namespace OrderManagerNew.AirDental_UserControls
             label_patientName.Content = cadProjectInfo.Patient;
             label_modifyDate.Content = cadProjectInfo.ModifyDate.DateTime.ToLongDateString() + cadProjectInfo.ModifyDate.DateTime.ToLongTimeString();
             label_designStep.ToolTip = label_designStep.Content;
-            /*try
-            {
-                Dll_Airdental.Main Airdental = new Dll_Airdental.Main();
-                string PatientPhoto = Airdental.APIPortal + @"file/ortho/photo/" + orthoProjectInfo.PatientAvatar;
-                image_patient.BeginInit();
-                image_patient.Source = new BitmapImage(new Uri( PatientPhoto, UriKind.RelativeOrAbsolute));
-                image_patient.EndInit();
-            }
-            catch
-            {
-                image_patient.BeginInit();
-                image_patient.Source = new BitmapImage(new Uri(@"/ImageSource/FunctionTable/icon_O.png", UriKind.RelativeOrAbsolute));
-                image_patient.EndInit();
-            }*/
         }
 
         /// <summary>
@@ -230,7 +216,9 @@ namespace OrderManagerNew.AirDental_UserControls
 
         private void Click_AirdentalWeb(object sender, RoutedEventArgs e)
         {
-
+            string WebUrl = Properties.OrderManagerProps.Default.AirDentalAPI.Remove(Properties.OrderManagerProps.Default.AirDentalAPI.LastIndexOf("api/")) + @"project/prostheses/patient/" + cadProjectInfo.Pid;
+            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+            omFunc.RunCommandLine(WebUrl, "");
         }
 
         private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
@@ -251,6 +239,7 @@ namespace OrderManagerNew.AirDental_UserControls
                     SetCaseFocusStatus(false);
                 }
             }
+            e.Handled = true;
         }
     }
 }

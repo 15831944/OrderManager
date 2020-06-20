@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -374,6 +375,63 @@ namespace OrderManagerNew
             AirD_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork_cad);
             AirD_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_cad);
             AirD_BackgroundWorker.RunWorkerAsync(this);
+        }
+
+        /// <summary>
+        /// 檢查是否有AirDental下載資料夾
+        /// </summary>
+        public void CheckAirDentalDirExist()
+        {
+            if(Properties.OrderManagerProps.Default.systemDisk == Properties.OrderManagerProps.Default.mostsoftwareDisk)
+            {
+                string AirdentalDir = Properties.OrderManagerProps.Default.systemDisk + @"IntewareData\AirDental\";
+                if (Directory.Exists(AirdentalDir) == false)
+                    Directory.CreateDirectory(AirdentalDir);
+                if (Directory.Exists(AirdentalDir + @"CAD\") == false)
+                    Directory.CreateDirectory(AirdentalDir + @"CAD\");
+                if (Directory.Exists(AirdentalDir + @"Implant\") == false)
+                    Directory.CreateDirectory(AirdentalDir + @"Implant\");
+                if (Directory.Exists(AirdentalDir + @"Ortho\") == false)
+                    Directory.CreateDirectory(AirdentalDir + @"Ortho\");
+
+                Properties.OrderManagerProps.Default.AirD_CAD_Dir = AirdentalDir + @"CAD\";
+                Properties.OrderManagerProps.Default.AirD_Implant_Dir = AirdentalDir + @"Implant\";
+                Properties.OrderManagerProps.Default.AirD_Ortho_Dir = AirdentalDir + @"Ortho\";
+            }
+            else
+            {
+                string SysAirdentalDir = Properties.OrderManagerProps.Default.systemDisk + @"IntewareData\AirDental\";
+                string MostDiskAirdentalDir = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\AirDental\";
+
+                if(Directory.Exists(MostDiskAirdentalDir) == true)
+                {
+                    if (Directory.Exists(MostDiskAirdentalDir + @"CAD\") == false)
+                        Directory.CreateDirectory(MostDiskAirdentalDir + @"CAD\");
+                    if (Directory.Exists(MostDiskAirdentalDir + @"Implant\") == false)
+                        Directory.CreateDirectory(MostDiskAirdentalDir + @"Implant\");
+                    if (Directory.Exists(MostDiskAirdentalDir + @"Ortho\") == false)
+                        Directory.CreateDirectory(MostDiskAirdentalDir + @"Ortho\");
+
+                    Properties.OrderManagerProps.Default.AirD_CAD_Dir = MostDiskAirdentalDir + @"CAD\";
+                    Properties.OrderManagerProps.Default.AirD_Implant_Dir = MostDiskAirdentalDir + @"Implant\";
+                    Properties.OrderManagerProps.Default.AirD_Ortho_Dir = MostDiskAirdentalDir + @"Ortho\";
+                }
+                else
+                {
+                    if (Directory.Exists(SysAirdentalDir) == false)
+                        Directory.CreateDirectory(SysAirdentalDir);
+                    if (Directory.Exists(SysAirdentalDir + @"CAD\") == false)
+                        Directory.CreateDirectory(SysAirdentalDir + @"CAD\");
+                    if (Directory.Exists(SysAirdentalDir + @"Implant\") == false)
+                        Directory.CreateDirectory(SysAirdentalDir + @"Implant\");
+                    if (Directory.Exists(SysAirdentalDir + @"Ortho\") == false)
+                        Directory.CreateDirectory(SysAirdentalDir + @"Ortho\");
+
+                    Properties.OrderManagerProps.Default.AirD_CAD_Dir = SysAirdentalDir + @"CAD\";
+                    Properties.OrderManagerProps.Default.AirD_Implant_Dir = SysAirdentalDir + @"Implant\";
+                    Properties.OrderManagerProps.Default.AirD_Ortho_Dir = SysAirdentalDir + @"Ortho\";
+                }
+            }
         }
     }
 }

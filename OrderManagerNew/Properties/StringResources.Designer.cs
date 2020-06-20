@@ -1681,6 +1681,24 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Download Completed 的當地語系化字串。
+        /// </summary>
+        internal static string Order_DownloadCompleted {
+            get {
+                return ResourceManager.GetString("Order_DownloadCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 (Downloaded) 的當地語系化字串。
+        /// </summary>
+        internal static string Order_Downloaded {
+            get {
+                return ResourceManager.GetString("Order_Downloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Order Created 的當地語系化字串。
         /// </summary>
         internal static string order_ezmdoctor {
@@ -2221,6 +2239,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Start downloading 的當地語系化字串。
+        /// </summary>
+        internal static string StartDownloading {
+            get {
+                return ResourceManager.GetString("StartDownloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Successfully 的當地語系化字串。
         /// </summary>
         internal static string Successfully {
@@ -2334,6 +2361,15 @@ namespace OrderManagerNew.Properties {
         internal static string Veneer {
             get {
                 return ResourceManager.GetString("Veneer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 View Detail 的當地語系化字串。
+        /// </summary>
+        internal static string ViewDetail {
+            get {
+                return ResourceManager.GetString("ViewDetail", resourceCulture);
             }
         }
         

@@ -185,7 +185,6 @@ namespace OrderManagerNew.UserControls
         {
             OrderManagerFunctions omFunc = new OrderManagerFunctions();
             omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + System.IO.Path.GetDirectoryName(orthoInfo.CaseDirectoryPath) + "\"");
-            e.Handled = true;
         }
 
         /// <summary>
@@ -261,6 +260,7 @@ namespace OrderManagerNew.UserControls
                     SetCaseFocusStatus(false);
                 }
             }
+            e.Handled = true;
         }
     }
 }

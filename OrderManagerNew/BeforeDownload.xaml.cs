@@ -255,12 +255,12 @@ namespace OrderManagerNew
             if (e.Error != null)
             {
                 tmr.Stop();
-                //MessageBox.Show("Error");   //錯誤 //TODO 多國語系
+                Handler_snackbarShow("Error");   //錯誤 //TODO 多國語系
             }
             else if (e.Cancelled)
             {
                 tmr.Stop();
-                //MessageBox.Show("Canceled");    //取消(超過時間，也許再讓使用者可以自行增加秒數?) //TODO 多國語系
+                Handler_snackbarShow("Canceled");    //取消(超過時間，也許再讓使用者可以自行增加秒數?) //TODO 多國語系
             }
             else
             {

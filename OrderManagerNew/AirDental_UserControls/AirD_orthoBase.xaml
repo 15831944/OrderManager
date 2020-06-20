@@ -65,8 +65,8 @@
                 <Button
                   Grid.Row="0" Grid.RowSpan="2" Grid.Column="5"
                   x:Name="button_AirdentalWeb" Click="Click_AirdentalWeb"
-                  Style="{StaticResource btn_folderOpen}"
-                  ToolTip="{local1:LocExtension OpenCaseFolder}" />
+                  Style="{DynamicResource btn_WebOpen}"
+                  ToolTip="{local1:LocExtension ViewDetail}" />
             </Grid>
         </StackPanel>
     </Grid>

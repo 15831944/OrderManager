@@ -65,10 +65,8 @@
             <Button
               Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
               x:Name="button_LoadOrthoProject" Width="28" Click="Click_ButtonEvent"
-              Style="{StaticResource ImageButton}"
-              ToolTip="{local1:LocExtension LoadProject}">
-                <Image Source="/ImageSource/FunctionTable/icon_O.png" />
-            </Button>
+              Style="{DynamicResource btn_Download}"
+              ToolTip="{local1:LocExtension LoadProject}" />
         </Grid>
     </Grid>
 </UserControl>

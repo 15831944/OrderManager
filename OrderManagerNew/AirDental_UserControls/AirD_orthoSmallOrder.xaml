@@ -69,10 +69,8 @@
               Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
               x:Name="button_DownloadOrder" Width="28" Background="#FFBCB2AA"
               Click="Click_ButtonEvent"
-              Style="{StaticResource ImageButton}"
-              ToolTip="{local1:LocExtension Download}">
-                <materialDesign:PackIcon Width="28" Height="28" Kind="Download" />
-            </Button>
+              Style="{DynamicResource btn_Download}"
+              ToolTip="{local1:LocExtension Download}" />
         </Grid>
     </Grid>
 </UserControl>

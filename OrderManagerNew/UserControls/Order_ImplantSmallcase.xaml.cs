@@ -100,7 +100,6 @@ namespace OrderManagerNew.UserControls
                         break;
                     }
             }
-            e.Handled = true;
         }
 
         /// <summary>
@@ -146,6 +145,7 @@ namespace OrderManagerNew.UserControls
                     SetCaseFocusStatus(false);
                 }
             }
+            e.Handled = true;
         }
     }
 }
