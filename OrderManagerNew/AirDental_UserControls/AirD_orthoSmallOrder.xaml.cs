@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
-using MahApps.Metro;
 //下載用
 using System.Net;
 using System.Net.Security;
@@ -62,7 +52,7 @@ namespace OrderManagerNew.AirDental_UserControls
             if (Import._stageKey.IndexOf("ortho_") == 0)
                 Import._stageKey = Import._stageKey.Remove(0, 6);
             label_ProjectName.Content = TranslationSource.Instance[Import._group] + " " + TranslationSource.Instance[Import._actionKey] + TranslationSource.Instance[Import._stageKey];
-            label_ProjectName.ToolTip = Import._date.DateTime.ToLongDateString() + Import._date.DateTime.ToLongTimeString();
+            label_ProjectName.ToolTip = Import._date.DateTime.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
             ItemIndex = Index;
         }
         

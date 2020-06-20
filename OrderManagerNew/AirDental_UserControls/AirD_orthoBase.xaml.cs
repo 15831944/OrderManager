@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace OrderManagerNew.AirDental_UserControls
 {
@@ -147,7 +139,7 @@ namespace OrderManagerNew.AirDental_UserControls
                 orthoProjectInfo.StageKey = orthoProjectInfo.StageKey.Remove(0, 6);
             label_designStep.Content = TranslationSource.Instance[orthoProjectInfo.Group] + " " + TranslationSource.Instance[orthoProjectInfo.ActionKey] + TranslationSource.Instance[orthoProjectInfo.StageKey];
             label_patientName.Content = orthoProjectInfo.Patient;
-            label_modifyDate.Content = orthoProjectInfo.ModifyDate.DateTime.ToLongDateString() + orthoProjectInfo.ModifyDate.DateTime.ToLongTimeString();
+            label_modifyDate.Content = orthoProjectInfo.ModifyDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
             label_designStep.ToolTip = label_designStep.Content;
         }
 

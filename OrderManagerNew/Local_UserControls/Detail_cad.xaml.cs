@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml.Linq;
-using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation;
+using CadInformation = OrderManagerNew.Local_UserControls.Order_cadBase.CadInformation;
 
-namespace OrderManagerNew.UserControls
+namespace OrderManagerNew.Local_UserControls
 {
     /// <summary>
     /// Detail_cad.xaml 的互動邏輯

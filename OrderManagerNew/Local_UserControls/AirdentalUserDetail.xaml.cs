@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 //Handling user control events in WPF: https://www.codeproject.com/Questions/424498/Handling-user-control-events-in-WPF
-namespace OrderManagerNew.UserControls
+namespace OrderManagerNew.Local_UserControls
 {
     [ValueConversion(typeof(string), typeof(string))]
     public class CapitalNameConverter : IValueConverter

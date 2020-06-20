@@ -1,6 +1,6 @@
 ﻿<UserControl
-  x:Class="OrderManagerNew.UserControls.Detail_cad" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OrderManagerNew.UserControls" xmlns:local1="clr-namespace:OrderManagerNew"
+  x:Class="OrderManagerNew.Local_UserControls.Detail_cad" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OrderManagerNew.Local_UserControls" xmlns:local1="clr-namespace:OrderManagerNew"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="635" d:DesignWidth="310"
   mc:Ignorable="d">
 

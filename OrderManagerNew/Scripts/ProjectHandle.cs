@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation;
-using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformation;
-using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
-using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
-using OrthoOuterInformation = OrderManagerNew.UserControls.Order_orthoBase.OrthoOuterInformation;
+using CadInformation = OrderManagerNew.Local_UserControls.Order_cadBase.CadInformation;
+using TrayInformation = OrderManagerNew.Local_UserControls.Order_tsBase.TrayInformation;
+using SplintInformation = OrderManagerNew.Local_UserControls.Order_tsBase.SplintInformation;
+using ImplantOuterInformation = OrderManagerNew.Local_UserControls.Order_implantBase.ImplantOuterInformation;
+using OrthoOuterInformation = OrderManagerNew.Local_UserControls.Order_orthoBase.OrthoOuterInformation;
 
 namespace OrderManagerNew
 {

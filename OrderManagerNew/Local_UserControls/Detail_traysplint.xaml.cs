@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformation;
-using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
+using TrayInformation = OrderManagerNew.Local_UserControls.Order_tsBase.TrayInformation;
+using SplintInformation = OrderManagerNew.Local_UserControls.Order_tsBase.SplintInformation;
 
-namespace OrderManagerNew.UserControls
+namespace OrderManagerNew.Local_UserControls
 {
     /// <summary>
     /// Detail_traysplint.xaml 的互動邏輯
@@ -53,8 +41,8 @@ namespace OrderManagerNew.UserControls
             textbox_Order.Text = SplintInfo.OrderID;
             textbox_DesignStep.Text = SplintInfo.DesignStepString;
             textbox_Brand.Text = SplintInfo.Brand;
-            textbox_CreateDate.Text = SplintInfo.CreateDate.ToLongDateString() + " " + SplintInfo.CreateDate.ToLongTimeString();
-            textbox_ModifyDate.Text = SplintInfo.ModifyDate.ToLongDateString() + " " + SplintInfo.ModifyDate.ToLongTimeString();
+            textbox_CreateDate.Text = SplintInfo.CreateDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
+            textbox_ModifyDate.Text = SplintInfo.ModifyDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
         }
 
         private void Click_systemButton(object sender, RoutedEventArgs e)

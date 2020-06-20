@@ -316,7 +316,7 @@
     <comment>Case</comment>
   </data>
   <data name="CreateDate" xml:space="preserve">
-    <value>Create Date</value>
+    <value>Create Date(MM/DD/YYYY)</value>
     <comment>Case</comment>
   </data>
   <data name="OpenCaseFolder" xml:space="preserve">
@@ -645,8 +645,8 @@
     <comment>Detail_Ortho</comment>
   </data>
   <data name="ModifyDate" xml:space="preserve">
-    <value>Modified date</value>
-    <comment>Detail_Ortho</comment>
+    <value>Modified Date(MM/DD/YYYY)</value>
+    <comment>Case</comment>
   </data>
   <data name="Clinic" xml:space="preserve">
     <value>Clinic</value>
@@ -726,7 +726,7 @@
     <comment>AirDental_Case</comment>
   </data>
   <data name="AirDUpdateDate" xml:space="preserve">
-    <value>Last Update</value>
+    <value>Last Update(MM/DD/YYYY)</value>
     <comment>AirDental_Case</comment>
   </data>
   <data name="drafted" xml:space="preserve">
@@ -1153,5 +1153,17 @@
   <data name="ViewDetail" xml:space="preserve">
     <value>View Detail</value>
     <comment>Case</comment>
+  </data>
+  <data name="CreateDate_short" xml:space="preserve">
+    <value>Create Date</value>
+    <comment>Case</comment>
+  </data>
+  <data name="ModifyDate_short" xml:space="preserve">
+    <value>Modified Date</value>
+    <comment>Case</comment>
+  </data>
+  <data name="PleaseLoginFirst" xml:space="preserve">
+    <value>Please login first</value>
+    <comment>Login</comment>
   </data>
 </root>

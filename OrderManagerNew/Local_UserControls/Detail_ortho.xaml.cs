@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using OrthoSmallCaseInformation = OrderManagerNew.UserControls.Order_orthoSmallcase.OrthoSmallCaseInformation;
+using OrthoSmallCaseInformation = OrderManagerNew.Local_UserControls.Order_orthoSmallcase.OrthoSmallCaseInformation;
 
-namespace OrderManagerNew.UserControls
+namespace OrderManagerNew.Local_UserControls
 {
     /// <summary>
     /// Detail_ortho.xaml 的互動邏輯
@@ -63,7 +52,7 @@ namespace OrderManagerNew.UserControls
             textbox_Gender.Text = orthoInfo.Gender;
             textbox_Age.Text = orthoInfo.Age;
             textbox_CreateDate.Text = orthoInfo.CreateDate;
-            textbox_ModifyDate.Text = orthoInfo.ModifyTime.ToLongDateString() + " " + orthoInfo.ModifyTime.ToLongTimeString();
+            textbox_ModifyDate.Text = orthoInfo.ModifyTime.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
             textbox_Clinic.Text = orthoInfo.Clinic;
             textbox_Dentist.Text = orthoInfo.Dentist;
             textbox_Note.Text = orthoInfo.Describe;

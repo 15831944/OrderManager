@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Order_ImplantSmallcase = OrderManagerNew.UserControls.Order_ImplantSmallcase;
-using ImplantSmallCaseInformation = OrderManagerNew.UserControls.Order_ImplantSmallcase.ImplantSmallCaseInformation;
+using ImplantSmallCaseInformation = OrderManagerNew.Local_UserControls.Order_ImplantSmallcase.ImplantSmallCaseInformation;
 using Path = System.IO.Path;
 
-namespace OrderManagerNew.UserControls
+namespace OrderManagerNew.Local_UserControls
 {
     /// <summary>
     /// Order_implantBase.xaml 的互動邏輯
@@ -114,7 +105,7 @@ namespace OrderManagerNew.UserControls
                 label_patientName.Content += "(" + patientAge.ToString() + ")";
                 label_patientName.ToolTip = TranslationSource.Instance["PatientNameWithAge"];
             }   
-            label_createDate.Content = implantInfo.CreateDate.ToLongDateString();
+            label_createDate.Content = implantInfo.CreateDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
             BaseCaseIndex = Index;
         }
 
@@ -123,7 +114,7 @@ namespace OrderManagerNew.UserControls
         /// </summary>
         private void LoadSmallCase()
         {
-            implantInfo.List_smallcase = new List<UserControls.Order_ImplantSmallcase>();
+            implantInfo.List_smallcase = new List<Local_UserControls.Order_ImplantSmallcase>();
             int itemIndex = 0;
             foreach (string filename in Directory.GetFiles(implantInfo.CaseDirectoryPath))
             {

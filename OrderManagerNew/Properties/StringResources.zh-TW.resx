@@ -268,7 +268,7 @@
     <value>訂單編號</value>
   </data>
   <data name="CreateDate" xml:space="preserve">
-    <value>創建日期</value>
+    <value>創建日期(MM/DD/YYYY)</value>
   </data>
   <data name="OpenCaseFolder" xml:space="preserve">
     <value>開啟訂單資料夾</value>
@@ -514,7 +514,7 @@
     <value>年齡</value>
   </data>
   <data name="ModifyDate" xml:space="preserve">
-    <value>修改日期</value>
+    <value>修改日期(MM/DD/YYYY)</value>
   </data>
   <data name="Clinic" xml:space="preserve">
     <value>診所</value>
@@ -574,7 +574,7 @@
     <value>流水號</value>
   </data>
   <data name="AirDUpdateDate" xml:space="preserve">
-    <value>更新日期</value>
+    <value>更新日期(MM/DD/YYYY)</value>
   </data>
   <data name="drafted" xml:space="preserve">
     <value>草稿</value>
@@ -893,5 +893,14 @@
   </data>
   <data name="ViewDetail" xml:space="preserve">
     <value>詳細資訊</value>
+  </data>
+  <data name="CreateDate_short" xml:space="preserve">
+    <value>創建日期</value>
+  </data>
+  <data name="ModifyDate_short" xml:space="preserve">
+    <value>修改日期</value>
+  </data>
+  <data name="PleaseLoginFirst" xml:space="preserve">
+    <value>請先登入</value>
   </data>
 </root>

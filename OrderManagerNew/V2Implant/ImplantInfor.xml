@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImplantInfor>
+	<Brand>
+		<Company>3i</Company>
+		<System>Certain platform</System>
+		<System>Non-Platform</System>
+	</Brand>
+	<Brand>
+		<Company>ADIN</Company>
+		<System>TOUAREG-NP</System>
+		<System>TOUAREG-S</System>
+	</Brand>
+	<Brand>
+		<Company>Anker</Company>
+		<System>SBI</System>
+		<System>SBII</System>
+		<System>SBIII</System>
+	</Brand>
+	<Brand>
+		<Company>Astra</Company>
+		<System>OsseoSpeed TX 3.0 S</System>
+		<System>OsseoSpeed TX 3.5 S</System>
+		<System>OsseoSpeed TX 4.0 S</System>
+		<System>OsseoSpeed TX 5.0 S</System>		
+	</Brand>
+	<Brand>
+		<Company>BEGO</Company>
+		<System>SC/SCX</System>
+		<System>RS/RSX</System>
+		<System>RI</System>	
+		<System>MINI</System>		
+	</Brand>
+	<Brand>
+		<Company>Biodenta</Company>
+		<System>Bone Level</System>
+		<System>Bone Level Tapered</System>
+	</Brand>
+	<Brand>
+		<Company>Branemark</Company>
+		<System>Mk III TiUnite</System>
+		<System>Mk III Groovy</System>
+		<System>Mk IV TiUnite</System>	
+	</Brand>	
+	<Brand>
+		<Company>Cowell</Company>
+		<System>INNO Submerged</System>
+		<System>INNO Submerged Narrow</System>
+		<System>INNO External</System>	
+	</Brand>
+	<Brand>
+		<Company>DENTIUM</Company>
+		<System>SuperLine</System>
+		<System>Implantium</System>
+	</Brand>
+	<Brand>
+		<Company>DIO</Company>
+		<System>UFII</System>
+		<System>ExtraWide</System>
+	</Brand>	
+	<Brand>
+		<Company>Megagen</Company>
+		<System>AnyRidge</System>
+		<System>AnyOne</System>	
+		<System>MiNi</System>
+		<System>Octa 1 Normal</System>	
+		<System>Octa 1 Deep</System>		
+	</Brand>
+	<Brand>
+		<Company>Neo</Company>
+		<System>IS-II active</System>
+		<System>IS-II active S-Wide</System>
+		<System>IS-III active</System>		
+	</Brand>
+	<Brand>
+		<Company>Nobel Active</Company>
+		<System>Nobel Active</System>
+	</Brand>
+	<Brand>
+		<Company>Osstem</Company>
+		<System>TSII SA</System>
+		<System>TSIII SA</System>
+		<System>TSIII SA Ultra-Wide</System>
+		<System>TSIV SA</System>
+		<System>TSIV SA Ultra-Wide</System>		
+	</Brand>
+	<Brand>
+		<Company>Straumann(BoneLevel)</Company>
+		<System>Bone Level Implants</System>
+		<System>Bone Level Tapered Implants</System>	
+	</Brand>	
+	<Brand>
+		<Company>Xive</Company>
+		<System>S plus Implant D 3.0</System>
+		<System>S plus Implant D 3.4</System>
+		<System>S plus Implant D 3.8</System>
+		<System>S plus Implant D 4.5</System>
+		<System>S plus Implant D 5.5</System>
+	</Brand>
+	<Brand>
+		<Company>Zimmer</Company>
+		<System>Tapered Screw-Vent</System>
+		<System>Screw-Vent</System>	
+	</Brand>	
+</ImplantInfor>

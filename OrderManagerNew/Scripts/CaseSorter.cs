@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation;
-using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformation;
-using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
-using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
-using OrthoOuterInformation = OrderManagerNew.UserControls.Order_orthoBase.OrthoOuterInformation;
+using CadInformation = OrderManagerNew.Local_UserControls.Order_cadBase.CadInformation;
+using TrayInformation = OrderManagerNew.Local_UserControls.Order_tsBase.TrayInformation;
+using SplintInformation = OrderManagerNew.Local_UserControls.Order_tsBase.SplintInformation;
+using ImplantOuterInformation = OrderManagerNew.Local_UserControls.Order_implantBase.ImplantOuterInformation;
+using OrthoOuterInformation = OrderManagerNew.Local_UserControls.Order_orthoBase.OrthoOuterInformation;
 
 //快速排序演算法: https://dotblogs.com.tw/kennyshu/2009/10/24/11270
 

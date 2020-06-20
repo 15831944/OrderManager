@@ -2,22 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml.Linq;
-using Order_orthoSmallcase = OrderManagerNew.UserControls.Order_orthoSmallcase;
 
-namespace OrderManagerNew.UserControls
+namespace OrderManagerNew.Local_UserControls
 {
     /// <summary>
     /// Order_orthoBase.xaml 的互動邏輯
@@ -93,7 +84,7 @@ namespace OrderManagerNew.UserControls
                 label_patientName.Content += "(" + patientAge.ToString() + ")";
                 label_patientName.ToolTip = TranslationSource.Instance["PatientNameWithAge"];
             }
-            label_createDate.Content = orthoInfo.CreateDate.ToLongDateString();
+            label_createDate.Content = orthoInfo.CreateDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
             BaseCaseIndex = Index;
         }
         
@@ -102,7 +93,7 @@ namespace OrderManagerNew.UserControls
         /// </summary>
         private void LoadSmallCase()
         {
-            orthoInfo.List_smallcase = new List<UserControls.Order_orthoSmallcase>();
+            orthoInfo.List_smallcase = new List<Local_UserControls.Order_orthoSmallcase>();
             int itemIndex = 0;
             //蒐集OrthoSmallcase然後存進OuterCase
             DirectoryInfo dInfo2 = new DirectoryInfo(orthoInfo.CaseDirectoryPath);

@@ -350,5 +350,5 @@ MigrationBackup/
 .ionide/
 
 #Ignore Things
-!/OrderManagerNew/ExtDLL/*
-!/OrderManagerNew/bin/*.xml
+!/OrderManagerNew/Dllext/*
+!/OrderManagerNew/V2Implant/*.xml

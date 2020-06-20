@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace OrderManagerNew.UserControls
+namespace OrderManagerNew.Local_UserControls
 {
     /// <summary>
     /// Order_cadBase.xaml 的互動邏輯
@@ -154,7 +145,7 @@ namespace OrderManagerNew.UserControls
             label_orderID.Content = cadInfo.OrderID;
             label_designStep.Content = GetDesignStep((int)cadInfo.DesignStep);
             label_patientName.Content = cadInfo.PatientName;
-            label_createDate.Content = cadInfo.CreateDate.ToLongDateString();
+            label_createDate.Content = cadInfo.CreateDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
             ItemIndex = Index;
         }
 

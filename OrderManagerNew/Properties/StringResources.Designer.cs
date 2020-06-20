@@ -151,7 +151,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Last Update 的當地語系化字串。
+        ///   查詢類似 Last Update(MM/DD/YYYY) 的當地語系化字串。
         /// </summary>
         internal static string AirDUpdateDate {
             get {
@@ -466,11 +466,20 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Create Date 的當地語系化字串。
+        ///   查詢類似 Create Date(MM/DD/YYYY) 的當地語系化字串。
         /// </summary>
         internal static string CreateDate {
             get {
                 return ResourceManager.GetString("CreateDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Create Date 的當地語系化字串。
+        /// </summary>
+        internal static string CreateDate_short {
+            get {
+                return ResourceManager.GetString("CreateDate_short", resourceCulture);
             }
         }
         
@@ -1510,11 +1519,20 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Modified date 的當地語系化字串。
+        ///   查詢類似 Modified Date(MM/DD/YYYY) 的當地語系化字串。
         /// </summary>
         internal static string ModifyDate {
             get {
                 return ResourceManager.GetString("ModifyDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Modified Date 的當地語系化字串。
+        /// </summary>
+        internal static string ModifyDate_short {
+            get {
+                return ResourceManager.GetString("ModifyDate_short", resourceCulture);
             }
         }
         
@@ -1839,6 +1857,15 @@ namespace OrderManagerNew.Properties {
         internal static string plan_ng_osp {
             get {
                 return ResourceManager.GetString("plan_ng_osp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Please login first 的當地語系化字串。
+        /// </summary>
+        internal static string PleaseLoginFirst {
+            get {
+                return ResourceManager.GetString("PleaseLoginFirst", resourceCulture);
             }
         }
         

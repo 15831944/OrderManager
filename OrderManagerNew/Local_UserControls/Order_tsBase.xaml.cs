@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace OrderManagerNew.UserControls
+namespace OrderManagerNew.Local_UserControls
 {
     /// <summary>
     /// Order_tsBase.xaml 的互動邏輯
@@ -205,7 +197,7 @@ namespace OrderManagerNew.UserControls
             trayInfo.DesignStepString = GetTrayDesignStep((int)trayInfo.DesignStep);
             label_orderID.Content = trayInfo.OrderID.Substring(trayInfo.OrderID.IndexOf('-') + 1);
             label_designStep.Content = TranslationSource.Instance["CurrentStep"] + trayInfo.DesignStepString;
-            label_createDate.Content = trayInfo.CreateDate.ToLongDateString();
+            label_createDate.Content = trayInfo.CreateDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
             ItemIndex = Index;
         }
 
@@ -226,7 +218,7 @@ namespace OrderManagerNew.UserControls
             splintInfo.DesignStepString = GetSplintDesignStep((int)splintInfo.DesignStep);
             label_orderID.Content = splintInfo.OrderID.Substring(splintInfo.OrderID.IndexOf('-') + 1);
             label_designStep.Content = TranslationSource.Instance["CurrentStep"] + splintInfo.DesignStepString;
-            label_createDate.Content = splintInfo.CreateDate.ToLongDateString();
+            label_createDate.Content = splintInfo.CreateDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
             ItemIndex = Index;
         }
 

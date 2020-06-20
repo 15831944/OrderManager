@@ -1,29 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Reflection;    //取得OrderManager自身軟體版本
 using System.Windows.Media.Effects;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Media.Animation;
 using Path = System.IO.Path;
-using CadInformation = OrderManagerNew.UserControls.Order_cadBase.CadInformation;
-using TrayInformation = OrderManagerNew.UserControls.Order_tsBase.TrayInformation;
-using SplintInformation = OrderManagerNew.UserControls.Order_tsBase.SplintInformation;
-using ImplantOuterInformation = OrderManagerNew.UserControls.Order_implantBase.ImplantOuterInformation;
-using OrthoOuterInformation = OrderManagerNew.UserControls.Order_orthoBase.OrthoOuterInformation;
+using CadInformation = OrderManagerNew.Local_UserControls.Order_cadBase.CadInformation;
+using TrayInformation = OrderManagerNew.Local_UserControls.Order_tsBase.TrayInformation;
+using SplintInformation = OrderManagerNew.Local_UserControls.Order_tsBase.SplintInformation;
+using ImplantOuterInformation = OrderManagerNew.Local_UserControls.Order_implantBase.ImplantOuterInformation;
+using OrthoOuterInformation = OrderManagerNew.Local_UserControls.Order_orthoBase.OrthoOuterInformation;
 //Mahapps套件(NuGet下載): MaterialDesignThemes.MahApps v0.0.12
 
 
@@ -190,6 +182,11 @@ namespace OrderManagerNew
             {
                 LoginSuccess(uInfo);
                 AirDentalProjHandle.CheckAirDentalDirExist();
+            }
+            else
+            {
+                tabitem_Cloud.ToolTip = TranslationSource.Instance["PleaseLoginFirst"];
+                tabitem_Cloud.IsEnabled = false;
             }
             DateFilterAll.IsChecked = true;
             // CaseFilter 復原之前最後選擇的軟體排序
@@ -584,7 +581,7 @@ namespace OrderManagerNew
                             //reLoad Imp Proj
                             foreach(var childCase in StackPanel_Local.Children)
                             {
-                                if(childCase is OrderManagerNew.UserControls.Order_orthoBase)
+                                if(childCase is OrderManagerNew.Local_UserControls.Order_orthoBase)
                                 {
 
                                 }
@@ -602,7 +599,7 @@ namespace OrderManagerNew
         private void PMouseDown_Main(object sender, MouseButtonEventArgs e)
         {
             //點擊UserDetail以外的地方就收回
-            var mouseWasDownOnUserDetail = e.Source as UserControls.AirdentalUserDetail;
+            var mouseWasDownOnUserDetail = e.Source as Local_UserControls.AirdentalUserDetail;
             var mouseWasDownOnomFunction_User = e.Source as Button;
             if (loginStatus == true)
             {
@@ -622,6 +619,9 @@ namespace OrderManagerNew
             usercontrolUserDetail.SetUserPic(AirDentalProjHandle.APIPortal + @"v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
             loginStatus = true;
             SnackBarShow(TranslationSource.Instance["Hello"] + usercontrolUserDetail.UserName);
+            tabitem_Cloud.ToolTip = null;
+            tabitem_Cloud.IsEnabled = true;
+            tabcontrol_Main.SelectedItem = tabitem_Cloud;
         }
         /// <summary>
         /// 跳出Snackbar訊息
@@ -721,6 +721,7 @@ namespace OrderManagerNew
                 if (dialogResult == true)
                 {
                     LoginSuccess(DialogLogin.UserDetail);
+                    ChooseToLoadProj();
                 }
                 this.Effect = null;
                 this.OpacityMask = null;
@@ -742,6 +743,10 @@ namespace OrderManagerNew
             AirDentalProjHandle.UserLogout();
             StackPanel_Cloud.Children.Clear();
             loginStatus = false;
+
+            tabcontrol_Main.SelectedItem = tabitem_Local;
+            tabitem_Cloud.ToolTip = TranslationSource.Instance["PleaseLoginFirst"];
+            tabitem_Cloud.IsEnabled = false;
         }
         /// <summary>
         /// 設定SofttwareTable各Icon顯示狀態
@@ -2037,11 +2042,11 @@ namespace OrderManagerNew
                 StackPanel_Local.Children.Clear();
 
             //AirDental端
-            if (SoftwareFilterCAD.IsChecked == true)
+            if (SoftwareFilterCAD.IsChecked == true && loginStatus == true)
                 AirDentalProjHandle.ReceiveCADProjects();
-            else if (SoftwareFilterImplant.IsChecked == true)
+            else if (SoftwareFilterImplant.IsChecked == true && loginStatus == true)
                 AirDentalProjHandle.ReceiveImplantProjects();
-            else if (SoftwareFilterOrtho.IsChecked == true)
+            else if (SoftwareFilterOrtho.IsChecked == true && loginStatus == true)
                 AirDentalProjHandle.ReceiveOrthoProjects();
             else
                 StackPanel_Cloud.Children.Clear();
@@ -2144,33 +2149,38 @@ namespace OrderManagerNew
                         {
                             Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.EZCAD;
                             ProjHandle.LoadEZCADProj();
-                            AirDentalProjHandle.ReceiveCADProjects();
+                            if (loginStatus == true)
+                                AirDentalProjHandle.ReceiveCADProjects();
                             break;
                         }
                     case "SoftwareFilterImplant":
                         {
                             Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.Implant;
                             ProjHandle.LoadImplantProjV2();
-                            AirDentalProjHandle.ReceiveImplantProjects();
+                            if (loginStatus == true)
+                                AirDentalProjHandle.ReceiveImplantProjects();
                             break;
                         }
                     case "SoftwareFilterOrtho":
                         {
                             Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.Ortho;
                             ProjHandle.LoadOrthoProj();
-                            AirDentalProjHandle.ReceiveOrthoProjects();
+                            if (loginStatus == true)
+                                AirDentalProjHandle.ReceiveOrthoProjects();
                             break;
                         }
                     case "SoftwareFilterTray":
                         {
                             Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.Tray;
                             ProjHandle.LoadTrayProj();
+                            Handler_SetCaseShow_Airdental((int)_softwareID.Tray);
                             break;
                         }
                     case "SoftwareFilterSplint":
                         {
                             Properties.Settings.Default.LastSoftwareFilter = (int)_softwareID.Splint;
                             ProjHandle.LoadSplintProj();
+                            Handler_SetCaseShow_Airdental((int)_softwareID.Splint);
                             break;
                         }
                 }
@@ -2258,7 +2268,7 @@ namespace OrderManagerNew
                             int countIndex = 0;
                             foreach (CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
                             {
-                                UserControls.Order_cadBase Order_CAD = new UserControls.Order_cadBase();
+                                Local_UserControls.Order_cadBase Order_CAD = new Local_UserControls.Order_cadBase();
                                 Order_CAD.SetBaseProjectShow += CaseHandler_EZCAD_showSingleProject;
                                 Order_CAD.SetCaseInfo(cadInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_CAD);
@@ -2267,7 +2277,7 @@ namespace OrderManagerNew
                             Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.cad_projectDirectory);
                         }
                         else
-                            StackPanel_Local.Children.Add(new UserControls.NoResult());
+                            StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
                         break;
                     }
                 case (int)_softwareID.Implant:
@@ -2277,7 +2287,7 @@ namespace OrderManagerNew
                         {
                             foreach (ImplantOuterInformation implantInfo in ProjHandle.Caselist_ImplantOuterCase)
                             {
-                                UserControls.Order_implantBase Order_Implant = new UserControls.Order_implantBase();
+                                Local_UserControls.Order_implantBase Order_Implant = new Local_UserControls.Order_implantBase();
                                 Order_Implant.SetBaseProjectShow += CaseHandler_Implant_showSingleProject;
                                 Order_Implant.SetSmallProjectDetailShow += CaseHandler_Implant_showDetail;
                                 Order_Implant.SetCaseInfo(implantInfo, countIndex);
@@ -2287,7 +2297,7 @@ namespace OrderManagerNew
                             Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.implant_projectDirectory);
                         }
                         else
-                            StackPanel_Local.Children.Add(new UserControls.NoResult());
+                            StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
                         break;
                     }
                 case (int)_softwareID.Ortho:
@@ -2297,7 +2307,7 @@ namespace OrderManagerNew
                         {
                             foreach (OrthoOuterInformation orthoInfo in ProjHandle.Caselist_OrthoOuterCase)
                             {
-                                UserControls.Order_orthoBase Order_Ortho = new UserControls.Order_orthoBase();
+                                Local_UserControls.Order_orthoBase Order_Ortho = new Local_UserControls.Order_orthoBase();
                                 Order_Ortho.SetBaseProjectShow += CaseHandler_Ortho_showSingleProject;
                                 Order_Ortho.SetSmallProjectDetailShow += CaseHandler_Ortho_showDetail;
                                 Order_Ortho.SetCaseInfo(orthoInfo, countIndex);
@@ -2307,7 +2317,7 @@ namespace OrderManagerNew
                             Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.ortho_projectDirectory);
                         }
                         else
-                            StackPanel_Local.Children.Add(new UserControls.NoResult());
+                            StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
                         break;
                     }
                 case (int)_softwareID.Tray:
@@ -2317,7 +2327,7 @@ namespace OrderManagerNew
                         {
                             foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
                             {
-                                UserControls.Order_tsBase Order_Tray = new UserControls.Order_tsBase();
+                                Local_UserControls.Order_tsBase Order_Tray = new Local_UserControls.Order_tsBase();
                                 Order_Tray.SetBaseProjectShow += CaseHandler_TraySplint_showSingleProject;
                                 Order_Tray.SetTrayCaseInfo(trayInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_Tray);
@@ -2326,7 +2336,7 @@ namespace OrderManagerNew
                             Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.tray_projectDirectory);
                         }
                         else
-                            StackPanel_Local.Children.Add(new UserControls.NoResult());
+                            StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
                         break;
                     }
                 case (int)_softwareID.Splint:
@@ -2336,7 +2346,7 @@ namespace OrderManagerNew
                         {
                             foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
                             {
-                                UserControls.Order_tsBase Order_Splint = new UserControls.Order_tsBase();
+                                Local_UserControls.Order_tsBase Order_Splint = new Local_UserControls.Order_tsBase();
                                 Order_Splint.SetBaseProjectShow += CaseHandler_TraySplint_showSingleProject;
                                 Order_Splint.SetSplintCaseInfo(splintInfo, countIndex);
                                 StackPanel_Local.Children.Add(Order_Splint);
@@ -2345,7 +2355,7 @@ namespace OrderManagerNew
                             Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.splint_projectDirectory);
                         }
                         else
-                            StackPanel_Local.Children.Add(new UserControls.NoResult());
+                            StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
                         break;
                     }
             }
@@ -2353,9 +2363,9 @@ namespace OrderManagerNew
         private void CaseHandler_EZCAD_showSingleProject(int projectIndex)
         {
             StackPanel_Detail.Children.Clear();
-            if (((UserControls.Order_cadBase)StackPanel_Local.Children[projectIndex]).IsFocusCase == false)
+            if (((Local_UserControls.Order_cadBase)StackPanel_Local.Children[projectIndex]).IsFocusCase == false)
             {
-                UserControls.Detail_cad detail_cad = new UserControls.Detail_cad();
+                Local_UserControls.Detail_cad detail_cad = new Local_UserControls.Detail_cad();
                 detail_cad.SetDetailInfo(ProjHandle.Caselist_EZCAD[projectIndex]);
                 StackPanel_Detail.Children.Add(detail_cad);
             }
@@ -2364,7 +2374,7 @@ namespace OrderManagerNew
                 if (i == projectIndex)
                     continue;
 
-                ((UserControls.Order_cadBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
+                ((Local_UserControls.Order_cadBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
             }
         }
         private void CaseHandler_Implant_showSingleProject(int projectIndex)
@@ -2375,7 +2385,7 @@ namespace OrderManagerNew
                 if (i == projectIndex)
                     continue;
 
-                ((UserControls.Order_implantBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
+                ((Local_UserControls.Order_implantBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
             }
         }
         private void CaseHandler_Ortho_showSingleProject(int projectIndex)
@@ -2386,23 +2396,23 @@ namespace OrderManagerNew
                 if (i == projectIndex)
                     continue;
 
-                ((UserControls.Order_orthoBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
+                ((Local_UserControls.Order_orthoBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
             }
         }
         private void CaseHandler_TraySplint_showSingleProject(int projectIndex)
         {
             StackPanel_Detail.Children.Clear();
-            if (((UserControls.Order_tsBase)StackPanel_Local.Children[projectIndex]).IsFocusCase == false)
+            if (((Local_UserControls.Order_tsBase)StackPanel_Local.Children[projectIndex]).IsFocusCase == false)
             {
-                if(((UserControls.Order_tsBase)StackPanel_Local.Children[projectIndex]).trayInfo != null)
+                if(((Local_UserControls.Order_tsBase)StackPanel_Local.Children[projectIndex]).trayInfo != null)
                 {
-                    UserControls.Detail_traysplint detail_tray = new UserControls.Detail_traysplint();
+                    Local_UserControls.Detail_traysplint detail_tray = new Local_UserControls.Detail_traysplint();
                     detail_tray.SetTrayDetailInfo(ProjHandle.Caselist_Tray[projectIndex]);
                     StackPanel_Detail.Children.Add(detail_tray);
                 }
                 else
                 {
-                    UserControls.Detail_traysplint detail_splint = new UserControls.Detail_traysplint();
+                    Local_UserControls.Detail_traysplint detail_splint = new Local_UserControls.Detail_traysplint();
                     detail_splint.SetSplintDetailInfo(ProjHandle.Caselist_Splint[projectIndex]);
                     StackPanel_Detail.Children.Add(detail_splint);
                 }
@@ -2412,20 +2422,20 @@ namespace OrderManagerNew
                 if (i == projectIndex)
                     continue;
 
-                ((UserControls.Order_tsBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
+                ((Local_UserControls.Order_tsBase)StackPanel_Local.Children[i]).SetCaseFocusStatus(false);
             }
         }
         private void CaseHandler_Implant_showDetail(int BaseCaseIndex, int SmallCaseIndex)
         {
             StackPanel_Detail.Children.Clear();
-            if (StackPanel_Local.Children[BaseCaseIndex] is UserControls.Order_implantBase)
+            if (StackPanel_Local.Children[BaseCaseIndex] is Local_UserControls.Order_implantBase)
             {
-                if (((UserControls.Order_implantBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Implant.Children[SmallCaseIndex + 1] is UserControls.Order_ImplantSmallcase tmpImplnatSmall)
+                if (((Local_UserControls.Order_implantBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Implant.Children[SmallCaseIndex + 1] is Local_UserControls.Order_ImplantSmallcase tmpImplnatSmall)
                 {
                     if (tmpImplnatSmall.IsFocusSmallCase == false)
                     {
-                        UserControls.Detail_implantV2 detail_implant = new UserControls.Detail_implantV2();
-                        detail_implant.SetDetailInfo(((UserControls.Order_implantBase)StackPanel_Local.Children[BaseCaseIndex]).implantInfo, tmpImplnatSmall.implantsmallcaseInfo);
+                        Local_UserControls.Detail_implantV2 detail_implant = new Local_UserControls.Detail_implantV2();
+                        detail_implant.SetDetailInfo(((Local_UserControls.Order_implantBase)StackPanel_Local.Children[BaseCaseIndex]).implantInfo, tmpImplnatSmall.implantsmallcaseInfo);
                         StackPanel_Detail.Children.Add(detail_implant);
                     }
                 }
@@ -2434,13 +2444,13 @@ namespace OrderManagerNew
         private void CaseHandler_Ortho_showDetail(int BaseCaseIndex, int SmallCaseIndex)
         {
             StackPanel_Detail.Children.Clear();
-            if(StackPanel_Local.Children[BaseCaseIndex] is UserControls.Order_orthoBase)
+            if(StackPanel_Local.Children[BaseCaseIndex] is Local_UserControls.Order_orthoBase)
             {
-                if (((UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex + 1] is UserControls.Order_orthoSmallcase tmpOrthoSmall)
+                if (((Local_UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex + 1] is Local_UserControls.Order_orthoSmallcase tmpOrthoSmall)
                 {
                     if (tmpOrthoSmall.IsFocusSmallCase == false)
                     {
-                        UserControls.Detail_ortho detail_ortho = new UserControls.Detail_ortho();
+                        Local_UserControls.Detail_ortho detail_ortho = new Local_UserControls.Detail_ortho();
                         detail_ortho.SetDetailInfo(tmpOrthoSmall.orthosmallcaseInfo);
                         StackPanel_Detail.Children.Add(detail_ortho);
                     }
@@ -2466,7 +2476,7 @@ namespace OrderManagerNew
                             }
                         }
                         else
-                            StackPanel_Cloud.Children.Add(new UserControls.NoResult());
+                            StackPanel_Cloud.Children.Add(new Local_UserControls.NoResult());
                         break;
                     }
                 case (int)_softwareID.Implant:
@@ -2479,7 +2489,7 @@ namespace OrderManagerNew
                             }
                         }
                         else
-                            StackPanel_Cloud.Children.Add(new UserControls.NoResult());
+                            StackPanel_Cloud.Children.Add(new Local_UserControls.NoResult());
                         break;
                     }
                 case (int)_softwareID.Ortho:
@@ -2492,7 +2502,17 @@ namespace OrderManagerNew
                             }
                         }
                         else
-                            StackPanel_Cloud.Children.Add(new UserControls.NoResult());
+                            StackPanel_Cloud.Children.Add(new Local_UserControls.NoResult());
+                        break;
+                    }
+                case (int)_softwareID.Tray:
+                    {
+                        StackPanel_Cloud.Children.Add(new Local_UserControls.NoResult());
+                        break;
+                    }
+                case (int)_softwareID.Splint:
+                    {
+                        StackPanel_Cloud.Children.Add(new Local_UserControls.NoResult());
                         break;
                     }
             }
@@ -2533,13 +2553,13 @@ namespace OrderManagerNew
         private void CloudCaseHandler_Ortho_showDetail(int BaseCaseIndex, int SmallCaseIndex)
         {
             StackPanel_Detail.Children.Clear();
-            /*if (StackPanel_Local.Children[BaseCaseIndex] is UserControls.Order_orthoBase)
+            /*if (StackPanel_Local.Children[BaseCaseIndex] is Local_UserControls.Order_orthoBase)
             {
-                if (((UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex + 1] is UserControls.Order_orthoSmallcase tmpOrthoSmall)
+                if (((Local_UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex + 1] is Local_UserControls.Order_orthoSmallcase tmpOrthoSmall)
                 {
                     if (tmpOrthoSmall.IsFocusSmallCase == false)
                     {
-                        UserControls.Detail_ortho detail_ortho = new UserControls.Detail_ortho();
+                        Local_UserControls.Detail_ortho detail_ortho = new Local_UserControls.Detail_ortho();
                         detail_ortho.SetDetailInfo(tmpOrthoSmall.orthosmallcaseInfo);
                         StackPanel_Detail.Children.Add(detail_ortho);
                     }
@@ -2549,13 +2569,13 @@ namespace OrderManagerNew
         private void CloudCaseHandler_Implant_showDetail(int BaseCaseIndex, int SmallCaseIndex)
         {
             StackPanel_Detail.Children.Clear();
-            /*if (StackPanel_Local.Children[BaseCaseIndex] is UserControls.Order_orthoBase)
+            /*if (StackPanel_Local.Children[BaseCaseIndex] is Local_UserControls.Order_orthoBase)
             {
-                if (((UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex + 1] is UserControls.Order_orthoSmallcase tmpOrthoSmall)
+                if (((Local_UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex + 1] is Local_UserControls.Order_orthoSmallcase tmpOrthoSmall)
                 {
                     if (tmpOrthoSmall.IsFocusSmallCase == false)
                     {
-                        UserControls.Detail_ortho detail_ortho = new UserControls.Detail_ortho();
+                        Local_UserControls.Detail_ortho detail_ortho = new Local_UserControls.Detail_ortho();
                         detail_ortho.SetDetailInfo(tmpOrthoSmall.orthosmallcaseInfo);
                         StackPanel_Detail.Children.Add(detail_ortho);
                     }
@@ -2565,13 +2585,13 @@ namespace OrderManagerNew
         private void CloudCaseHandler_CAD_showDetail(int BaseCaseIndex, int SmallCaseIndex)
         {
             StackPanel_Detail.Children.Clear();
-            /*if (StackPanel_Local.Children[BaseCaseIndex] is UserControls.Order_orthoBase)
+            /*if (StackPanel_Local.Children[BaseCaseIndex] is Local_UserControls.Order_orthoBase)
             {
-                if (((UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex + 1] is UserControls.Order_orthoSmallcase tmpOrthoSmall)
+                if (((Local_UserControls.Order_orthoBase)StackPanel_Local.Children[BaseCaseIndex]).stackpanel_Ortho.Children[SmallCaseIndex + 1] is Local_UserControls.Order_orthoSmallcase tmpOrthoSmall)
                 {
                     if (tmpOrthoSmall.IsFocusSmallCase == false)
                     {
-                        UserControls.Detail_ortho detail_ortho = new UserControls.Detail_ortho();
+                        Local_UserControls.Detail_ortho detail_ortho = new Local_UserControls.Detail_ortho();
                         detail_ortho.SetDetailInfo(tmpOrthoSmall.orthosmallcaseInfo);
                         StackPanel_Detail.Children.Add(detail_ortho);
                     }

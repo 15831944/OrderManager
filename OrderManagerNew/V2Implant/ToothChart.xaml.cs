@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace OrderManagerNew.V2Implant
@@ -474,22 +465,22 @@ namespace OrderManagerNew.V2Implant
 			if (IsShowOnly) return;
 
 
-            if (!(sender is Image img))
-            {
-                //reset tooth select index
-                for (int i = 0; i < 32; i++)
-                {
-                    Image sI = GetToothImage(i);
-                    sI.Tag = "0";
-                    sI.Style = FindResource("DisToothSelect") as Style;
+			if (!(sender is Image img))
+			{
+				//reset tooth select index
+				for (int i = 0; i < 32; i++)
+				{
+					Image sI = GetToothImage(i);
+					sI.Tag = "0";
+					sI.Style = FindResource("DisToothSelect") as Style;
 
-                    ToothSelectIdx[i] = false;
-                }
+					ToothSelectIdx[i] = false;
+				}
 
-                return;
-            }
+				return;
+			}
 
-            PressShift = false;
+			PressShift = false;
 			if (System.Windows.Forms.Control.ModifierKeys == System.Windows.Forms.Keys.Shift)
 				PressShift = true;
 
@@ -547,9 +538,9 @@ namespace OrderManagerNew.V2Implant
 						}
 					}
 
-                    //send click event to winNewOrder class
-                    ImageClick?.Invoke(sender, new RoutedEventArgs());
-                }
+					//send click event to winNewOrder class
+					ImageClick?.Invoke(sender, new RoutedEventArgs());
+				}
 
 
 			}
@@ -775,16 +766,16 @@ namespace OrderManagerNew.V2Implant
 					Ellipse e1 = GetConnectorImage(i);
 					Ellipse e2 = GetConnectorImage(i + 1);
 
-                    Line myLine = new Line
-                    {
-                        Stroke = System.Windows.Media.Brushes.Orange,
-                        X1 = Canvas.GetLeft(e1) + 5,
-                        X2 = Canvas.GetLeft(e2) + 5,
-                        Y1 = Canvas.GetTop(e1) + 5,
-                        Y2 = Canvas.GetTop(e2) + 5,
-                        StrokeThickness = 6
-                    };
-                    canvas_connector.Children.Add(myLine);
+					Line myLine = new Line
+					{
+						Stroke = System.Windows.Media.Brushes.Orange,
+						X1 = Canvas.GetLeft(e1) + 5,
+						X2 = Canvas.GetLeft(e2) + 5,
+						Y1 = Canvas.GetTop(e1) + 5,
+						Y2 = Canvas.GetTop(e2) + 5,
+						StrokeThickness = 6
+					};
+					canvas_connector.Children.Add(myLine);
 				}
 			}
 
@@ -795,16 +786,16 @@ namespace OrderManagerNew.V2Implant
 					Ellipse e1 = GetConnectorImage(i);
 					Ellipse e2 = GetConnectorImage(i + 1);
 
-                    Line myLine = new Line
-                    {
-                        Stroke = System.Windows.Media.Brushes.Orange,
-                        X1 = Canvas.GetLeft(e1) + 5,
-                        X2 = Canvas.GetLeft(e2) + 5,
-                        Y1 = Canvas.GetTop(e1) + 5,
-                        Y2 = Canvas.GetTop(e2) + 5,
-                        StrokeThickness = 6
-                    };
-                    canvas_connector.Children.Add(myLine);
+					Line myLine = new Line
+					{
+						Stroke = System.Windows.Media.Brushes.Orange,
+						X1 = Canvas.GetLeft(e1) + 5,
+						X2 = Canvas.GetLeft(e2) + 5,
+						Y1 = Canvas.GetTop(e1) + 5,
+						Y2 = Canvas.GetTop(e2) + 5,
+						StrokeThickness = 6
+					};
+					canvas_connector.Children.Add(myLine);
 				}
 			}
 		}

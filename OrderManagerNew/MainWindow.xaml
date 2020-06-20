@@ -1,7 +1,7 @@
 ﻿<Window
   x:Class="OrderManagerNew.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" xmlns:local="clr-namespace:OrderManagerNew"
-  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:OrderManagerNew.UserControls"
+  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:uc="clr-namespace:OrderManagerNew.Local_UserControls"
   Title="OrderManager" Width="1310" Height="768"
   MinWidth="1280" MinHeight="768" Background="#FF353531"
   Closing="Closing_MainWindow" Focusable="false" KeyUp="KeyUp_MainWindow"
@@ -566,18 +566,21 @@
 
                     <!--  CaseTable-Start  -->
                     <TabControl
-                      Grid.Column="1"
+                      Grid.Column="1" x:Name="tabcontrol_Main"
                       Background="{StaticResource background_SuperDarkCaseTable}"
                       BorderBrush="{StaticResource background_SuperDarkCaseTable}"
                       BorderThickness="1" Focusable="False">
-                        <TabItem Header="{local:LocExtension Local}" Style="{StaticResource CaseTabItem}">
+                        <TabItem x:Name="tabitem_Local" Header="{local:LocExtension Local}" Style="{StaticResource CaseTabItem}">
                             <Border Background="#FFEDEDE2">
                                 <ScrollViewer x:Name="scrollbar_local">
                                     <StackPanel x:Name="StackPanel_Local" Orientation="Vertical" />
                                 </ScrollViewer>
                             </Border>
                         </TabItem>
-                        <TabItem Header="Airdental" Style="{StaticResource CaseTabItem}">
+                        <TabItem
+                          x:Name="tabitem_Cloud" Header="Airdental"
+                          Style="{StaticResource CaseTabItem}"
+                          ToolTipService.ShowOnDisabled="True">
                             <Border Background="#FFEDEDE2">
                                 <ScrollViewer>
                                     <StackPanel x:Name="StackPanel_Cloud" Orientation="Vertical" />

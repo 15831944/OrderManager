@@ -2,12 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
 //C# HttpWebRequest保存cookies模擬登入的方法！ http://www.piaoyi.org/c-sharp/c-httpwebrequest-cookies.html
 
 namespace Dll_Airdental

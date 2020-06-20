@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Xml.Linq;
 using Microsoft.Win32;
 //using System.Windows.Forms;
@@ -23,139 +19,141 @@ namespace OrderManagerNew.V2Implant
 	/// </summary>
 	public partial class ImplantV2NewOrder : Window
 	{
-        private Point startPos;
-        System.Windows.Forms.Screen[] screens = System.Windows.Forms.Screen.AllScreens;
+		private Point startPos;
+		System.Windows.Forms.Screen[] screens = System.Windows.Forms.Screen.AllScreens;
 
-        int ListBox1_PreSelectIndex;
+		int ListBox1_PreSelectIndex;
 	  
 		//記錄齒位資訊
 		public ToothOrderInfo[] ToothData;
 
-        public string m_ImplantRoot;
+		public string m_ImplantRoot;
 
-        public int ActiveToothType { get; set; }
+		public int ActiveToothType { get; set; }
 
 		public List<int> Productlist{ get; set; }
 
 		public bool[] connectorInfo = new bool[32];
 
-        public class ImplantInforElement
-        {
-            public String CompanyName { get; set; }
-            public List<String> SystemName { get; set; }
-        }
+		public class ImplantInforElement
+		{
+			public String CompanyName { get; set; }
+			public List<String> SystemName { get; set; }
+		}
 
-        public List<ImplantInforElement> ImplantInforList;
+		public List<ImplantInforElement> ImplantInforList;
 
-        public bool IsUpperJaw_case = true;
+		public bool IsUpperJaw_case = true;
 
-        //5/15/2019 handtan//set default folder path
-        public string Selected_folder_path;
+		//5/15/2019 handtan//set default folder path
+		public string Selected_folder_path;
 
-        //10/08/2019 handtan//airdental串接
-        public bool IsAirdentalCase = false;
+		//10/08/2019 handtan//airdental串接
+		public bool IsAirdentalCase = false;
 
-        public ImplantV2NewOrder()
+		public bool haveXml;
+
+		public ImplantV2NewOrder()
 		{
 			InitializeComponent();
 
 			Productlist = new List<int>();
 			ActiveToothType = -1;
-
+			haveXml = true;
 			ToothData = new ToothOrderInfo[32];
-            for (int i = 0; i < 32; i++)
+			for (int i = 0; i < 32; i++)
 			{
 				ToothData[i] = new ToothOrderInfo();
 				connectorInfo[i] = false;
-            }
+			}
 			toothImg.SetConnectorAllUnset();
 
 			SetDesignerGeneralProcuctType();
 
 			ListBox1_PreSelectIndex = -1;
-            
-            LoadSurgicalKitXml();
+			
+			LoadSurgicalKitXml();
 
-            //SetImplantBrand();
+			//SetImplantBrand();
 
-            //-load implant icon
-            if (true)
-            {
-                SetBridgeProductList();
-                listbox2.Items.Clear();
-                String imgstring = "", namestring = "";
-                int toothtypeindex = 0;
-                foreach (int id in Productlist)
-                {
-                    GetToothTypeData(id, ref imgstring, ref namestring, ref toothtypeindex);
-                    UCToothTypeBase uc = new UCToothTypeBase();
-                    uc.SetImage(imgstring);
-                    uc.ToothTypeName.Content = namestring;
-                    uc.ProductTypeIdx = toothtypeindex;
-                    listbox2.Items.Add(uc);
-                }
+			//-load implant icon
+			if (true)
+			{
+				SetBridgeProductList();
+				listbox2.Items.Clear();
+				String imgstring = "", namestring = "";
+				int toothtypeindex = 0;
+				foreach (int id in Productlist)
+				{
+					GetToothTypeData(id, ref imgstring, ref namestring, ref toothtypeindex);
+					UCToothTypeBase uc = new UCToothTypeBase();
+					uc.SetImage(imgstring);
+					uc.ToothTypeName.Content = namestring;
+					uc.ProductTypeIdx = toothtypeindex;
+					listbox2.Items.Add(uc);
+				}
 
-                //給預設order number
-                DateTime localDate = DateTime.Now;
-                localDate.Month.ToString();
+				//給預設order number
+				DateTime localDate = DateTime.Now;
+				localDate.Month.ToString();
 
-                //-20200525 handtan//統一日期單位皆為二位數,如5月為05
-                String m_month="";
-                String m_day="";
-                String m_hour="";
-                String m_min="";
-                String m_sec="";
-                if (localDate.Month.ToString().Length == 1) m_month = "0" + localDate.Month.ToString();
-                else                                        m_month = localDate.Month.ToString();
+				//-20200525 handtan//統一日期單位皆為二位數,如5月為05
+				String m_month="";
+				String m_day="";
+				String m_hour="";
+				String m_min="";
+				String m_sec="";
+				if (localDate.Month.ToString().Length == 1) m_month = "0" + localDate.Month.ToString();
+				else                                        m_month = localDate.Month.ToString();
 
-                if (localDate.Day.ToString().Length == 1)   m_day = "0" + localDate.Day.ToString();
-                else                                        m_day = localDate.Day.ToString();
+				if (localDate.Day.ToString().Length == 1)   m_day = "0" + localDate.Day.ToString();
+				else                                        m_day = localDate.Day.ToString();
 
-                if (localDate.Hour.ToString().Length == 1)  m_hour = "0" + localDate.Hour.ToString();
-                else                                        m_hour = localDate.Hour.ToString();
+				if (localDate.Hour.ToString().Length == 1)  m_hour = "0" + localDate.Hour.ToString();
+				else                                        m_hour = localDate.Hour.ToString();
 
-                if (localDate.Minute.ToString().Length == 1)    m_min = "0" + localDate.Minute.ToString();
-                else                                            m_min = localDate.Minute.ToString();
+				if (localDate.Minute.ToString().Length == 1)    m_min = "0" + localDate.Minute.ToString();
+				else                                            m_min = localDate.Minute.ToString();
 
-                if (localDate.Second.ToString().Length == 1)    m_sec = "0" + localDate.Second.ToString();
-                else                                            m_sec = localDate.Second.ToString();
+				if (localDate.Second.ToString().Length == 1)    m_sec = "0" + localDate.Second.ToString();
+				else                                            m_sec = localDate.Second.ToString();
 
-                //m_order_num.Text = localDate.Year.ToString() + localDate.Month.ToString() + localDate.Day.ToString() + localDate.Hour.ToString() + localDate.Minute.ToString() + localDate.Second.ToString();
-                m_order_num.Text = localDate.Year.ToString() + m_month + m_day + m_hour + m_day + m_min + m_sec;
+				//m_order_num.Text = localDate.Year.ToString() + localDate.Month.ToString() + localDate.Day.ToString() + localDate.Hour.ToString() + localDate.Minute.ToString() + localDate.Second.ToString();
+				m_order_num.Text = localDate.Year.ToString() + m_month + m_day + m_hour + m_day + m_min + m_sec;
 
-                //給預設生日
+				//給預設生日
 
-                //if (m_patient_birthday_airdental != "")
-                //{
-                //    m_patient_birthday.Text = m_patient_birthday_airdental;
-                //}
-                //else
-                {
-                    m_patient_birthday.SelectedDate = localDate.Date;
-                }
+				//if (m_patient_birthday_airdental != "")
+				//{
+				//    m_patient_birthday.Text = m_patient_birthday_airdental;
+				//}
+				//else
+				{
+					m_patient_birthday.SelectedDate = localDate.Date;
+				}
 
 
-                //測試
-                //m_implant_path.Text = @"C:\IntewareData\Implant\안녕하세요";
+				//測試
+				//m_implant_path.Text = @"C:\IntewareData\Implant\안녕하세요";
 
-                LoadImplantInfor();
+				LoadImplantInfor();
 
-                //初始standard guide
-                m_ct_path_check.IsChecked = true;
-                m_upperjaw_path_check.IsChecked = true;
+				//初始standard guide
+				m_ct_path_check.IsChecked = true;
+				m_upperjaw_path_check.IsChecked = true;
 
-                m_lowerjaw_path.Opacity = 0.0;
-                brolower.Opacity = 0.0;
-                m_lowerjaw_path_clear.Opacity = 0.0;
+				m_lowerjaw_path.Opacity = 0.0;
+				brolower.Opacity = 0.0;
+				m_lowerjaw_path_clear.Opacity = 0.0;
 
-                m_othermodel_path.Text = "";
-                m_othermodel_path.Opacity = 0.0;
-                broother.Opacity = 0.0;
-                m_othermodel_path_check.IsChecked = false;
-                m_othermodel_path_clear.Opacity = 0.0;
-            }
-            /*SaveXml();*/
-        }
+				m_othermodel_path.Text = "";
+				m_othermodel_path.Opacity = 0.0;
+				broother.Opacity = 0.0;
+				m_othermodel_path_check.IsChecked = false;
+				m_othermodel_path_clear.Opacity = 0.0;
+			}
+			/*SaveXml();*/
+		}
 
 		public void GetToothTypeData(int index, ref String ImgString, ref String NameString, ref int ToothTypeIdx)
 		{
@@ -246,12 +244,12 @@ namespace OrderManagerNew.V2Implant
 					NameString = "Neighbor Tooth";
 					ToothTypeIdx = (int)ToothType.ToothTypeList.NEIGHBOR;
 					break;
-                case (int)ToothType.ToothTypeList.IMPLANT:
-                    ImgString = "ToothImg\\icon_implant.png";
-                    NameString = "Implant";
-                    ToothTypeIdx = (int)ToothType.ToothTypeList.IMPLANT;
-                    break;
-                default:
+				case (int)ToothType.ToothTypeList.IMPLANT:
+					ImgString = "ToothImg\\icon_implant.png";
+					NameString = "Implant";
+					ToothTypeIdx = (int)ToothType.ToothTypeList.IMPLANT;
+					break;
+				default:
 					break;
 			}
 		}
@@ -314,28 +312,28 @@ namespace OrderManagerNew.V2Implant
 
 		public void MyEventHandlerFunction_StatusUpdated(object sender, EventArgs e)
 		{
-            //點選list1要變動list2的物件
-            if (sender is UCToothTypeBase uc)
-            {
-                Listbox1_SelectionChanged(listbox1, null);
-                return;
-            }
+			//點選list1要變動list2的物件
+			if (sender is UCToothTypeBase uc)
+			{
+				Listbox1_SelectionChanged(listbox1, null);
+				return;
+			}
 
-            if (sender is Image img)
-            {
-                int idx = toothImg.GetToothImageIndex(img.Name);
+			if (sender is Image img)
+			{
+				int idx = toothImg.GetToothImageIndex(img.Name);
 
-                //有產品設定
-                if (ToothData[idx].FLAG)
-                {
-                    SetProductDetail(ToothData[idx]);
-                }
-                else
-                {
-                    listbox2.SelectedIndex = -1;
-                }
-            }
-        }
+				//有產品設定
+				if (ToothData[idx].FLAG)
+				{
+					SetProductDetail(ToothData[idx]);
+				}
+				else
+				{
+					listbox2.SelectedIndex = -1;
+				}
+			}
+		}
 
 
 		private void Listbox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -455,9 +453,9 @@ namespace OrderManagerNew.V2Implant
 		public void SetBridgeProductList()
 		{
 			Productlist.Clear();
-            Productlist.Add((int)ToothType.ToothTypeList.IMPLANT);
-            Productlist.Add((int)ToothType.ToothTypeList.NON_TOOTH);
-        }
+			Productlist.Add((int)ToothType.ToothTypeList.IMPLANT);
+			Productlist.Add((int)ToothType.ToothTypeList.NON_TOOTH);
+		}
 
 		public void SetAbutmentProductList()
 		{
@@ -478,8 +476,8 @@ namespace OrderManagerNew.V2Implant
 
 		private void Listbox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-            //MessageBox.Show("select change");
-            if (listbox2.SelectedIndex!=-1)
+			//MessageBox.Show("select change");
+			if (listbox2.SelectedIndex!=-1)
 			{
 				UCToothTypeBase uc = listbox2.SelectedItem as UCToothTypeBase;
 				ActiveToothType = uc.ProductTypeIdx;
@@ -551,10 +549,10 @@ namespace OrderManagerNew.V2Implant
 					toothImg.DrawConnectorLine(toothImg.ConnectorIdx);
 				}
 
-                //5/9/2019 handtan//植體無法重選bug修正
-                listbox2.SelectedIndex = -1;
+				//5/9/2019 handtan//植體無法重選bug修正
+				listbox2.SelectedIndex = -1;
 
-            }
+			}
 			else
 			{
 				ActiveToothType = -1;
@@ -659,114 +657,117 @@ namespace OrderManagerNew.V2Implant
 				comboColor.SelectedIndex = 0;
 		}
 
-        public void LoadSurgicalKitXml()
-        {
-            XDocument xDoc;
-            try
-            {
-                xDoc = XDocument.Load("..\\SurgicalKitInfor.xml");
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-            
-            if (xDoc == null)
-            {
-                MessageBox.Show("Load SurgicalKitInfor.xml Error!");
-                return;
-            }
-            var result = from q in xDoc.Descendants("Name")
-                         select new
-                         {
-                             m_name = q.Value
-                         };
-
-            foreach (var item in result)
-            {
-                comboSurgicalKit.Items.Add(item.m_name);
-            }
-
-            if (comboSurgicalKit.Items.Count > 0)
-                comboSurgicalKit.SelectedIndex = 0;
-        }
-        
-        public void LoadImplantInfor()
-        {
-            XDocument xDoc;
-            try
-            {
-                xDoc = XDocument.Load("..\\ImplantInfor.xml");
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-
-            comboImplantBrand.Items.Clear();
-            comboImplantSystem.Items.Clear();
-
-            if (ImplantInforList == null)
-            {
-                ImplantInforList = new List<ImplantInforElement>();
-            }
-            else
-            {
-                ImplantInforList.Clear();
-            }
-
-            var brandstr = from item in xDoc.Element("ImplantInfor").Descendants("Brand")
-                          select item;
-
-            foreach (var item in brandstr)
-            {
-                ImplantInforElement ie = new ImplantInforElement();
-          
-                string company_name = item.Descendants("Company").First().Value;
-                comboImplantBrand.Items.Add(company_name);
-                ie.CompanyName = company_name;
-
-                var systemstr = from sutitem in item.Descendants("System")
-                                select sutitem;
-
-                ie.SystemName = new List<String>();
-
-                int index = 0;
-                foreach (var sutitem in systemstr)
-                {
-                    string system_name = sutitem.Value;
-
-                    if (index == 0) comboImplantSystem.Items.Add(system_name);
-
-                    ie.SystemName.Add(system_name);
-                    index++;
-                }
-
-                ImplantInforList.Add(ie);
-            }
-
-            if (comboImplantBrand.Items.Count > 0)
-                comboImplantBrand.SelectedIndex = 0;
-
-            if (comboImplantSystem.Items.Count > 0)
-                comboImplantSystem.SelectedIndex = 0;
-        }
-
-
-        public event EventHandler NewOrderStatusUpdated;
-
-        private void FunctionThatRaisesEvent()
-        {
-            //Null check makes sure the main page is attached to the event
-            this.NewOrderStatusUpdated?.Invoke(this, new EventArgs());
-        }
-
-        public void SaveXml(string storepath)
+		public void LoadSurgicalKitXml()
 		{
-            //set group information
-            List<GCase> grouplist = new List<GCase>();
+			XDocument xDoc;
+			try
+			{
+				xDoc = XDocument.Load("V2Implant\\SurgicalKitInfor.xml");
+			}
+			catch(Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+                haveXml = false;
+                return;
+			}
+			
+			if (xDoc == null)
+			{
+				MessageBox.Show("Load SurgicalKitInfor.xml Error!");
+                haveXml = false;
+                return;
+			}
+			var result = from q in xDoc.Descendants("Name")
+						 select new
+						 {
+							 m_name = q.Value
+						 };
+
+			foreach (var item in result)
+			{
+				comboSurgicalKit.Items.Add(item.m_name);
+			}
+
+			if (comboSurgicalKit.Items.Count > 0)
+				comboSurgicalKit.SelectedIndex = 0;
+		}
+		
+		public void LoadImplantInfor()
+		{
+			XDocument xDoc;
+			try
+			{
+				xDoc = XDocument.Load("V2Implant\\ImplantInfor.xml");
+			}
+			catch(Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+                haveXml = false;
+                return;
+			}
+
+			comboImplantBrand.Items.Clear();
+			comboImplantSystem.Items.Clear();
+
+			if (ImplantInforList == null)
+			{
+				ImplantInforList = new List<ImplantInforElement>();
+			}
+			else
+			{
+				ImplantInforList.Clear();
+			}
+
+			var brandstr = from item in xDoc.Element("ImplantInfor").Descendants("Brand")
+						  select item;
+
+			foreach (var item in brandstr)
+			{
+				ImplantInforElement ie = new ImplantInforElement();
+		  
+				string company_name = item.Descendants("Company").First().Value;
+				comboImplantBrand.Items.Add(company_name);
+				ie.CompanyName = company_name;
+
+				var systemstr = from sutitem in item.Descendants("System")
+								select sutitem;
+
+				ie.SystemName = new List<String>();
+
+				int index = 0;
+				foreach (var sutitem in systemstr)
+				{
+					string system_name = sutitem.Value;
+
+					if (index == 0) comboImplantSystem.Items.Add(system_name);
+
+					ie.SystemName.Add(system_name);
+					index++;
+				}
+
+				ImplantInforList.Add(ie);
+			}
+
+			if (comboImplantBrand.Items.Count > 0)
+				comboImplantBrand.SelectedIndex = 0;
+
+			if (comboImplantSystem.Items.Count > 0)
+				comboImplantSystem.SelectedIndex = 0;
+		}
+
+
+		public event EventHandler NewOrderStatusUpdated;
+
+		private void FunctionThatRaisesEvent()
+		{
+			//Null check makes sure the main page is attached to the event
+			this.NewOrderStatusUpdated?.Invoke(this, new EventArgs());
+		}
+
+		public void SaveXml(string storepath)
+		{
+			//set group information
+			List<GCase> grouplist = new List<GCase>();
 			for (int i = 0; i < 32; i++)
 			{
 				if (ToothData[i].Product != "" && ToothData[i].Product!=Enum.GetName(typeof(ToothType.ToothTypeList), ToothType.ToothTypeList.NEIGHBOR))
@@ -777,12 +778,12 @@ namespace OrderManagerNew.V2Implant
 						{
 							if(toothImg.ConnectorIdx[j]==false)
 							{
-                                GCase g = new GCase
-                                {
-                                    c_start = i,
-                                    c_end = j
-                                };
-                                i = j;
+								GCase g = new GCase
+								{
+									c_start = i,
+									c_end = j
+								};
+								i = j;
 								grouplist.Add(g);
 								break;
 							}
@@ -790,12 +791,12 @@ namespace OrderManagerNew.V2Implant
 					}
 					else
 					{
-                        GCase g = new GCase
-                        {
-                            c_start = i,
-                            c_end = i
-                        };
-                        grouplist.Add(g);
+						GCase g = new GCase
+						{
+							c_start = i,
+							c_end = i
+						};
+						grouplist.Add(g);
 					}
 				}
 
@@ -811,69 +812,69 @@ namespace OrderManagerNew.V2Implant
 			xmlOrderInfo.Add(new XElement("OrderNo", m_order_num.Text));
 			xmlOrderInfo.Add(new XElement("PatientName", m_patient_name.Text));
 
-            string tmpstring;
-            //bool malecheck = m_patient_male.Checked;
-            if (m_patient_male.IsChecked == true)
-            {
-                tmpstring = "Male";
-            }
-            else
-            {
-                tmpstring = "Female";
-            }
-            xmlOrderInfo.Add(new XElement("PatientGender", tmpstring));
+			string tmpstring;
+			//bool malecheck = m_patient_male.Checked;
+			if (m_patient_male.IsChecked == true)
+			{
+				tmpstring = "Male";
+			}
+			else
+			{
+				tmpstring = "Female";
+			}
+			xmlOrderInfo.Add(new XElement("PatientGender", tmpstring));
 
 
-            if (m_patient_birthday.SelectedDate == null)
-            {
-                DateTime nowd = DateTime.Now;
-                tmpstring = nowd.Year.ToString() + "-" + nowd.Month.ToString() + "-" + nowd.Day.ToString();
-            }
-            else
-            {
-                DateTime dt = m_patient_birthday.SelectedDate.Value.Date;
-                tmpstring = dt.Year.ToString() +"-"+ dt.Month.ToString() + "-" + dt.Day.ToString();
-            }
+			if (m_patient_birthday.SelectedDate == null)
+			{
+				DateTime nowd = DateTime.Now;
+				tmpstring = nowd.Year.ToString() + "-" + nowd.Month.ToString() + "-" + nowd.Day.ToString();
+			}
+			else
+			{
+				DateTime dt = m_patient_birthday.SelectedDate.Value.Date;
+				tmpstring = dt.Year.ToString() +"-"+ dt.Month.ToString() + "-" + dt.Day.ToString();
+			}
 
 
-            xmlOrderInfo.Add(new XElement("PatientBirthday", tmpstring));
+			xmlOrderInfo.Add(new XElement("PatientBirthday", tmpstring));
 
-            xmlOrderInfo.Add(new XElement("Clinic", m_lab_name.Text));
+			xmlOrderInfo.Add(new XElement("Clinic", m_lab_name.Text));
 			//xmlOrderInfo.Add(new XElement("Note", m_note.Text));
-            xmlOrderInfo.Add(new XElement("Note", m_instruction.Text));
+			xmlOrderInfo.Add(new XElement("Note", m_instruction.Text));
 
-            xmlRoot.Add(xmlOrderInfo);
+			xmlRoot.Add(xmlOrderInfo);
 
-            var xmlCaseInfo = new XElement("CaseInfo");
+			var xmlCaseInfo = new XElement("CaseInfo");
 
-            if (m_goal_guide.IsChecked == true)  {tmpstring = "Guide";}
-            else                                 {tmpstring = "ONE-DAY Implant";}
-            xmlCaseInfo.Add(new XElement("SurgicalGoal", tmpstring));
+			if (m_goal_guide.IsChecked == true)  {tmpstring = "Guide";}
+			else                                 {tmpstring = "ONE-DAY Implant";}
+			xmlCaseInfo.Add(new XElement("SurgicalGoal", tmpstring));
 
-            //1/21/2020 handtan//mi guide
-            if (m_guide_standard.IsChecked == true) { tmpstring = "Standard"; }
-            else if (m_guide_vacuum.IsChecked == true) { tmpstring = "Vacuum"; }
-            else if (m_guide_denture.IsChecked == true) { tmpstring = "Denture"; }
-            else { tmpstring = "MI"; }
+			//1/21/2020 handtan//mi guide
+			if (m_guide_standard.IsChecked == true) { tmpstring = "Standard"; }
+			else if (m_guide_vacuum.IsChecked == true) { tmpstring = "Vacuum"; }
+			else if (m_guide_denture.IsChecked == true) { tmpstring = "Denture"; }
+			else { tmpstring = "MI"; }
 
-            xmlCaseInfo.Add(new XElement("SurgicalGuide", tmpstring));
+			xmlCaseInfo.Add(new XElement("SurgicalGuide", tmpstring));
 
-            if (m_surgery_flap.IsChecked == true) { tmpstring = "Flap"; }
-            else if (m_surgery_mini.IsChecked == true) { tmpstring = "Flapless"; }
-            else if (m_surgery_immediate.IsChecked == true) { tmpstring = "Immediate"; }
-            else { tmpstring = "Undecided"; }
-            xmlCaseInfo.Add(new XElement("SurgicalOption", tmpstring));
+			if (m_surgery_flap.IsChecked == true) { tmpstring = "Flap"; }
+			else if (m_surgery_mini.IsChecked == true) { tmpstring = "Flapless"; }
+			else if (m_surgery_immediate.IsChecked == true) { tmpstring = "Immediate"; }
+			else { tmpstring = "Undecided"; }
+			xmlCaseInfo.Add(new XElement("SurgicalOption", tmpstring));
 
-            tmpstring = comboSurgicalKit.Text;
-            xmlCaseInfo.Add(new XElement("Surgicalkit", tmpstring));
-            xmlRoot.Add(xmlCaseInfo);
+			tmpstring = comboSurgicalKit.Text;
+			xmlCaseInfo.Add(new XElement("Surgicalkit", tmpstring));
+			xmlRoot.Add(xmlCaseInfo);
 
-            var xmlProjectPath = new XElement("ImageData");
+			var xmlProjectPath = new XElement("ImageData");
 			xmlProjectPath.Add(new XElement("CBCTPath", m_ct_path.Text));
 			xmlProjectPath.Add(new XElement("JawPath", m_upperjaw_path.Text));
 			xmlProjectPath.Add(new XElement("JawTrayPath", m_lowerjaw_path.Text));
-            xmlProjectPath.Add(new XElement("DenturePath", m_othermodel_path.Text));
-            xmlRoot.Add(xmlProjectPath);
+			xmlProjectPath.Add(new XElement("DenturePath", m_othermodel_path.Text));
+			xmlRoot.Add(xmlProjectPath);
 
 			var xmlToothInfo = new XElement("ToothInfo");
 			for (int i = 1; i <= 32; i++)
@@ -883,23 +884,23 @@ namespace OrderManagerNew.V2Implant
 				xmlToothAttr.Add(new XAttribute("id", a));
 				xmlToothInfo.Add(xmlToothAttr);
 
-                if (xmlToothAttr.Value != "" && i > 16)
-                {
-                    IsUpperJaw_case = false;
-                }
-            }
+				if (xmlToothAttr.Value != "" && i > 16)
+				{
+					IsUpperJaw_case = false;
+				}
+			}
 			xmlRoot.Add(xmlToothInfo);
 
-            var xmlImplantInfo = new XElement("ImplantInfo");
-            xmlImplantInfo.Add(new XElement("Brand",comboImplantBrand.Text));
-            xmlImplantInfo.Add(new XElement("System", comboImplantSystem.Text));
-            xmlRoot.Add(xmlImplantInfo);
-            
+			var xmlImplantInfo = new XElement("ImplantInfo");
+			xmlImplantInfo.Add(new XElement("Brand",comboImplantBrand.Text));
+			xmlImplantInfo.Add(new XElement("System", comboImplantSystem.Text));
+			xmlRoot.Add(xmlImplantInfo);
+			
 			BIMLXdoc.Add(xmlRoot);
-            string storefile;
-            storefile = storepath +"\\"+ m_order_num.Text + ".xml";
-            BIMLXdoc.Save(storefile);
-        }
+			string storefile;
+			storefile = storepath +"\\"+ m_order_num.Text + ".xml";
+			BIMLXdoc.Save(storefile);
+		}
 
 		public void SetProductDetail(ToothOrderInfo order)
 		{
@@ -1111,119 +1112,119 @@ namespace OrderManagerNew.V2Implant
 
 		}
 
-        private void SurgicalGuideRadioBtnClick(object sender, RoutedEventArgs e)
-        {
-            double trans_value = 1.0;
+		private void SurgicalGuideRadioBtnClick(object sender, RoutedEventArgs e)
+		{
+			double trans_value = 1.0;
 
-            if (IsAirdentalCase == false) m_ct_path.Text = "";
-            m_ct_path.Opacity = trans_value;
-            browct.Opacity = trans_value;
-            m_ct_path_check.IsChecked = false;
-            m_ct_path_clear.Opacity = trans_value;
+			if (IsAirdentalCase == false) m_ct_path.Text = "";
+			m_ct_path.Opacity = trans_value;
+			browct.Opacity = trans_value;
+			m_ct_path_check.IsChecked = false;
+			m_ct_path_clear.Opacity = trans_value;
 
-            if (IsAirdentalCase == false) m_upperjaw_path.Text = "";
-            m_upperjaw_path.Opacity = trans_value;
-            broupper.Opacity = trans_value;
-            m_upperjaw_path_check.IsChecked = false;
-            m_upperjaw_path_clear.Opacity = trans_value;
+			if (IsAirdentalCase == false) m_upperjaw_path.Text = "";
+			m_upperjaw_path.Opacity = trans_value;
+			broupper.Opacity = trans_value;
+			m_upperjaw_path_check.IsChecked = false;
+			m_upperjaw_path_clear.Opacity = trans_value;
 
-            if (IsAirdentalCase == false) m_lowerjaw_path.Text = "";
-            m_lowerjaw_path.Opacity = trans_value;
-            brolower.Opacity = trans_value;
-            m_lowerjaw_path_check.IsChecked = false;
-            m_lowerjaw_path_clear.Opacity = trans_value;
+			if (IsAirdentalCase == false) m_lowerjaw_path.Text = "";
+			m_lowerjaw_path.Opacity = trans_value;
+			brolower.Opacity = trans_value;
+			m_lowerjaw_path_check.IsChecked = false;
+			m_lowerjaw_path_clear.Opacity = trans_value;
 
-            if (IsAirdentalCase == false) m_othermodel_path.Text = "";
-            m_othermodel_path.Opacity = trans_value;
-            broother.Opacity = trans_value;
-            m_othermodel_path_check.IsChecked = false;
-            m_othermodel_path_clear.Opacity = trans_value;
+			if (IsAirdentalCase == false) m_othermodel_path.Text = "";
+			m_othermodel_path.Opacity = trans_value;
+			broother.Opacity = trans_value;
+			m_othermodel_path_check.IsChecked = false;
+			m_othermodel_path_clear.Opacity = trans_value;
 
-            listbox2.IsEnabled = true;
-            label_brand.IsEnabled = true;
-            label_system.IsEnabled = true;
-            comboImplantBrand.IsEnabled = true;
-            comboImplantSystem.IsEnabled = true;
-            comboSurgicalKit.IsEnabled = true;
-            toothImg.IsEnabled = true;
+			listbox2.IsEnabled = true;
+			label_brand.IsEnabled = true;
+			label_system.IsEnabled = true;
+			comboImplantBrand.IsEnabled = true;
+			comboImplantSystem.IsEnabled = true;
+			comboSurgicalKit.IsEnabled = true;
+			toothImg.IsEnabled = true;
 
-            trans_value = 0.0;
-            if (m_guide_standard.IsChecked == true)
-            {
-                m_lowerjaw_path.Opacity = 0.0;
-                brolower.Opacity = 0.0;
-                m_lowerjaw_path_clear.Opacity = 0.0;
+			trans_value = 0.0;
+			if (m_guide_standard.IsChecked == true)
+			{
+				m_lowerjaw_path.Opacity = 0.0;
+				brolower.Opacity = 0.0;
+				m_lowerjaw_path_clear.Opacity = 0.0;
 
 
-                m_ct_path_check.IsChecked = true;
+				m_ct_path_check.IsChecked = true;
 
-                m_upperjaw_path_check.IsChecked = true;
+				m_upperjaw_path_check.IsChecked = true;
 
-                if (IsAirdentalCase == false) m_othermodel_path.Text = "";
-                m_othermodel_path.Opacity = trans_value;
-                broother.Opacity = trans_value;
-                m_othermodel_path_check.IsChecked = false;
-                m_othermodel_path_clear.Opacity = trans_value;
-            }
-            else if (m_guide_vacuum.IsChecked == true)
-            {
-                m_lowerjaw_path.Opacity = 0.0;
-                brolower.Opacity = 0.0;
-                m_lowerjaw_path_clear.Opacity = 0.0;
+				if (IsAirdentalCase == false) m_othermodel_path.Text = "";
+				m_othermodel_path.Opacity = trans_value;
+				broother.Opacity = trans_value;
+				m_othermodel_path_check.IsChecked = false;
+				m_othermodel_path_clear.Opacity = trans_value;
+			}
+			else if (m_guide_vacuum.IsChecked == true)
+			{
+				m_lowerjaw_path.Opacity = 0.0;
+				brolower.Opacity = 0.0;
+				m_lowerjaw_path_clear.Opacity = 0.0;
 
-                m_ct_path_check.IsChecked = true;
-                m_upperjaw_path_check.IsChecked = true;
+				m_ct_path_check.IsChecked = true;
+				m_upperjaw_path_check.IsChecked = true;
 
-                if (IsAirdentalCase == false) m_othermodel_path.Text = "";
-                m_othermodel_path.Opacity = trans_value;
-                broother.Opacity = trans_value;
-                m_othermodel_path_check.IsChecked = false;
-                m_othermodel_path_clear.Opacity = trans_value;
-            }
-            else if (m_guide_mi.IsChecked == true)
-            {
-                m_lowerjaw_path.Opacity = 0.0;
-                brolower.Opacity = 0.0;
-                m_lowerjaw_path_clear.Opacity = 0.0;
+				if (IsAirdentalCase == false) m_othermodel_path.Text = "";
+				m_othermodel_path.Opacity = trans_value;
+				broother.Opacity = trans_value;
+				m_othermodel_path_check.IsChecked = false;
+				m_othermodel_path_clear.Opacity = trans_value;
+			}
+			else if (m_guide_mi.IsChecked == true)
+			{
+				m_lowerjaw_path.Opacity = 0.0;
+				brolower.Opacity = 0.0;
+				m_lowerjaw_path_clear.Opacity = 0.0;
 
-                m_ct_path_check.IsChecked = true;
-                m_upperjaw_path_check.IsChecked = true;
+				m_ct_path_check.IsChecked = true;
+				m_upperjaw_path_check.IsChecked = true;
 
-                if (IsAirdentalCase == false) m_othermodel_path.Text = "";
-                m_othermodel_path.Opacity = trans_value;
-                broother.Opacity = trans_value;
-                m_othermodel_path_check.IsChecked = false;
-                m_othermodel_path_clear.Opacity = trans_value;
+				if (IsAirdentalCase == false) m_othermodel_path.Text = "";
+				m_othermodel_path.Opacity = trans_value;
+				broother.Opacity = trans_value;
+				m_othermodel_path_check.IsChecked = false;
+				m_othermodel_path_clear.Opacity = trans_value;
 
-                listbox2.IsEnabled = false;
-                label_brand.IsEnabled = false;
-                label_system.IsEnabled = false;
-                comboImplantBrand.IsEnabled = false;
-                comboImplantSystem.IsEnabled = false;
-                comboSurgicalKit.IsEnabled = false;
-                toothImg.IsEnabled = false;
-            }
-            else//denture
-            {
-                m_lowerjaw_path_check.IsChecked = true;
-                m_othermodel_path_check.IsChecked = true;
+				listbox2.IsEnabled = false;
+				label_brand.IsEnabled = false;
+				label_system.IsEnabled = false;
+				comboImplantBrand.IsEnabled = false;
+				comboImplantSystem.IsEnabled = false;
+				comboSurgicalKit.IsEnabled = false;
+				toothImg.IsEnabled = false;
+			}
+			else//denture
+			{
+				m_lowerjaw_path_check.IsChecked = true;
+				m_othermodel_path_check.IsChecked = true;
 
-                if (IsAirdentalCase == false) m_ct_path.Text = "";
-                browct.Opacity = trans_value;
+				if (IsAirdentalCase == false) m_ct_path.Text = "";
+				browct.Opacity = trans_value;
 
-                m_ct_path_check.IsChecked = true;
-                m_upperjaw_path_check.IsChecked = true;
+				m_ct_path_check.IsChecked = true;
+				m_upperjaw_path_check.IsChecked = true;
 
-                if (IsAirdentalCase == false) m_upperjaw_path.Text = "";
-                m_upperjaw_path.Opacity = trans_value;
-                broupper.Opacity = trans_value;
-                m_upperjaw_path_check.IsChecked = false;
-                m_upperjaw_path_clear.Opacity = trans_value;
-            }
-        }
+				if (IsAirdentalCase == false) m_upperjaw_path.Text = "";
+				m_upperjaw_path.Opacity = trans_value;
+				broupper.Opacity = trans_value;
+				m_upperjaw_path_check.IsChecked = false;
+				m_upperjaw_path_clear.Opacity = trans_value;
+			}
+		}
 
-        //connector分組用結構
-        public struct GCase
+		//connector分組用結構
+		public struct GCase
 		{
 			public int c_start;
 			public int c_end;          
@@ -1287,146 +1288,146 @@ namespace OrderManagerNew.V2Implant
 
 		private void BtnOK_Click(object sender, RoutedEventArgs e)
 		{
-            if (true)
-            {
-                //檢查
-                if (m_ct_path.Text == "")
-                {
-                    MessageBox.Show("C.B.C.T directory is not set!");
-                    return;
-                }
+			if (true)
+			{
+				//檢查
+				if (m_ct_path.Text == "")
+				{
+					MessageBox.Show("C.B.C.T directory is not set!");
+					return;
+				}
 
-                Process_Neworder.Visibility = Visibility.Visible;
-                Process_Neworder.Minimum = 1;
-                Process_Neworder.Value = 1;
-                Process_Neworder.Maximum = 100;
-                Process_Neworder.SmallChange = 1;
+				Process_Neworder.Visibility = Visibility.Visible;
+				Process_Neworder.Minimum = 1;
+				Process_Neworder.Value = 1;
+				Process_Neworder.Maximum = 100;
+				Process_Neworder.SmallChange = 1;
 
-                string targetdirectory = m_ImplantRoot + m_order_num.Text;
-                string sourcedirectory = m_ct_path.Text;
+				string targetdirectory = m_ImplantRoot + m_order_num.Text;
+				string sourcedirectory = m_ct_path.Text;
 
-                if (!Directory.Exists(targetdirectory))
-                {
-                    Directory.CreateDirectory(targetdirectory);
-                }
+				if (!Directory.Exists(targetdirectory))
+				{
+					Directory.CreateDirectory(targetdirectory);
+				}
 
-                //改先存,取得植牙齒位上或下顎
-                SaveXml(targetdirectory);
-                string jpgFilePath = targetdirectory + "\\" + m_order_num.Text + ".jpg";
-                ExportToJpg(jpgFilePath);
+				//改先存,取得植牙齒位上或下顎
+				SaveXml(targetdirectory);
+				string jpgFilePath = targetdirectory + "\\" + m_order_num.Text + ".jpg";
+				ExportToJpg(jpgFilePath);
 
-                if (m_ct_path_check.IsChecked.GetValueOrDefault())
-                {
-                    DirectoryInfo disource = new DirectoryInfo(sourcedirectory);
-                    DirectoryInfo ditarget = new DirectoryInfo(targetdirectory);
+				if (m_ct_path_check.IsChecked.GetValueOrDefault())
+				{
+					DirectoryInfo disource = new DirectoryInfo(sourcedirectory);
+					DirectoryInfo ditarget = new DirectoryInfo(targetdirectory);
 
-                    FileInfo[] files = disource.GetFiles();
-                    Process_Neworder.Maximum = files.Length+4;
-                    
-                    //暫定
-                    //更新頻率
-                    int kk = 0;
-                    foreach (var file in Directory.GetFiles(sourcedirectory))
-                    {
-                        Process_Neworder.Value += 1;
-                        kk++;
-                        
-                        if (file.IndexOf(".dcm") > 0 &&
-                           !(file.IndexOf("ZZProjectCT") > 0))
-                        {
-                            File.Copy(file, System.IO.Path.Combine(targetdirectory, System.IO.Path.GetFileName(file)));
-                            //11/21/2019 handtan//ordermanager新訂單進度列異常修正
+					FileInfo[] files = disource.GetFiles();
+					Process_Neworder.Maximum = files.Length+4;
+					
+					//暫定
+					//更新頻率
+					int kk = 0;
+					foreach (var file in Directory.GetFiles(sourcedirectory))
+					{
+						Process_Neworder.Value += 1;
+						kk++;
+						
+						if (file.IndexOf(".dcm") > 0 &&
+						   !(file.IndexOf("ZZProjectCT") > 0))
+						{
+							File.Copy(file, System.IO.Path.Combine(targetdirectory, System.IO.Path.GetFileName(file)));
+							//11/21/2019 handtan//ordermanager新訂單進度列異常修正
 
-                            if (kk>=50)
-                            {
-                                Prograsee_update((int)Process_Neworder.Value);
-                                kk = 0;
-                            }
+							if (kk>=50)
+							{
+								Prograsee_update((int)Process_Neworder.Value);
+								kk = 0;
+							}
 
-                        }
-                    }
+						}
+					}
 
-                }
+				}
 
-                if (m_upperjaw_path_check.IsChecked.GetValueOrDefault() && m_upperjaw_path.Text !="")
-                {
-                    string newfile = "";
+				if (m_upperjaw_path_check.IsChecked.GetValueOrDefault() && m_upperjaw_path.Text !="")
+				{
+					string newfile = "";
 
-                    if (IsUpperJaw_case) newfile = targetdirectory + "\\" + "Upperjaw.stl";
-                    else                 newfile = targetdirectory + "\\" + "Lowerjaw.stl";
-                    
-                    File.Copy(m_upperjaw_path.Text, newfile,true);
-                    DirectoryInfo disource = new DirectoryInfo(sourcedirectory);  
-                }
+					if (IsUpperJaw_case) newfile = targetdirectory + "\\" + "Upperjaw.stl";
+					else                 newfile = targetdirectory + "\\" + "Lowerjaw.stl";
+					
+					File.Copy(m_upperjaw_path.Text, newfile,true);
+					DirectoryInfo disource = new DirectoryInfo(sourcedirectory);  
+				}
 
-                //11/21/2019 handtan//ordermanager新訂單進度列異常修正
-                //Process_Neworder.Value += 1;
-                Prograsee_update((int)Process_Neworder.Value);
+				//11/21/2019 handtan//ordermanager新訂單進度列異常修正
+				//Process_Neworder.Value += 1;
+				Prograsee_update((int)Process_Neworder.Value);
 
-                if (m_lowerjaw_path_check.IsChecked.GetValueOrDefault() && m_lowerjaw_path.Text != "")
-                {
-                    string newfile = "";
+				if (m_lowerjaw_path_check.IsChecked.GetValueOrDefault() && m_lowerjaw_path.Text != "")
+				{
+					string newfile = "";
 
-                    if (IsUpperJaw_case) newfile = targetdirectory + "\\" + "Upperjaw_tray.stl";
-                    else                 newfile = targetdirectory + "\\" + "Lowerjaw_tray.stl";
+					if (IsUpperJaw_case) newfile = targetdirectory + "\\" + "Upperjaw_tray.stl";
+					else                 newfile = targetdirectory + "\\" + "Lowerjaw_tray.stl";
 
-                    File.Copy(m_lowerjaw_path.Text, newfile, true);
-                    DirectoryInfo disource = new DirectoryInfo(sourcedirectory);
-                }
+					File.Copy(m_lowerjaw_path.Text, newfile, true);
+					DirectoryInfo disource = new DirectoryInfo(sourcedirectory);
+				}
 
-                //11/21/2019 handtan//ordermanager新訂單進度列異常修正
-                Prograsee_update((int)Process_Neworder.Value);
+				//11/21/2019 handtan//ordermanager新訂單進度列異常修正
+				Prograsee_update((int)Process_Neworder.Value);
 
-                if (m_othermodel_path_check.IsChecked.GetValueOrDefault() && m_othermodel_path.Text != "")
-                {
-                    string newfile = targetdirectory + "\\" + "Denture.stl";
-                    File.Copy(m_othermodel_path.Text, newfile, true);
-                    DirectoryInfo disource = new DirectoryInfo(sourcedirectory);
-                }
+				if (m_othermodel_path_check.IsChecked.GetValueOrDefault() && m_othermodel_path.Text != "")
+				{
+					string newfile = targetdirectory + "\\" + "Denture.stl";
+					File.Copy(m_othermodel_path.Text, newfile, true);
+					DirectoryInfo disource = new DirectoryInfo(sourcedirectory);
+				}
 
-                //11/21/2019 handtan//ordermanager新訂單進度列異常修正
-                Prograsee_update((int)Process_Neworder.Value);
-                
-                Process_Neworder.Visibility = Visibility.Hidden;
-            }
-            this.Close();
-            FunctionThatRaisesEvent();
-        }
+				//11/21/2019 handtan//ordermanager新訂單進度列異常修正
+				Prograsee_update((int)Process_Neworder.Value);
+				
+				Process_Neworder.Visibility = Visibility.Hidden;
+			}
+			this.Close();
+			FunctionThatRaisesEvent();
+		}
 
-        public void Prograsee_update(int new_value)
-        {
-            Dispatcher.Invoke(new Action<System.Windows.DependencyProperty,
-                                object>(Process_Neworder.SetValue),
-                                System.Windows.Threading.DispatcherPriority.Background,
-                                new object[] { ProgressBar.ValueProperty, Convert.ToDouble(new_value + 1) });
-        }
+		public void Prograsee_update(int new_value)
+		{
+			Dispatcher.Invoke(new Action<System.Windows.DependencyProperty,
+								object>(Process_Neworder.SetValue),
+								System.Windows.Threading.DispatcherPriority.Background,
+								new object[] { ProgressBar.ValueProperty, Convert.ToDouble(new_value + 1) });
+		}
 
-        public void CopyAll(DirectoryInfo source, DirectoryInfo target)
-        {
-            if (source.FullName.ToLower() == target.FullName.ToLower())
-            {
-                return;
-            }
+		public void CopyAll(DirectoryInfo source, DirectoryInfo target)
+		{
+			if (source.FullName.ToLower() == target.FullName.ToLower())
+			{
+				return;
+			}
 
-            // Check if the target directory exists, if not, create it.
-            if (Directory.Exists(target.FullName) == false)
-            {
-                Directory.CreateDirectory(target.FullName);
-            }
+			// Check if the target directory exists, if not, create it.
+			if (Directory.Exists(target.FullName) == false)
+			{
+				Directory.CreateDirectory(target.FullName);
+			}
 
-            // Copy each file into it's new directory.
-            foreach (FileInfo fi in source.GetFiles())
-            {
-                //Console.WriteLine(@"Copying {0}\{1}", target.FullName, fi.Name);
-                fi.CopyTo(System.IO.Path.Combine(target.ToString(), fi.Name), true);
+			// Copy each file into it's new directory.
+			foreach (FileInfo fi in source.GetFiles())
+			{
+				//Console.WriteLine(@"Copying {0}\{1}", target.FullName, fi.Name);
+				fi.CopyTo(System.IO.Path.Combine(target.ToString(), fi.Name), true);
 
-                Process_Neworder.Value += 1;
+				Process_Neworder.Value += 1;
 
-                Prograsee_update((int)Process_Neworder.Value);
-            }
-        }
+				Prograsee_update((int)Process_Neworder.Value);
+			}
+		}
 
-        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+		private void BtnCancel_Click(object sender, RoutedEventArgs e)
 		{
 			this.Close();
 		}
@@ -1456,27 +1457,27 @@ namespace OrderManagerNew.V2Implant
 		private void ComboImplantBrand_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			string brandName = comboImplantBrand.SelectedItem.ToString();
-            int brandIndex = comboImplantBrand.SelectedIndex;
+			int brandIndex = comboImplantBrand.SelectedIndex;
 
-            comboImplantModel.Items.Clear();
+			comboImplantModel.Items.Clear();
 			comboImplantMaterial.Items.Clear();
 			comboImplantScrew.Items.Clear();
-            comboImplantSystem.Items.Clear();
+			comboImplantSystem.Items.Clear();
 
-            if (brandIndex != -1)
-            {
-                foreach (ImplantInforElement listbrand in ImplantInforList)
-                {
-                    if (brandName == listbrand.CompanyName)
-                    {
-                        foreach (string listsystem in listbrand.SystemName)
-                        {
-                            comboImplantSystem.Items.Add(listsystem);
-                        }
-                    }
-                }
-            }
-        }
+			if (brandIndex != -1)
+			{
+				foreach (ImplantInforElement listbrand in ImplantInforList)
+				{
+					if (brandName == listbrand.CompanyName)
+					{
+						foreach (string listsystem in listbrand.SystemName)
+						{
+							comboImplantSystem.Items.Add(listsystem);
+						}
+					}
+				}
+			}
+		}
 
 		private void ComboImplantModel_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -1611,425 +1612,431 @@ namespace OrderManagerNew.V2Implant
 			}
 		}
 
-        private void Listbox2_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("key down");
-            if (listbox2.SelectedIndex != -1)
-            {
-                UCToothTypeBase uc = listbox2.SelectedItem as UCToothTypeBase;
-                ActiveToothType = uc.ProductTypeIdx;
-                toothImg.ActiveProductType = ActiveToothType;
+		private void Listbox2_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			MessageBox.Show("key down");
+			if (listbox2.SelectedIndex != -1)
+			{
+				UCToothTypeBase uc = listbox2.SelectedItem as UCToothTypeBase;
+				ActiveToothType = uc.ProductTypeIdx;
+				toothImg.ActiveProductType = ActiveToothType;
 
-                for (int i = 0; i < 32; i++)
-                {
-                    if (toothImg.ToothSelectIdx[i])
-                    {
-                        toothImg.SetToothType(i, ActiveToothType);
-                        Image img = toothImg.GetToothImage(i);
+				for (int i = 0; i < 32; i++)
+				{
+					if (toothImg.ToothSelectIdx[i])
+					{
+						toothImg.SetToothType(i, ActiveToothType);
+						Image img = toothImg.GetToothImage(i);
 
-                        toothImg.SetToothStatus(img);
+						toothImg.SetToothStatus(img);
 
-                        ToothData[i].ResetData();
-                        ToothData[i].FLAG = true;
-                        ToothData[i].Product_idx = ActiveToothType;
-                        ToothData[i].Product = Enum.GetName(typeof(ToothType.ToothTypeList), ActiveToothType);
+						ToothData[i].ResetData();
+						ToothData[i].FLAG = true;
+						ToothData[i].Product_idx = ActiveToothType;
+						ToothData[i].Product = Enum.GetName(typeof(ToothType.ToothTypeList), ActiveToothType);
 
-                        if (ActiveToothType != (int)(int)ToothType.ToothTypeList.ABUTMENT &&
-                            ActiveToothType != (int)(int)ToothType.ToothTypeList.ABUTMENT_TEMP &&
-                            ActiveToothType != (int)(int)ToothType.ToothTypeList.SRIA &&
-                            ActiveToothType != (int)(int)ToothType.ToothTypeList.SRIA_CROWN)
-                        {
-                            if (Radio_Mat_Ceramic.IsChecked == true)
-                            {
-                                ToothData[i].Material_Type = "Ceramic";
-                                ToothData[i].Material_Name = comboCeramic.SelectedItem.ToString();
-                            }
-                            else if (Radio_Mat_Metal.IsChecked == true)
-                            {
-                                ToothData[i].Material_Type = "Metal";
-                                ToothData[i].Material_Name = comboMetal.SelectedItem.ToString();
-                            }
-                            else
-                            {
-                                ToothData[i].Material_Type = "Other";
-                                ToothData[i].Material_Name = comboOther.SelectedItem.ToString();
-                            }
+						if (ActiveToothType != (int)(int)ToothType.ToothTypeList.ABUTMENT &&
+							ActiveToothType != (int)(int)ToothType.ToothTypeList.ABUTMENT_TEMP &&
+							ActiveToothType != (int)(int)ToothType.ToothTypeList.SRIA &&
+							ActiveToothType != (int)(int)ToothType.ToothTypeList.SRIA_CROWN)
+						{
+							if (Radio_Mat_Ceramic.IsChecked == true)
+							{
+								ToothData[i].Material_Type = "Ceramic";
+								ToothData[i].Material_Name = comboCeramic.SelectedItem.ToString();
+							}
+							else if (Radio_Mat_Metal.IsChecked == true)
+							{
+								ToothData[i].Material_Type = "Metal";
+								ToothData[i].Material_Name = comboMetal.SelectedItem.ToString();
+							}
+							else
+							{
+								ToothData[i].Material_Type = "Other";
+								ToothData[i].Material_Name = comboOther.SelectedItem.ToString();
+							}
 
-                            ToothData[i].Color = comboColor.SelectedItem.ToString();
-                        }
-                    }
-                }
+							ToothData[i].Color = comboColor.SelectedItem.ToString();
+						}
+					}
+				}
 
-                //set connector
-                if (ActiveToothType != (int)(int)ToothType.ToothTypeList.ABUTMENT &&
-                    ActiveToothType != (int)(int)ToothType.ToothTypeList.ABUTMENT_TEMP &&
-                    ActiveToothType != (int)(int)ToothType.ToothTypeList.SRIA &&
-                    ActiveToothType != (int)(int)ToothType.ToothTypeList.SRIA_CROWN &&
-                    ActiveToothType != (int)(int)ToothType.ToothTypeList.NEIGHBOR &&
-                    ActiveToothType != (int)(int)ToothType.ToothTypeList.NON_TOOTH)
-                {
-                    bool doConnector;
-                    doConnector = false;
-                    for (int i = 0; i < 31; i++)
-                    {
-                        if (toothImg.ToothSelectIdx[i])
-                        {
-                            if (toothImg.ToothSelectIdx[i + 1])
-                            {
-                                doConnector = true;
-                                break;
-                            }
-                        }
-                    }
+				//set connector
+				if (ActiveToothType != (int)(int)ToothType.ToothTypeList.ABUTMENT &&
+					ActiveToothType != (int)(int)ToothType.ToothTypeList.ABUTMENT_TEMP &&
+					ActiveToothType != (int)(int)ToothType.ToothTypeList.SRIA &&
+					ActiveToothType != (int)(int)ToothType.ToothTypeList.SRIA_CROWN &&
+					ActiveToothType != (int)(int)ToothType.ToothTypeList.NEIGHBOR &&
+					ActiveToothType != (int)(int)ToothType.ToothTypeList.NON_TOOTH)
+				{
+					bool doConnector;
+					doConnector = false;
+					for (int i = 0; i < 31; i++)
+					{
+						if (toothImg.ToothSelectIdx[i])
+						{
+							if (toothImg.ToothSelectIdx[i + 1])
+							{
+								doConnector = true;
+								break;
+							}
+						}
+					}
 
-                    if (doConnector)
-                    {
-                        for (int i = 0; i < 31; i++)
-                        {
-                            if (toothImg.ToothSelectIdx[i])
-                            {
-                                if (toothImg.ToothSelectIdx[i + 1])
-                                {
-                                    toothImg.SetConnectorStatus(i, true);
-                                }
-                            }
-                        }
+					if (doConnector)
+					{
+						for (int i = 0; i < 31; i++)
+						{
+							if (toothImg.ToothSelectIdx[i])
+							{
+								if (toothImg.ToothSelectIdx[i + 1])
+								{
+									toothImg.SetConnectorStatus(i, true);
+								}
+							}
+						}
 
-                        toothImg.DrawConnectorLine(toothImg.ConnectorIdx);
-                    }
-                }
-                else//clear connector status
-                {
-                    for (int i = 0; i < 31; i++)
-                    {
-                        if (toothImg.ToothSelectIdx[i])
-                        {
-                            toothImg.SetConnectorStatus(i, false);
-                        }
-                    }
-                    toothImg.DrawConnectorLine(toothImg.ConnectorIdx);
-                }
+						toothImg.DrawConnectorLine(toothImg.ConnectorIdx);
+					}
+				}
+				else//clear connector status
+				{
+					for (int i = 0; i < 31; i++)
+					{
+						if (toothImg.ToothSelectIdx[i])
+						{
+							toothImg.SetConnectorStatus(i, false);
+						}
+					}
+					toothImg.DrawConnectorLine(toothImg.ConnectorIdx);
+				}
 
-            }
-            else
-            {
-                ActiveToothType = -1;
-                toothImg.ActiveProductType = ActiveToothType;
-            }
-        }
+			}
+			else
+			{
+				ActiveToothType = -1;
+				toothImg.ActiveProductType = ActiveToothType;
+			}
+		}
 
-        private void Browct_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.FolderBrowserDialog folderDialog = new System.Windows.Forms.FolderBrowserDialog
-            {
-                SelectedPath = Selected_folder_path
-            };
+		private void Browct_Click(object sender, RoutedEventArgs e)
+		{
+			System.Windows.Forms.FolderBrowserDialog folderDialog = new System.Windows.Forms.FolderBrowserDialog
+			{
+				SelectedPath = Selected_folder_path
+			};
 
-            System.Windows.Forms.DialogResult result = folderDialog.ShowDialog();
+			System.Windows.Forms.DialogResult result = folderDialog.ShowDialog();
 
-            if (result == System.Windows.Forms.DialogResult.Cancel)
-            {
-                m_ct_path.Text = m_ct_path.Text;
-            }
-            else
-            {
-                m_ct_path.Text = folderDialog.SelectedPath.Trim();
+			if (result == System.Windows.Forms.DialogResult.Cancel)
+			{
+				m_ct_path.Text = m_ct_path.Text;
+			}
+			else
+			{
+				m_ct_path.Text = folderDialog.SelectedPath.Trim();
 
-                //5/15/2019 handtan//check the dcm file in selected folder
-                if (Check_folder_dcm(m_ct_path.Text) == false)
-                {
-                    MessageBox.Show("There is no C.B.C.T file(dcm) in the Directory!");
-                    m_ct_path.Text = "";
-                }
-                else
-                {
-                    System.IO.DirectoryInfo directoryInfo = System.IO.Directory.GetParent(m_ct_path.Text);
-                    Selected_folder_path = directoryInfo.FullName;
-                }
-            }
-        }
+				//5/15/2019 handtan//check the dcm file in selected folder
+				if (Check_folder_dcm(m_ct_path.Text) == false)
+				{
+					MessageBox.Show("There is no C.B.C.T file(dcm) in the Directory!");
+					m_ct_path.Text = "";
+				}
+				else
+				{
+					System.IO.DirectoryInfo directoryInfo = System.IO.Directory.GetParent(m_ct_path.Text);
+					Selected_folder_path = directoryInfo.FullName;
+				}
+			}
+		}
 
-        public bool Check_folder_dcm(string targetDirectory)
-        {
-            DirectoryInfo subfolder = new DirectoryInfo(targetDirectory);
-            FileInfo[] files = subfolder.GetFiles("*.dcm", SearchOption.TopDirectoryOnly);
+		public bool Check_folder_dcm(string targetDirectory)
+		{
+			DirectoryInfo subfolder = new DirectoryInfo(targetDirectory);
+			FileInfo[] files = subfolder.GetFiles("*.dcm", SearchOption.TopDirectoryOnly);
 
-            if (files.Length > 0) return true;
-            else return false;
-        }
+			if (files.Length > 0) return true;
+			else return false;
+		}
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                //dialog.InitialDirectory = "C:\\";
-                InitialDirectory = Selected_folder_path,
-                Filter = "Model file (*.stl)|*.stl"
-            };
-            if (dialog.ShowDialog() == true)
-            {
-                m_upperjaw_path.Text = dialog.FileName;
-                Selected_folder_path = System.IO.Path.GetDirectoryName(dialog.FileName);
-            }
-        }
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			OpenFileDialog dialog = new OpenFileDialog
+			{
+				//dialog.InitialDirectory = "C:\\";
+				InitialDirectory = Selected_folder_path,
+				Filter = "Model file (*.stl)|*.stl"
+			};
+			if (dialog.ShowDialog() == true)
+			{
+				m_upperjaw_path.Text = dialog.FileName;
+				Selected_folder_path = System.IO.Path.GetDirectoryName(dialog.FileName);
+			}
+		}
 
-        private void Brolower_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                //dialog.InitialDirectory = "C:\\";
-                InitialDirectory = Selected_folder_path,
-                Filter = "Model file (*.stl)|*.stl"
-            };
-            if (dialog.ShowDialog() == true)
-            {
-                m_lowerjaw_path.Text = dialog.FileName;
-                Selected_folder_path = System.IO.Path.GetDirectoryName(dialog.FileName);
-            }
-        }
+		private void Brolower_Click(object sender, RoutedEventArgs e)
+		{
+			OpenFileDialog dialog = new OpenFileDialog
+			{
+				//dialog.InitialDirectory = "C:\\";
+				InitialDirectory = Selected_folder_path,
+				Filter = "Model file (*.stl)|*.stl"
+			};
+			if (dialog.ShowDialog() == true)
+			{
+				m_lowerjaw_path.Text = dialog.FileName;
+				Selected_folder_path = System.IO.Path.GetDirectoryName(dialog.FileName);
+			}
+		}
 
-        private void Broother_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                //dialog.InitialDirectory = "C:\\";
-                InitialDirectory = Selected_folder_path,
-                Filter = "Model file (*.stl)|*.stl"
-            };
-            if (dialog.ShowDialog() == true)
-            {
-                m_othermodel_path.Text = dialog.FileName;
-                Selected_folder_path = System.IO.Path.GetDirectoryName(dialog.FileName);
-            }
-        }
+		private void Broother_Click(object sender, RoutedEventArgs e)
+		{
+			OpenFileDialog dialog = new OpenFileDialog
+			{
+				//dialog.InitialDirectory = "C:\\";
+				InitialDirectory = Selected_folder_path,
+				Filter = "Model file (*.stl)|*.stl"
+			};
+			if (dialog.ShowDialog() == true)
+			{
+				m_othermodel_path.Text = dialog.FileName;
+				Selected_folder_path = System.IO.Path.GetDirectoryName(dialog.FileName);
+			}
+		}
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            if (m_ct_path_check.IsChecked.HasValue && m_ct_path_check.IsChecked.Value)
-            {
-               // m_ct_path_check.IsChecked = false;
-            }
+		private void CheckBox_Checked(object sender, RoutedEventArgs e)
+		{
+			if (m_ct_path_check.IsChecked.HasValue && m_ct_path_check.IsChecked.Value)
+			{
+			   // m_ct_path_check.IsChecked = false;
+			}
 
-            m_ct_path.Opacity = 1.0;
-            browct.Opacity = 1.0;
-            m_ct_path_clear.Opacity = 1.0;
-        }
+			m_ct_path.Opacity = 1.0;
+			browct.Opacity = 1.0;
+			m_ct_path_clear.Opacity = 1.0;
+		}
 
-        private void M_ct_path_check_Unchecked(object sender, RoutedEventArgs e)
-        {
-            m_ct_path.Opacity = 0.0;
-            browct.Opacity = 0.0;
-            m_ct_path_clear.Opacity = 0.0;
-            if (IsAirdentalCase == false) m_ct_path.Text = "";
-        }
+		private void M_ct_path_check_Unchecked(object sender, RoutedEventArgs e)
+		{
+			m_ct_path.Opacity = 0.0;
+			browct.Opacity = 0.0;
+			m_ct_path_clear.Opacity = 0.0;
+			if (IsAirdentalCase == false) m_ct_path.Text = "";
+		}
 
-        private void M_upperjaw_path_check_Checked(object sender, RoutedEventArgs e)
-        {
-            m_upperjaw_path.Opacity = 1.0;
-            broupper.Opacity = 1.0;
-            m_upperjaw_path_clear.Opacity = 1.0;
-        }
+		private void M_upperjaw_path_check_Checked(object sender, RoutedEventArgs e)
+		{
+			m_upperjaw_path.Opacity = 1.0;
+			broupper.Opacity = 1.0;
+			m_upperjaw_path_clear.Opacity = 1.0;
+		}
 
-        private void M_upperjaw_path_check_Unchecked(object sender, RoutedEventArgs e)
-        {
-            m_upperjaw_path.Opacity = 0.0;
-            broupper.Opacity = 0.0;
-            m_upperjaw_path_clear.Opacity = 0.0;
-            if (IsAirdentalCase == false) m_upperjaw_path.Text = "";
-        }
+		private void M_upperjaw_path_check_Unchecked(object sender, RoutedEventArgs e)
+		{
+			m_upperjaw_path.Opacity = 0.0;
+			broupper.Opacity = 0.0;
+			m_upperjaw_path_clear.Opacity = 0.0;
+			if (IsAirdentalCase == false) m_upperjaw_path.Text = "";
+		}
 
-        private void M_lowerjaw_path_check_Checked(object sender, RoutedEventArgs e)
-        {
-            m_lowerjaw_path.Opacity = 1.0;
-            brolower.Opacity = 1.0;
-            m_lowerjaw_path_clear.Opacity = 1.0;
-        }
+		private void M_lowerjaw_path_check_Checked(object sender, RoutedEventArgs e)
+		{
+			m_lowerjaw_path.Opacity = 1.0;
+			brolower.Opacity = 1.0;
+			m_lowerjaw_path_clear.Opacity = 1.0;
+		}
 
-        private void M_lowerjaw_path_check_Unchecked(object sender, RoutedEventArgs e)
-        {
-            m_lowerjaw_path.Opacity = 0.0;
-            brolower.Opacity = 0.0;
-            m_lowerjaw_path_clear.Opacity = 0.0;
-            if (IsAirdentalCase == false) m_lowerjaw_path.Text = "";
-        }
+		private void M_lowerjaw_path_check_Unchecked(object sender, RoutedEventArgs e)
+		{
+			m_lowerjaw_path.Opacity = 0.0;
+			brolower.Opacity = 0.0;
+			m_lowerjaw_path_clear.Opacity = 0.0;
+			if (IsAirdentalCase == false) m_lowerjaw_path.Text = "";
+		}
 
-        private void M_othermodel_path_check_Checked(object sender, RoutedEventArgs e)
-        {
-            m_othermodel_path.Opacity = 1.0;
-            broother.Opacity = 1.0;
-            m_othermodel_path_clear.Opacity = 1.0;
-        }
+		private void M_othermodel_path_check_Checked(object sender, RoutedEventArgs e)
+		{
+			m_othermodel_path.Opacity = 1.0;
+			broother.Opacity = 1.0;
+			m_othermodel_path_clear.Opacity = 1.0;
+		}
 
-        private void M_othermodel_path_check_Unchecked(object sender, RoutedEventArgs e)
-        {
-            m_othermodel_path.Opacity = 0.0;
-            broother.Opacity = 0.0;
-            m_othermodel_path_clear.Opacity = 0.0;
-            if (IsAirdentalCase == false) m_othermodel_path.Text = "";
-        }
+		private void M_othermodel_path_check_Unchecked(object sender, RoutedEventArgs e)
+		{
+			m_othermodel_path.Opacity = 0.0;
+			broother.Opacity = 0.0;
+			m_othermodel_path_clear.Opacity = 0.0;
+			if (IsAirdentalCase == false) m_othermodel_path.Text = "";
+		}
 
-        private void Click_Test(object sender, RoutedEventArgs e)
-        {
-            DateTime dt = m_patient_birthday.SelectedDate.Value.Date;
-            
-            MessageBox.Show(dt.Year.ToString() + dt.Month.ToString() + dt.Day.ToString());
-        }
+		private void Click_Test(object sender, RoutedEventArgs e)
+		{
+			DateTime dt = m_patient_birthday.SelectedDate.Value.Date;
+			
+			MessageBox.Show(dt.Year.ToString() + dt.Month.ToString() + dt.Day.ToString());
+		}
 
-        private void M_ct_path_clear_Click(object sender, RoutedEventArgs e)
-        {
-            m_ct_path.Text = "";
-        }
+		private void M_ct_path_clear_Click(object sender, RoutedEventArgs e)
+		{
+			m_ct_path.Text = "";
+		}
 
-        private void M_upperjaw_path_clear_Click(object sender, RoutedEventArgs e)
-        {
-            m_upperjaw_path.Text = "";
-        }
+		private void M_upperjaw_path_clear_Click(object sender, RoutedEventArgs e)
+		{
+			m_upperjaw_path.Text = "";
+		}
 
-        private void M_lowerjaw_path_clear_Click(object sender, RoutedEventArgs e)
-        {
-            m_lowerjaw_path.Text = "";
-        }
+		private void M_lowerjaw_path_clear_Click(object sender, RoutedEventArgs e)
+		{
+			m_lowerjaw_path.Text = "";
+		}
 
-        private void M_othermodel_path_clear_Click(object sender, RoutedEventArgs e)
-        {
-            m_othermodel_path.Text = "";
-        }
+		private void M_othermodel_path_clear_Click(object sender, RoutedEventArgs e)
+		{
+			m_othermodel_path.Text = "";
+		}
 
-        private void M_guide_standard_Click(object sender, RoutedEventArgs e)
-        {
-            m_othermodel_path.Text = "";
-            m_othermodel_path.Opacity = 0.5;
-            broother.Opacity = 0.5;
-            m_othermodel_path_check.IsChecked = false;
-        }
+		private void M_guide_standard_Click(object sender, RoutedEventArgs e)
+		{
+			m_othermodel_path.Text = "";
+			m_othermodel_path.Opacity = 0.5;
+			broother.Opacity = 0.5;
+			m_othermodel_path_check.IsChecked = false;
+		}
 
-        private void O(object sender, MouseEventArgs e)
-        {
-           // Process_Neworder.Value++;
-        }
+		private void O(object sender, MouseEventArgs e)
+		{
+		   // Process_Neworder.Value++;
+		}
 
-        private void Process_Neworder_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            this.Process_Neworder.Value = e.NewValue;
-        }
-        //---title bar 設定
-        private void Window_LocationChanged(object sender, EventArgs e)
-        {
-            int sum = 0;
-            foreach (var item in screens)
-            {
-                sum += item.WorkingArea.Width;
-                if (sum >= this.Left + this.Width / 2)
-                {
-                    this.MaxHeight = item.WorkingArea.Height;
-                    break;
-                }
-            }
-        }
+		private void Process_Neworder_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			this.Process_Neworder.Value = e.NewValue;
+		}
+		//---title bar 設定
+		private void Window_LocationChanged(object sender, EventArgs e)
+		{
+			int sum = 0;
+			foreach (var item in screens)
+			{
+				sum += item.WorkingArea.Width;
+				if (sum >= this.Left + this.Width / 2)
+				{
+					this.MaxHeight = item.WorkingArea.Height;
+					break;
+				}
+			}
+		}
 
-        private void System_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
+		private void System_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			if (e.ChangedButton == MouseButton.Left)
+			{
 
-            }
-            else if (e.ChangedButton == MouseButton.Right)
-            {
+			}
+			else if (e.ChangedButton == MouseButton.Right)
+			{
 
-            }
-        }
+			}
+		}
 
-        [DllImport("user32.dll")]
-        static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
-        [DllImport("user32.dll")]
-        static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
-        [DllImport("user32.dll")]
-        static extern int TrackPopupMenu(IntPtr hMenu, uint uFlags, int x, int y, int nReserved, IntPtr hWnd, IntPtr prcRect);
+		[DllImport("user32.dll")]
+		static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+		[DllImport("user32.dll")]
+		static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+		[DllImport("user32.dll")]
+		static extern int TrackPopupMenu(IntPtr hMenu, uint uFlags, int x, int y, int nReserved, IntPtr hWnd, IntPtr prcRect);
 
-        private void System_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                if (this.WindowState == WindowState.Maximized && Math.Abs(startPos.Y - e.GetPosition(null).Y) > 2)
-                {
-                    var point = PointToScreen(e.GetPosition(null));
+		private void System_MouseMove(object sender, MouseEventArgs e)
+		{
+			if (e.LeftButton == MouseButtonState.Pressed)
+			{
+				if (this.WindowState == WindowState.Maximized && Math.Abs(startPos.Y - e.GetPosition(null).Y) > 2)
+				{
+					var point = PointToScreen(e.GetPosition(null));
 
-                    this.WindowState = WindowState.Normal;
+					this.WindowState = WindowState.Normal;
 
-                    this.Left = point.X - this.ActualWidth / 2;
-                    this.Top = point.Y - border.ActualHeight / 2;
-                }
-                DragMove();
-            }
-        }
+					this.Left = point.X - this.ActualWidth / 2;
+					this.Top = point.Y - border.ActualHeight / 2;
+				}
+				DragMove();
+			}
+		}
 
-        private void Maximize_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = (this.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
-        }
+		private void Maximize_Click(object sender, RoutedEventArgs e)
+		{
+			this.WindowState = (this.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
+		}
 
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+		private void Close_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
+		}
 
-        private void Mimimize_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
+		private void Mimimize_Click(object sender, RoutedEventArgs e)
+		{
+			this.WindowState = WindowState.Minimized;
+		}
 
-        private void Window_StateChanged(object sender, EventArgs e)
-        {
+		private void Window_StateChanged(object sender, EventArgs e)
+		{
 
-        }
+		}
 
-        public void ExportToJpg(string path)
-        {
-            //toothImg.SetAllImageSelectStatus();
-            byte[] screenshot = GetJpgImage(sp_tooth, 90);
-            FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
-            BinaryWriter binaryWriter = new BinaryWriter(fileStream);
-            binaryWriter.Write(screenshot);
-            binaryWriter.Close();
-        }
+		public void ExportToJpg(string path)
+		{
+			//toothImg.SetAllImageSelectStatus();
+			byte[] screenshot = GetJpgImage(sp_tooth, 90);
+			FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
+			BinaryWriter binaryWriter = new BinaryWriter(fileStream);
+			binaryWriter.Write(screenshot);
+			binaryWriter.Close();
+		}
 
-        public static byte[] GetJpgImage(UIElement source, int quality)
-        {
-            double scale = 1.0;
-            double actualHeight = source.RenderSize.Height;
-            double actualWidth = source.RenderSize.Width;
+		public static byte[] GetJpgImage(UIElement source, int quality)
+		{
+			double scale = 1.0;
+			double actualHeight = source.RenderSize.Height;
+			double actualWidth = source.RenderSize.Width;
 
-            double renderHeight = actualHeight * scale;
-            double renderWidth = actualWidth * scale;
+			double renderHeight = actualHeight * scale;
+			double renderWidth = actualWidth * scale;
 
-            RenderTargetBitmap renderTarget = new RenderTargetBitmap((int)renderWidth, (int)renderHeight, 96, 96, PixelFormats.Pbgra32);
-            VisualBrush sourceBrush = new VisualBrush(source);
+			RenderTargetBitmap renderTarget = new RenderTargetBitmap((int)renderWidth, (int)renderHeight, 96, 96, PixelFormats.Pbgra32);
+			VisualBrush sourceBrush = new VisualBrush(source);
 
-            DrawingVisual drawingVisual = new DrawingVisual();
-            DrawingContext drawingContext = drawingVisual.RenderOpen();
+			DrawingVisual drawingVisual = new DrawingVisual();
+			DrawingContext drawingContext = drawingVisual.RenderOpen();
 
-            using (drawingContext)
-            {
-                drawingContext.PushTransform(new ScaleTransform(scale, scale));
-                drawingContext.DrawRectangle(sourceBrush, null, new Rect(new Point(0, 0), new Point(actualWidth, actualHeight)));
-            }
-            renderTarget.Render(drawingVisual);
+			using (drawingContext)
+			{
+				drawingContext.PushTransform(new ScaleTransform(scale, scale));
+				drawingContext.DrawRectangle(sourceBrush, null, new Rect(new Point(0, 0), new Point(actualWidth, actualHeight)));
+			}
+			renderTarget.Render(drawingVisual);
 
-            JpegBitmapEncoder jpgEncoder = new JpegBitmapEncoder
-            {
-                QualityLevel = quality
-            };
-            jpgEncoder.Frames.Add(BitmapFrame.Create(renderTarget));
+			JpegBitmapEncoder jpgEncoder = new JpegBitmapEncoder
+			{
+				QualityLevel = quality
+			};
+			jpgEncoder.Frames.Add(BitmapFrame.Create(renderTarget));
 
-            Byte[] _imageArray;
+			Byte[] _imageArray;
 
-            using (MemoryStream outputStream = new MemoryStream())
-            {
-                jpgEncoder.Save(outputStream);
-                _imageArray = outputStream.ToArray();
-            }
+			using (MemoryStream outputStream = new MemoryStream())
+			{
+				jpgEncoder.Save(outputStream);
+				_imageArray = outputStream.ToArray();
+			}
 
-            return _imageArray;
-        }
-    }
+			return _imageArray;
+		}
+
+		private void LoadedNewImplantOrderV2(object sender, RoutedEventArgs e)
+		{
+            if (haveXml == false)
+                DialogResult = false;
+		}
+	}
 }
