@@ -361,9 +361,7 @@
   <ItemGroup>
     <Resource Include="ImageSource\CaseTable\guide_model.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dllext\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="ImageSource\DetailTable\cadDemo.jpg" />
   </ItemGroup>
@@ -515,6 +513,14 @@
   <ItemGroup>
     <Resource Include="V2Implant\ToothImg\icon_implant-delete.png" />
     <Resource Include="V2Implant\ToothImg\icon_implant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="V2Implant\ImplantInfor.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="V2Implant\SurgicalKitInfor.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
