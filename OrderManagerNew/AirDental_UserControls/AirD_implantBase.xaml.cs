@@ -12,6 +12,9 @@ namespace OrderManagerNew.AirDental_UserControls
     /// </summary>
     public partial class AirD_implantBase : UserControl
     {
+        //委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
+        public delegate void AirD_implantBaseHandleEventHandler_snackbar(string message);
+        public event AirD_implantBaseHandleEventHandler_snackbar ProjectHandler_snackbarShow;
         //委派到MainWindow.xaml.cs裡面CaseHandler_Ortho_showSingleProject()
         public delegate void AirD_implantBaseEventHandler(int projectIndex);
         public event AirD_implantBaseEventHandler SetAirDentalProjectShow;
@@ -95,6 +98,7 @@ namespace OrderManagerNew.AirDental_UserControls
             {
                 AirDental_UserControls.AirD_implantSmallOrder TmpImplantSmallOrder = new AirD_implantSmallOrder();
                 TmpImplantSmallOrder.SetOrderCaseShow += new AirD_implantSmallOrder.implantOrderEventHandler(SmallOrderHandler);
+                TmpImplantSmallOrder.OrderHandler_snackbarShow += new AirD_implantSmallOrder.implantOrder2EventHandler_snackbar(ProjectHandler_snackbarShow);
                 TmpImplantSmallOrder.SetOrderInfo(Orderlist_Implant[i], i);
                 implantProjectInfo.List_implantOrder.Add(TmpImplantSmallOrder);
             }

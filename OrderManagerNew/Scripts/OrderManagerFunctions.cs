@@ -22,6 +22,14 @@ namespace OrderManagerNew
         public delegate void softwareLogoShowEventHandler(int softwareID, int currentProgress, double downloadPercent);
         public event softwareLogoShowEventHandler SoftwareLogoShowEvent;
         /// <summary>
+        /// 委派到MainWindow.xaml.cs裡面的setSoftwareVersionShow()
+        /// </summary>
+        /// <param name="softwareID"> 請參考_softwareID</param>
+        /// <param name="softwareStatus">設定開啟軟體或更新軟體</param>
+        /// <param name="SoftwareVersion">軟體版本號</param>
+        public delegate void softwareLogoShowEventHandler2(int softwareID, int softwareStatus, string SoftwareVersion);
+        public event softwareLogoShowEventHandler2 SoftwareVersionShowEvent;
+        /// <summary>
         /// 委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
         /// </summary>
         /// <param name="message">顯示訊息</param>
@@ -86,7 +94,7 @@ namespace OrderManagerNew
         public void DoubleCheckEXEexist()
         {
             var recDisk = new List<Tuple<string, int>>();
-
+            FileVersionInfo verInfo;
             void AddDataToRecDisk(string exePathRoot)
             {
                 if(recDisk.Count == 0)
@@ -115,6 +123,8 @@ namespace OrderManagerNew
             if(File.Exists(Properties.Settings.Default.cad_exePath) == true)
             {
                 SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
+                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
+                SoftwareVersionShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, verInfo.FileVersion);
                 AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.cad_exePath));
             }
             else
@@ -125,6 +135,8 @@ namespace OrderManagerNew
             if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
             {
                 SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
+                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.implant_exePath);
+                SoftwareVersionShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, verInfo.FileVersion);
                 AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.implant_exePath));
             }
             else
@@ -135,6 +147,8 @@ namespace OrderManagerNew
             if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
             {
                 SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
+                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.ortho_exePath);
+                SoftwareVersionShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, verInfo.FileVersion);
                 AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.ortho_exePath));
             }
             else
@@ -145,6 +159,8 @@ namespace OrderManagerNew
             if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
             {
                 SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
+                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.tray_exePath);
+                SoftwareVersionShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, verInfo.FileVersion);
                 AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.tray_exePath));
             }
             else
@@ -155,6 +171,8 @@ namespace OrderManagerNew
             if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
             {
                 SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
+                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.splint_exePath);
+                SoftwareVersionShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, verInfo.FileVersion);
                 AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.splint_exePath));
             }
             else
@@ -165,6 +183,8 @@ namespace OrderManagerNew
             if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
             {
                 SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
+                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.guide_exePath);
+                SoftwareVersionShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, verInfo.FileVersion);
                 AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.guide_exePath));
             }
             else

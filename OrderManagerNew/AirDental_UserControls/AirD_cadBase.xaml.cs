@@ -12,6 +12,9 @@ namespace OrderManagerNew.AirDental_UserControls
     /// </summary>
     public partial class AirD_cadBase : UserControl
     {
+        //委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
+        public delegate void AirD_cadBaseHandleEventHandler_snackbar(string message);
+        public event AirD_cadBaseHandleEventHandler_snackbar ProjectHandler_snackbarShow;
         //委派到MainWindow.xaml.cs裡面CaseHandler_Ortho_showSingleProject()
         public delegate void AirD_cadBaseEventHandler(int projectIndex);
         public event AirD_cadBaseEventHandler SetAirDentalProjectShow;
@@ -98,6 +101,7 @@ namespace OrderManagerNew.AirDental_UserControls
             {
                 AirDental_UserControls.AirD_cadSmallOrder TmpCADSmallOrder = new AirD_cadSmallOrder();
                 TmpCADSmallOrder.SetOrderCaseShow += new AirD_cadSmallOrder.cadOrderEventHandler(SmallOrderHandler);
+                TmpCADSmallOrder.OrderHandler_snackbarShow += new AirD_cadSmallOrder.cadOrder2EventHandler_snackbar(ProjectHandler_snackbarShow);
                 TmpCADSmallOrder.SetOrderInfo(Orderlist_CAD[i], i);
                 cadProjectInfo.List_cadOrder.Add(TmpCADSmallOrder);
             }

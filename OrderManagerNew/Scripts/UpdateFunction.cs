@@ -49,7 +49,8 @@ namespace OrderManagerNew
         /// </summary>
         /// <param name="SoftwareID">參考_softwareID</param>
         /// <param name="canUpdate">isEnable開關</param>
-        public delegate void softwareUpdateStatusHandler(int SoftwareID, bool canUpdate);
+        /// <param name="SoftwareVersion">最新軟體版本號</param>
+        public delegate void softwareUpdateStatusHandler(int SoftwareID, bool canUpdate, string SoftwareVersion);
         public event softwareUpdateStatusHandler SoftwareUpdateEvent;
 
         public List<SoftwareInfo> CloudSoftwareTotal { get; set; }  //軟體最新版清單
@@ -341,7 +342,7 @@ namespace OrderManagerNew
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
                                 else if (info.softwareVersion > new Version(verInfo.FileVersion))
-                                    SoftwareUpdateEvent(TmpsoftwareID, true);
+                                    SoftwareUpdateEvent(TmpsoftwareID, true, info.softwareVersion.ToString());
                             }
                         }
                         break;
@@ -357,7 +358,7 @@ namespace OrderManagerNew
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
                                 else if (info.softwareVersion > new Version(verInfo.FileVersion))
-                                    SoftwareUpdateEvent(TmpsoftwareID, true);
+                                    SoftwareUpdateEvent(TmpsoftwareID, true, info.softwareVersion.ToString());
                             }
                         }
                         break;
@@ -373,7 +374,7 @@ namespace OrderManagerNew
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
                                 else if (info.softwareVersion > new Version(verInfo.FileVersion))
-                                    SoftwareUpdateEvent(TmpsoftwareID, true);
+                                    SoftwareUpdateEvent(TmpsoftwareID, true, info.softwareVersion.ToString());
                             }
                         }
                         break;
@@ -389,7 +390,7 @@ namespace OrderManagerNew
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
                                 else if (info.softwareVersion > new Version(verInfo.FileVersion))
-                                    SoftwareUpdateEvent(TmpsoftwareID, true);
+                                    SoftwareUpdateEvent(TmpsoftwareID, true, info.softwareVersion.ToString());
                             }
                         }
                         break;
@@ -405,7 +406,7 @@ namespace OrderManagerNew
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
                                 else if (info.softwareVersion > new Version(verInfo.FileVersion))
-                                    SoftwareUpdateEvent(TmpsoftwareID, true);
+                                    SoftwareUpdateEvent(TmpsoftwareID, true, info.softwareVersion.ToString());
                             }
                         }
                         break;
@@ -421,7 +422,7 @@ namespace OrderManagerNew
                                 if (info.softwareID != TmpsoftwareID)
                                     continue;
                                 else if (info.softwareVersion > new Version(verInfo.FileVersion))
-                                    SoftwareUpdateEvent(TmpsoftwareID, true);
+                                    SoftwareUpdateEvent(TmpsoftwareID, true, info.softwareVersion.ToString());
                             }
                         }
                         break;

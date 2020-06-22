@@ -149,6 +149,10 @@
                                       Content="{local:LocExtension DownloadSoftware}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
+                                      x:Name="implant_open" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension Open_Implant}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
                                       x:Name="implant_create" Click="Click_SoftwareTable"
                                       Content="{local:LocExtension CreateOrder}"
                                       Foreground="{StaticResource Common_DarkBrown}" />

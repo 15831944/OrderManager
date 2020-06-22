@@ -15,7 +15,6 @@ namespace OrderManagerNew.AirDental_UserControls
         //委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
         public delegate void AirD_orthoBaseHandleEventHandler_snackbar(string message);
         public event AirD_orthoBaseHandleEventHandler_snackbar ProjectHandler_snackbarShow;
-
         //委派到MainWindow.xaml.cs裡面CaseHandler_Ortho_showSingleProject()
         public delegate void AirD_orthoBaseEventHandler(int projectIndex);
         public event AirD_orthoBaseEventHandler SetAirDentalProjectShow;

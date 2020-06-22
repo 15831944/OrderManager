@@ -1166,4 +1166,12 @@
     <value>Please login first</value>
     <comment>Login</comment>
   </data>
+  <data name="DownloadDirNotFound" xml:space="preserve">
+    <value></value>
+    <comment>Download</comment>
+  </data>
+  <data name="Open_Implant" xml:space="preserve">
+    <value>Open ImplantPlanningV2</value>
+    <comment>TableFunction</comment>
+  </data>
 </root>

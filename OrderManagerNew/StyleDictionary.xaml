@@ -758,8 +758,8 @@
         </Setter>
     </Style>
     <Style x:Key="btn_Download" BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="{x:Type Button}">
-        <Setter Property="Height" Value="32" />
-        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="28" />
+        <Setter Property="Width" Value="28" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Margin" Value="6,0" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -775,6 +775,33 @@
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="BtnBG_refresh" Property="Source" Value="{StaticResource icon_download_clickDrawingImage}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="BtnBG_refresh" Property="Opacity" Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="btn_folderOpen_forCase" BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="{x:Type Button}">
+        <Setter Property="Height" Value="28" />
+        <Setter Property="Width" Value="28" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Margin" Value="6,0" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Image Name="BtnBG_refresh" Source="{StaticResource icon_folderDrawingImage}" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BtnBG_refresh" Property="Source" Value="{StaticResource icon_folder_mouseDrawingImage}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="BtnBG_refresh" Property="Source" Value="{StaticResource icon_folder_clickDrawingImage}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="BtnBG_refresh" Property="Opacity" Value="0.3" />

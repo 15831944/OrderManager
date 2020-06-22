@@ -1006,6 +1006,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似  的當地語系化字串。
+        /// </summary>
+        internal static string DownloadDirNotFound {
+            get {
+                return ResourceManager.GetString("DownloadDirNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Download Directory 的當地語系化字串。
         /// </summary>
         internal static string Downloadpath {
@@ -1614,6 +1623,15 @@ namespace OrderManagerNew.Properties {
         internal static string Open_EZCAD {
             get {
                 return ResourceManager.GetString("Open_EZCAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Open ImplantPlanningV2 的當地語系化字串。
+        /// </summary>
+        internal static string Open_Implant {
+            get {
+                return ResourceManager.GetString("Open_Implant", resourceCulture);
             }
         }
         

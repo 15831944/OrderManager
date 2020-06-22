@@ -66,8 +66,12 @@
               Content="ProjectName(DesignStep)"
               Style="{DynamicResource OrderSmallCase_OrderIDlabel}" />
             <Button
-              Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
-              x:Name="button_DownloadOrder" Width="28" Background="#FFBCB2AA"
+              Grid.Row="0" Grid.Column="3" x:Name="button_openDir"
+              Click="Click_ButtonEvent"
+              Style="{DynamicResource btn_folderOpen_forCase}"
+              ToolTip="{local1:LocExtension OpenCaseFolder}" />
+            <Button
+              Grid.Row="0" Grid.Column="4" x:Name="button_DownloadOrder"
               Click="Click_ButtonEvent"
               Style="{DynamicResource btn_Download}"
               ToolTip="{local1:LocExtension Download}" />

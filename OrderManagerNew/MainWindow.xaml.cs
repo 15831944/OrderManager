@@ -131,6 +131,7 @@ namespace OrderManagerNew
             //OrderManager常用Function
             OrderManagerFunc = new OrderManagerFunctions();
             OrderManagerFunc.SoftwareLogoShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler(Handler_setSoftwareShow);
+            OrderManagerFunc.SoftwareVersionShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler2(Handler_setSoftwareVersion);
             //更新Function
             UpdateFunc = new UpdateFunction();
             UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
@@ -175,7 +176,6 @@ namespace OrderManagerNew
         {
             UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
             OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
-
             //檢查Cookie是否還可以用
             string[] uInfo = new string[4];
             if (AirDentalProjHandle.OrderManagerLoginCheck(ref uInfo) == true)
@@ -844,6 +844,7 @@ namespace OrderManagerNew
                                     popupbox_Implant.IsEnabled = true;
                                     implant_selectPath.Visibility = Visibility.Visible;
                                     implant_download.Visibility = Visibility.Visible;
+                                    implant_open.Visibility = Visibility.Collapsed;
                                     implant_create.Visibility = Visibility.Collapsed;
                                     implant_demo.Visibility = Visibility.Collapsed;
                                     implant_troubleShooting.Visibility = Visibility.Collapsed;
@@ -863,6 +864,7 @@ namespace OrderManagerNew
                                     popupbox_Implant.IsEnabled = true;
                                     implant_selectPath.Visibility = Visibility.Collapsed;
                                     implant_download.Visibility = Visibility.Collapsed;
+                                    implant_open.Visibility = Visibility.Visible;
                                     implant_create.Visibility = Visibility.Visible;
                                     implant_demo.Visibility = Visibility.Visible;
                                     implant_troubleShooting.Visibility = Visibility.Visible;
@@ -1162,7 +1164,7 @@ namespace OrderManagerNew
                     }
             }
             //事件
-            switch(currentProgress)
+            switch (currentProgress)
             {
                 case (int)_softwareStatus.Installed:
                     {
@@ -1191,11 +1193,99 @@ namespace OrderManagerNew
             }
         }
         /// <summary>
+        /// 設定各軟體顯示的版本號
+        /// </summary>
+        /// <param name="softwareID">(軟體ID) EZCAD、Implant、Ortho、Tray、Splint</param>
+        /// <param name="SoftwareStatus">設定開啟軟體或更新軟體Button</param>
+        /// <param name="SoftwareVersion">版本號</param>
+        /// <returns></returns>
+        private void Handler_setSoftwareVersion(int softwareID, int SoftwareStatus, string SoftwareVersion)
+        {
+            switch(SoftwareStatus)
+            {
+                case (int)_softwareStatus.Installed:    //開啟軟體button
+                    {
+                        switch(softwareID)
+                        {
+                            case (int)_softwareID.EZCAD:
+                                {
+                                    cad_open.Content += "(" + SoftwareVersion + ")";
+                                    break;
+                                }
+                            case (int)_softwareID.Implant:
+                                {
+                                    implant_open.Content += "(" + SoftwareVersion + ")";
+                                    break;
+                                }
+                            case (int)_softwareID.Ortho:
+                                {
+                                    ortho_open.Content += "(" + SoftwareVersion + ")";
+                                    break;
+                                }
+                            case (int)_softwareID.Tray:
+                                {
+                                    tray_open.Content += "(" + SoftwareVersion + ")";
+                                    break;
+                                }
+                            case (int)_softwareID.Splint:
+                                {
+                                    splint_open.Content += "(" + SoftwareVersion + ")";
+                                    break;
+                                }
+                            case (int)_softwareID.Guide:
+                                {
+                                    guide_open.Content += "(" + SoftwareVersion + ")";
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case (int)_softwareStatus.Updating: //更新軟體button
+                    {
+                        switch (softwareID)
+                        {
+                            case (int)_softwareID.EZCAD:
+                                {
+                                    cad_update.Content += "(" + SoftwareVersion + ")";
+                                    break;
+                                }
+                            case (int)_softwareID.Implant:
+                                {
+                                    implant_update.Content += "(" + SoftwareVersion + ")";
+                                    break;
+                                }
+                            case (int)_softwareID.Ortho:
+                                {
+                                    ortho_update.Content += "(" + SoftwareVersion + ")";
+                                    break;
+                                }
+                            case (int)_softwareID.Tray:
+                                {
+                                    tray_update.Content += "(" + SoftwareVersion + ")";
+                                    break;
+                                }
+                            case (int)_softwareID.Splint:
+                                {
+                                    splint_update.Content += "(" + SoftwareVersion + ")";
+                                    break;
+                                }
+                            case (int)_softwareID.Guide:
+                                {
+                                    guide_update.Content += "(" + SoftwareVersion + ")";
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+            }
+        }
+        /// <summary>
         /// 設定各單機軟體更新Button的isEnable狀態
         /// </summary>
-        /// <param name="SoftwareID"></param>
-        /// <param name="canUpdate"></param>
-        private void Handler_SetSoftwareUpdateButtonStatus(int SoftwareID,bool canUpdate)
+        /// <param name="SoftwareID">參考_softwareID</param>
+        /// <param name="canUpdate">isEnable開關</param>
+        /// <param name="SoftwareVersion">最新軟體版本號</param>
+        private void Handler_SetSoftwareUpdateButtonStatus(int SoftwareID,bool canUpdate, string SoftwareVersion)
         {
             switch(SoftwareID)
             {
@@ -1208,6 +1298,7 @@ namespace OrderManagerNew
                             updateimage_EZCAD.Visibility = Visibility.Visible;
                             cad_update.FontWeight = FontWeights.Bold;
                             cad_update.Foreground = Brushes.Red;
+                            cad_update.Content += "(" + SoftwareVersion + ")";
                         }   
                         else
                         {
@@ -1225,6 +1316,7 @@ namespace OrderManagerNew
                             updateimage_Implant.Visibility = Visibility.Visible;
                             implant_update.FontWeight = FontWeights.Bold;
                             implant_update.Foreground = Brushes.Red;
+                            implant_update.Content += "(" + SoftwareVersion + ")";
                         }   
                         else
                         {
@@ -1242,6 +1334,7 @@ namespace OrderManagerNew
                             updateimage_Ortho.Visibility = Visibility.Visible;
                             ortho_update.FontWeight = FontWeights.Bold;
                             ortho_update.Foreground = Brushes.Red;
+                            ortho_update.Content += "(" + SoftwareVersion + ")";
                         }   
                         else
                         {
@@ -1259,6 +1352,7 @@ namespace OrderManagerNew
                             updateimage_Tray.Visibility = Visibility.Visible;
                             tray_update.FontWeight = FontWeights.Bold;
                             tray_update.Foreground = Brushes.Red;
+                            tray_update.Content += "(" + SoftwareVersion + ")";
                         }
                         else
                         {
@@ -1276,6 +1370,7 @@ namespace OrderManagerNew
                             updateimage_Splint.Visibility = Visibility.Visible;
                             splint_update.FontWeight = FontWeights.Bold;
                             splint_update.Foreground = Brushes.Red;
+                            tray_update.Content += "(" + SoftwareVersion + ")";
                         }   
                         else
                         {
@@ -1293,6 +1388,7 @@ namespace OrderManagerNew
                             updateimage_Guide.Visibility = Visibility.Visible;
                             guide_update.FontWeight = FontWeights.Bold;
                             guide_update.Foreground = Brushes.Red;
+                            guide_update.Content += "(" + SoftwareVersion + ")";
                         }   
                         else
                         {
@@ -1363,9 +1459,7 @@ namespace OrderManagerNew
                         }
                     case "cad_open":
                         {
-                            QueryProductState qPS = new QueryProductState();
-                            if (qPS.CheckSoftwareVC((int)_softwareID.EZCAD) == true)
-                                OrderManagerFunc.RunCommandLine(Properties.Settings.Default.cad_exePath, "");
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.cad_exePath, "");
                             break;
                         }
                     case "cad_webIntro":
@@ -1445,12 +1539,13 @@ namespace OrderManagerNew
                             DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
+                    case "implant_open":
+                        {
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");
+                            break;
+                        }
                     case "implant_create":
                         {
-                            /*QueryProductState qPS = new QueryProductState();
-                            if (qPS.CheckSoftwareVC((int)_softwareID.Implant) == true)
-                                OrderManagerFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");*/
-
                             //-2019/0408-handtan
                             var blur = new BlurEffect();
                             this.Effect = blur;
@@ -1530,9 +1625,7 @@ namespace OrderManagerNew
                         }
                     case "ortho_open":
                         {
-                            QueryProductState qPS = new QueryProductState();
-                            if (qPS.CheckSoftwareVC((int)_softwareID.Ortho) == true)
-                                OrderManagerFunc.RunCommandLine(Properties.Settings.Default.ortho_exePath, "");
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.ortho_exePath, "");
                             break;
                         }
                     case "ortho_webIntro":
@@ -1613,9 +1706,7 @@ namespace OrderManagerNew
                         }
                     case "tray_open":
                         {
-                            QueryProductState qPS = new QueryProductState();
-                            if (qPS.CheckSoftwareVC((int)_softwareID.Tray) == true)
-                                OrderManagerFunc.RunCommandLine(Properties.Settings.Default.tray_exePath, "");
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.tray_exePath, "");
                             break;
                         }
                     case "tray_webIntro":
@@ -1696,9 +1787,7 @@ namespace OrderManagerNew
                         }
                     case "splint_open":
                         {
-                            QueryProductState qPS = new QueryProductState();
-                            if (qPS.CheckSoftwareVC((int)_softwareID.Splint) == true)
-                                OrderManagerFunc.RunCommandLine(Properties.Settings.Default.splint_exePath, "");
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.splint_exePath, "");
                             break;
                         }
                     case "splint_webIntro":
@@ -1780,9 +1869,7 @@ namespace OrderManagerNew
                         }
                     case "guide_open":
                         {
-                            QueryProductState qPS = new QueryProductState();
-                            if (qPS.CheckSoftwareVC((int)_softwareID.Guide) == true)
-                                OrderManagerFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "");
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "");
                             break;
                         }
                     case "guide_webIntro":

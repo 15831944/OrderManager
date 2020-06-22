@@ -20,11 +20,9 @@ namespace OrderManagerNew.AirDental_UserControls
         //委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
         public delegate void orthoOrder2EventHandler_snackbar(string message);
         public event orthoOrder2EventHandler_snackbar OrderHandler_snackbarShow;
-
         //委派到Order_orthoBase.xaml.cs裡面的SmallCaseHandler()
         public delegate void orthoOrderEventHandler(int projectIndex);
         public event orthoOrderEventHandler SetOrderCaseShow;
-
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {   // 總是接受
             return true;
@@ -44,6 +42,7 @@ namespace OrderManagerNew.AirDental_UserControls
             progressbar_download.Value = 0;
             background_orthoSmallcase.Visibility = Visibility.Visible;
             DownloadFileName = "";
+            button_openDir.IsEnabled = false;
         }
 
         public void SetOrderInfo(Dll_Airdental.Main._orthoOrder Import, int Index)
@@ -67,6 +66,12 @@ namespace OrderManagerNew.AirDental_UserControls
                             if(background_orthoSmallcase.Visibility == Visibility.Visible)
                                 background_orthoSmallcase.Visibility = Visibility.Hidden;
                             DownloadOrderFile();
+                            break;
+                        }
+                    case "button_openDir":
+                        {
+                            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                            omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "/select,\"" + DownloadFileName + "\"");
                             break;
                         }
                 }
@@ -122,10 +127,12 @@ namespace OrderManagerNew.AirDental_UserControls
         private void DownloadOrderFile()
         {
             button_DownloadOrder.IsEnabled = false;
-            if (System.IO.Directory.Exists(Properties.OrderManagerProps.Default.ortho_projectDirectory) == false)
+            button_openDir.IsEnabled = false;
+            if (Directory.Exists(Properties.OrderManagerProps.Default.AirD_Ortho_Dir) == false)
+            {
+                OrderHandler_snackbarShow(TranslationSource.Instance["DownloadDirNotFound"]);
                 return;
-            else if (Directory.Exists(Properties.OrderManagerProps.Default.ortho_projectDirectory) == false)
-                return;
+            }   
 
             string Downloadurl = "";
             try
@@ -145,12 +152,11 @@ namespace OrderManagerNew.AirDental_UserControls
             {
                 try
                 {
-                    string readyDownloadFilePath = Properties.OrderManagerProps.Default.AirD_Ortho_Dir + DownloadFileName;
-                    readyDownloadFilePath = readyDownloadFilePath.Insert(readyDownloadFilePath.LastIndexOf("."), "_" + (ItemIndex + 1).ToString());
-                    if (File.Exists(readyDownloadFilePath) == true)
-                        File.Delete(readyDownloadFilePath);
+                    DownloadFileName = Properties.OrderManagerProps.Default.AirD_Ortho_Dir + DownloadFileName;
+                    DownloadFileName = DownloadFileName.Insert(DownloadFileName.LastIndexOf("."), "_" + (ItemIndex + 1).ToString());
+                    if (File.Exists(DownloadFileName) == true)
+                        File.Delete(DownloadFileName);
                     progressbar_download.Value = 0.0;
-                    button_DownloadOrder.IsEnabled = false;
                     if (((string)label_ProjectName.Content).IndexOf(TranslationSource.Instance["Order_Downloaded"]) != -1)
                         label_ProjectName.Content = ((string)label_ProjectName.Content).Remove(((string)label_ProjectName.Content).IndexOf("(已下載)"));
                 }
@@ -188,10 +194,8 @@ namespace OrderManagerNew.AirDental_UserControls
                     {
                         // 取得下載的檔名
                         Uri uri = new Uri(fileUrl);
-                        string downloadfilepath = Properties.OrderManagerProps.Default.AirD_Ortho_Dir + DownloadFileName;
-                        downloadfilepath = downloadfilepath.Insert(downloadfilepath.LastIndexOf("."), "_" + (ItemIndex + 1).ToString());
                         Stream netStream = response.GetResponseStream();
-                        Stream fileStream = new FileStream(downloadfilepath, FileMode.Create, FileAccess.Write);
+                        Stream fileStream = new FileStream(DownloadFileName, FileMode.Create, FileAccess.Write);
                         byte[] read = new byte[1024];
                         long progressBarValue = 0;
                         int realReadLen = netStream.Read(read, 0, read.Length);
@@ -240,6 +244,7 @@ namespace OrderManagerNew.AirDental_UserControls
                 if(((string)label_ProjectName.Content).IndexOf(TranslationSource.Instance["Order_Downloaded"]) == -1)
                     label_ProjectName.Content += TranslationSource.Instance["Order_Downloaded"];
                 button_DownloadOrder.IsEnabled = true;
+                button_openDir.IsEnabled = true;
             }
         }
     }

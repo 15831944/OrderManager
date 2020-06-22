@@ -903,4 +903,10 @@
   <data name="PleaseLoginFirst" xml:space="preserve">
     <value>請先登入</value>
   </data>
+  <data name="DownloadDirNotFound" xml:space="preserve">
+    <value>找不到存放下載專案的資料夾</value>
+  </data>
+  <data name="Open_Implant" xml:space="preserve">
+    <value>開啟 ImplantPlanningV2</value>
+  </data>
 </root>

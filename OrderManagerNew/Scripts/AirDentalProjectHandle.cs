@@ -280,6 +280,7 @@ namespace OrderManagerNew
                 {
                     implantBase_AirDental = Airdental
                 };
+                tmpUserControl_implantProject.ProjectHandler_snackbarShow += new AirDental_UserControls.AirD_implantBase.AirD_implantBaseHandleEventHandler_snackbar(Handler_snackbarShow);
                 tmpUserControl_implantProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_implantBase.AirD_implantBaseEventHandler(Main_implantSetAirDentalProjectShow);
                 tmpUserControl_implantProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_implantBase.AirD_implantBaseEventHandler2(Main_implantSetSmallOrderDetailShow);
                 tmpUserControl_implantProject.SetProjectInfo(implantProject, count);
@@ -335,6 +336,7 @@ namespace OrderManagerNew
                 {
                     cadBase_AirDental = Airdental
                 };
+                tmpUserControl_cadProject.ProjectHandler_snackbarShow += new AirDental_UserControls.AirD_cadBase.AirD_cadBaseHandleEventHandler_snackbar(Handler_snackbarShow);
                 tmpUserControl_cadProject.SetAirDentalProjectShow += new AirDental_UserControls.AirD_cadBase.AirD_cadBaseEventHandler(Main_cadSetAirDentalProjectShow);
                 tmpUserControl_cadProject.SetSmallOrderDetailShow += new AirDental_UserControls.AirD_cadBase.AirD_cadBaseEventHandler2(Main_cadSetSmallOrderDetailShow);
                 tmpUserControl_cadProject.SetProjectInfo(cadProject, count);
