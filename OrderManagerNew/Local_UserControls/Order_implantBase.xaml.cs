@@ -175,10 +175,26 @@ namespace OrderManagerNew.Local_UserControls
             }
         }
 
-        private void Click_OpenDir(object sender, RoutedEventArgs e)
+        private void Click_ButtonEvent(object sender, RoutedEventArgs e)
         {
-            OrderManagerFunctions omFunc = new OrderManagerFunctions();
-            omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + Path.GetDirectoryName(implantInfo.CaseDirectoryPath) + "\"");
+            if(sender is Button)
+            {
+                switch(((Button)sender).Name)
+                {
+                    case "button_openImplant":
+                        {
+                            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                            omFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "\"readct\" \"" + Path.GetDirectoryName(implantInfo.XmlfilePath) + "\"");
+                            break;
+                        }
+                    case "button_openDir":
+                        {
+                            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                            omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + Path.GetDirectoryName(implantInfo.CaseDirectoryPath) + "\"");
+                            break;
+                        }
+                }
+            }
         }
 
         /// <summary>
@@ -240,7 +256,7 @@ namespace OrderManagerNew.Local_UserControls
         {
             if (e.Source is Button)
             {
-                Click_OpenDir(e.Source, e);
+                Click_ButtonEvent(e.Source, e);
             }
             else
             {
@@ -255,6 +271,11 @@ namespace OrderManagerNew.Local_UserControls
                 }
             }
             e.Handled = true;
+        }
+
+        private void Click_AirdentalWeb(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

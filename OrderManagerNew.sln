@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderManagerNew", "OrderMan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dll_Airdental", "AirDental\Dll_Airdental.csproj", "{F843136F-6291-435D-9038-DC79401E7DCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderManagerLauncher", "OrderManagerLauncher\OrderManagerLauncher.csproj", "{927CEB08-58D3-411D-BD61-DDCB5CC07072}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{F843136F-6291-435D-9038-DC79401E7DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F843136F-6291-435D-9038-DC79401E7DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F843136F-6291-435D-9038-DC79401E7DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{927CEB08-58D3-411D-BD61-DDCB5CC07072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{927CEB08-58D3-411D-BD61-DDCB5CC07072}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{927CEB08-58D3-411D-BD61-DDCB5CC07072}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{927CEB08-58D3-411D-BD61-DDCB5CC07072}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

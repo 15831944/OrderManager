@@ -61,7 +61,7 @@
 
                 <Image Grid.Row="0" Grid.RowSpan="2" Source="/ImageSource/FunctionTable/icon_O.png" />
                 <Button
-                  Grid.Row="0" Grid.RowSpan="2" Grid.Column="5"
+                  Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
                   x:Name="button_OpenFolder"
                   Style="{StaticResource btn_folderOpen}"
                   ToolTip="{local1:LocExtension OpenCaseFolder}" />

@@ -204,8 +204,7 @@ namespace OrderManagerNew.AirDental_UserControls
                     }
             }
         }
-
-
+        
         private void Click_AirdentalWeb(object sender, RoutedEventArgs e)
         {
             string WebUrl = Properties.OrderManagerProps.Default.AirDentalAPI.Remove(Properties.OrderManagerProps.Default.AirDentalAPI.LastIndexOf("api/")) + @"project/implant/" + implantProjectInfo.Pid;

@@ -1006,7 +1006,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似  的當地語系化字串。
+        ///   查詢類似 Download project directory not found 的當地語系化字串。
         /// </summary>
         internal static string DownloadDirNotFound {
             get {

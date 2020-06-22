@@ -63,7 +63,7 @@
                   Grid.Row="0" Grid.RowSpan="2" x:Name="image_patient"
                   Width="64" Height="64" Source="/ImageSource/FunctionTable/icon_O.png" />
                 <Button
-                  Grid.Row="0" Grid.RowSpan="2" Grid.Column="5"
+                  Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
                   x:Name="button_AirdentalWeb" Click="Click_AirdentalWeb"
                   Style="{DynamicResource btn_WebOpen}"
                   ToolTip="{local1:LocExtension ViewDetail}" />

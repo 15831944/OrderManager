@@ -57,7 +57,7 @@
 
             <Image Grid.Row="0" Grid.RowSpan="2" Source="/ImageSource/FunctionTable/icon_D.png" />
             <Button
-              Grid.Row="0" Grid.RowSpan="2" Grid.Column="5"
+              Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
               Click="Click_FolderOpen"
               Style="{DynamicResource btn_folderOpen}"
               ToolTip="{local1:LocExtension OpenCaseFolder}" />

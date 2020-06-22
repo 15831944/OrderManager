@@ -1167,7 +1167,7 @@
     <comment>Login</comment>
   </data>
   <data name="DownloadDirNotFound" xml:space="preserve">
-    <value></value>
+    <value>Download project directory not found</value>
     <comment>Download</comment>
   </data>
   <data name="Open_Implant" xml:space="preserve">

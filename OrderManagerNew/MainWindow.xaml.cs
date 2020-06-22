@@ -82,39 +82,17 @@ namespace OrderManagerNew
         {
             InitializeComponent();
             CheckedSoftwareID = -1;
-            string[] args;
-            args = Environment.GetCommandLineArgs();
-            if(args != null && args.Length > 1)
-            {
-                foreach(string argument in args)
-                {
-                    if (argument == "-Rec") //完整記錄模式
-                        Properties.Settings.Default.FullRecord = true;
-                }
-            }
-            
+
             LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
 
             //OrderManager不能多開
             Process[] MyProcess = Process.GetProcessesByName("OrderManager");
             if (MyProcess.Length > 1)
             {
-                this.Hide();
-
-                if (MessageBox.Show(TranslationSource.Instance["OMAlreadyRunning"], "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
-                {
-                    try
-                    {
-                        MyProcess[0].Kill(); //關閉執行中的程式
-                    }
-                    catch { }
-                }
-                else
-                {
-                    this.Close();
-                }
+                this.Visibility = Visibility.Collapsed;
+                MyProcess[0].Kill(); //關閉執行中的程式
             }
-            
+
             //初始化LogRecorder
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
@@ -132,6 +110,27 @@ namespace OrderManagerNew
             OrderManagerFunc = new OrderManagerFunctions();
             OrderManagerFunc.SoftwareLogoShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler(Handler_setSoftwareShow);
             OrderManagerFunc.SoftwareVersionShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler2(Handler_setSoftwareVersion);
+
+            string[] args;
+            bool latestVersion = false;
+            args = Environment.GetCommandLineArgs();
+            if(args != null && args.Length > 1)
+            {
+                foreach(string argument in args)
+                {
+                    if (argument == "-Rec") //完整記錄模式
+                        Properties.Settings.Default.FullRecord = true;
+                    else if (argument == "-latestVer")
+                        latestVersion = true;
+                }
+            }
+
+            if(latestVersion == false)
+            {
+                OrderManagerFunc.RunCommandLine("OrderManagerLauncher.exe", "");
+                Environment.Exit(0);
+            }   
+            
             //更新Function
             UpdateFunc = new UpdateFunction();
             UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
