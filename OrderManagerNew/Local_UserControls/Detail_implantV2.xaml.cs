@@ -67,6 +67,9 @@ namespace OrderManagerNew.Local_UserControls
                 button_openPDF.IsEnabled = false;
             else
                 button_openPDF.IsEnabled = true;
+
+            if (Properties.Settings.Default.guide_exePath == "")
+                button_loadGuide.IsEnabled = false;
         }
 
         private void Click_systemButton(object sender, RoutedEventArgs e)

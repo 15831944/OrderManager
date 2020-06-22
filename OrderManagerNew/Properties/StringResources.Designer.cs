@@ -1222,6 +1222,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Guide Model Directory 的當地語系化字串。
+        /// </summary>
+        internal static string GuideModelDir {
+            get {
+                return ResourceManager.GetString("GuideModelDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Guide Type 的當地語系化字串。
         /// </summary>
         internal static string GuideType {
@@ -1627,11 +1636,29 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Open EZCAD.guide 的當地語系化字串。
+        /// </summary>
+        internal static string Open_Guide {
+            get {
+                return ResourceManager.GetString("Open_Guide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Open ImplantPlanningV2 的當地語系化字串。
         /// </summary>
         internal static string Open_Implant {
             get {
                 return ResourceManager.GetString("Open_Implant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Open ImplantPlanning 的當地語系化字串。
+        /// </summary>
+        internal static string Open_Implant_short {
+            get {
+                return ResourceManager.GetString("Open_Implant_short", resourceCulture);
             }
         }
         
@@ -1645,7 +1672,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open EZCAD.Splint 的當地語系化字串。
+        ///   查詢類似 Open EZCAD.splint 的當地語系化字串。
         /// </summary>
         internal static string Open_Splint {
             get {
@@ -1654,7 +1681,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open EZCAD.Tray 的當地語系化字串。
+        ///   查詢類似 Open EZCAD.tray 的當地語系化字串。
         /// </summary>
         internal static string Open_Tray {
             get {

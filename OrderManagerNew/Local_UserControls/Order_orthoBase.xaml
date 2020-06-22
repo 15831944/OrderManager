@@ -63,7 +63,7 @@
                 <Button
                   Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
                   x:Name="button_OpenFolder"
-                  Style="{StaticResource btn_folderOpen}"
+                  Style="{DynamicResource btn_folderOpen}"
                   ToolTip="{local1:LocExtension OpenCaseFolder}" />
             </Grid>
         </StackPanel>

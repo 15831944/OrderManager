@@ -66,21 +66,19 @@
               Grid.Row="0" Grid.RowSpan="2" Grid.Column="2"
               x:Name="button_Implant" Width="28" Click="Click_ButtonEvent"
               Style="{DynamicResource ImageButton}"
-              ToolTip="{local1:LocExtension OpenCaseFolder}">
+              ToolTip="{local1:LocExtension Open_Implant}">
                 <Image Source="/ImageSource/FunctionTable/icon_I.png" />
             </Button>
             <Button
               Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"
               x:Name="button_Guide" Width="28" Click="Click_ButtonEvent"
-              Style="{StaticResource ImageButton}">
+              Style="{DynamicResource ImageButton}">
                 <Image Source="/ImageSource/FunctionTable/icon_G.png" />
             </Button>
             <Button
               Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
               x:Name="button_GuideModelDir" Width="28" Click="Click_ButtonEvent"
-              Style="{StaticResource ImageButton}">
-                <Image Source="{DynamicResource icon_guideDrawingImage}" />
-            </Button>
+              Style="{DynamicResource btn_GuideDirOpen}" />
         </Grid>
     </Grid>
 </UserControl>

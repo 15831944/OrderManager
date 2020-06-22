@@ -217,6 +217,16 @@
               Stretch="Fill">
                 <Image Source="{DynamicResource icon_guideDrawingImage}" />
             </Viewbox>
+            <Viewbox
+              Width="36" Height="36" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{DynamicResource icon_guide_clickDrawingImage}" />
+            </Viewbox>
+            <Viewbox
+              Width="36" Height="36" Margin="6,0"
+              Stretch="Fill">
+                <Image Source="{DynamicResource icon_guide_mouseDrawingImage}" />
+            </Viewbox>
         </StackPanel>
         <StackPanel Grid.Row="3" HorizontalAlignment="Left" Orientation="Horizontal">
             <StackPanel.Resources>

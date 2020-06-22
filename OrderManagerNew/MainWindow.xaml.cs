@@ -1208,32 +1208,38 @@ namespace OrderManagerNew
                         {
                             case (int)_softwareID.EZCAD:
                                 {
-                                    cad_open.Content += "(" + SoftwareVersion + ")";
+                                    if(((string)cad_open.Content).IndexOf("(") == -1)
+                                        cad_open.Content += "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Implant:
                                 {
-                                    implant_open.Content += "(" + SoftwareVersion + ")";
+                                    if (((string)implant_open.Content).IndexOf("(") == -1)
+                                        implant_open.Content += "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Ortho:
                                 {
-                                    ortho_open.Content += "(" + SoftwareVersion + ")";
+                                    if (((string)ortho_open.Content).IndexOf("(") == -1)
+                                        ortho_open.Content += "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Tray:
                                 {
-                                    tray_open.Content += "(" + SoftwareVersion + ")";
+                                    if (((string)tray_open.Content).IndexOf("(") == -1)
+                                        tray_open.Content += "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Splint:
                                 {
-                                    splint_open.Content += "(" + SoftwareVersion + ")";
+                                    if (((string)splint_open.Content).IndexOf("(") == -1)
+                                        splint_open.Content += "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Guide:
                                 {
-                                    guide_open.Content += "(" + SoftwareVersion + ")";
+                                    if (((string)guide_open.Content).IndexOf("(") == -1)
+                                        guide_open.Content += "(" + SoftwareVersion + ")";
                                     break;
                                 }
                         }
@@ -2068,6 +2074,14 @@ namespace OrderManagerNew
                 usercontrolUserDetail.RefreshData();    //usergroup是多國語系
 
                 ChooseToLoadProj();
+                if (SoftwareFilterCAD.IsChecked == false && SoftwareFilterImplant.IsChecked == false &&
+                SoftwareFilterOrtho.IsChecked == false && SoftwareFilterTray.IsChecked == false &&
+                SoftwareFilterSplint.IsChecked == false)
+                {
+                    ChangeSoftwareFilter();
+                }
+                if(tabitem_Cloud.IsEnabled == false)
+                    tabitem_Cloud.ToolTip = TranslationSource.Instance["PleaseLoginFirst"];
                 log.RecordConfigLog("Click_FunctionTable_Setting()", "Config changed");
             }
 
@@ -2111,7 +2125,7 @@ namespace OrderManagerNew
         /// <summary>
         /// F5重新整理專案
         /// </summary>
-        private void ChooseToLoadProj() //日期過濾要加
+        private void ChooseToLoadProj()
         {
             //本地端
             if (SoftwareFilterCAD.IsChecked == true)

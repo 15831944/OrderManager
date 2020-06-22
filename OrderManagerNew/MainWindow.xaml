@@ -350,7 +350,7 @@
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="guide_open" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension Open_Splint}"
+                                      Content="{local:LocExtension Open_Guide}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="guide_webIntro" Click="Click_SoftwareTable"

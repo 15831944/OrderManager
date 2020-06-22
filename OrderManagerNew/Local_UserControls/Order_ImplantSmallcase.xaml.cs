@@ -43,6 +43,8 @@ namespace OrderManagerNew.Local_UserControls
             InitializeComponent();
             IsFocusSmallCase = false;
             ItemIndex = -1;
+
+            
         }
 
         public void SetImplantSmallCaseInfo(ImplantSmallCaseInformation Import, int Index)
@@ -57,8 +59,19 @@ namespace OrderManagerNew.Local_UserControls
             else
             {
                 button_GuideModelDir.IsEnabled = true;
-                button_GuideModelDir.ToolTip = TranslationSource.Instance["GuideModel"];
+                button_GuideModelDir.ToolTip = TranslationSource.Instance["GuideModelDir"];
             }
+            if (Properties.Settings.Default.guide_exePath == "")
+            {
+                button_Guide.IsEnabled = false;
+                button_Guide.ToolTip = null;
+            }
+            else
+            {
+                button_Guide.IsEnabled = true;
+                button_Guide.ToolTip = TranslationSource.Instance["Open_Guide"];
+            }
+                
             ItemIndex = Index;
         }
 

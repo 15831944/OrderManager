@@ -61,7 +61,7 @@
             <Button
               Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
               Click="Click_FolderOpen"
-              Style="{StaticResource btn_folderOpen}"
+              Style="{DynamicResource btn_folderOpen}"
               ToolTip="{local1:LocExtension OpenCaseFolder}" />
         </Grid>
     </Grid>

@@ -62,11 +62,17 @@
                 <Image Grid.Row="0" Grid.RowSpan="2" Source="/ImageSource/FunctionTable/icon_I.png" />
                 <Button
                   Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"
-                  x:Name="button_openImplant" />
+                  x:Name="button_openImplant" Width="36" Height="36"
+                  BorderThickness="0"
+                  ToolTip="{local1:LocExtension Open_Implant}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/OrderManager;component/ImageSource/FunctionTable/icon_I.png" />
+                    </Button.Background>
+                </Button>
                 <Button
                   Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
                   x:Name="button_openDir"
-                  Style="{StaticResource btn_folderOpen}"
+                  Style="{DynamicResource btn_folderOpen}"
                   ToolTip="{local1:LocExtension OpenCaseFolder}" />
             </Grid>
         </StackPanel>
