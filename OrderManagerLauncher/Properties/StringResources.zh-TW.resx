@@ -126,4 +126,19 @@
   <data name="Downloading" xml:space="preserve">
     <value>下載更新包中...</value>
   </data>
+  <data name="CannotGetnewOMXML" xml:space="preserve">
+    <value>無法取得OrderManager更新資訊</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>，請聯絡英特崴客服</value>
+  </data>
+  <data name="DownloadingError" xml:space="preserve">
+    <value>資料下載時發生錯誤</value>
+  </data>
+  <data name="CannotDownloadOM" xml:space="preserve">
+    <value>無法下載OrderManager更新資訊</value>
+  </data>
+  <data name="UnpackingError" xml:space="preserve">
+    <value>資料解析時發生錯誤</value>
+  </data>
 </root>

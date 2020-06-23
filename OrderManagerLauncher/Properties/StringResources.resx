@@ -126,4 +126,24 @@
     <value>Downloading update pack...</value>
     <comment>Launcher</comment>
   </data>
+  <data name="CannotGetnewOMXML" xml:space="preserve">
+    <value>Cannot get update information</value>
+    <comment>Launcher</comment>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>, please contact Inteware customer service</value>
+    <comment>Launcher</comment>
+  </data>
+  <data name="DownloadingError" xml:space="preserve">
+    <value>Error occurred during data download</value>
+    <comment>Launcher</comment>
+  </data>
+  <data name="CannotDownloadOM" xml:space="preserve">
+    <value>Cannot download update patch</value>
+    <comment>Launcher</comment>
+  </data>
+  <data name="UnpackingError" xml:space="preserve">
+    <value>Error occurred during data unpack</value>
+    <comment>Launcher</comment>
+  </data>
 </root>

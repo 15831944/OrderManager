@@ -202,13 +202,13 @@
     <value>開啟 EZCAD.splint</value>
   </data>
   <data name="DemoCase" xml:space="preserve">
-    <value>範例Case</value>
+    <value>範例檔案</value>
   </data>
   <data name="TroubleShooting" xml:space="preserve">
     <value>疑難排解</value>
   </data>
   <data name="BuyLic" xml:space="preserve">
-    <value>購買License</value>
+    <value>購買許可證</value>
   </data>
   <data name="Uninstall" xml:space="preserve">
     <value>解除安裝</value>
@@ -364,7 +364,7 @@
     <value>輸出</value>
   </data>
   <data name="GuideModel" xml:space="preserve">
-    <value>Guide 模型</value>
+    <value>導板模型</value>
   </data>
   <data name="PatientNameWithAge" xml:space="preserve">
     <value>患者姓名(年齡)</value>
@@ -916,6 +916,6 @@
     <value>開啟 ImplantPlanning</value>
   </data>
   <data name="GuideModelDir" xml:space="preserve">
-    <value>Guide 模型資料夾</value>
+    <value>導板模型資料夾</value>
   </data>
 </root>

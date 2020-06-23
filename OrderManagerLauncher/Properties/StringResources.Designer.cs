@@ -61,6 +61,24 @@ namespace OrderManagerLauncher.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Cannot download update patch 的當地語系化字串。
+        /// </summary>
+        internal static string CannotDownloadOM {
+            get {
+                return ResourceManager.GetString("CannotDownloadOM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Cannot get update information 的當地語系化字串。
+        /// </summary>
+        internal static string CannotGetnewOMXML {
+            get {
+                return ResourceManager.GetString("CannotGetnewOMXML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Checking OrderManager version... 的當地語系化字串。
         /// </summary>
         internal static string CheckVersion {
@@ -70,11 +88,38 @@ namespace OrderManagerLauncher.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 , please contact Inteware customer service 的當地語系化字串。
+        /// </summary>
+        internal static string Contact {
+            get {
+                return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Downloading update pack... 的當地語系化字串。
         /// </summary>
         internal static string Downloading {
             get {
                 return ResourceManager.GetString("Downloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Error occurred during data download 的當地語系化字串。
+        /// </summary>
+        internal static string DownloadingError {
+            get {
+                return ResourceManager.GetString("DownloadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Error occurred during data unpack 的當地語系化字串。
+        /// </summary>
+        internal static string UnpackingError {
+            get {
+                return ResourceManager.GetString("UnpackingError", resourceCulture);
             }
         }
         

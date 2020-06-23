@@ -808,6 +808,7 @@ namespace OrderManagerNew
                                     cad_buyLic.Visibility = Visibility.Visible;
                                     cad_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterCAD.IsEnabled = true;
+                                    cad_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
                                     cad_update.Visibility = Visibility.Visible;
                                     cad_update.IsEnabled = false;
                                     break;

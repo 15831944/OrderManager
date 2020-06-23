@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Ionic.Zip;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace OrderManagerLauncher
 {
@@ -15,13 +18,27 @@ namespace OrderManagerLauncher
     /// </summary>
     public partial class Launcher : Window
     {
+        string HLXMLlink = @"https://inteware.com.tw/updateXML/newOM.xml";//newOM.xml網址
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {   // 總是接受
             return true;
         }
         BackgroundWorker BgWorker_Main;
         BackgroundWorker OrderManagerFunc_BackgroundWorker;
+        bool NeedUpdate;
+        string DownloadFileName;
+        NewOMInfo omInfo;
+        class NewOMInfo
+        {
+            public Version VersionFromWeb;
+            public string DownloadLink;
 
+            public NewOMInfo()
+            {
+                VersionFromWeb = new Version();
+                DownloadLink = "";
+            }
+        }
         class BackgroundArgs
         {
             public string FileName { get; set; }
@@ -37,14 +54,47 @@ namespace OrderManagerLauncher
         public Launcher()
         {
             InitializeComponent();
-
+            NeedUpdate = false;
             string systemName = System.Globalization.CultureInfo.CurrentCulture.Name; // 取得電腦語系
             if (systemName == "zh-TW")
                 LocalizationService.SetLanguage("zh-TW");
             else
                 LocalizationService.SetLanguage("en-US");
         }
+        /// <summary>
+        /// 讀取HL.xml的詳細更新資訊
+        /// </summary>
+        public void LoadHLXml()
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
 
+            XDocument xDoc;
+            try
+            {
+                omInfo = new NewOMInfo();
+                xDoc = XDocument.Load(HLXMLlink);
+
+                var OrderManagerInfo = from q in xDoc.Descendants("DownloadLink").Descendants("OrderManager")
+                                 select new
+                                 {
+                                    m_Version = q.Descendants("Version").First().Value,
+                                    m_HyperLink = q.Descendants("HyperLink").First().Value,
+                                 };
+
+                foreach (var item in OrderManagerInfo)
+                {
+                    omInfo.VersionFromWeb = new Version(item.m_Version);
+                    omInfo.DownloadLink = item.m_HyperLink.Replace("\n ", "").Replace("\r ", "").Replace(" ", ""); ;
+                }
+            }
+            catch
+            {
+                MessageBox.Show(TranslationSource.Instance["CannotGetnewOMXML"] + TranslationSource.Instance["Contact"]);
+                RunCommandLine("OrderManager.exe", "-VerChk");
+                Environment.Exit(0);
+            }
+        }
         private void Loaded_Launcher(object sender, RoutedEventArgs e)
         {
             BgWorker_Main = new BackgroundWorker();
@@ -57,56 +107,72 @@ namespace OrderManagerLauncher
 
         void DoWork_UpdateCheck(object sender, DoWorkEventArgs e)
         {
-            int counter = 0;
-            while(counter < 2)
-            {
-                Thread.Sleep(1000);
-                counter++;
-            }
+            //檢查是否有更新
+            LoadHLXml();
         }
 
         void CompletedWork_UpdateCheck(object sender, RunWorkerCompletedEventArgs e)
         {
-            RunCommandLine("OrderManager.exe", "-ExportProps");
-            progressbar_update.IsIndeterminate = false;
-            label_describe.Content = TranslationSource.Instance["Downloading"];
-            BgWorker_Main = new BackgroundWorker();
-            BgWorker_Main.DoWork += new DoWorkEventHandler(DoWork_Download);
-            BgWorker_Main.ProgressChanged += new ProgressChangedEventHandler(UpdateProgress_Download);
-            BgWorker_Main.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_Download);
-            BgWorker_Main.WorkerReportsProgress = true;
-            BgWorker_Main.WorkerSupportsCancellation = false;
-            BgWorker_Main.RunWorkerAsync();
+            try
+            {
+                FileVersionInfo verInfo;
+                verInfo = FileVersionInfo.GetVersionInfo("OrderManager.exe");
+                if(omInfo.VersionFromWeb > new Version(verInfo.FileVersion))
+                    NeedUpdate = true;
+            }
+            catch
+            {
+                NeedUpdate = true;
+            }
+
+            if (NeedUpdate == false) //不用更新
+            {
+                RunCommandLine("OrderManager.exe", "-VerChk");
+                Environment.Exit(0);
+            }
+            else  //進入更新
+            {
+                RunCommandLine("OrderManager.exe", "-ExportProps");//匯出Properties
+                progressbar_update.IsIndeterminate = false;
+                label_describe.Content = TranslationSource.Instance["Downloading"];
+                BgWorker_Main = new BackgroundWorker();
+                BgWorker_Main.DoWork += new DoWorkEventHandler(DoWork_Download);
+                BgWorker_Main.ProgressChanged += new ProgressChangedEventHandler(UpdateProgress_Download);
+                BgWorker_Main.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_Download);
+                BgWorker_Main.WorkerReportsProgress = true;
+                BgWorker_Main.WorkerSupportsCancellation = false;
+                BgWorker_Main.RunWorkerAsync();
+            }
         }
 
         void DoWork_Download(object sender, DoWorkEventArgs e)
         {
             if (sender is BackgroundWorker)
             {
+                BackgroundWorker bw = sender as BackgroundWorker;
+
                 //跳過https檢測 & Win7 相容
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                 ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
 
+                //Request資料
+                HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(omInfo.DownloadLink);
+                httpRequest.Credentials = CredentialCache.DefaultCredentials;
+                httpRequest.UserAgent = ".NET Framework Example Client";
+                httpRequest.Method = "GET";
+                
+                HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
                 try
                 {
-                    int counter = 1;
-                    while (counter <100)
-                    {
-                        double percent = (double)counter / (double)100;
-                        ((BackgroundWorker)sender).ReportProgress(Convert.ToInt32(percent * 100));
-                        Thread.Sleep(20);
-                        counter++;
-                    }
-
-                    /*string fileUrl = Properties.OrderManagerProps.Default.AirDentalAPI + @"project/ortho/download/" + OrderInfo._Key;
-                    //Response資料
-                    HttpWebResponse response = AirDental.GetDownloadFileResponse(fileUrl, Properties.Settings.Default.AirdentalCookie);
-                    if (response != null)
+                    if (((HttpWebResponse)httpResponse).StatusDescription == "OK" && httpResponse.ContentLength > 1)
                     {
                         // 取得下載的檔名
-                        Uri uri = new Uri(fileUrl);
-                        Stream netStream = response.GetResponseStream();
-                        Stream fileStream = new FileStream(DownloadFileName, FileMode.Create, FileAccess.Write);
+                        Uri uri = new Uri(omInfo.DownloadLink);
+                        DownloadFileName = Path.GetFileName(uri.LocalPath);
+                        if (File.Exists(DownloadFileName) == true)
+                            File.Delete(DownloadFileName);
+                        Stream netStream = httpResponse.GetResponseStream();
+                        Stream fileStream = new FileStream(DownloadFileName, FileMode.Create);
                         byte[] read = new byte[1024];
                         long progressBarValue = 0;
                         int realReadLen = netStream.Read(read, 0, read.Length);
@@ -115,19 +181,27 @@ namespace OrderManagerLauncher
                         {
                             fileStream.Write(read, 0, realReadLen);
                             progressBarValue += realReadLen;
-                            double percent = (double)progressBarValue / (double)response.ContentLength;
-                            ((BackgroundWorker)sender).ReportProgress(Convert.ToInt32(percent * 100));
+                            double percent = (double)progressBarValue / (double)httpResponse.ContentLength;
+                            bw.ReportProgress(Convert.ToInt32(percent * 100));
                             realReadLen = netStream.Read(read, 0, read.Length);
                         }
                         fileStream.Close();
                         netStream.Close();
+                        httpResponse.Close();
                     }
-                    response.Close();*/
+                    else
+                    {
+                        httpResponse.Close();
+                        MessageBox.Show(TranslationSource.Instance["CannotDownloadOM"] + TranslationSource.Instance["Contact"]);
+                        RunCommandLine("OrderManager.exe", "-VerChk");
+                        Environment.Exit(0);
+                    }
                 }
-                catch (WebException ex)
+                catch
                 {
-                    Console.WriteLine(ex.Message);
-                    e.Cancel = true;
+                    MessageBox.Show(TranslationSource.Instance["DownloadingError"] + TranslationSource.Instance["Contact"]);
+                    RunCommandLine("OrderManager.exe", "-VerChk");
+                    Environment.Exit(0);
                 }
             }
         }
@@ -153,15 +227,28 @@ namespace OrderManagerLauncher
 
         void DoWork_Unpacking(object sender, DoWorkEventArgs e)
         {
-            int counter = 0;
-            while (counter < 2)
+            try
             {
-                Thread.Sleep(1000);
-                counter++;
+                //解壓縮
+                using (var zip = ZipFile.Read(DownloadFileName))
+                {
+                    foreach (var zipEntry in zip)
+                    {
+                        zipEntry.Extract(System.Environment.CurrentDirectory, ExtractExistingFileAction.OverwriteSilently);//解壓縮到同一個資料夾
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show(TranslationSource.Instance["UnpackingError"] + TranslationSource.Instance["Contact"]);
+                RunCommandLine("OrderManager.exe", "-VerChk");
+                Environment.Exit(0);
             }
         }
         void CompletedWork_Unpacking(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (File.Exists(DownloadFileName) == true)
+                File.Delete(DownloadFileName);
             RunCommandLine("OrderManager.exe", "-VerChk");
             Environment.Exit(0);
         }
