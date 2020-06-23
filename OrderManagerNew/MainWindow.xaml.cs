@@ -82,17 +82,7 @@ namespace OrderManagerNew
         {
             InitializeComponent();
             CheckedSoftwareID = -1;
-
-            LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
-
-            //OrderManager不能多開
-            Process[] MyProcess = Process.GetProcessesByName("OrderManager");
-            if (MyProcess.Length > 1)
-            {
-                this.Visibility = Visibility.Collapsed;
-                MyProcess[0].Kill(); //關閉執行中的程式
-            }
-
+            
             //初始化LogRecorder
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
@@ -110,27 +100,6 @@ namespace OrderManagerNew
             OrderManagerFunc = new OrderManagerFunctions();
             OrderManagerFunc.SoftwareLogoShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler(Handler_setSoftwareShow);
             OrderManagerFunc.SoftwareVersionShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler2(Handler_setSoftwareVersion);
-
-            string[] args;
-            bool latestVersion = false;
-            args = Environment.GetCommandLineArgs();
-            if(args != null && args.Length > 1)
-            {
-                foreach(string argument in args)
-                {
-                    if (argument == "-Rec") //完整記錄模式
-                        Properties.Settings.Default.FullRecord = true;
-                    else if (argument == "-latestVer")
-                        latestVersion = true;
-                }
-            }
-
-            if(latestVersion == false)
-            {
-                OrderManagerFunc.RunCommandLine("OrderManagerLauncher.exe", "");
-                Environment.Exit(0);
-            }   
-            
             //更新Function
             UpdateFunc = new UpdateFunction();
             UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
@@ -149,6 +118,44 @@ namespace OrderManagerNew
             AirDentalProjHandle.Main_implantSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_implantBaseEventHandler2(CloudCaseHandler_Implant_showDetail);
             AirDentalProjHandle.Main_cadSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_cadBaseEventHandler(CloudCaseHandler_CAD_showSingleProject);
             AirDentalProjHandle.Main_cadSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_cadBaseEventHandler2(CloudCaseHandler_CAD_showDetail);
+
+            string[] args;
+            bool latestVersion = false;
+            args = Environment.GetCommandLineArgs();
+            if(args != null && args.Length > 1)
+            {
+                foreach(string argument in args)
+                {
+                    if (argument == "-Rec") //完整記錄模式
+                        Properties.Settings.Default.FullRecord = true;
+                    else if (argument == "-VerChk")
+                    {
+                        if (File.Exists("OrderManagerProps.xml") == true)
+                            UpdateFunc.ImportPropertiesXml();
+
+                        latestVersion = true;
+                    }   
+                    else if (argument == "-ExportProps")
+                    {
+                        UpdateFunc.ExportPropertiesXml();
+                        Environment.Exit(0);
+                    }   
+                }
+            }
+            if(latestVersion == false)
+            {
+                OrderManagerFunc.RunCommandLine("OrderManagerLauncher.exe", "");
+                Environment.Exit(0);
+            }
+            LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
+            //OrderManager不能多開
+            Process[] MyProcess = Process.GetProcessesByName("OrderManager");
+            if (MyProcess.Length > 1)
+            {
+                this.Visibility = Visibility.Collapsed;
+                MyProcess[0].Kill(); //關閉執行中的程式
+            }
+
             //工程師模式切換
             if (developerMode == true)
             {

@@ -7,8 +7,7 @@ using System.Linq;                                  //XDocument用
 using System.Net;                                   //跳過網路檢查
 using System.Net.Security;                          //跳過網路檢查
 using System.Security.Cryptography.X509Certificates;//跳過網路檢查
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace OrderManagerNew
@@ -427,6 +426,111 @@ namespace OrderManagerNew
                         }
                         break;
                     }
+            }
+        }
+        /// <summary>
+        /// 匯出Properties Xml
+        /// </summary>
+        public void ExportPropertiesXml()
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlNode rootNode = doc.CreateElement("Properties");
+            doc.AppendChild(rootNode);
+            XmlNode Xnode = doc.CreateElement("sysLanguage");
+            Xnode.InnerText = Properties.Settings.Default.sysLanguage;
+            rootNode.AppendChild(Xnode);
+            Xnode = doc.CreateElement("cad_exePath");
+            Xnode.InnerText = Properties.Settings.Default.cad_exePath;
+            rootNode.AppendChild(Xnode);
+            Xnode = doc.CreateElement("implant_exePath");
+            Xnode.InnerText = Properties.Settings.Default.implant_exePath;
+            rootNode.AppendChild(Xnode);
+            Xnode = doc.CreateElement("ortho_exePath");
+            Xnode.InnerText = Properties.Settings.Default.ortho_exePath;
+            rootNode.AppendChild(Xnode);
+            Xnode = doc.CreateElement("tray_exePath");
+            Xnode.InnerText = Properties.Settings.Default.tray_exePath;
+            rootNode.AppendChild(Xnode);
+            Xnode = doc.CreateElement("splint_exePath");
+            Xnode.InnerText = Properties.Settings.Default.splint_exePath;
+            rootNode.AppendChild(Xnode);
+            Xnode = doc.CreateElement("guide_exePath");
+            Xnode.InnerText = Properties.Settings.Default.guide_exePath;
+            rootNode.AppendChild(Xnode);
+            Xnode = doc.CreateElement("DownloadFolder");
+            Xnode.InnerText = Properties.Settings.Default.DownloadFolder;
+            rootNode.AppendChild(Xnode);
+            Xnode = doc.CreateElement("PingTime");
+            Xnode.InnerText = Properties.Settings.Default.PingTime.ToString();
+            rootNode.AppendChild(Xnode);
+            Xnode = doc.CreateElement("LastSoftwareFilter");
+            Xnode.InnerText = Properties.Settings.Default.LastSoftwareFilter.ToString();
+            rootNode.AppendChild(Xnode);
+            Xnode = doc.CreateElement("AirdentalAcc");
+            Xnode.InnerText = Properties.Settings.Default.AirdentalAcc;
+            rootNode.AppendChild(Xnode);
+            Xnode = doc.CreateElement("AirdentalCookie");
+            Xnode.InnerText = Properties.Settings.Default.AirdentalCookie;
+            rootNode.AppendChild(Xnode);
+            Xnode = doc.CreateElement("showCloudOrderNumbers");
+            Xnode.InnerText = Properties.Settings.Default.showCloudOrderNumbers.ToString();
+            rootNode.AppendChild(Xnode);
+            doc.Save("OrderManagerProps.xml");
+        }
+        /// <summary>
+        /// 匯入Properties
+        /// </summary>
+        public void ImportPropertiesXml()
+        {
+            try
+            {
+                XDocument doc = new XDocument();
+                doc = XDocument.Load("OrderManagerProps.xml");
+                var props = from q in doc.Descendants("Properties")
+                            select new
+                            {
+                                m_sysLang = q.Descendants("sysLanguage").First().Value,
+                                m_cad_exePath = q.Descendants("cad_exePath").First().Value,
+                                m_implant_exePath = q.Descendants("implant_exePath").First().Value,
+                                m_ortho_exePath = q.Descendants("ortho_exePath").First().Value,
+                                m_tray_exePath = q.Descendants("tray_exePath").First().Value,
+                                m_splint_exePath = q.Descendants("splint_exePath").First().Value,
+                                m_guide_exePath = q.Descendants("guide_exePath").First().Value,
+                                m_DownloadFolder = q.Descendants("DownloadFolder").First().Value,
+                                m_PingTime = q.Descendants("PingTime").First().Value,
+                                m_LastSoftwareFilter = q.Descendants("LastSoftwareFilter").First().Value,
+                                m_AirdentalAcc = q.Descendants("AirdentalAcc").First().Value,
+                                m_AirdentalCookie = q.Descendants("AirdentalCookie").First().Value,
+                                m_showCloudOrderNumbers = q.Descendants("showCloudOrderNumbers").First().Value
+                            };
+                foreach(var item in props)
+                {
+                    Properties.Settings.Default.sysLanguage = item.m_sysLang;
+                    Properties.Settings.Default.cad_exePath = item.m_cad_exePath;
+                    Properties.Settings.Default.implant_exePath = item.m_implant_exePath;
+                    Properties.Settings.Default.ortho_exePath = item.m_ortho_exePath;
+                    Properties.Settings.Default.tray_exePath = item.m_tray_exePath;
+                    Properties.Settings.Default.splint_exePath = item.m_splint_exePath;
+                    Properties.Settings.Default.guide_exePath = item.m_guide_exePath;
+                    Properties.Settings.Default.DownloadFolder = item.m_DownloadFolder;
+                    Properties.Settings.Default.PingTime = int.Parse(item.m_PingTime);
+                    Properties.Settings.Default.LastSoftwareFilter = int.Parse(item.m_LastSoftwareFilter);
+                    Properties.Settings.Default.AirdentalAcc = item.m_AirdentalAcc;
+                    Properties.Settings.Default.AirdentalCookie = item.m_AirdentalCookie;
+                    Properties.Settings.Default.showCloudOrderNumbers = int.Parse(item.m_showCloudOrderNumbers);
+                    Properties.Settings.Default.Save();
+                }
+                try
+                {
+                    doc = null;
+                    File.Delete("OrderManagerProps.xml");
+                }
+                catch { }
+                
+            }
+            catch
+            {
+                return;
             }
         }
     }

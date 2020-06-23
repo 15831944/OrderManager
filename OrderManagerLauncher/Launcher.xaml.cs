@@ -67,6 +67,7 @@ namespace OrderManagerLauncher
 
         void CompletedWork_UpdateCheck(object sender, RunWorkerCompletedEventArgs e)
         {
+            RunCommandLine("OrderManager.exe", "-ExportProps");
             progressbar_update.IsIndeterminate = false;
             label_describe.Content = TranslationSource.Instance["Downloading"];
             BgWorker_Main = new BackgroundWorker();
@@ -161,7 +162,7 @@ namespace OrderManagerLauncher
         }
         void CompletedWork_Unpacking(object sender, RunWorkerCompletedEventArgs e)
         {
-            RunCommandLine("OrderManager.exe", "-latestVer");
+            RunCommandLine("OrderManager.exe", "-VerChk");
             Environment.Exit(0);
         }
 
