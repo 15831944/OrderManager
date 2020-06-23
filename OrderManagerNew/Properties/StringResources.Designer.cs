@@ -1708,6 +1708,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Open Report 的當地語系化字串。
+        /// </summary>
+        internal static string OpenReport {
+            get {
+                return ResourceManager.GetString("OpenReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Order Created 的當地語系化字串。
         /// </summary>
         internal static string order {

@@ -215,14 +215,27 @@ namespace OrderManagerLauncher
         }
         void CompletedWork_Download(object sender, RunWorkerCompletedEventArgs e)
         {
-            label_describe.Content = TranslationSource.Instance["Updating"];
-            progressbar_update.IsIndeterminate = true;
-            BgWorker_Main = new BackgroundWorker();
-            BgWorker_Main.DoWork += new DoWorkEventHandler(DoWork_Unpacking);
-            BgWorker_Main.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_Unpacking);
-            BgWorker_Main.WorkerReportsProgress = false;
-            BgWorker_Main.WorkerSupportsCancellation = false;
-            BgWorker_Main.RunWorkerAsync();
+            if(Path.GetExtension(DownloadFileName) == ".zip")
+            {
+                label_describe.Content = TranslationSource.Instance["Updating"];
+                progressbar_update.IsIndeterminate = true;
+                BgWorker_Main = new BackgroundWorker();
+                BgWorker_Main.DoWork += new DoWorkEventHandler(DoWork_Unpacking);
+                BgWorker_Main.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_Unpacking);
+                BgWorker_Main.WorkerReportsProgress = false;
+                BgWorker_Main.WorkerSupportsCancellation = false;
+                BgWorker_Main.RunWorkerAsync();
+            }
+            else if(Path.GetExtension(DownloadFileName) == ".exe")
+            {
+                RunCommandLine(DownloadFileName, "");
+                Environment.Exit(0);
+            }
+            else
+            {
+                RunCommandLine("OrderManager.exe", "-VerChk");
+                Environment.Exit(0);
+            }
         }
 
         void DoWork_Unpacking(object sender, DoWorkEventArgs e)

@@ -918,4 +918,7 @@
   <data name="GuideModelDir" xml:space="preserve">
     <value>導板模型資料夾</value>
   </data>
+  <data name="OpenReport" xml:space="preserve">
+    <value>開啟報表</value>
+  </data>
 </root>

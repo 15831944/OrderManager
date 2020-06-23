@@ -1186,4 +1186,8 @@
     <value>Guide Model Directory</value>
     <comment>Case</comment>
   </data>
+  <data name="OpenReport" xml:space="preserve">
+    <value>Open Report</value>
+    <comment>Case</comment>
+  </data>
 </root>

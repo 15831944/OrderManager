@@ -16,6 +16,7 @@ using TrayInformation = OrderManagerNew.Local_UserControls.Order_tsBase.TrayInfo
 using SplintInformation = OrderManagerNew.Local_UserControls.Order_tsBase.SplintInformation;
 using ImplantOuterInformation = OrderManagerNew.Local_UserControls.Order_implantBase.ImplantOuterInformation;
 using OrthoOuterInformation = OrderManagerNew.Local_UserControls.Order_orthoBase.OrthoOuterInformation;
+using System.Threading;
 //Mahapps套件(NuGet下載): MaterialDesignThemes.MahApps v0.0.12
 
 
@@ -138,6 +139,7 @@ namespace OrderManagerNew
                     else if (argument == "-ExportProps")
                     {
                         UpdateFunc.ExportPropertiesXml();
+                        Thread.Sleep(1000);
                         Environment.Exit(0);
                     }   
                 }

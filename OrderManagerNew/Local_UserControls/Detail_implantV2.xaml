@@ -114,7 +114,8 @@
               Content="{local1:LocExtension GuideModelDir}" />
             <Button
               Grid.Column="1" x:Name="button_openPDF" Margin="3,0,0,0"
-              Click="Click_systemButton" Content="Open PDF" />
+              Click="Click_systemButton"
+              Content="{local1:LocExtension OpenReport}" />
         </Grid>
     </StackPanel>
 </UserControl>
