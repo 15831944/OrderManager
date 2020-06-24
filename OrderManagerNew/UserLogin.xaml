@@ -160,8 +160,9 @@
 
                 <Label
                   Grid.Row="1" x:Name="label_loginFail" HorizontalAlignment="Left"
-                  VerticalAlignment="Top" Content="The email or password is incorrect." Foreground="Red"
-                  Opacity="0.8" />
+                  VerticalAlignment="Top"
+                  Content="{local:LocExtension AccOrPDerr}"
+                  Foreground="Red" Opacity="0.8" />
 
                 <Grid Grid.Row="2">
                     <Grid.RowDefinitions>
@@ -176,7 +177,7 @@
                       Padding="-10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                       MouseLeftButtonUp="MouseLeftButtonUp_ForgotPWD">
                         <Hyperlink Foreground="Transparent">
-                            <Label Content="Forgot your password?" Style="{DynamicResource forgotLabel}" />
+                            <Label Content="{local:LocExtension ForgotPassWD}" Style="{DynamicResource forgotLabel}" />
                         </Hyperlink>
                     </Label>
                     <PasswordBox
@@ -198,7 +199,8 @@
 
                 <Button
                   Grid.Row="4" Height="40" Click="Click_OK"
-                  Content="OK" FontSize="16"
+                  Content="{local:LocExtension OK}"
+                  FontSize="16"
                   Style="{DynamicResource OkButton}"
                   TabIndex="2" />
             </Grid>

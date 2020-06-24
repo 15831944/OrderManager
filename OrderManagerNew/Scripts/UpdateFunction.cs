@@ -16,7 +16,7 @@ namespace OrderManagerNew
     {
         #region 變數宣告
         readonly string HLXMLlink = @"https://inteware.com.tw/updateXML/HLnoLic.xml";//HL.xml網址
-        //string HLXMLlink = "D:\\IntewareInc\\HLnoLic.xml";    //單機測試//TODO之後要換到網上
+        //string HLXMLlink = "D:\\IntewareInc\\HLnoLic.xml";    //單機測試
         string downloadfilepath;
         LogRecorder log;    //日誌檔cs
         BackgroundWorker bgWorker_Download;        //申明後臺物件
@@ -114,12 +114,6 @@ namespace OrderManagerNew
 #region 多執行緒處理下載軟體
         public void StartDownloadSoftware()
         {
-            if (readyInstallSoftwareInfo.softwareID == -1)
-            {
-                Handler_snackbarShow("No SoftwareID");    //NoSoftwareID停止下載//TODO多國語系
-                return;
-            }
-
             //開始下載多執行緒
             bgWorker_Download = new BackgroundWorker();
             bgWorker_Download.DoWork += new DoWorkEventHandler(DoWork_DownloadSoftware);
@@ -145,7 +139,7 @@ namespace OrderManagerNew
                 httpRequest.UserAgent = ".NET Framework Example Client";
                 httpRequest.Method = "GET";
 
-                Handler_snackbarShow("Get httpRequest Response Start..."); //開始取得資料 //TODO 多國語系
+                Handler_snackbarShow(TranslationSource.Instance["ReceivingData"]); //開始取得資料
                 HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
 
                 try

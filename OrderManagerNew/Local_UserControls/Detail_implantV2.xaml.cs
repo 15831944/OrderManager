@@ -20,7 +20,6 @@ namespace OrderManagerNew.Local_UserControls
         {
             InitializeComponent();
             implantInfo = new ImplantSmallCaseInformation();
-            image_toothJPG.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -46,18 +45,7 @@ namespace OrderManagerNew.Local_UserControls
             textbox_SurgicalKit.Text = implantOuterInfo.Surgicalkit;
 
             string JpgPath = importOuter.XmlfilePath.Remove(importOuter.XmlfilePath.Length - 4) + ".jpg";
-            if (File.Exists(JpgPath) == true)
-            {
-                image_toothJPG.BeginInit();
-                image_toothJPG.Source = new BitmapImage(new Uri(JpgPath, UriKind.RelativeOrAbsolute));
-                image_toothJPG.EndInit();
-                image_toothJPG.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                image_toothJPG.Visibility = Visibility.Hidden;
-            }
-
+            
             if (File.Exists(implantInfo.GuideModelPath) != true)
                 button_openDir.IsEnabled = false;
             else
@@ -70,8 +58,20 @@ namespace OrderManagerNew.Local_UserControls
 
             if (Properties.Settings.Default.guide_exePath == "")
                 button_loadGuide.IsEnabled = false;
-        }
 
+            textbox_toothProductInfo.Text = "";
+            if(implantInfo.List_ImplantToothInfo != null && implantInfo.List_ImplantToothInfo.Count > 0)
+            {
+                //有植體資料
+                foreach (var item in implantInfo.List_ImplantToothInfo)
+                {
+                    string ToothNumber = item.ToothID.ToString();
+                    string ToothProduct = item.Implant_Company + "(" + item.Implant_System + ")";
+                    textbox_toothProductInfo.Text += "Tooth_" + ToothNumber + ":" + ToothProduct + '\n';
+                }
+            }
+        }
+        
         private void Click_systemButton(object sender, RoutedEventArgs e)
         {
             if (sender is Button)

@@ -1190,4 +1190,48 @@
     <value>Open Report</value>
     <comment>Case</comment>
   </data>
+  <data name="ForgotPassWD" xml:space="preserve">
+    <value>Forgot your password?</value>
+    <comment>Login</comment>
+  </data>
+  <data name="AccOrPDerr" xml:space="preserve">
+    <value>Account or Password is incorrect</value>
+    <comment>Login</comment>
+  </data>
+  <data name="SpaceMaynotBeEnough" xml:space="preserve">
+    <value>There may not be enough disk space to install the software</value>
+    <comment>Message</comment>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NoEnoughSpaceToInstall" xml:space="preserve">
+    <value>There is not enough disk space to install the software, please free up more disk space</value>
+    <comment>Message</comment>
+  </data>
+  <data name="CannotFindUninstall" xml:space="preserve">
+    <value>Unable to find Uninstall.lnk</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NetworkError" xml:space="preserve">
+    <value>Network Connection error</value>
+    <comment>Message</comment>
+  </data>
+  <data name="CannnotGetRemainingSpace" xml:space="preserve">
+    <value>Unable to get computer space</value>
+    <comment>Message</comment>
+  </data>
+  <data name="ReceivingData" xml:space="preserve">
+    <value>Receiving data...</value>
+    <comment>Message</comment>
+  </data>
+  <data name="ReceivingDataNotResponding" xml:space="preserve">
+    <value>Receiving data not responding, try again later</value>
+    <comment>Message</comment>
+  </data>
+  <data name="CannotGetexePath" xml:space="preserve">
+    <value>Unable to get exe path</value>
+    <comment>Message</comment>
+  </data>
 </root>

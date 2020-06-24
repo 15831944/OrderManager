@@ -114,7 +114,7 @@ namespace OrderManagerNew
 
                     if (errMessage != "")
                     {
-                        MessageBox.Show(errMessage, TranslationSource.Instance["Login"] + " " + TranslationSource.Instance["Error"]);//TODO要再細分哪種登入錯誤
+                        MessageBox.Show(errMessage, TranslationSource.Instance["Login"] + " " + TranslationSource.Instance["Error"]);
                         log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UserLogin.xaml.cs_ClickOK_exception", errMessage);
                     }   
                 }

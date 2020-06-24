@@ -921,4 +921,37 @@
   <data name="OpenReport" xml:space="preserve">
     <value>開啟報表</value>
   </data>
+  <data name="ForgotPassWD" xml:space="preserve">
+    <value>忘記你的密碼?</value>
+  </data>
+  <data name="AccOrPDerr" xml:space="preserve">
+    <value>帳號或密碼錯誤</value>
+  </data>
+  <data name="SpaceMaynotBeEnough" xml:space="preserve">
+    <value>磁碟空間可能不足以安裝軟體</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="NoEnoughSpaceToInstall" xml:space="preserve">
+    <value>磁碟空間不足以安裝軟體，請空出更多磁碟空間</value>
+  </data>
+  <data name="CannotFindUninstall" xml:space="preserve">
+    <value>找不到Uninstall.lnk</value>
+  </data>
+  <data name="NetworkError" xml:space="preserve">
+    <value>網路連線異常</value>
+  </data>
+  <data name="CannnotGetRemainingSpace" xml:space="preserve">
+    <value>無法取得電腦剩餘空間</value>
+  </data>
+  <data name="ReceivingData" xml:space="preserve">
+    <value>接收資料中...</value>
+  </data>
+  <data name="ReceivingDataNotResponding" xml:space="preserve">
+    <value>無法接收資料，請梢候再重試</value>
+  </data>
+  <data name="CannotGetexePath" xml:space="preserve">
+    <value>無法取得執行檔路徑</value>
+  </data>
 </root>

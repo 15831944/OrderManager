@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml.Linq;
 using ImplantSmallCaseInformation = OrderManagerNew.Local_UserControls.Order_ImplantSmallcase.ImplantSmallCaseInformation;
 using Path = System.IO.Path;
 
@@ -148,6 +150,10 @@ namespace OrderManagerNew.Local_UserControls
                             else
                                 impInfo.GuideModelPath = "";
 
+                            if(File.Exists(implantInfo.CaseDirectoryPath + impInfo.OrderName + @"\" + impInfo.OrderName + ".xml") == true)
+                            {
+                                LoadCaseXml(ref impInfo, implantInfo.CaseDirectoryPath + impInfo.OrderName + @"\" + impInfo.OrderName + ".xml");
+                            }
                             foreach (string searchPDF in Directory.GetFiles(implantInfo.CaseDirectoryPath + impInfo.OrderName + @"\"))
                             {
                                 if (Path.GetExtension(searchPDF).ToLower() == ".pdf")
@@ -188,7 +194,6 @@ namespace OrderManagerNew.Local_UserControls
                 implantInfo.List_smallcase[i].SetCaseFocusStatus(false);
             }
         }
-
         private void Click_ButtonEvent(object sender, RoutedEventArgs e)
         {
             if(sender is Button)
@@ -210,7 +215,6 @@ namespace OrderManagerNew.Local_UserControls
                 }
             }
         }
-
         /// <summary>
         /// 設定Case的Focus狀態
         /// </summary>
@@ -265,7 +269,6 @@ namespace OrderManagerNew.Local_UserControls
                     }
             }
         }
-
         private void PMDown_StackPanelMain(object sender, MouseButtonEventArgs e)
         {
             if (e.Source is Button)
@@ -285,6 +288,45 @@ namespace OrderManagerNew.Local_UserControls
                 }
             }
             e.Handled = true;
+        }
+        private void LoadCaseXml(ref ImplantSmallCaseInformation smallcaseInfo , string XMLpath)
+        {
+            XDocument xDoc;
+            try
+            {
+                smallcaseInfo.List_ImplantToothInfo = new List<Order_ImplantSmallcase.Implant_tooth_Info>();
+                xDoc = XDocument.Load(XMLpath);
+
+                var toothInfo = from q in xDoc.Descendants("ImplantPlanningExport").Descendants("Implant")
+                                       select new
+                                       {
+                                           m_ID = q.Descendants("ID").First().Value,
+                                           m_Company = q.Descendants("Company").First().Value,
+                                           m_System = q.Descendants("System").First().Value,
+                                       };
+
+                foreach (var item in toothInfo)
+                {
+                    try
+                    {
+                        Order_ImplantSmallcase.Implant_tooth_Info TmpToothInfo = new Order_ImplantSmallcase.Implant_tooth_Info
+                        {
+                            ToothID = int.Parse(item.m_ID),
+                            Implant_Company = item.m_Company,
+                            Implant_System = item.m_System
+                        };
+                        smallcaseInfo.List_ImplantToothInfo.Add(TmpToothInfo);
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+            }
+            catch
+            {
+                smallcaseInfo.List_ImplantToothInfo = null;
+            }
         }
     }
 }

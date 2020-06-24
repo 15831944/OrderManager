@@ -189,7 +189,6 @@ namespace OrderManagerNew
             if (AirDentalProjHandle.OrderManagerLoginCheck(ref uInfo) == true)
             {
                 LoginSuccess(uInfo);
-                AirDentalProjHandle.CheckAirDentalDirExist();
             }
             else
             {
@@ -581,6 +580,7 @@ namespace OrderManagerNew
             usercontrolUserDetail.UserName = UserDetail[(int)_AirD_LoginDetail.USERNAME];
             Properties.OrderManagerProps.Default.AirDentalAPI = AirDentalProjHandle.APIPortal;
             usercontrolUserDetail.SetUserPic(AirDentalProjHandle.APIPortal + @"v2/user/avatar/" + Properties.OrderManagerProps.Default.AirD_uid);
+            AirDentalProjHandle.CheckAirDentalDirExist();
             loginStatus = true;
             SnackBarShow(TranslationSource.Instance["Hello"] + usercontrolUserDetail.UserName);
             tabitem_Cloud.ToolTip = null;
@@ -668,7 +668,8 @@ namespace OrderManagerNew
         {
             if (AirDentalProjHandle.Airdental.CheckServerStatus(AirDentalProjHandle.APIPortal) != true)
             {
-                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Click_FunctionTable_User", "Connection error"); //TODO 多國語系
+                SnackBarShow(TranslationSource.Instance["NetworkError"]);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Click_FunctionTable_User", "Connection error");
                 return;
             }
 
@@ -1174,38 +1175,32 @@ namespace OrderManagerNew
                         {
                             case (int)_softwareID.EZCAD:
                                 {
-                                    if(((string)cad_open.Content).IndexOf("(") == -1)
-                                        cad_open.Content += "(" + SoftwareVersion + ")";
+                                    cad_open.Content = TranslationSource.Instance["Open_EZCAD"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Implant:
                                 {
-                                    if (((string)implant_open.Content).IndexOf("(") == -1)
-                                        implant_open.Content += "(" + SoftwareVersion + ")";
+                                    implant_open.Content = TranslationSource.Instance["Open_Implant"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Ortho:
                                 {
-                                    if (((string)ortho_open.Content).IndexOf("(") == -1)
-                                        ortho_open.Content += "(" + SoftwareVersion + ")";
+                                    ortho_open.Content = TranslationSource.Instance["Open_Ortho"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Tray:
                                 {
-                                    if (((string)tray_open.Content).IndexOf("(") == -1)
-                                        tray_open.Content += "(" + SoftwareVersion + ")";
+                                    tray_open.Content = TranslationSource.Instance["Open_Tray"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Splint:
                                 {
-                                    if (((string)splint_open.Content).IndexOf("(") == -1)
-                                        splint_open.Content += "(" + SoftwareVersion + ")";
+                                    splint_open.Content = TranslationSource.Instance["Open_Splint"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Guide:
                                 {
-                                    if (((string)guide_open.Content).IndexOf("(") == -1)
-                                        guide_open.Content += "(" + SoftwareVersion + ")";
+                                    guide_open.Content = TranslationSource.Instance["Open_Guide"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                         }
@@ -1217,32 +1212,32 @@ namespace OrderManagerNew
                         {
                             case (int)_softwareID.EZCAD:
                                 {
-                                    cad_update.Content += "(" + SoftwareVersion + ")";
+                                    cad_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Implant:
                                 {
-                                    implant_update.Content += "(" + SoftwareVersion + ")";
+                                    implant_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Ortho:
                                 {
-                                    ortho_update.Content += "(" + SoftwareVersion + ")";
+                                    ortho_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Tray:
                                 {
-                                    tray_update.Content += "(" + SoftwareVersion + ")";
+                                    tray_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Splint:
                                 {
-                                    splint_update.Content += "(" + SoftwareVersion + ")";
+                                    splint_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Guide:
                                 {
-                                    guide_update.Content += "(" + SoftwareVersion + ")";
+                                    guide_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                         }
@@ -1260,7 +1255,6 @@ namespace OrderManagerNew
         {
             switch(SoftwareID)
             {
-                //TODO:要再加上Logo右上角小提示
                 case (int)_softwareID.EZCAD:
                     {
                         cad_update.IsEnabled = canUpdate;
@@ -1447,7 +1441,6 @@ namespace OrderManagerNew
                         }
                     case "cad_unInstall":
                         {
-                            //TODO 多國語系
                             if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.cad_exePath) == ".exe")
@@ -1460,7 +1453,7 @@ namespace OrderManagerNew
                                     }
                                     else
                                     {
-                                        MessageBox.Show("can't find Uninstall.lnk");    //TODO多國語系
+                                        MessageBox.Show(TranslationSource.Instance["CannotFindUninstall"]);
                                     }
                                 }
                             }
@@ -1559,7 +1552,7 @@ namespace OrderManagerNew
                                     }
                                     else
                                     {
-                                        MessageBox.Show("can't find Uninstall.lnk");    //TODO多國語系
+                                        MessageBox.Show(TranslationSource.Instance["CannotFindUninstall"]);
                                     }
                                 }
                             }
@@ -1625,7 +1618,7 @@ namespace OrderManagerNew
                                     }
                                     else
                                     {
-                                        MessageBox.Show("can't find Uninstall.lnk");    //TODO多國語系
+                                        MessageBox.Show(TranslationSource.Instance["CannotFindUninstall"]);
                                     }
                                 }
                             }
@@ -1706,7 +1699,7 @@ namespace OrderManagerNew
                                     }
                                     else
                                     {
-                                        MessageBox.Show("can't find Uninstall.lnk");    //TODO多國語系
+                                        MessageBox.Show(TranslationSource.Instance["CannotFindUninstall"]);
                                     }
                                 }
                             }
@@ -1787,7 +1780,7 @@ namespace OrderManagerNew
                                     }
                                     else
                                     {
-                                        MessageBox.Show("can't find Uninstall.lnk");    //TODO多國語系
+                                        MessageBox.Show(TranslationSource.Instance["CannotFindUninstall"]);
                                     }
                                 }
                             }
@@ -1823,7 +1816,6 @@ namespace OrderManagerNew
                         {
                             for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
                             {
-                                //TODO 之後不會分Dongle和License
                                 if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Guide)
                                 {
                                     UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
@@ -1869,7 +1861,7 @@ namespace OrderManagerNew
                                     }
                                     else
                                     {
-                                        MessageBox.Show("can't find Uninstall.lnk");    //TODO多國語系
+                                        MessageBox.Show(TranslationSource.Instance["CannotFindUninstall"]);
                                     }
                                 }
                             }
@@ -1982,7 +1974,7 @@ namespace OrderManagerNew
             }
             else
             {
-                SnackBarShow("exePath is blank");//TODO 多國語系
+                SnackBarShow(TranslationSource.Instance["CannotGetexePath"]);
                 Handler_setSoftwareShow(CheckedSoftwareID, (int)_softwareStatus.Installed, 0);
             }
         }

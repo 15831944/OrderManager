@@ -69,7 +69,6 @@ namespace OrderManagerNew.Local_UserControls
             {
                 LogRecorder Log = new LogRecorder();
                 Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Detail_cad.xaml.cs GetToothProductString()_exception", ex.Message);
-                //MessageBox.Show(ex.Message);//TODO log要記下來
                 return "UnKnow";
             }
         }
@@ -128,7 +127,7 @@ namespace OrderManagerNew.Local_UserControls
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);//TODO Log記錄
+                MessageBox.Show(ex.Message);
             }
         }
 

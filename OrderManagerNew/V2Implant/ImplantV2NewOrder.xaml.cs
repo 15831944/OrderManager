@@ -667,15 +667,15 @@ namespace OrderManagerNew.V2Implant
 			catch(Exception ex)
 			{
 				MessageBox.Show(ex.Message);
-                haveXml = false;
-                return;
+				haveXml = false;
+				return;
 			}
 			
 			if (xDoc == null)
 			{
 				MessageBox.Show("Load SurgicalKitInfor.xml Error!");
-                haveXml = false;
-                return;
+				haveXml = false;
+				return;
 			}
 			var result = from q in xDoc.Descendants("Name")
 						 select new
@@ -702,8 +702,8 @@ namespace OrderManagerNew.V2Implant
 			catch(Exception ex)
 			{
 				MessageBox.Show(ex.Message);
-                haveXml = false;
-                return;
+				haveXml = false;
+				return;
 			}
 
 			comboImplantBrand.Items.Clear();
@@ -1313,8 +1313,6 @@ namespace OrderManagerNew.V2Implant
 
 				//改先存,取得植牙齒位上或下顎
 				SaveXml(targetdirectory);
-				string jpgFilePath = targetdirectory + "\\" + m_order_num.Text + ".jpg";
-				ExportToJpg(jpgFilePath);
 
 				if (m_ct_path_check.IsChecked.GetValueOrDefault())
 				{
@@ -1984,16 +1982,6 @@ namespace OrderManagerNew.V2Implant
 
 		}
 
-		public void ExportToJpg(string path)
-		{
-			//toothImg.SetAllImageSelectStatus();
-			byte[] screenshot = GetJpgImage(sp_tooth, 90);
-			FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
-			BinaryWriter binaryWriter = new BinaryWriter(fileStream);
-			binaryWriter.Write(screenshot);
-			binaryWriter.Close();
-		}
-
 		public static byte[] GetJpgImage(UIElement source, int quality)
 		{
 			double scale = 1.0;
@@ -2035,8 +2023,8 @@ namespace OrderManagerNew.V2Implant
 
 		private void LoadedNewImplantOrderV2(object sender, RoutedEventArgs e)
 		{
-            if (haveXml == false)
-                DialogResult = false;
+			if (haveXml == false)
+				DialogResult = false;
 		}
 	}
 }

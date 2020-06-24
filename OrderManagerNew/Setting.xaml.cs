@@ -240,7 +240,7 @@ namespace OrderManagerNew
                     case "sysBtn_AutoDetect":
                         {
                             OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                            omFunc.AutoDetectEXE((int)_classFrom.Setting);//TODO如果原本properties全部都沒有，AutoDetect偵測到並寫入textbox，再按取消,則properties會寫入(bug)
+                            omFunc.AutoDetectEXE((int)_classFrom.Setting);
 
                             textbox_EZCAD.Text = Properties.Settings.Default.cad_exePath;
                             textbox_Implant.Text = Properties.Settings.Default.implant_exePath;

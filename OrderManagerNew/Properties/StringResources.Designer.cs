@@ -133,6 +133,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Account or Password is incorrect 的當地語系化字串。
+        /// </summary>
+        internal static string AccOrPDerr {
+            get {
+                return ResourceManager.GetString("AccOrPDerr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Account 的當地語系化字串。
         /// </summary>
         internal static string Account {
@@ -327,6 +336,33 @@ namespace OrderManagerNew.Properties {
         internal static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Unable to get computer space 的當地語系化字串。
+        /// </summary>
+        internal static string CannnotGetRemainingSpace {
+            get {
+                return ResourceManager.GetString("CannnotGetRemainingSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Unable to find Uninstall.lnk 的當地語系化字串。
+        /// </summary>
+        internal static string CannotFindUninstall {
+            get {
+                return ResourceManager.GetString("CannotFindUninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Unable to get exe path 的當地語系化字串。
+        /// </summary>
+        internal static string CannotGetexePath {
+            get {
+                return ResourceManager.GetString("CannotGetexePath", resourceCulture);
             }
         }
         
@@ -1123,6 +1159,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Forgot your password? 的當地語系化字串。
+        /// </summary>
+        internal static string ForgotPassWD {
+            get {
+                return ResourceManager.GetString("ForgotPassWD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Blockout 的當地語系化字串。
         /// </summary>
         internal static string GDS_BLOCKOUT {
@@ -1573,11 +1618,29 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Network Connection error 的當地語系化字串。
+        /// </summary>
+        internal static string NetworkError {
+            get {
+                return ResourceManager.GetString("NetworkError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 No results found 的當地語系化字串。
         /// </summary>
         internal static string NoDataFound {
             get {
                 return ResourceManager.GetString("NoDataFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 There is not enough disk space to install the software, please free up more disk space 的當地語系化字串。
+        /// </summary>
+        internal static string NoEnoughSpaceToInstall {
+            get {
+                return ResourceManager.GetString("NoEnoughSpaceToInstall", resourceCulture);
             }
         }
         
@@ -2005,6 +2068,24 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Receiving data... 的當地語系化字串。
+        /// </summary>
+        internal static string ReceivingData {
+            get {
+                return ResourceManager.GetString("ReceivingData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Receiving data not responding, try again later 的當地語系化字串。
+        /// </summary>
+        internal static string ReceivingDataNotResponding {
+            get {
+                return ResourceManager.GetString("ReceivingDataNotResponding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Reduced Pontic 的當地語系化字串。
         /// </summary>
         internal static string Reduced_Pontic {
@@ -2311,6 +2392,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 There may not be enough disk space to install the software 的當地語系化字串。
+        /// </summary>
+        internal static string SpaceMaynotBeEnough {
+            get {
+                return ResourceManager.GetString("SpaceMaynotBeEnough", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Disk space required 的當地語系化字串。
         /// </summary>
         internal static string SpaceRequired {
@@ -2460,6 +2550,15 @@ namespace OrderManagerNew.Properties {
         internal static string ViewPWD {
             get {
                 return ResourceManager.GetString("ViewPWD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Warning 的當地語系化字串。
+        /// </summary>
+        internal static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
         

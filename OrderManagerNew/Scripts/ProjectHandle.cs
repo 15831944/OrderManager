@@ -383,8 +383,7 @@ namespace OrderManagerNew
                                     Gender = false;
                             }
                             catch { }
-
-
+                            
                             OrthoOuterInformation orthoInfo = new OrthoOuterInformation
                             {
                                 CaseDirectoryPath = Path.GetDirectoryName(XmlPath) + @"\",

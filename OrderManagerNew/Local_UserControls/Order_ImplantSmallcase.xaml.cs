@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,6 +21,19 @@ namespace OrderManagerNew.Local_UserControls
         public bool IsFocusSmallCase;
         private int ItemIndex;
 
+        public class Implant_tooth_Info
+        {
+            public int ToothID { get; set; }
+            public string Implant_Company { get; set; }
+            public string Implant_System { get; set; }
+
+            public Implant_tooth_Info()
+            {
+                ToothID = -1;
+                Implant_Company = "";
+                Implant_System = "";
+            }
+        }
         public class ImplantSmallCaseInformation
         {
             public string OrderName { get; set; }
@@ -27,6 +41,7 @@ namespace OrderManagerNew.Local_UserControls
             public string GuideModelPath { get; set; }
             public string GuideCaseDir { get; set; }
             public string PDFpath { get; set; }
+            public List<Implant_tooth_Info> List_ImplantToothInfo { get; set; }
 
             public ImplantSmallCaseInformation()
             {
@@ -35,6 +50,7 @@ namespace OrderManagerNew.Local_UserControls
                 GuideModelPath = "";
                 GuideCaseDir = "";
                 PDFpath = "";
+                List_ImplantToothInfo = null;
             }
         }
 
@@ -43,8 +59,6 @@ namespace OrderManagerNew.Local_UserControls
             InitializeComponent();
             IsFocusSmallCase = false;
             ItemIndex = -1;
-
-            
         }
 
         public void SetImplantSmallCaseInfo(ImplantSmallCaseInformation Import, int Index)

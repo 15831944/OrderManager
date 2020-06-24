@@ -102,9 +102,8 @@ namespace OrderManagerNew
                             //檢查客戶端容量是否比軟體檔案所需空間大超過3倍，如果沒有就Messagebox警告
                             if (label_AvailableSpace.Foreground == Brushes.Orange)
                             {
-                                if (MessageBox.Show("磁碟空間可能不足以安裝軟體", "Waring", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
+                                if (MessageBox.Show(TranslationSource.Instance["SpaceMaynotBeEnough"], TranslationSource.Instance["Warning"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
                                 {
-                                    //磁碟空間可能不足以安裝軟體 //TODO 多國語系
                                     GOTODownload();
                                 }
                                 else
@@ -114,7 +113,7 @@ namespace OrderManagerNew
                             }
                             else if (label_AvailableSpace.Foreground == Brushes.Orange)
                             {
-                                MessageBox.Show("磁碟空間不足以安裝軟體，請空出更多磁碟空間");//磁碟空間不足以安裝軟體 //TODO 多國語系
+                                MessageBox.Show(TranslationSource.Instance["NoEnoughSpaceToInstall"]);//磁碟空間不足以安裝軟體
                                 this.DialogResult = false;
                             }
                             else
@@ -151,7 +150,7 @@ namespace OrderManagerNew
 
                 if (!success)
                 {
-                    MessageBox.Show("Can't get space! try use adnim mode"); //TODO 多國語系
+                    MessageBox.Show(TranslationSource.Instance["CannnotGetRemainingSpace"]);
                     return false;
                 }
 
@@ -199,16 +198,6 @@ namespace OrderManagerNew
                         break;
                     }
             }
-
-            /*if (((double)(Int64)InputBytes / 1024.0 / 1024.0) < 1.0)//低於1MB就用KB
-                OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0), 1)).ToString() + "KB";
-            else if (((double)(Int64)InputBytes / 1024.0 / 1024.0 / 1024.0) < 1.0)//低於1GB就用MB
-                OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0 / 1024.0), 1)).ToString() + "MB";
-            else if (((double)(Int64)InputBytes / 1024.0 / 1024.0 / 1024.0 / 1024.0) < 1.0)//低於1TB就用GB
-                OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0 / 1024.0 / 1024.0), 1)).ToString() + "GB";
-            else
-                OutputString = Convert.ToSingle(Math.Round(((double)(Int64)InputBytes / 1024.0 / 1024.0 / 1024.0 / 1024.0), 1)).ToString() + "TB";*/
-
             return OutputString;
         }
         
@@ -229,29 +218,36 @@ namespace OrderManagerNew
                 httpRequest.Method = "GET";
                 httpRequest.Timeout = Properties.Settings.Default.PingTime * 1000;
 
-                Handler_snackbarShow("Get httpRequest Response Start..."); //開始取得資料 //TODO 多國語系
+                Handler_snackbarShow(TranslationSource.Instance["ReceivingData"]); //開始取得資料
                 httpResponse = (HttpWebResponse)httpRequest.GetResponse();
             }
             catch (Exception ex)
             {
                 Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload.xaml.cs_DoWork()_exception", ex.Message);
-                //MessageBox.Show(ex.Message, "Network error");   //網路連線異常or載點掛掉 //TODO 多國語系 這邊目前會出現2次Messagebox，之後要刪掉一個
                 e.Cancel = true;
             }
         }
-        
         void CompletedWork(object sender, RunWorkerCompletedEventArgs e)
         {
             
             if (e.Error != null)
             {
                 tmr.Stop();
-                Handler_snackbarShow("Error");   //錯誤 //TODO 多國語系
+                Handler_snackbarShow(TranslationSource.Instance["Error"]);   //錯誤
             }
             else if (e.Cancelled)
             {
                 tmr.Stop();
-                Handler_snackbarShow("Canceled");    //取消(超過時間，也許再讓使用者可以自行增加秒數?) //TODO 多國語系
+                if(MessageBox.Show(TranslationSource.Instance["ReceivingDataNotResponding"], TranslationSource.Instance["Warning"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
+                {
+                    if(Properties.Settings.Default.PingTime < 60)
+                    {
+                        //重試，加5秒接收時間
+                        Properties.Settings.Default.PingTime += 5;
+                        Properties.Settings.Default.Save();
+                    }
+                }
+                Handler_snackbarShow(TranslationSource.Instance["Cancel"]);    //取消(超過時間，也許再讓使用者可以自行增加秒數?)
             }
             else
             {
@@ -259,13 +255,11 @@ namespace OrderManagerNew
                 SetHttpResponseOK();
             }
         }
-        
         /// <summary>
         /// 計時器結束事件
         /// </summary>
         void Tmr_Elapsed(object sender, EventArgs e)
         {
-            Handler_snackbarShow("can't get network response"); //超過回應時間 //TODO 多國語系
             tmr.Stop();
         }
         #endregion
@@ -308,12 +302,12 @@ namespace OrderManagerNew
                         if ((ulong)label_AvailableSpace.Tag < (ulong)label_RequireSpace.Tag)
                         {
                             label_AvailableSpace.Foreground = Brushes.Orange;
-                            label_AvailableSpace.ToolTip = "磁碟空間不足以安裝軟體";//磁碟空間不足以安裝軟體 //TODO 多國語系
+                            label_AvailableSpace.ToolTip = TranslationSource.Instance["NoEnoughSpaceToInstall"];//磁碟空間不足以安裝軟體
                         }
                         else if ((ulong)label_AvailableSpace.Tag < (ulong)label_RequireSpace.Tag * 3)
                         {
                             label_AvailableSpace.Foreground = Brushes.Orange;
-                            label_AvailableSpace.ToolTip = "磁碟空間可能不足以安裝軟體";//磁碟空間可能不足以安裝軟體 //TODO 多國語系
+                            label_AvailableSpace.ToolTip = TranslationSource.Instance["SpaceMaynotBeEnough"];//磁碟空間可能不足以安裝軟體
                         }
                         else
                         {
@@ -323,7 +317,7 @@ namespace OrderManagerNew
                     }
                     else
                     {
-                        MessageBox.Show("Can't get user remaining space");//無法獲取客戶電腦剩餘空間 //TODO 多國語系
+                        MessageBox.Show(TranslationSource.Instance["CannnotGetRemainingSpace"]);//無法獲取客戶電腦剩餘空間
                         if (httpResponse != null)
                             httpResponse.Close();
                         return false;
@@ -332,7 +326,7 @@ namespace OrderManagerNew
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Network error");   //網路連線異常or載點掛掉 //TODO 多國語系
+                MessageBox.Show(ex.Message, TranslationSource.Instance["NetworkError"]);   //網路連線異常or載點掛掉
                 if (httpResponse != null)
                     httpResponse.Close();
                 return false;
@@ -341,7 +335,6 @@ namespace OrderManagerNew
                 httpResponse.Close();
             return true;
         }
-
         /// <summary>
         /// 用多執行緒去取得httpResponse
         /// </summary>
@@ -361,7 +354,7 @@ namespace OrderManagerNew
 
             //倒數計時
             tmr = new Timer();
-            if (Properties.Settings.Default.PingTime <= 0)
+            if (Properties.Settings.Default.PingTime <= 0 || Properties.Settings.Default.PingTime >= 45)
             {
                 Properties.Settings.Default.PingTime = 5;
                 Properties.Settings.Default.Save();
@@ -377,7 +370,6 @@ namespace OrderManagerNew
 
             m_BackgroundWorker.RunWorkerAsync(this);
         }
-
         /// <summary>
         /// 設定Properties內各軟體路徑
         /// </summary>
