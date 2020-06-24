@@ -379,77 +379,33 @@ namespace OrderManagerNew
             };
 
             //設定觸發事件
-            Watcher.Created += new FileSystemEventHandler(Watcher_ProjectCreated);
-            Watcher.Deleted += new FileSystemEventHandler(Watcher_ProjectDeleted);
+            Watcher.Created += new FileSystemEventHandler(Watcher_ProjectChanged);
+            Watcher.Deleted += new FileSystemEventHandler(Watcher_ProjectChanged);
         }
 
-        private void Watcher_ProjectCreated(object sender, FileSystemEventArgs e)
+        private void Watcher_ProjectChanged(object sender, FileSystemEventArgs e)
         {
+            if (Path.GetExtension(e.Name).ToLower() != ".xml" && Path.GetExtension(e.Name).ToLower() != "")
+                return;
+
             this.Dispatcher.Invoke((Action)(() =>
             {
                 try
                 {
-                    if ((SoftwareFilterCAD.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.cad_projectDirectory))
+                    if ((Properties.Settings.Default.LastSoftwareFilter == (int)_softwareID.EZCAD) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.cad_projectDirectory))
                         ProjHandle.LoadEZCADProj();
-                    else if ((SoftwareFilterImplant.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.implant_projectDirectory))
+                    else if ((Properties.Settings.Default.LastSoftwareFilter == (int)_softwareID.Implant) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.implant_projectDirectory))
                         ProjHandle.LoadImplantProjV2();
-                    else if ((SoftwareFilterOrtho.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.ortho_projectDirectory))
+                    else if ((Properties.Settings.Default.LastSoftwareFilter == (int)_softwareID.Ortho) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.ortho_projectDirectory))
                         ProjHandle.LoadOrthoProj();
-                    else if ((SoftwareFilterTray.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.tray_projectDirectory))
+                    else if ((Properties.Settings.Default.LastSoftwareFilter == (int)_softwareID.Tray) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.tray_projectDirectory))
                         ProjHandle.LoadTrayProj();
-                    else if ((SoftwareFilterSplint.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.splint_projectDirectory))
+                    else if ((Properties.Settings.Default.LastSoftwareFilter == (int)_softwareID.Splint) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.splint_projectDirectory))
                         ProjHandle.LoadSplintProj();
                 }
                 catch (Exception ex)
                 {
                     log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Watcher_ProjectCreated_exception", ex.Message);
-
-                    if(SoftwareFilterCAD.IsChecked == true)
-                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.cad_projectDirectory);
-                    else if(SoftwareFilterImplant.IsChecked == true)
-                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.implant_projectDirectory);
-                    else if (SoftwareFilterOrtho.IsChecked == true)
-                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.ortho_projectDirectory);
-                    else if (SoftwareFilterTray.IsChecked == true)
-                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.tray_projectDirectory);
-                    else if (SoftwareFilterSplint.IsChecked == true)
-                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.splint_projectDirectory);
-                }
-            }));
-
-        }
-
-        private void Watcher_ProjectDeleted(object sender, FileSystemEventArgs e)
-        {
-            this.Dispatcher.Invoke((Action)(() =>
-            {
-                try
-                {
-                    if ((SoftwareFilterCAD.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.cad_projectDirectory))
-                        ProjHandle.LoadEZCADProj();
-                    else if ((SoftwareFilterImplant.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.implant_projectDirectory))
-                        ProjHandle.LoadImplantProjV2();
-                    else if ((SoftwareFilterOrtho.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.ortho_projectDirectory))
-                        ProjHandle.LoadOrthoProj();
-                    else if ((SoftwareFilterTray.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.tray_projectDirectory))
-                        ProjHandle.LoadTrayProj();
-                    else if ((SoftwareFilterSplint.IsChecked == true) && (e.FullPath.Replace(e.Name, "") == Properties.OrderManagerProps.Default.splint_projectDirectory))
-                        ProjHandle.LoadSplintProj();
-                }
-                catch (Exception ex)
-                {
-                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Watcher_ProjectDeleted_exception", ex.Message);
-
-                    if (SoftwareFilterCAD.IsChecked == true)
-                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.cad_projectDirectory);
-                    else if (SoftwareFilterImplant.IsChecked == true)
-                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.implant_projectDirectory);
-                    else if (SoftwareFilterOrtho.IsChecked == true)
-                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.ortho_projectDirectory);
-                    else if (SoftwareFilterTray.IsChecked == true)
-                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.tray_projectDirectory);
-                    else if (SoftwareFilterSplint.IsChecked == true)
-                        Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.splint_projectDirectory);
                 }
             }));
         }
@@ -2367,108 +2323,111 @@ namespace OrderManagerNew
         /// <param name="SoftwareID"></param>
         public void Handler_SetCaseShow(int SoftwareID)
         {
-            StackPanel_Local.Children.Clear();
-            StackPanel_Detail.Children.Clear();
-            switch (SoftwareID)
+            this.Dispatcher.Invoke((Action)(() =>
             {
-                case (int)_softwareID.EZCAD:
-                    {
-                        if (ProjHandle.Caselist_EZCAD != null && ProjHandle.Caselist_EZCAD.Count > 0)
+                StackPanel_Local.Children.Clear();
+                StackPanel_Detail.Children.Clear();
+                switch (SoftwareID)
+                {
+                    case (int)_softwareID.EZCAD:
+                        {
+                            if (ProjHandle.Caselist_EZCAD != null && ProjHandle.Caselist_EZCAD.Count > 0)
+                            {
+                                int countIndex = 0;
+                                foreach (CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
+                                {
+                                    Local_UserControls.Order_cadBase Order_CAD = new Local_UserControls.Order_cadBase();
+                                    Order_CAD.SetBaseProjectShow += CaseHandler_EZCAD_showSingleProject;
+                                    Order_CAD.SetCaseInfo(cadInfo, countIndex);
+                                    StackPanel_Local.Children.Add(Order_CAD);
+                                    countIndex++;
+                                }
+                                Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.cad_projectDirectory);
+                            }
+                            else
+                                StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
+                            break;
+                        }
+                    case (int)_softwareID.Implant:
                         {
                             int countIndex = 0;
-                            foreach (CadInformation cadInfo in ProjHandle.Caselist_EZCAD)
+                            if (ProjHandle.Caselist_ImplantOuterCase != null && ProjHandle.Caselist_ImplantOuterCase.Count > 0)
                             {
-                                Local_UserControls.Order_cadBase Order_CAD = new Local_UserControls.Order_cadBase();
-                                Order_CAD.SetBaseProjectShow += CaseHandler_EZCAD_showSingleProject;
-                                Order_CAD.SetCaseInfo(cadInfo, countIndex);
-                                StackPanel_Local.Children.Add(Order_CAD);
-                                countIndex++;
+                                foreach (ImplantOuterInformation implantInfo in ProjHandle.Caselist_ImplantOuterCase)
+                                {
+                                    Local_UserControls.Order_implantBase Order_Implant = new Local_UserControls.Order_implantBase();
+                                    Order_Implant.SetBaseProjectShow += CaseHandler_Implant_showSingleProject;
+                                    Order_Implant.SetSmallProjectDetailShow += CaseHandler_Implant_showDetail;
+                                    Order_Implant.SetCaseInfo(implantInfo, countIndex);
+                                    StackPanel_Local.Children.Add(Order_Implant);
+                                    countIndex++;
+                                }
+                                Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.implant_projectDirectory);
                             }
-                            Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.cad_projectDirectory);
+                            else
+                                StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
+                            break;
                         }
-                        else
-                            StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
-                        break;
-                    }
-                case (int)_softwareID.Implant:
-                    {
-                        int countIndex = 0;
-                        if (ProjHandle.Caselist_ImplantOuterCase != null && ProjHandle.Caselist_ImplantOuterCase.Count > 0)
+                    case (int)_softwareID.Ortho:
                         {
-                            foreach (ImplantOuterInformation implantInfo in ProjHandle.Caselist_ImplantOuterCase)
+                            int countIndex = 0;
+                            if (ProjHandle.Caselist_OrthoOuterCase != null && ProjHandle.Caselist_OrthoOuterCase.Count > 0)
                             {
-                                Local_UserControls.Order_implantBase Order_Implant = new Local_UserControls.Order_implantBase();
-                                Order_Implant.SetBaseProjectShow += CaseHandler_Implant_showSingleProject;
-                                Order_Implant.SetSmallProjectDetailShow += CaseHandler_Implant_showDetail;
-                                Order_Implant.SetCaseInfo(implantInfo, countIndex);
-                                StackPanel_Local.Children.Add(Order_Implant);
-                                countIndex++;
+                                foreach (OrthoOuterInformation orthoInfo in ProjHandle.Caselist_OrthoOuterCase)
+                                {
+                                    Local_UserControls.Order_orthoBase Order_Ortho = new Local_UserControls.Order_orthoBase();
+                                    Order_Ortho.SetBaseProjectShow += CaseHandler_Ortho_showSingleProject;
+                                    Order_Ortho.SetSmallProjectDetailShow += CaseHandler_Ortho_showDetail;
+                                    Order_Ortho.SetCaseInfo(orthoInfo, countIndex);
+                                    StackPanel_Local.Children.Add(Order_Ortho);
+                                    countIndex++;
+                                }
+                                Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.ortho_projectDirectory);
                             }
-                            Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.implant_projectDirectory);
+                            else
+                                StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
+                            break;
                         }
-                        else
-                            StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
-                        break;
-                    }
-                case (int)_softwareID.Ortho:
-                    {
-                        int countIndex = 0;
-                        if (ProjHandle.Caselist_OrthoOuterCase != null && ProjHandle.Caselist_OrthoOuterCase.Count > 0)
+                    case (int)_softwareID.Tray:
                         {
-                            foreach (OrthoOuterInformation orthoInfo in ProjHandle.Caselist_OrthoOuterCase)
+                            int countIndex = 0;
+                            if (ProjHandle.Caselist_Tray != null && ProjHandle.Caselist_Tray.Count > 0)
                             {
-                                Local_UserControls.Order_orthoBase Order_Ortho = new Local_UserControls.Order_orthoBase();
-                                Order_Ortho.SetBaseProjectShow += CaseHandler_Ortho_showSingleProject;
-                                Order_Ortho.SetSmallProjectDetailShow += CaseHandler_Ortho_showDetail;
-                                Order_Ortho.SetCaseInfo(orthoInfo, countIndex);
-                                StackPanel_Local.Children.Add(Order_Ortho);
-                                countIndex++;
+                                foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
+                                {
+                                    Local_UserControls.Order_tsBase Order_Tray = new Local_UserControls.Order_tsBase();
+                                    Order_Tray.SetBaseProjectShow += CaseHandler_TraySplint_showSingleProject;
+                                    Order_Tray.SetTrayCaseInfo(trayInfo, countIndex);
+                                    StackPanel_Local.Children.Add(Order_Tray);
+                                    countIndex++;
+                                }
+                                Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.tray_projectDirectory);
                             }
-                            Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.ortho_projectDirectory);
+                            else
+                                StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
+                            break;
                         }
-                        else
-                            StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
-                        break;
-                    }
-                case (int)_softwareID.Tray:
-                    {
-                        int countIndex = 0;
-                        if (ProjHandle.Caselist_Tray != null && ProjHandle.Caselist_Tray.Count > 0)
+                    case (int)_softwareID.Splint:
                         {
-                            foreach (TrayInformation trayInfo in ProjHandle.Caselist_Tray)
+                            int countIndex = 0;
+                            if (ProjHandle.Caselist_Splint != null && ProjHandle.Caselist_Splint.Count > 0)
                             {
-                                Local_UserControls.Order_tsBase Order_Tray = new Local_UserControls.Order_tsBase();
-                                Order_Tray.SetBaseProjectShow += CaseHandler_TraySplint_showSingleProject;
-                                Order_Tray.SetTrayCaseInfo(trayInfo, countIndex);
-                                StackPanel_Local.Children.Add(Order_Tray);
-                                countIndex++;
+                                foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
+                                {
+                                    Local_UserControls.Order_tsBase Order_Splint = new Local_UserControls.Order_tsBase();
+                                    Order_Splint.SetBaseProjectShow += CaseHandler_TraySplint_showSingleProject;
+                                    Order_Splint.SetSplintCaseInfo(splintInfo, countIndex);
+                                    StackPanel_Local.Children.Add(Order_Splint);
+                                    countIndex++;
+                                }
+                                Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.splint_projectDirectory);
                             }
-                            Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.tray_projectDirectory);
+                            else
+                                StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
+                            break;
                         }
-                        else
-                            StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
-                        break;
-                    }
-                case (int)_softwareID.Splint:
-                    {
-                        int countIndex = 0;
-                        if (ProjHandle.Caselist_Splint != null && ProjHandle.Caselist_Splint.Count > 0)
-                        {
-                            foreach (SplintInformation splintInfo in ProjHandle.Caselist_Splint)
-                            {
-                                Local_UserControls.Order_tsBase Order_Splint = new Local_UserControls.Order_tsBase();
-                                Order_Splint.SetBaseProjectShow += CaseHandler_TraySplint_showSingleProject;
-                                Order_Splint.SetSplintCaseInfo(splintInfo, countIndex);
-                                StackPanel_Local.Children.Add(Order_Splint);
-                                countIndex++;
-                            }
-                            Watcher_CaseProject(new FileSystemWatcher(), Properties.OrderManagerProps.Default.splint_projectDirectory);
-                        }
-                        else
-                            StackPanel_Local.Children.Add(new Local_UserControls.NoResult());
-                        break;
-                    }
-            }
+                }
+            }));
         }
         private void CaseHandler_EZCAD_showSingleProject(int projectIndex)
         {

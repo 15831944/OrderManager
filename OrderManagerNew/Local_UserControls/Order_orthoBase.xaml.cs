@@ -95,64 +95,72 @@ namespace OrderManagerNew.Local_UserControls
         {
             orthoInfo.List_smallcase = new List<Local_UserControls.Order_orthoSmallcase>();
             int itemIndex = 0;
-            //蒐集OrthoSmallcase然後存進OuterCase
-            DirectoryInfo dInfo2 = new DirectoryInfo(orthoInfo.CaseDirectoryPath);
-            foreach (DirectoryInfo folder2 in dInfo2.GetDirectories())
+
+            try
             {
-                // 這層是C:\IntewareData\OrthoAnalysisV3\OrthoData\Test_1216\folder2\
-                string SmallXmlPath = folder2.FullName + @"\" + (orthoInfo.PatientID + "_" + orthoInfo.PatientName) + ".xml";
-                if (File.Exists(SmallXmlPath) == false)
-                    continue;
-                else
+                //蒐集OrthoSmallcase然後存進OuterCase
+                DirectoryInfo dInfo2 = new DirectoryInfo(orthoInfo.CaseDirectoryPath);
+                foreach (DirectoryInfo folder2 in dInfo2.GetDirectories())
                 {
-                    XDocument xmlDoc;
-                    FileInfo fInfo = new FileInfo(SmallXmlPath);//要取得檔案創建日期和修改日期
-
-                    try
-                    {
-                        xmlDoc = XDocument.Load(SmallXmlPath);
-                    }
-                    catch (Exception ex)
-                    {
-                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Ortho smallcase) Exception", ex.Message);
+                    // 這層是C:\IntewareData\OrthoAnalysisV3\OrthoData\Test_1216\folder2\
+                    string SmallXmlPath = folder2.FullName + @"\" + (orthoInfo.PatientID + "_" + orthoInfo.PatientName) + ".xml";
+                    if (File.Exists(SmallXmlPath) == false)
                         continue;
-                    }
-
-                    try
+                    else
                     {
-                        var orthodata = EZOrthoDataStructure.ProjectDataWrapper.ProjectDataWrapperDeserialize(SmallXmlPath);
-                        int patientAge = DateTime.Today.Year - DateTime.Parse(orthodata.patientInformation.m_PatientBday).Year;
+                        XDocument xmlDoc;
+                        FileInfo fInfo = new FileInfo(SmallXmlPath);//要取得檔案創建日期和修改日期
 
-                        Order_orthoSmallcase.OrthoSmallCaseInformation tmpOrthosmallInfo = new Order_orthoSmallcase.OrthoSmallCaseInformation
+                        try
                         {
-                            //tmpOrthosmallInfo.SoftwareVer = new Version(orthodata.File_Version);
-                            WorkflowStep = Convert.ToInt16(orthodata.workflowstep),
-                            CreateDate = orthodata.patientInformation.m_CreateTime,
-                            Describe = orthodata.patientInformation.m_Discribe,
-                            ModifyTime = fInfo.LastWriteTime,
-                            SmallCaseXmlPath = SmallXmlPath,
+                            xmlDoc = XDocument.Load(SmallXmlPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Ortho smallcase) Exception", ex.Message);
+                            continue;
+                        }
 
-                            ProductTypeString = TranslationSource.Instance["ClearAligner"],
-                            Name = orthodata.patientInformation.m_PatientName,
-                            OrderID = orthodata.patientInformation.m_PatientID,
-                            Gender = orthodata.patientInformation.m_PatientSex ? TranslationSource.Instance["Male"] : TranslationSource.Instance["Female"],
-                            Age = patientAge.ToString(),
-                            Clinic = orthodata.patientInformation.m_ClinicName,
-                            Dentist = orthodata.patientInformation.m_DentistName
-                        };
+                        try
+                        {
+                            var orthodata = EZOrthoDataStructure.ProjectDataWrapper.ProjectDataWrapperDeserialize(SmallXmlPath);
+                            int patientAge = DateTime.Today.Year - DateTime.Parse(orthodata.patientInformation.m_PatientBday).Year;
 
-                        Order_orthoSmallcase tmporthoSmallcase = new Order_orthoSmallcase();
-                        tmporthoSmallcase.SetsmallCaseShow += SmallCaseHandler;
-                        tmporthoSmallcase.SetOrthoSmallCaseInfo(tmpOrthosmallInfo, itemIndex);
-                        orthoInfo.List_smallcase.Add(tmporthoSmallcase);
-                        itemIndex++;
-                    }
-                    catch (Exception ex)
-                    {
-                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Ortho smallcase) Exception2", ex.Message);
-                        continue;
+                            Order_orthoSmallcase.OrthoSmallCaseInformation tmpOrthosmallInfo = new Order_orthoSmallcase.OrthoSmallCaseInformation
+                            {
+                                //tmpOrthosmallInfo.SoftwareVer = new Version(orthodata.File_Version);
+                                WorkflowStep = Convert.ToInt16(orthodata.workflowstep),
+                                CreateDate = orthodata.patientInformation.m_CreateTime,
+                                Describe = orthodata.patientInformation.m_Discribe,
+                                ModifyTime = fInfo.LastWriteTime,
+                                SmallCaseXmlPath = SmallXmlPath,
+
+                                ProductTypeString = TranslationSource.Instance["ClearAligner"],
+                                Name = orthodata.patientInformation.m_PatientName,
+                                OrderID = orthodata.patientInformation.m_PatientID,
+                                Gender = orthodata.patientInformation.m_PatientSex ? TranslationSource.Instance["Male"] : TranslationSource.Instance["Female"],
+                                Age = patientAge.ToString(),
+                                Clinic = orthodata.patientInformation.m_ClinicName,
+                                Dentist = orthodata.patientInformation.m_DentistName
+                            };
+
+                            Order_orthoSmallcase tmporthoSmallcase = new Order_orthoSmallcase();
+                            tmporthoSmallcase.SetsmallCaseShow += SmallCaseHandler;
+                            tmporthoSmallcase.SetOrthoSmallCaseInfo(tmpOrthosmallInfo, itemIndex);
+                            orthoInfo.List_smallcase.Add(tmporthoSmallcase);
+                            itemIndex++;
+                        }
+                        catch (Exception ex)
+                        {
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(Ortho smallcase) Exception2", ex.Message);
+                            continue;
+                        }
                     }
                 }
+            }
+            catch
+            {
+
             }
         }
 

@@ -116,50 +116,64 @@ namespace OrderManagerNew.Local_UserControls
         {
             implantInfo.List_smallcase = new List<Local_UserControls.Order_ImplantSmallcase>();
             int itemIndex = 0;
-            foreach (string filename in Directory.GetFiles(implantInfo.CaseDirectoryPath))
-            {
-                // 這層是C:\IntewareData\Implant\2020130102946\
-                //找有幾個tii檔就等於有幾個Implant要給Guide的檔
-                if (Path.GetExtension(filename).ToLower() == ".tii")
-                {
-                    Order_ImplantSmallcase ImplantSmallCase = new Order_ImplantSmallcase();
-                    ImplantSmallCase.SetsmallCaseShow += SmallCaseHandler;
-                    //記錄內部專案資料夾名稱(就是OrderName)、Guide專案資料夾路徑和檢查是否有從Guide輸出的模型
-                    ImplantSmallCaseInformation impInfo = new ImplantSmallCaseInformation
-                    {
-                        OrderName = Path.GetFileNameWithoutExtension(filename),
-                        ImplantTiiPath = filename
-                    };
-                    impInfo.GuideCaseDir = implantInfo.CaseDirectoryPath + impInfo.OrderName + @"\LinkStation\";
-                    //TODO 這邊會有bug
-                    string tmpGuideModelDir = implantInfo.CaseDirectoryPath + impInfo.OrderName + @"\LinkStation\ManufacturingDir\";
-                    if (Directory.Exists(tmpGuideModelDir) == true)
-                    {
-                        string[] guideModel = Directory.GetFiles(tmpGuideModelDir);
-                        if (guideModel.Length > 0)
-                            impInfo.GuideModelPath = guideModel[0];
-                        else
-                            impInfo.GuideModelPath = "";
-                    }
-                    else
-                        impInfo.GuideModelPath = "";
 
-                    foreach(string searchPDF in Directory.GetFiles(implantInfo.CaseDirectoryPath  + impInfo.OrderName + @"\"))
+            try
+            {
+                foreach (string filename in Directory.GetFiles(implantInfo.CaseDirectoryPath))
+                {
+                    // 這層是C:\IntewareData\Implant\2020130102946\
+                    //找有幾個tii檔就等於有幾個Implant要給Guide的檔
+                    if (Path.GetExtension(filename).ToLower() == ".tii")
                     {
-                        if(Path.GetExtension(searchPDF).ToLower() == ".pdf")
+                        try
                         {
-                            if(searchPDF.ToLower().IndexOf("examination") != -1)
+                            Order_ImplantSmallcase ImplantSmallCase = new Order_ImplantSmallcase();
+                            ImplantSmallCase.SetsmallCaseShow += SmallCaseHandler;
+                            //記錄內部專案資料夾名稱(就是OrderName)、Guide專案資料夾路徑和檢查是否有從Guide輸出的模型
+                            ImplantSmallCaseInformation impInfo = new ImplantSmallCaseInformation
                             {
-                                impInfo.PDFpath = searchPDF;
-                                break;
+                                OrderName = Path.GetFileNameWithoutExtension(filename),
+                                ImplantTiiPath = filename
+                            };
+                            impInfo.GuideCaseDir = implantInfo.CaseDirectoryPath + impInfo.OrderName + @"\LinkStation\";
+                            string tmpGuideModelDir = implantInfo.CaseDirectoryPath + impInfo.OrderName + @"\LinkStation\ManufacturingDir\";
+                            if (Directory.Exists(tmpGuideModelDir) == true)
+                            {
+                                string[] guideModel = Directory.GetFiles(tmpGuideModelDir);
+                                if (guideModel.Length > 0)
+                                    impInfo.GuideModelPath = guideModel[0];
+                                else
+                                    impInfo.GuideModelPath = "";
                             }
+                            else
+                                impInfo.GuideModelPath = "";
+
+                            foreach (string searchPDF in Directory.GetFiles(implantInfo.CaseDirectoryPath + impInfo.OrderName + @"\"))
+                            {
+                                if (Path.GetExtension(searchPDF).ToLower() == ".pdf")
+                                {
+                                    if (searchPDF.ToLower().IndexOf("examination") != -1)
+                                    {
+                                        impInfo.PDFpath = searchPDF;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            ImplantSmallCase.SetImplantSmallCaseInfo(impInfo, itemIndex);
+                            implantInfo.List_smallcase.Add(ImplantSmallCase);
+                            itemIndex++;
+                        }
+                        catch
+                        {
+                            continue;
                         }
                     }
-
-                    ImplantSmallCase.SetImplantSmallCaseInfo(impInfo, itemIndex);
-                    implantInfo.List_smallcase.Add(ImplantSmallCase);
-                    itemIndex++;
                 }
+            }
+            catch
+            {
+
             }
         }
 
@@ -271,11 +285,6 @@ namespace OrderManagerNew.Local_UserControls
                 }
             }
             e.Handled = true;
-        }
-
-        private void Click_AirdentalWeb(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

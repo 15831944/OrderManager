@@ -225,7 +225,6 @@ namespace OrderManagerNew
 
             //Ortho外部清單
             Caselist_OrthoOuterCase = new List<OrthoOuterInformation>();
-
             DirectoryInfo dInfo = new DirectoryInfo(ortho_projectDirectory);
             // C:\IntewareData\OrthoAnalysisV3\OrthoData\Test_1216\2019-12-16-1543\Test_1216.xml
             foreach(DirectoryInfo folder in dInfo.GetDirectories())
@@ -240,7 +239,6 @@ namespace OrderManagerNew
                         continue;
                 }
             }
-            
             Sorter.Sort_Ortho(Caselist_OrthoOuterCase, 0, (Caselist_OrthoOuterCase.Count - 1), true);
             CaseShowEvent((int)_softwareID.Ortho);
         }
