@@ -1627,6 +1627,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 No 的當地語系化字串。
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 No results found 的當地語系化字串。
         /// </summary>
         internal static string NoDataFound {
@@ -2568,6 +2577,15 @@ namespace OrderManagerNew.Properties {
         internal static string Workflow {
             get {
                 return ResourceManager.GetString("Workflow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Yes 的當地語系化字串。
+        /// </summary>
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

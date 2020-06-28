@@ -32,7 +32,7 @@
             <!--  TitleBar-Start  -->
             <Border
               Height="42" Panel.ZIndex="10"
-              Background="{DynamicResource Common_OrangeTitleBar}"
+              Background="{StaticResource Common_OrangeTitleBar}"
               DockPanel.Dock="Top">
                 <Grid>
                     <Label
@@ -47,7 +47,7 @@
 
                     <StackPanel
                       HorizontalAlignment="Right" VerticalAlignment="Center" Panel.ZIndex="1"
-                      Background="{DynamicResource Common_OrangeTitleBar}"
+                      Background="{StaticResource Common_OrangeTitleBar}"
                       Orientation="Horizontal">
                         <Button Name="systemButton_ContactInteware" Click="Click_TitleBar_titlebarButtons" Style="{StaticResource systemButton_contactInteware}" />
                         <Button Name="systemButton_Minimize" Click="Click_TitleBar_titlebarButtons" Style="{StaticResource systemButton_mimimize}" />
@@ -388,6 +388,7 @@
                     <StackPanel
                       Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
                       Panel.ZIndex="2" Orientation="Horizontal">
+                        <Button Click="Click_test"/>
                         <Button Click="Click_FunctionTable_Setting" Style="{StaticResource FunctionButton_setting}" />
                         <Button x:Name="omFunction_User" Click="Click_FunctionTable_User" Style="{StaticResource FunctionButton_User}" />
                         <Grid Width="6" />
@@ -419,7 +420,7 @@
                     <materialDesign:Snackbar
                       Grid.Column="0" Grid.ColumnSpan="3" x:Name="SnackbarMain"
                       Margin="12,0" HorizontalAlignment="Stretch" Panel.ZIndex="10"
-                      Background="{DynamicResource Common_OrangeTitleBar}"
+                      Background="{StaticResource Common_OrangeTitleBar}"
                       MessageQueue="{materialDesign:MessageQueue}" />
 
                     <Grid

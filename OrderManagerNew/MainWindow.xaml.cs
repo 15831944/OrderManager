@@ -2660,5 +2660,12 @@ namespace OrderManagerNew
             }*/
         }
         #endregion
+
+        private void Click_test(object sender, RoutedEventArgs e)
+        {
+            Inteware_Messagebox Msg = new Inteware_Messagebox();
+            //Msg.ShowMessage("TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest");
+            Msg.ShowMessage("TestTestTestTestTestTestTestTestTestTestTestTestTestTest", "TestTitle");
+        }
     }
 }

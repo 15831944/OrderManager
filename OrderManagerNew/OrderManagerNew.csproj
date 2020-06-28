@@ -107,6 +107,9 @@
     <Compile Include="AirDental_UserControls\AirD_orthoSmallOrder.xaml.cs">
       <DependentUpon>AirD_orthoSmallOrder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Inteware_Messagebox.xaml.cs">
+      <DependentUpon>Inteware_Messagebox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\StringResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -204,6 +207,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AirDental_UserControls\AirD_orthoSmallOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Inteware_Messagebox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

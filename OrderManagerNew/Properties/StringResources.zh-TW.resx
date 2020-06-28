@@ -954,4 +954,10 @@
   <data name="CannotGetexePath" xml:space="preserve">
     <value>無法取得執行檔路徑</value>
   </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+  </data>
 </root>
