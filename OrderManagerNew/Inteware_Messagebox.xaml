@@ -64,8 +64,8 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Width="576">
                     <StackPanel Orientation="Horizontal">
-                        <Grid x:Name="grid_contentImage" Width="120">
-                            <Image Height="60" Source="{DynamicResource icon_AccountError}" />
+                        <Grid x:Name="grid_contentImage" Width="120" Panel.ZIndex="1">
+                            <Image x:Name="image_content" Height="60" Source="{DynamicResource icon_AccountError}" />
                         </Grid>
                         <TextBlock
                           Grid.Row="0" x:Name="textblock_content" Width="456"

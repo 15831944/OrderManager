@@ -19,7 +19,15 @@ namespace OrderManagerNew
     /// </summary>
     public partial class Inteware_Messagebox : Window
     {
-        public bool BtnCancel;
+        public enum _ReturnButtonName
+        {
+            OK = 0,
+            YES,
+            NO,
+            CANCEL
+        }
+
+        public int ReturnClickWhitchButton;
         private Point startPos;
         
         public Inteware_Messagebox()
@@ -27,6 +35,7 @@ namespace OrderManagerNew
             InitializeComponent();
             label_title.Content = "";
             textblock_content.Text = "";
+            ReturnClickWhitchButton = -1;
         }
 
         /// <summary>
@@ -52,20 +61,99 @@ namespace OrderManagerNew
             label_title.Content = titleMessage;
             ShowMessage(message);
         }
-
+        /// <summary>
+        /// 顯示字串、標題另外再區分MessageBoxButton，內建顯示ShowDialog()
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="titleMessage"></param>
+        /// <param name="messageBoxButton"></param>
         public void ShowMessage(string message, string titleMessage, MessageBoxButton messageBoxButton)
         {
-
+            label_title.Content = titleMessage;
+            textblock_content.Text = message;
+            textblock_content.Width += grid_contentImage.Width;
+            grid_contentImage.Visibility = Visibility.Collapsed;
+            switch (messageBoxButton)
+            {
+                case MessageBoxButton.OK:
+                    {
+                        btn_no.Visibility = Visibility.Collapsed;
+                        btn_cancel.Visibility = Visibility.Collapsed;
+                        btn_yes.Content = TranslationSource.Instance["OK"];
+                        break;
+                    }
+                case MessageBoxButton.OKCancel:
+                    {
+                        btn_no.Visibility = Visibility.Collapsed;
+                        btn_yes.Content = TranslationSource.Instance["OK"];
+                        break;
+                    }
+                case MessageBoxButton.YesNo:
+                    {
+                        btn_cancel.Visibility = Visibility.Collapsed;
+                        break;
+                    }
+                case MessageBoxButton.YesNoCancel:
+                    {
+                        break;
+                    }
+            }
+            ShowDialog();
         }
-
+        /// <summary>
+        /// 顯示字串、標題、MessageBoxButton還有MessageboxImage，內建顯示ShowDialog()
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="titleMessage"></param>
+        /// <param name="messageBoxButton"></param>
+        /// <param name="messageBoxImage"></param>
         public void ShowMessage(string message, string titleMessage, MessageBoxButton messageBoxButton, MessageBoxImage messageBoxImage)
         {
-
-        }
-
-        public bool ReturnResult(string message, string titleMessage, MessageBoxButton messageBoxButton, MessageBoxImage messageBoxImage)
-        {
-            return true;
+            label_title.Content = titleMessage;
+            textblock_content.Text = message;
+            switch (messageBoxButton)
+            {
+                case MessageBoxButton.OK:
+                    {
+                        btn_no.Visibility = Visibility.Collapsed;
+                        btn_cancel.Visibility = Visibility.Collapsed;
+                        btn_yes.Content = TranslationSource.Instance["OK"];
+                        break;
+                    }
+                case MessageBoxButton.OKCancel:
+                    {
+                        btn_no.Visibility = Visibility.Collapsed;
+                        btn_yes.Content = TranslationSource.Instance["OK"];
+                        break;
+                    }
+                case MessageBoxButton.YesNo:
+                    {
+                        btn_cancel.Visibility = Visibility.Collapsed;
+                        break;
+                    }
+                case MessageBoxButton.YesNoCancel:
+                    {
+                        break;
+                    }
+            }
+            switch(messageBoxImage)
+            {
+                case MessageBoxImage.Error:
+                    {
+                        image_content.BeginInit();
+                        image_content.Source = (System.Windows.Media.ImageSource)this.Resources["icon_errorDrawingImage"];
+                        image_content.EndInit();
+                        break;
+                    }
+                default:    //其它都是用Warning
+                    {
+                        image_content.BeginInit();
+                        image_content.Source = (System.Windows.Media.ImageSource)this.Resources["icon_warningDrawingImage"];
+                        image_content.EndInit();
+                        break;
+                    }
+            }
+            ShowDialog();
         }
 
         private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
@@ -118,18 +206,20 @@ namespace OrderManagerNew
                 {
                     case "btn_yes":
                         {
-                            BtnCancel = false;  //DialogResult為True且BtnCancel為False
+                            if ((string)btn_yes.Content == TranslationSource.Instance["OK"])
+                                ReturnClickWhitchButton = (int)_ReturnButtonName.OK;
+                            else
+                                ReturnClickWhitchButton = (int)_ReturnButtonName.YES;
                             break;
                         }
                     case "btn_no":
                         {
-                            BtnCancel = false;
-                            DialogResult = false; //DialogResult為False
+                            ReturnClickWhitchButton = (int)_ReturnButtonName.NO;
                             break;
                         }
                     case "btn_cancel":
                         {
-                            BtnCancel = true;  //DialogResult為True且BtnCancel為True
+                            ReturnClickWhitchButton = (int)_ReturnButtonName.CANCEL;
                             break;
                         }
                 }

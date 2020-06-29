@@ -87,7 +87,8 @@ namespace OrderManagerNew
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    Inteware_Messagebox Msg = new Inteware_Messagebox();
+                    Msg.ShowMessage(ex.Message);
                     this.DialogResult = false;
                 }
                 
@@ -102,18 +103,17 @@ namespace OrderManagerNew
                             //檢查客戶端容量是否比軟體檔案所需空間大超過3倍，如果沒有就Messagebox警告
                             if (label_AvailableSpace.Foreground == Brushes.Orange)
                             {
-                                if (MessageBox.Show(TranslationSource.Instance["SpaceMaynotBeEnough"], TranslationSource.Instance["Warning"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
-                                {
+                                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                                Msg.ShowMessage(TranslationSource.Instance["SpaceMaynotBeEnough"], TranslationSource.Instance["Warning"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                                if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                                     GOTODownload();
-                                }
                                 else
-                                {
                                     this.DialogResult = false;
-                                }
                             }
                             else if (label_AvailableSpace.Foreground == Brushes.Orange)
                             {
-                                MessageBox.Show(TranslationSource.Instance["NoEnoughSpaceToInstall"]);//磁碟空間不足以安裝軟體
+                                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                                Msg.ShowMessage(TranslationSource.Instance["NoEnoughSpaceToInstall"]);//磁碟空間不足以安裝軟體
                                 this.DialogResult = false;
                             }
                             else
@@ -150,7 +150,8 @@ namespace OrderManagerNew
 
                 if (!success)
                 {
-                    MessageBox.Show(TranslationSource.Instance["CannnotGetRemainingSpace"]);
+                    Inteware_Messagebox Msg = new Inteware_Messagebox();
+                    Msg.ShowMessage(TranslationSource.Instance["CannnotGetRemainingSpace"]);
                     return false;
                 }
 
@@ -160,7 +161,8 @@ namespace OrderManagerNew
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message);
                 return false;
             }
         }
@@ -238,9 +240,11 @@ namespace OrderManagerNew
             else if (e.Cancelled)
             {
                 tmr.Stop();
-                if(MessageBox.Show(TranslationSource.Instance["ReceivingDataNotResponding"], TranslationSource.Instance["Warning"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(TranslationSource.Instance["ReceivingDataNotResponding"], TranslationSource.Instance["Warning"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                 {
-                    if(Properties.Settings.Default.PingTime < 60)
+                    if (Properties.Settings.Default.PingTime < 60)
                     {
                         //重試，加5秒接收時間
                         Properties.Settings.Default.PingTime += 5;
@@ -270,10 +274,8 @@ namespace OrderManagerNew
         public bool SetInformation()
         {
             if (currentSoftwareID == -1 || http_url == "")
-            {
-                MessageBox.Show("SoftwareID is -1");
                 return false;
-            }
+
             string[] SoftwareNameArray = new string[6] { "EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD tray", "EZCAD splint", "EZCAD guide" };
             label_TitleBar.Content = TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             label_Header.Content = TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
@@ -317,7 +319,8 @@ namespace OrderManagerNew
                     }
                     else
                     {
-                        MessageBox.Show(TranslationSource.Instance["CannnotGetRemainingSpace"]);//無法獲取客戶電腦剩餘空間
+                        Inteware_Messagebox Msg = new Inteware_Messagebox();
+                        Msg.ShowMessage(TranslationSource.Instance["CannnotGetRemainingSpace"]);
                         if (httpResponse != null)
                             httpResponse.Close();
                         return false;
@@ -326,7 +329,8 @@ namespace OrderManagerNew
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, TranslationSource.Instance["NetworkError"]);   //網路連線異常or載點掛掉
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message, TranslationSource.Instance["NetworkError"]);    //網路連線異常or載點掛掉
                 if (httpResponse != null)
                     httpResponse.Close();
                 return false;

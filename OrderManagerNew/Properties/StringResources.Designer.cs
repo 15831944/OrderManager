@@ -1024,6 +1024,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Directory is not set! 的當地語系化字串。
+        /// </summary>
+        internal static string DirNotSet {
+            get {
+                return ResourceManager.GetString("DirNotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Doctor planning 的當地語系化字串。
         /// </summary>
         internal static string doctor_complete {
@@ -1402,6 +1411,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Loding 的當地語系化字串。
+        /// </summary>
+        internal static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Load Project 的當地語系化字串。
         /// </summary>
         internal static string LoadProj {
@@ -1632,6 +1650,15 @@ namespace OrderManagerNew.Properties {
         internal static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 There is no C.B.C.T file(dcm) in the Directory! 的當地語系化字串。
+        /// </summary>
+        internal static string NoCBCTInDir {
+            get {
+                return ResourceManager.GetString("NoCBCTInDir", resourceCulture);
             }
         }
         

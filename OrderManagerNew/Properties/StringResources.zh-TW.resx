@@ -960,4 +960,13 @@
   <data name="No" xml:space="preserve">
     <value>否</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>讀取</value>
+  </data>
+  <data name="DirNotSet" xml:space="preserve">
+    <value>資料夾未選擇!</value>
+  </data>
+  <data name="NoCBCTInDir" xml:space="preserve">
+    <value>資料夾內沒有C.B.C.T 檔案(dcm)!</value>
+  </data>
 </root>

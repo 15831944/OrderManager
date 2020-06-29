@@ -127,7 +127,8 @@ namespace OrderManagerNew.Local_UserControls
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message);
             }
         }
 

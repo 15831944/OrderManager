@@ -257,10 +257,10 @@
                 <Image Source="{DynamicResource icon_download_clickDrawingImage}" />
             </Viewbox>
             <Viewbox>
-                <Image />
+                <Image Source="{DynamicResource icon_warningDrawingImage}" />
             </Viewbox>
             <Viewbox>
-                <Image />
+                <Image Source="{DynamicResource icon_errorDrawingImage}" />
             </Viewbox>
             <Viewbox>
                 <Image />

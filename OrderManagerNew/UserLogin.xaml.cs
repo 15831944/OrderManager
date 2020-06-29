@@ -114,7 +114,8 @@ namespace OrderManagerNew
 
                     if (errMessage != "")
                     {
-                        MessageBox.Show(errMessage, TranslationSource.Instance["Login"] + " " + TranslationSource.Instance["Error"]);
+                        Inteware_Messagebox Msg = new Inteware_Messagebox();
+                        Msg.ShowMessage(errMessage, TranslationSource.Instance["Login"] + TranslationSource.Instance["Error"], MessageBoxButton.OK, MessageBoxImage.Warning);
                         log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UserLogin.xaml.cs_ClickOK_exception", errMessage);
                     }   
                 }

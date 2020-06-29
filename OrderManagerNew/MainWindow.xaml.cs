@@ -1441,7 +1441,9 @@ namespace OrderManagerNew
                         }
                     case "cad_unInstall":
                         {
-                            if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.cad_exePath) == ".exe")
                                 {
@@ -1453,7 +1455,8 @@ namespace OrderManagerNew
                                     }
                                     else
                                     {
-                                        MessageBox.Show(TranslationSource.Instance["CannotFindUninstall"]);
+                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
+                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
                                     }
                                 }
                             }
@@ -1540,7 +1543,9 @@ namespace OrderManagerNew
                         }
                     case "implant_unInstall":
                         {
-                            if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "ImplantPlanning?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "ImplantPlanning?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.implant_exePath) == ".exe")
                                 {
@@ -1552,7 +1557,8 @@ namespace OrderManagerNew
                                     }
                                     else
                                     {
-                                        MessageBox.Show(TranslationSource.Instance["CannotFindUninstall"]);
+                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
+                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
                                     }
                                 }
                             }
@@ -1606,7 +1612,9 @@ namespace OrderManagerNew
                         }
                     case "ortho_unInstall":
                         {
-                            if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "OrthoAnalysis?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "OrthoAnalysis?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.ortho_exePath) == ".exe")
                                 {
@@ -1618,7 +1626,8 @@ namespace OrderManagerNew
                                     }
                                     else
                                     {
-                                        MessageBox.Show(TranslationSource.Instance["CannotFindUninstall"]);
+                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
+                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
                                     }
                                 }
                             }
@@ -1687,7 +1696,9 @@ namespace OrderManagerNew
                         }
                     case "tray_unInstall":
                         {
-                            if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.tray?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.tray?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.tray_exePath) == ".exe")
                                 {
@@ -1699,7 +1710,8 @@ namespace OrderManagerNew
                                     }
                                     else
                                     {
-                                        MessageBox.Show(TranslationSource.Instance["CannotFindUninstall"]);
+                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
+                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
                                     }
                                 }
                             }
@@ -1768,7 +1780,9 @@ namespace OrderManagerNew
                         }
                     case "splint_unInstall":
                         {
-                            if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.splint?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.splint?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.splint_exePath) == ".exe")
                                 {
@@ -1780,7 +1794,8 @@ namespace OrderManagerNew
                                     }
                                     else
                                     {
-                                        MessageBox.Show(TranslationSource.Instance["CannotFindUninstall"]);
+                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
+                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
                                     }
                                 }
                             }
@@ -1849,7 +1864,9 @@ namespace OrderManagerNew
                         }
                     case "guide_unInstall":
                         {
-                            if (MessageBox.Show(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.guide?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.guide?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.guide_exePath) == ".exe")
                                 {
@@ -1861,7 +1878,8 @@ namespace OrderManagerNew
                                     }
                                     else
                                     {
-                                        MessageBox.Show(TranslationSource.Instance["CannotFindUninstall"]);
+                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
+                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
                                     }
                                 }
                             }
@@ -2660,12 +2678,5 @@ namespace OrderManagerNew
             }*/
         }
         #endregion
-
-        private void Click_test(object sender, RoutedEventArgs e)
-        {
-            Inteware_Messagebox Msg = new Inteware_Messagebox();
-            //Msg.ShowMessage("TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest");
-            Msg.ShowMessage("TestTestTestTestTestTestTestTestTestTestTestTestTestTest", "TestTitle");
-        }
     }
 }

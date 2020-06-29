@@ -566,7 +566,8 @@ namespace OrderManagerNew.V2Implant
 			xDoc = XDocument.Load("..\\Material_Ceramic.xml");
 			if (xDoc == null)
 			{
-				MessageBox.Show("Load Material_Ceramic.xml Error!");
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(TranslationSource.Instance["Loading"] + " Material_Ceramic.xml " + TranslationSource.Instance["Error"]);
 				return;
 			}
 
@@ -591,7 +592,7 @@ namespace OrderManagerNew.V2Implant
 			xDoc = XDocument.Load("..\\Material_Metal.xml");
 			if (xDoc == null)
 			{
-				MessageBox.Show("Load Material_Metal.xml Error!");
+				//MessageBox.Show("Load Material_Metal.xml Error!");
 				return;
 			}
 			var result = from q in xDoc.Descendants("Name")
@@ -615,7 +616,7 @@ namespace OrderManagerNew.V2Implant
 			xDoc = XDocument.Load("..\\Material_Other.xml");
 			if (xDoc == null)
 			{
-				MessageBox.Show("Load Material_Other.xml Error!");
+				//MessageBox.Show("Load Material_Other.xml Error!");
 				return;
 			}
 			var result = from q in xDoc.Descendants("Name")
@@ -639,7 +640,7 @@ namespace OrderManagerNew.V2Implant
 			xDoc = XDocument.Load("..\\ShadeColor.xml");
 			if (xDoc == null)
 			{
-				MessageBox.Show("Load ShadeColor.xml Error!");
+				//MessageBox.Show("Load ShadeColor.xml Error!");
 				return;
 			}
 			var result = from q in xDoc.Descendants("Name")
@@ -666,14 +667,16 @@ namespace OrderManagerNew.V2Implant
 			}
 			catch(Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-				haveXml = false;
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message);
+                haveXml = false;
 				return;
 			}
 			
 			if (xDoc == null)
 			{
-				MessageBox.Show("Load SurgicalKitInfor.xml Error!");
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(TranslationSource.Instance["Loading"] + " SurgicalKitInfor.xml " + TranslationSource.Instance["Error"]);
 				haveXml = false;
 				return;
 			}
@@ -701,7 +704,8 @@ namespace OrderManagerNew.V2Implant
 			}
 			catch(Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message);
 				haveXml = false;
 				return;
 			}
@@ -1293,7 +1297,8 @@ namespace OrderManagerNew.V2Implant
 				//檢查
 				if (m_ct_path.Text == "")
 				{
-					MessageBox.Show("C.B.C.T directory is not set!");
+                    Inteware_Messagebox Msg = new Inteware_Messagebox();
+                    Msg.ShowMessage("C.B.C.T" + TranslationSource.Instance["DirNotSet"]);
 					return;
 				}
 
@@ -1612,7 +1617,7 @@ namespace OrderManagerNew.V2Implant
 
 		private void Listbox2_MouseDown(object sender, MouseButtonEventArgs e)
 		{
-			MessageBox.Show("key down");
+			//MessageBox.Show("key down");
 			if (listbox2.SelectedIndex != -1)
 			{
 				UCToothTypeBase uc = listbox2.SelectedItem as UCToothTypeBase;
@@ -1737,7 +1742,8 @@ namespace OrderManagerNew.V2Implant
 				//5/15/2019 handtan//check the dcm file in selected folder
 				if (Check_folder_dcm(m_ct_path.Text) == false)
 				{
-					MessageBox.Show("There is no C.B.C.T file(dcm) in the Directory!");
+                    Inteware_Messagebox Msg = new Inteware_Messagebox();
+                    Msg.ShowMessage(TranslationSource.Instance["NoCBCTInDir"]);
 					m_ct_path.Text = "";
 				}
 				else
@@ -1871,7 +1877,7 @@ namespace OrderManagerNew.V2Implant
 		{
 			DateTime dt = m_patient_birthday.SelectedDate.Value.Date;
 			
-			MessageBox.Show(dt.Year.ToString() + dt.Month.ToString() + dt.Day.ToString());
+			//MessageBox.Show(dt.Year.ToString() + dt.Month.ToString() + dt.Day.ToString());
 		}
 
 		private void M_ct_path_clear_Click(object sender, RoutedEventArgs e)
