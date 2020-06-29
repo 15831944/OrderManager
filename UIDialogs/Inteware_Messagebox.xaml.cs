@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +11,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace OrderManagerNew
+namespace UIDialogs
 {
     /// <summary>
     /// Inteware_Messagebox.xaml 的互動邏輯
@@ -29,13 +31,19 @@ namespace OrderManagerNew
 
         public int ReturnClickWhitchButton;
         private Point startPos;
-        
+
         public Inteware_Messagebox()
         {
             InitializeComponent();
             label_title.Content = "";
             textblock_content.Text = "";
             ReturnClickWhitchButton = -1;
+
+            string systemName = System.Globalization.CultureInfo.CurrentCulture.Name; // 取得電腦語系
+            if (systemName == "zh-TW")
+                LocalizationService.SetLanguage("zh-TW");
+            else
+                LocalizationService.SetLanguage("en-US");
         }
 
         /// <summary>
@@ -136,7 +144,7 @@ namespace OrderManagerNew
                         break;
                     }
             }
-            switch(messageBoxImage)
+            switch (messageBoxImage)
             {
                 case MessageBoxImage.Error:
                     {
@@ -163,8 +171,9 @@ namespace OrderManagerNew
                 switch (((Button)sender).Name)
                 {
                     case "systemButton_ContactInteware":    //聯絡客服
-                        OrderManagerFunctions OrderManagerFunc = new OrderManagerFunctions();
-                        OrderManagerFunc.RunCommandLine(Properties.HyperLink.Default.ContactInteware, "");
+                        Process processer = new Process();
+                        processer.StartInfo.FileName = @"https://www.facebook.com/messages/t/191158537741700";
+                        processer.Start();
                         break;
                     case "systemButton_Close":              //關閉
                         DialogResult = false;
@@ -179,7 +188,7 @@ namespace OrderManagerNew
             {
                 if (e.ClickCount >= 2)
                 {
-                    this.WindowState = (this.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
+                    //this.WindowState = (this.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
                 }
                 else
                 {
@@ -192,17 +201,15 @@ namespace OrderManagerNew
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (this.WindowState == WindowState.Maximized && Math.Abs(startPos.Y - e.GetPosition(null).Y) > 2)
-                { }
                 DragMove();
             }
         }
 
         private void Click_result(object sender, RoutedEventArgs e)
         {
-            if(sender is Button)
+            if (sender is Button)
             {
-                switch(((Button)sender).Name)
+                switch (((Button)sender).Name)
                 {
                     case "btn_yes":
                         {

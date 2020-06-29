@@ -878,7 +878,7 @@ namespace OrderManagerNew
 
             return directory;
         }
-        void DoWork_Cmd(object sender, DoWorkEventArgs e)
+        private void DoWork_Cmd(object sender, DoWorkEventArgs e)
         {
             try
             {

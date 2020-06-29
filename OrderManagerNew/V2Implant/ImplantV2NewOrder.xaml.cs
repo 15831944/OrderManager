@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Microsoft.Win32;
+using UIDialogs;
 //using System.Windows.Forms;
 
 namespace OrderManagerNew.V2Implant

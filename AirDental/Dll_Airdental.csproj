@@ -50,5 +50,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UIDialogs\UIDialogs.csproj">
+      <Project>{53d8eff6-a229-46fe-9525-a7b8a29ca387}</Project>
+      <Name>UIDialogs</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,4 @@
-﻿using WpfOrderManager.Properties;
+﻿using UIDialogs.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,7 +37,7 @@ using System.Windows.Data;
 * C++
 * LocalizationService::SetLanguage("zh-TW");
 */
-namespace WpfOrderManager
+namespace UIDialogs
 {
     public class LocalizationService
     {

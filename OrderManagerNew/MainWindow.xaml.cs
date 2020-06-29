@@ -17,6 +17,7 @@ using SplintInformation = OrderManagerNew.Local_UserControls.Order_tsBase.Splint
 using ImplantOuterInformation = OrderManagerNew.Local_UserControls.Order_implantBase.ImplantOuterInformation;
 using OrthoOuterInformation = OrderManagerNew.Local_UserControls.Order_orthoBase.OrthoOuterInformation;
 using System.Threading;
+using UIDialogs;
 //Mahapps套件(NuGet下載): MaterialDesignThemes.MahApps v0.0.12
 
 

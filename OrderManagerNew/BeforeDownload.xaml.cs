@@ -11,6 +11,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.ComponentModel;
 using System.Timers;  // 名稱空間是 Timers 而不是 Threading
 using System.Diagnostics;
+using UIDialogs;
 
 namespace OrderManagerNew
 {

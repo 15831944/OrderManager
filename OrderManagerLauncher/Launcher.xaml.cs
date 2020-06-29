@@ -10,6 +10,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Windows;
 using System.Xml.Linq;
+using UIDialogs;
 
 namespace OrderManagerLauncher
 {
@@ -19,6 +20,7 @@ namespace OrderManagerLauncher
     public partial class Launcher : Window
     {
         string HLXMLlink = @"https://inteware.com.tw/updateXML/newOM.xml";//newOM.xml網址
+        //string HLXMLlink = @"https://inteware.com.tw/updateXML/newOM_Developer.xml";//newOM_Developer.xml網址
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {   // 總是接受
             return true;
@@ -60,6 +62,20 @@ namespace OrderManagerLauncher
                 LocalizationService.SetLanguage("zh-TW");
             else
                 LocalizationService.SetLanguage("en-US");
+
+            string[] args;
+            args = Environment.GetCommandLineArgs();
+            if (args != null && args.Length > 1)
+            {
+                foreach (string argument in args)
+                {
+                    if (argument == "-Developer")
+                    {
+                        HLXMLlink = @"https://inteware.com.tw/updateXML/newOM_Developer.xml";//newOM_Developer.xml網址
+                        break;
+                    }
+                }
+            }
         }
         /// <summary>
         /// 讀取HL.xml的詳細更新資訊
@@ -90,7 +106,8 @@ namespace OrderManagerLauncher
             }
             catch
             {
-                MessageBox.Show(TranslationSource.Instance["CannotGetnewOMXML"] + TranslationSource.Instance["Contact"]);
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(TranslationSource.Instance["CannotGetnewOMXML"] + TranslationSource.Instance["Contact"]);
                 RunCommandLine("OrderManager.exe", "-VerChk");
                 Environment.Exit(0);
             }
@@ -192,14 +209,16 @@ namespace OrderManagerLauncher
                     else
                     {
                         httpResponse.Close();
-                        MessageBox.Show(TranslationSource.Instance["CannotDownloadOM"] + TranslationSource.Instance["Contact"]);
+                        Inteware_Messagebox Msg = new Inteware_Messagebox();
+                        Msg.ShowMessage(TranslationSource.Instance["CannotDownloadOM"] + TranslationSource.Instance["Contact"]);
                         RunCommandLine("OrderManager.exe", "-VerChk");
                         Environment.Exit(0);
                     }
                 }
                 catch
                 {
-                    MessageBox.Show(TranslationSource.Instance["DownloadingError"] + TranslationSource.Instance["Contact"]);
+                    Inteware_Messagebox Msg = new Inteware_Messagebox();
+                    Msg.ShowMessage(TranslationSource.Instance["DownloadingError"] + TranslationSource.Instance["Contact"]);
                     RunCommandLine("OrderManager.exe", "-VerChk");
                     Environment.Exit(0);
                 }
@@ -229,11 +248,13 @@ namespace OrderManagerLauncher
             else if(Path.GetExtension(DownloadFileName) == ".exe")
             {
                 RunCommandLine(DownloadFileName, "");
+                Thread.Sleep(1000);
                 Environment.Exit(0);
             }
             else
             {
                 RunCommandLine("OrderManager.exe", "-VerChk");
+                Thread.Sleep(1000);
                 Environment.Exit(0);
             }
         }
@@ -253,7 +274,8 @@ namespace OrderManagerLauncher
             }
             catch
             {
-                MessageBox.Show(TranslationSource.Instance["UnpackingError"] + TranslationSource.Instance["Contact"]);
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(TranslationSource.Instance["UnpackingError"] + TranslationSource.Instance["Contact"]);
                 RunCommandLine("OrderManager.exe", "-VerChk");
                 Environment.Exit(0);
             }
@@ -298,7 +320,8 @@ namespace OrderManagerLauncher
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message);
             }
         }
         void CompletedWork_Cmd(object sender, RunWorkerCompletedEventArgs e)
