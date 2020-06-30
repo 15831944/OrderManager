@@ -2131,6 +2131,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Refresh list (F5) 的當地語系化字串。
+        /// </summary>
+        internal static string Refresh {
+            get {
+                return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Upload project file(*.zip) 的當地語系化字串。
         /// </summary>
         internal static string release {

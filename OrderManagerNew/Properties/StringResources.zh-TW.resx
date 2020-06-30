@@ -969,4 +969,7 @@
   <data name="NoCBCTInDir" xml:space="preserve">
     <value>資料夾內沒有C.B.C.T 檔案(dcm)!</value>
   </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>重新整理清單 (F5)</value>
+  </data>
 </root>

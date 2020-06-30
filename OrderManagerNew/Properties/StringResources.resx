@@ -1254,4 +1254,8 @@
     <value>There is no C.B.C.T file(dcm) in the Directory!</value>
     <comment>Message</comment>
   </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh list (F5)</value>
+    <comment>UI</comment>
+  </data>
 </root>

@@ -658,9 +658,13 @@ namespace OrderManagerNew
                 this.WindowState = (this.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
             }
         }
-#endregion
+        #endregion
 
 #region FunctionTable事件
+        private void Click_ProjectsRefresh(object sender, RoutedEventArgs e)
+        {
+            ChooseToLoadProj();
+        }
         private void Click_FunctionTable_Setting(object sender, RoutedEventArgs e)
         {
             GoToSetting(-1);
@@ -702,7 +706,6 @@ namespace OrderManagerNew
                     UserDetailshow(false);
             }
         }
-        
         private void Click_UserDetail_Logout(object sender, RoutedEventArgs e)
         {
             UserDetailshow(false);
@@ -713,6 +716,529 @@ namespace OrderManagerNew
             tabcontrol_Main.SelectedItem = tabitem_Local;
             tabitem_Cloud.ToolTip = TranslationSource.Instance["PleaseLoginFirst"];
             tabitem_Cloud.IsEnabled = false;
+        }
+        /// <summary>
+        /// 設定SofttwareTable的PopupBox事件
+        /// </summary>
+        private void Click_SoftwareTable(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button)
+            {
+                switch (((Button)sender).Name)
+                {
+                    case "buyLic":
+                        {
+                            break;
+                        }
+                    #region EZCAD
+                    case "cad_update":
+                        {
+                            Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Updating, 0);
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.EZCAD)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                            break;
+                        }
+                    case "cad_selectPath":
+                        {
+                            GoToSetting((int)_softwareID.EZCAD);
+                            break;
+                        }
+                    case "cad_download":
+                        {
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.EZCAD)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                            break;
+                        }
+                    case "cad_open":
+                        {
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.cad_exePath, "");
+                            break;
+                        }
+                    case "cad_webIntro":
+                        {
+                            break;
+                        }
+                    case "cad_demo":
+                        {
+                            break;
+                        }
+                    case "cad_troubleShooting":
+                        {
+                            break;
+                        }
+                    case "cad_unInstall":
+                        {
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
+                            {
+                                if (Path.GetExtension(Properties.Settings.Default.cad_exePath) == ".exe")
+                                {
+                                    string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.cad_exePath) + @"\Uninstall.lnk";
+                                    if (File.Exists(uninstallPath) == true)
+                                    {
+                                        Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Uninstalling, 0);
+                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
+                                    }
+                                    else
+                                    {
+                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
+                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region Implant
+                    case "implant_update":
+                        {
+                            Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Updating, 0);
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Implant)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                            break;
+                        }
+                    case "implant_selectPath":
+                        {
+                            GoToSetting((int)_softwareID.Implant);
+                            break;
+                        }
+                    case "implant_download":
+                        {
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Implant)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                            break;
+                        }
+                    case "implant_open":
+                        {
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");
+                            break;
+                        }
+                    case "implant_create":
+                        {
+                            //-2019/0408-handtan
+                            var blur = new BlurEffect();
+                            this.Effect = blur;
+                            V2Implant.ImplantV2NewOrder w1 = new V2Implant.ImplantV2NewOrder
+                            {
+                                Owner = this,
+                                ShowActivated = true,
+                                m_ImplantRoot = Properties.OrderManagerProps.Default.implant_projectDirectory,
+                                Selected_folder_path = Properties.OrderManagerProps.Default.implant_projectDirectory
+                            };
+                            w1.NewOrderStatusUpdated += OrderEventHandlerFunction_StatusUpdated;
+                            w1.ShowDialog();
+                            this.Effect = null;
+                            this.OpacityMask = null;
+                            break;
+                        }
+                    case "implant_webIntro":
+                        {
+                            break;
+                        }
+                    case "implant_demo":
+                        {
+                            break;
+                        }
+                    case "implant_troubleShooting":
+                        {
+                            break;
+                        }
+                    case "implant_unInstall":
+                        {
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "ImplantPlanning?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
+                            {
+                                if (Path.GetExtension(Properties.Settings.Default.implant_exePath) == ".exe")
+                                {
+                                    string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.implant_exePath) + @"\Uninstall.lnk";
+                                    if (File.Exists(uninstallPath) == true)
+                                    {
+                                        Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Uninstalling, 0);
+                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
+                                    }
+                                    else
+                                    {
+                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
+                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region Ortho
+                    case "ortho_update":
+                        {
+                            break;
+                        }
+                    case "ortho_selectPath":
+                        {
+                            GoToSetting((int)_softwareID.Ortho);
+                            break;
+                        }
+                    case "ortho_download":
+                        {
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Ortho)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                            break;
+                        }
+                    case "ortho_open":
+                        {
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.ortho_exePath, "");
+                            break;
+                        }
+                    case "ortho_webIntro":
+                        {
+                            break;
+                        }
+                    case "ortho_demo":
+                        {
+                            break;
+                        }
+                    case "ortho_troubleShooting":
+                        {
+                            break;
+                        }
+                    case "ortho_unInstall":
+                        {
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "OrthoAnalysis?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
+                            {
+                                if (Path.GetExtension(Properties.Settings.Default.ortho_exePath) == ".exe")
+                                {
+                                    string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.ortho_exePath) + @"\Uninstall.lnk";
+                                    if (File.Exists(uninstallPath) == true)
+                                    {
+                                        Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Uninstalling, 0);
+                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
+                                    }
+                                    else
+                                    {
+                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
+                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region Tray
+                    case "tray_update":
+                        {
+                            Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Updating, 0);
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Tray)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                            break;
+                        }
+                    case "tray_selectPath":
+                        {
+                            GoToSetting((int)_softwareID.Tray);
+                            break;
+                        }
+                    case "tray_download":
+                        {
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Tray)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                            break;
+                        }
+                    case "tray_open":
+                        {
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.tray_exePath, "");
+                            break;
+                        }
+                    case "tray_webIntro":
+                        {
+                            break;
+                        }
+                    case "tray_demo":
+                        {
+                            break;
+                        }
+                    case "tray_troubleShooting":
+                        {
+                            break;
+                        }
+                    case "tray_unInstall":
+                        {
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.tray?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
+                            {
+                                if (Path.GetExtension(Properties.Settings.Default.tray_exePath) == ".exe")
+                                {
+                                    string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.tray_exePath) + @"\Uninstall.lnk";
+                                    if (File.Exists(uninstallPath) == true)
+                                    {
+                                        Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Uninstalling, 0);
+                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
+                                    }
+                                    else
+                                    {
+                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
+                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region Splint
+                    case "splint_update":
+                        {
+                            Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Updating, 0);
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Splint)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                            break;
+                        }
+                    case "splint_selectPath":
+                        {
+                            GoToSetting((int)_softwareID.Splint);
+                            break;
+                        }
+                    case "splint_download":
+                        {
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Splint)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                            break;
+                        }
+                    case "splint_open":
+                        {
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.splint_exePath, "");
+                            break;
+                        }
+                    case "splint_webIntro":
+                        {
+                            break;
+                        }
+                    case "splint_demo":
+                        {
+                            break;
+                        }
+                    case "splint_troubleShooting":
+                        {
+                            break;
+                        }
+                    case "splint_unInstall":
+                        {
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.splint?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
+                            {
+                                if (Path.GetExtension(Properties.Settings.Default.splint_exePath) == ".exe")
+                                {
+                                    string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.splint_exePath) + @"\Uninstall.lnk";
+                                    if (File.Exists(uninstallPath) == true)
+                                    {
+                                        Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Uninstalling, 0);
+                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
+                                    }
+                                    else
+                                    {
+                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
+                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region Guide
+                    case "guide_update":
+                        {
+                            Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Updating, 0);
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Guide)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                            break;
+                        }
+                    case "guide_selectPath":
+                        {
+                            GoToSetting((int)_softwareID.Guide);
+                            break;
+                        }
+                    case "guide_download":
+                        {
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Guide)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
+                            break;
+                        }
+                    case "guide_open":
+                        {
+                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "");
+                            break;
+                        }
+                    case "guide_webIntro":
+                        {
+                            break;
+                        }
+                    case "guide_demo":
+                        {
+                            break;
+                        }
+                    case "guide_troubleShooting":
+                        {
+                            break;
+                        }
+                    case "guide_unInstall":
+                        {
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.guide?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
+                            {
+                                if (Path.GetExtension(Properties.Settings.Default.guide_exePath) == ".exe")
+                                {
+                                    string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.guide_exePath) + @"\Uninstall.lnk";
+                                    if (File.Exists(uninstallPath) == true)
+                                    {
+                                        Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Uninstalling, 0);
+                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
+                                    }
+                                    else
+                                    {
+                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
+                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        #endregion
+                }
+            }
         }
         /// <summary>
         /// 設定SofttwareTable各Icon顯示狀態
@@ -1336,7 +1862,7 @@ namespace OrderManagerNew
                             updateimage_Splint.Visibility = Visibility.Visible;
                             splint_update.FontWeight = FontWeights.Bold;
                             splint_update.Foreground = Brushes.Red;
-                            tray_update.Content += "(" + SoftwareVersion + ")";
+                            splint_update.Content += "(" + SoftwareVersion + ")";
                         }   
                         else
                         {
@@ -1367,529 +1893,6 @@ namespace OrderManagerNew
             }
             
         }
-        /// <summary>
-        /// 設定SofttwareTable的PopupBox事件
-        /// </summary>
-        private void Click_SoftwareTable(object sender, RoutedEventArgs e)
-        {
-            if(sender is Button)
-            {
-                switch (((Button)sender).Name)
-                {
-                    case "buyLic":
-                        {
-                            break;
-                        }
-                    #region EZCAD
-                    case "cad_update":
-                        {
-                            Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Updating, 0);
-                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
-                            {
-                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.EZCAD)
-                                {
-                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
-                                    break;
-                                }
-                            }
-
-                            DialogBeforeDownload = new BeforeDownload();
-                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
-                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            SetAllSoftwareTableDownloadisEnable(false);
-                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
-                            break;
-                        }
-                    case "cad_selectPath":
-                        {
-                            GoToSetting((int)_softwareID.EZCAD);
-                            break;
-                        }
-                    case "cad_download":
-                        {
-                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
-                            {
-                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.EZCAD)
-                                {
-                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
-                                    break;
-                                }
-                            }
-                            
-                            DialogBeforeDownload = new BeforeDownload();
-                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
-                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            SetAllSoftwareTableDownloadisEnable(false);
-                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
-                            break;
-                        }
-                    case "cad_open":
-                        {
-                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.cad_exePath, "");
-                            break;
-                        }
-                    case "cad_webIntro":
-                        {
-                            break;
-                        }
-                    case "cad_demo":
-                        {
-                            break;
-                        }
-                    case "cad_troubleShooting":
-                        {
-                            break;
-                        }
-                    case "cad_unInstall":
-                        {
-                            Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                            if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
-                            {
-                                if (Path.GetExtension(Properties.Settings.Default.cad_exePath) == ".exe")
-                                {
-                                    string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.cad_exePath) + @"\Uninstall.lnk";
-                                    if (File.Exists(uninstallPath) == true)
-                                    {
-                                        Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Uninstalling, 0);
-                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
-                                    }
-                                    else
-                                    {
-                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
-                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
-                                    }
-                                }
-                            }
-                            break;
-                        }
-                    #endregion
-                    #region Implant
-                    case "implant_update":
-                        {
-                            Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Updating, 0);
-                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
-                            {
-                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Implant)
-                                {
-                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
-                                    break;
-                                }
-                            }
-
-                            DialogBeforeDownload = new BeforeDownload();
-                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
-                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            SetAllSoftwareTableDownloadisEnable(false);
-                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
-                            break;
-                        }
-                    case "implant_selectPath":
-                        {
-                            GoToSetting((int)_softwareID.Implant);
-                            break;
-                        }
-                    case "implant_download":
-                        {
-                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
-                            {
-                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Implant)
-                                {
-                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
-                                    break;
-                                }
-                            }
-                            
-                            DialogBeforeDownload = new BeforeDownload();
-                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
-                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            SetAllSoftwareTableDownloadisEnable(false);
-                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
-                            break;
-                        }
-                    case "implant_open":
-                        {
-                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, "");
-                            break;
-                        }
-                    case "implant_create":
-                        {
-                            //-2019/0408-handtan
-                            var blur = new BlurEffect();
-                            this.Effect = blur;
-                            V2Implant.ImplantV2NewOrder w1 = new V2Implant.ImplantV2NewOrder
-                            {
-                                Owner = this,
-                                ShowActivated = true,
-                                m_ImplantRoot = Properties.OrderManagerProps.Default.implant_projectDirectory,
-                                Selected_folder_path = Properties.OrderManagerProps.Default.implant_projectDirectory
-                            };
-                            w1.NewOrderStatusUpdated += OrderEventHandlerFunction_StatusUpdated;
-                            w1.ShowDialog();
-                            this.Effect = null;
-                            this.OpacityMask = null;
-                            break;
-                        }
-                    case "implant_webIntro":
-                        {
-                            break;
-                        }
-                    case "implant_demo":
-                        {
-                            break;
-                        }
-                    case "implant_troubleShooting":
-                        {
-                            break;
-                        }
-                    case "implant_unInstall":
-                        {
-                            Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "ImplantPlanning?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                            if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
-                            {
-                                if (Path.GetExtension(Properties.Settings.Default.implant_exePath) == ".exe")
-                                {
-                                    string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.implant_exePath) + @"\Uninstall.lnk";
-                                    if (File.Exists(uninstallPath) == true)
-                                    {
-                                        Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Uninstalling, 0);
-                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
-                                    }
-                                    else
-                                    {
-                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
-                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
-                                    }
-                                }
-                            }
-                            break;
-                        }
-                    #endregion
-                    #region Ortho
-                    case "ortho_update":
-                        {
-                            break;
-                        }
-                    case "ortho_selectPath":
-                        {
-                            GoToSetting((int)_softwareID.Ortho);
-                            break;
-                        }
-                    case "ortho_download":
-                        {
-                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
-                            {
-                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Ortho)
-                                {
-                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
-                                    break;
-                                }
-                            }
-                            
-                            DialogBeforeDownload = new BeforeDownload();
-                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
-                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            SetAllSoftwareTableDownloadisEnable(false);
-                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
-                            break;
-                        }
-                    case "ortho_open":
-                        {
-                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.ortho_exePath, "");
-                            break;
-                        }
-                    case "ortho_webIntro":
-                        {
-                            break;
-                        }
-                    case "ortho_demo":
-                        {
-                            break;
-                        }
-                    case "ortho_troubleShooting":
-                        {
-                            break;
-                        }
-                    case "ortho_unInstall":
-                        {
-                            Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "OrthoAnalysis?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                            if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
-                            {
-                                if (Path.GetExtension(Properties.Settings.Default.ortho_exePath) == ".exe")
-                                {
-                                    string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.ortho_exePath) + @"\Uninstall.lnk";
-                                    if (File.Exists(uninstallPath) == true)
-                                    {
-                                        Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Uninstalling, 0);
-                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
-                                    }
-                                    else
-                                    {
-                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
-                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
-                                    }
-                                }
-                            }
-                            break;
-                        }
-                    #endregion
-                    #region Tray
-                    case "tray_update":
-                        {
-                            Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Updating, 0);
-                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
-                            {
-                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Tray)
-                                {
-                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
-                                    break;
-                                }
-                            }
-
-                            DialogBeforeDownload = new BeforeDownload();
-                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
-                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            SetAllSoftwareTableDownloadisEnable(false);
-                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
-                            break;
-                        }
-                    case "tray_selectPath":
-                        {
-                            GoToSetting((int)_softwareID.Tray);
-                            break;
-                        }
-                    case "tray_download":
-                        {
-                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
-                            {
-                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Tray)
-                                {
-                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
-                                    break;
-                                }
-                            }
-                            
-                            DialogBeforeDownload = new BeforeDownload();
-                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
-                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            SetAllSoftwareTableDownloadisEnable(false);
-                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
-                            break;
-                        }
-                    case "tray_open":
-                        {
-                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.tray_exePath, "");
-                            break;
-                        }
-                    case "tray_webIntro":
-                        {
-                            break;
-                        }
-                    case "tray_demo":
-                        {
-                            break;
-                        }
-                    case "tray_troubleShooting":
-                        {
-                            break;
-                        }
-                    case "tray_unInstall":
-                        {
-                            Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.tray?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                            if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
-                            {
-                                if (Path.GetExtension(Properties.Settings.Default.tray_exePath) == ".exe")
-                                {
-                                    string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.tray_exePath) + @"\Uninstall.lnk";
-                                    if (File.Exists(uninstallPath) == true)
-                                    {
-                                        Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Uninstalling, 0);
-                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
-                                    }
-                                    else
-                                    {
-                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
-                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
-                                    }
-                                }
-                            }
-                            break;
-                        }
-                    #endregion
-                    #region Splint
-                    case "splint_update":
-                        {
-                            Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Updating, 0);
-                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
-                            {
-                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Splint)
-                                {
-                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
-                                    break;
-                                }
-                            }
-
-                            DialogBeforeDownload = new BeforeDownload();
-                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
-                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            SetAllSoftwareTableDownloadisEnable(false);
-                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
-                            break;
-                        }
-                    case "splint_selectPath":
-                        {
-                            GoToSetting((int)_softwareID.Splint);
-                            break;
-                        }
-                    case "splint_download":
-                        {
-                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
-                            {
-                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Splint)
-                                {
-                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
-                                    break;
-                                }
-                            }
-                            
-                            DialogBeforeDownload = new BeforeDownload();
-                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
-                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            SetAllSoftwareTableDownloadisEnable(false);
-                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
-                            break;
-                        }
-                    case "splint_open":
-                        {
-                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.splint_exePath, "");
-                            break;
-                        }
-                    case "splint_webIntro":
-                        {
-                            break;
-                        }
-                    case "splint_demo":
-                        {
-                            break;
-                        }
-                    case "splint_troubleShooting":
-                        {
-                            break;
-                        }
-                    case "splint_unInstall":
-                        {
-                            Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.splint?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                            if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
-                            {
-                                if (Path.GetExtension(Properties.Settings.Default.splint_exePath) == ".exe")
-                                {
-                                    string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.splint_exePath) + @"\Uninstall.lnk";
-                                    if (File.Exists(uninstallPath) == true)
-                                    {
-                                        Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Uninstalling, 0);
-                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
-                                    }
-                                    else
-                                    {
-                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
-                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
-                                    }
-                                }
-                            }
-                            break;
-                        }
-                    #endregion
-                    #region Guide
-                    case "guide_update":
-                        {
-                            Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Updating, 0);
-                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
-                            {
-                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Guide)
-                                {
-                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
-                                    break;
-                                }
-                            }
-
-                            DialogBeforeDownload = new BeforeDownload();
-                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
-                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            SetAllSoftwareTableDownloadisEnable(false);
-                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
-                            break;
-                        }
-                    case "guide_selectPath":
-                        {
-                            GoToSetting((int)_softwareID.Guide);
-                            break;
-                        }
-                    case "guide_download":
-                        {
-                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
-                            {
-                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Guide)
-                                {
-                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
-                                    break;
-                                }
-                            }
-                            
-                            DialogBeforeDownload = new BeforeDownload();
-                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
-                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            SetAllSoftwareTableDownloadisEnable(false);
-                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
-                            break;
-                        }
-                    case "guide_open":
-                        {
-                            OrderManagerFunc.RunCommandLine(Properties.Settings.Default.guide_exePath, "");
-                            break;
-                        }
-                    case "guide_webIntro":
-                        {
-                            break;
-                        }
-                    case "guide_demo":
-                        {
-                            break;
-                        }
-                    case "guide_troubleShooting":
-                        {
-                            break;
-                        }
-                    case "guide_unInstall":
-                        {
-                            Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.guide?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                            if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
-                            {
-                                if (Path.GetExtension(Properties.Settings.Default.guide_exePath) == ".exe")
-                                {
-                                    string uninstallPath = Path.GetDirectoryName(Properties.Settings.Default.guide_exePath) + @"\Uninstall.lnk";
-                                    if (File.Exists(uninstallPath) == true)
-                                    {
-                                        Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Uninstalling, 0);
-                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
-                                    }
-                                    else
-                                    {
-                                        Inteware_Messagebox Msg2 = new Inteware_Messagebox();
-                                        Msg2.ShowMessage(TranslationSource.Instance["CannotFindUninstall"]);
-                                    }
-                                }
-                            }
-                            break;
-                        }
-                        #endregion
-                }
-            }
-        }
         public void OrderEventHandlerFunction_StatusUpdated(object sender, EventArgs e)
         {
             if (sender is V2Implant.ImplantV2NewOrder wnewoder)
@@ -1899,7 +1902,6 @@ namespace OrderManagerNew
                 OrderManagerFunc.RunCommandLine(Properties.Settings.Default.implant_exePath, Args);
             }
         }
-
         /// <summary>
         /// 設定各軟體Popupbox內"下載軟體"的isEnable屬性
         /// </summary>
