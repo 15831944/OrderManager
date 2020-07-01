@@ -1258,4 +1258,64 @@
     <value>Refresh list (F5)</value>
     <comment>UI</comment>
   </data>
+  <data name="PatientBirth" xml:space="preserve">
+    <value>Patient Birthday</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="Caseinfo" xml:space="preserve">
+    <value>Case Information</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>System</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="Implant" xml:space="preserve">
+    <value>Implant</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="Implantinfo" xml:space="preserve">
+    <value>Implant Imformation</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="Standard" xml:space="preserve">
+    <value>Standard</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="Vacuum" xml:space="preserve">
+    <value>Vacuum</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="Denture" xml:space="preserve">
+    <value>Denture</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="ImageData" xml:space="preserve">
+    <value>Image Data</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="Jaw_Implant" xml:space="preserve">
+    <value>Jaw (*.stl)</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="JawTray_Implant" xml:space="preserve">
+    <value>Jaw Tray (*.stl)</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="Denture_Implant" xml:space="preserve">
+    <value>Denture (*.stl)</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="CBCTFolder" xml:space="preserve">
+    <value>C.B.C.T folder</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="MI" xml:space="preserve">
+    <value>MI</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
 </root>

@@ -972,4 +972,49 @@
   <data name="Refresh" xml:space="preserve">
     <value>重新整理清單 (F5)</value>
   </data>
+  <data name="PatientBirth" xml:space="preserve">
+    <value>患者生日</value>
+  </data>
+  <data name="Caseinfo" xml:space="preserve">
+    <value>專案資訊</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>系統</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>建立</value>
+  </data>
+  <data name="Implant" xml:space="preserve">
+    <value>植體</value>
+  </data>
+  <data name="Implantinfo" xml:space="preserve">
+    <value>植體資訊</value>
+  </data>
+  <data name="Standard" xml:space="preserve">
+    <value>直接列印型</value>
+  </data>
+  <data name="Vacuum" xml:space="preserve">
+    <value>熱壓型</value>
+  </data>
+  <data name="Denture" xml:space="preserve">
+    <value>仿假牙型</value>
+  </data>
+  <data name="ImageData" xml:space="preserve">
+    <value>影像與模型資料</value>
+  </data>
+  <data name="Jaw_Implant" xml:space="preserve">
+    <value>顎掃描資料 (*.stl)</value>
+  </data>
+  <data name="JawTray_Implant" xml:space="preserve">
+    <value>顎托架資料 (*.stl)</value>
+  </data>
+  <data name="Denture_Implant" xml:space="preserve">
+    <value>活動假牙資料 (*.stl)</value>
+  </data>
+  <data name="CBCTFolder" xml:space="preserve">
+    <value>C.B.C.T 資料夾</value>
+  </data>
+  <data name="MI" xml:space="preserve">
+    <value>骨釘型</value>
+  </data>
 </root>

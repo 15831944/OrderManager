@@ -340,7 +340,7 @@
                   Grid.Row="0" Grid.Column="0" Margin="7,0,3,0"
                   Style="{StaticResource MyGroupBox}">
                     <GroupBox.Header>
-                        <Label Content="1. Order Information" FontWeight="Bold" Foreground="White" />
+                        <Label Content="{local:LocExtension OrderInfo}" FontWeight="Bold" Foreground="White" />
                     </GroupBox.Header>
                     <StackPanel Margin="5">
                         <Grid>
@@ -359,23 +359,23 @@
 
                             <Label
                               Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"
-                              Content="Order Number"
+                              Content="{local:LocExtension OrderID}"
                               Style="{StaticResource CreatLabel}" />
                             <Label
                               Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"
-                              Content="Patient Name"
+                              Content="{local:LocExtension PatientName}"
                               Style="{StaticResource CreatLabel}" />
                             <Label
                               Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left"
-                              Content="Patient Gender"
+                              Content="{local:Loc Gender}"
                               Style="{StaticResource CreatLabel}" />
                             <Label
                               Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left"
-                              Content="Patient Birthday"
+                              Content="{local:LocExtension PatientBirth}"
                               Style="{StaticResource CreatLabel}" />
                             <Label
                               Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left"
-                              Content="Clinic Name"
+                              Content="{local:LocExtension Clinic}"
                               Style="{StaticResource CreatLabel}" />
 
                             <TextBox
@@ -395,12 +395,15 @@
                             <RadioButton
                               Grid.Row="2" Grid.Column="1" x:Name="m_patient_male"
                               Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                              Click="MaterialRadioBtnClick" Content="Male" IsChecked="True"
+                              Click="MaterialRadioBtnClick"
+                              Content="{local:LocExtension Male}"
+                              IsChecked="True"
                               Style="{StaticResource CreatRadioButton}" />
                             <RadioButton
                               Grid.Row="2" Grid.Column="1" x:Name="m_patient_female"
                               Margin="50,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
-                              Click="MaterialRadioBtnClick" Content="Female"
+                              Click="MaterialRadioBtnClick"
+                              Content="{local:LocExtension Female}"
                               Style="{StaticResource CreatRadioButton}" />
                             <DatePicker
                               Grid.Row="3" Grid.Column="1" x:Name="m_patient_birthday"
@@ -420,12 +423,12 @@
                   Grid.Row="0" Grid.Column="1" Margin="3,0,3,0"
                   Style="{StaticResource MyGroupBox}">
                     <GroupBox.Header>
-                        <Label Content="3. Image Data" FontWeight="Bold" Foreground="White" />
+                        <Label Content="{local:LocExtension ImageData}" FontWeight="Bold" Foreground="White" />
                     </GroupBox.Header>
                     <StackPanel Margin="3">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition Width="125" />
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="37" />
                             </Grid.ColumnDefinitions>
@@ -438,25 +441,29 @@
 
                             <CheckBox
                               Grid.Row="0" Grid.Column="0" x:Name="m_ct_path_check"
-                              VerticalAlignment="Center" Checked="CheckBox_Checked" Content="C.B.C.T folder"
+                              VerticalAlignment="Center" Checked="CheckBox_Checked"
+                              Content="{local:LocExtension CBCTFolder}"
                               IsEnabled="False"
                               Style="{StaticResource CreatCheckbox}"
                               Unchecked="M_ct_path_check_Unchecked" />
                             <CheckBox
                               Grid.Row="1" Grid.Column="0" x:Name="m_upperjaw_path_check"
-                              VerticalAlignment="Center" Checked="M_upperjaw_path_check_Checked" Content="Jaw(*.stl)"
+                              VerticalAlignment="Center" Checked="M_upperjaw_path_check_Checked"
+                              Content="{local:LocExtension Jaw_Implant}"
                               Style="{StaticResource CreatCheckbox}"
                               Unchecked="M_upperjaw_path_check_Unchecked" />
 
 
                             <CheckBox
                               Grid.Row="2" Grid.Column="0" x:Name="m_lowerjaw_path_check"
-                              VerticalAlignment="Center" Checked="M_lowerjaw_path_check_Checked" Content="Jaw Tray(*.stl)"
+                              VerticalAlignment="Center" Checked="M_lowerjaw_path_check_Checked"
+                              Content="{local:LocExtension JawTray_Implant}"
                               Style="{StaticResource CreatCheckbox}"
                               Unchecked="M_lowerjaw_path_check_Unchecked" />
                             <CheckBox
                               Grid.Row="3" Grid.Column="0" x:Name="m_othermodel_path_check"
-                              VerticalAlignment="Center" Checked="M_othermodel_path_check_Checked" Content="Denture(*.stl)"
+                              VerticalAlignment="Center" Checked="M_othermodel_path_check_Checked"
+                              Content="{local:LocExtension Denture_Implant}"
                               Style="{StaticResource CreatCheckbox}"
                               Unchecked="M_othermodel_path_check_Unchecked" />
 
@@ -569,7 +576,7 @@
                               Margin="6,0,2,0"
                               Style="{StaticResource MyGroupBox}">
                                 <GroupBox.Header>
-                                    <Label Content="2. Case Information" FontWeight="Bold" Foreground="White" />
+                                    <Label Content="{local:LocExtension Caseinfo}" FontWeight="Bold" Foreground="White" />
                                 </GroupBox.Header>
                                 <StackPanel Margin="3">
                                     <Grid>
@@ -652,27 +659,32 @@
 
                                         <Label
                                           Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"
-                                          VerticalAlignment="Center" Content="Surgical Guide"
+                                          VerticalAlignment="Center"
+                                          Content="{local:LocExtension SurgicalGT}"
                                           Style="{StaticResource CreatLabel}" />
                                         <RadioButton
                                           Grid.Row="0" Grid.Column="2" x:Name="m_guide_standard"
                                           HorizontalAlignment="Left" VerticalAlignment="Center" Click="SurgicalGuideRadioBtnClick"
-                                          Content="Standard" GroupName="guide" IsChecked="True"
+                                          Content="{local:LocExtension Standard}"
+                                          GroupName="guide" IsChecked="True"
                                           Style="{StaticResource CreatRadioButton}" />
                                         <RadioButton
                                           Grid.Row="0" Grid.Column="3" x:Name="m_guide_vacuum"
                                           HorizontalAlignment="Left" VerticalAlignment="Center" Click="SurgicalGuideRadioBtnClick"
-                                          Content="Vacuum" GroupName="guide"
+                                          Content="{local:LocExtension Vacuum}"
+                                          GroupName="guide"
                                           Style="{StaticResource CreatRadioButton}" />
                                         <RadioButton
                                           Grid.Row="1" Grid.Column="2" x:Name="m_guide_denture"
                                           HorizontalAlignment="Left" VerticalAlignment="Center" Click="SurgicalGuideRadioBtnClick"
-                                          Content="Denture" GroupName="guide"
+                                          Content="{local:LocExtension Denture}"
+                                          GroupName="guide"
                                           Style="{StaticResource CreatRadioButton}" />
                                         <RadioButton
                                           Grid.Row="1" Grid.Column="3" x:Name="m_guide_mi"
                                           HorizontalAlignment="Left" VerticalAlignment="Center" Click="SurgicalGuideRadioBtnClick"
-                                          Content="MI" GroupName="guide"
+                                          Content="{local:LocExtension MI}"
+                                          GroupName="guide"
                                           Style="{StaticResource CreatRadioButton}" />
 
                                         <Label
@@ -771,7 +783,7 @@
                                   Margin="3,0,0,5" Background="#FFEFEFE6" Foreground="#FFEDEDE3"
                                   Style="{StaticResource MyGroupBox}">
                                     <GroupBox.Header>
-                                        <Label Content="4. Implant Information" FontWeight="Bold" Foreground="White" />
+                                        <Label Content="{local:LocExtension Implantinfo}" FontWeight="Bold" Foreground="White" />
                                     </GroupBox.Header>
                                     <StackPanel
                                       Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"
@@ -790,7 +802,7 @@
                                   Grid.Row="0" Grid.Column="1" Margin="7,0,3,0"
                                   Style="{StaticResource MyGroupBox}">
                                     <GroupBox.Header>
-                                        <Label Content="Information" FontWeight="Bold" Foreground="White" />
+                                        <Label Content="{local:LocExtension Setting}" FontWeight="Bold" Foreground="White" />
                                     </GroupBox.Header>
 
                                     <StackPanel>
@@ -861,7 +873,7 @@
                                   Margin="7,0,3,0"
                                   Style="{StaticResource MyGroupBox}">
                                     <GroupBox.Header>
-                                        <Label Content="Implant Data" FontWeight="Bold" Foreground="White" />
+                                        <Label Content="{local:LocExtension Implant}" FontWeight="Bold" Foreground="White" />
                                     </GroupBox.Header>
 
                                     <StackPanel>
@@ -882,11 +894,13 @@
 
                                             <Label
                                               Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1"
-                                              x:Name="label_brand" VerticalAlignment="Center" Content="Brand"
+                                              x:Name="label_brand" VerticalAlignment="Center"
+                                              Content="{local:LocExtension Brand}"
                                               Style="{StaticResource CreatLabel}" />
                                             <Label
                                               Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1"
-                                              x:Name="label_system" VerticalAlignment="Center" Content="System"
+                                              x:Name="label_system" VerticalAlignment="Center"
+                                              Content="{local:LocExtension System}"
                                               Style="{StaticResource CreatLabel}" />
                                             <Label
                                               Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
@@ -932,7 +946,7 @@
                                   Grid.Row="3" Grid.Column="1" Margin="7,0,3,35"
                                   Style="{StaticResource MyGroupBox}">
                                     <GroupBox.Header>
-                                        <Label Content="Surgical Kit" FontWeight="Bold" Foreground="White" />
+                                        <Label Content="{local:LocExtension SurgicalKit}" FontWeight="Bold" Foreground="White" />
                                     </GroupBox.Header>
                                     <StackPanel>
                                         <ComboBox
@@ -959,11 +973,13 @@
 
                                         <Button
                                           Grid.Column="0" x:Name="BtnOK" Height="32"
-                                          Margin="5,0,5,5" Click="BtnOK_Click" Content="Submit"
+                                          Margin="5,0,5,5" Click="BtnOK_Click"
+                                          Content="{local:LocExtension Submit}"
                                           Style="{StaticResource OkButton}" />
                                         <Button
                                           Grid.Column="1" x:Name="BtnCancel" Margin="5,0,5,5"
-                                          Click="BtnCancel_Click" Content="Cancel"
+                                          Click="BtnCancel_Click"
+                                          Content="{local:LocExtension Cancel}"
                                           Style="{StaticResource CancelButton}" />
 
                                     </Grid>

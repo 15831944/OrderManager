@@ -367,6 +367,24 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Case Information 的當地語系化字串。
+        /// </summary>
+        internal static string Caseinfo {
+            get {
+                return ResourceManager.GetString("Caseinfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 C.B.C.T folder 的當地語系化字串。
+        /// </summary>
+        internal static string CBCTFolder {
+            get {
+                return ResourceManager.GetString("CBCTFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Data complete 的當地語系化字串。
         /// </summary>
         internal static string check {
@@ -750,6 +768,24 @@ namespace OrderManagerNew.Properties {
         internal static string Dentist {
             get {
                 return ResourceManager.GetString("Dentist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Denture 的當地語系化字串。
+        /// </summary>
+        internal static string Denture {
+            get {
+                return ResourceManager.GetString("Denture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Denture (*.stl) 的當地語系化字串。
+        /// </summary>
+        internal static string Denture_Implant {
+            get {
+                return ResourceManager.GetString("Denture_Implant", resourceCulture);
             }
         }
         
@@ -1312,6 +1348,33 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Image Data 的當地語系化字串。
+        /// </summary>
+        internal static string ImageData {
+            get {
+                return ResourceManager.GetString("ImageData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Implant 的當地語系化字串。
+        /// </summary>
+        internal static string Implant {
+            get {
+                return ResourceManager.GetString("Implant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Implant Imformation 的當地語系化字串。
+        /// </summary>
+        internal static string Implantinfo {
+            get {
+                return ResourceManager.GetString("Implantinfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Inlay / Onlay 的當地語系化字串。
         /// </summary>
         internal static string Inlay___Onlay {
@@ -1335,6 +1398,24 @@ namespace OrderManagerNew.Properties {
         internal static string Install {
             get {
                 return ResourceManager.GetString("Install", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Jaw (*.stl) 的當地語系化字串。
+        /// </summary>
+        internal static string Jaw_Implant {
+            get {
+                return ResourceManager.GetString("Jaw_Implant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Jaw Tray (*.stl) 的當地語系化字串。
+        /// </summary>
+        internal static string JawTray_Implant {
+            get {
+                return ResourceManager.GetString("JawTray_Implant", resourceCulture);
             }
         }
         
@@ -1569,6 +1650,15 @@ namespace OrderManagerNew.Properties {
         internal static string Maximize {
             get {
                 return ResourceManager.GetString("Maximize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 MI 的當地語系化字串。
+        /// </summary>
+        internal static string MI {
+            get {
+                return ResourceManager.GetString("MI", resourceCulture);
             }
         }
         
@@ -1956,6 +2046,15 @@ namespace OrderManagerNew.Properties {
         internal static string Patient {
             get {
                 return ResourceManager.GetString("Patient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Patient Birthday 的當地語系化字串。
+        /// </summary>
+        internal static string PatientBirth {
+            get {
+                return ResourceManager.GetString("PatientBirth", resourceCulture);
             }
         }
         
@@ -2455,11 +2554,29 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Standard 的當地語系化字串。
+        /// </summary>
+        internal static string Standard {
+            get {
+                return ResourceManager.GetString("Standard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Start downloading 的當地語系化字串。
         /// </summary>
         internal static string StartDownloading {
             get {
                 return ResourceManager.GetString("StartDownloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Submit 的當地語系化字串。
+        /// </summary>
+        internal static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
             }
         }
         
@@ -2487,6 +2604,15 @@ namespace OrderManagerNew.Properties {
         internal static string SurgicalKit {
             get {
                 return ResourceManager.GetString("SurgicalKit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 System 的當地語系化字串。
+        /// </summary>
+        internal static string System {
+            get {
+                return ResourceManager.GetString("System", resourceCulture);
             }
         }
         
@@ -2568,6 +2694,15 @@ namespace OrderManagerNew.Properties {
         internal static string upload_model_file_litedoctor {
             get {
                 return ResourceManager.GetString("upload_model_file_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Vacuum 的當地語系化字串。
+        /// </summary>
+        internal static string Vacuum {
+            get {
+                return ResourceManager.GetString("Vacuum", resourceCulture);
             }
         }
         

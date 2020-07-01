@@ -57,7 +57,7 @@ namespace OrderManagerNew.V2Implant
 		public ImplantV2NewOrder()
 		{
 			InitializeComponent();
-
+            Title = TranslationSource.Instance["CreateOrder"];
 			Productlist = new List<int>();
 			ActiveToothType = -1;
 			haveXml = true;
@@ -162,7 +162,7 @@ namespace OrderManagerNew.V2Implant
 			{
 				case (int)ToothType.ToothTypeList.NON_TOOTH:
 					ImgString = "ToothImg\\icon_implant-delete.png";
-					NameString = "Cancel";
+					NameString = TranslationSource.Instance["Cancel"];
 					ToothTypeIdx = (int)ToothType.ToothTypeList.NON_TOOTH;
 					break;
 				case (int)ToothType.ToothTypeList.OFFSET_COPING:
@@ -247,7 +247,7 @@ namespace OrderManagerNew.V2Implant
 					break;
 				case (int)ToothType.ToothTypeList.IMPLANT:
 					ImgString = "ToothImg\\icon_implant.png";
-					NameString = "Implant";
+					NameString = TranslationSource.Instance["Implant"];
 					ToothTypeIdx = (int)ToothType.ToothTypeList.IMPLANT;
 					break;
 				default:
