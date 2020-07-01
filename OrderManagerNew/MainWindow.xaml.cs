@@ -321,7 +321,7 @@ namespace OrderManagerNew
                         string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[UpdateFunc.readyInstallSoftwareInfo.softwareID] 
                         + " " + TranslationSource.Instance["Successfully"];
                         SnackBarShow(snackStr);
-                        //System.Threading.Thread.Sleep(1000);
+                        OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
                     }));
                 }
             }
@@ -919,6 +919,21 @@ namespace OrderManagerNew
                     #region Ortho
                     case "ortho_update":
                         {
+                            Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Updating, 0);
+                            for (int i = 0; i < UpdateFunc.CloudSoftwareTotal.Count; i++)
+                            {
+                                if (UpdateFunc.CloudSoftwareTotal[i].softwareID == (int)_softwareID.Ortho)
+                                {
+                                    UpdateFunc.readyInstallSoftwareInfo = UpdateFunc.CloudSoftwareTotal[i];
+                                    break;
+                                }
+                            }
+
+                            DialogBeforeDownload = new BeforeDownload();
+                            DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_SoftwareUpdate);
+                            DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
+                            SetAllSoftwareTableDownloadisEnable(false);
+                            DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
                     case "ortho_selectPath":
@@ -1364,6 +1379,7 @@ namespace OrderManagerNew
                                     implant_buyLic.Visibility = Visibility.Visible;
                                     implant_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterImplant.IsEnabled = true;
+                                    implant_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
                                     implant_update.Visibility = Visibility.Visible;
                                     implant_update.IsEnabled = false;
                                     break;
@@ -1431,6 +1447,7 @@ namespace OrderManagerNew
                                     ortho_buyLic.Visibility = Visibility.Visible;
                                     ortho_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterOrtho.IsEnabled = true;
+                                    ortho_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
                                     ortho_update.Visibility = Visibility.Visible;
                                     ortho_update.IsEnabled = false;
                                     break;
@@ -1498,6 +1515,7 @@ namespace OrderManagerNew
                                     tray_buyLic.Visibility = Visibility.Visible;
                                     tray_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterTray.IsEnabled = true;
+                                    tray_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
                                     tray_update.Visibility = Visibility.Visible;
                                     tray_update.IsEnabled = false;
                                     break;
@@ -1565,6 +1583,7 @@ namespace OrderManagerNew
                                     splint_buyLic.Visibility = Visibility.Visible;
                                     splint_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterSplint.IsEnabled = true;
+                                    splint_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
                                     splint_update.Visibility = Visibility.Visible;
                                     splint_update.IsEnabled = false;
                                     break;
@@ -1630,6 +1649,7 @@ namespace OrderManagerNew
                                     guide_troubleShooting.Visibility = Visibility.Visible;
                                     guide_buyLic.Visibility = Visibility.Visible;
                                     guide_unInstall.Visibility = Visibility.Visible;
+                                    guide_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
                                     guide_update.Visibility = Visibility.Visible;
                                     guide_update.IsEnabled = false;
                                     break;
@@ -1739,32 +1759,38 @@ namespace OrderManagerNew
                         {
                             case (int)_softwareID.EZCAD:
                                 {
-                                    cad_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
+                                    if(((string)cad_update.Content).IndexOf(")") == -1)
+                                        cad_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Implant:
                                 {
-                                    implant_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
+                                    if (((string)implant_update.Content).IndexOf(")") == -1)
+                                        implant_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Ortho:
                                 {
-                                    ortho_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
+                                    if (((string)ortho_update.Content).IndexOf(")") == -1)
+                                        ortho_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Tray:
                                 {
-                                    tray_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
+                                    if (((string)tray_update.Content).IndexOf(")") == -1)
+                                        tray_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Splint:
                                 {
-                                    splint_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
+                                    if (((string)splint_update.Content).IndexOf(")") == -1)
+                                        splint_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                             case (int)_softwareID.Guide:
                                 {
-                                    guide_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
+                                    if (((string)guide_update.Content).IndexOf(")") == -1)
+                                        guide_update.Content = TranslationSource.Instance["SoftwareUpdate"] + "(" + SoftwareVersion + ")";
                                     break;
                                 }
                         }

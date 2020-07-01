@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("OrderManagerNew")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Inteware")]
 [assembly: AssemblyProduct("OrderManagerNew")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyCopyright("Inteware ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,5 +51,5 @@ using System.Windows;
 // 您可以指定所有的值，或將組建編號或修訂編號設為預設值
 // 指定為預設值: 
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2020.629.0")]
-[assembly: AssemblyFileVersion("1.2020.629.0")]
+[assembly: AssemblyVersion("1.2020.701.1")]
+[assembly: AssemblyFileVersion("1.2020.701.1")]
