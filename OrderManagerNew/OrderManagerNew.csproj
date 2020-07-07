@@ -356,9 +356,6 @@
     <Resource Include="ordermanager.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageSource\FunctionTable\icon_update.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="ImageSource\CaseTable\guide_model.png" />
   </ItemGroup>
   <ItemGroup />
