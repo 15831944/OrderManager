@@ -43,7 +43,7 @@
             <DrawingImage x:Key="Customer_service_focus_03DrawingImage">
                 <DrawingImage.Drawing>
                     <DrawingGroup ClipGeometry="M0,0 V40 H46 V0 H0 Z">
-                        <GeometryDrawing Brush="#FFDD780B">
+                        <GeometryDrawing Brush="#FF07894E">
                             <GeometryDrawing.Geometry>
                                 <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,46,40" />
                             </GeometryDrawing.Geometry>
@@ -111,7 +111,7 @@
                         <DrawingGroup.Transform>
                             <TranslateTransform X="0.03" Y="0.01" />
                         </DrawingGroup.Transform>
-                        <GeometryDrawing Brush="#FFDD780B">
+                        <GeometryDrawing Brush="#FF07894E">
                             <GeometryDrawing.Geometry>
                                 <RectangleGeometry RadiusX="0" RadiusY="0" Rect="-0.03,-0.01,46,40" />
                             </GeometryDrawing.Geometry>
@@ -150,7 +150,7 @@
                                 <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,36,36" />
                             </DrawingGroup.ClipGeometry>
                             <GeometryDrawing Brush="#FFFFB600" Geometry="F1 M36,36z M0,0z M16.27,4.23L1.52,29.77A2,2,0,0,0,3.26,32.77L32.74,32.77A2,2,0,0,0,34.48,29.77L19.73,4.23A2,2,0,0,0,16.27,4.23z" />
-                            <GeometryDrawing Brush="#FF493E34" Geometry="F1 M36,36z M0,0z M32.75,34L3.25,34A3.23,3.23,0,0,1,0.44,32.4A3.21,3.21,0,0,1,0.44,29.15L15.19,3.6 15.19,3.6A3.25,3.25,0,0,1,20.81,3.6L35.56,29.15A3.25,3.25,0,0,1,32.75,34z M18,4.48A0.73,0.73,0,0,0,17.35,4.85L2.6,30.4A0.76,0.76,0,0,0,2.6,31.15A0.75,0.75,0,0,0,3.25,31.52L32.75,31.52A0.75,0.75,0,0,0,33.4,31.15A0.76,0.76,0,0,0,33.4,30.4L18.65,4.85A0.73,0.73,0,0,0,18,4.48z" />
+                            <GeometryDrawing Brush="#FF4C4B4B" Geometry="F1 M36,36z M0,0z M32.75,34L3.25,34A3.23,3.23,0,0,1,0.44,32.4A3.21,3.21,0,0,1,0.44,29.15L15.19,3.6 15.19,3.6A3.25,3.25,0,0,1,20.81,3.6L35.56,29.15A3.25,3.25,0,0,1,32.75,34z M18,4.48A0.73,0.73,0,0,0,17.35,4.85L2.6,30.4A0.76,0.76,0,0,0,2.6,31.15A0.75,0.75,0,0,0,3.25,31.52L32.75,31.52A0.75,0.75,0,0,0,33.4,31.15A0.76,0.76,0,0,0,33.4,30.4L18.65,4.85A0.73,0.73,0,0,0,18,4.48z" />
                             <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M36,36z M0,0z M17.32,11.84L18.68,11.84A1.57,1.57,0,0,1,20.25,13.41L20.25,15.19A1.23,1.23,0,0,1,20.25,15.38L19.57,20.84A1.58,1.58,0,0,1,18,22.22L18,22.22A1.58,1.58,0,0,1,16.44,20.84L15.77,15.38C15.77,15.32,15.77,15.26,15.77,15.19L15.77,13.41A1.57,1.57,0,0,1,17.32,11.84z M17.76,24.45L18.25,24.45A1.85,1.85,0,0,1,20.1,26.3L20.1,26.3A1.85,1.85,0,0,1,18.25,28.16L17.76,28.16A1.85,1.85,0,0,1,15.91,26.3L15.91,26.3A1.85,1.85,0,0,1,17.76,24.45z" />
                         </DrawingGroup>
                     </DrawingGroup>
@@ -168,7 +168,7 @@
                                     <EllipseGeometry Center="18,18" RadiusX="15" RadiusY="15" />
                                 </GeometryDrawing.Geometry>
                             </GeometryDrawing>
-                            <GeometryDrawing Brush="#FF493E34" Geometry="F1 M36,36z M0,0z M18,34.25A16.25,16.25,0,1,1,34.25,18A16.27,16.27,0,0,1,18,34.25z M18,4.25A13.75,13.75,0,1,0,31.75,18A13.77,13.77,0,0,0,18,4.25z" />
+                            <GeometryDrawing Brush="#FF4C4B4B" Geometry="F1 M36,36z M0,0z M18,34.25A16.25,16.25,0,1,1,34.25,18A16.27,16.27,0,0,1,18,34.25z M18,4.25A13.75,13.75,0,1,0,31.75,18A13.77,13.77,0,0,0,18,4.25z" />
                             <DrawingGroup Transform="0.707106781186548,-0.707106781186547,0.707106781186547,0.707106781186548,-7.46,18">
                                 <GeometryDrawing Brush="#FFFFFFFF">
                                     <GeometryDrawing.Geometry>
@@ -187,7 +187,7 @@
                     </DrawingGroup>
                 </DrawingImage.Drawing>
             </DrawingImage>
-            <SolidColorBrush x:Key="Common_OrangeTitleBar" Color="#FFE08A1E" />
+            <SolidColorBrush x:Key="Common_OrangeTitleBar" Color="#FF056840" />
             <Style x:Key="systemButton" TargetType="{x:Type Button}">
                 <Setter Property="Width" Value="35" />
                 <Setter Property="Height" Value="30" />

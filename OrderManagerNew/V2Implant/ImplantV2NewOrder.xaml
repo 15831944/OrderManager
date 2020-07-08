@@ -225,7 +225,7 @@
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
             <Style x:Key="OkButton" TargetType="{x:Type Button}">
-                <Setter Property="Background" Value="#FF756550" />
+                <Setter Property="Background" Value="#FF657a69" />
                 <Setter Property="Foreground" Value="#FFF4E9DC" />
                 <Setter Property="FontWeight" Value="Bold" />
                 <Setter Property="BorderThickness" Value="0" />
@@ -240,12 +240,12 @@
                 </Setter>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#FFFFB14A" />
+                        <Setter Property="Background" Value="#FFFFD400" />
                     </Trigger>
                 </Style.Triggers>
             </Style>
             <Style x:Key="CancelButton" TargetType="{x:Type Button}">
-                <Setter Property="Background" Value="#FF756550" />
+                <Setter Property="Background" Value="#FF657a69" />
                 <Setter Property="Foreground" Value="#FFF4E9DC" />
                 <Setter Property="FontWeight" Value="Bold" />
                 <Setter Property="BorderThickness" Value="0" />
@@ -260,7 +260,7 @@
                 </Setter>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#FFFFB14A" />
+                        <Setter Property="Background" Value="#FFFFD400" />
                     </Trigger>
                 </Style.Triggers>
             </Style>
@@ -279,7 +279,7 @@
         <DockPanel>
             <!--  Title Bar Area  -->
             <Border
-              Name="border" Height="30" Background="#FFE08A1E"
+              Name="border" Height="30" Background="#FF056840"
               DockPanel.Dock="Top">
 
                 <Grid>
@@ -292,7 +292,7 @@
                     </Label>
 
                     <!--  System Button Area  -->
-                    <StackPanel HorizontalAlignment="Right" Background="#FFE08A1E" Orientation="Horizontal">
+                    <StackPanel HorizontalAlignment="Right" Background="#FF056840" Orientation="Horizontal">
 
                         <StackPanel.Resources>
                             <Style x:Key="systemButton" TargetType="{x:Type Button}">
@@ -325,7 +325,7 @@
                 </Grid>
             </Border>
 
-            <Grid Background="#FF353631">
+            <Grid Background="#FF2E2F2B">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="180" />
                     <RowDefinition />

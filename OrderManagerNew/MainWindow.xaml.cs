@@ -362,6 +362,9 @@ namespace OrderManagerNew
         /// <param name="Path">資料夾路徑</param>
         private void Watcher_CaseProject(FileSystemWatcher Watcher, string Path)
         {
+            //TODO:還在測試，目前先關閉Case Watcher
+            return;
+
             if (Directory.Exists(Path) == false)
                 return;
 

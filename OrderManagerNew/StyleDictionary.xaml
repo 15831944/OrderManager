@@ -6,16 +6,16 @@
     </ResourceDictionary.MergedDictionaries>
 
     <SolidColorBrush x:Key="Common_DarkBackGround" Color="#FF30312C" />
-    <SolidColorBrush x:Key="Common_OrangeTitleBar" Color="#FFE08A1E" />
-    <SolidColorBrush x:Key="Common_DarkBrown" Color="#FF493E34" />
+    <SolidColorBrush x:Key="Common_OrangeTitleBar" Color="#FF056840" />
+    <SolidColorBrush x:Key="Common_DarkBrown" Color="#FF4C4B4B" />
     <SolidColorBrush x:Key="background_SuperDarkCaseTable" Color="#FF353531" />
     <SolidColorBrush x:Key="background_WhiteCaseTable" Color="#FFEDEDE2" />
-    <SolidColorBrush x:Key="background_CheckedBaseCaseTable" Color="#FFFFD6AE" />
-    <SolidColorBrush x:Key="background_SmallCase" Color="#FFBCB2AA" />
+    <SolidColorBrush x:Key="background_SmallCase" Color="#FFA9BCB8" />
     <SolidColorBrush x:Key="background_FocusedCase" Color="#FFFFF1C2" />
     <SolidColorBrush x:Key="background_FocusedSmallCase" Color="#FFEDAE9F" />
     <SolidColorBrush x:Key="borderbrush_FocusedSmallCase" Color="#FFF26C5A" />
     <SolidColorBrush x:Key="borderbrush_SuperWhiteDetail" Color="#FFDDDDDD" />
+    <SolidColorBrush x:Key="background_Expender_mouseOver" Color="#FF07894E" />
     <Style TargetType="{x:Type Label}">
         <Setter Property="FontFamily" Value="Arial" />
     </Style>
@@ -333,12 +333,12 @@
                       Background="{TemplateBinding Background}"
                       SnapsToDevicePixels="True">
                         <Canvas
-                          Canvas.Right="0" x:Name="canvNormal"
+                          x:Name="canvNormal" Canvas.Right="0"
                           Width="{TemplateBinding Width}"
                           Height="{TemplateBinding Height}"
                           Background="{TemplateBinding Background}"
                           SnapsToDevicePixels="True" Visibility="Visible">
-                            <Polygon Fill="#FF70450F" Points="0,0 0,26 26,26 26,0 0,0" />
+                            <Polygon Fill="#FF0bbd81" Points="0,0 0,26 26,26 26,0 0,0" />
                             <Line
                               Stroke="#FFFFFFFF" StrokeThickness="1" X1="8"
                               X2="18" Y1="13" Y2="13" />
@@ -347,12 +347,12 @@
                               X2="13" Y1="8" Y2="18" />
                         </Canvas>
                         <Canvas
-                          Canvas.Right="0" x:Name="canvChecked"
+                          x:Name="canvChecked" Canvas.Right="0"
                           Width="{TemplateBinding Width}"
                           Height="{TemplateBinding Height}"
                           Background="{TemplateBinding Background}"
                           SnapsToDevicePixels="True" Visibility="Hidden">
-                            <Polygon Fill="#FF70450F" Points="0,0 0,26 26,26 26,0 0,0" />
+                            <Polygon Fill="#FF0bbd81" Points="0,0 0,26 26,26 26,0 0,0" />
                             <Line
                               Stroke="#FFFFFFFF" StrokeThickness="1" X1="8"
                               X2="18" Y1="13" Y2="13" />
@@ -366,7 +366,7 @@
                     </Canvas>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="#FFDD780B" />
+                            <Setter Property="Background" Value="{DynamicResource background_Expender_mouseOver}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="true">
                             <Setter TargetName="canvChecked" Property="Visibility" Value="Visible" />
@@ -439,7 +439,7 @@
     <Style x:Key="SortTextBox" BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
         <Setter Property="Width" Value="112" />
         <Setter Property="Height" Value="25" />
-        <Setter Property="Background" Value="#FF756550" />
+        <Setter Property="Background" Value="#FF657a69" />
         <Setter Property="BorderBrush" Value="#FFF4E9DC" />
         <Setter Property="Foreground" Value="#FFF4E9DC" />
         <Setter Property="Margin" Value="0,5,5,5" />
@@ -480,7 +480,7 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <BulletDecorator
-                      Margin="0,1" HorizontalAlignment="Left" Background="#FF756550"
+                      Margin="0,1" HorizontalAlignment="Left" Background="#FF657a69"
                       Cursor="Hand">
                         <BulletDecorator.Bullet>
                             <Grid Width="11" Height="11">
@@ -496,7 +496,7 @@
                                   Width="20" Height="20" HorizontalAlignment="Center"
                                   VerticalAlignment="Center">
                                     <Ellipse
-                                      Canvas.Left="10" Canvas.Top="10" x:Name="InteractionEllipse"
+                                      x:Name="InteractionEllipse" Canvas.Left="10" Canvas.Top="10"
                                       Width="0" Height="0"
                                       Fill="{TemplateBinding Foreground}"
                                       Opacity="0" RenderTransformOrigin="0.5,0.5">
@@ -567,7 +567,7 @@
     </Style>
     <Style TargetType="{x:Type ScrollBar}">
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
-        <Setter Property="Foreground" Value="#FF756550" />
+        <Setter Property="Foreground" Value="#FF657a69" />
         <Setter Property="Background" Value="#FFB3B3B3" />
         <Setter Property="Width" Value="18" />
         <Setter Property="Template">
@@ -931,7 +931,7 @@
                                         <Border
                                           Grid.Column="1" x:Name="Border" Background="#353531"
                                           BorderThickness="0" />
-                                        <Border Grid.Column="0" Background="#756550" BorderThickness="0" />
+                                        <Border Grid.Column="0" Background="{DynamicResource background_Expender_mouseOver}" BorderThickness="0" />
                                         <Path
                                           Grid.Column="1" x:Name="Arrow" Width="10"
                                           Height="10" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -961,7 +961,7 @@
                               MinWidth="{TemplateBinding ActualWidth}"
                               MaxHeight="{TemplateBinding MaxDropDownHeight}"
                               SnapsToDevicePixels="True">
-                                <Border x:Name="DropDownBorder" Background="#756550" />
+                                <Border x:Name="DropDownBorder" Background="{DynamicResource background_Expender_mouseOver}" />
                                 <ScrollViewer SnapsToDevicePixels="True">
                                     <StackPanel IsItemsHost="True" />
                                 </ScrollViewer>
@@ -977,12 +977,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-                    <Border x:Name="Border" Background="#756550">
+                    <Border x:Name="Border" Background="{DynamicResource background_Expender_mouseOver}">
                         <ContentPresenter Margin="3" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="#3B3127" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource Common_OrangeTitleBar}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

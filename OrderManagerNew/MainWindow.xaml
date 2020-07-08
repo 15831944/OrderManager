@@ -31,12 +31,11 @@
         <DockPanel PreviewMouseDown="PMouseDown_Main">
             <!--  TitleBar-Start  -->
             <Border
-              Height="42" Panel.ZIndex="10"
-              Background="{StaticResource Common_OrangeTitleBar}"
+              Height="42" Panel.ZIndex="10" Background="#FF056840"
               DockPanel.Dock="Top">
                 <Grid>
                     <Label
-                      Margin="0,0,143,0" VerticalAlignment="Center" Foreground="White"
+                      Margin="0,0,143,0" VerticalAlignment="Center" Foreground="#FF056840"
                       PreviewMouseDown="MouseDown_TitleBar" PreviewMouseMove="MouseMove_TitleBar">
                         <Image Height="42" Margin="20,-5,0,0" Source="{StaticResource INTEWARE_TITLE_OrderManagerDrawingImage}" />
                     </Label>
@@ -53,8 +52,8 @@
                         <Button Name="systemButton_Minimize" Click="Click_TitleBar_titlebarButtons" Style="{StaticResource systemButton_mimimize}" />
 
                         <ToggleButton
-                          Name="systemButton_Maximize" Width="35" Height="30"
-                          HorizontalAlignment="Right" VerticalAlignment="Top" Click="Click_TitleBar_titlebarButtons"
+                          Name="systemButton_Maximize" Width="36" Height="30"
+                          Padding="0" Click="Click_TitleBar_titlebarButtons"
                           Style="{StaticResource systemButton_max}" />
                         <Button Name="systemButton_Close" Click="Click_TitleBar_titlebarButtons" Style="{StaticResource systemButton_close}" />
                     </StackPanel>
@@ -126,7 +125,7 @@
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
-                            <Rectangle x:Name="mask2_EZCAD_Installing" Style="{StaticResource maskImageInstalling}" />
+                            <Rectangle x:Name="mask2_EZCAD_Installing" Fill="#FF4C4B4B" Style="{StaticResource maskImageInstalling}" />
                             <ProgressBar x:Name="progressbar_EZCAD_Installing" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0">
@@ -497,7 +496,7 @@
 
                     <!--  FilterTable-Start  -->
                     <StackPanel
-                      Grid.Column="0" Margin="0,3" Background="#FF756550"
+                      Grid.Column="0" Margin="0,3" Background="#FF657a69"
                       Orientation="Vertical">
                         <StackPanel.Resources>
                             <Style BasedOn="{StaticResource MaterialDesignCheckBox}" TargetType="CheckBox">
@@ -508,7 +507,7 @@
                             </Style>
                         </StackPanel.Resources>
                         <Expander Header="{local:LocExtension BySoftware}" Style="{StaticResource ExpanderStyle}">
-                            <Grid Background="#FF756550">
+                            <Grid Background="#FF657a69">
                                 <Grid.Resources>
                                     <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
                                         <Setter Property="GroupName" Value="SortSoftware" />
@@ -526,7 +525,7 @@
                             </Grid>
                         </Expander>
                         <Expander Header="{local:LocExtension ByDate}" Style="{StaticResource ExpanderStyle}">
-                            <Grid Background="#FF756550">
+                            <Grid Background="#FF657a69">
                                 <Grid.Resources>
                                     <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
                                         <EventSetter Event="Checked" Handler="Checked_SortTable_Filter" />
@@ -542,7 +541,7 @@
                             </Grid>
                         </Expander>
                         <Expander Header="{local:LocExtension ByPatient}" Style="{StaticResource ExpanderStyle}">
-                            <Grid Background="#FF756550">
+                            <Grid Background="#FF657a69">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="45" />
                                     <ColumnDefinition />
@@ -555,7 +554,7 @@
                             </Grid>
                         </Expander>
                         <Expander Header="{local:LocExtension ByCase}" Style="{StaticResource ExpanderStyle}">
-                            <Grid Background="#FF756550">
+                            <Grid Background="#FF657a69">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="45" />
                                     <ColumnDefinition />
