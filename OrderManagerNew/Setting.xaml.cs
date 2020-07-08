@@ -199,11 +199,6 @@ namespace OrderManagerNew
                             else
                             {
                                 Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + "IntewareTempFile\\";
-
-                                /*if (Directory.Exists(System.IO.Path.GetTempPath() + "IntewareTempFile\\") == false)
-                                {
-                                    System.IO.Directory.CreateDirectory(System.IO.Path.GetTempPath() + "IntewareTempFile\\");
-                                }*/
                             }
 
                             //多國語系

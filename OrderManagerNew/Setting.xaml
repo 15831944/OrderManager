@@ -81,11 +81,11 @@
 
                     <Label Grid.Row="0" Grid.Column="0" Content="EZCAD" />
                     <Label Grid.Row="1" Grid.Column="0" Content="ImplantPlanning" />
-                    <Label Grid.Row="2" Grid.Column="0" Content="OrthoAnalysis" />
-                    <Label Grid.Row="3" Grid.Column="0" Content="EZCAD.Tray" />
-                    <Label Grid.Row="4" Grid.Column="0" Content="EZCAD.Splint" />
-                    <Label Grid.Row="5" Grid.Column="0" Content="EZCAD.Guide" />
-                    <Label Grid.Row="6" Grid.Column="0" Content="{local:LocExtension Downloadpath}" />
+                    <Label Grid.Row="2" Grid.Column="0" Content="OrthoAnalysis" Visibility="Collapsed"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="EZCAD.Tray"  Visibility="Collapsed"/>
+                    <Label Grid.Row="4" Grid.Column="0" Content="EZCAD.Splint"  Visibility="Collapsed"/>
+                    <Label Grid.Row="2" Grid.Column="0" Content="EZCAD.Guide" />
+                    <Label Grid.Row="3" Grid.Column="0" Content="{local:LocExtension Downloadpath}" />
 
                     <TextBox
                       Grid.Row="0" Grid.Column="1" x:Name="textbox_EZCAD"
@@ -95,19 +95,19 @@
                       Grid.Row="1" Grid.Column="1" x:Name="textbox_Implant"
                       Style="{DynamicResource Setting_textbox}" />
                     <TextBox
-                      Grid.Row="2" Grid.Column="1" x:Name="textbox_Ortho"
+                      Grid.Row="2" Grid.Column="1" x:Name="textbox_Ortho" Visibility="Collapsed"
                       Style="{DynamicResource Setting_textbox}" />
                     <TextBox
-                      Grid.Row="3" Grid.Column="1" x:Name="textbox_Tray"
+                      Grid.Row="3" Grid.Column="1" x:Name="textbox_Tray" Visibility="Collapsed"
                       Style="{DynamicResource Setting_textbox}" />
                     <TextBox
-                      Grid.Row="4" Grid.Column="1" x:Name="textbox_Splint"
+                      Grid.Row="4" Grid.Column="1" x:Name="textbox_Splint" Visibility="Collapsed"
                       Style="{DynamicResource Setting_textbox}" />
                     <TextBox
-                      Grid.Row="5" Grid.Column="1" x:Name="textbox_Guide"
+                      Grid.Row="2" Grid.Column="1" x:Name="textbox_Guide"
                       Style="{DynamicResource Setting_textbox}" />
                     <TextBox
-                      Grid.Row="6" Grid.Column="1" x:Name="textbox_Download"
+                      Grid.Row="3" Grid.Column="1" x:Name="textbox_Download"
                       Style="{DynamicResource Setting_textbox}" />
 
                     <Button
@@ -117,19 +117,19 @@
                       Grid.Row="1" Grid.Column="2" x:Name="Btn_Implantprogram"
                       Style="{DynamicResource folderOpen}" />
                     <Button
-                      Grid.Row="2" Grid.Column="2" x:Name="Btn_Orthoprogram"
+                      Grid.Row="2" Grid.Column="2" x:Name="Btn_Orthoprogram" Visibility="Collapsed"
                       Style="{DynamicResource folderOpen}" />
                     <Button
-                      Grid.Row="3" Grid.Column="2" x:Name="Btn_Trayprogram"
+                      Grid.Row="3" Grid.Column="2" x:Name="Btn_Trayprogram" Visibility="Collapsed"
                       Style="{DynamicResource folderOpen}" />
                     <Button
-                      Grid.Row="4" Grid.Column="2" x:Name="Btn_Splintprogram"
+                      Grid.Row="4" Grid.Column="2" x:Name="Btn_Splintprogram" Visibility="Collapsed"
                       Style="{DynamicResource folderOpen}" />
                     <Button
-                      Grid.Row="5" Grid.Column="2" x:Name="Btn_Guideprogram"
+                      Grid.Row="2" Grid.Column="2" x:Name="Btn_Guideprogram"
                       Style="{DynamicResource folderOpen}" />
                     <Button
-                      Grid.Row="6" Grid.Column="2" x:Name="Btn_Downloadpath"
+                      Grid.Row="3" Grid.Column="2" x:Name="Btn_Downloadpath"
                       Style="{DynamicResource folderOpen}" />
                 </Grid>
                 <Grid Grid.Row="2" Margin="0,12">

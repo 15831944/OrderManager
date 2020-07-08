@@ -1676,6 +1676,12 @@ namespace OrderManagerNew
                                     break;
                                 }
                         }
+
+                        //TODO:PrintIn 暫不開放
+                        SoftwareFilterOrtho.IsEnabled = false;
+                        SoftwareFilterTray.IsEnabled = false;
+                        SoftwareFilterSplint.IsEnabled = false;
+
                         break;
                     }
             }
@@ -2323,6 +2329,11 @@ namespace OrderManagerNew
         /// </summary>
         private void ChangeSoftwareFilter()
         {
+            //TODO:PrintIn 暫不開放
+            SoftwareFilterOrtho.IsEnabled = false;
+            SoftwareFilterTray.IsEnabled = false;
+            SoftwareFilterSplint.IsEnabled = false;
+
             if (SoftwareFilterCAD.IsEnabled == false && SoftwareFilterImplant.IsEnabled == false && SoftwareFilterOrtho.IsEnabled == false && SoftwareFilterTray.IsEnabled == false && SoftwareFilterSplint.IsEnabled == false)
             {
                 SoftwareFilterCAD.IsChecked = false;
