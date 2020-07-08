@@ -16,6 +16,7 @@
     <SolidColorBrush x:Key="borderbrush_FocusedSmallCase" Color="#FFF26C5A" />
     <SolidColorBrush x:Key="borderbrush_SuperWhiteDetail" Color="#FFDDDDDD" />
     <SolidColorBrush x:Key="background_Expender_mouseOver" Color="#FF07894E" />
+    <SolidColorBrush x:Key="comboboxButton_Color" Color="#FFF6AA00" />
     <Style TargetType="{x:Type Label}">
         <Setter Property="FontFamily" Value="Arial" />
     </Style>
@@ -404,8 +405,6 @@
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
-
-
                             <ToggleButton
                               Grid.Row="0" x:Name="HeaderSite"
                               Content="{TemplateBinding Header}"
@@ -490,7 +489,8 @@
                                   Name="RadioOuter" Background="Transparent" BorderBrush="#FFF4E9DC"
                                   BorderThickness="1" CornerRadius="20" />
                                 <Border
-                                  Name="RadioMark" Margin="3" Background="#FFF6AA00"
+                                  Name="RadioMark" Margin="3"
+                                  Background="{DynamicResource comboboxButton_Color}"
                                   CornerRadius="20" Visibility="Hidden" />
                                 <Canvas
                                   Width="20" Height="20" HorizontalAlignment="Center"
@@ -537,6 +537,10 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    <Style x:Key="Sort_Checkbox" BasedOn="{StaticResource MaterialDesignCheckBox}" TargetType="CheckBox">
+        <Setter Property="Background" Value="{DynamicResource comboboxButton_Color}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource comboboxButton_Color}" />
     </Style>
     <!--  SortTable-End  -->
 

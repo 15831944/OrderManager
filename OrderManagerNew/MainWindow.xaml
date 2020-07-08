@@ -377,10 +377,6 @@
                             <Rectangle x:Name="mask2_Guide_Installing" Style="{StaticResource maskImageInstalling}" />
                             <ProgressBar x:Name="progressbar_Guide_Installing" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
-                        <!--  TODO可能不用  -->
-                        <Grid Margin="6,0" Visibility="Hidden">
-                            <Image Source="ImageSource/FunctionTable/icon_update.png" Style="{StaticResource progressImage}" />
-                        </Grid>
                     </StackPanel>
 
                     <!--  ordermanagerFunction  -->
@@ -499,7 +495,7 @@
                       Grid.Column="0" Margin="0,3" Background="#FF657a69"
                       Orientation="Vertical">
                         <StackPanel.Resources>
-                            <Style BasedOn="{StaticResource MaterialDesignCheckBox}" TargetType="CheckBox">
+                            <Style BasedOn="{StaticResource Sort_Checkbox}" TargetType="CheckBox">
                                 <EventSetter Event="Checked" Handler="Checked_SortTable_Filter" />
                                 <EventSetter Event="Unchecked" Handler="Checked_SortTable_Filter" />
                                 <Setter Property="HorizontalAlignment" Value="Right" />

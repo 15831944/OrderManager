@@ -81,7 +81,8 @@
                                           Name="RadioOuter" Background="White" BorderBrush="#FFB3B3B3"
                                           BorderThickness="1" CornerRadius="20" />
                                         <Border
-                                          Name="RadioMark" Margin="3" Background="#FFF6AA00"
+                                          Name="RadioMark" Margin="3"
+                                          Background="{DynamicResource comboboxButton_Color}"
                                           CornerRadius="20" Visibility="Hidden" />
                                         <Canvas
                                           Width="20" Height="20" HorizontalAlignment="Center"
