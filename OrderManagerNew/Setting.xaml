@@ -81,9 +81,15 @@
 
                     <Label Grid.Row="0" Grid.Column="0" Content="EZCAD" />
                     <Label Grid.Row="1" Grid.Column="0" Content="ImplantPlanning" />
-                    <Label Grid.Row="2" Grid.Column="0" Content="OrthoAnalysis" Visibility="Collapsed"/>
-                    <Label Grid.Row="3" Grid.Column="0" Content="EZCAD.Tray"  Visibility="Collapsed"/>
-                    <Label Grid.Row="4" Grid.Column="0" Content="EZCAD.Splint"  Visibility="Collapsed"/>
+                    <Label
+                      Grid.Row="2" Grid.Column="0" Content="OrthoAnalysis"
+                      Visibility="Collapsed" />
+                    <Label
+                      Grid.Row="3" Grid.Column="0" Content="EZCAD.Tray"
+                      Visibility="Collapsed" />
+                    <Label
+                      Grid.Row="4" Grid.Column="0" Content="EZCAD.Splint"
+                      Visibility="Collapsed" />
                     <Label Grid.Row="2" Grid.Column="0" Content="EZCAD.Guide" />
                     <Label Grid.Row="3" Grid.Column="0" Content="{local:LocExtension Downloadpath}" />
 
@@ -95,14 +101,17 @@
                       Grid.Row="1" Grid.Column="1" x:Name="textbox_Implant"
                       Style="{DynamicResource Setting_textbox}" />
                     <TextBox
-                      Grid.Row="2" Grid.Column="1" x:Name="textbox_Ortho" Visibility="Collapsed"
-                      Style="{DynamicResource Setting_textbox}" />
+                      Grid.Row="2" Grid.Column="1" x:Name="textbox_Ortho"
+                      Style="{DynamicResource Setting_textbox}"
+                      Visibility="Collapsed" />
                     <TextBox
-                      Grid.Row="3" Grid.Column="1" x:Name="textbox_Tray" Visibility="Collapsed"
-                      Style="{DynamicResource Setting_textbox}" />
+                      Grid.Row="3" Grid.Column="1" x:Name="textbox_Tray"
+                      Style="{DynamicResource Setting_textbox}"
+                      Visibility="Collapsed" />
                     <TextBox
-                      Grid.Row="4" Grid.Column="1" x:Name="textbox_Splint" Visibility="Collapsed"
-                      Style="{DynamicResource Setting_textbox}" />
+                      Grid.Row="4" Grid.Column="1" x:Name="textbox_Splint"
+                      Style="{DynamicResource Setting_textbox}"
+                      Visibility="Collapsed" />
                     <TextBox
                       Grid.Row="2" Grid.Column="1" x:Name="textbox_Guide"
                       Style="{DynamicResource Setting_textbox}" />
@@ -117,14 +126,17 @@
                       Grid.Row="1" Grid.Column="2" x:Name="Btn_Implantprogram"
                       Style="{DynamicResource folderOpen}" />
                     <Button
-                      Grid.Row="2" Grid.Column="2" x:Name="Btn_Orthoprogram" Visibility="Collapsed"
-                      Style="{DynamicResource folderOpen}" />
+                      Grid.Row="2" Grid.Column="2" x:Name="Btn_Orthoprogram"
+                      Style="{DynamicResource folderOpen}"
+                      Visibility="Collapsed" />
                     <Button
-                      Grid.Row="3" Grid.Column="2" x:Name="Btn_Trayprogram" Visibility="Collapsed"
-                      Style="{DynamicResource folderOpen}" />
+                      Grid.Row="3" Grid.Column="2" x:Name="Btn_Trayprogram"
+                      Style="{DynamicResource folderOpen}"
+                      Visibility="Collapsed" />
                     <Button
-                      Grid.Row="4" Grid.Column="2" x:Name="Btn_Splintprogram" Visibility="Collapsed"
-                      Style="{DynamicResource folderOpen}" />
+                      Grid.Row="4" Grid.Column="2" x:Name="Btn_Splintprogram"
+                      Style="{DynamicResource folderOpen}"
+                      Visibility="Collapsed" />
                     <Button
                       Grid.Row="2" Grid.Column="2" x:Name="Btn_Guideprogram"
                       Style="{DynamicResource folderOpen}" />
