@@ -1084,6 +1084,8 @@ namespace OrderManagerNew.V2Implant
 
 		private void MaterialRadioBtnClick(object sender, RoutedEventArgs e)
 		{
+            return;
+
 			if (ActiveToothType == (int)ToothType.ToothTypeList.NEIGHBOR || ActiveToothType == 0) 
 				return;
 
