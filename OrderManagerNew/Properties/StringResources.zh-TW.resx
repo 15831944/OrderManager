@@ -1017,4 +1017,7 @@
   <data name="MI" xml:space="preserve">
     <value>骨釘型</value>
   </data>
+  <data name="InitNoSoftwareAsk" xml:space="preserve">
+    <value>沒有軟體路徑記錄，是否自動搜尋軟體路徑? </value>
+  </data>
 </root>

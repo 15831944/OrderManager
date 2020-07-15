@@ -246,6 +246,23 @@ namespace OrderManagerNew
             }
             else
                 ChangeSoftwareFilter();
+
+            if(Properties.Settings.Default.cad_exePath == "" && 
+                Properties.Settings.Default.implant_exePath == "" && 
+                Properties.Settings.Default.ortho_exePath == "" && 
+                Properties.Settings.Default.tray_exePath == "" &&
+                Properties.Settings.Default.splint_exePath == "" &&
+                Properties.Settings.Default.guide_exePath == "")
+            {
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.SetLanguage(Properties.Settings.Default.sysLanguage);
+                Msg.ShowMessage(TranslationSource.Instance["InitNoSoftwareAsk"], TranslationSource.Instance["AutoDetect"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES )
+                {
+                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                    ChangeSoftwareFilter();
+                }
+            }
         }
 
 #region Watcher事件
@@ -317,6 +334,7 @@ namespace OrderManagerNew
                     {
                         haveEXE = false;
                         watcher = new FileSystemWatcher();
+                        Thread.Sleep(2000);//2秒緩衝
                         Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
                         string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[UpdateFunc.readyInstallSoftwareInfo.softwareID] 
                         + " " + TranslationSource.Instance["Successfully"];
@@ -805,7 +823,7 @@ namespace OrderManagerNew
                                     if (File.Exists(uninstallPath) == true)
                                     {
                                         Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Uninstalling, 0);
-                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
+                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet", true);
                                     }
                                     else
                                     {
@@ -907,7 +925,7 @@ namespace OrderManagerNew
                                     if (File.Exists(uninstallPath) == true)
                                     {
                                         Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Uninstalling, 0);
-                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
+                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet", true);
                                     }
                                     else
                                     {
@@ -991,7 +1009,7 @@ namespace OrderManagerNew
                                     if (File.Exists(uninstallPath) == true)
                                     {
                                         Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Uninstalling, 0);
-                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
+                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet", true);
                                     }
                                     else
                                     {
@@ -1075,7 +1093,7 @@ namespace OrderManagerNew
                                     if (File.Exists(uninstallPath) == true)
                                     {
                                         Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Uninstalling, 0);
-                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
+                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet", true);
                                     }
                                     else
                                     {
@@ -1159,7 +1177,7 @@ namespace OrderManagerNew
                                     if (File.Exists(uninstallPath) == true)
                                     {
                                         Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Uninstalling, 0);
-                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
+                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet", true);
                                     }
                                     else
                                     {
@@ -1243,7 +1261,7 @@ namespace OrderManagerNew
                                     if (File.Exists(uninstallPath) == true)
                                     {
                                         Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Uninstalling, 0);
-                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet");
+                                        OrderManagerFunc.RunCommandLine(uninstallPath, "/quiet", true);
                                     }
                                     else
                                     {
@@ -2097,6 +2115,7 @@ namespace OrderManagerNew
                 if(tabitem_Cloud.IsEnabled == false)
                     tabitem_Cloud.ToolTip = TranslationSource.Instance["PleaseLoginFirst"];
                 log.RecordConfigLog("Click_FunctionTable_Setting()", "Config changed");
+                ChangeSoftwareFilter();
             }
 
             //主視窗還原

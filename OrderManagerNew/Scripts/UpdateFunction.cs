@@ -15,7 +15,7 @@ namespace OrderManagerNew
     public class UpdateFunction
     {
         #region 變數宣告
-        readonly string HLXMLlink = @"https://inteware.com.tw/updateXML/HLnoLic.xml";//HL.xml網址
+        readonly string HLXMLlink = @"https://inteware.com.tw/updateXML/PrintIn_om.xml";//HL.xml網址
         //string HLXMLlink = "D:\\IntewareInc\\HLnoLic.xml";    //單機測試
         string downloadfilepath;
         LogRecorder log;    //日誌檔cs
@@ -213,7 +213,7 @@ namespace OrderManagerNew
 
                 string param = "/quiet APPDIR=\"" + downloadPath + "\"";
                 OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                omFunc.RunCommandLine(downloadfilepath, param);
+                omFunc.RunCommandLine(downloadfilepath, param, true);
             }
         }
 #endregion

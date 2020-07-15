@@ -1318,4 +1318,8 @@
     <value>MI</value>
     <comment>ImplantNewOrderV2</comment>
   </data>
+  <data name="InitNoSoftwareAsk" xml:space="preserve">
+    <value>Software path is missing.  Do you want to search for the software path automatically?</value>
+    <comment>Message</comment>
+  </data>
 </root>

@@ -1375,6 +1375,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Software path is missing.  Do you want to search for the software path automatically? 的當地語系化字串。
+        /// </summary>
+        internal static string InitNoSoftwareAsk {
+            get {
+                return ResourceManager.GetString("InitNoSoftwareAsk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Inlay / Onlay 的當地語系化字串。
         /// </summary>
         internal static string Inlay___Onlay {

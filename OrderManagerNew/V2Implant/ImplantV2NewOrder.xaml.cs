@@ -1084,6 +1084,7 @@ namespace OrderManagerNew.V2Implant
 
 		private void MaterialRadioBtnClick(object sender, RoutedEventArgs e)
 		{
+            //選女性會閃退bug
             return;
 
 			if (ActiveToothType == (int)ToothType.ToothTypeList.NEIGHBOR || ActiveToothType == 0) 

@@ -19,8 +19,7 @@ namespace OrderManagerLauncher
     /// </summary>
     public partial class Launcher : Window
     {
-        string HLXMLlink = @"https://inteware.com.tw/updateXML/newOM.xml";//newOM.xml網址
-        //string HLXMLlink = @"https://inteware.com.tw/updateXML/newOM_Developer.xml";//newOM_Developer.xml網址
+        string HLXMLlink = @"https://inteware.com.tw/updateXML/PrintIn_om.xml";//newOM.xml網址
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {   // 總是接受
             return true;
@@ -62,20 +61,7 @@ namespace OrderManagerLauncher
                 LocalizationService.SetLanguage("zh-TW");
             else
                 LocalizationService.SetLanguage("en-US");
-
-            string[] args;
-            args = Environment.GetCommandLineArgs();
-            if (args != null && args.Length > 1)
-            {
-                foreach (string argument in args)
-                {
-                    if (argument == "-Developer")
-                    {
-                        HLXMLlink = @"https://inteware.com.tw/updateXML/newOM_Developer.xml";//newOM_Developer.xml網址
-                        break;
-                    }
-                }
-            }
+            
         }
         /// <summary>
         /// 讀取HL.xml的詳細更新資訊
