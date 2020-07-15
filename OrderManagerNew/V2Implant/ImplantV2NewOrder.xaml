@@ -581,10 +581,10 @@
                                 <StackPanel Margin="3">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition />
                                             <ColumnDefinition Width="10" />
                                             <ColumnDefinition Width="100" />
-                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="100"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="26" />

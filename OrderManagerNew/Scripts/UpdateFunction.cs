@@ -213,7 +213,7 @@ namespace OrderManagerNew
 
                 string param = "/quiet APPDIR=\"" + downloadPath + "\"";
                 OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                omFunc.RunCommandLine(downloadfilepath, param);
+                omFunc.RunCommandLine(downloadfilepath, param, true);
             }
         }
 #endregion

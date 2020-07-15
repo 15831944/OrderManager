@@ -28,6 +28,11 @@ namespace UIDialogs
             NO,
             CANCEL
         }
+        public enum _Lang
+        {
+            English = 0,
+            TraditionalChinese
+        }
 
         public int ReturnClickWhitchButton;
         private Point startPos;
@@ -44,6 +49,34 @@ namespace UIDialogs
                 LocalizationService.SetLanguage("zh-TW");
             else
                 LocalizationService.SetLanguage("en-US");
+        }
+        /// <summary>
+        /// 設定語系
+        /// </summary>
+        /// <param name="language">請用列舉_Lang</param>
+        public void SetLanguage(int language)
+        {
+            switch(language)
+            {
+                case (int)_Lang.English:
+                    {
+                        LocalizationService.SetLanguage("en-US");
+                        break;
+                    }
+                case (int)_Lang.TraditionalChinese:
+                    {
+                        LocalizationService.SetLanguage("zh-TW");
+                        break;
+                    }
+            }
+        }
+        /// <summary>
+        /// 設定語系
+        /// </summary>
+        /// <param name="lang">LocalizationService.SetLanguage("參數");</param>
+        public void SetLanguage(string lang)
+        {
+            LocalizationService.SetLanguage(lang);
         }
 
         /// <summary>
@@ -70,7 +103,7 @@ namespace UIDialogs
             ShowMessage(message);
         }
         /// <summary>
-        /// 顯示字串、標題另外再區分MessageBoxButton，內建顯示ShowDialog()
+        /// 顯示字串、標題另外再區分MessageBoxButton，內建顯示ShowDialog()，要找回傳函數請用ReturnClickWhitchButton，用法 if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES )
         /// </summary>
         /// <param name="message"></param>
         /// <param name="titleMessage"></param>
@@ -109,7 +142,7 @@ namespace UIDialogs
             ShowDialog();
         }
         /// <summary>
-        /// 顯示字串、標題、MessageBoxButton還有MessageboxImage，內建顯示ShowDialog()
+        /// 顯示字串、標題、MessageBoxButton還有MessageboxImage，內建顯示ShowDialog()，要找回傳函數請用ReturnClickWhitchButton，用法 if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES )
         /// </summary>
         /// <param name="message"></param>
         /// <param name="titleMessage"></param>

@@ -121,7 +121,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T11.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T11">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -136,7 +136,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T12.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T12">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -151,7 +151,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T13.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T13">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -166,7 +166,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T14.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T14">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -181,7 +181,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T15.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T15">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -196,7 +196,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T16.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T16">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -211,7 +211,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T17.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T17">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -226,7 +226,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T18.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T18">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -245,7 +245,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T21.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T21">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -260,7 +260,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T22.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T22">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -275,7 +275,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T23.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T23">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -290,7 +290,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T24.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T24">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -305,7 +305,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T25.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T25">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -320,7 +320,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T26.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T26">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -335,7 +335,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T27.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T27">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -350,7 +350,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T28.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T28">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -369,7 +369,7 @@
               MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown" RenderTransformOrigin="0.5,0.5"
               Source="ToothImg\None\T31.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T31">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -384,7 +384,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T32.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T32">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -399,7 +399,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T33.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T33">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -414,7 +414,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T34.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T34">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -429,7 +429,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T35.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T35">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -444,7 +444,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T36.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T36">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -459,7 +459,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T37.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T37">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -474,7 +474,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T38.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T38">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -494,7 +494,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T41.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T41">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -509,7 +509,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T42.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T42">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -524,7 +524,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T43.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T43">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -539,7 +539,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T44.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T44">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -554,7 +554,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T45.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T45">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -569,7 +569,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T46.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T46">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -584,7 +584,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T47.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T47">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -599,7 +599,7 @@
               MouseEnter="ToothImg_MouseEnter" MouseLeave="ToothImg_MouseLeave" MouseLeftButtonDown="ToothImg_MouseLBtnDown"
               RenderTransformOrigin="0.5,0.5" Source="ToothImg\None\T48.png" Stretch="None"
               Style="{StaticResource DisToothSelect}"
-              Tag="1">
+              Tag="1" ToolTip="T48">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />

@@ -858,6 +858,40 @@ namespace OrderManagerNew
             OrderManagerFunc_BackgroundWorker.RunWorkerAsync(bgArgs);
         }
         /// <summary>
+        /// CommandLine(命令提示字元)
+        /// </summary>
+        /// <param name="fileName">要開啟的檔案</param>
+        /// <param name="arguments">要傳進去的參數</param>
+        /// <param name="byAdmin">Admin管理員執行</param>
+        public void RunCommandLine(string fileName, string arguments, bool byAdmin)
+        {
+            if (byAdmin == true)
+            {
+                Process processer = new Process();
+                ProcessStartInfo info = new ProcessStartInfo(fileName);
+                
+                info.UseShellExecute = true;
+                info.Verb = "runas";
+                //Process.Start(info);
+                processer.StartInfo = info;
+                if (arguments != "")
+                    processer.StartInfo.Arguments = arguments;
+                processer.Start();
+            }
+            else
+            {
+                OrderManagerFunc_BackgroundWorker = new BackgroundWorker();
+                OrderManagerFunc_BackgroundWorker.DoWork += new DoWorkEventHandler(DoWork_Cmd);
+                OrderManagerFunc_BackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_Cmd);
+                BackgroundArgs bgArgs = new BackgroundArgs
+                {
+                    FileName = fileName,
+                    Arguments = arguments
+                };
+                OrderManagerFunc_BackgroundWorker.RunWorkerAsync(bgArgs);
+            }
+        }
+        /// <summary>
         /// 取得往上第 n 個階層的目錄路徑
         /// </summary>
         /// <param name="path">檔案路徑</param>
