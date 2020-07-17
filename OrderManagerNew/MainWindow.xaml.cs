@@ -88,7 +88,6 @@ namespace OrderManagerNew
             //初始化LogRecorder
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
-            log.RecordConfigLog("OM Startup", Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             //設定Snackbar顯示時間
             var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
@@ -129,7 +128,7 @@ namespace OrderManagerNew
                 foreach(string argument in args)
                 {
                     if (argument == "-Rec") //完整記錄模式
-                        Properties.Settings.Default.FullRecord = true;
+                        Properties.OrderManagerProps.Default.FullRecord = true;
                     else if (argument == "-VerChk")
                     {
                         if (File.Exists("OrderManagerProps.xml") == true)
@@ -168,7 +167,7 @@ namespace OrderManagerNew
                 Custommargin.Bottom = 40;
                 Dev_btnGrid.Margin = Custommargin;
                 Properties.Settings.Default.engineerMode = true;
-                Properties.Settings.Default.FullRecord = true;
+                Properties.OrderManagerProps.Default.FullRecord = true;
                 SnackBarShow(message);
             }
             else
@@ -183,6 +182,7 @@ namespace OrderManagerNew
 
         private void Loaded_MainWindow(object sender, RoutedEventArgs e)
         {
+            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Loaded_MainWindow", "Into func");
             UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
             OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
             //檢查Cookie是否還可以用
@@ -263,6 +263,7 @@ namespace OrderManagerNew
                     ChangeSoftwareFilter();
                 }
             }
+            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Loaded_MainWindow", "fin func");
         }
 
 #region Watcher事件
@@ -477,7 +478,6 @@ namespace OrderManagerNew
                             Properties.OrderManagerProps.Default.systemDisk = "";
                             Properties.Settings.Default.engineerMode = false;
                             Properties.Settings.Default.PingTime = 5;
-                            Properties.Settings.Default.FullRecord = false;
                             Properties.Settings.Default.LastSoftwareFilter = -1;
                             Properties.Settings.Default.AirdentalAcc = "";
                             Properties.Settings.Default.AirdentalCookie = "";
@@ -493,6 +493,11 @@ namespace OrderManagerNew
                             Properties.OrderManagerProps.Default.CaseNameFilter = "";
                             Properties.OrderManagerProps.Default.mostsoftwareDisk = "";
                             Properties.OrderManagerProps.Default.systemDisk = "";
+                            Properties.OrderManagerProps.Default.AirD_uid = "";
+                            Properties.OrderManagerProps.Default.AirD_CAD_Dir = "";
+                            Properties.OrderManagerProps.Default.AirD_Implant_Dir = "";
+                            Properties.OrderManagerProps.Default.AirD_Ortho_Dir = "";
+                            Properties.OrderManagerProps.Default.FullRecord = false;
 
                             Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
                             Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
@@ -500,6 +505,7 @@ namespace OrderManagerNew
                             Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0.0);
                             Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0.0);
                             Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
+                            ChangeSoftwareFilter();
 
                             SnackBarShow("Reset Properties Success");
                             break;

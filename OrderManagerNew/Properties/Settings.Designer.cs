@@ -145,18 +145,6 @@ namespace OrderManagerNew.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool FullRecord {
-            get {
-                return ((bool)(this["FullRecord"]));
-            }
-            set {
-                this["FullRecord"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("-1")]
         public int LastSoftwareFilter {
             get {
