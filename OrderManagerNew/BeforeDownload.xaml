@@ -91,7 +91,7 @@
                   Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
                   x:Name="textbox_InstallPath"
                   Style="{DynamicResource Setting_textbox}"
-                  Text="C:\IntewareInc\SoftwareName" />
+                  Text="C:\PrintIn3D\SoftwareName" />
                 <Button
                   Grid.Row="5" Grid.Column="3" x:Name="Btn_Downloadpath"
                   Margin="0" HorizontalAlignment="Right" Click="Click_OpenFilePath"

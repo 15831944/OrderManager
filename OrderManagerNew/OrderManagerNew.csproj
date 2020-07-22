@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ordermanager.ico</ApplicationIcon>
+    <ApplicationIcon>PrintInOrder.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -353,12 +353,11 @@
     <Resource Include="ImageSource\FunctionTable\icon_O.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ordermanager.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="ImageSource\CaseTable\guide_model.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="PrintInOrder.ico" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="ImageSource\DetailTable\cadDemo.jpg" />
   </ItemGroup>

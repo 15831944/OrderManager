@@ -68,7 +68,7 @@ namespace OrderManagerNew
             if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == true)
                 OriginalSet.DownloadFolder = Properties.Settings.Default.DownloadFolder;
             else
-                OriginalSet.DownloadFolder = Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + @"IntewareTempFile\";
+                OriginalSet.DownloadFolder = Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + @"PrintIn3DTempFile\";
             if (Properties.Settings.Default.sysLanguage == "zh-TW")
                 OriginalSet.Language = (int)_langSupport.zhTW;
             else
@@ -198,7 +198,7 @@ namespace OrderManagerNew
                                 Properties.Settings.Default.DownloadFolder = textbox_Download.Text;
                             else
                             {
-                                Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + "IntewareTempFile\\";
+                                Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + "PrintIn3DTempFile\\";
                             }
 
                             //多國語系
@@ -277,8 +277,8 @@ namespace OrderManagerNew
 
             if (File.Exists(originPah) == true)
                 Dlg.InitialDirectory = Path.GetDirectoryName(originPah);
-            else if (Directory.Exists(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareInc\") == true)
-                Dlg.InitialDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareInc\";
+            else if (Directory.Exists(Properties.OrderManagerProps.Default.mostsoftwareDisk + Properties.OrderManagerProps.Default.OEM_DirName) == true)
+                Dlg.InitialDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + Properties.OrderManagerProps.Default.OEM_DirName;
             else
                 return;
 

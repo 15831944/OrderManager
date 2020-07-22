@@ -16,7 +16,6 @@ namespace OrderManagerNew
     {
         #region 變數宣告
         readonly string HLXMLlink = @"https://inteware.com.tw/updateXML/PrintIn_om.xml";//HL.xml網址
-        //string HLXMLlink = "D:\\IntewareInc\\HLnoLic.xml";    //單機測試
         string downloadfilepath;
         LogRecorder log;    //日誌檔cs
         BackgroundWorker bgWorker_Download;        //申明後臺物件
@@ -151,7 +150,7 @@ namespace OrderManagerNew
 
                         if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == false)
                         {
-                            Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + "IntewareTempFile\\";
+                            Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + "PrintIn3DTempFile\\";
                             Properties.Settings.Default.Save();
                             Directory.CreateDirectory(Properties.Settings.Default.DownloadFolder);
                         }

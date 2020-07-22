@@ -202,5 +202,17 @@ namespace OrderManagerNew.Properties {
                 this["AirD_Ortho_Dir"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OEM_DirName {
+            get {
+                return ((string)(this["OEM_DirName"]));
+            }
+            set {
+                this["OEM_DirName"] = value;
+            }
+        }
     }
 }

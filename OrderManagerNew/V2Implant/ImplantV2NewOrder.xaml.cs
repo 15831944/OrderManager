@@ -135,7 +135,7 @@ namespace OrderManagerNew.V2Implant
 
 
 				//測試
-				//m_implant_path.Text = @"C:\IntewareData\Implant\안녕하세요";
+				//m_implant_path.Text = @"C:\PrintIn3D Data\Implant\안녕하세요";
 
 				LoadImplantInfor();
 

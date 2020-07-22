@@ -84,7 +84,10 @@ namespace OrderManagerNew
         {
             InitializeComponent();
             CheckedSoftwareID = -1;
-            
+
+            Properties.OrderManagerProps.Default.OEM_DirName = @"PrintIn3D\";
+            systemButton_ContactInteware.Visibility = Visibility.Hidden;
+
             //初始化LogRecorder
             log = new LogRecorder();
             titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本

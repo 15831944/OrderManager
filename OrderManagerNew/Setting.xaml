@@ -96,7 +96,7 @@
                     <TextBox
                       Grid.Row="0" Grid.Column="1" x:Name="textbox_EZCAD"
                       Style="{DynamicResource Setting_textbox}"
-                      Text="C:\IntewareInc\EZCAD\Bin\EZCAD.exe" />
+                      Text="C:\PrintIn3D\EZCAD\Bin\EZCAD.exe" />
                     <TextBox
                       Grid.Row="1" Grid.Column="1" x:Name="textbox_Implant"
                       Style="{DynamicResource Setting_textbox}" />

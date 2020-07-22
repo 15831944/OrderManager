@@ -37,7 +37,7 @@
                     <Label
                       Margin="0,0,143,0" VerticalAlignment="Center" Foreground="#FF056840"
                       PreviewMouseDown="MouseDown_TitleBar" PreviewMouseMove="MouseMove_TitleBar">
-                        <Image Height="42" Margin="20,-5,0,0" Source="{StaticResource INTEWARE_TITLE_OrderManagerDrawingImage}" />
+                        <Image Height="42" Margin="20,-5,0,0" Source="{StaticResource PrintIn_TITLE_OrderDrawingImage}" />
                     </Label>
                     <Label
                       x:Name="titlebar_OrderManagerVersion" Margin="250,5,0,0" HorizontalAlignment="Left"

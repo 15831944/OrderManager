@@ -386,7 +386,7 @@ namespace OrderManagerNew
         {
             if(Properties.OrderManagerProps.Default.systemDisk == Properties.OrderManagerProps.Default.mostsoftwareDisk)
             {
-                string AirdentalDir = Properties.OrderManagerProps.Default.systemDisk + @"IntewareData\AirDental\";
+                string AirdentalDir = Properties.OrderManagerProps.Default.systemDisk + @"PrintIn3D Data\AirDental\";
                 if (Directory.Exists(AirdentalDir) == false)
                     Directory.CreateDirectory(AirdentalDir);
                 if (Directory.Exists(AirdentalDir + @"CAD\") == false)
@@ -402,8 +402,8 @@ namespace OrderManagerNew
             }
             else
             {
-                string SysAirdentalDir = Properties.OrderManagerProps.Default.systemDisk + @"IntewareData\AirDental\";
-                string MostDiskAirdentalDir = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\AirDental\";
+                string SysAirdentalDir = Properties.OrderManagerProps.Default.systemDisk + @"PrintIn3D Data\AirDental\";
+                string MostDiskAirdentalDir = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\AirDental\";
 
                 if(Directory.Exists(MostDiskAirdentalDir) == true)
                 {

@@ -281,11 +281,11 @@ namespace OrderManagerNew
             label_TitleBar.Content = TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             label_Header.Content = TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             if(Properties.OrderManagerProps.Default.mostsoftwareDisk != "")
-                textbox_InstallPath.Text = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
+                textbox_InstallPath.Text = Properties.OrderManagerProps.Default.mostsoftwareDisk + Properties.OrderManagerProps.Default.OEM_DirName + SoftwareNameArray[currentSoftwareID] + @"\";
             else if(Properties.OrderManagerProps.Default.systemDisk != "")
-                textbox_InstallPath.Text = Properties.OrderManagerProps.Default.systemDisk + @"IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
+                textbox_InstallPath.Text = Properties.OrderManagerProps.Default.systemDisk + Properties.OrderManagerProps.Default.OEM_DirName + SoftwareNameArray[currentSoftwareID] + @"\";
             else
-                textbox_InstallPath.Text = @"C:\IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
+                textbox_InstallPath.Text = @"C:\PrintIn3D\" + SoftwareNameArray[currentSoftwareID] + @"\";
             jlabel_RequireSpace.Content += ":";
             jlabel_AvailableSpace.Content += ":";
             try
