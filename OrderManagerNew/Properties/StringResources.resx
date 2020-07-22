@@ -1322,4 +1322,8 @@
     <value>Software path is missing.  Do you want to search for the software path automatically?</value>
     <comment>Message</comment>
   </data>
+  <data name="Warning_ImplantProductSelected" xml:space="preserve">
+    <value>Please set implant product on tooth chart</value>
+    <comment>Message</comment>
+  </data>
 </root>
