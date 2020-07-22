@@ -150,12 +150,12 @@ namespace OrderManagerNew
             }
             if(latestVersion == false)
             {
-                OrderManagerFunc.RunCommandLine("OrderManagerLauncher.exe", "");
+                OrderManagerFunc.RunCommandLine("PrintIn Order Launcher.exe", "");
                 Environment.Exit(0);
             }
             LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
             //OrderManager不能多開
-            Process[] MyProcess = Process.GetProcessesByName("OrderManager");
+            Process[] MyProcess = Process.GetProcessesByName("PrintIn Order");
             if (MyProcess.Length > 1)
             {
                 this.Visibility = Visibility.Collapsed;

@@ -266,5 +266,10 @@ namespace UIDialogs
                 DialogResult = true;
             }
         }
+
+        private void Loaded_Main(object sender, RoutedEventArgs e)
+        {
+            systemButton_ContactInteware.IsEnabled = false;
+        }
     }
 }

@@ -94,7 +94,7 @@ namespace OrderManagerLauncher
             {
                 Inteware_Messagebox Msg = new Inteware_Messagebox();
                 Msg.ShowMessage(TranslationSource.Instance["CannotGetnewOMXML"] + TranslationSource.Instance["Contact"]);
-                RunCommandLine("OrderManager.exe", "-VerChk");
+                RunCommandLine("PrintIn Order.exe", "-VerChk");
                 Environment.Exit(0);
             }
         }
@@ -119,7 +119,7 @@ namespace OrderManagerLauncher
             try
             {
                 FileVersionInfo verInfo;
-                verInfo = FileVersionInfo.GetVersionInfo("OrderManager.exe");
+                verInfo = FileVersionInfo.GetVersionInfo("PrintIn Order.exe");
                 if(omInfo.VersionFromWeb > new Version(verInfo.FileVersion))
                     NeedUpdate = true;
             }
@@ -130,12 +130,12 @@ namespace OrderManagerLauncher
 
             if (NeedUpdate == false) //不用更新
             {
-                RunCommandLine("OrderManager.exe", "-VerChk");
+                RunCommandLine("PrintIn Order.exe", "-VerChk");
                 Environment.Exit(0);
             }
             else  //進入更新
             {
-                RunCommandLine("OrderManager.exe", "-ExportProps");//匯出Properties
+                RunCommandLine("PrintIn Order.exe", "-ExportProps");//匯出Properties
                 progressbar_update.IsIndeterminate = false;
                 label_describe.Content = TranslationSource.Instance["Downloading"];
                 BgWorker_Main = new BackgroundWorker();
@@ -197,7 +197,7 @@ namespace OrderManagerLauncher
                         httpResponse.Close();
                         Inteware_Messagebox Msg = new Inteware_Messagebox();
                         Msg.ShowMessage(TranslationSource.Instance["CannotDownloadOM"] + TranslationSource.Instance["Contact"]);
-                        RunCommandLine("OrderManager.exe", "-VerChk");
+                        RunCommandLine("PrintIn Order.exe", "-VerChk");
                         Environment.Exit(0);
                     }
                 }
@@ -205,7 +205,7 @@ namespace OrderManagerLauncher
                 {
                     Inteware_Messagebox Msg = new Inteware_Messagebox();
                     Msg.ShowMessage(TranslationSource.Instance["DownloadingError"] + TranslationSource.Instance["Contact"]);
-                    RunCommandLine("OrderManager.exe", "-VerChk");
+                    RunCommandLine("PrintIn Order.exe", "-VerChk");
                     Environment.Exit(0);
                 }
             }
@@ -239,7 +239,7 @@ namespace OrderManagerLauncher
             }
             else
             {
-                RunCommandLine("OrderManager.exe", "-VerChk");
+                RunCommandLine("PrintIn Order.exe", "-VerChk");
                 Thread.Sleep(1000);
                 Environment.Exit(0);
             }
@@ -262,7 +262,7 @@ namespace OrderManagerLauncher
             {
                 Inteware_Messagebox Msg = new Inteware_Messagebox();
                 Msg.ShowMessage(TranslationSource.Instance["UnpackingError"] + TranslationSource.Instance["Contact"]);
-                RunCommandLine("OrderManager.exe", "-VerChk");
+                RunCommandLine("PrintIn Order.exe", "-VerChk");
                 Environment.Exit(0);
             }
         }
@@ -270,7 +270,7 @@ namespace OrderManagerLauncher
         {
             if (File.Exists(DownloadFileName) == true)
                 File.Delete(DownloadFileName);
-            RunCommandLine("OrderManager.exe", "-VerChk");
+            RunCommandLine("PrintIn Order.exe", "-VerChk");
             Environment.Exit(0);
         }
 
