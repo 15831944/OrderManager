@@ -1306,7 +1306,24 @@ namespace OrderManagerNew.V2Implant
 					return;
 				}
 
-				Process_Neworder.Visibility = Visibility.Visible;
+                bool product_selected = false;
+                for (int i = 1; i <= 32; i++)
+                {
+                    if (ToothData[i - 1].Product != "")
+                    {
+                        product_selected = true;
+                        break;
+                    }
+                }
+
+                if (!product_selected)
+                {
+                    Inteware_Messagebox Msg = new Inteware_Messagebox();
+                    Msg.ShowMessage(TranslationSource.Instance["Warning_ImplantProductSelected"], TranslationSource.Instance["CreateOrder"] + TranslationSource.Instance["Error"], MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                Process_Neworder.Visibility = Visibility.Visible;
 				Process_Neworder.Minimum = 1;
 				Process_Neworder.Value = 1;
 				Process_Neworder.Maximum = 100;

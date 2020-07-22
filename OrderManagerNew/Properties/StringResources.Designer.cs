@@ -2752,6 +2752,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Please set implant product on tooth chart 的當地語系化字串。
+        /// </summary>
+        internal static string Warning_ImplantProductSelected {
+            get {
+                return ResourceManager.GetString("Warning_ImplantProductSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Workflow 的當地語系化字串。
         /// </summary>
         internal static string Workflow {
