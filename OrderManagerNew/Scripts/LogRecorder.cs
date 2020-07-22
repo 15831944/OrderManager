@@ -35,7 +35,7 @@ namespace OrderManagerNew
         /// <returns></returns>
         public void RecordLog(string Row,string Block, string logMessage)
         {
-            if (Properties.Settings.Default.FullRecord == false)
+            if (Properties.OrderManagerProps.Default.FullRecord == false)
                 return;
 
             using (StreamWriter w = File.AppendText("OrderManager.log"))
@@ -54,7 +54,7 @@ namespace OrderManagerNew
         /// <returns></returns>
         public void RecordLogContinue(string Row, string Block, string logMessage)
         {
-            if (Properties.Settings.Default.FullRecord == false)
+            if (Properties.OrderManagerProps.Default.FullRecord == false)
                 return;
 
             using (StreamWriter w = File.AppendText("OrderManager.log"))
@@ -72,7 +72,7 @@ namespace OrderManagerNew
         /// <returns></returns>
         public void RecordConfigLog(string Block, string logMessage)
         {
-            if (Properties.Settings.Default.FullRecord == false)
+            if (Properties.OrderManagerProps.Default.FullRecord == false)
                 return;
 
             using (StreamWriter w = File.AppendText("OrderManager.log"))
@@ -86,7 +86,7 @@ namespace OrderManagerNew
         /// </summary>
         public void RecordLogSaperate()
         {
-            if (Properties.Settings.Default.FullRecord == false)
+            if (Properties.OrderManagerProps.Default.FullRecord == false)
                 return;
 
             using (StreamWriter w = File.AppendText("OrderManager.log"))
@@ -103,7 +103,7 @@ namespace OrderManagerNew
         /// <param name="w"></param>
         private void ConfigLog(string Block, string logMessage, TextWriter w)
         {
-            if (Properties.Settings.Default.FullRecord == false)
+            if (Properties.OrderManagerProps.Default.FullRecord == false)
                 return;
 
             w.Write("\r\nLog Entry : ");
@@ -130,7 +130,7 @@ namespace OrderManagerNew
         
         private void SeprateLog( TextWriter w)
         {
-            if (Properties.Settings.Default.FullRecord == false)
+            if (Properties.OrderManagerProps.Default.FullRecord == false)
                 return;
 
             w.WriteLine("-------------------------------");
