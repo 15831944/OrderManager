@@ -21,6 +21,7 @@ namespace OrderManagerLauncher
     {
         string HLXMLlink = @"https://inteware.com.tw/updateXML/newOM.xml";//newOM.xml網址
         //string HLXMLlink = @"https://inteware.com.tw/updateXML/newOM_Developer.xml";//newOM_Developer.xml網址
+        bool FullRecord;
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {   // 總是接受
             return true;
@@ -57,14 +58,15 @@ namespace OrderManagerLauncher
         {
             InitializeComponent();
             NeedUpdate = false;
+            FullRecord = false;
+
             string systemName = System.Globalization.CultureInfo.CurrentCulture.Name; // 取得電腦語系
             if (systemName == "zh-TW")
                 LocalizationService.SetLanguage("zh-TW");
             else
                 LocalizationService.SetLanguage("en-US");
-
-            string[] args;
-            args = Environment.GetCommandLineArgs();
+            
+            string[] args = Environment.GetCommandLineArgs();
             if (args != null && args.Length > 1)
             {
                 foreach (string argument in args)
@@ -73,6 +75,23 @@ namespace OrderManagerLauncher
                     {
                         HLXMLlink = @"https://inteware.com.tw/updateXML/newOM_Developer.xml";//newOM_Developer.xml網址
                         break;
+                    }
+                    else if (argument == "-Rec") //完整記錄模式
+                        FullRecord = true;
+                    else if (argument == "-VerChk")
+                    {
+                        foreach (string item in args)
+                        {
+                            if (item == "-Rec")
+                            {
+                                FullRecord = true;
+                                break;
+                            }
+                        }
+                        if (FullRecord == true)
+                            RunCommandLine("PrintIn Order.exe", "-VerChk -Rec");
+                        else
+                            RunCommandLine("PrintIn Order.exe", "-VerChk");
                     }
                 }
             }
