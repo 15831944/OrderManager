@@ -308,7 +308,7 @@ namespace OrderManagerNew
             }
             catch (Exception ex)
             {
-                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs Initial exception", ex.Message);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs LoadHLXml() exception", ex.Message);
             }
         }
         /// <summary>
@@ -426,49 +426,58 @@ namespace OrderManagerNew
         /// </summary>
         public void ExportPropertiesXml()
         {
-            XmlDocument doc = new XmlDocument();
-            XmlNode rootNode = doc.CreateElement("Properties");
-            doc.AppendChild(rootNode);
-            XmlNode Xnode = doc.CreateElement("sysLanguage");
-            Xnode.InnerText = Properties.Settings.Default.sysLanguage;
-            rootNode.AppendChild(Xnode);
-            Xnode = doc.CreateElement("cad_exePath");
-            Xnode.InnerText = Properties.Settings.Default.cad_exePath;
-            rootNode.AppendChild(Xnode);
-            Xnode = doc.CreateElement("implant_exePath");
-            Xnode.InnerText = Properties.Settings.Default.implant_exePath;
-            rootNode.AppendChild(Xnode);
-            Xnode = doc.CreateElement("ortho_exePath");
-            Xnode.InnerText = Properties.Settings.Default.ortho_exePath;
-            rootNode.AppendChild(Xnode);
-            Xnode = doc.CreateElement("tray_exePath");
-            Xnode.InnerText = Properties.Settings.Default.tray_exePath;
-            rootNode.AppendChild(Xnode);
-            Xnode = doc.CreateElement("splint_exePath");
-            Xnode.InnerText = Properties.Settings.Default.splint_exePath;
-            rootNode.AppendChild(Xnode);
-            Xnode = doc.CreateElement("guide_exePath");
-            Xnode.InnerText = Properties.Settings.Default.guide_exePath;
-            rootNode.AppendChild(Xnode);
-            Xnode = doc.CreateElement("DownloadFolder");
-            Xnode.InnerText = Properties.Settings.Default.DownloadFolder;
-            rootNode.AppendChild(Xnode);
-            Xnode = doc.CreateElement("PingTime");
-            Xnode.InnerText = Properties.Settings.Default.PingTime.ToString();
-            rootNode.AppendChild(Xnode);
-            Xnode = doc.CreateElement("LastSoftwareFilter");
-            Xnode.InnerText = Properties.Settings.Default.LastSoftwareFilter.ToString();
-            rootNode.AppendChild(Xnode);
-            Xnode = doc.CreateElement("AirdentalAcc");
-            Xnode.InnerText = Properties.Settings.Default.AirdentalAcc;
-            rootNode.AppendChild(Xnode);
-            Xnode = doc.CreateElement("AirdentalCookie");
-            Xnode.InnerText = Properties.Settings.Default.AirdentalCookie;
-            rootNode.AppendChild(Xnode);
-            Xnode = doc.CreateElement("showCloudOrderNumbers");
-            Xnode.InnerText = Properties.Settings.Default.showCloudOrderNumbers.ToString();
-            rootNode.AppendChild(Xnode);
-            doc.Save("OrderManagerProps.xml");
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                XmlNode rootNode = doc.CreateElement("Properties");
+                doc.AppendChild(rootNode);
+                XmlNode Xnode = doc.CreateElement("sysLanguage");
+                Xnode.InnerText = Properties.Settings.Default.sysLanguage;
+                rootNode.AppendChild(Xnode);
+                Xnode = doc.CreateElement("cad_exePath");
+                Xnode.InnerText = Properties.Settings.Default.cad_exePath;
+                rootNode.AppendChild(Xnode);
+                Xnode = doc.CreateElement("implant_exePath");
+                Xnode.InnerText = Properties.Settings.Default.implant_exePath;
+                rootNode.AppendChild(Xnode);
+                Xnode = doc.CreateElement("ortho_exePath");
+                Xnode.InnerText = Properties.Settings.Default.ortho_exePath;
+                rootNode.AppendChild(Xnode);
+                Xnode = doc.CreateElement("tray_exePath");
+                Xnode.InnerText = Properties.Settings.Default.tray_exePath;
+                rootNode.AppendChild(Xnode);
+                Xnode = doc.CreateElement("splint_exePath");
+                Xnode.InnerText = Properties.Settings.Default.splint_exePath;
+                rootNode.AppendChild(Xnode);
+                Xnode = doc.CreateElement("guide_exePath");
+                Xnode.InnerText = Properties.Settings.Default.guide_exePath;
+                rootNode.AppendChild(Xnode);
+                Xnode = doc.CreateElement("DownloadFolder");
+                Xnode.InnerText = Properties.Settings.Default.DownloadFolder;
+                rootNode.AppendChild(Xnode);
+                Xnode = doc.CreateElement("PingTime");
+                Xnode.InnerText = Properties.Settings.Default.PingTime.ToString();
+                rootNode.AppendChild(Xnode);
+                Xnode = doc.CreateElement("LastSoftwareFilter");
+                Xnode.InnerText = Properties.Settings.Default.LastSoftwareFilter.ToString();
+                rootNode.AppendChild(Xnode);
+                Xnode = doc.CreateElement("AirdentalAcc");
+                Xnode.InnerText = Properties.Settings.Default.AirdentalAcc;
+                rootNode.AppendChild(Xnode);
+                Xnode = doc.CreateElement("AirdentalCookie");
+                Xnode.InnerText = Properties.Settings.Default.AirdentalCookie;
+                rootNode.AppendChild(Xnode);
+                Xnode = doc.CreateElement("showCloudOrderNumbers");
+                Xnode.InnerText = Properties.Settings.Default.showCloudOrderNumbers.ToString();
+                rootNode.AppendChild(Xnode);
+                doc.Save("OrderManagerProps.xml");
+            }
+            catch(Exception ex)
+            {
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs ExportPropertiesXml()_exception", ex.Message);
+                return;
+            }
+            
         }
         /// <summary>
         /// 匯入Properties
@@ -521,8 +530,9 @@ namespace OrderManagerNew
                 catch { }
                 
             }
-            catch
+            catch(Exception ex)
             {
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs ImportPropertiesXml()_exception", ex.Message);
                 return;
             }
         }

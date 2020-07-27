@@ -88,42 +88,105 @@ namespace OrderManagerNew
             Properties.OrderManagerProps.Default.OEM_DirName = @"PrintIn3D\";
             systemButton_ContactInteware.Visibility = Visibility.Hidden;
 
-            //初始化LogRecorder
-            log = new LogRecorder();
-            titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
-            log.RecordConfigLog("OM Startup", Assembly.GetExecutingAssembly().GetName().Version.ToString());
-
-            //設定Snackbar顯示時間
-            var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
-            SnackbarMain.MessageQueue = myMessageQueue;
-            MainsnackbarMessageQueue = SnackbarMain.MessageQueue;
-            Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(500));    //設定動畫流暢度
-            //專案Function
-            ProjHandle = new ProjectHandle();
-            ProjHandle.CaseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
-            //OrderManager常用Function
-            OrderManagerFunc = new OrderManagerFunctions();
-            OrderManagerFunc.SoftwareLogoShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler(Handler_setSoftwareShow);
-            OrderManagerFunc.SoftwareVersionShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler2(Handler_setSoftwareVersion);
-            //更新Function
-            UpdateFunc = new UpdateFunction();
-            UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
-            UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
-            UpdateFunc.SoftwareUpdateEvent += new UpdateFunction.softwareUpdateStatusHandler(Handler_SetSoftwareUpdateButtonStatus);
-            //Airdental通道
-            AirDentalProjHandle = new AirDentalProjectHandle
+            try
             {
-                Airdental = new Dll_Airdental.Main()
-            };
-            AirDentalProjHandle.Handler_snackbarShow += new AirDentalProjectHandle.AirDentalProjHandleEventHandler_snackbar(SnackBarShow);
-            AirDentalProjHandle.AirdentalProjectShowEvent += new AirDentalProjectHandle.caseShowEventHandler(Handler_SetCaseShow_Airdental);
-            AirDentalProjHandle.Main_orthoSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler(CloudCaseHandler_Ortho_showSingleProject);
-            AirDentalProjHandle.Main_orthoSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler2(CloudCaseHandler_Ortho_showDetail);
-            AirDentalProjHandle.Main_implantSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_implantBaseEventHandler(CloudCaseHandler_Implant_showSingleProject);
-            AirDentalProjHandle.Main_implantSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_implantBaseEventHandler2(CloudCaseHandler_Implant_showDetail);
-            AirDentalProjHandle.Main_cadSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_cadBaseEventHandler(CloudCaseHandler_CAD_showSingleProject);
-            AirDentalProjHandle.Main_cadSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_cadBaseEventHandler2(CloudCaseHandler_CAD_showDetail);
+                //初始化LogRecorder
+                log = new LogRecorder();
+                titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
+                log.RecordConfigLog("OM Startup", Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            }
+            catch(Exception ex)
+            {
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message, "Init LogRecorder error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(0);
+            }
+            
+            try
+            {
+                //設定Snackbar顯示時間
+                var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
+                SnackbarMain.MessageQueue = myMessageQueue;
+                MainsnackbarMessageQueue = SnackbarMain.MessageQueue;
+                Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(500));    //設定動畫流暢度
+            }
+            catch(Exception ex)
+            {
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message, "Init myMessageQueue error", MessageBoxButton.OK, MessageBoxImage.Error);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Init myMessageQueue error", ex.Message);
+                Environment.Exit(0);
+            }
+            
+            try
+            {
+                //專案Function
+                ProjHandle = new ProjectHandle();
+                ProjHandle.CaseShowEvent += new ProjectHandle.caseShowEventHandler(Handler_SetCaseShow);
+            }
+            catch(Exception ex)
+            {
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message, "Init ProjectHandle error", MessageBoxButton.OK, MessageBoxImage.Error);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Init ProjectHandle error", ex.Message);
+                Environment.Exit(0);
+            }
+            
+            try
+            {
+                //OrderManager常用Function
+                OrderManagerFunc = new OrderManagerFunctions();
+                OrderManagerFunc.SoftwareLogoShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler(Handler_setSoftwareShow);
+                OrderManagerFunc.SoftwareVersionShowEvent += new OrderManagerFunctions.softwareLogoShowEventHandler2(Handler_setSoftwareVersion);
+            }
+            catch(Exception ex)
+            {
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message, "Init OrderManagerFunctions error", MessageBoxButton.OK, MessageBoxImage.Error);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Init Inteware_Messagebox error", ex.Message);
+                Environment.Exit(0);
+            }
+            
+            try
+            {
+                //更新Function
+                UpdateFunc = new UpdateFunction();
+                UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
+                UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
+                UpdateFunc.SoftwareUpdateEvent += new UpdateFunction.softwareUpdateStatusHandler(Handler_SetSoftwareUpdateButtonStatus);
+            }
+            catch(Exception ex)
+            {
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message, "Init UpdateFunction error", MessageBoxButton.OK, MessageBoxImage.Error);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Init UpdateFunction error", ex.Message);
+                Environment.Exit(0);
+            }
 
+            try
+            {
+                //Airdental通道
+                AirDentalProjHandle = new AirDentalProjectHandle
+                {
+                    Airdental = new Dll_Airdental.Main()
+                };
+                AirDentalProjHandle.Handler_snackbarShow += new AirDentalProjectHandle.AirDentalProjHandleEventHandler_snackbar(SnackBarShow);
+                AirDentalProjHandle.AirdentalProjectShowEvent += new AirDentalProjectHandle.caseShowEventHandler(Handler_SetCaseShow_Airdental);
+                AirDentalProjHandle.Main_orthoSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler(CloudCaseHandler_Ortho_showSingleProject);
+                AirDentalProjHandle.Main_orthoSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_orthoBaseEventHandler2(CloudCaseHandler_Ortho_showDetail);
+                AirDentalProjHandle.Main_implantSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_implantBaseEventHandler(CloudCaseHandler_Implant_showSingleProject);
+                AirDentalProjHandle.Main_implantSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_implantBaseEventHandler2(CloudCaseHandler_Implant_showDetail);
+                AirDentalProjHandle.Main_cadSetAirDentalProjectShow += new AirDentalProjectHandle.AirD_cadBaseEventHandler(CloudCaseHandler_CAD_showSingleProject);
+                AirDentalProjHandle.Main_cadSetSmallOrderDetailShow += new AirDentalProjectHandle.AirD_cadBaseEventHandler2(CloudCaseHandler_CAD_showDetail);
+            }
+            catch(Exception ex)
+            {
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message, "Init AirDentalProjectHandle error", MessageBoxButton.OK, MessageBoxImage.Error);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Init AirDentalProjectHandle error", ex.Message);
+                Environment.Exit(0);
+            }
+            
             string[] args;
             bool latestVersion = false;
             args = Environment.GetCommandLineArgs();
@@ -151,9 +214,22 @@ namespace OrderManagerNew
             if(latestVersion == false)
             {
                 OrderManagerFunc.RunCommandLine("PrintIn Order Launcher.exe", "");
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Switch to Order Launcher", "latestVersion == false");
                 Environment.Exit(0);
             }
-            LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
+
+            try
+            {
+                LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
+            }
+            catch(Exception ex)
+            {
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message, "Init SetLanguage error", MessageBoxButton.OK, MessageBoxImage.Error);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Init SetLanguage error", ex.Message);
+                Environment.Exit(0);
+            }
+            
             //OrderManager不能多開
             Process[] MyProcess = Process.GetProcessesByName("PrintIn Order");
             if (MyProcess.Length > 1)
@@ -162,25 +238,35 @@ namespace OrderManagerNew
                 MyProcess[0].Kill(); //關閉執行中的程式
             }
 
-            //工程師模式切換
-            if (developerMode == true)
+            try
             {
-                //開發者模式
-                string message = "Developer Mode";
-                Thickness Custommargin = Dev_btnGrid.Margin;
-                Custommargin.Bottom = 40;
-                Dev_btnGrid.Margin = Custommargin;
-                Properties.Settings.Default.engineerMode = true;
-                Properties.Settings.Default.FullRecord = true;
-                SnackBarShow(message);
+                //工程師模式切換
+                if (developerMode == true)
+                {
+                    //開發者模式
+                    string message = "Developer Mode";
+                    Thickness Custommargin = Dev_btnGrid.Margin;
+                    Custommargin.Bottom = 40;
+                    Dev_btnGrid.Margin = Custommargin;
+                    Properties.Settings.Default.engineerMode = true;
+                    Properties.Settings.Default.FullRecord = true;
+                    SnackBarShow(message);
+                }
+                else
+                {
+                    //使用者模式
+                    Thickness Custommargin = Dev_btnGrid.Margin;
+                    Custommargin.Bottom = -120;
+                    Dev_btnGrid.Margin = Custommargin;
+                    Properties.Settings.Default.engineerMode = false;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                //使用者模式
-                Thickness Custommargin = Dev_btnGrid.Margin;
-                Custommargin.Bottom = -120;
-                Dev_btnGrid.Margin = Custommargin;
-                Properties.Settings.Default.engineerMode = false;
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message, "DeveloperMode switch error", MessageBoxButton.OK, MessageBoxImage.Error);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "DeveloperMode switch error", ex.Message);
+                Environment.Exit(0);
             }
         }
 

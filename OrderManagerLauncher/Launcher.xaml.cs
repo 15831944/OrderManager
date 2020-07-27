@@ -20,6 +20,7 @@ namespace OrderManagerLauncher
     public partial class Launcher : Window
     {
         string HLXMLlink = @"https://inteware.com.tw/updateXML/PrintIn_om.xml";//newOM.xml網址
+        bool FullRecord;
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {   // 總是接受
             return true;
@@ -56,12 +57,39 @@ namespace OrderManagerLauncher
         {
             InitializeComponent();
             NeedUpdate = false;
+            FullRecord = false;
+
             string systemName = System.Globalization.CultureInfo.CurrentCulture.Name; // 取得電腦語系
             if (systemName == "zh-TW")
                 LocalizationService.SetLanguage("zh-TW");
             else
                 LocalizationService.SetLanguage("en-US");
-            
+
+            string[] args = Environment.GetCommandLineArgs();
+            if (args != null && args.Length > 1)
+            {
+                foreach (string argument in args)
+                {
+                    if (argument == "-Rec") //完整記錄模式
+                        FullRecord = true;
+                    else if (argument == "-VerChk")
+                    {
+                        foreach(string item in args)
+                        {
+                            if(item == "-Rec")
+                            {
+                                FullRecord = true;
+                                break;
+                            }
+                        }
+                        if(FullRecord == true)
+                            RunCommandLine("PrintIn Order.exe", "-VerChk -Rec");
+                        else
+                            RunCommandLine("PrintIn Order.exe", "-VerChk");
+                    }
+                }
+            }
+
         }
         /// <summary>
         /// 讀取HL.xml的詳細更新資訊

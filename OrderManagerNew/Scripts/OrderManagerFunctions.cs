@@ -6,8 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Effects;
 using System.Xml;
 using System.Xml.Linq;
+using UIDialogs;
 
 namespace OrderManagerNew
 {
@@ -94,138 +96,146 @@ namespace OrderManagerNew
         /// </summary>
         public void DoubleCheckEXEexist()
         {
-            var recDisk = new List<Tuple<string, int>>();
-            FileVersionInfo verInfo;
-            void AddDataToRecDisk(string exePathRoot)
+            try
             {
-                if(recDisk.Count == 0)
+                var recDisk = new List<Tuple<string, int>>();
+                FileVersionInfo verInfo;
+                void AddDataToRecDisk(string exePathRoot)
                 {
-                    recDisk.Add(Tuple.Create(exePathRoot, 1));
+                    if (recDisk.Count == 0)
+                    {
+                        recDisk.Add(Tuple.Create(exePathRoot, 1));
+                    }
+                    else
+                    {
+                        bool haveRec = false;
+                        for (int i = 0; i < recDisk.Count; i++)
+                        {
+                            if (recDisk[i].Item1 == exePathRoot)
+                            {
+                                int count = recDisk[i].Item2 + 1;
+                                recDisk.RemoveAt(i);
+                                recDisk.Add(Tuple.Create(exePathRoot, count));
+                                haveRec = true;
+                                i++;
+                            }
+                        }
+                        if (haveRec == false)
+                            recDisk.Add(Tuple.Create(exePathRoot, 1));
+                    }
+                }
+
+                if (File.Exists(Properties.Settings.Default.cad_exePath) == true)
+                {
+                    SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
+                    verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
+                    SoftwareVersionShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, verInfo.FileVersion);
+                    AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.cad_exePath));
                 }
                 else
                 {
-                    bool haveRec = false;
-                    for(int i=0; i<recDisk.Count; i++)
+                    Properties.Settings.Default.cad_exePath = "";
+                    SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
+                }
+                if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
+                {
+                    SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
+                    verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.implant_exePath);
+                    SoftwareVersionShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, verInfo.FileVersion);
+                    AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.implant_exePath));
+                }
+                else
+                {
+                    Properties.Settings.Default.implant_exePath = "";
+                    SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
+                }
+                if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
+                {
+                    SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
+                    verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.ortho_exePath);
+                    SoftwareVersionShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, verInfo.FileVersion);
+                    AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.ortho_exePath));
+                }
+                else
+                {
+                    Properties.Settings.Default.ortho_exePath = "";
+                    SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0.0);
+                }
+                if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
+                {
+                    SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
+                    verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.tray_exePath);
+                    SoftwareVersionShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, verInfo.FileVersion);
+                    AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.tray_exePath));
+                }
+                else
+                {
+                    Properties.Settings.Default.tray_exePath = "";
+                    SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0.0);
+                }
+                if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
+                {
+                    SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
+                    verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.splint_exePath);
+                    SoftwareVersionShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, verInfo.FileVersion);
+                    AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.splint_exePath));
+                }
+                else
+                {
+                    Properties.Settings.Default.splint_exePath = "";
+                    SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0.0);
+                }
+                if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
+                {
+                    SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
+                    verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.guide_exePath);
+                    SoftwareVersionShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, verInfo.FileVersion);
+                    AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.guide_exePath));
+                }
+                else
+                {
+                    Properties.Settings.Default.guide_exePath = "";
+                    SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
+                }
+                //取得mostsoftwareDisk資料
+                if (recDisk.Count > 0)
+                {
+                    var mostSoftwareDisk = new Tuple<string, int>("", 0);
+                    for (int i = 0; i < recDisk.Count; i++)
                     {
-                        if (recDisk[i].Item1 == exePathRoot)
+                        if (mostSoftwareDisk.Item1 == "")
+                            mostSoftwareDisk = recDisk[i];
+                        else if (recDisk[i].Item2 > mostSoftwareDisk.Item2)
+                            mostSoftwareDisk = recDisk[i];
+                    }
+                    Properties.OrderManagerProps.Default.mostsoftwareDisk = mostSoftwareDisk.Item1;
+                }
+
+                //取得systemDisk資料
+                if (Directory.Exists(Properties.OrderManagerProps.Default.systemDisk) == false)
+                {
+                    DriveInfo[] allDrives = DriveInfo.GetDrives();
+                    foreach (DriveInfo diskInfo in allDrives)  //檢查客戶所有磁碟
+                    {
+                        try
                         {
-                            int count = recDisk[i].Item2 +1;
-                            recDisk.RemoveAt(i);
-                            recDisk.Add(Tuple.Create(exePathRoot, count));
-                            haveRec = true;
-                            i++;
+                            if (File.Exists(diskInfo.Name + @"Windows\explorer.exe") == true)
+                            {
+                                Properties.OrderManagerProps.Default.systemDisk = diskInfo.Name;
+                                break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foreach to check have explorer", ex.Message);
                         }
                     }
-                    if(haveRec == false)
-                        recDisk.Add(Tuple.Create(exePathRoot, 1));
                 }
             }
-
-            if(File.Exists(Properties.Settings.Default.cad_exePath) == true)
+            catch(Exception ex)
             {
-                SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
-                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
-                SoftwareVersionShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, verInfo.FileVersion);
-                AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.cad_exePath));
-            }
-            else
-            {
-                Properties.Settings.Default.cad_exePath = "";
-                SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.NotInstall, 0.0);
-            }
-            if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
-            {
-                SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
-                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.implant_exePath);
-                SoftwareVersionShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, verInfo.FileVersion);
-                AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.implant_exePath));
-            }
-            else
-            {
-                Properties.Settings.Default.implant_exePath = "";
-                SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.NotInstall, 0.0);
-            }
-            if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
-            {
-                SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
-                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.ortho_exePath);
-                SoftwareVersionShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, verInfo.FileVersion);
-                AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.ortho_exePath));
-            }
-            else
-            {
-                Properties.Settings.Default.ortho_exePath = "";
-                SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.NotInstall, 0.0);
-            }
-            if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
-            {
-                SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
-                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.tray_exePath);
-                SoftwareVersionShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, verInfo.FileVersion);
-                AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.tray_exePath));
-            }
-            else
-            {
-                Properties.Settings.Default.tray_exePath = "";
-                SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.NotInstall, 0.0);
-            }
-            if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
-            {
-                SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
-                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.splint_exePath);
-                SoftwareVersionShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, verInfo.FileVersion);
-                AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.splint_exePath));
-            }
-            else
-            {
-                Properties.Settings.Default.splint_exePath = "";
-                SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.NotInstall, 0.0);
-            }
-            if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
-            {
-                SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
-                verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.guide_exePath);
-                SoftwareVersionShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, verInfo.FileVersion);
-                AddDataToRecDisk(Path.GetPathRoot(Properties.Settings.Default.guide_exePath));
-            }
-            else
-            {
-                Properties.Settings.Default.guide_exePath = "";
-                SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.NotInstall, 0.0);
-            }
-            //取得mostsoftwareDisk資料
-            if(recDisk.Count > 0)
-            {
-                var mostSoftwareDisk = new Tuple<string, int>("", 0);
-                for (int i=0; i<recDisk.Count; i++)
-                {
-                    if (mostSoftwareDisk.Item1 == "")
-                        mostSoftwareDisk = recDisk[i];
-                    else if (recDisk[i].Item2 > mostSoftwareDisk.Item2)
-                        mostSoftwareDisk = recDisk[i];
-                }
-                Properties.OrderManagerProps.Default.mostsoftwareDisk = mostSoftwareDisk.Item1;
-            }
-
-            //取得systemDisk資料
-            if (Directory.Exists(Properties.OrderManagerProps.Default.systemDisk) == false)
-            {
-                DriveInfo[] allDrives = DriveInfo.GetDrives();
-                foreach (DriveInfo diskInfo in allDrives)  //檢查客戶所有磁碟
-                {
-                    try
-                    {
-                        if (File.Exists(diskInfo.Name + @"Windows\explorer.exe") == true)
-                        {
-                            Properties.OrderManagerProps.Default.systemDisk = diskInfo.Name;
-                            break;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "foreach to check have explorer", ex.Message);
-                    }
-                }
+                Handler_snackbarShow(ex.Message);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs DoubleCheckExExist()_exception", ex.Message);
             }
         }
         /// <summary>
