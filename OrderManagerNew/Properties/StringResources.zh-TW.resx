@@ -231,9 +231,6 @@
   <data name="Install" xml:space="preserve">
     <value>安裝</value>
   </data>
-  <data name="ChooseLocationToInstall" xml:space="preserve">
-    <value>選擇安裝位置:</value>
-  </data>
   <data name="SpaceRequired" xml:space="preserve">
     <value>所需磁碟空間</value>
   </data>
@@ -1022,5 +1019,14 @@
   </data>
   <data name="Warning_ImplantProductSelected" xml:space="preserve">
     <value>請在植牙齒位設定植體產品</value>
+  </data>
+  <data name="OMVer" xml:space="preserve">
+    <value>OrderManager 軟體版本</value>
+  </data>
+  <data name="CheckVer" xml:space="preserve">
+    <value>檢查軟體版本</value>
+  </data>
+  <data name="ChooseLocationToInstall" xml:space="preserve">
+    <value>選擇安裝位置:</value>
   </data>
 </root>

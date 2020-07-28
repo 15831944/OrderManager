@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using Path = System.IO.Path;
@@ -82,6 +84,7 @@ namespace OrderManagerNew
             textbox_Guide.Text = OriginalSet.Guide_exePath;
             textbox_Download.Text = OriginalSet.DownloadFolder;
             comboboxLanguage.SelectedIndex = OriginalSet.Language;
+            label_version.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
         
         private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
@@ -330,6 +333,13 @@ namespace OrderManagerNew
                         }
                 }
             }
+        }
+
+        private void MouseLeftButtonUp_checkVersion(object sender, RoutedEventArgs e)
+        {
+            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+            omFunc.RunCommandLine("OrderManagerLauncher.exe", "-NeedUpdate");
+            Environment.Exit(0);
         }
     }
 }

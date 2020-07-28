@@ -2,7 +2,7 @@
   x:Class="OrderManagerNew.Setting" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OrderManagerNew" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Title="Setting" Width="500"
-  Height="500" AllowsTransparency="True"
+  Height="560" AllowsTransparency="True"
   Background="{DynamicResource Common_DarkBackGround}"
   ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
   WindowStyle="None" mc:Ignorable="d">
@@ -50,6 +50,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="24" />
                     <RowDefinition />
+                    <RowDefinition Height="60" />
                     <RowDefinition Height="60" />
                     <RowDefinition Height="42" />
                 </Grid.RowDefinitions>
@@ -132,23 +133,58 @@
                       Grid.Row="6" Grid.Column="2" x:Name="Btn_Downloadpath"
                       Style="{DynamicResource folderOpen}" />
                 </Grid>
-                <Grid Grid.Row="2" Margin="0,12">
+                <Grid Grid.Row="2" Grid.RowSpan="2" Margin="0,12">
+                    <Grid.Resources>
+                        <Style x:Key="AllLabel" TargetType="{x:Type Label}">
+                            <Setter Property="FontFamily" Value="Arial" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="HorizontalAlignment" Value="Left" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                        <Style x:Key="forgotLabel" BasedOn="{StaticResource AllLabel}" TargetType="{x:Type Label}">
+                            <Setter Property="Foreground" Value="{StaticResource Common_OrangeTitleBar}" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="#FFFFB14A" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
-                        <ColumnDefinition Width="197" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="140" />
                     </Grid.ColumnDefinitions>
 
-                    <Rectangle Grid.Column="0" Grid.ColumnSpan="2" Fill="{DynamicResource background_WhiteCaseTable}" />
-                    <Label Grid.Column="0" Content="語言/Language" />
+                    <Rectangle
+                      Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                      Fill="{DynamicResource background_WhiteCaseTable}" />
+                    <Label Grid.Row="0" Grid.Column="0" Content="語言/Language" />
                     <ComboBox
-                      Grid.Column="1" x:Name="comboboxLanguage" Margin="2,0,10,0"
-                      SelectedIndex="0" SelectionChanged="SelectionChanged_Lang"
+                      Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                      x:Name="comboboxLanguage" Margin="2,0,10,0" SelectedIndex="0"
+                      SelectionChanged="SelectionChanged_Lang"
                       Style="{DynamicResource comboboxSetting}">
                         <ComboBoxItem>English</ComboBoxItem>
                         <ComboBoxItem>繁體中文</ComboBoxItem>
                     </ComboBox>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="{local:LocExtension OMVer}" />
+                    <Label
+                      Grid.Row="1" Grid.Column="1" x:Name="label_version"
+                      Content="1.2020.1111.1" />
+
+                    <Button
+                      Grid.Row="1" Grid.Column="2" Margin="0,0,10,0"
+                      Click="MouseLeftButtonUp_checkVersion"
+                      Content="{local:LocExtension CheckVer}" />
                 </Grid>
-                <Grid Grid.Row="3">
+                <Grid Grid.Row="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />

@@ -88,6 +88,15 @@ namespace OrderManagerLauncher.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Cancel auto check for updates 的當地語系化字串。
+        /// </summary>
+        internal static string CloseAutoChk {
+            get {
+                return ResourceManager.GetString("CloseAutoChk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 , please contact Inteware customer service 的當地語系化字串。
         /// </summary>
         internal static string Contact {
@@ -115,6 +124,33 @@ namespace OrderManagerLauncher.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 New version available 的當地語系化字串。
+        /// </summary>
+        internal static string NewVerAvailable {
+            get {
+                return ResourceManager.GetString("NewVerAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 , update now? 的當地語系化字串。
+        /// </summary>
+        internal static string NewVerAvailable2 {
+            get {
+                return ResourceManager.GetString("NewVerAvailable2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 No 的當地語系化字串。
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Error occurred during data unpack 的當地語系化字串。
         /// </summary>
         internal static string UnpackingError {
@@ -129,6 +165,15 @@ namespace OrderManagerLauncher.Properties {
         internal static string Updating {
             get {
                 return ResourceManager.GetString("Updating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Yes 的當地語系化字串。
+        /// </summary>
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

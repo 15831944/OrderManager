@@ -878,10 +878,11 @@ namespace OrderManagerNew
             if (byAdmin == true)
             {
                 Process processer = new Process();
-                ProcessStartInfo info = new ProcessStartInfo(fileName);
-                
-                info.UseShellExecute = true;
-                info.Verb = "runas";
+                ProcessStartInfo info = new ProcessStartInfo(fileName)
+                {
+                    UseShellExecute = true,
+                    Verb = "runas"
+                };
                 //Process.Start(info);
                 processer.StartInfo = info;
                 if (arguments != "")

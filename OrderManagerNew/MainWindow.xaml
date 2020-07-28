@@ -378,10 +378,6 @@
                             <Rectangle x:Name="mask2_Guide_Installing" Style="{StaticResource maskImageInstalling}" />
                             <ProgressBar x:Name="progressbar_Guide_Installing" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
-                        <!--  TODO可能不用  -->
-                        <Grid Margin="6,0" Visibility="Hidden">
-                            <Image Source="ImageSource/FunctionTable/icon_update.png" Style="{StaticResource progressImage}" />
-                        </Grid>
                     </StackPanel>
 
                     <!--  ordermanagerFunction  -->
