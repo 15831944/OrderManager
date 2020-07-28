@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CheckVersion" xml:space="preserve">
-    <value>正在檢查 OrderManager 版本...</value>
+    <value>正在檢查 PrintIn Order 版本...</value>
   </data>
   <data name="Updating" xml:space="preserve">
-    <value>正在更新 OrderManager中...</value>
+    <value>正在更新 PrintIn Order中...</value>
   </data>
   <data name="Downloading" xml:space="preserve">
     <value>下載更新包中...</value>
   </data>
   <data name="CannotGetnewOMXML" xml:space="preserve">
-    <value>無法取得OrderManager更新資訊</value>
+    <value>無法取得PrintIn Order更新資訊</value>
   </data>
   <data name="Contact" xml:space="preserve">
     <value>，請聯絡英特崴客服</value>
@@ -136,7 +136,7 @@
     <value>資料下載時發生錯誤</value>
   </data>
   <data name="CannotDownloadOM" xml:space="preserve">
-    <value>無法下載OrderManager更新資訊</value>
+    <value>無法下載 PrintIn Order更新資訊</value>
   </data>
   <data name="UnpackingError" xml:space="preserve">
     <value>資料解析時發生錯誤</value>

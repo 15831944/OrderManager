@@ -83,7 +83,7 @@ namespace OrderManagerNew
                     if (Directory.Exists(textbox_InstallPath.Text) != true)
                         Directory.CreateDirectory(textbox_InstallPath.Text);
 
-                    SetPropertiesSoftewarePath(currentSoftwareID, textbox_InstallPath.Text);
+                    SetPropertiesSoftwarePath(currentSoftwareID, textbox_InstallPath.Text);
                     this.DialogResult = true;
                 }
                 catch(Exception ex)
@@ -277,13 +277,11 @@ namespace OrderManagerNew
             if (currentSoftwareID == -1 || http_url == "")
                 return false;
 
-            string[] SoftwareNameArray = new string[6] { "EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD tray", "EZCAD splint", "EZCAD guide" };
+            string[] SoftwareNameArray = new string[6] { "PrintIn C Design", "PrintIn ImplantPlanning", "PrintIn Aligner", "PrintIn Tray", "PrintIn Splint", "PrintIn Guide" };
             label_TitleBar.Content = TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             label_Header.Content = TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             if(Properties.OrderManagerProps.Default.mostsoftwareDisk != "")
                 textbox_InstallPath.Text = Properties.OrderManagerProps.Default.mostsoftwareDisk + Properties.OrderManagerProps.Default.OEM_DirName + SoftwareNameArray[currentSoftwareID] + @"\";
-            else if(Properties.OrderManagerProps.Default.systemDisk != "")
-                textbox_InstallPath.Text = Properties.OrderManagerProps.Default.systemDisk + Properties.OrderManagerProps.Default.OEM_DirName + SoftwareNameArray[currentSoftwareID] + @"\";
             else
                 textbox_InstallPath.Text = @"C:\PrintIn3D\" + SoftwareNameArray[currentSoftwareID] + @"\";
             jlabel_RequireSpace.Content += ":";
@@ -380,7 +378,7 @@ namespace OrderManagerNew
         /// </summary>
         /// <param name="SoftwareID">軟體ID</param>
         /// <param name="softwarePath">路徑</param>
-        public void SetPropertiesSoftewarePath(int SoftwareID, string softwarePath)
+        public void SetPropertiesSoftwarePath(int SoftwareID, string softwarePath)
         {
             switch (SoftwareID)
             {

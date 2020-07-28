@@ -41,7 +41,7 @@ namespace OrderManagerNew
         /// <summary>
         /// 單機軟體全名
         /// </summary>
-        public string[] SoftwareNameArray = new string[6] { "EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD.tray", "EZCAD.splint", "EZCAD.guide" };
+        public string[] SoftwareNameArray = new string[6] { "PrintIn C Design", "PrintIn ImplantPlanning", "PrintIn Aligner", "PrintIn Tray", "PrintIn Splint", "PrintIn Guide" };
         BackgroundWorker OrderManagerFunc_BackgroundWorker;
         public OrderManagerFunctions()
         {
@@ -422,55 +422,55 @@ namespace OrderManagerNew
                             DiskName = d.Name
                         };
 
-                        if (File.Exists(cad_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"EZCAD\Bin\EZCAD.exe") == true)
+                        if (File.Exists(cad_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn C Design\Bin\PrintIn C Design.exe") == true)
                         {
                             if (Properties.Settings.Default.cad_exePath == "")
-                                Properties.Settings.Default.cad_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"EZCAD\Bin\EZCAD.exe";
+                                Properties.Settings.Default.cad_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn C Design\Bin\PrintIn C Design.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(implant_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"ImplantPlanning\ImplantPlanning.exe") == true)
+                        if (File.Exists(implant_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn ImplantPlanning\PrintIn ImplantPlanning.exe") == true)
                         {
                             if (Properties.Settings.Default.implant_exePath == "")
-                                Properties.Settings.Default.implant_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"ImplantPlanning\ImplantPlanning.exe";
+                                Properties.Settings.Default.implant_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn ImplantPlanning\PrintIn ImplantPlanning.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(ortho_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"OrthoAnalysis\OrthoAnalysis.exe") == true)
+                        if (File.Exists(ortho_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn Aligner\PrintIn Aligner.exe") == true)
                         {
                             if (Properties.Settings.Default.ortho_exePath == "")
-                                Properties.Settings.Default.ortho_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"OrthoAnalysis\OrthoAnalysis.exe";
+                                Properties.Settings.Default.ortho_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn Aligner\PrintIn Aligner.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(tray_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"EZCAD tray\Bin\EZCAD.tray.exe") == true)
+                        if (File.Exists(tray_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn Tray\Bin\PrintIn Tray.exe") == true)
                         {
                             if (Properties.Settings.Default.tray_exePath == "")
-                                Properties.Settings.Default.tray_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"EZCAD tray\Bin\EZCAD.tray.exe";
+                                Properties.Settings.Default.tray_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn Tray\Bin\PrintIn Tray.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(splint_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"EZCAD splint\Bin\EZCAD.splint.exe") == true)
+                        if (File.Exists(splint_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn Splint\Bin\PrintIn Splint.exe") == true)
                         {
                             if (Properties.Settings.Default.splint_exePath == "")
-                                Properties.Settings.Default.splint_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"EZCAD splint\Bin\EZCAD.splint.exe";
+                                Properties.Settings.Default.splint_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn Splint\Bin\PrintIn Splint.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(guide_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"EZCAD guide\Bin\EZCAD.guide.exe") == true)
+                        if (File.Exists(guide_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn Guide\Bin\PrintIn Guide.exe") == true)
                         {
                             if (Properties.Settings.Default.guide_exePath == "")
-                                Properties.Settings.Default.guide_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"EZCAD guide\Bin\EZCAD.guide.exe";
+                                Properties.Settings.Default.guide_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn Guide\Bin\PrintIn Guide.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
@@ -598,25 +598,18 @@ namespace OrderManagerNew
 
                                 if (!Directory.Exists(cad_projectDirectory))
                                     Directory.CreateDirectory(cad_projectDirectory);
-
-                                /*_watch_EZCADProject.Path = cad_projectDirectory;
-                                MyFileSystemWatcher(_watch_EZCADProject, cad_projectDirectory);
-
-                                if (RecordAll == true)
-                                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadEZCADProject()", "IntoFunc");
-                                LoadEZCADProject();*/
                             }
                             catch (Exception ex)
                             {
                                 Properties.OrderManagerProps.Default.cad_projectDirectory = "";
-                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_CAD", ex.Message);
+                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_C Design", ex.Message);
                             }
                         }
                         else
                         {
                             Properties.OrderManagerProps.Default.cad_projectDirectory = "";
                         }
-                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "cad_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.cad_projectDirectory + "\"");
+                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "PrintIn C Design_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.cad_projectDirectory + "\"");
                         break;
                     }
                 case (int)_softwareID.Implant:
@@ -710,18 +703,18 @@ namespace OrderManagerNew
                             }
                             catch (Exception ex)
                             {
-                                Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\";
+                                Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\PrintIn ImplantPlanning\";
                                 if (Directory.Exists(Properties.OrderManagerProps.Default.implant_projectDirectory) == false)
-                                    Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\");
+                                    Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\PrintIn ImplantPlanning\");
 
                                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_implant", ex.Message);
                             }
                         }
                         else
                         {
-                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\";
+                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\PrintIn ImplantPlanning\";
                             if (Directory.Exists(Properties.OrderManagerProps.Default.implant_projectDirectory) == false)
-                                Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\");
+                                Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\PrintIn ImplantPlanning\");
                         }
                         log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "implant_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.implant_projectDirectory + "\"");
                         break;
@@ -745,25 +738,18 @@ namespace OrderManagerNew
 
                                 if (!Directory.Exists(ortho_projectDirectory))
                                     Directory.CreateDirectory(ortho_projectDirectory);
-
-                                /*_watch_OrthoProject.Path = ortho_projectDirectory;
-                                MyFileSystemWatcher(_watch_OrthoProject, ortho_projectDirectory);
-
-                                if (RecordAll == true)
-                                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadOrthoProject()", "IntoFunc");
-                                LoadOrthoProject();*/
                             }
                             catch (Exception ex)
                             {
                                 Properties.OrderManagerProps.Default.ortho_projectDirectory = "";
-                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_ortho", ex.Message);
+                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_Aligner", ex.Message);
                             }
                         }
                         else
                         {
                             Properties.OrderManagerProps.Default.ortho_projectDirectory = "";
                         }
-                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ortho_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.ortho_projectDirectory + "\"");
+                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "PrintIn Aligner_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.ortho_projectDirectory + "\"");
                         break;
                     }
                 case (int)_softwareID.Tray:
@@ -785,13 +771,6 @@ namespace OrderManagerNew
 
                                 if (!Directory.Exists(tray_projectDirectory))
                                     Directory.CreateDirectory(tray_projectDirectory);
-
-                                /*_watch_TrayProject.Path = tray_projectDirectory;
-                                MyFileSystemWatcher(_watch_TrayProject, tray_projectDirectory);
-
-                                if (RecordAll == true)
-                                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadTrayProject()", "IntoFunc");
-                                LoadTrayProject();*/
                             }
                             catch (Exception ex)
                             {
@@ -803,7 +782,7 @@ namespace OrderManagerNew
                         {
                             Properties.OrderManagerProps.Default.tray_projectDirectory = "";
                         }
-                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "tray_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.tray_projectDirectory + "\"");
+                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "PrintIn Tray_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.tray_projectDirectory + "\"");
                         break;
                     }
                 case (int)_softwareID.Splint:
@@ -825,13 +804,6 @@ namespace OrderManagerNew
 
                                 if (!Directory.Exists(splint_projectDirectory))
                                     Directory.CreateDirectory(splint_projectDirectory);
-
-                                /*_watch_SplintProject.Path = splint_projectDirectory;
-                                MyFileSystemWatcher(_watch_SplintProject, splint_projectDirectory);
-
-                                if (RecordAll == true)
-                                    log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "LoadSplintProject()", "IntoFunc");
-                                LoadSplintProject();*/
                             }
                             catch (Exception ex)
                             {
@@ -843,7 +815,7 @@ namespace OrderManagerNew
                         {
                             Properties.OrderManagerProps.Default.splint_projectDirectory = "";
                         }
-                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "splint_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.splint_projectDirectory + "\"");
+                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "PrintIn Splint_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.splint_projectDirectory + "\"");
                         break;
                     }
             }
@@ -878,10 +850,11 @@ namespace OrderManagerNew
             if (byAdmin == true)
             {
                 Process processer = new Process();
-                ProcessStartInfo info = new ProcessStartInfo(fileName);
-                
-                info.UseShellExecute = true;
-                info.Verb = "runas";
+                ProcessStartInfo info = new ProcessStartInfo(fileName)
+                {
+                    UseShellExecute = true,
+                    Verb = "runas"
+                };
                 //Process.Start(info);
                 processer.StartInfo = info;
                 if (arguments != "")

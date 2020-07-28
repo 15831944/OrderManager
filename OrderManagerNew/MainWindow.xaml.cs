@@ -410,10 +410,10 @@ namespace OrderManagerNew
                 double LimitSize = UpdateFunc.readyInstallSoftwareInfo.softwareSize;
 
                 string exeName = Path.GetFileName(e.FullPath).ToLower();
-                if (exeName.IndexOf("cad.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("orthoanalysis.exe") != -1
-                    || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1)
+                if (exeName.IndexOf("PrintIn C Design.exe") != -1 || exeName.IndexOf("PrintIn Implantplanning.exe") != -1 || exeName.IndexOf("PrintIn Aligner.exe") != -1
+                    || exeName.IndexOf("PrintIn Tray.exe") != -1 || exeName.IndexOf("PrintIn Splint.exe") != -1 || exeName.IndexOf("PrintIn Guide.exe") != -1)
                 {
-                    DialogBeforeDownload.SetPropertiesSoftewarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
+                    DialogBeforeDownload.SetPropertiesSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
                     haveEXE = true;
                 }
 
@@ -443,8 +443,8 @@ namespace OrderManagerNew
         {
             bool HaveDeleted = false;
             string exeName = Path.GetFileName(e.FullPath).ToLower();
-                if (HaveDeleted == false && (exeName.IndexOf("cad.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("orthoanalysis.exe") != -1
-                    || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1))
+                if (HaveDeleted == false && (exeName.IndexOf("PrintIn C Design.exe") != -1 || exeName.IndexOf("PrintIn Implantplanning.exe") != -1 || exeName.IndexOf("PrintIn Aligner.exe") != -1
+                    || exeName.IndexOf("PrintIn Tray.exe") != -1 || exeName.IndexOf("PrintIn Splint.exe") != -1 || exeName.IndexOf("PrintIn Guide.exe") != -1))
                 {
                 this.Dispatcher.Invoke((Action)(() =>
                 {
@@ -903,7 +903,7 @@ namespace OrderManagerNew
                     case "cad_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn C Design?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.cad_exePath) == ".exe")
@@ -1005,7 +1005,7 @@ namespace OrderManagerNew
                     case "implant_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "ImplantPlanning?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn ImplantPlanning?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.implant_exePath) == ".exe")
@@ -1089,7 +1089,7 @@ namespace OrderManagerNew
                     case "ortho_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "OrthoAnalysis?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn Aligner?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.ortho_exePath) == ".exe")
@@ -1173,7 +1173,7 @@ namespace OrderManagerNew
                     case "tray_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.tray?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn Tray?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.tray_exePath) == ".exe")
@@ -1257,7 +1257,7 @@ namespace OrderManagerNew
                     case "splint_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.splint?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn Splint?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.splint_exePath) == ".exe")
@@ -1341,7 +1341,7 @@ namespace OrderManagerNew
                     case "guide_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.guide?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn Guide?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.guide_exePath) == ".exe")

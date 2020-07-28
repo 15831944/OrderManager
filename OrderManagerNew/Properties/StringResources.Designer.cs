@@ -1816,7 +1816,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Order Manager is already running, do you want to restart Order Manager? 的當地語系化字串。
+        ///   查詢類似 PrintIn Order is already running, do you want to restart Order Manager? 的當地語系化字串。
         /// </summary>
         internal static string OMAlreadyRunning {
             get {
@@ -1825,7 +1825,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open EZCAD 的當地語系化字串。
+        ///   查詢類似 Open PrintIn C Design 的當地語系化字串。
         /// </summary>
         internal static string Open_EZCAD {
             get {
@@ -1834,7 +1834,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open EZCAD.guide 的當地語系化字串。
+        ///   查詢類似 Open PrintIn Guide 的當地語系化字串。
         /// </summary>
         internal static string Open_Guide {
             get {
@@ -1843,7 +1843,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open ImplantPlanningV2 的當地語系化字串。
+        ///   查詢類似 Open PrintIn ImplantPlanningV2 的當地語系化字串。
         /// </summary>
         internal static string Open_Implant {
             get {
@@ -1852,7 +1852,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open ImplantPlanning 的當地語系化字串。
+        ///   查詢類似 Open PrintIn ImplantPlanning 的當地語系化字串。
         /// </summary>
         internal static string Open_Implant_short {
             get {
@@ -1861,7 +1861,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open OrthoAnalysis 的當地語系化字串。
+        ///   查詢類似 Open PrintIn Aligner 的當地語系化字串。
         /// </summary>
         internal static string Open_Ortho {
             get {
@@ -1870,7 +1870,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open EZCAD.splint 的當地語系化字串。
+        ///   查詢類似 Open PrintIn Splint 的當地語系化字串。
         /// </summary>
         internal static string Open_Splint {
             get {
@@ -1879,7 +1879,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open EZCAD.tray 的當地語系化字串。
+        ///   查詢類似 Open PrintIn Tray 的當地語系化字串。
         /// </summary>
         internal static string Open_Tray {
             get {

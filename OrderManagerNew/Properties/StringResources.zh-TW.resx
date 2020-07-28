@@ -157,7 +157,7 @@
     <value>取消</value>
   </data>
   <data name="OMAlreadyRunning" xml:space="preserve">
-    <value>另一個Order Manager執行個體已在執行中。請問您是否要重新開啟Order Manager?</value>
+    <value>另一個PrintIn Order執行個體已在執行中。請問您是否要重新開啟Order Manager?</value>
   </data>
   <data name="AutoDetect" xml:space="preserve">
     <value>自動偵測</value>
@@ -190,16 +190,16 @@
     <value>建新工單</value>
   </data>
   <data name="Open_EZCAD" xml:space="preserve">
-    <value>開啟 EZCAD</value>
+    <value>開啟 PrintIn C Design</value>
   </data>
   <data name="Open_Ortho" xml:space="preserve">
-    <value>開啟 OrthoAnalysis</value>
+    <value>開啟 PrintIn Aligner</value>
   </data>
   <data name="Open_Tray" xml:space="preserve">
-    <value>開啟 EZCAD.tray</value>
+    <value>開啟 PrintIn Tray</value>
   </data>
   <data name="Open_Splint" xml:space="preserve">
-    <value>開啟 EZCAD.splint</value>
+    <value>開啟 PrintIn Splint</value>
   </data>
   <data name="DemoCase" xml:space="preserve">
     <value>範例檔案</value>
@@ -907,13 +907,13 @@
     <value>找不到存放下載專案的資料夾</value>
   </data>
   <data name="Open_Implant" xml:space="preserve">
-    <value>開啟 ImplantPlanningV2</value>
+    <value>開啟 PrintIn ImplantPlanningV2</value>
   </data>
   <data name="Open_Guide" xml:space="preserve">
-    <value>開啟 EZCAD.guide</value>
+    <value>開啟 PrintIn Guide</value>
   </data>
   <data name="Open_Implant_short" xml:space="preserve">
-    <value>開啟 ImplantPlanning</value>
+    <value>開啟 PrintIn ImplantPlanning</value>
   </data>
   <data name="GuideModelDir" xml:space="preserve">
     <value>導板模型資料夾</value>

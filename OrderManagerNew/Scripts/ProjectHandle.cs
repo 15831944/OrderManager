@@ -207,7 +207,7 @@ namespace OrderManagerNew
         }
 
         /// <summary>
-        /// 讀取OrthoAnalysis專案
+        /// 讀取Aligner專案
         /// </summary>
         public void LoadOrthoProj()
         {
@@ -302,7 +302,7 @@ namespace OrderManagerNew
                         }
                         catch (Exception ex)
                         {
-                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(EZCAD) Exception", ex.Message);
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(C Design) Exception", ex.Message);
                             return false;
                         }
                     }

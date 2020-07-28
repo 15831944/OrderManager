@@ -115,11 +115,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CheckVersion" xml:space="preserve">
-    <value>Checking OrderManager version...</value>
+    <value>Checking PrintIn Order version...</value>
     <comment>Launcher</comment>
   </data>
   <data name="Updating" xml:space="preserve">
-    <value>Updating OrderManager...</value>
+    <value>Updating PrintIn Order ...</value>
     <comment>Launcher</comment>
   </data>
   <data name="Downloading" xml:space="preserve">

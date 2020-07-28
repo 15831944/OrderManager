@@ -167,7 +167,7 @@
     <comment>UI</comment>
   </data>
   <data name="OMAlreadyRunning" xml:space="preserve">
-    <value>Order Manager is already running, do you want to restart Order Manager?</value>
+    <value>PrintIn Order is already running, do you want to restart Order Manager?</value>
     <comment>Message</comment>
   </data>
   <data name="AutoDetect" xml:space="preserve">
@@ -211,19 +211,19 @@
     <comment>TableFunction</comment>
   </data>
   <data name="Open_EZCAD" xml:space="preserve">
-    <value>Open EZCAD</value>
+    <value>Open PrintIn C Design</value>
     <comment>TableFunction</comment>
   </data>
   <data name="Open_Ortho" xml:space="preserve">
-    <value>Open OrthoAnalysis</value>
+    <value>Open PrintIn Aligner</value>
     <comment>TableFunction</comment>
   </data>
   <data name="Open_Tray" xml:space="preserve">
-    <value>Open EZCAD.tray</value>
+    <value>Open PrintIn Tray</value>
     <comment>TableFunction</comment>
   </data>
   <data name="Open_Splint" xml:space="preserve">
-    <value>Open EZCAD.splint</value>
+    <value>Open PrintIn Splint</value>
     <comment>TableFunction</comment>
   </data>
   <data name="DemoCase" xml:space="preserve">
@@ -1171,15 +1171,15 @@
     <comment>Download</comment>
   </data>
   <data name="Open_Implant" xml:space="preserve">
-    <value>Open ImplantPlanningV2</value>
+    <value>Open PrintIn ImplantPlanningV2</value>
     <comment>TableFunction</comment>
   </data>
   <data name="Open_Guide" xml:space="preserve">
-    <value>Open EZCAD.guide</value>
+    <value>Open PrintIn Guide</value>
     <comment>TableFunction</comment>
   </data>
   <data name="Open_Implant_short" xml:space="preserve">
-    <value>Open ImplantPlanning</value>
+    <value>Open PrintIn ImplantPlanning</value>
     <comment>TableFunction</comment>
   </data>
   <data name="GuideModelDir" xml:space="preserve">

@@ -79,24 +79,24 @@
                       Grid.ColumnSpan="3"
                       Fill="{DynamicResource background_WhiteCaseTable}" />
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="EZCAD" />
+                    <Label Grid.Row="0" Grid.Column="0" Content="C Design" />
                     <Label Grid.Row="1" Grid.Column="0" Content="ImplantPlanning" />
                     <Label
                       Grid.Row="2" Grid.Column="0" Content="OrthoAnalysis"
                       Visibility="Collapsed" />
                     <Label
-                      Grid.Row="3" Grid.Column="0" Content="EZCAD.Tray"
+                      Grid.Row="3" Grid.Column="0" Content="Tray"
                       Visibility="Collapsed" />
                     <Label
-                      Grid.Row="4" Grid.Column="0" Content="EZCAD.Splint"
+                      Grid.Row="4" Grid.Column="0" Content="Splint"
                       Visibility="Collapsed" />
-                    <Label Grid.Row="2" Grid.Column="0" Content="EZCAD.Guide" />
+                    <Label Grid.Row="2" Grid.Column="0" Content="Guide" />
                     <Label Grid.Row="3" Grid.Column="0" Content="{local:LocExtension Downloadpath}" />
 
                     <TextBox
                       Grid.Row="0" Grid.Column="1" x:Name="textbox_EZCAD"
                       Style="{DynamicResource Setting_textbox}"
-                      Text="C:\PrintIn3D\EZCAD\Bin\EZCAD.exe" />
+                      Text="C:\PrintIn3D\PrintIn C Design\Bin\PrintIn C Design.exe" />
                     <TextBox
                       Grid.Row="1" Grid.Column="1" x:Name="textbox_Implant"
                       Style="{DynamicResource Setting_textbox}" />
