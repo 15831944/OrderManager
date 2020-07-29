@@ -20,6 +20,7 @@ namespace OrderManagerLauncher
     public partial class Launcher : Window
     {
         string HLXMLlink = @"https://inteware.com.tw/updateXML/PrintIn_om.xml";//newOM.xml網址
+        //string HLXMLlink = @"D:\IS\PrintIn_om.xml";
         bool FullRecord;
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {   // 總是接受
@@ -29,7 +30,7 @@ namespace OrderManagerLauncher
         BackgroundWorker OrderManagerFunc_BackgroundWorker;
         bool NeedUpdate;
         string DownloadFileName;
-        NewOMInfo omInfo;
+        NewOMInfo omInfo, updateInfo;
         class NewOMInfo
         {
             public Version VersionFromWeb;
@@ -103,6 +104,7 @@ namespace OrderManagerLauncher
             try
             {
                 omInfo = new NewOMInfo();
+                updateInfo = new NewOMInfo();
                 xDoc = XDocument.Load(HLXMLlink);
 
                 var OrderManagerInfo = from q in xDoc.Descendants("DownloadLink").Descendants("OrderManager")
@@ -112,13 +114,34 @@ namespace OrderManagerLauncher
                                     m_HyperLink = q.Descendants("HyperLink").First().Value,
                                  };
 
+                var UpdateInfo = from q in xDoc.Descendants("DownloadLink").Descendants("Updates")
+                                       select new
+                                       {
+                                           m2_Version = q.Descendants("Version").First().Value,
+                                           m2_HyperLink = q.Descendants("HyperLink").First().Value,
+                                       };
+
                 foreach (var item in OrderManagerInfo)
                 {
                     omInfo.VersionFromWeb = new Version(item.m_Version);
                     omInfo.DownloadLink = item.m_HyperLink.Replace("\n ", "").Replace("\r ", "").Replace(" ", ""); ;
                 }
+                foreach (var item in UpdateInfo)
+                {
+                    updateInfo.VersionFromWeb = new Version(item.m2_Version);
+                    updateInfo.DownloadLink = item.m2_HyperLink.Replace("\n ", "").Replace("\r ", "").Replace(" ", ""); ;
+                }
+
+                if(updateInfo.VersionFromWeb != new Version() && omInfo.VersionFromWeb != new Version())
+                {
+                    if(updateInfo.VersionFromWeb > omInfo.VersionFromWeb)
+                    {
+                        omInfo.VersionFromWeb = updateInfo.VersionFromWeb;
+                        omInfo.DownloadLink = updateInfo.DownloadLink;
+                    }
+                }
             }
-            catch
+            catch(Exception ex)
             {
                 Inteware_Messagebox Msg = new Inteware_Messagebox();
                 Msg.ShowMessage(TranslationSource.Instance["CannotGetnewOMXML"] + TranslationSource.Instance["Contact"]);

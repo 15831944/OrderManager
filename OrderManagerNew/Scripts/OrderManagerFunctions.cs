@@ -625,9 +625,9 @@ namespace OrderManagerNew
                                 {
                                     try
                                     {
-                                        if (Directory.Exists(d.Name + @"PrintIn3D Data\Implant\") == true)
+                                        if (Directory.Exists(d.Name + @"PrintIn3D Data\PrintIn ImplantPlanning\") == true)
                                         {
-                                            Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\Implant\";
+                                            Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\PrintIn ImplantPlanning\";
                                             foundImplantPath = true;
                                             break;
                                         }
@@ -644,8 +644,8 @@ namespace OrderManagerNew
                                     {
                                         if (Properties.OrderManagerProps.Default.mostsoftwareDisk != "")
                                         {
-                                            Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\");
-                                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\";
+                                            Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\PrintIn ImplantPlanning\");
+                                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\PrintIn ImplantPlanning\";
                                             goto createtosysDirectorySuccess;
                                         }
                                         else
@@ -665,13 +665,13 @@ namespace OrderManagerNew
                                         {
                                             if (d.Name == @"C:\")
                                             {
-                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\Implant\";
+                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\PrintIn ImplantPlanning\";
                                                 chosen = true;
                                                 break;
                                             }
                                             if (d.Name == @"D:\")
                                             {
-                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\Implant\";
+                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\PrintIn ImplantPlanning\";
                                                 chosen = true;
                                                 break;
                                             }
@@ -688,8 +688,8 @@ namespace OrderManagerNew
                                         {
                                             try
                                             {
-                                                Directory.CreateDirectory(d.Name + @"PrintIn3D Data\Implant\");
-                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\Implant\";
+                                                Directory.CreateDirectory(d.Name + @"PrintIn3D Data\PrintIn ImplantPlanning\");
+                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\PrintIn ImplantPlanning\";
                                                 break;
                                             }
                                             catch (Exception ex)

@@ -410,11 +410,14 @@ namespace OrderManagerNew
                 double LimitSize = UpdateFunc.readyInstallSoftwareInfo.softwareSize;
 
                 string exeName = Path.GetFileName(e.FullPath).ToLower();
-                if (exeName.IndexOf("PrintIn C Design.exe") != -1 || exeName.IndexOf("PrintIn Implantplanning.exe") != -1 || exeName.IndexOf("PrintIn Aligner.exe") != -1
-                    || exeName.IndexOf("PrintIn Tray.exe") != -1 || exeName.IndexOf("PrintIn Splint.exe") != -1 || exeName.IndexOf("PrintIn Guide.exe") != -1)
+                if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
+                    || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1)
                 {
-                    DialogBeforeDownload.SetPropertiesSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
-                    haveEXE = true;
+                    this.Dispatcher.Invoke((Action)(() =>
+                    {
+                        DialogBeforeDownload.SetPropertiesSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
+                        haveEXE = true;
+                    }));
                 }
 
                 if (dirSize >= LimitSize && haveEXE == true)
@@ -443,8 +446,8 @@ namespace OrderManagerNew
         {
             bool HaveDeleted = false;
             string exeName = Path.GetFileName(e.FullPath).ToLower();
-                if (HaveDeleted == false && (exeName.IndexOf("PrintIn C Design.exe") != -1 || exeName.IndexOf("PrintIn Implantplanning.exe") != -1 || exeName.IndexOf("PrintIn Aligner.exe") != -1
-                    || exeName.IndexOf("PrintIn Tray.exe") != -1 || exeName.IndexOf("PrintIn Splint.exe") != -1 || exeName.IndexOf("PrintIn Guide.exe") != -1))
+                if (HaveDeleted == false && (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
+                    || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1))
                 {
                 this.Dispatcher.Invoke((Action)(() =>
                 {
