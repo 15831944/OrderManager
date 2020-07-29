@@ -1326,4 +1326,12 @@
     <value>Please set implant product on tooth chart</value>
     <comment>Message</comment>
   </data>
+  <data name="OMVer" xml:space="preserve">
+    <value>PrintIn Order Version</value>
+    <comment>Setting</comment>
+  </data>
+  <data name="CheckVer" xml:space="preserve">
+    <value>Check version</value>
+    <comment>Setting</comment>
+  </data>
 </root>

@@ -146,4 +146,24 @@
     <value>Error occurred during data unpack</value>
     <comment>Launcher</comment>
   </data>
+  <data name="NewVerAvailable" xml:space="preserve">
+    <value>New version available</value>
+    <comment>UpdateCheck</comment>
+  </data>
+  <data name="NewVerAvailable2" xml:space="preserve">
+    <value>, update now?</value>
+    <comment>UpdateCheck</comment>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+    <comment>UpdateCheck</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+    <comment>UpdateCheck</comment>
+  </data>
+  <data name="CloseAutoChk" xml:space="preserve">
+    <value>Cancel auto check for updates</value>
+    <comment>UpdateCheck</comment>
+  </data>
 </root>

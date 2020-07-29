@@ -1023,4 +1023,10 @@
   <data name="Warning_ImplantProductSelected" xml:space="preserve">
     <value>請在植牙齒位設定植體產品</value>
   </data>
+  <data name="OMVer" xml:space="preserve">
+    <value>PrintIn Order軟體版本</value>
+  </data>
+  <data name="CheckVer" xml:space="preserve">
+    <value>檢查軟體版本</value>
+  </data>
 </root>

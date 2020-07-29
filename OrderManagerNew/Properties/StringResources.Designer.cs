@@ -403,6 +403,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Check version 的當地語系化字串。
+        /// </summary>
+        internal static string CheckVer {
+            get {
+                return ResourceManager.GetString("CheckVer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Choose location for install: 的當地語系化字串。
         /// </summary>
         internal static string ChooseLocationToInstall {
@@ -1821,6 +1830,15 @@ namespace OrderManagerNew.Properties {
         internal static string OMAlreadyRunning {
             get {
                 return ResourceManager.GetString("OMAlreadyRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 PrintIn Order Version 的當地語系化字串。
+        /// </summary>
+        internal static string OMVer {
+            get {
+                return ResourceManager.GetString("OMVer", resourceCulture);
             }
         }
         

@@ -21,14 +21,12 @@ namespace OrderManagerLauncher
     {
         string HLXMLlink = @"https://inteware.com.tw/updateXML/PrintIn_om.xml";//newOM.xml網址
         //string HLXMLlink = @"D:\IS\PrintIn_om.xml";
-        bool FullRecord;
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {   // 總是接受
             return true;
         }
         BackgroundWorker BgWorker_Main;
         BackgroundWorker OrderManagerFunc_BackgroundWorker;
-        bool NeedUpdate;
         string DownloadFileName;
         NewOMInfo omInfo, updateInfo;
         class NewOMInfo
@@ -57,8 +55,7 @@ namespace OrderManagerLauncher
         public Launcher()
         {
             InitializeComponent();
-            NeedUpdate = false;
-            FullRecord = false;
+            bool FullRecord = false;
 
             string systemName = System.Globalization.CultureInfo.CurrentCulture.Name; // 取得電腦語系
             if (systemName == "zh-TW")
@@ -88,7 +85,20 @@ namespace OrderManagerLauncher
                         else
                             RunCommandLine("PrintIn Order.exe", "-VerChk");
                     }
+                    else if (argument == "-NeedUpdate")
+                    {
+                        Properties.Settings.Default.NeedUpdate = true;
+                        Properties.Settings.Default.Save();
+                    }
+
                 }
+            }
+
+            if (Properties.Settings.Default.NeedUpdate == false) //直接跳過檢查更新
+            {
+                RunCommandLine("PrintIn Order.exe", "-VerChk");
+                Thread.Sleep(1000);
+                Environment.Exit(0);
             }
 
         }
@@ -146,6 +156,7 @@ namespace OrderManagerLauncher
                 Inteware_Messagebox Msg = new Inteware_Messagebox();
                 Msg.ShowMessage(TranslationSource.Instance["CannotGetnewOMXML"] + TranslationSource.Instance["Contact"]);
                 RunCommandLine("PrintIn Order.exe", "-VerChk");
+                Thread.Sleep(1000);
                 Environment.Exit(0);
             }
         }
@@ -167,35 +178,65 @@ namespace OrderManagerLauncher
 
         void CompletedWork_UpdateCheck(object sender, RunWorkerCompletedEventArgs e)
         {
+            bool GoUpdate = false;
             try
             {
                 FileVersionInfo verInfo;
                 verInfo = FileVersionInfo.GetVersionInfo("PrintIn Order.exe");
                 if(omInfo.VersionFromWeb > new Version(verInfo.FileVersion))
-                    NeedUpdate = true;
+                    GoUpdate = true;
             }
-            catch
+            catch (Exception ex)
             {
-                NeedUpdate = true;
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message, "UpdateCheck error");
+                GoUpdate = true;
             }
 
-            if (NeedUpdate == false) //不用更新
+            if (GoUpdate == false) //不用更新
             {
                 RunCommandLine("PrintIn Order.exe", "-VerChk");
+                Thread.Sleep(1000);
                 Environment.Exit(0);
             }
             else  //進入更新
             {
-                RunCommandLine("PrintIn Order.exe", "-ExportProps");//匯出Properties
-                progressbar_update.IsIndeterminate = false;
-                label_describe.Content = TranslationSource.Instance["Downloading"];
-                BgWorker_Main = new BackgroundWorker();
-                BgWorker_Main.DoWork += new DoWorkEventHandler(DoWork_Download);
-                BgWorker_Main.ProgressChanged += new ProgressChangedEventHandler(UpdateProgress_Download);
-                BgWorker_Main.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_Download);
-                BgWorker_Main.WorkerReportsProgress = true;
-                BgWorker_Main.WorkerSupportsCancellation = false;
-                BgWorker_Main.RunWorkerAsync();
+                DialogUpdateCheck DlgUpdateChk = new DialogUpdateCheck
+                {
+                    Owner = this
+                };
+                DlgUpdateChk.ShowDialog();
+                if (DlgUpdateChk.DialogResult == true)   //進入更新
+                {
+                    if (DlgUpdateChk.NoAutoChk == true)
+                        Properties.Settings.Default.NeedUpdate = false;
+                    else
+                        Properties.Settings.Default.NeedUpdate = true;
+
+                    Properties.Settings.Default.Save();
+                    RunCommandLine("PrintIn Order.exe", "-ExportProps");//匯出Properties
+                    progressbar_update.IsIndeterminate = false;
+                    label_describe.Content = TranslationSource.Instance["Downloading"];
+                    BgWorker_Main = new BackgroundWorker();
+                    BgWorker_Main.DoWork += new DoWorkEventHandler(DoWork_Download);
+                    BgWorker_Main.ProgressChanged += new ProgressChangedEventHandler(UpdateProgress_Download);
+                    BgWorker_Main.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_Download);
+                    BgWorker_Main.WorkerReportsProgress = true;
+                    BgWorker_Main.WorkerSupportsCancellation = false;
+                    BgWorker_Main.RunWorkerAsync();
+                }
+                else  //不更新
+                {
+                    if (DlgUpdateChk.NoAutoChk == true)
+                        Properties.Settings.Default.NeedUpdate = false;
+                    else
+                        Properties.Settings.Default.NeedUpdate = true;
+
+                    Properties.Settings.Default.Save();
+                    RunCommandLine("PrintIn Order.exe", "-VerChk");
+                    Thread.Sleep(1000);
+                    Environment.Exit(0);
+                }
             }
         }
 
@@ -249,6 +290,7 @@ namespace OrderManagerLauncher
                         Inteware_Messagebox Msg = new Inteware_Messagebox();
                         Msg.ShowMessage(TranslationSource.Instance["CannotDownloadOM"] + TranslationSource.Instance["Contact"]);
                         RunCommandLine("PrintIn Order.exe", "-VerChk");
+                        Thread.Sleep(1000);
                         Environment.Exit(0);
                     }
                 }
@@ -257,6 +299,7 @@ namespace OrderManagerLauncher
                     Inteware_Messagebox Msg = new Inteware_Messagebox();
                     Msg.ShowMessage(TranslationSource.Instance["DownloadingError"] + TranslationSource.Instance["Contact"]);
                     RunCommandLine("PrintIn Order.exe", "-VerChk");
+                    Thread.Sleep(1000);
                     Environment.Exit(0);
                 }
             }
@@ -314,6 +357,7 @@ namespace OrderManagerLauncher
                 Inteware_Messagebox Msg = new Inteware_Messagebox();
                 Msg.ShowMessage(TranslationSource.Instance["UnpackingError"] + TranslationSource.Instance["Contact"]);
                 RunCommandLine("PrintIn Order.exe", "-VerChk");
+                Thread.Sleep(1000);
                 Environment.Exit(0);
             }
         }
@@ -322,6 +366,7 @@ namespace OrderManagerLauncher
             if (File.Exists(DownloadFileName) == true)
                 File.Delete(DownloadFileName);
             RunCommandLine("PrintIn Order.exe", "-VerChk");
+            Thread.Sleep(1000);
             Environment.Exit(0);
         }
 
