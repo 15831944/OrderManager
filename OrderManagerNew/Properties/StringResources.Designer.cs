@@ -475,7 +475,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Contect Inteware 的當地語系化字串。
+        ///   查詢類似 Contact Inteware 的當地語系化字串。
         /// </summary>
         internal static string Contect {
             get {
@@ -2545,7 +2545,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Introduction Website 的當地語系化字串。
+        ///   查詢類似 Software Introduction 的當地語系化字串。
         /// </summary>
         internal static string SoftwareWeb {
             get {

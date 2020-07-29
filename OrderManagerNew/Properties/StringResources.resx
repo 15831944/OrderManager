@@ -183,11 +183,11 @@
     <comment>TableFunction</comment>
   </data>
   <data name="SoftwareWeb" xml:space="preserve">
-    <value>Introduction Website</value>
+    <value>Software Introduction</value>
     <comment>TableFunction</comment>
   </data>
   <data name="Contect" xml:space="preserve">
-    <value>Contect Inteware</value>
+    <value>Contact Inteware</value>
     <comment>TitleBar</comment>
   </data>
   <data name="Maximize" xml:space="preserve">
