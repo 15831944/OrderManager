@@ -15,8 +15,8 @@ namespace OrderManagerNew
     public class UpdateFunction
     {
         #region 變數宣告
-        readonly string HLXMLlink = @"https://inteware.com.tw/updateXML/HLnoLic.xml";//HL.xml網址
-        //string HLXMLlink = "D:\\IntewareInc\\HLnoLic.xml";    //單機測試
+        readonly string HLXMLlink = @"https://inteware.com.tw//updateXML//Inteware_om.xml";//HL.xml網址
+        //string HLXMLlink = "D:\\IntewareInc\\Inteware_om.xml";    //單機測試
         string downloadfilepath;
         LogRecorder log;    //日誌檔cs
         BackgroundWorker bgWorker_Download;        //申明後臺物件

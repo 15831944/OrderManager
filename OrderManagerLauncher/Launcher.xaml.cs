@@ -19,8 +19,8 @@ namespace OrderManagerLauncher
     /// </summary>
     public partial class Launcher : Window
     {
-        string HLXMLlink = @"https://inteware.com.tw/updateXML/newOM.xml";//newOM.xml網址
-        //string HLXMLlink = @"https://inteware.com.tw/updateXML/newOM_Developer.xml";//newOM_Developer.xml網址
+        string HLXMLlink = @"https://inteware.com.tw//updateXML//Inteware_om.xml";//newOM.xml網址
+        //string HLXMLlink = @"https://inteware.com.tw//updateXML//newOM_Developer.xml";//newOM_Developer.xml網址
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {   // 總是接受
             return true;
@@ -28,7 +28,7 @@ namespace OrderManagerLauncher
         BackgroundWorker BgWorker_Main;
         BackgroundWorker OrderManagerFunc_BackgroundWorker;
         string DownloadFileName;
-        NewOMInfo omInfo;
+        NewOMInfo omInfo, updateInfo;
         class NewOMInfo
         {
             public Version VersionFromWeb;
@@ -68,8 +68,6 @@ namespace OrderManagerLauncher
             {
                 foreach (string argument in args)
                 {
-                    MessageBox.Show(argument);
-
                     if (argument == "-Developer")
                     {
                         HLXMLlink = @"https://inteware.com.tw/updateXML/newOM_Developer.xml";//newOM_Developer.xml網址
@@ -120,6 +118,7 @@ namespace OrderManagerLauncher
             try
             {
                 omInfo = new NewOMInfo();
+                updateInfo = new NewOMInfo();
                 xDoc = XDocument.Load(HLXMLlink);
 
                 var OrderManagerInfo = from q in xDoc.Descendants("DownloadLink").Descendants("OrderManager")
@@ -128,17 +127,37 @@ namespace OrderManagerLauncher
                                     m_Version = q.Descendants("Version").First().Value,
                                     m_HyperLink = q.Descendants("HyperLink").First().Value,
                                  };
+                var UpdateInfo = from q in xDoc.Descendants("DownloadLink").Descendants("Updates")
+                                       select new
+                                       {
+                                           m_Version2 = q.Descendants("Version").First().Value,
+                                           m_HyperLink2 = q.Descendants("HyperLink").First().Value,
+                                       };
 
                 foreach (var item in OrderManagerInfo)
                 {
                     omInfo.VersionFromWeb = new Version(item.m_Version);
                     omInfo.DownloadLink = item.m_HyperLink.Replace("\n ", "").Replace("\r ", "").Replace(" ", ""); ;
                 }
+                foreach (var item in UpdateInfo)
+                {
+                    updateInfo.VersionFromWeb = new Version(item.m_Version2);
+                    updateInfo.DownloadLink = item.m_HyperLink2.Replace("\n ", "").Replace("\r ", "").Replace(" ", ""); ;
+                }
+
+                if (updateInfo.VersionFromWeb != new Version() && omInfo.VersionFromWeb != new Version())
+                {
+                    if (updateInfo.VersionFromWeb > omInfo.VersionFromWeb)
+                    {
+                        omInfo.VersionFromWeb = updateInfo.VersionFromWeb;
+                        omInfo.DownloadLink = updateInfo.DownloadLink;
+                    }
+                }
             }
-            catch
+            catch(Exception ex)
             {
                 Inteware_Messagebox Msg = new Inteware_Messagebox();
-                Msg.ShowMessage(TranslationSource.Instance["CannotGetnewOMXML"] + TranslationSource.Instance["Contact"]);
+                Msg.ShowMessage(ex.Message, "Load data error");
                 RunCommandLine("OrderManager.exe", "-VerChk");
                 Thread.Sleep(1000);
                 Environment.Exit(0);
