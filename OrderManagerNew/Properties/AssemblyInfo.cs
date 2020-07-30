@@ -7,11 +7,11 @@ using System.Windows;
 // 組件的一般資訊是由下列的屬性集控制。
 // 變更這些屬性的值即可修改組件的相關
 // 資訊。
-[assembly: AssemblyTitle("OrderManagerNew")]
+[assembly: AssemblyTitle("OrderManager")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Inteware")]
-[assembly: AssemblyProduct("OrderManagerNew")]
+[assembly: AssemblyProduct("OrderManager")]
 [assembly: AssemblyCopyright("Inteware ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -51,5 +51,5 @@ using System.Windows;
 // 您可以指定所有的值，或將組建編號或修訂編號設為預設值
 // 指定為預設值: 
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2020.722.0")]
-[assembly: AssemblyFileVersion("1.2020.722.0")]
+[assembly: AssemblyVersion("1.2020.730.0")]
+[assembly: AssemblyFileVersion("1.2020.730.0")]

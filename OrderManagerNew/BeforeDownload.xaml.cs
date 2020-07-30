@@ -282,8 +282,6 @@ namespace OrderManagerNew
             label_Header.Content = TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             if(Properties.OrderManagerProps.Default.mostsoftwareDisk != "")
                 textbox_InstallPath.Text = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
-            else if(Properties.OrderManagerProps.Default.systemDisk != "")
-                textbox_InstallPath.Text = Properties.OrderManagerProps.Default.systemDisk + @"IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
             else
                 textbox_InstallPath.Text = @"C:\IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
             jlabel_RequireSpace.Content += ":";
