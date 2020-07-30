@@ -528,7 +528,7 @@ namespace OrderManagerNew.V2Implant
 						{
 							if (toothImg.ToothSelectIdx[i])
 							{
-								if (toothImg.ToothSelectIdx[i + 1])
+								if (toothImg.ToothSelectIdx[i + 1] && i!= 15)
 								{
 									toothImg.SetConnectorStatus(i, true);
 								}
@@ -542,7 +542,7 @@ namespace OrderManagerNew.V2Implant
 				{
 					for (int i = 0; i < 31; i++)
 					{
-						if (toothImg.ToothSelectIdx[i])
+						if (toothImg.ToothSelectIdx[i] && i!= 15)
 						{
 							toothImg.SetConnectorStatus(i, false);
 						}
