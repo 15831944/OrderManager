@@ -77,6 +77,7 @@ namespace OrderManagerNew
         /// 記錄使用者按下哪個軟體的SoftwareTable
         /// </summary>
         int CheckedSoftwareID;
+        bool isInstalling;
         MaterialDesignThemes.Wpf.SnackbarMessageQueue MainsnackbarMessageQueue; //Snackbar
 #endregion
         
@@ -84,7 +85,7 @@ namespace OrderManagerNew
         {
             InitializeComponent();
             CheckedSoftwareID = -1;
-
+            isInstalling = false;
             Properties.OrderManagerProps.Default.OEM_DirName = @"PrintIn3D\";
             systemButton_ContactInteware.Visibility = Visibility.Hidden;
 
@@ -364,6 +365,7 @@ namespace OrderManagerNew
         {
             if (watcherCommand == (int)_watcherCommand.Install)   //安裝中
             {
+                isInstalling = true;
                 FileSystemWatcher watcher = new FileSystemWatcher
                 {
                     Path = UpdateFunc.GetSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID),
@@ -381,7 +383,6 @@ namespace OrderManagerNew
             {
                 if (SoftwareID == -1)
                     return;
-
                 FileSystemWatcher watcher = new FileSystemWatcher
                 {
                     //softwarePath是執行檔路徑，所以要抓資料夾用Path.GetDirectoryName()
@@ -410,14 +411,32 @@ namespace OrderManagerNew
                 double LimitSize = UpdateFunc.readyInstallSoftwareInfo.softwareSize;
 
                 string exeName = Path.GetFileName(e.FullPath).ToLower();
-                if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
-                    || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1)
+                if(Path.GetExtension(exeName).ToLower() == ".exe")
                 {
-                    this.Dispatcher.Invoke((Action)(() =>
+                    if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("designer.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
+                    || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1)
                     {
                         DialogBeforeDownload.SetPropertiesSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
                         haveEXE = true;
-                    }));
+
+                        if(dirSize >= LimitSize)
+                        {
+                            this.Dispatcher.Invoke((Action)(() =>
+                            {
+                                haveEXE = false;
+                                watcher = new FileSystemWatcher();
+                                Thread.Sleep(2000);//2秒緩衝
+                                Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[UpdateFunc.readyInstallSoftwareInfo.softwareID]
+                                + " " + TranslationSource.Instance["Successfully"];
+                                SnackBarShow(snackStr);
+                                OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                isInstalling = false;
+                                ChangeSoftwareFilter();
+                                return;
+                            }));
+                        }
+                    }
                 }
 
                 if (dirSize >= LimitSize && haveEXE == true)
@@ -432,6 +451,8 @@ namespace OrderManagerNew
                         + " " + TranslationSource.Instance["Successfully"];
                         SnackBarShow(snackStr);
                         OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                        isInstalling = false;
+                        ChangeSoftwareFilter();
                     }));
                 }
             }
@@ -446,7 +467,7 @@ namespace OrderManagerNew
         {
             bool HaveDeleted = false;
             string exeName = Path.GetFileName(e.FullPath).ToLower();
-                if (HaveDeleted == false && (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
+                if (HaveDeleted == false && (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("designer.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
                     || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1))
                 {
                 this.Dispatcher.Invoke((Action)(() =>
@@ -2832,5 +2853,40 @@ namespace OrderManagerNew
             }*/
         }
         #endregion
+
+        private void MouseUp_progressbar(object sender, MouseButtonEventArgs e)
+        {
+            if(sender is ProgressBar pbar)
+            {
+                if (isInstalling == false)
+                    return;
+
+                switch(pbar.Name)
+                {
+                    case "progressbar_EZCAD_Installing":
+                        {
+                            if(File.Exists(Properties.Settings.Default.cad_exePath) == true)
+                            {
+                                Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.EZCAD]
+                                + " " + TranslationSource.Instance["Successfully"];
+                                SnackBarShow(snackStr);
+                                OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                isInstalling = false;
+                                ChangeSoftwareFilter();
+                            }
+                            break;
+                        }
+                    case "progressbar_Implant_Installing":
+                        {
+                            break;
+                        }
+                    case "progressbar_Guide_Installing":
+                        {
+                            break;
+                        }
+                }
+            }
+        }
     }
 }
