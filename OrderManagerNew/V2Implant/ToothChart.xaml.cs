@@ -227,7 +227,7 @@ namespace OrderManagerNew.V2Implant
 
 				ConnectorIdx[toothidx] = false;
 
-				if (toothidx != 0)
+				if (toothidx != 0 && toothidx != 16)
 				{
 					es = GetConnectorImage(toothidx - 1);
 					es.Tag = "0";
