@@ -28,7 +28,7 @@
     </Window.Resources>
 
     <Border BorderThickness="0">
-        <DockPanel PreviewMouseDown="PMouseDown_Main">
+        <DockPanel>
             <!--  TitleBar-Start  -->
             <Border
               Height="42" Panel.ZIndex="10" Background="#FF056840"
@@ -125,8 +125,10 @@
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
-                            <Rectangle x:Name="mask2_EZCAD_Installing" Fill="#FF4C4B4B" Style="{StaticResource maskImageInstalling}" />
-                            <ProgressBar x:Name="progressbar_EZCAD_Installing" MouseUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
+                            <Rectangle
+                              x:Name="mask2_EZCAD_Installing" Fill="#FF4C4B4B" MouseLeftButtonUp="MouseUp_progressbar"
+                              Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_EZCAD_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0" ToolTip="PrintIn ImplantPlanning">
                             <Rectangle x:Name="mask_Implant" Style="{StaticResource maskImage}" />
@@ -178,7 +180,7 @@
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
-                            <Rectangle x:Name="mask2_Implant_Installing" Style="{StaticResource maskImageInstalling}" />
+                            <Rectangle x:Name="mask2_Implant_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource maskImageInstalling}" />
                             <ProgressBar x:Name="progressbar_Implant_Installing" MouseUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0" ToolTip="PrintIn Aligner" Visibility="Collapsed">
@@ -374,7 +376,7 @@
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
-                            <Rectangle x:Name="mask2_Guide_Installing" Style="{StaticResource maskImageInstalling}" />
+                            <Rectangle x:Name="mask2_Guide_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource maskImageInstalling}" />
                             <ProgressBar x:Name="progressbar_Guide_Installing" MouseUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                     </StackPanel>
