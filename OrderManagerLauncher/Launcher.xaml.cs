@@ -327,14 +327,18 @@ namespace OrderManagerLauncher
             }
             else if(Path.GetExtension(DownloadFileName) == ".exe")
             {
-                RunCommandLine(DownloadFileName, "");
-                Thread.Sleep(1000);
+                //RunCommandLine(DownloadFileName, "");
+                Process processer = new Process();
+                processer.StartInfo.FileName = DownloadFileName;
+                processer.Start();
+
+                Thread.Sleep(2000);
                 Environment.Exit(0);
             }
             else
             {
                 RunCommandLine("PrintIn Order.exe", "-VerChk");
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 Environment.Exit(0);
             }
         }

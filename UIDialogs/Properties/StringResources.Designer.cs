@@ -70,6 +70,15 @@ namespace UIDialogs.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Contact PrintIn 的當地語系化字串。
+        /// </summary>
+        internal static string Contact {
+            get {
+                return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 No 的當地語系化字串。
         /// </summary>
         internal static string No {

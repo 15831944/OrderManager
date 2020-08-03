@@ -205,7 +205,7 @@ namespace UIDialogs
                 {
                     case "systemButton_ContactInteware":    //聯絡客服
                         Process processer = new Process();
-                        processer.StartInfo.FileName = @"https://www.facebook.com/messages/t/191158537741700";
+                        processer.StartInfo.FileName = @"https://www.facebook.com/messages/t/484154545409477";
                         processer.Start();
                         break;
                     case "systemButton_Close":              //關閉

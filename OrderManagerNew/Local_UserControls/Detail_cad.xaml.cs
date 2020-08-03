@@ -69,7 +69,7 @@ namespace OrderManagerNew.Local_UserControls
             catch(Exception ex)
             {
                 LogRecorder Log = new LogRecorder();
-                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Detail_C Design.xaml.cs GetToothProductString()_exception", ex.Message);
+                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Detail_DentDesign.xaml.cs GetToothProductString()_exception", ex.Message);
                 return "UnKnow";
             }
         }

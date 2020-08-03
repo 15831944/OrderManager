@@ -41,7 +41,7 @@ namespace OrderManagerNew
         /// <summary>
         /// 單機軟體全名
         /// </summary>
-        public string[] SoftwareNameArray = new string[6] { "PrintIn C Design", "PrintIn ImplantPlanning", "PrintIn Aligner", "PrintIn Tray", "PrintIn Splint", "PrintIn Guide" };
+        public string[] SoftwareNameArray = new string[6] { "PrintIn DentDesign", "PrintIn ImplantPlanning", "PrintIn Aligner", "PrintIn Tray", "PrintIn Splint", "PrintIn Guide" };
         BackgroundWorker OrderManagerFunc_BackgroundWorker;
         public OrderManagerFunctions()
         {
@@ -422,10 +422,10 @@ namespace OrderManagerNew
                             DiskName = d.Name
                         };
 
-                        if (File.Exists(cad_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn C Design\Bin\PrintIn C Design.exe") == true)
+                        if (File.Exists(cad_exePath) == false && File.Exists(d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn DentDesign\Bin\PrintIn DentDesign.exe") == true)
                         {
                             if (Properties.Settings.Default.cad_exePath == "")
-                                Properties.Settings.Default.cad_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn C Design\Bin\PrintIn C Design.exe";
+                                Properties.Settings.Default.cad_exePath = d.Name + Properties.OrderManagerProps.Default.OEM_DirName + @"PrintIn DentDesign\Bin\PrintIn DentDesign.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
@@ -602,14 +602,14 @@ namespace OrderManagerNew
                             catch (Exception ex)
                             {
                                 Properties.OrderManagerProps.Default.cad_projectDirectory = "";
-                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_C Design", ex.Message);
+                                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_DentDesign", ex.Message);
                             }
                         }
                         else
                         {
                             Properties.OrderManagerProps.Default.cad_projectDirectory = "";
                         }
-                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "PrintIn C Design_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.cad_projectDirectory + "\"");
+                        log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "PrintIn DentDesign_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.cad_projectDirectory + "\"");
                         break;
                     }
                 case (int)_softwareID.Implant:

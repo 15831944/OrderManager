@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ContactInteware" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://www.facebook.com/messages/t/191158537741700</Value>
+      <Value Profile="(Default)">https://www.facebook.com/messages/t/484154545409477</Value>
     </Setting>
     <Setting Name="ForgetAirdentalPassword" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://airdental.inteware.com.tw/findyouraccount/search</Value>

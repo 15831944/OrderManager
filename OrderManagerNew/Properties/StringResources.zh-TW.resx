@@ -190,7 +190,7 @@
     <value>建新工單</value>
   </data>
   <data name="Open_EZCAD" xml:space="preserve">
-    <value>開啟 PrintIn C Design</value>
+    <value>開啟 PrintIn DentDesign</value>
   </data>
   <data name="Open_Ortho" xml:space="preserve">
     <value>開啟 PrintIn Aligner</value>

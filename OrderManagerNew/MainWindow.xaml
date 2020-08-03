@@ -79,7 +79,7 @@
                       Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
                       Panel.ZIndex="2" Orientation="Horizontal">
                         <Grid Width="18" />
-                        <Grid Margin="6,0" ToolTip="PrintIn C Design">
+                        <Grid Margin="6,0" ToolTip="PrintIn DentDesign">
                             <Rectangle x:Name="mask_EZCAD" Style="{StaticResource maskImage}" />
                             <ed:Arc x:Name="process_EZCAD" Style="{StaticResource progressArc}" />
                             <Image Source="ImageSource/FunctionTable/icon_D.png" Style="{StaticResource progressImage}" />
@@ -514,7 +514,7 @@
                                     </Style>
                                 </Grid.Resources>
                                 <StackPanel Margin="30,0,0,0" Orientation="Vertical">
-                                    <RadioButton Name="SoftwareFilterCAD" Content="C Design" />
+                                    <RadioButton Name="SoftwareFilterCAD" Content="DentDesign" />
                                     <RadioButton Name="SoftwareFilterImplant" Content="ImplantPlanning" />
                                     <RadioButton Name="SoftwareFilterOrtho" Content="Aligner" Visibility="Collapsed" />
                                     <RadioButton Name="SoftwareFilterTray" Content="Tray" Visibility="Collapsed" />

@@ -129,4 +129,7 @@
   <data name="OK" xml:space="preserve">
     <value>確定</value>
   </data>
+  <data name="Contact" xml:space="preserve">
+    <value>聯絡品印</value>
+  </data>
 </root>

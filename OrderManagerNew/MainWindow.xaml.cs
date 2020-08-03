@@ -88,7 +88,6 @@ namespace OrderManagerNew
             CheckedSoftwareID = -1;
             isInstalling = false;
             Properties.OrderManagerProps.Default.OEM_DirName = @"PrintIn3D\";
-            systemButton_ContactInteware.Visibility = Visibility.Hidden;
 
             try
             {
@@ -414,7 +413,7 @@ namespace OrderManagerNew
                 string exeName = Path.GetFileName(e.FullPath).ToLower();
                 if(Path.GetExtension(exeName).ToLower() == ".exe")
                 {
-                    if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("designer.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
+                    if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("dentdesign.exe.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
                     || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1)
                     {
                         DialogBeforeDownload.SetPropertiesSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
@@ -468,7 +467,7 @@ namespace OrderManagerNew
         {
             bool HaveDeleted = false;
             string exeName = Path.GetFileName(e.FullPath).ToLower();
-                if (HaveDeleted == false && (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("designer.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
+                if (HaveDeleted == false && (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("dentdesign.exe.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
                     || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1))
                 {
                 this.Dispatcher.Invoke((Action)(() =>
@@ -928,7 +927,7 @@ namespace OrderManagerNew
                     case "cad_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn C Design?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn DentDesign?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.cad_exePath) == ".exe")
@@ -2866,9 +2865,9 @@ namespace OrderManagerNew
                 {
                     case "progressbar_EZCAD_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\PrintIn C Design.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\PrintIn DentDesign.exe") == true)
                             {
-                                Properties.Settings.Default.cad_exePath += @"Bin\PrintIn C Design.exe";
+                                Properties.Settings.Default.cad_exePath += @"Bin\PrintIn DentDesign.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
                                 bool isOldVer = false;
@@ -2969,9 +2968,9 @@ namespace OrderManagerNew
                 {
                     case "mask2_EZCAD_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\PrintIn C Design.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\PrintIn DentDesign.exe") == true)
                             {
-                                Properties.Settings.Default.cad_exePath += @"Bin\PrintIn C Design.exe";
+                                Properties.Settings.Default.cad_exePath += @"Bin\PrintIn DentDesign.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
                                 bool isOldVer = false;

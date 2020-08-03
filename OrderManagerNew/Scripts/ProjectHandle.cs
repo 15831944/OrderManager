@@ -302,7 +302,7 @@ namespace OrderManagerNew
                         }
                         catch (Exception ex)
                         {
-                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(C Design) Exception", ex.Message);
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "ProjectHandle.cs LoadXml(DentDesign) Exception", ex.Message);
                             return false;
                         }
                     }

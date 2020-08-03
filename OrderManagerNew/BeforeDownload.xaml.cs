@@ -277,7 +277,7 @@ namespace OrderManagerNew
             if (currentSoftwareID == -1 || http_url == "")
                 return false;
 
-            string[] SoftwareNameArray = new string[6] { "PrintIn C Design", "PrintIn ImplantPlanning", "PrintIn Aligner", "PrintIn Tray", "PrintIn Splint", "PrintIn Guide" };
+            string[] SoftwareNameArray = new string[6] { "PrintIn DentDesign", "PrintIn ImplantPlanning", "PrintIn Aligner", "PrintIn Tray", "PrintIn Splint", "PrintIn Guide" };
             label_TitleBar.Content = TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             label_Header.Content = TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             if(Properties.OrderManagerProps.Default.mostsoftwareDisk != "")

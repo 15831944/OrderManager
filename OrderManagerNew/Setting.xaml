@@ -80,7 +80,7 @@
                       Grid.ColumnSpan="3"
                       Fill="{DynamicResource background_WhiteCaseTable}" />
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="C Design" />
+                    <Label Grid.Row="0" Grid.Column="0" Content="DentDesign" />
                     <Label Grid.Row="1" Grid.Column="0" Content="ImplantPlanning" />
                     <Label
                       Grid.Row="2" Grid.Column="0" Content="OrthoAnalysis"
@@ -97,7 +97,7 @@
                     <TextBox
                       Grid.Row="0" Grid.Column="1" x:Name="textbox_EZCAD"
                       Style="{DynamicResource Setting_textbox}"
-                      Text="C:\PrintIn3D\PrintIn C Design\Bin\PrintIn C Design.exe" />
+                      Text="C:\PrintIn3D\PrintIn DentDesign\Bin\PrintIn DentDesign.exe" />
                     <TextBox
                       Grid.Row="1" Grid.Column="1" x:Name="textbox_Implant"
                       Style="{DynamicResource Setting_textbox}" />

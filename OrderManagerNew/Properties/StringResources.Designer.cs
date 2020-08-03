@@ -1843,7 +1843,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open PrintIn C Design 的當地語系化字串。
+        ///   查詢類似 Open PrintIn DentDesign 的當地語系化字串。
         /// </summary>
         internal static string Open_EZCAD {
             get {
