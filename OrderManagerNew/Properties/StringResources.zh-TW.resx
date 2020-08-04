@@ -1029,4 +1029,7 @@
   <data name="CheckVer" xml:space="preserve">
     <value>檢查軟體版本</value>
   </data>
+  <data name="Other" xml:space="preserve">
+    <value>其它 (*.stl)</value>
+  </data>
 </root>

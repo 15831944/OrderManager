@@ -148,16 +148,7 @@ namespace OrderManagerNew.Local_UserControls
             label_createDate.Content = cadInfo.CreateDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
             ItemIndex = Index;
         }
-
-        private void Click_FolderOpen(object sender, RoutedEventArgs e)
-        {
-            if (cadInfo != null && System.IO.Directory.Exists(cadInfo.CaseDirectoryPath) == true)
-            {
-                OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + cadInfo.CaseDirectoryPath + "\"");
-            }
-        }
-
+        
         /// <summary>
         /// 設定Case的Focus狀態
         /// </summary>
@@ -185,7 +176,7 @@ namespace OrderManagerNew.Local_UserControls
         {
             if (e.Source is Button)
             {
-                Click_FolderOpen(e.Source, e);
+                Click_buttn_event(e.Source, e);
             }
             else
             {
@@ -200,6 +191,31 @@ namespace OrderManagerNew.Local_UserControls
                 }
             }
             e.Handled = true;
+        }
+
+        private void Click_buttn_event(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button buttonName)
+            {
+                switch(buttonName.Name)
+                {
+                    case "button_openCAD":
+                        {
+                            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                            omFunc.RunCommandLine(Properties.Settings.Default.cad_exePath, "-openrpd \"" + cadInfo.CaseXmlPath + "\"");
+                            break;
+                        }
+                    case "button_openDir":
+                        {
+                            if (cadInfo != null && System.IO.Directory.Exists(cadInfo.CaseDirectoryPath) == true)
+                            {
+                                OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                                omFunc.RunCommandLine(Properties.OrderManagerProps.Default.systemDisk + @"Windows\explorer.exe", "\"" + cadInfo.CaseDirectoryPath + "\"");
+                            }
+                            break;
+                        }
+                }
+            }
         }
     }
 }

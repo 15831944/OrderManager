@@ -1334,4 +1334,8 @@
     <value>Check version</value>
     <comment>Setting</comment>
   </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other (*.stl)</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
 </root>

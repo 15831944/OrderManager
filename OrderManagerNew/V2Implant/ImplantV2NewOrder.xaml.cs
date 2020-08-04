@@ -57,7 +57,8 @@ namespace OrderManagerNew.V2Implant
 		public ImplantV2NewOrder()
 		{
 			InitializeComponent();
-            Title = TranslationSource.Instance["CreateOrder"];
+			checkbox_other.IsChecked = false;
+			Title = TranslationSource.Instance["CreateOrder"];
 			Productlist = new List<int>();
 			ActiveToothType = -1;
 			haveXml = true;
@@ -567,8 +568,8 @@ namespace OrderManagerNew.V2Implant
 			xDoc = XDocument.Load("..\\Material_Ceramic.xml");
 			if (xDoc == null)
 			{
-                Inteware_Messagebox Msg = new Inteware_Messagebox();
-                Msg.ShowMessage(TranslationSource.Instance["Loading"] + " Material_Ceramic.xml " + TranslationSource.Instance["Error"]);
+				Inteware_Messagebox Msg = new Inteware_Messagebox();
+				Msg.ShowMessage(TranslationSource.Instance["Loading"] + " Material_Ceramic.xml " + TranslationSource.Instance["Error"]);
 				return;
 			}
 
@@ -668,16 +669,16 @@ namespace OrderManagerNew.V2Implant
 			}
 			catch(Exception ex)
 			{
-                Inteware_Messagebox Msg = new Inteware_Messagebox();
-                Msg.ShowMessage(ex.Message);
-                haveXml = false;
+				Inteware_Messagebox Msg = new Inteware_Messagebox();
+				Msg.ShowMessage(ex.Message);
+				haveXml = false;
 				return;
 			}
 			
 			if (xDoc == null)
 			{
-                Inteware_Messagebox Msg = new Inteware_Messagebox();
-                Msg.ShowMessage(TranslationSource.Instance["Loading"] + " SurgicalKitInfor.xml " + TranslationSource.Instance["Error"]);
+				Inteware_Messagebox Msg = new Inteware_Messagebox();
+				Msg.ShowMessage(TranslationSource.Instance["Loading"] + " SurgicalKitInfor.xml " + TranslationSource.Instance["Error"]);
 				haveXml = false;
 				return;
 			}
@@ -706,7 +707,7 @@ namespace OrderManagerNew.V2Implant
 			catch(Exception ex)
 			{
 				Inteware_Messagebox Msg = new Inteware_Messagebox();
-                Msg.ShowMessage(ex.Message);
+				Msg.ShowMessage(ex.Message);
 				haveXml = false;
 				return;
 			}
@@ -1084,8 +1085,8 @@ namespace OrderManagerNew.V2Implant
 
 		private void MaterialRadioBtnClick(object sender, RoutedEventArgs e)
 		{
-            //選女性會閃退bug
-            return;
+			//選女性會閃退bug
+			return;
 
 			if (ActiveToothType == (int)ToothType.ToothTypeList.NEIGHBOR || ActiveToothType == 0) 
 				return;
@@ -1301,29 +1302,29 @@ namespace OrderManagerNew.V2Implant
 				//檢查
 				if (m_ct_path.Text == "")
 				{
-                    Inteware_Messagebox Msg = new Inteware_Messagebox();
-                    Msg.ShowMessage("C.B.C.T" + TranslationSource.Instance["DirNotSet"]);
+					Inteware_Messagebox Msg = new Inteware_Messagebox();
+					Msg.ShowMessage("C.B.C.T" + TranslationSource.Instance["DirNotSet"]);
 					return;
 				}
 
-                bool product_selected = false;
-                for (int i = 1; i <= 32; i++)
-                {
-                    if (ToothData[i - 1].Product != "")
-                    {
-                        product_selected = true;
-                        break;
-                    }
-                }
+				bool product_selected = false;
+				for (int i = 1; i <= 32; i++)
+				{
+					if (ToothData[i - 1].Product != "")
+					{
+						product_selected = true;
+						break;
+					}
+				}
 
-                if (!product_selected)
-                {
-                    Inteware_Messagebox Msg = new Inteware_Messagebox();
-                    Msg.ShowMessage(TranslationSource.Instance["Warning_ImplantProductSelected"], TranslationSource.Instance["CreateOrder"] + TranslationSource.Instance["Error"], MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
+				if (!product_selected)
+				{
+					Inteware_Messagebox Msg = new Inteware_Messagebox();
+					Msg.ShowMessage(TranslationSource.Instance["Warning_ImplantProductSelected"], TranslationSource.Instance["CreateOrder"] + TranslationSource.Instance["Error"], MessageBoxButton.OK, MessageBoxImage.Warning);
+					return;
+				}
 
-                Process_Neworder.Visibility = Visibility.Visible;
+				Process_Neworder.Visibility = Visibility.Visible;
 				Process_Neworder.Minimum = 1;
 				Process_Neworder.Value = 1;
 				Process_Neworder.Maximum = 100;
@@ -1413,6 +1414,21 @@ namespace OrderManagerNew.V2Implant
 				Prograsee_update((int)Process_Neworder.Value);
 				
 				Process_Neworder.Visibility = Visibility.Hidden;
+
+				if(checkbox_other.IsChecked == true && File.Exists(textbox_other.Text) == true)
+				{
+					try
+					{
+						File.Copy(textbox_other.Text, targetdirectory + @"\" + Path.GetFileName(textbox_other.Text));
+					}
+					catch(Exception ex)
+					{
+						Inteware_Messagebox Msg = new Inteware_Messagebox();
+						Msg.ShowMessage(ex.Message);
+					}
+					
+				}
+
 			}
 			this.Close();
 			FunctionThatRaisesEvent();
@@ -1763,8 +1779,8 @@ namespace OrderManagerNew.V2Implant
 				//5/15/2019 handtan//check the dcm file in selected folder
 				if (Check_folder_dcm(m_ct_path.Text) == false)
 				{
-                    Inteware_Messagebox Msg = new Inteware_Messagebox();
-                    Msg.ShowMessage(TranslationSource.Instance["NoCBCTInDir"]);
+					Inteware_Messagebox Msg = new Inteware_Messagebox();
+					Msg.ShowMessage(TranslationSource.Instance["NoCBCTInDir"]);
 					m_ct_path.Text = "";
 				}
 				else
@@ -2052,6 +2068,35 @@ namespace OrderManagerNew.V2Implant
 		{
 			if (haveXml == false)
 				DialogResult = false;
+		}
+
+		private void Click_other_selDir(object sender, RoutedEventArgs e)
+		{
+			OpenFileDialog dialog = new OpenFileDialog
+			{
+				//dialog.InitialDirectory = "C:\\";
+				InitialDirectory = Selected_folder_path,
+				Filter = "Model file (*.stl)|*.stl"
+			};
+			if (dialog.ShowDialog() == true)
+			{
+				textbox_other.Text = dialog.FileName;
+				Selected_folder_path = System.IO.Path.GetDirectoryName(dialog.FileName);
+			}
+		}
+
+		private void Checked_other(object sender, RoutedEventArgs e)
+		{
+			textbox_other.Visibility = Visibility.Visible;
+			button_other.Visibility = Visibility.Visible;
+			button_other_selDir.Visibility = Visibility.Visible;
+		}
+
+		private void Unchecked_other(object sender, RoutedEventArgs e)
+		{
+			textbox_other.Visibility = Visibility.Hidden;
+			button_other.Visibility = Visibility.Hidden;
+			button_other_selDir.Visibility = Visibility.Hidden;
 		}
 	}
 }

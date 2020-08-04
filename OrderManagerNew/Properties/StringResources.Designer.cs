@@ -2041,6 +2041,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Other (*.stl) 的當地語系化字串。
+        /// </summary>
+        internal static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Packaged 的當地語系化字串。
         /// </summary>
         internal static string package {
