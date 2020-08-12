@@ -103,21 +103,11 @@ namespace OrderManagerNew
                 Environment.Exit(0);
             }
             
-            try
-            {
-                //設定Snackbar顯示時間
-                var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
-                SnackbarMain.MessageQueue = myMessageQueue;
-                MainsnackbarMessageQueue = SnackbarMain.MessageQueue;
-                Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(500));    //設定動畫流暢度
-            }
-            catch(Exception ex)
-            {
-                Inteware_Messagebox Msg = new Inteware_Messagebox();
-                Msg.ShowMessage(ex.Message, "Init myMessageQueue error", MessageBoxButton.OK, MessageBoxImage.Error);
-                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Init myMessageQueue error", ex.Message);
-                Environment.Exit(0);
-            }
+            //設定Snackbar顯示時間
+            var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
+            SnackbarMain.MessageQueue = myMessageQueue;
+            MainsnackbarMessageQueue = SnackbarMain.MessageQueue;
+            Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(500));    //設定動畫流暢度
             
             try
             {
@@ -274,7 +264,7 @@ namespace OrderManagerNew
         private void Loaded_MainWindow(object sender, RoutedEventArgs e)
         {
             UpdateFunc.LoadHLXml();//截取線上HL.xml內的資料
-            OrderManagerFunc.DoubleCheckEXEexist();//檢查軟體執行檔是否存在
+            OrderManagerFunc.DoubleCheckEXEexist(false);//檢查軟體執行檔是否存在
             //檢查Cookie是否還可以用
             string[] uInfo = new string[4];
             if (AirDentalProjHandle.OrderManagerLoginCheck(ref uInfo) == true)
@@ -409,11 +399,44 @@ namespace OrderManagerNew
                 //DirectoryInfo info = new DirectoryInfo(watcher.Path);
                 double dirSize = (double)OrderManagerFunc.DirSize(new DirectoryInfo(watcher.Path));
                 double LimitSize = UpdateFunc.readyInstallSoftwareInfo.softwareSize;
-
                 string exeName = Path.GetFileName(e.FullPath).ToLower();
-                if(Path.GetExtension(exeName).ToLower() == ".exe")
+
+                if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.EZCAD && File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\PrintIn DentDesign.exe") == true)
                 {
-                    if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("dentdesign.exe.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
+                    Properties.Settings.Default.cad_exePath += @"Bin\PrintIn DentDesign.exe";
+                    Properties.Settings.Default.Save();
+                    FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
+                    bool isOldVer = false;
+                    foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                    {
+                        if (info.softwareID != (int)_softwareID.EZCAD)
+                            continue;
+                        else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                        {
+                            isOldVer = true;
+                            break;
+                        }
+                    }
+                    if (isOldVer == false)
+                    {
+                        this.Dispatcher.Invoke((Action)(() =>
+                        {
+                            Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
+                            string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.EZCAD]
+                            + " " + TranslationSource.Instance["Successfully"];
+                            SnackBarShow(snackStr);
+                            OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                            isInstalling = false;
+                            ChangeSoftwareFilter();
+                            watcher = new FileSystemWatcher();
+                        }));
+                    }
+                }
+
+                if (Path.GetExtension(exeName).ToLower() == ".exe")
+                {
+                    Console.WriteLine(exeName);
+                    if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("dentdesign.exe") != -1 || exeName.IndexOf("designer.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
                     || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1)
                     {
                         DialogBeforeDownload.SetPropertiesSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
@@ -496,7 +519,7 @@ namespace OrderManagerNew
             //TODO:還在測試，目前先關閉Case Watcher
             return;
 
-            if (Directory.Exists(Path) == false)
+            /*if (Directory.Exists(Path) == false)
                 return;
 
             Watcher = new FileSystemWatcher
@@ -514,7 +537,7 @@ namespace OrderManagerNew
 
             //設定觸發事件
             Watcher.Created += new FileSystemEventHandler(Watcher_ProjectChanged);
-            Watcher.Deleted += new FileSystemEventHandler(Watcher_ProjectChanged);
+            Watcher.Deleted += new FileSystemEventHandler(Watcher_ProjectChanged);*/
         }
 
         private void Watcher_ProjectChanged(object sender, FileSystemEventArgs e)
@@ -2215,7 +2238,7 @@ namespace OrderManagerNew
             DialogSetting.ShowDialog();
             if (DialogSetting.DialogResult == true)
             {
-                OrderManagerFunc.DoubleCheckEXEexist();
+                OrderManagerFunc.DoubleCheckEXEexist(true);
                 usercontrolUserDetail.RefreshData();    //usergroup是多國語系
 
                 ChooseToLoadProj();

@@ -1870,7 +1870,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open PrintIn ImplantPlanning 的當地語系化字串。
+        ///   查詢類似 Open ImplantPlanning 的當地語系化字串。
         /// </summary>
         internal static string Open_Implant_short {
             get {

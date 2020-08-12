@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using Path = System.IO.Path;
@@ -13,6 +14,7 @@ namespace OrderManagerNew
     public partial class Setting : Window
     {
         SettingAllSet OriginalSet;
+        CountdownEvent latch = new CountdownEvent(1);
 
         class DiskSoftwareNum
         {
@@ -329,10 +331,22 @@ namespace OrderManagerNew
             }
         }
 
+        private void RefreshData(CountdownEvent latch)
+        {
+            latch.Signal();
+        }
+
         private void MouseLeftButtonUp_checkVersion(object sender, RoutedEventArgs e)
         {
-            OrderManagerFunctions omFunc = new OrderManagerFunctions();
-            omFunc.RunCommandLine("PrintIn Order Launcher.exe", "-NeedUpdate");
+            latch = new CountdownEvent(1);
+            Thread thread = new Thread(() =>
+            {
+                OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                omFunc.RunCommandLine("PrintIn Order Launcher.exe", "-NeedUpdate");
+                RefreshData(latch);
+            });
+            thread.Start();
+            latch.Wait();
             Environment.Exit(0);
         }
     }

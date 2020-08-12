@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Effects;
 using System.Xml;
 using System.Xml.Linq;
@@ -94,7 +95,7 @@ namespace OrderManagerNew
         /// <summary>
         /// 再次檢查軟體執行檔是否存在，exePath路徑不會生
         /// </summary>
-        public void DoubleCheckEXEexist()
+        public void DoubleCheckEXEexist(bool isLoaded)
         {
             try
             {
@@ -234,7 +235,15 @@ namespace OrderManagerNew
             }
             catch(Exception ex)
             {
-                Handler_snackbarShow(ex.Message);
+                if(isLoaded == true)
+                {
+                    Handler_snackbarShow(ex.Message);
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "OrderManagerFunctions.cs DoubleCheckExExist()_exception", ex.Message);
             }
         }
@@ -565,7 +574,7 @@ namespace OrderManagerNew
             //沒安裝的軟體Logo變灰，有安裝的常亮
             if (classfrom == (int)_classFrom.MainWindow)
             {
-                DoubleCheckEXEexist();
+                DoubleCheckEXEexist(true);
             }
         }
         /// <summary>

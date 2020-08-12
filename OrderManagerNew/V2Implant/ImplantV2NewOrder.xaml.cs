@@ -2098,5 +2098,10 @@ namespace OrderManagerNew.V2Implant
 			button_other.Visibility = Visibility.Hidden;
 			button_other_selDir.Visibility = Visibility.Hidden;
 		}
-	}
+
+        private void Click_cancel_otherModel(object sender, RoutedEventArgs e)
+        {
+            textbox_other.Text = "";
+        }
+    }
 }

@@ -549,7 +549,7 @@
                               Text="" Visibility="Hidden" />
                             <Button
                               Grid.Row="4" Grid.Column="1" x:Name="button_other"
-                              HorizontalAlignment="Right" Click="M_othermodel_path_clear_Click"
+                              HorizontalAlignment="Right" Click="Click_cancel_otherModel"
                               Style="{StaticResource ClearButton}"
                               Visibility="Hidden" />
 
