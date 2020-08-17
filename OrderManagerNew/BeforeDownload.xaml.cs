@@ -207,6 +207,7 @@ namespace OrderManagerNew
         #region 多執行緒處理接收網路下載資料內容
         void DoWork(object sender, DoWorkEventArgs e)
         {
+            Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload_DoWork", "IntoFunc");
             //跳過https檢測 & Win7 相容
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
@@ -232,7 +233,7 @@ namespace OrderManagerNew
         }
         void CompletedWork(object sender, RunWorkerCompletedEventArgs e)
         {
-            
+            Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownlad_CompletedWork", "IntoFunc");
             if (e.Error != null)
             {
                 tmr.Stop();
@@ -349,6 +350,7 @@ namespace OrderManagerNew
         /// <returns></returns>
         public void GethttpResoponse(string Import_http_url, int SoftwareID)
         {
+            Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload_GethttpResponse", "IntoFunc");
             http_url = Import_http_url;
             currentSoftwareID = SoftwareID;
 

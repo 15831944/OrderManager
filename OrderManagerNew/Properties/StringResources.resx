@@ -1171,7 +1171,7 @@
     <comment>Download</comment>
   </data>
   <data name="Open_Implant" xml:space="preserve">
-    <value>Open PrintIn ImplantPlanningV2</value>
+    <value>Open PrintIn ImplantPlanning</value>
     <comment>TableFunction</comment>
   </data>
   <data name="Open_Guide" xml:space="preserve">
