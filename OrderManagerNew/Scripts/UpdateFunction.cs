@@ -18,6 +18,7 @@ namespace OrderManagerNew
         readonly string HLXMLlink = @"https://inteware.com.tw/updateXML/PrintIn_om.xml";//HL.xml網址
         string downloadfilepath;
         LogRecorder log;    //日誌檔cs
+        UIDialogs.Inteware_Messagebox Msg;
         BackgroundWorker bgWorker_Download;        //申明後臺物件
         /// <summary>
         /// 準備要安裝的軟體Info
@@ -150,9 +151,9 @@ namespace OrderManagerNew
 
                         if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == false)
                         {
-                            Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + "PrintIn3DTempFile\\";
-                            Properties.Settings.Default.Save();
-                            Directory.CreateDirectory(Properties.Settings.Default.DownloadFolder);
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "DoWork_DownloadSoftware_exception", "DownloadFolder not found");
+                            Msg.ShowMessage("Download folder not found!");
+                            return;
                         }
 
                         // 取得下載的檔名

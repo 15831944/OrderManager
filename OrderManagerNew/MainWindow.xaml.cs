@@ -91,6 +91,18 @@ namespace OrderManagerNew
 
             try
             {
+                if(Properties.Settings.Default.Log_filePath == "" || Directory.Exists(Properties.Settings.Default.Log_filePath) == false)
+                {
+                    //我的文件資料夾路徑
+                    string MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    Properties.Settings.Default.Log_filePath = MyDocumentsPath + @"\PrintIn Order\";
+                    if (Directory.Exists(Properties.Settings.Default.Log_filePath) == false)
+                    {
+                        Directory.CreateDirectory(Properties.Settings.Default.Log_filePath);
+                    }
+                    Properties.Settings.Default.Save();
+                }
+
                 //初始化LogRecorder
                 log = new LogRecorder();
                 titlebar_OrderManagerVersion.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();  //TitleBar顯示OrderManager版本
@@ -101,6 +113,12 @@ namespace OrderManagerNew
                 Inteware_Messagebox Msg = new Inteware_Messagebox();
                 Msg.ShowMessage(ex.Message, "Init LogRecorder error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(0);
+            }
+
+            if(Properties.Settings.Default.DownloadFolder == "" || Directory.Exists(Properties.Settings.Default.DownloadFolder) == false)
+            {
+                Properties.Settings.Default.DownloadFolder = Properties.Settings.Default.Log_filePath;
+                Properties.Settings.Default.Save();
             }
             
             //設定Snackbar顯示時間
@@ -122,7 +140,21 @@ namespace OrderManagerNew
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Init ProjectHandle error", ex.Message);
                 Environment.Exit(0);
             }
-            
+
+            try
+            {
+                if (Properties.Settings.Default.sysLanguage == "")
+                    Properties.Settings.Default.sysLanguage = "en-US";
+
+                LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
+            }
+            catch (Exception ex)
+            {
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message, "Init SetLanguage error", MessageBoxButton.OK, MessageBoxImage.Error);
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Init SetLanguage error", ex.Message);
+            }
+
             try
             {
                 //OrderManager常用Function
@@ -179,20 +211,16 @@ namespace OrderManagerNew
             }
             
             string[] args;
-            bool latestVersion = false;
             args = Environment.GetCommandLineArgs();
             if(args != null && args.Length > 1)
             {
                 foreach(string argument in args)
                 {
-                    if (argument == "-Rec") //完整記錄模式
-                        Properties.Settings.Default.FullRecord = true;
-                    else if (argument == "-VerChk")
+                    if (argument == "-VerChk")
                     {
                         if (File.Exists("OrderManagerProps.xml") == true)
                             UpdateFunc.ImportPropertiesXml();
-
-                        latestVersion = true;
+                        
                     }   
                     else if (argument == "-ExportProps")
                     {
@@ -202,25 +230,7 @@ namespace OrderManagerNew
                     }   
                 }
             }
-            if(latestVersion == false)
-            {
-                OrderManagerFunc.RunCommandLine("PrintIn Order Launcher.exe", "");
-                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Switch to Order Launcher", "latestVersion == false");
-                Environment.Exit(0);
-            }
 
-            try
-            {
-                LocalizationService.SetLanguage(Properties.Settings.Default.sysLanguage);   //設定語系
-            }
-            catch(Exception ex)
-            {
-                Inteware_Messagebox Msg = new Inteware_Messagebox();
-                Msg.ShowMessage(ex.Message, "Init SetLanguage error", MessageBoxButton.OK, MessageBoxImage.Error);
-                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Init SetLanguage error", ex.Message);
-                Environment.Exit(0);
-            }
-            
             //OrderManager不能多開
             Process[] MyProcess = Process.GetProcessesByName("PrintIn Order");
             if (MyProcess.Length > 1)
@@ -240,7 +250,6 @@ namespace OrderManagerNew
                     Custommargin.Bottom = 40;
                     Dev_btnGrid.Margin = Custommargin;
                     Properties.Settings.Default.engineerMode = true;
-                    Properties.Settings.Default.FullRecord = true;
                     SnackBarShow(message);
                 }
                 else
@@ -613,7 +622,6 @@ namespace OrderManagerNew
                             Properties.OrderManagerProps.Default.systemDisk = "";
                             Properties.Settings.Default.engineerMode = false;
                             Properties.Settings.Default.PingTime = 5;
-                            Properties.Settings.Default.FullRecord = false;
                             Properties.Settings.Default.LastSoftwareFilter = -1;
                             Properties.Settings.Default.AirdentalAcc = "";
                             Properties.Settings.Default.AirdentalCookie = "";
@@ -2195,8 +2203,10 @@ namespace OrderManagerNew
         {
             haveEXE = false;
             bool DownloadStart = false;
+            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Handler_ShowBeforeDownload()", "Start");
             if (DialogBeforeDownload.SetInformation() == true)
             {
+                log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "DialogBeforeDownload.SetInformation()", "result is true");
                 //主視窗羽化
                 var blur = new BlurEffect();
                 this.Effect = blur;

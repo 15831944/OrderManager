@@ -93,6 +93,7 @@
                       Visibility="Collapsed" />
                     <Label Grid.Row="2" Grid.Column="0" Content="Guide" />
                     <Label Grid.Row="3" Grid.Column="0" Content="{local:LocExtension Downloadpath}" />
+                    <Label Grid.Row="4" Grid.Column="0" Content="{local:LocExtension SysLog}" />
 
                     <TextBox
                       Grid.Row="0" Grid.Column="1" x:Name="textbox_EZCAD"
@@ -119,6 +120,9 @@
                     <TextBox
                       Grid.Row="3" Grid.Column="1" x:Name="textbox_Download"
                       Style="{DynamicResource Setting_textbox}" />
+                    <TextBox
+                      Grid.Row="4" Grid.Column="1" x:Name="textbox_Log"
+                      Style="{DynamicResource Setting_textbox}" />
 
                     <Button
                       Grid.Row="0" Grid.Column="2" x:Name="Btn_EZCADprogram"
@@ -143,6 +147,9 @@
                       Style="{DynamicResource folderOpen}" />
                     <Button
                       Grid.Row="3" Grid.Column="2" x:Name="Btn_Downloadpath"
+                      Style="{DynamicResource folderOpen}" />
+                    <Button
+                      Grid.Row="4" Grid.Column="2" x:Name="Btn_Logpath"
                       Style="{DynamicResource folderOpen}" />
                 </Grid>
                 <Grid Grid.Row="2" Grid.RowSpan="2" Margin="0,12">

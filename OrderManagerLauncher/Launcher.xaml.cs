@@ -415,6 +415,7 @@ namespace OrderManagerLauncher
             });
             thread.Start();
             latch.Wait();
+            Thread.Sleep(5000);
             Environment.Exit(0);
         }
     }

@@ -1338,4 +1338,8 @@
     <value>Other (*.stl)</value>
     <comment>ImplantNewOrderV2</comment>
   </data>
+  <data name="SysLog" xml:space="preserve">
+    <value>Software Log</value>
+    <comment>Setting</comment>
+  </data>
 </root>

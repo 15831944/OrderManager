@@ -32,9 +32,6 @@
     <Setting Name="PingTime" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
-    <Setting Name="FullRecord" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="LastSoftwareFilter" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">-1</Value>
     </Setting>
@@ -46,6 +43,9 @@
     </Setting>
     <Setting Name="showCloudOrderNumbers" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="Log_filePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

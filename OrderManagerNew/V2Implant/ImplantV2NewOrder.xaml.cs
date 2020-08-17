@@ -1088,40 +1088,40 @@ namespace OrderManagerNew.V2Implant
 			//選女性會閃退bug
 			return;
 
-			if (ActiveToothType == (int)ToothType.ToothTypeList.NEIGHBOR || ActiveToothType == 0) 
-				return;
+            /*if (ActiveToothType == (int)ToothType.ToothTypeList.NEIGHBOR || ActiveToothType == 0)
+                return;
 
-			string MetrialType = "";
-			string MetrialName = "";
+            string MetrialType = "";
+            string MetrialName = "";
 
-			if (Radio_Mat_Ceramic.IsChecked == true)
-			{
-				MetrialType = "Ceramic";
-				MetrialName = comboCeramic.SelectedItem.ToString();
-			}              
-			else if (Radio_Mat_Metal.IsChecked == true)
-			{
-				MetrialType = "Metal";
-				MetrialName = comboMetal.SelectedItem.ToString();
-			}             
-			else
-			{
-				MetrialType = "Other";
-				MetrialName = comboOther.SelectedItem.ToString();
-			}
+            if (Radio_Mat_Ceramic.IsChecked == true)
+            {
+                MetrialType = "Ceramic";
+                MetrialName = comboCeramic.SelectedItem.ToString();
+            }
+            else if (Radio_Mat_Metal.IsChecked == true)
+            {
+                MetrialType = "Metal";
+                MetrialName = comboMetal.SelectedItem.ToString();
+            }
+            else
+            {
+                MetrialType = "Other";
+                MetrialName = comboOther.SelectedItem.ToString();
+            }
 
-			for (int i = 0; i < 32; i++)
-			{
-				if (toothImg.ToothSelectIdx[i])
-				{
-					ToothData[i].Material_Type = MetrialType;
-					ToothData[i].Material_Name = MetrialName;
-				}
-			}
+            for (int i = 0; i < 32; i++)
+            {
+                if (toothImg.ToothSelectIdx[i])
+                {
+                    ToothData[i].Material_Type = MetrialType;
+                    ToothData[i].Material_Name = MetrialName;
+                }
+            }*/
 
-		}
+        }
 
-		private void SurgicalGuideRadioBtnClick(object sender, RoutedEventArgs e)
+        private void SurgicalGuideRadioBtnClick(object sender, RoutedEventArgs e)
 		{
 			double trans_value = 1.0;
 

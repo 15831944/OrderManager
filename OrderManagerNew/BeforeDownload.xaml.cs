@@ -236,11 +236,13 @@ namespace OrderManagerNew
             if (e.Error != null)
             {
                 tmr.Stop();
+                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload.xaml.cs_CompletedWork()_Error", e.Error.Message);
                 Handler_snackbarShow(TranslationSource.Instance["Error"]);   //錯誤
             }
             else if (e.Cancelled)
             {
                 tmr.Stop();
+                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload.xaml.cs_CompletedWork()_exception", "e.Cancelled");
                 Inteware_Messagebox Msg = new Inteware_Messagebox();
                 Msg.ShowMessage(TranslationSource.Instance["ReceivingDataNotResponding"], TranslationSource.Instance["Warning"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
@@ -257,6 +259,7 @@ namespace OrderManagerNew
             else
             {
                 tmr.Stop();
+                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload.xaml.cs_CompletedWork()", "OK");
                 SetHttpResponseOK();
             }
         }

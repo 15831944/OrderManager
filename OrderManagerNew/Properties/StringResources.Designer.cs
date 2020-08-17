@@ -2644,6 +2644,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Software Log 的當地語系化字串。
+        /// </summary>
+        internal static string SysLog {
+            get {
+                return ResourceManager.GetString("SysLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 System 的當地語系化字串。
         /// </summary>
         internal static string System {

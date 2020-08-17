@@ -14,13 +14,15 @@ namespace OrderManagerNew
     {
         public LogRecorder()
         {
-            if(File.Exists("OrderManager.log"))
+            string logFilepath = Properties.Settings.Default.Log_filePath + "OrderManager.log";
+
+            if (File.Exists(logFilepath))
             {
-                FileStream fs = new FileStream("OrderManager.log", FileMode.Open, FileAccess.Read);
+                FileStream fs = new FileStream(logFilepath, FileMode.Open, FileAccess.Read);
                 if (fs.Length > Math.Pow(2, 20) * 100)  //超過100M就刪掉重建新的log檔
                 {
                     fs.Close();
-                    File.Delete("OrderManager.log");
+                    File.Delete(logFilepath);
                 }
                 fs.Close();
             }
@@ -35,10 +37,12 @@ namespace OrderManagerNew
         /// <returns></returns>
         public void RecordLog(string Row,string Block, string logMessage)
         {
-            if (Properties.Settings.Default.FullRecord == false)
+            string logFilepath = Properties.Settings.Default.Log_filePath + "OrderManager.log";
+
+            if (Directory.Exists(Properties.Settings.Default.Log_filePath) == false)
                 return;
 
-            using (StreamWriter w = File.AppendText("OrderManager.log"))
+            using (StreamWriter w = File.AppendText(logFilepath))
             {
                 string str = "row_" + Row + " " + Block;
                 Log(str, logMessage, w);
@@ -54,10 +58,12 @@ namespace OrderManagerNew
         /// <returns></returns>
         public void RecordLogContinue(string Row, string Block, string logMessage)
         {
-            if (Properties.Settings.Default.FullRecord == false)
+            string logFilepath = Properties.Settings.Default.Log_filePath + "OrderManager.log";
+
+            if (Directory.Exists(Properties.Settings.Default.Log_filePath) == false)
                 return;
 
-            using (StreamWriter w = File.AppendText("OrderManager.log"))
+            using (StreamWriter w = File.AppendText(logFilepath))
             {
                 string str = "row_" + Row + " " + Block;
                 ShortLog(str, logMessage, w);
@@ -72,10 +78,12 @@ namespace OrderManagerNew
         /// <returns></returns>
         public void RecordConfigLog(string Block, string logMessage)
         {
-            if (Properties.Settings.Default.FullRecord == false)
+            string logFilepath = Properties.Settings.Default.Log_filePath + "OrderManager.log";
+
+            if (Directory.Exists(Properties.Settings.Default.Log_filePath) == false)
                 return;
 
-            using (StreamWriter w = File.AppendText("OrderManager.log"))
+            using (StreamWriter w = File.AppendText(logFilepath))
             {
                 ConfigLog(Block, logMessage, w);
             }
@@ -86,10 +94,12 @@ namespace OrderManagerNew
         /// </summary>
         public void RecordLogSaperate()
         {
-            if (Properties.Settings.Default.FullRecord == false)
+            string logFilepath = Properties.Settings.Default.Log_filePath + "OrderManager.log";
+
+            if (Directory.Exists(Properties.Settings.Default.Log_filePath) == false)
                 return;
 
-            using (StreamWriter w = File.AppendText("OrderManager.log"))
+            using (StreamWriter w = File.AppendText(logFilepath))
             {
                 SeprateLog(w);
             }
@@ -103,9 +113,6 @@ namespace OrderManagerNew
         /// <param name="w"></param>
         private void ConfigLog(string Block, string logMessage, TextWriter w)
         {
-            if (Properties.Settings.Default.FullRecord == false)
-                return;
-
             w.Write("\r\nLog Entry : ");
             w.WriteLine($"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
             w.WriteLine($"{Block}:{logMessage}");
@@ -130,9 +137,6 @@ namespace OrderManagerNew
         
         private void SeprateLog( TextWriter w)
         {
-            if (Properties.Settings.Default.FullRecord == false)
-                return;
-
             w.WriteLine("-------------------------------");
             w.WriteLine("");
         }
