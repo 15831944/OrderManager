@@ -53,6 +53,7 @@ namespace OrderManagerNew.Local_UserControls
             FDI[26] = "T43"; FDI[27] = "T44";
             FDI[28] = "T45"; FDI[29] = "T46";
             FDI[30] = "T47"; FDI[31] = "T48";
+            
         }
 
         private string GetFDIToothIndexString(int idx)

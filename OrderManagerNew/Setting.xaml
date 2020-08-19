@@ -2,7 +2,7 @@
   x:Class="OrderManagerNew.Setting" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:OrderManagerNew" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Title="Setting" Width="500"
-  Height="560" AllowsTransparency="True"
+  Height="620" AllowsTransparency="True"
   Background="{DynamicResource Common_DarkBackGround}"
   ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
   WindowStyle="None" mc:Ignorable="d">
@@ -68,6 +68,7 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="110" />
@@ -76,7 +77,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Rectangle
-                      Grid.Row="0" Grid.RowSpan="7" Grid.Column="0"
+                      Grid.Row="0" Grid.RowSpan="8" Grid.Column="0"
                       Grid.ColumnSpan="3"
                       Fill="{DynamicResource background_WhiteCaseTable}" />
 
@@ -87,6 +88,7 @@
                     <Label Grid.Row="4" Grid.Column="0" Content="EZCAD.Splint" />
                     <Label Grid.Row="5" Grid.Column="0" Content="EZCAD.Guide" />
                     <Label Grid.Row="6" Grid.Column="0" Content="{local:LocExtension Downloadpath}" />
+                    <Label Grid.Row="7" Grid.Column="0" Content="{local:LocExtension SysLog}" />
 
                     <TextBox
                       Grid.Row="0" Grid.Column="1" x:Name="textbox_EZCAD"
@@ -110,6 +112,9 @@
                     <TextBox
                       Grid.Row="6" Grid.Column="1" x:Name="textbox_Download"
                       Style="{DynamicResource Setting_textbox}" />
+                    <TextBox
+                      Grid.Row="7" Grid.Column="1" x:Name="textbox_Log"
+                      Style="{DynamicResource Setting_textbox}" />
 
                     <Button
                       Grid.Row="0" Grid.Column="2" x:Name="Btn_EZCADprogram"
@@ -131,6 +136,9 @@
                       Style="{DynamicResource folderOpen}" />
                     <Button
                       Grid.Row="6" Grid.Column="2" x:Name="Btn_Downloadpath"
+                      Style="{DynamicResource folderOpen}" />
+                    <Button
+                      Grid.Row="7" Grid.Column="2" x:Name="Btn_Logpath"
                       Style="{DynamicResource folderOpen}" />
                 </Grid>
                 <Grid Grid.Row="2" Grid.RowSpan="2" Margin="0,12">

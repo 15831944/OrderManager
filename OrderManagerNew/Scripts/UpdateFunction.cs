@@ -9,6 +9,7 @@ using System.Net.Security;                          //跳過網路檢查
 using System.Security.Cryptography.X509Certificates;//跳過網路檢查
 using System.Xml;
 using System.Xml.Linq;
+using UIDialogs;
 
 namespace OrderManagerNew
 {
@@ -151,9 +152,10 @@ namespace OrderManagerNew
 
                         if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == false)
                         {
-                            Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + "IntewareTempFile\\";
-                            Properties.Settings.Default.Save();
-                            Directory.CreateDirectory(Properties.Settings.Default.DownloadFolder);
+                            log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "DoWork_DownloadSoftware_exception", "DownloadFolder not found");
+                            Inteware_Messagebox Msg = new Inteware_Messagebox();
+                            Msg.ShowMessage("Download folder not found!");
+                            return;
                         }
 
                         // 取得下載的檔名

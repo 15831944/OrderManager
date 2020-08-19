@@ -1012,7 +1012,7 @@
     <value>骨釘型</value>
   </data>
   <data name="InitNoSoftwareAsk" xml:space="preserve">
-    <value>沒有軟體路徑記錄，是否自動搜尋軟體路徑? </value>
+    <value>沒有軟體路徑記錄，是否自動搜尋軟體路徑?</value>
   </data>
   <data name="Warning_ImplantProductSelected" xml:space="preserve">
     <value>請在植牙齒位設定植體產品</value>

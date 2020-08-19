@@ -437,6 +437,7 @@
                                 <RowDefinition Height="30" />
                                 <RowDefinition Height="30" />
                                 <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
                             </Grid.RowDefinitions>
 
                             <CheckBox
@@ -466,6 +467,12 @@
                               Content="{local:LocExtension Denture_Implant}"
                               Style="{StaticResource CreatCheckbox}"
                               Unchecked="M_othermodel_path_check_Unchecked" />
+                            <CheckBox
+                              Grid.Row="4" Grid.Column="0" x:Name="checkbox_other"
+                              VerticalAlignment="Center" Checked="Checked_other"
+                              Content="{local:LocExtension Other}"
+                              Style="{StaticResource CreatCheckbox}"
+                              Unchecked="Unchecked_other" />
 
                             <CheckBox
                               Grid.Row="0" Grid.Column="0" Margin="0,4,0,0"
@@ -527,10 +534,23 @@
                               IsReadOnly="True"
                               Style="{StaticResource CreatTextBox}"
                               Text="" />
+
+
                             <Button
                               Grid.Row="3" Grid.Column="1" x:Name="m_othermodel_path_clear"
                               HorizontalAlignment="Right" Click="M_othermodel_path_clear_Click"
                               Style="{StaticResource ClearButton}" />
+
+                            <TextBox
+                              Grid.Row="4" Grid.Column="1" x:Name="textbox_other"
+                              IsReadOnly="True"
+                              Style="{StaticResource CreatTextBox}"
+                              Text="" Visibility="Hidden" />
+                            <Button
+                              Grid.Row="4" Grid.Column="1" x:Name="button_other"
+                              HorizontalAlignment="Right" Click="Click_cancel_otherModel"
+                              Style="{StaticResource ClearButton}"
+                              Visibility="Hidden" />
 
                             <Button
                               Grid.Row="0" Grid.Column=" 2" x:Name="browct"
@@ -554,6 +574,13 @@
                               Grid.Row="3" Grid.Column=" 2" x:Name="broother"
                               Click="Broother_Click"
                               Style="{StaticResource FloderButton}">
+                                <Image Source="{DynamicResource icon_folderDrawingImage}" />
+                            </Button>
+                            <Button
+                              Grid.Row="4" Grid.Column=" 2" x:Name="button_other_selDir"
+                              Click="Click_other_selDir"
+                              Style="{StaticResource FloderButton}"
+                              Visibility="Hidden">
                                 <Image Source="{DynamicResource icon_folderDrawingImage}" />
                             </Button>
                         </Grid>
@@ -584,7 +611,7 @@
                                             <ColumnDefinition />
                                             <ColumnDefinition Width="10" />
                                             <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="26" />

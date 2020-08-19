@@ -45,6 +45,7 @@ namespace OrderManagerNew
             http_url = "";
             currentSoftwareID = -1;
             Log = new LogRecorder();
+            
         }
 
         private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
@@ -83,7 +84,7 @@ namespace OrderManagerNew
                     if (Directory.Exists(textbox_InstallPath.Text) != true)
                         Directory.CreateDirectory(textbox_InstallPath.Text);
 
-                    SetPropertiesSoftewarePath(currentSoftwareID, textbox_InstallPath.Text);
+                    SetPropertiesSoftwarePath(currentSoftwareID, textbox_InstallPath.Text);
                     this.DialogResult = true;
                 }
                 catch(Exception ex)
@@ -207,6 +208,7 @@ namespace OrderManagerNew
         #region 多執行緒處理接收網路下載資料內容
         void DoWork(object sender, DoWorkEventArgs e)
         {
+            Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload_DoWork", "IntoFunc");
             //跳過https檢測 & Win7 相容
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
@@ -232,15 +234,17 @@ namespace OrderManagerNew
         }
         void CompletedWork(object sender, RunWorkerCompletedEventArgs e)
         {
-            
+            Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownlad_CompletedWork", "IntoFunc");
             if (e.Error != null)
             {
                 tmr.Stop();
+                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload.xaml.cs_CompletedWork()_Error", e.Error.Message);
                 Handler_snackbarShow(TranslationSource.Instance["Error"]);   //錯誤
             }
             else if (e.Cancelled)
             {
                 tmr.Stop();
+                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload.xaml.cs_CompletedWork()_exception", "e.Cancelled");
                 Inteware_Messagebox Msg = new Inteware_Messagebox();
                 Msg.ShowMessage(TranslationSource.Instance["ReceivingDataNotResponding"], TranslationSource.Instance["Warning"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
@@ -257,6 +261,7 @@ namespace OrderManagerNew
             else
             {
                 tmr.Stop();
+                Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload.xaml.cs_CompletedWork()", "OK");
                 SetHttpResponseOK();
             }
         }
@@ -346,6 +351,7 @@ namespace OrderManagerNew
         /// <returns></returns>
         public void GethttpResoponse(string Import_http_url, int SoftwareID)
         {
+            Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload_GethttpResponse", "IntoFunc");
             http_url = Import_http_url;
             currentSoftwareID = SoftwareID;
 
@@ -378,7 +384,7 @@ namespace OrderManagerNew
         /// </summary>
         /// <param name="SoftwareID">軟體ID</param>
         /// <param name="softwarePath">路徑</param>
-        public void SetPropertiesSoftewarePath(int SoftwareID, string softwarePath)
+        public void SetPropertiesSoftwarePath(int SoftwareID, string softwarePath)
         {
             switch (SoftwareID)
             {

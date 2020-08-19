@@ -65,10 +65,22 @@ namespace OrderManagerLauncher
             bool FullRecord = false;
 
             string systemName = System.Globalization.CultureInfo.CurrentCulture.Name; // 取得電腦語系
-            if (systemName == "zh-TW")
-                LocalizationService.SetLanguage("zh-TW");
-            else
-                LocalizationService.SetLanguage("en-US");
+
+            try
+            {
+                if (systemName == "zh-TW")
+                {
+                    LocalizationService.SetLanguage("zh-TW");
+                }
+                else
+                {
+                    LocalizationService.SetLanguage("en-US");
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             string[] args = Environment.GetCommandLineArgs();
             if (args != null && args.Length > 1)
@@ -410,7 +422,7 @@ namespace OrderManagerLauncher
             latch = new CountdownEvent(1);
             Thread thread = new Thread(() =>
             {
-                RunCommandLine("PrintIn Order.exe", "-VerChk");
+                RunCommandLine("OrderManager.exe", "-VerChk");
                 RefreshData(latch);
             });
             thread.Start();

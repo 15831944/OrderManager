@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using Path = System.IO.Path;
@@ -14,6 +14,7 @@ namespace OrderManagerNew
     public partial class Setting : Window
     {
         SettingAllSet OriginalSet;
+        CountdownEvent latch = new CountdownEvent(1);
 
         class DiskSoftwareNum
         {
@@ -36,6 +37,7 @@ namespace OrderManagerNew
             public string Splint_exePath { get; set; }
             public string Guide_exePath { get; set; }
             public string DownloadFolder { get; set; }
+            public string LogFolder { get; set; }
             public int Language { get; set; }
             public SettingAllSet()
             {
@@ -46,6 +48,7 @@ namespace OrderManagerNew
                 Splint_exePath = "";
                 Guide_exePath = "";
                 DownloadFolder = "";
+                LogFolder = "";
                 Language = -1;
             }
         }
@@ -55,7 +58,7 @@ namespace OrderManagerNew
             InitializeComponent();
             OriginalSet = new SettingAllSet();
 
-            if(File.Exists(Properties.Settings.Default.cad_exePath) == true)
+            if (File.Exists(Properties.Settings.Default.cad_exePath) == true)
                 OriginalSet.Cad_exePath = Properties.Settings.Default.cad_exePath;
             if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
                 OriginalSet.Implant_exePath = Properties.Settings.Default.implant_exePath;
@@ -69,8 +72,8 @@ namespace OrderManagerNew
                 OriginalSet.Guide_exePath = Properties.Settings.Default.guide_exePath;
             if (Directory.Exists(Properties.Settings.Default.DownloadFolder) == true)
                 OriginalSet.DownloadFolder = Properties.Settings.Default.DownloadFolder;
-            else
-                OriginalSet.DownloadFolder = Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + @"IntewareTempFile\";
+            if (Directory.Exists(Properties.Settings.Default.Log_filePath) == true)
+                OriginalSet.LogFolder = Properties.Settings.Default.Log_filePath;
             if (Properties.Settings.Default.sysLanguage == "zh-TW")
                 OriginalSet.Language = (int)_langSupport.zhTW;
             else
@@ -83,10 +86,11 @@ namespace OrderManagerNew
             textbox_Splint.Text = OriginalSet.Splint_exePath;
             textbox_Guide.Text = OriginalSet.Guide_exePath;
             textbox_Download.Text = OriginalSet.DownloadFolder;
+            textbox_Log.Text = OriginalSet.LogFolder;
             comboboxLanguage.SelectedIndex = OriginalSet.Language;
             label_version.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
-        
+
         private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
         {
             if(sender is Button)
@@ -158,6 +162,19 @@ namespace OrderManagerNew
                             }
                             return;
                         }
+                    case "Btn_Logpath":
+                        {
+                            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+                            {
+                                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                                if (result == System.Windows.Forms.DialogResult.OK)
+                                {
+                                    textbox_Log.Text = dialog.SelectedPath;
+                                    textbox_Log.Focus();
+                                }
+                            }
+                            return;
+                        }
                 }
 
                 SearchEXE(OriginalPath, softwareID);
@@ -201,12 +218,14 @@ namespace OrderManagerNew
                                 Properties.Settings.Default.DownloadFolder = textbox_Download.Text;
                             else
                             {
-                                Properties.Settings.Default.DownloadFolder = Path.GetTempPath() + "IntewareTempFile\\";
+                                Properties.Settings.Default.DownloadFolder = OriginalSet.DownloadFolder;
+                            }
 
-                                /*if (Directory.Exists(System.IO.Path.GetTempPath() + "IntewareTempFile\\") == false)
+                            if (Directory.Exists(textbox_Log.Text) == true)
+                                Properties.Settings.Default.Log_filePath = textbox_Log.Text;
+                            else
                                 {
-                                    System.IO.Directory.CreateDirectory(System.IO.Path.GetTempPath() + "IntewareTempFile\\");
-                                }*/
+                                Properties.Settings.Default.Log_filePath = OriginalSet.LogFolder;
                             }
 
                             //多國語系
@@ -231,6 +250,7 @@ namespace OrderManagerNew
                             Properties.Settings.Default.splint_exePath = OriginalSet.Splint_exePath;
                             Properties.Settings.Default.guide_exePath = OriginalSet.Guide_exePath;
                             Properties.Settings.Default.DownloadFolder = OriginalSet.DownloadFolder;
+                            Properties.Settings.Default.Log_filePath = OriginalSet.LogFolder;
 
                             if (OriginalSet.Language == (int)_langSupport.zhTW)
                                 LocalizationService.SetLanguage("zh-TW");
@@ -335,10 +355,22 @@ namespace OrderManagerNew
             }
         }
 
+        private void RefreshData(CountdownEvent latch)
+        {
+            latch.Signal();
+        }
+
         private void MouseLeftButtonUp_checkVersion(object sender, RoutedEventArgs e)
         {
+            latch = new CountdownEvent(1);
+            Thread thread = new Thread(() =>
+            {
             OrderManagerFunctions omFunc = new OrderManagerFunctions();
-            omFunc.RunCommandLine("OrderManagerLauncher.exe", "-NeedUpdate");
+                omFunc.RunCommandLine("OrderManagerLauncher.exe", "-NeedUpdate");
+                RefreshData(latch);
+            });
+            thread.Start();
+            latch.Wait();
             Environment.Exit(0);
         }
     }

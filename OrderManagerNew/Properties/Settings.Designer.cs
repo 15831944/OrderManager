@@ -190,5 +190,17 @@ namespace OrderManagerNew.Properties {
                 this["showCloudOrderNumbers"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Log_filePath {
+            get {
+                return ((string)(this["Log_filePath"]));
+            }
+            set {
+                this["Log_filePath"] = value;
+            }
+        }
     }
 }

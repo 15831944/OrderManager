@@ -57,6 +57,8 @@ namespace OrderManagerNew.V2Implant
 		public ImplantV2NewOrder()
 		{
 			InitializeComponent();
+            
+            checkbox_other.IsChecked = false;
 			Title = TranslationSource.Instance["CreateOrder"];
 			Productlist = new List<int>();
 			ActiveToothType = -1;
@@ -567,8 +569,8 @@ namespace OrderManagerNew.V2Implant
 			xDoc = XDocument.Load("..\\Material_Ceramic.xml");
 			if (xDoc == null)
 			{
-				Inteware_Messagebox Msg = new Inteware_Messagebox();
-				Msg.ShowMessage(TranslationSource.Instance["Loading"] + " Material_Ceramic.xml " + TranslationSource.Instance["Error"]);
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(TranslationSource.Instance["Loading"] + " Material_Ceramic.xml " + TranslationSource.Instance["Error"]);
 				return;
 			}
 
@@ -668,16 +670,16 @@ namespace OrderManagerNew.V2Implant
 			}
 			catch(Exception ex)
 			{
-				Inteware_Messagebox Msg = new Inteware_Messagebox();
-				Msg.ShowMessage(ex.Message);
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message);
 				haveXml = false;
 				return;
 			}
 			
 			if (xDoc == null)
 			{
-				Inteware_Messagebox Msg = new Inteware_Messagebox();
-				Msg.ShowMessage(TranslationSource.Instance["Loading"] + " SurgicalKitInfor.xml " + TranslationSource.Instance["Error"]);
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(TranslationSource.Instance["Loading"] + " SurgicalKitInfor.xml " + TranslationSource.Instance["Error"]);
 				haveXml = false;
 				return;
 			}
@@ -705,8 +707,8 @@ namespace OrderManagerNew.V2Implant
 			}
 			catch(Exception ex)
 			{
-				Inteware_Messagebox Msg = new Inteware_Messagebox();
-				Msg.ShowMessage(ex.Message);
+                Inteware_Messagebox Msg = new Inteware_Messagebox();
+                Msg.ShowMessage(ex.Message);
 				haveXml = false;
 				return;
 			}
@@ -1269,8 +1271,8 @@ namespace OrderManagerNew.V2Implant
 				//檢查
 				if (m_ct_path.Text == "")
 				{
-					Inteware_Messagebox Msg = new Inteware_Messagebox();
-					Msg.ShowMessage("C.B.C.T" + TranslationSource.Instance["DirNotSet"]);
+                    Inteware_Messagebox Msg = new Inteware_Messagebox();
+                    Msg.ShowMessage("C.B.C.T" + TranslationSource.Instance["DirNotSet"]);
 					return;
 				}
 
@@ -1286,8 +1288,8 @@ namespace OrderManagerNew.V2Implant
 
 				if (!product_selected)
 				{
-					Inteware_Messagebox Msg = new Inteware_Messagebox();
-					Msg.ShowMessage(TranslationSource.Instance["Warning_ImplantProductSelected"], TranslationSource.Instance["CreateOrder"] + TranslationSource.Instance["Error"], MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Inteware_Messagebox Msg = new Inteware_Messagebox();
+                    Msg.ShowMessage(TranslationSource.Instance["Warning_ImplantProductSelected"], TranslationSource.Instance["CreateOrder"] + TranslationSource.Instance["Error"], MessageBoxButton.OK, MessageBoxImage.Warning);
 					return;
 				}
 
@@ -1381,6 +1383,21 @@ namespace OrderManagerNew.V2Implant
 				Prograsee_update((int)Process_Neworder.Value);
 				
 				Process_Neworder.Visibility = Visibility.Hidden;
+
+				if(checkbox_other.IsChecked == true && File.Exists(textbox_other.Text) == true)
+				{
+					try
+					{
+						File.Copy(textbox_other.Text, targetdirectory + @"\" + Path.GetFileName(textbox_other.Text));
+					}
+					catch(Exception ex)
+					{
+                        Inteware_Messagebox Msg = new Inteware_Messagebox();
+                        Msg.ShowMessage(ex.Message);
+					}
+					
+				}
+
 			}
 			this.Close();
 			FunctionThatRaisesEvent();
@@ -1731,8 +1748,8 @@ namespace OrderManagerNew.V2Implant
 				//5/15/2019 handtan//check the dcm file in selected folder
 				if (Check_folder_dcm(m_ct_path.Text) == false)
 				{
-					Inteware_Messagebox Msg = new Inteware_Messagebox();
-					Msg.ShowMessage(TranslationSource.Instance["NoCBCTInDir"]);
+                    Inteware_Messagebox Msg = new Inteware_Messagebox();
+                    Msg.ShowMessage(TranslationSource.Instance["NoCBCTInDir"]);
 					m_ct_path.Text = "";
 				}
 				else
@@ -2021,5 +2038,39 @@ namespace OrderManagerNew.V2Implant
 			if (haveXml == false)
 				DialogResult = false;
 		}
+
+		private void Click_other_selDir(object sender, RoutedEventArgs e)
+		{
+			OpenFileDialog dialog = new OpenFileDialog
+			{
+				//dialog.InitialDirectory = "C:\\";
+				InitialDirectory = Selected_folder_path,
+				Filter = "Model file (*.stl)|*.stl"
+			};
+			if (dialog.ShowDialog() == true)
+			{
+				textbox_other.Text = dialog.FileName;
+				Selected_folder_path = System.IO.Path.GetDirectoryName(dialog.FileName);
+			}
+		}
+
+		private void Checked_other(object sender, RoutedEventArgs e)
+		{
+			textbox_other.Visibility = Visibility.Visible;
+			button_other.Visibility = Visibility.Visible;
+			button_other_selDir.Visibility = Visibility.Visible;
+		}
+
+		private void Unchecked_other(object sender, RoutedEventArgs e)
+		{
+			textbox_other.Visibility = Visibility.Hidden;
+			button_other.Visibility = Visibility.Hidden;
+			button_other_selDir.Visibility = Visibility.Hidden;
+		}
+
+        private void Click_cancel_otherModel(object sender, RoutedEventArgs e)
+        {
+            textbox_other.Text = "";
+        }
 	}
 }

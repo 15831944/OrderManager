@@ -76,7 +76,11 @@ namespace UIDialogs
         /// <param name="lang">LocalizationService.SetLanguage("參數");</param>
         public void SetLanguage(string lang)
         {
-            LocalizationService.SetLanguage(lang);
+            try
+            {
+                LocalizationService.SetLanguage(lang);
+            }
+            catch{ }
         }
 
         /// <summary>

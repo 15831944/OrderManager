@@ -57,8 +57,18 @@
 
             <Image Grid.Row="0" Grid.RowSpan="2" Source="/ImageSource/FunctionTable/icon_D.png" />
             <Button
+              Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"
+              x:Name="button_openCAD" Width="36" Height="36"
+              Click="Click_buttn_event"
+              Style="{DynamicResource Button_withImage}"
+              ToolTip="{local1:LocExtension Open_EZCAD}">
+                <Button.Background>
+                    <ImageBrush ImageSource="/ImageSource/FunctionTable/icon_D.png" />
+                </Button.Background>
+            </Button>
+            <Button
               Grid.Row="0" Grid.RowSpan="2" Grid.Column="4"
-              Click="Click_FolderOpen"
+              x:Name="button_openDir" Click="Click_buttn_event"
               Style="{DynamicResource btn_folderOpen}"
               ToolTip="{local1:LocExtension OpenCaseFolder}" />
         </Grid>
