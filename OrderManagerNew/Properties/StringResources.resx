@@ -1171,19 +1171,15 @@
     <comment>Download</comment>
   </data>
   <data name="Open_Implant" xml:space="preserve">
-    <value>Open ImplantPlanningV2</value>
+    <value>Open ImplantPlanning</value>
     <comment>TableFunction</comment>
   </data>
   <data name="Open_Guide" xml:space="preserve">
     <value>Open EZCAD.guide</value>
     <comment>TableFunction</comment>
   </data>
-  <data name="Open_Implant_short" xml:space="preserve">
-    <value>Open ImplantPlanning</value>
-    <comment>TableFunction</comment>
-  </data>
   <data name="GuideModelDir" xml:space="preserve">
-    <value>Guide Model Directory</value>
+    <value>Guide Model Dir</value>
     <comment>Case</comment>
   </data>
   <data name="OpenReport" xml:space="preserve">
@@ -1332,6 +1328,14 @@
   </data>
   <data name="CheckVer" xml:space="preserve">
     <value>Check version</value>
+    <comment>Setting</comment>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other (*.stl)</value>
+    <comment>ImplantNewOrderV2</comment>
+  </data>
+  <data name="SysLog" xml:space="preserve">
+    <value>Software Log</value>
     <comment>Setting</comment>
   </data>
 </root>

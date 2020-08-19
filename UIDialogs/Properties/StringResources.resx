@@ -113,4 +113,8 @@
     <value>Cancel</value>
     <comment>Message</comment>
   </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact Inteware</value>
+    <comment>Message</comment>
+  </data>
 </root>

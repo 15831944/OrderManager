@@ -84,7 +84,7 @@
             <Button
               Grid.Column="0" x:Name="button_loadImp" Margin="0,0,3,0"
               Padding="-2,0" Click="Click_systemButton"
-              Content="{local1:LocExtension Open_Implant_short}" />
+              Content="{local1:LocExtension Open_Implant}" />
             <Button
               Grid.Column="1" x:Name="button_loadGuide" Margin="3,0,0,0"
               Padding="-3,0,0,0" Click="Click_systemButton"

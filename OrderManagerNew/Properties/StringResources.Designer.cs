@@ -1321,7 +1321,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Guide Model Directory 的當地語系化字串。
+        ///   查詢類似 Guide Model Dir 的當地語系化字串。
         /// </summary>
         internal static string GuideModelDir {
             get {
@@ -1861,20 +1861,11 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open ImplantPlanningV2 的當地語系化字串。
+        ///   查詢類似 Open ImplantPlanning 的當地語系化字串。
         /// </summary>
         internal static string Open_Implant {
             get {
                 return ResourceManager.GetString("Open_Implant", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類似 Open ImplantPlanning 的當地語系化字串。
-        /// </summary>
-        internal static string Open_Implant_short {
-            get {
-                return ResourceManager.GetString("Open_Implant_short", resourceCulture);
             }
         }
         
@@ -2037,6 +2028,15 @@ namespace OrderManagerNew.Properties {
         internal static string OrderInfo {
             get {
                 return ResourceManager.GetString("OrderInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Other (*.stl) 的當地語系化字串。
+        /// </summary>
+        internal static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
             }
         }
         
@@ -2631,6 +2631,15 @@ namespace OrderManagerNew.Properties {
         internal static string SurgicalKit {
             get {
                 return ResourceManager.GetString("SurgicalKit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Software Log 的當地語系化字串。
+        /// </summary>
+        internal static string SysLog {
+            get {
+                return ResourceManager.GetString("SysLog", resourceCulture);
             }
         }
         
