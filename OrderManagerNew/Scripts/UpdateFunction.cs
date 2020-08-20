@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;                                  //XDocument用
 using System.Net;                                   //跳過網路檢查
 using System.Net.Security;                          //跳過網路檢查
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;//跳過網路檢查
 using System.Xml;
 using System.Xml.Linq;
@@ -20,7 +21,8 @@ namespace OrderManagerNew
         //string HLXMLlink = "D:\\IntewareInc\\Inteware_om.xml";    //單機測試
         string downloadfilepath;
         LogRecorder log;    //日誌檔cs
-        BackgroundWorker bgWorker_Download;        //申明後臺物件
+        BackgroundWorker bgWorker_Download;
+        BackgroundWorker bgWorker_OMUpdateCheck;
         /// <summary>
         /// 準備要安裝的軟體Info
         /// </summary>
@@ -53,7 +55,10 @@ namespace OrderManagerNew
         public delegate void softwareUpdateStatusHandler(int SoftwareID, bool canUpdate, string SoftwareVersion);
         public event softwareUpdateStatusHandler SoftwareUpdateEvent;
 
+        public delegate void omUpdateHandler();
+        public event omUpdateHandler OMUpdateEvent;
         public List<SoftwareInfo> CloudSoftwareTotal { get; set; }  //軟體最新版清單
+        NewOMInfo omInfo, updateInfo;
         #endregion
         public class SoftwareInfo
         {
@@ -76,6 +81,17 @@ namespace OrderManagerNew
                 softwarePath = "";
                 softwareSize = 0;
                 softwareDownloadLink = "";
+            }
+        }
+        class NewOMInfo
+        {
+            public Version VersionFromWeb;
+            public string DownloadLink;
+
+            public NewOMInfo()
+            {
+                VersionFromWeb = new Version();
+                DownloadLink = "";
             }
         }
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
@@ -101,7 +117,7 @@ namespace OrderManagerNew
         private void SoftwareInfoLog(List<SoftwareInfo> outputInfo, string InfoName)
         {
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs SoftwareInfoLog()", InfoName + " Total:" + outputInfo.Count);
-            for(int i=0; i<outputInfo.Count; i++)
+            for (int i = 0; i < outputInfo.Count; i++)
             {
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "SoftwareID", "\"" + Enum.GetName(typeof(_softwareID), outputInfo[i].softwareID) + "\" " + outputInfo[i].softwareID.ToString());
                 log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "softwareInstalled", "\"" + Enum.GetName(typeof(_softwareStatus), outputInfo[i].softwareInstalled) + "\" " + outputInfo[i].softwareInstalled.ToString());
@@ -112,7 +128,7 @@ namespace OrderManagerNew
                 log.RecordLogSaperate();
             }
         }
-#region 多執行緒處理下載軟體
+        #region 多執行緒處理下載軟體
         public void StartDownloadSoftware()
         {
             //開始下載多執行緒
@@ -126,7 +142,7 @@ namespace OrderManagerNew
         }
         void DoWork_DownloadSoftware(object sender, DoWorkEventArgs e)
         {
-            if(sender is BackgroundWorker)
+            if (sender is BackgroundWorker)
             {
                 BackgroundWorker bw = sender as BackgroundWorker;
 
@@ -195,7 +211,7 @@ namespace OrderManagerNew
         void UpdateProgress_DownloadSoftware(object sender, ProgressChangedEventArgs e)
         {
             int progress = e.ProgressPercentage;
-            SoftwareLogoShowEvent(readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Downloading, (double)(progress/100.0));
+            SoftwareLogoShowEvent(readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Downloading, (double)(progress / 100.0));
         }
         void CompletedWork_DownloadSoftware(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -218,7 +234,7 @@ namespace OrderManagerNew
                 omFunc.RunCommandLine(downloadfilepath, param, true);
             }
         }
-#endregion
+        #endregion
 
         /// <summary>
         /// 回傳軟體路徑
@@ -261,13 +277,13 @@ namespace OrderManagerNew
                 xDoc = XDocument.Load(HLXMLlink);
 
                 var SoftwareHL = from q in xDoc.Descendants("Software").Descendants("Item")
-                                   select new
-                                   {
-                                       SName = q.Descendants("SoftwareName").First().Value,
-                                       SVersion = q.Descendants("LatestVersion").First().Value,
-                                       SHyperlink = q.Descendants("HyperLink").First().Value,
-                                       SDescription = q.Descendants("Description").First().Value,
-                                   };
+                                 select new
+                                 {
+                                     SName = q.Descendants("SoftwareName").First().Value,
+                                     SVersion = q.Descendants("LatestVersion").First().Value,
+                                     SHyperlink = q.Descendants("HyperLink").First().Value,
+                                     SDescription = q.Descendants("Description").First().Value,
+                                 };
 
                 var OthersHL = from q in xDoc.Descendants("Others").Descendants("Item")
                                select new
@@ -324,7 +340,7 @@ namespace OrderManagerNew
 
             FileVersionInfo verInfo;
 
-            switch(TmpsoftwareID)
+            switch (TmpsoftwareID)
             {
                 case (int)_softwareID.EZCAD:
                     {
@@ -475,12 +491,12 @@ namespace OrderManagerNew
                 rootNode.AppendChild(Xnode);
                 doc.Save("OrderManagerProps.xml");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs ExportPropertiesXml()_exception", ex.Message);
                 return;
             }
-            
+
         }
         /// <summary>
         /// 匯入Properties
@@ -508,7 +524,7 @@ namespace OrderManagerNew
                                 m_AirdentalCookie = q.Descendants("AirdentalCookie").First().Value,
                                 m_showCloudOrderNumbers = q.Descendants("showCloudOrderNumbers").First().Value
                             };
-                foreach(var item in props)
+                foreach (var item in props)
                 {
                     Properties.Settings.Default.sysLanguage = item.m_sysLang;
                     Properties.Settings.Default.cad_exePath = item.m_cad_exePath;
@@ -531,12 +547,103 @@ namespace OrderManagerNew
                     File.Delete("OrderManagerProps.xml");
                 }
                 catch { }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "UpdateFunction.cs ImportPropertiesXml()_exception", ex.Message);
                 return;
+            }
+        }
+
+        /// <summary>
+        /// 讀取HL.xml的詳細更新資訊
+        /// </summary>
+        public void CatchOMLatestVer()
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+
+            XDocument xDoc;
+            try
+            {
+                omInfo = new NewOMInfo();
+                updateInfo = new NewOMInfo();
+                xDoc = XDocument.Load(HLXMLlink);
+
+                var OrderManagerInfo = from q in xDoc.Descendants("DownloadLink").Descendants("OrderManager")
+                                       select new
+                                       {
+                                           m_Version = q.Descendants("Version").First().Value,
+                                           m_HyperLink = q.Descendants("HyperLink").First().Value,
+                                       };
+
+                var UpdateInfo = from q in xDoc.Descendants("DownloadLink").Descendants("Updates")
+                                 select new
+                                 {
+                                     m2_Version = q.Descendants("Version").First().Value,
+                                     m2_HyperLink = q.Descendants("HyperLink").First().Value,
+                                 };
+
+                foreach (var item in OrderManagerInfo)
+                {
+                    omInfo.VersionFromWeb = new Version(item.m_Version);
+                    omInfo.DownloadLink = item.m_HyperLink.Replace("\n ", "").Replace("\r ", "").Replace(" ", ""); ;
+                }
+                foreach (var item in UpdateInfo)
+                {
+                    updateInfo.VersionFromWeb = new Version(item.m2_Version);
+                    updateInfo.DownloadLink = item.m2_HyperLink.Replace("\n ", "").Replace("\r ", "").Replace(" ", ""); ;
+                }
+
+                if (updateInfo.VersionFromWeb != new Version() && omInfo.VersionFromWeb != new Version())
+                {
+                    if (updateInfo.VersionFromWeb > omInfo.VersionFromWeb)
+                    {
+                        omInfo.VersionFromWeb = updateInfo.VersionFromWeb;
+                        omInfo.DownloadLink = updateInfo.DownloadLink;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        public void CheckOMHaveNewVersion()
+        {
+            bgWorker_OMUpdateCheck = new BackgroundWorker();
+            bgWorker_OMUpdateCheck.DoWork += new DoWorkEventHandler(DoWork_OMUpdateCheck);
+            bgWorker_OMUpdateCheck.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_OMUpdateCheck);
+            bgWorker_OMUpdateCheck.WorkerReportsProgress = false;
+            bgWorker_OMUpdateCheck.WorkerSupportsCancellation = false;
+            bgWorker_OMUpdateCheck.RunWorkerAsync();
+        }
+        void DoWork_OMUpdateCheck(object sender, DoWorkEventArgs e)
+        {
+            //檢查是否有更新
+            CatchOMLatestVer();
+        }
+        void CompletedWork_OMUpdateCheck(object sender, RunWorkerCompletedEventArgs e)
+        {
+            bool GoUpdate = false;
+            try
+            {
+                if (omInfo.VersionFromWeb > Assembly.GetExecutingAssembly().GetName().Version)
+                {
+                    Properties.OrderManagerProps.Default.OMLatestVer = omInfo.VersionFromWeb.ToString();
+                    GoUpdate = true;
+                }  
+            }
+            catch
+            {
+                return;
+            }
+
+            if(GoUpdate == true)
+            {
+                //TODO:有可用更新
+                OMUpdateEvent();
             }
         }
     }

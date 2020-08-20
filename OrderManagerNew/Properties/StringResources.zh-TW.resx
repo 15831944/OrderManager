@@ -1032,4 +1032,10 @@
   <data name="SysLog" xml:space="preserve">
     <value>軟體日誌檔</value>
   </data>
+  <data name="OMLatestVer" xml:space="preserve">
+    <value>OrderManager 最新版本</value>
+  </data>
+  <data name="omCanUpdate" xml:space="preserve">
+    <value>OrderManager新版本可供下載，請至設定頁面進行更新</value>
+  </data>
 </root>

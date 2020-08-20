@@ -1834,6 +1834,24 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 New version of OrderManager is available , please go to setting Page to update 的當地語系化字串。
+        /// </summary>
+        internal static string omCanUpdate {
+            get {
+                return ResourceManager.GetString("omCanUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Latest OrderManager Version 的當地語系化字串。
+        /// </summary>
+        internal static string OMLatestVer {
+            get {
+                return ResourceManager.GetString("OMLatestVer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 OrderManager Version 的當地語系化字串。
         /// </summary>
         internal static string OMVer {

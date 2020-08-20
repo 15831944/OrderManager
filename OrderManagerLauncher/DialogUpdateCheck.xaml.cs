@@ -25,6 +25,7 @@ namespace OrderManagerLauncher
         {
             InitializeComponent();
             label_title.Content = TranslationSource.Instance["NewVerAvailable"] + TranslationSource.Instance["NewVerAvailable2"];
+            checkbox_NoautoCheckUpdate.Visibility = Visibility.Hidden;
         }
 
         private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
@@ -36,7 +37,7 @@ namespace OrderManagerLauncher
         {
             if(sender is Button buttonName)
             {
-                if (checkbox_NoautoCheckUpdate.IsChecked == true)
+                if (checkbox_NoautoCheckUpdate.Visibility == Visibility.Visible && checkbox_NoautoCheckUpdate.IsChecked == true)
                     NoAutoChk = true;
                 else
                     NoAutoChk = false;

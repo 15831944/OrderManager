@@ -1338,4 +1338,12 @@
     <value>Software Log</value>
     <comment>Setting</comment>
   </data>
+  <data name="OMLatestVer" xml:space="preserve">
+    <value>Latest OrderManager Version</value>
+    <comment>Setting</comment>
+  </data>
+  <data name="omCanUpdate" xml:space="preserve">
+    <value>New version of OrderManager is available , please go to setting Page to update</value>
+    <comment>Setting</comment>
+  </data>
 </root>

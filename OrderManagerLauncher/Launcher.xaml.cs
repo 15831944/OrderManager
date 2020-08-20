@@ -29,6 +29,7 @@ namespace OrderManagerLauncher
         BackgroundWorker OrderManagerFunc_BackgroundWorker;
         string DownloadFileName;
         NewOMInfo omInfo, updateInfo;
+        bool UpdateOM_Main = false;//OrderManager含Launcher的封裝包
 
         CountdownEvent latch = new CountdownEvent(1);
         private void RefreshData(CountdownEvent latch)
@@ -158,15 +159,6 @@ namespace OrderManagerLauncher
                     updateInfo.VersionFromWeb = new Version(item.m2_Version);
                     updateInfo.DownloadLink = item.m2_HyperLink.Replace("\n ", "").Replace("\r ", "").Replace(" ", ""); ;
                 }
-
-                if(updateInfo.VersionFromWeb != new Version() && omInfo.VersionFromWeb != new Version())
-                {
-                    if(updateInfo.VersionFromWeb > omInfo.VersionFromWeb)
-                    {
-                        omInfo.VersionFromWeb = updateInfo.VersionFromWeb;
-                        omInfo.DownloadLink = updateInfo.DownloadLink;
-                    }
-                }
             }
             catch(Exception ex)
             {
@@ -200,7 +192,15 @@ namespace OrderManagerLauncher
                 FileVersionInfo verInfo;
                 verInfo = FileVersionInfo.GetVersionInfo("OrderManager.exe");
                 if(omInfo.VersionFromWeb > new Version(verInfo.FileVersion))
+                {
                     GoUpdate = true;
+                    UpdateOM_Main = true;
+                }
+                else if(omInfo.VersionFromWeb == new Version(verInfo.FileVersion) && updateInfo.VersionFromWeb > new Version(verInfo.FileVersion))
+                {
+                    GoUpdate = true;
+                    UpdateOM_Main = false;
+                }
             }
             catch (Exception ex)
             {
@@ -262,8 +262,18 @@ namespace OrderManagerLauncher
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                 ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
 
+                string downloadLink;
+                if(UpdateOM_Main == true)
+                {
+                    downloadLink = omInfo.DownloadLink;
+                }
+                else
+                {
+                    downloadLink = updateInfo.DownloadLink;
+                }
+
                 //Request資料
-                HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(omInfo.DownloadLink);
+                HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(downloadLink);
                 httpRequest.Credentials = CredentialCache.DefaultCredentials;
                 httpRequest.UserAgent = ".NET Framework Example Client";
                 httpRequest.Method = "GET";
@@ -274,7 +284,7 @@ namespace OrderManagerLauncher
                     if (((HttpWebResponse)httpResponse).StatusDescription == "OK" && httpResponse.ContentLength > 1)
                     {
                         // 取得下載的檔名
-                        Uri uri = new Uri(omInfo.DownloadLink);
+                        Uri uri = new Uri(downloadLink);
                         DownloadFileName = Path.GetFileName(uri.LocalPath);
                         if (File.Exists(DownloadFileName) == true)
                             File.Delete(DownloadFileName);

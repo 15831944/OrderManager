@@ -89,6 +89,46 @@ namespace OrderManagerNew
             textbox_Log.Text = OriginalSet.LogFolder;
             comboboxLanguage.SelectedIndex = OriginalSet.Language;
             label_version.Content = "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+            if(Properties.OrderManagerProps.Default.OMLatestVer != "")
+            {
+                Version LatestVer = new Version(Properties.OrderManagerProps.Default.OMLatestVer);
+                if (LatestVer > Assembly.GetExecutingAssembly().GetName().Version)
+                {
+                    OMUpdate(true);
+                }
+                else
+                {
+                    OMUpdate(false);
+                }
+            }
+            else
+            {
+                OMUpdate(false);
+            }
+        }
+
+        /// <summary>
+        /// 切換OrderManager是否有新版本可以更新
+        /// </summary>
+        /// <param name="CanUpdate"></param>
+        private void OMUpdate(bool CanUpdate)
+        {
+            if(CanUpdate == true)
+            {
+                label_titlelatestVer.Visibility = Visibility.Visible;
+                label_latestversion.Visibility = Visibility.Visible;
+                Button_chkVer.Content = TranslationSource.Instance["SoftwareUpdate"];
+                updateimage_OM.Visibility = Visibility.Visible;
+                label_latestversion.Content = Properties.OrderManagerProps.Default.OMLatestVer;
+            }
+            else
+            {
+                label_titlelatestVer.Visibility = Visibility.Hidden;
+                label_latestversion.Visibility = Visibility.Hidden;
+                Button_chkVer.Content = TranslationSource.Instance["CheckVer"];
+                updateimage_OM.Visibility = Visibility.Hidden;
+            }
         }
 
         private void Click_TitleBar_titlebarButtons(object sender, RoutedEventArgs e)
@@ -286,6 +326,17 @@ namespace OrderManagerNew
             else if(comboboxLanguage.SelectedIndex == 1)
             {
                 LocalizationService.SetLanguage("zh-TW");
+            }
+            if(label_latestversion != null)
+            {
+                if (label_latestversion.Visibility == Visibility.Visible)
+                {
+                    Button_chkVer.Content = TranslationSource.Instance["SoftwareUpdate"];
+                }
+                else
+                {
+                    Button_chkVer.Content = TranslationSource.Instance["CheckVer"];
+                }
             }
         }
         

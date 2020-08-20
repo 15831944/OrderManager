@@ -87,7 +87,7 @@ namespace OrderManagerNew
             InitializeComponent();
             CheckedSoftwareID = -1;
             isInstalling = false;
-            
+            updateimage_Setting.Visibility = Visibility.Hidden;
             try
             {
                 if(Properties.Settings.Default.Log_filePath == "" || Directory.Exists(Properties.Settings.Default.Log_filePath) == false)
@@ -121,7 +121,7 @@ namespace OrderManagerNew
             }
             
                 //設定Snackbar顯示時間
-                var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
+                var myMessageQueue = new MaterialDesignThemes.Wpf.SnackbarMessageQueue(TimeSpan.FromMilliseconds(2000));
                 SnackbarMain.MessageQueue = myMessageQueue;
                 MainsnackbarMessageQueue = SnackbarMain.MessageQueue;
                 Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(500));    //設定動畫流暢度
@@ -176,6 +176,7 @@ namespace OrderManagerNew
                 UpdateFunc.SoftwareLogoShowEvent += new UpdateFunction.softwareLogoShowEventHandler(Handler_setSoftwareShow);
                 UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
                 UpdateFunc.SoftwareUpdateEvent += new UpdateFunction.softwareUpdateStatusHandler(Handler_SetSoftwareUpdateButtonStatus);
+                UpdateFunc.OMUpdateEvent += new UpdateFunction.omUpdateHandler(Handler_SetOMUpate);
             }
             catch(Exception ex)
             {
@@ -350,6 +351,10 @@ namespace OrderManagerNew
                     ChangeSoftwareFilter();
                 }
             }
+
+            //檢查OrderManager是否為最新版本
+            UpdateFunc.CheckOMHaveNewVersion();
+
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Loaded_MainWindow", "fin func");
         }
 
@@ -414,40 +419,213 @@ namespace OrderManagerNew
                     Properties.Settings.Default.cad_exePath += @"Bin\EZCAD.exe";
                     Properties.Settings.Default.Save();
                     FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
-                    bool isOldVer = false;
-                    foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                    if(verInfo.FileVersion != null)
                     {
-                        if (info.softwareID != (int)_softwareID.EZCAD)
-                            continue;
-                        else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                        bool isOldVer = false;
+                        foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
                         {
-                            isOldVer = true;
-                            break;
+                            if (info.softwareID != (int)_softwareID.EZCAD)
+                                continue;
+                            else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                            {
+                                isOldVer = true;
+                                break;
+                            }
+                        }
+                        if (isOldVer == false)
+                        {
+                            this.Dispatcher.Invoke((Action)(() =>
+                            {
+                                Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.EZCAD]
+                                + " " + TranslationSource.Instance["Successfully"];
+                                SnackBarShow(snackStr);
+                                OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                isInstalling = false;
+                                ChangeSoftwareFilter();
+                                watcher = new FileSystemWatcher();
+                            }));
                         }
                     }
-                    if (isOldVer == false)
+                }
+                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Implant && File.Exists(Properties.Settings.Default.implant_exePath + @"ImplantPlanning.exe") == true)
+                {
+                    Properties.Settings.Default.implant_exePath += @"ImplantPlanning.exe";
+                    Properties.Settings.Default.Save();
+                    FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.implant_exePath);
+                    if(verInfo.FileVersion != null)
                     {
-                        this.Dispatcher.Invoke((Action)(() =>
+                        bool isOldVer = false;
+                        foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
                         {
-                            Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
-                            string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.EZCAD]
-                            + " " + TranslationSource.Instance["Successfully"];
-                            SnackBarShow(snackStr);
-                            OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                            isInstalling = false;
-                            ChangeSoftwareFilter();
-                            watcher = new FileSystemWatcher();
-                        }));
+                            if (info.softwareID != (int)_softwareID.Implant)
+                                continue;
+                            else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                            {
+                                isOldVer = true;
+                                break;
+                            }
+                        }
+                        if (isOldVer == false)
+                        {
+                            this.Dispatcher.Invoke((Action)(() =>
+                            {
+                                Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0);
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Implant]
+                                + " " + TranslationSource.Instance["Successfully"];
+                                SnackBarShow(snackStr);
+                                OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                isInstalling = false;
+                                ChangeSoftwareFilter();
+                                watcher = new FileSystemWatcher();
+                            }));
+                        }
+                    }
+                }
+                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Ortho && File.Exists(Properties.Settings.Default.ortho_exePath + @"OrthoAnalysis.exe") == true)
+                {
+                    Properties.Settings.Default.ortho_exePath += @"OrthoAnalysis.exe";
+                    Properties.Settings.Default.Save();
+                    FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.ortho_exePath);
+                    if(verInfo.FileVersion != null)
+                    {
+                        bool isOldVer = false;
+                        foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                        {
+                            if (info.softwareID != (int)_softwareID.Ortho)
+                                continue;
+                            else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                            {
+                                isOldVer = true;
+                                break;
+                            }
+                        }
+                        if (isOldVer == false)
+                        {
+                            this.Dispatcher.Invoke((Action)(() =>
+                            {
+                                Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0);
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Ortho]
+                                + " " + TranslationSource.Instance["Successfully"];
+                                SnackBarShow(snackStr);
+                                OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                isInstalling = false;
+                                ChangeSoftwareFilter();
+                                watcher = new FileSystemWatcher();
+                            }));
+                        }
+                    }
+                }
+                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Tray && File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\EZCAD.tray.exe") == true)
+                {
+                    Properties.Settings.Default.tray_exePath += @"Bin\EZCAD.tray.exe";
+                    Properties.Settings.Default.Save();
+                    FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.tray_exePath);
+                    if(verInfo.FileVersion != null)
+                    {
+                        bool isOldVer = false;
+                        foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                        {
+                            if (info.softwareID != (int)_softwareID.Tray)
+                                continue;
+                            else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                            {
+                                isOldVer = true;
+                                break;
+                            }
+                        }
+                        if (isOldVer == false)
+                        {
+                            this.Dispatcher.Invoke((Action)(() =>
+                            {
+                                Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0);
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Tray]
+                                + " " + TranslationSource.Instance["Successfully"];
+                                SnackBarShow(snackStr);
+                                OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                isInstalling = false;
+                                ChangeSoftwareFilter();
+                                watcher = new FileSystemWatcher();
+                            }));
+                        }
+                    }
+                }
+                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Splint && File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\EZCAD.splint.exe") == true)
+                {
+                    Properties.Settings.Default.splint_exePath += @"Bin\EZCAD.splint.exe";
+                    Properties.Settings.Default.Save();
+                    FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.splint_exePath);
+                    if(verInfo.FileVersion != null)
+                    {
+                        bool isOldVer = false;
+                        foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                        {
+                            if (info.softwareID != (int)_softwareID.Splint)
+                                continue;
+                            else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                            {
+                                isOldVer = true;
+                                break;
+                            }
+                        }
+                        if (isOldVer == false)
+                        {
+                            this.Dispatcher.Invoke((Action)(() =>
+                            {
+                                Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0);
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Splint]
+                                + " " + TranslationSource.Instance["Successfully"];
+                                SnackBarShow(snackStr);
+                                OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                isInstalling = false;
+                                ChangeSoftwareFilter();
+                                watcher = new FileSystemWatcher();
+                            }));
+                        }
+                    }
+                }
+                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Guide && File.Exists(Properties.Settings.Default.guide_exePath + @"Bin\EZCAD.guide.exe") == true)
+                {
+                    Properties.Settings.Default.guide_exePath += @"Bin\EZCAD.guide.exe";
+                    Properties.Settings.Default.Save();
+                    FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.guide_exePath);
+                    if(verInfo.FileVersion != null)
+                    {
+                        bool isOldVer = false;
+                        foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                        {
+                            if (info.softwareID != (int)_softwareID.Guide)
+                                continue;
+                            else if (info.softwareVersion > new Version(verInfo.FileVersion))
+                            {
+                                isOldVer = true;
+                                break;
+                            }
+                        }
+                        if (isOldVer == false)
+                        {
+                            this.Dispatcher.Invoke((Action)(() =>
+                            {
+                                Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0);
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Guide]
+                                + " " + TranslationSource.Instance["Successfully"];
+                                SnackBarShow(snackStr);
+                                OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                isInstalling = false;
+                                ChangeSoftwareFilter();
+                                watcher = new FileSystemWatcher();
+                            }));
+                        }
                     }
                 }
 
                 if (Path.GetExtension(exeName).ToLower() == ".exe")
                 {
                     Console.WriteLine(exeName);
-                    if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("dentdesign.exe") != -1 || exeName.IndexOf("designer.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
+                    if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("dentdesign.exe") != -1 || exeName.IndexOf("ezcad.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("orthoanalysis.exe") != -1
                     || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1)
                 {
-                        DialogBeforeDownload.SetPropertiesSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
+                    DialogBeforeDownload.SetPropertiesSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
                     haveEXE = true;
 
                         if(dirSize >= LimitSize)
@@ -2290,9 +2468,408 @@ namespace OrderManagerNew
                 showUserDetail = false;
             }
         }
-#endregion
 
-#region FilterTable事件
+        private void MouseUp_progressbar(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ProgressBar pbar)
+            {
+                if (isInstalling == false)
+                    return;
+
+                switch (pbar.Name)
+                {
+                    case "progressbar_EZCAD_Installing":
+                        {
+                            if (File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\EZCAD.exe") == true)
+                            {
+                                Properties.Settings.Default.cad_exePath += @"Bin\EZCAD.exe";
+                                Properties.Settings.Default.Save();
+                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
+                                bool isOldVer = false;
+                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                                {
+                                    if (info.softwareID != (int)_softwareID.EZCAD)
+                                        continue;
+                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                                    {
+                                        isOldVer = true;
+                                        break;
+                                    }
+                                }
+                                if (isOldVer == false)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.EZCAD]
+                                    + " " + TranslationSource.Instance["Successfully"];
+                                    SnackBarShow(snackStr);
+                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                    isInstalling = false;
+                                    ChangeSoftwareFilter();
+                                }
+                            }
+                            break;
+                        }
+                    case "progressbar_Implant_Installing":
+                        {
+                            if (File.Exists(Properties.Settings.Default.implant_exePath + @"ImplantPlanning.exe") == true)
+                            {
+                                Properties.Settings.Default.implant_exePath += @"ImplantPlanning.exe";
+                                Properties.Settings.Default.Save();
+                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.implant_exePath);
+                                bool isOldVer = false;
+                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                                {
+                                    if (info.softwareID != (int)_softwareID.Implant)
+                                        continue;
+                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                                    {
+                                        isOldVer = true;
+                                        break;
+                                    }
+                                }
+                                if (isOldVer == false)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0);
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Implant]
+                                    + " " + TranslationSource.Instance["Successfully"];
+                                    SnackBarShow(snackStr);
+                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                    isInstalling = false;
+                                    ChangeSoftwareFilter();
+                                }
+                            }
+                            break;
+                        }
+                    case "progressbar_Ortho_Installing":
+                        {
+                            if (File.Exists(Properties.Settings.Default.ortho_exePath + @"OrthoAnalysis.exe") == true)
+                            {
+                                Properties.Settings.Default.ortho_exePath += @"OrthoAnalysis.exe";
+                                Properties.Settings.Default.Save();
+                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.ortho_exePath);
+                                bool isOldVer = false;
+                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                                {
+                                    if (info.softwareID != (int)_softwareID.Ortho)
+                                        continue;
+                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                                    {
+                                        isOldVer = true;
+                                        break;
+                                    }
+                                }
+                                if (isOldVer == false)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0);
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Ortho]
+                                    + " " + TranslationSource.Instance["Successfully"];
+                                    SnackBarShow(snackStr);
+                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                    isInstalling = false;
+                                    ChangeSoftwareFilter();
+                                }
+                            }
+                            break;
+                        }
+                    case "progressbar_Tray_Installing":
+                        {
+                            if (File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\EZCAD.tray.exe") == true)
+                            {
+                                Properties.Settings.Default.tray_exePath += @"Bin\EZCAD.tray.exe";
+                                Properties.Settings.Default.Save();
+                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.tray_exePath);
+                                bool isOldVer = false;
+                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                                {
+                                    if (info.softwareID != (int)_softwareID.Tray)
+                                        continue;
+                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                                    {
+                                        isOldVer = true;
+                                        break;
+                                    }
+                                }
+                                if (isOldVer == false)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0);
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Tray]
+                                    + " " + TranslationSource.Instance["Successfully"];
+                                    SnackBarShow(snackStr);
+                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                    isInstalling = false;
+                                    ChangeSoftwareFilter();
+                                }
+                            }
+                            break;
+                        }
+                    case "progressbar_Splint_Installing":
+                        {
+                            if (File.Exists(Properties.Settings.Default.splint_exePath + @"Bin\EZCAD.splint.exe") == true)
+                            {
+                                Properties.Settings.Default.splint_exePath += @"Bin\EZCAD.splint.exe";
+                                Properties.Settings.Default.Save();
+                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.splint_exePath);
+                                bool isOldVer = false;
+                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                                {
+                                    if (info.softwareID != (int)_softwareID.Splint)
+                                        continue;
+                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                                    {
+                                        isOldVer = true;
+                                        break;
+                                    }
+                                }
+                                if (isOldVer == false)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0);
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Splint]
+                                    + " " + TranslationSource.Instance["Successfully"];
+                                    SnackBarShow(snackStr);
+                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                    isInstalling = false;
+                                    ChangeSoftwareFilter();
+                                }
+                            }
+                            break;
+                        }
+                    case "progressbar_Guide_Installing":
+                        {
+                            if (File.Exists(Properties.Settings.Default.guide_exePath + @"Bin\EZCAD.guide.exe") == true)
+                            {
+                                Properties.Settings.Default.guide_exePath += @"Bin\EZCAD.guide.exe";
+                                Properties.Settings.Default.Save();
+                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.guide_exePath);
+                                bool isOldVer = false;
+                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                                {
+                                    if (info.softwareID != (int)_softwareID.Guide)
+                                        continue;
+                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                                    {
+                                        isOldVer = true;
+                                        break;
+                                    }
+                                }
+                                if (isOldVer == false)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0);
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Guide]
+                                    + " " + TranslationSource.Instance["Successfully"];
+                                    SnackBarShow(snackStr);
+                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                    isInstalling = false;
+                                    ChangeSoftwareFilter();
+                                }
+                            }
+                            break;
+                        }
+                }
+            }
+            else if (sender is Rectangle rect)
+            {
+                if (isInstalling == false)
+                    return;
+
+                switch (rect.Name)
+                {
+                    case "mask2_EZCAD_Installing":
+                        {
+                            if (File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\EZCAD.exe") == true)
+                            {
+                                Properties.Settings.Default.cad_exePath += @"Bin\EZCAD.exe";
+                                Properties.Settings.Default.Save();
+                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
+                                bool isOldVer = false;
+                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                                {
+                                    if (info.softwareID != (int)_softwareID.EZCAD)
+                                        continue;
+                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                                    {
+                                        isOldVer = true;
+                                        break;
+                                    }
+                                }
+                                if (isOldVer == false)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.EZCAD]
+                                    + " " + TranslationSource.Instance["Successfully"];
+                                    SnackBarShow(snackStr);
+                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                    isInstalling = false;
+                                    ChangeSoftwareFilter();
+                                }
+                            }
+                            break;
+                        }
+                    case "mask2_Implant_Installing":
+                        {
+                            if (File.Exists(Properties.Settings.Default.implant_exePath + @"ImplantPlanning.exe") == true)
+                            {
+                                Properties.Settings.Default.implant_exePath += @"ImplantPlanning.exe";
+                                Properties.Settings.Default.Save();
+                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.implant_exePath);
+                                bool isOldVer = false;
+                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                                {
+                                    if (info.softwareID != (int)_softwareID.Implant)
+                                        continue;
+                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                                    {
+                                        isOldVer = true;
+                                        break;
+                                    }
+                                }
+                                if (isOldVer == false)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0);
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Implant]
+                                    + " " + TranslationSource.Instance["Successfully"];
+                                    SnackBarShow(snackStr);
+                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                    isInstalling = false;
+                                    ChangeSoftwareFilter();
+                                }
+                            }
+                            break;
+                        }
+                    case "mask2_Ortho_Installing":
+                        {
+                            if (File.Exists(Properties.Settings.Default.ortho_exePath + @"OrthoAnalysis.exe") == true)
+                            {
+                                Properties.Settings.Default.ortho_exePath += @"OrthoAnalysis.exe";
+                                Properties.Settings.Default.Save();
+                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.ortho_exePath);
+                                bool isOldVer = false;
+                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                                {
+                                    if (info.softwareID != (int)_softwareID.Ortho)
+                                        continue;
+                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                                    {
+                                        isOldVer = true;
+                                        break;
+                                    }
+                                }
+                                if (isOldVer == false)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0);
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Ortho]
+                                    + " " + TranslationSource.Instance["Successfully"];
+                                    SnackBarShow(snackStr);
+                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                    isInstalling = false;
+                                    ChangeSoftwareFilter();
+                                }
+                            }
+                            break;
+                        }
+                    case "mask2_Tray_Installing":
+                        {
+                            if (File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\EZCAD.tray.exe") == true)
+                            {
+                                Properties.Settings.Default.tray_exePath += @"Bin\EZCAD.tray.exe";
+                                Properties.Settings.Default.Save();
+                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.tray_exePath);
+                                bool isOldVer = false;
+                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                                {
+                                    if (info.softwareID != (int)_softwareID.Tray)
+                                        continue;
+                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                                    {
+                                        isOldVer = true;
+                                        break;
+                                    }
+                                }
+                                if (isOldVer == false)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0);
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Tray]
+                                    + " " + TranslationSource.Instance["Successfully"];
+                                    SnackBarShow(snackStr);
+                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                    isInstalling = false;
+                                    ChangeSoftwareFilter();
+                                }
+                            }
+                            break;
+                        }
+                    case "mask2_Splint_Installing":
+                        {
+                            if (File.Exists(Properties.Settings.Default.splint_exePath + @"Bin\EZCAD.splint.exe") == true)
+                            {
+                                Properties.Settings.Default.splint_exePath += @"Bin\EZCAD.splint.exe";
+                                Properties.Settings.Default.Save();
+                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.splint_exePath);
+                                bool isOldVer = false;
+                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                                {
+                                    if (info.softwareID != (int)_softwareID.Splint)
+                                        continue;
+                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                                    {
+                                        isOldVer = true;
+                                        break;
+                                    }
+                                }
+                                if (isOldVer == false)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0);
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Splint]
+                                    + " " + TranslationSource.Instance["Successfully"];
+                                    SnackBarShow(snackStr);
+                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                    isInstalling = false;
+                                    ChangeSoftwareFilter();
+                                }
+                            }
+                            break;
+                        }
+                    case "mask2_Guide_Installing":
+                        {
+                            if (File.Exists(Properties.Settings.Default.guide_exePath + @"Bin\EZCAD.guide.exe") == true)
+                            {
+                                Properties.Settings.Default.guide_exePath += @"Bin\EZCAD.guide.exe";
+                                Properties.Settings.Default.Save();
+                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.guide_exePath);
+                                bool isOldVer = false;
+                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
+                                {
+                                    if (info.softwareID != (int)_softwareID.Guide)
+                                        continue;
+                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
+                                    {
+                                        isOldVer = true;
+                                        break;
+                                    }
+                                }
+                                if (isOldVer == false)
+                                {
+                                    Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0);
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Guide]
+                                    + " " + TranslationSource.Instance["Successfully"];
+                                    SnackBarShow(snackStr);
+                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
+                                    isInstalling = false;
+                                    ChangeSoftwareFilter();
+                                }
+                            }
+                            break;
+                        }
+                }
+            }
+        }
+        private void Handler_SetOMUpate()
+        {
+            updateimage_Setting.Visibility = Visibility.Visible;
+            SnackBarShow(TranslationSource.Instance["omCanUpdate"]);
+        }
+        #endregion
+
+        #region FilterTable事件
         /// <summary>
         /// F5重新整理專案
         /// </summary>
@@ -2873,399 +3450,6 @@ namespace OrderManagerNew
             }*/
         }
         #endregion
-
-        private void MouseUp_progressbar(object sender, MouseButtonEventArgs e)
-        {
-            if(sender is ProgressBar pbar)
-            {
-                if (isInstalling == false)
-                    return;
-
-                switch(pbar.Name)
-                {
-                    case "progressbar_EZCAD_Installing":
-                        {
-                            if (File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\EZCAD.exe") == true)
-                            {
-                                Properties.Settings.Default.cad_exePath += @"Bin\EZCAD.exe";
-                                Properties.Settings.Default.Save();
-                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
-                                bool isOldVer = false;
-                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
-                                {
-                                    if (info.softwareID != (int)_softwareID.EZCAD)
-                                        continue;
-                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
-                                    {
-                                        isOldVer = true;
-                                        break;
-                                    }
-                                }
-                                if (isOldVer == false)
-                                {
-                                    Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.EZCAD]
-                                    + " " + TranslationSource.Instance["Successfully"];
-                                    SnackBarShow(snackStr);
-                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                                    isInstalling = false;
-                                    ChangeSoftwareFilter();
-                                }
-                            }
-                            break;
-                        }
-                    case "progressbar_Implant_Installing":
-                        {
-                            if (File.Exists(Properties.Settings.Default.implant_exePath + @"ImplantPlanning.exe") == true)
-                            {
-                                Properties.Settings.Default.implant_exePath += @"ImplantPlanning.exe";
-                                Properties.Settings.Default.Save();
-                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.implant_exePath);
-                                bool isOldVer = false;
-                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
-                                {
-                                    if (info.softwareID != (int)_softwareID.Implant)
-                                        continue;
-                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
-                                    {
-                                        isOldVer = true;
-                                        break;
-                                    }
-                                }
-                                if (isOldVer == false)
-                                {
-                                    Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Implant]
-                                    + " " + TranslationSource.Instance["Successfully"];
-                                    SnackBarShow(snackStr);
-                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                                    isInstalling = false;
-                                    ChangeSoftwareFilter();
-                                }
-                            }
-                            break;
-                        }
-                    case "progressbar_Ortho_Installing":
-                        {
-                            if (File.Exists(Properties.Settings.Default.ortho_exePath + @"OrthoAnalysis.exe") == true)
-                            {
-                                Properties.Settings.Default.ortho_exePath += @"OrthoAnalysis.exe";
-                                Properties.Settings.Default.Save();
-                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.ortho_exePath);
-                                bool isOldVer = false;
-                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
-                                {
-                                    if (info.softwareID != (int)_softwareID.Ortho)
-                                        continue;
-                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
-                                    {
-                                        isOldVer = true;
-                                        break;
-                                    }
-                                }
-                                if (isOldVer == false)
-                                {
-                                    Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Ortho]
-                                    + " " + TranslationSource.Instance["Successfully"];
-                                    SnackBarShow(snackStr);
-                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                                    isInstalling = false;
-                                    ChangeSoftwareFilter();
-                                }
-                            }
-                            break;
-                        }
-                    case "progressbar_Tray_Installing":
-                        {
-                            if (File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\EZCAD.tray.exe") == true)
-                            {
-                                Properties.Settings.Default.tray_exePath += @"Bin\EZCAD.tray.exe";
-                                Properties.Settings.Default.Save();
-                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.tray_exePath);
-                                bool isOldVer = false;
-                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
-                                {
-                                    if (info.softwareID != (int)_softwareID.Tray)
-                                        continue;
-                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
-                                    {
-                                        isOldVer = true;
-                                        break;
-                                    }
-                                }
-                                if (isOldVer == false)
-                                {
-                                    Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Tray]
-                                    + " " + TranslationSource.Instance["Successfully"];
-                                    SnackBarShow(snackStr);
-                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                                    isInstalling = false;
-                                    ChangeSoftwareFilter();
-                                }
-                            }
-                            break;
-                        }
-                    case "progressbar_Splint_Installing":
-                        {
-                            if (File.Exists(Properties.Settings.Default.splint_exePath + @"Bin\EZCAD.splint.exe") == true)
-                            {
-                                Properties.Settings.Default.splint_exePath += @"Bin\EZCAD.splint.exe";
-                                Properties.Settings.Default.Save();
-                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.splint_exePath);
-                                bool isOldVer = false;
-                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
-                                {
-                                    if (info.softwareID != (int)_softwareID.Splint)
-                                        continue;
-                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
-                                    {
-                                        isOldVer = true;
-                                        break;
-                                    }
-                                }
-                                if (isOldVer == false)
-                                {
-                                    Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Splint]
-                                    + " " + TranslationSource.Instance["Successfully"];
-                                    SnackBarShow(snackStr);
-                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                                    isInstalling = false;
-                                    ChangeSoftwareFilter();
-                                }
-                            }
-                            break;
-                        }
-                    case "progressbar_Guide_Installing":
-                        {
-                            if (File.Exists(Properties.Settings.Default.guide_exePath + @"Bin\EZCAD.guide.exe") == true)
-                            {
-                                Properties.Settings.Default.guide_exePath += @"Bin\EZCAD.guide.exe";
-                                Properties.Settings.Default.Save();
-                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.guide_exePath);
-                                bool isOldVer = false;
-                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
-                                {
-                                    if (info.softwareID != (int)_softwareID.Guide)
-                                        continue;
-                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
-                                    {
-                                        isOldVer = true;
-                                        break;
-                                    }
-                                }
-                                if (isOldVer == false)
-                                {
-                                    Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Guide]
-                                    + " " + TranslationSource.Instance["Successfully"];
-                                    SnackBarShow(snackStr);
-                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                                    isInstalling = false;
-                                    ChangeSoftwareFilter();
-                                }
-                            }
-                            break;
-                        }
-                }
-            }
-            else if (sender is Rectangle rect)
-            {
-                if (isInstalling == false)
-                    return;
-
-                switch (rect.Name)
-                {
-                    case "mask2_EZCAD_Installing":
-                        {
-                            if (File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\EZCAD.exe") == true)
-                            {
-                                Properties.Settings.Default.cad_exePath += @"Bin\EZCAD.exe";
-                                Properties.Settings.Default.Save();
-                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
-                                bool isOldVer = false;
-                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
-                                {
-                                    if (info.softwareID != (int)_softwareID.EZCAD)
-                                        continue;
-                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
-                                    {
-                                        isOldVer = true;
-                                        break;
-                                    }
-                                }
-                                if (isOldVer == false)
-                                {
-                                    Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.EZCAD]
-                                    + " " + TranslationSource.Instance["Successfully"];
-                                    SnackBarShow(snackStr);
-                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                                    isInstalling = false;
-                                    ChangeSoftwareFilter();
-                                }
-                            }
-                            break;
-                        }
-                    case "mask2_Implant_Installing":
-                        {
-                            if (File.Exists(Properties.Settings.Default.implant_exePath + @"ImplantPlanning.exe") == true)
-                            {
-                                Properties.Settings.Default.implant_exePath += @"ImplantPlanning.exe";
-                                Properties.Settings.Default.Save();
-                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.implant_exePath);
-                                bool isOldVer = false;
-                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
-                                {
-                                    if (info.softwareID != (int)_softwareID.Implant)
-                                        continue;
-                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
-                                    {
-                                        isOldVer = true;
-                                        break;
-                                    }
-                                }
-                                if (isOldVer == false)
-                                {
-                                    Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Implant]
-                                    + " " + TranslationSource.Instance["Successfully"];
-                                    SnackBarShow(snackStr);
-                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                                    isInstalling = false;
-                                    ChangeSoftwareFilter();
-                                }
-                            }
-                            break;
-                        }
-                    case "mask2_Ortho_Installing":
-                        {
-                            if (File.Exists(Properties.Settings.Default.ortho_exePath + @"OrthoAnalysis.exe") == true)
-                            {
-                                Properties.Settings.Default.ortho_exePath += @"OrthoAnalysis.exe";
-                                Properties.Settings.Default.Save();
-                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.ortho_exePath);
-                                bool isOldVer = false;
-                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
-                                {
-                                    if (info.softwareID != (int)_softwareID.Ortho)
-                                        continue;
-                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
-                                    {
-                                        isOldVer = true;
-                                        break;
-                                    }
-                                }
-                                if (isOldVer == false)
-                                {
-                                    Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Ortho]
-                                    + " " + TranslationSource.Instance["Successfully"];
-                                    SnackBarShow(snackStr);
-                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                                    isInstalling = false;
-                                    ChangeSoftwareFilter();
-                                }
-                            }
-                            break;
-                        }
-                    case "mask2_Tray_Installing":
-                        {
-                            if (File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\EZCAD.tray.exe") == true)
-                            {
-                                Properties.Settings.Default.tray_exePath += @"Bin\EZCAD.tray.exe";
-                                Properties.Settings.Default.Save();
-                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.tray_exePath);
-                                bool isOldVer = false;
-                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
-                                {
-                                    if (info.softwareID != (int)_softwareID.Tray)
-                                        continue;
-                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
-                                    {
-                                        isOldVer = true;
-                                        break;
-                                    }
-                                }
-                                if (isOldVer == false)
-                                {
-                                    Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Tray]
-                                    + " " + TranslationSource.Instance["Successfully"];
-                                    SnackBarShow(snackStr);
-                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                                    isInstalling = false;
-                                    ChangeSoftwareFilter();
-                                }
-                            }
-                            break;
-                        }
-                    case "mask2_Splint_Installing":
-                        {
-                            if (File.Exists(Properties.Settings.Default.splint_exePath + @"Bin\EZCAD.splint.exe") == true)
-                            {
-                                Properties.Settings.Default.splint_exePath += @"Bin\EZCAD.splint.exe";
-                                Properties.Settings.Default.Save();
-                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.splint_exePath);
-                                bool isOldVer = false;
-                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
-                                {
-                                    if (info.softwareID != (int)_softwareID.Splint)
-                                        continue;
-                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
-                                    {
-                                        isOldVer = true;
-                                        break;
-                                    }
-                                }
-                                if (isOldVer == false)
-                                {
-                                    Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Splint]
-                                    + " " + TranslationSource.Instance["Successfully"];
-                                    SnackBarShow(snackStr);
-                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                                    isInstalling = false;
-                                    ChangeSoftwareFilter();
-                                }
-                            }
-                            break;
-                        }
-                    case "mask2_Guide_Installing":
-                        {
-                            if (File.Exists(Properties.Settings.Default.guide_exePath + @"Bin\EZCAD.guide.exe") == true)
-                            {
-                                Properties.Settings.Default.guide_exePath += @"Bin\EZCAD.guide.exe";
-                                Properties.Settings.Default.Save();
-                                FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.guide_exePath);
-                                bool isOldVer = false;
-                                foreach (UpdateFunction.SoftwareInfo info in UpdateFunc.CloudSoftwareTotal)
-                                {
-                                    if (info.softwareID != (int)_softwareID.Guide)
-                                        continue;
-                                    else if (info.softwareVersion < new Version(verInfo.FileVersion))
-                                    {
-                                        isOldVer = true;
-                                        break;
-                                    }
-                                }
-                                if (isOldVer == false)
-                                {
-                                    Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Guide]
-                                    + " " + TranslationSource.Instance["Successfully"];
-                                    SnackBarShow(snackStr);
-                                    OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
-                                    isInstalling = false;
-                                    ChangeSoftwareFilter();
-                                }
-                            }
-                            break;
-                        }
-                }
-            }
-        }
+        
     }
 }
