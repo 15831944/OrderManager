@@ -2563,15 +2563,6 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Software Introduction 的當地語系化字串。
-        /// </summary>
-        internal static string SoftwareWeb {
-            get {
-                return ResourceManager.GetString("SoftwareWeb", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查詢類似 Disk space available 的當地語系化字串。
         /// </summary>
         internal static string SpaceAvailable {
@@ -2748,6 +2739,15 @@ namespace OrderManagerNew.Properties {
         internal static string upload_model_file_litedoctor {
             get {
                 return ResourceManager.GetString("upload_model_file_litedoctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 User Guide 的當地語系化字串。
+        /// </summary>
+        internal static string UserGuide {
+            get {
+                return ResourceManager.GetString("UserGuide", resourceCulture);
             }
         }
         

@@ -105,7 +105,7 @@
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="cad_webIntro" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension SoftwareWeb}"
+                                      Content="{local:LocExtension UserGuide}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="cad_demo" Click="Click_SoftwareTable"
@@ -158,7 +158,7 @@
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="implant_webIntro" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension SoftwareWeb}"
+                                      Content="{local:LocExtension UserGuide}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="implant_demo" Click="Click_SoftwareTable"
@@ -207,7 +207,7 @@
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="ortho_webIntro" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension SoftwareWeb}"
+                                      Content="{local:LocExtension UserGuide}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="ortho_demo" Click="Click_SoftwareTable"
@@ -256,7 +256,7 @@
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="tray_webIntro" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension SoftwareWeb}"
+                                      Content="{local:LocExtension UserGuide}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="tray_demo" Click="Click_SoftwareTable"
@@ -305,7 +305,7 @@
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="splint_webIntro" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension SoftwareWeb}"
+                                      Content="{local:LocExtension UserGuide}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="splint_demo" Click="Click_SoftwareTable"
@@ -354,7 +354,7 @@
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button Visibility="Collapsed"
                                       x:Name="guide_webIntro" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension SoftwareWeb}"
+                                      Content="{local:LocExtension UserGuide}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button
                                       x:Name="guide_demo" Click="Click_SoftwareTable"

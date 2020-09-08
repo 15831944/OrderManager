@@ -182,8 +182,8 @@
     <value>Download Software</value>
     <comment>TableFunction</comment>
   </data>
-  <data name="SoftwareWeb" xml:space="preserve">
-    <value>Software Introduction</value>
+  <data name="UserGuide" xml:space="preserve">
+    <value>User Guide</value>
     <comment>TableFunction</comment>
   </data>
   <data name="Contect" xml:space="preserve">

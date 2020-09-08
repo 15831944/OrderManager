@@ -168,8 +168,8 @@
   <data name="DownloadSoftware" xml:space="preserve">
     <value>下載軟體</value>
   </data>
-  <data name="SoftwareWeb" xml:space="preserve">
-    <value>軟體介紹</value>
+  <data name="UserGuide" xml:space="preserve">
+    <value>軟體手冊</value>
   </data>
   <data name="Contect" xml:space="preserve">
     <value>聯絡客服</value>
