@@ -352,7 +352,7 @@
                                       x:Name="guide_open" Click="Click_SoftwareTable"
                                       Content="{local:LocExtension Open_Guide}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
-                                    <Button
+                                    <Button Visibility="Collapsed"
                                       x:Name="guide_webIntro" Click="Click_SoftwareTable"
                                       Content="{local:LocExtension SoftwareWeb}"
                                       Foreground="{StaticResource Common_DarkBrown}" />

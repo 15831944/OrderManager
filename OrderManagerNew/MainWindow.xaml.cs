@@ -1127,6 +1127,10 @@ namespace OrderManagerNew
                         }
                     case "cad_webIntro":
                         {
+                            if (Properties.Settings.Default.sysLanguage == "zh-TW")
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/07/EZCAD-%E8%BB%9F%E9%AB%94%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8A-V2.1.20325.pdf", "");
+                            else
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/07/EZCAD-User-Guide-V2.1_20325.pdf", "");
                             break;
                         }
                     case "cad_demo":
@@ -1228,6 +1232,10 @@ namespace OrderManagerNew
                         }
                     case "implant_webIntro":
                         {
+                            if (Properties.Settings.Default.sysLanguage == "zh-TW")
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/07/ImplantPlanning_%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8A-V2.0.0_20191008.pdf", "");
+                            else
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/07/ImplantPlanning_User-Guide-V2.1_20214.pdf", "");
                             break;
                         }
                     case "implant_demo":
@@ -1311,6 +1319,10 @@ namespace OrderManagerNew
                         }
                     case "ortho_webIntro":
                         {
+                            if (Properties.Settings.Default.sysLanguage == "zh-TW")
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/09/OrthoAnalysis_軟體使用手册-v3.1_20508.pdf", "");
+                            else
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/09/OrthoAnalysis_User-Guide-v3.1_20409.pdf", "");
                             break;
                         }
                     case "ortho_demo":
@@ -1394,6 +1406,10 @@ namespace OrderManagerNew
                         }
                     case "tray_webIntro":
                         {
+                            if (Properties.Settings.Default.sysLanguage == "zh-TW")
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/09/EZCAD-Tray_軟體使用手冊-V1.0_20218.pdf", "");
+                            else
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/09/EZCAD-Tray_User-Guide-V1.0_20218.pdf", "");
                             break;
                         }
                     case "tray_demo":
@@ -1477,6 +1493,10 @@ namespace OrderManagerNew
                         }
                     case "splint_webIntro":
                         {
+                            if (Properties.Settings.Default.sysLanguage == "zh-TW")
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/09/EZCAD-Splint_軟體使用手冊-V1.0_20218.pdf", "");
+                            else
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/09/EZCAD-Splint_User-Guide-V1.0_20218.pdf", "");
                             break;
                         }
                     case "splint_demo":
@@ -1641,13 +1661,14 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
+                                    cad_demo.Visibility = Visibility.Collapsed;
+                                    cad_troubleShooting.Visibility = Visibility.Collapsed;
+                                    cad_buyLic.Visibility = Visibility.Collapsed;
+
                                     popupbox_EZCAD.IsEnabled = true;
                                     cad_selectPath.Visibility = Visibility.Collapsed;
                                     cad_download.Visibility = Visibility.Collapsed;
                                     cad_open.Visibility = Visibility.Visible;
-                                    cad_demo.Visibility = Visibility.Visible;
-                                    cad_troubleShooting.Visibility = Visibility.Visible;
-                                    cad_buyLic.Visibility = Visibility.Visible;
                                     cad_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterCAD.IsEnabled = true;
                                     cad_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
@@ -1710,14 +1731,15 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
+                                    implant_demo.Visibility = Visibility.Collapsed;
+                                    implant_troubleShooting.Visibility = Visibility.Collapsed;
+                                    implant_buyLic.Visibility = Visibility.Collapsed;
+                                    
                                     popupbox_Implant.IsEnabled = true;
                                     implant_selectPath.Visibility = Visibility.Collapsed;
                                     implant_download.Visibility = Visibility.Collapsed;
                                     implant_open.Visibility = Visibility.Visible;
                                     implant_create.Visibility = Visibility.Visible;
-                                    implant_demo.Visibility = Visibility.Visible;
-                                    implant_troubleShooting.Visibility = Visibility.Visible;
-                                    implant_buyLic.Visibility = Visibility.Visible;
                                     implant_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterImplant.IsEnabled = true;
                                     implant_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
@@ -1779,13 +1801,14 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
+                                    ortho_demo.Visibility = Visibility.Collapsed;
+                                    ortho_troubleShooting.Visibility = Visibility.Collapsed;
+                                    ortho_buyLic.Visibility = Visibility.Collapsed;
+
                                     popupbox_Ortho.IsEnabled = true;
                                     ortho_selectPath.Visibility = Visibility.Collapsed;
                                     ortho_download.Visibility = Visibility.Collapsed;
                                     ortho_open.Visibility = Visibility.Visible;
-                                    ortho_demo.Visibility = Visibility.Visible;
-                                    ortho_troubleShooting.Visibility = Visibility.Visible;
-                                    ortho_buyLic.Visibility = Visibility.Visible;
                                     ortho_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterOrtho.IsEnabled = true;
                                     ortho_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
@@ -1847,13 +1870,14 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
+                                    tray_demo.Visibility = Visibility.Collapsed;
+                                    tray_troubleShooting.Visibility = Visibility.Collapsed;
+                                    tray_buyLic.Visibility = Visibility.Collapsed;
+
                                     popupbox_Tray.IsEnabled = true;
                                     tray_selectPath.Visibility = Visibility.Collapsed;
                                     tray_download.Visibility = Visibility.Collapsed;
                                     tray_open.Visibility = Visibility.Visible;
-                                    tray_demo.Visibility = Visibility.Visible;
-                                    tray_troubleShooting.Visibility = Visibility.Visible;
-                                    tray_buyLic.Visibility = Visibility.Visible;
                                     tray_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterTray.IsEnabled = true;
                                     tray_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
@@ -1915,13 +1939,14 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
+                                    splint_demo.Visibility = Visibility.Collapsed;
+                                    splint_troubleShooting.Visibility = Visibility.Collapsed;
+                                    splint_buyLic.Visibility = Visibility.Collapsed;
+
                                     popupbox_Splint.IsEnabled = true;
                                     splint_selectPath.Visibility = Visibility.Collapsed;
                                     splint_download.Visibility = Visibility.Collapsed;
                                     splint_open.Visibility = Visibility.Visible;
-                                    splint_demo.Visibility = Visibility.Visible;
-                                    splint_troubleShooting.Visibility = Visibility.Visible;
-                                    splint_buyLic.Visibility = Visibility.Visible;
                                     splint_unInstall.Visibility = Visibility.Visible;
                                     SoftwareFilterSplint.IsEnabled = true;
                                     splint_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
@@ -1982,13 +2007,14 @@ namespace OrderManagerNew
                                 }
                             case (int)_softwareStatus.Installed:
                                 {
+                                    guide_demo.Visibility = Visibility.Collapsed;
+                                    guide_troubleShooting.Visibility = Visibility.Collapsed;
+                                    guide_buyLic.Visibility = Visibility.Collapsed;
+
                                     popupbox_Guide.IsEnabled = true;
                                     guide_selectPath.Visibility = Visibility.Collapsed;
                                     guide_download.Visibility = Visibility.Collapsed;
                                     guide_open.Visibility = Visibility.Visible;
-                                    guide_demo.Visibility = Visibility.Visible;
-                                    guide_troubleShooting.Visibility = Visibility.Visible;
-                                    guide_buyLic.Visibility = Visibility.Visible;
                                     guide_unInstall.Visibility = Visibility.Visible;
                                     guide_update.Foreground = this.FindResource("Common_DarkBrown") as SolidColorBrush;
                                     guide_update.Visibility = Visibility.Visible;
