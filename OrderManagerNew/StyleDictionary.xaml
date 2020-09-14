@@ -169,6 +169,7 @@
         <Setter Property="Source" Value="{DynamicResource icon_auxiliary_updateDrawingImage}" />
         <Setter Property="Panel.ZIndex" Value="2" />
         <Setter Property="Height" Value="68" />
+        <Setter Property="IsHitTestVisible" Value="False" />
     </Style>
     <Style x:Key="maskImage" TargetType="{x:Type Rectangle}">
         <Setter Property="Panel.ZIndex" Value="1" />

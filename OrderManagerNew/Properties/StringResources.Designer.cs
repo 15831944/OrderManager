@@ -1447,6 +1447,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 (Latest Version) 的當地語系化字串。
+        /// </summary>
+        internal static string LatestVer {
+            get {
+                return ResourceManager.GetString("LatestVer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Clinic 的當地語系化字串。
         /// </summary>
         internal static string liteclinic {
@@ -2721,6 +2730,15 @@ namespace OrderManagerNew.Properties {
         internal static string Uninstall {
             get {
                 return ResourceManager.GetString("Uninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Updating... 的當地語系化字串。
+        /// </summary>
+        internal static string Updating {
+            get {
+                return ResourceManager.GetString("Updating", resourceCulture);
             }
         }
         

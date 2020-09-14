@@ -120,7 +120,7 @@ namespace OrderManagerNew
                 label_latestversion.Visibility = Visibility.Visible;
                 Button_chkVer.Content = TranslationSource.Instance["SoftwareUpdate"];
                 updateimage_OM.Visibility = Visibility.Visible;
-                label_latestversion.Content = Properties.OrderManagerProps.Default.OMLatestVer;
+                label_latestversion.Content = "v" + Properties.OrderManagerProps.Default.OMLatestVer;
             }
             else
             {

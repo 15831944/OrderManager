@@ -1346,4 +1346,12 @@
     <value>New version of OrderManager is available , please go to setting Page to update</value>
     <comment>Setting</comment>
   </data>
+  <data name="Updating" xml:space="preserve">
+    <value>Updating...</value>
+    <comment>Update</comment>
+  </data>
+  <data name="LatestVer" xml:space="preserve">
+    <value>(Latest Version)</value>
+    <comment>Update</comment>
+  </data>
 </root>

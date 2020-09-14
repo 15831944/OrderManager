@@ -126,8 +126,8 @@
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
-                            <Rectangle x:Name="mask2_EZCAD_Installing" Style="{StaticResource maskImageInstalling}"  MouseLeftButtonUp="MouseUp_progressbar"/>
-                            <ProgressBar x:Name="progressbar_EZCAD_Installing" Style="{StaticResource progressbarInstalling}" MouseLeftButtonUp="MouseUp_progressbar"/>
+                            <Rectangle x:Name="mask2_EZCAD_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_EZCAD_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0" ToolTip="ImplantPlanning">
                             <Rectangle x:Name="mask_Implant" Style="{StaticResource maskImage}" />
@@ -179,8 +179,8 @@
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
-                            <Rectangle x:Name="mask2_Implant_Installing" Style="{StaticResource maskImageInstalling}"  MouseLeftButtonUp="MouseUp_progressbar"/>
-                            <ProgressBar x:Name="progressbar_Implant_Installing" Style="{StaticResource progressbarInstalling}"  MouseUp="MouseUp_progressbar"/>
+                            <Rectangle x:Name="mask2_Implant_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_Implant_Installing" MouseUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0" ToolTip="OrthoAnalysis">
                             <Rectangle x:Name="mask_Ortho" Style="{StaticResource maskImage}" />
@@ -277,8 +277,8 @@
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
-                            <Rectangle x:Name="mask2_Tray_Installing" Style="{StaticResource maskImageInstalling}"  MouseLeftButtonUp="MouseUp_progressbar"/>
-                            <ProgressBar x:Name="progressbar_Tray_Installing" Style="{StaticResource progressbarInstalling}"  MouseLeftButtonUp="MouseUp_progressbar"/>
+                            <Rectangle x:Name="mask2_Tray_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_Tray_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0" ToolTip="EZCAD.splint">
                             <Rectangle x:Name="mask_Splint" Style="{StaticResource maskImage}" />
@@ -326,8 +326,8 @@
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
-                            <Rectangle x:Name="mask2_Splint_Installing" Style="{StaticResource maskImageInstalling}"  MouseLeftButtonUp="MouseUp_progressbar"/>
-                            <ProgressBar x:Name="progressbar_Splint_Installing" Style="{StaticResource progressbarInstalling}"  MouseLeftButtonUp="MouseUp_progressbar"/>
+                            <Rectangle x:Name="mask2_Splint_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_Splint_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0" ToolTip="EZCAD.guide">
                             <Rectangle x:Name="mask_Guide" Style="{StaticResource maskImage}" />
@@ -352,10 +352,11 @@
                                       x:Name="guide_open" Click="Click_SoftwareTable"
                                       Content="{local:LocExtension Open_Guide}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
-                                    <Button Visibility="Collapsed"
+                                    <Button
                                       x:Name="guide_webIntro" Click="Click_SoftwareTable"
                                       Content="{local:LocExtension UserGuide}"
-                                      Foreground="{StaticResource Common_DarkBrown}" />
+                                      Foreground="{StaticResource Common_DarkBrown}"
+                                      Visibility="Collapsed" />
                                     <Button
                                       x:Name="guide_demo" Click="Click_SoftwareTable"
                                       Content="{local:LocExtension DemoCase}"
@@ -375,8 +376,8 @@
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
-                            <Rectangle x:Name="mask2_Guide_Installing" Style="{StaticResource maskImageInstalling}"  MouseLeftButtonUp="MouseUp_progressbar"/>
-                            <ProgressBar x:Name="progressbar_Guide_Installing" Style="{StaticResource progressbarInstalling}"  MouseLeftButtonUp="MouseUp_progressbar"/>
+                            <Rectangle x:Name="mask2_Guide_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_Guide_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                     </StackPanel>
 
@@ -386,10 +387,15 @@
                       Panel.ZIndex="2" Orientation="Horizontal">
                         <Button Click="Click_ProjectsRefresh" Style="{StaticResource FunctionButton_refresh}" ToolTip="{local:LocExtension Refresh}" />
                         <Grid>
-                            <Image MouseLeftButtonUp="Click_FunctionTable_Setting" Panel.ZIndex="1" x:Name="updateimage_Setting" Style="{StaticResource updateImage}" />
-                            <Button Click="Click_FunctionTable_Setting" Style="{StaticResource FunctionButton_setting}" ToolTip="{local:LocExtension Setting}" />
+                            <Image
+                              x:Name="updateimage_Setting" Panel.ZIndex="1" MouseLeftButtonUp="Click_FunctionTable_Setting"
+                              Style="{StaticResource updateImage}" />
+                            <Button
+                              x:Name="Button_Setting" Click="Click_FunctionTable_Setting"
+                              Style="{StaticResource FunctionButton_setting}"
+                              ToolTip="{local:LocExtension Setting}" />
                         </Grid>
-                        
+
                         <Button
                           x:Name="omFunction_User" Click="Click_FunctionTable_User"
                           Style="{StaticResource FunctionButton_User}"
