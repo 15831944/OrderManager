@@ -123,6 +123,10 @@
                                       x:Name="cad_unInstall" Click="Click_SoftwareTable"
                                       Content="{local:LocExtension Uninstall}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="cad_relNote" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension ReleaseNote}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
@@ -176,11 +180,69 @@
                                       x:Name="implant_unInstall" Click="Click_SoftwareTable"
                                       Content="{local:LocExtension Uninstall}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="implant_relNote" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension ReleaseNote}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
                             <Rectangle x:Name="mask2_Implant_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource maskImageInstalling}" />
                             <ProgressBar x:Name="progressbar_Implant_Installing" MouseUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
+                        </Grid>
+                        <Grid Margin="6,0" ToolTip="EZCAD.guide">
+                            <Rectangle x:Name="mask_Guide" Style="{StaticResource maskImage}" />
+                            <ed:Arc x:Name="process_Guide" Style="{StaticResource progressArc}" />
+                            <Image Source="ImageSource/FunctionTable/icon_G.png" Style="{StaticResource progressImage}" />
+                            <Image x:Name="updateimage_Guide" Style="{StaticResource updateImage}" />
+                            <materialDesign:PopupBox x:Name="popupbox_Guide" Style="{StaticResource popupBoxSoftwareTable}">
+                                <StackPanel>
+                                    <Button
+                                      x:Name="guide_update" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension SoftwareUpdate}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="guide_selectPath" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension SelectPath}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="guide_download" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension DownloadSoftware}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="guide_open" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension Open_Guide}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="guide_webIntro" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension UserGuide}"
+                                      Foreground="{StaticResource Common_DarkBrown}"
+                                      Visibility="Collapsed" />
+                                    <Button
+                                      x:Name="guide_demo" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension DemoCase}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="guide_troubleShooting" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension TroubleShooting}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="guide_buyLic" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension BuyLic}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="guide_unInstall" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension Uninstall}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="guide_relNote" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension ReleaseNote}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
+                                </StackPanel>
+                            </materialDesign:PopupBox>
+                            <Rectangle x:Name="mask2_Guide_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource maskImageInstalling}" />
+                            <ProgressBar x:Name="progressbar_Guide_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
                         <Grid Margin="6,0" ToolTip="OrthoAnalysis">
                             <Rectangle x:Name="mask_Ortho" Style="{StaticResource maskImage}" />
@@ -225,12 +287,17 @@
                                       x:Name="ortho_unInstall" Click="Click_SoftwareTable"
                                       Content="{local:LocExtension Uninstall}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="ortho_relNote" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension ReleaseNote}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
                             <Rectangle x:Name="mask2_Ortho_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource maskImageInstalling}" />
                             <ProgressBar x:Name="progressbar_Ortho_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
+
                         <Grid Margin="6,0" ToolTip="EZCAD.tray">
                             <Rectangle x:Name="mask_Tray" Style="{StaticResource maskImage}" />
                             <ed:Arc x:Name="process_Tray" Style="{StaticResource progressArc}" />
@@ -273,6 +340,10 @@
                                     <Button
                                       x:Name="tray_unInstall" Click="Click_SoftwareTable"
                                       Content="{local:LocExtension Uninstall}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="tray_relNote" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension ReleaseNote}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
@@ -323,62 +394,17 @@
                                       x:Name="splint_unInstall" Click="Click_SoftwareTable"
                                       Content="{local:LocExtension Uninstall}"
                                       Foreground="{StaticResource Common_DarkBrown}" />
+                                    <Button
+                                      x:Name="splint_relNote" Click="Click_SoftwareTable"
+                                      Content="{local:LocExtension ReleaseNote}"
+                                      Foreground="{StaticResource Common_DarkBrown}" />
                                     <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
                                 </StackPanel>
                             </materialDesign:PopupBox>
                             <Rectangle x:Name="mask2_Splint_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource maskImageInstalling}" />
                             <ProgressBar x:Name="progressbar_Splint_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
                         </Grid>
-                        <Grid Margin="6,0" ToolTip="EZCAD.guide">
-                            <Rectangle x:Name="mask_Guide" Style="{StaticResource maskImage}" />
-                            <ed:Arc x:Name="process_Guide" Style="{StaticResource progressArc}" />
-                            <Image Source="ImageSource/FunctionTable/icon_G.png" Style="{StaticResource progressImage}" />
-                            <Image x:Name="updateimage_Guide" Style="{StaticResource updateImage}" />
-                            <materialDesign:PopupBox x:Name="popupbox_Guide" Style="{StaticResource popupBoxSoftwareTable}">
-                                <StackPanel>
-                                    <Button
-                                      x:Name="guide_update" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension SoftwareUpdate}"
-                                      Foreground="{StaticResource Common_DarkBrown}" />
-                                    <Button
-                                      x:Name="guide_selectPath" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension SelectPath}"
-                                      Foreground="{StaticResource Common_DarkBrown}" />
-                                    <Button
-                                      x:Name="guide_download" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension DownloadSoftware}"
-                                      Foreground="{StaticResource Common_DarkBrown}" />
-                                    <Button
-                                      x:Name="guide_open" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension Open_Guide}"
-                                      Foreground="{StaticResource Common_DarkBrown}" />
-                                    <Button
-                                      x:Name="guide_webIntro" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension UserGuide}"
-                                      Foreground="{StaticResource Common_DarkBrown}"
-                                      Visibility="Collapsed" />
-                                    <Button
-                                      x:Name="guide_demo" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension DemoCase}"
-                                      Foreground="{StaticResource Common_DarkBrown}" />
-                                    <Button
-                                      x:Name="guide_troubleShooting" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension TroubleShooting}"
-                                      Foreground="{StaticResource Common_DarkBrown}" />
-                                    <Button
-                                      x:Name="guide_buyLic" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension BuyLic}"
-                                      Foreground="{StaticResource Common_DarkBrown}" />
-                                    <Button
-                                      x:Name="guide_unInstall" Click="Click_SoftwareTable"
-                                      Content="{local:LocExtension Uninstall}"
-                                      Foreground="{StaticResource Common_DarkBrown}" />
-                                    <Button Click="Click_TitleBar_titlebarButtons" Content="{local:LocExtension Contect}" Foreground="{StaticResource Common_DarkBrown}" />
-                                </StackPanel>
-                            </materialDesign:PopupBox>
-                            <Rectangle x:Name="mask2_Guide_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource maskImageInstalling}" />
-                            <ProgressBar x:Name="progressbar_Guide_Installing" MouseLeftButtonUp="MouseUp_progressbar" Style="{StaticResource progressbarInstalling}" />
-                        </Grid>
+
                     </StackPanel>
 
                     <!--  ordermanagerFunction  -->

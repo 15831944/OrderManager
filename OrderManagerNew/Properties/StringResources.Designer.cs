@@ -1528,6 +1528,15 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Loading... 的當地語系化字串。
+        /// </summary>
+        internal static string Loading___ {
+            get {
+                return ResourceManager.GetString("Loading...", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Load Project 的當地語系化字串。
         /// </summary>
         internal static string LoadProj {
@@ -2325,6 +2334,15 @@ namespace OrderManagerNew.Properties {
         internal static string release_ng_osp {
             get {
                 return ResourceManager.GetString("release_ng_osp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Release Note 的當地語系化字串。
+        /// </summary>
+        internal static string ReleaseNote {
+            get {
+                return ResourceManager.GetString("ReleaseNote", resourceCulture);
             }
         }
         

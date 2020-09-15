@@ -1044,4 +1044,10 @@
   <data name="LatestVer" xml:space="preserve">
     <value>(最新版本)</value>
   </data>
+  <data name="ReleaseNote" xml:space="preserve">
+    <value>更新記錄</value>
+  </data>
+  <data name="Loading..." xml:space="preserve">
+    <value>讀取中...</value>
+  </data>
 </root>

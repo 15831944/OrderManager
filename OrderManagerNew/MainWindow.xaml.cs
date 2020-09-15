@@ -944,7 +944,28 @@ namespace OrderManagerNew
         {
             Task.Factory.StartNew(() => MainsnackbarMessageQueue.Enqueue(Message));
         }
-        #endregion
+
+        private void SetBlur(bool isBlur)
+        {
+            switch(isBlur)
+            {
+                case true:
+                    {
+                        //主視窗羽化
+                        var blur = new BlurEffect();
+                        this.Effect = blur;
+                        break;
+                    }
+                case false:
+                    {
+                        //主視窗還原
+                        this.Effect = null;
+                        this.OpacityMask = null;
+                        break;
+                    }
+            }
+        }
+#endregion
 
 #region TitleBar事件
         private Point startPos;
@@ -1163,6 +1184,11 @@ namespace OrderManagerNew
                             }
                             break;
                         }
+                    case "cad_relNote":
+                        {
+                            ShowReleaseNote(_softwareID.EZCAD);
+                            break;
+                        }
                     #endregion
                     #region Implant
                     case "implant_update":
@@ -1214,9 +1240,7 @@ namespace OrderManagerNew
                         }
                     case "implant_create":
                         {
-                            //-2019/0408-handtan
-                            var blur = new BlurEffect();
-                            this.Effect = blur;
+                            SetBlur(true);
                             V2Implant.ImplantV2NewOrder w1 = new V2Implant.ImplantV2NewOrder
                             {
                                 Owner = this,
@@ -1226,14 +1250,13 @@ namespace OrderManagerNew
                             };
                             w1.NewOrderStatusUpdated += OrderEventHandlerFunction_StatusUpdated;
                             w1.ShowDialog();
-                            this.Effect = null;
-                            this.OpacityMask = null;
+                            SetBlur(false);
                             break;
                         }
                     case "implant_webIntro":
                         {
                             if (Properties.Settings.Default.sysLanguage == "zh-TW")
-                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/07/ImplantPlanning_%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8A-V2.0.0_20191008.pdf", "");
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/07/ImplantPlanning_User-Guide-V2.1_20214.pdf", "");
                             else
                                 OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/07/ImplantPlanning_User-Guide-V2.1_20214.pdf", "");
                             break;
@@ -1266,6 +1289,11 @@ namespace OrderManagerNew
                                     }
                                 }
                             }
+                            break;
+                        }
+                    case "implant_relNote":
+                        {
+                            ShowReleaseNote(_softwareID.Implant);
                             break;
                         }
                     #endregion
@@ -1355,6 +1383,11 @@ namespace OrderManagerNew
                             }
                             break;
                         }
+                    case "ortho_relNote":
+                        {
+                            ShowReleaseNote(_softwareID.Ortho);
+                            break;
+                        }
                     #endregion
                     #region Tray
                     case "tray_update":
@@ -1440,6 +1473,11 @@ namespace OrderManagerNew
                                     }
                                 }
                             }
+                            break;
+                        }
+                    case "tray_relNote":
+                        {
+                            ShowReleaseNote(_softwareID.Tray);
                             break;
                         }
                     #endregion
@@ -1529,6 +1567,11 @@ namespace OrderManagerNew
                             }
                             break;
                         }
+                    case "splint_relNote":
+                        {
+                            ShowReleaseNote(_softwareID.Splint);
+                            break;
+                        }
                     #endregion
                     #region Guide
                     case "guide_update":
@@ -1612,10 +1655,26 @@ namespace OrderManagerNew
                             }
                             break;
                         }
-                        #endregion
+                    case "guide_relNote":
+                        {
+                            ShowReleaseNote(_softwareID.Guide);
+                            break;
+                        }
+                    #endregion
                 }
             }
         }
+
+        private void ShowReleaseNote(_softwareID software)
+        {
+            SetBlur(true);
+            ReleaseNote relNote = new ReleaseNote();
+            relNote.SetCurrentSoftware(software);
+            relNote.Owner = this;
+            relNote.ShowDialog();
+            SetBlur(false);
+        }
+
         /// <summary>
         /// 設定SofttwareTable各Icon顯示狀態
         /// </summary>
@@ -2425,9 +2484,7 @@ namespace OrderManagerNew
             if (DialogBeforeDownload.SetInformation() == true)
             {
                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "DialogBeforeDownload.SetInformation()", "result is true");
-                //主視窗羽化
-                var blur = new BlurEffect();
-                this.Effect = blur;
+                SetBlur(true);
 
                 DialogBeforeDownload.Owner = this;
                 DialogBeforeDownload.ShowActivated = true;
@@ -2440,9 +2497,7 @@ namespace OrderManagerNew
                 else
                     SetAllSoftwareTableDownloadisEnable(true);
 
-                //主視窗還原
-                this.Effect = null;
-                this.OpacityMask = null;
+                SetBlur(false);
             }
 
             if (DownloadStart == true)
@@ -2450,10 +2505,7 @@ namespace OrderManagerNew
         }
         private void GoToSetting(int softwareID)
         {
-            //主視窗羽化
-            var blur = new BlurEffect();
-            this.Effect = blur;
-
+            SetBlur(true);
             Setting DialogSetting = new Setting
             {
                 Owner = this,
@@ -2481,10 +2533,7 @@ namespace OrderManagerNew
                 log.RecordConfigLog("Click_FunctionTable_Setting()", "Config changed");
                 ChangeSoftwareFilter();
             }
-
-            //主視窗還原
-            this.Effect = null;
-            this.OpacityMask = null;
+            SetBlur(false);
         }
         /// <summary>
         /// 是否顯示UserDetail
@@ -2915,9 +2964,9 @@ namespace OrderManagerNew
             updateimage_Setting.Visibility = Visibility.Visible;
             SnackBarShow(TranslationSource.Instance["omCanUpdate"]);
         }
-        #endregion
+#endregion
 
-        #region FilterTable事件
+#region FilterTable事件
         /// <summary>
         /// F5重新整理專案
         /// </summary>
