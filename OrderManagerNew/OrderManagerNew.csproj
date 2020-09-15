@@ -7,7 +7,7 @@
     <ProjectGuid>{4D6456AC-80B7-4F70-9291-E5A055531FB8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>OrderManagerNew</RootNamespace>
-    <AssemblyName>OrderManager</AssemblyName>
+    <AssemblyName>Order Manager</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -360,12 +360,11 @@
     <Resource Include="ImageSource\FunctionTable\icon_O.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ordermanager.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="ImageSource\CaseTable\guide_model.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="PrintInOrder.ico" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="ImageSource\DetailTable\cadDemo.jpg" />
   </ItemGroup>
@@ -529,6 +528,9 @@
     <None Include="V2Implant\SurgicalKitInfor.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ordermanager.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
