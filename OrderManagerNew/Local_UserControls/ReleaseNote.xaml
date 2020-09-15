@@ -45,8 +45,8 @@
 
                 <TextBox
                   Grid.Row="0" Grid.RowSpan="2" x:Name="textbox_relNote"
-                  Panel.ZIndex="-1" IsReadOnly="True" TextWrapping="Wrap"
-                  VerticalScrollBarVisibility="Auto" />
+                  Panel.ZIndex="-1" FontSize="16" IsReadOnly="True"
+                  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
             </Grid>
         </DockPanel>
     </Border>
