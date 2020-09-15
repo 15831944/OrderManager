@@ -425,7 +425,7 @@
                         <Button
                           x:Name="omFunction_User" Click="Click_FunctionTable_User"
                           Style="{StaticResource FunctionButton_User}"
-                          ToolTip="AirDental" />
+                          ToolTip="AirDental" Visibility="Collapsed" />
                         <Grid Width="6" />
                     </StackPanel>
                 </Grid>
@@ -529,7 +529,8 @@
 
                     <!--  FilterTable-Start  -->
                     <StackPanel
-                      Grid.Column="0" Margin="0,3" Background="#FF756550"
+                      Grid.Column="0" Margin="0,3"
+                      Background="{StaticResource expanderBG_Color}"
                       Orientation="Vertical">
                         <StackPanel.Resources>
                             <Style BasedOn="{StaticResource MaterialDesignCheckBox}" TargetType="CheckBox">
@@ -540,7 +541,7 @@
                             </Style>
                         </StackPanel.Resources>
                         <Expander Header="{local:LocExtension BySoftware}" Style="{StaticResource ExpanderStyle}">
-                            <Grid Background="#FF756550">
+                            <Grid Background="{StaticResource expanderBG_Color}">
                                 <Grid.Resources>
                                     <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
                                         <Setter Property="GroupName" Value="SortSoftware" />
@@ -558,7 +559,7 @@
                             </Grid>
                         </Expander>
                         <Expander Header="{local:LocExtension ByDate}" Style="{StaticResource ExpanderStyle}">
-                            <Grid Background="#FF756550">
+                            <Grid Background="{StaticResource expanderBG_Color}">
                                 <Grid.Resources>
                                     <Style BasedOn="{StaticResource SortRadioButton}" TargetType="{x:Type RadioButton}">
                                         <EventSetter Event="Checked" Handler="Checked_SortTable_Filter" />
@@ -574,7 +575,7 @@
                             </Grid>
                         </Expander>
                         <Expander Header="{local:LocExtension ByPatient}" Style="{StaticResource ExpanderStyle}">
-                            <Grid Background="#FF756550">
+                            <Grid Background="{StaticResource expanderBG_Color}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="45" />
                                     <ColumnDefinition />
@@ -587,7 +588,7 @@
                             </Grid>
                         </Expander>
                         <Expander Header="{local:LocExtension ByCase}" Style="{StaticResource ExpanderStyle}">
-                            <Grid Background="#FF756550">
+                            <Grid Background="{StaticResource expanderBG_Color}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="45" />
                                     <ColumnDefinition />
@@ -618,7 +619,7 @@
                         <TabItem
                           x:Name="tabitem_Cloud" Header="Airdental"
                           Style="{StaticResource CaseTabItem}"
-                          ToolTipService.ShowOnDisabled="True">
+                          ToolTipService.ShowOnDisabled="True" Visibility="Hidden">
                             <Border Background="#FFEDEDE2">
                                 <ScrollViewer>
                                     <StackPanel x:Name="StackPanel_Cloud" Orientation="Vertical" />

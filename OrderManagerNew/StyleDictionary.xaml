@@ -6,16 +6,22 @@
     </ResourceDictionary.MergedDictionaries>
 
     <SolidColorBrush x:Key="Common_DarkBackGround" Color="#FF30312C" />
-    <SolidColorBrush x:Key="Common_OrangeTitleBar" Color="#FFE08A1E" />
-    <SolidColorBrush x:Key="Common_DarkBrown" Color="#FF493E34" />
+    <SolidColorBrush x:Key="Common_OrangeTitleBar" Color="#FF056840" />
+    <SolidColorBrush x:Key="Common_DarkBrown" Color="#FF4C4B4B" />
     <SolidColorBrush x:Key="background_SuperDarkCaseTable" Color="#FF353531" />
     <SolidColorBrush x:Key="background_WhiteCaseTable" Color="#FFEDEDE2" />
-    <SolidColorBrush x:Key="background_CheckedBaseCaseTable" Color="#FFFFD6AE" />
-    <SolidColorBrush x:Key="background_SmallCase" Color="#FFBCB2AA" />
+    <SolidColorBrush x:Key="background_SmallCase" Color="#FFA9BCB8" />
     <SolidColorBrush x:Key="background_FocusedCase" Color="#FFFFF1C2" />
     <SolidColorBrush x:Key="background_FocusedSmallCase" Color="#FFEDAE9F" />
     <SolidColorBrush x:Key="borderbrush_FocusedSmallCase" Color="#FFF26C5A" />
     <SolidColorBrush x:Key="borderbrush_SuperWhiteDetail" Color="#FFDDDDDD" />
+    <SolidColorBrush x:Key="background_Expender_mouseOver" Color="#FF07894E" />
+    <SolidColorBrush x:Key="comboboxButton_Color" Color="#FFF6AA00" />
+    <SolidColorBrush x:Key="expanderBG_Color" Color="#FF657A69" />
+    <SolidColorBrush x:Key="expanderBtn_Color" Color="#FF0BBD81" />
+    <SolidColorBrush x:Key="Common_BG_grayColor" Color="#FFF4E9DC" />
+    <SolidColorBrush x:Key="combobox_defaultBGColor" Color="#FF07894E" />
+    <SolidColorBrush x:Key="combobox_isMouseOverItem" Color="#FF056840" />
     <Style TargetType="{x:Type Label}">
         <Setter Property="FontFamily" Value="Arial" />
     </Style>
@@ -339,7 +345,7 @@
                           Height="{TemplateBinding Height}"
                           Background="{TemplateBinding Background}"
                           SnapsToDevicePixels="True" Visibility="Visible">
-                            <Polygon Fill="#FF70450F" Points="0,0 0,26 26,26 26,0 0,0" />
+                            <Polygon Fill="{DynamicResource expanderBtn_Color}" Points="0,0 0,26 26,26 26,0 0,0" />
                             <Line
                               Stroke="#FFFFFFFF" StrokeThickness="1" X1="8"
                               X2="18" Y1="13" Y2="13" />
@@ -353,7 +359,7 @@
                           Height="{TemplateBinding Height}"
                           Background="{TemplateBinding Background}"
                           SnapsToDevicePixels="True" Visibility="Hidden">
-                            <Polygon Fill="#FF70450F" Points="0,0 0,26 26,26 26,0 0,0" />
+                            <Polygon Fill="{DynamicResource expanderBtn_Color}" Points="0,0 0,26 26,26 26,0 0,0" />
                             <Line
                               Stroke="#FFFFFFFF" StrokeThickness="1" X1="8"
                               X2="18" Y1="13" Y2="13" />
@@ -367,7 +373,7 @@
                     </Canvas>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="#FFDD780B" />
+                            <Setter Property="Background" Value="{DynamicResource background_Expender_mouseOver}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="true">
                             <Setter TargetName="canvChecked" Property="Visibility" Value="Visible" />
@@ -382,7 +388,7 @@
         </Setter>
     </Style>
     <Style x:Key="ExpanderStyle" TargetType="{x:Type Expander}">
-        <Setter Property="Foreground" Value="#FFF4E9DC" />
+        <Setter Property="Foreground" Value="{DynamicResource Common_BG_grayColor}" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -438,9 +444,9 @@
     <Style x:Key="SortTextBox" BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
         <Setter Property="Width" Value="112" />
         <Setter Property="Height" Value="25" />
-        <Setter Property="Background" Value="#FF756550" />
-        <Setter Property="BorderBrush" Value="#FFF4E9DC" />
-        <Setter Property="Foreground" Value="#FFF4E9DC" />
+        <Setter Property="Background" Value="{StaticResource expanderBG_Color}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Common_BG_grayColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource Common_BG_grayColor}" />
         <Setter Property="Margin" Value="0,5,5,5" />
         <Setter Property="Padding" Value="1,-1,0,0" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -479,14 +485,16 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <BulletDecorator
-                      Margin="0,1" HorizontalAlignment="Left" Background="#FF756550"
+                      Margin="0,1" HorizontalAlignment="Left"
+                      Background="{StaticResource expanderBG_Color}"
                       Cursor="Hand">
                         <BulletDecorator.Bullet>
                             <Grid Width="11" Height="11">
                                 <!--  Define size of the Bullet  -->
                                 <!--  The two borders  -->
                                 <Border
-                                  Name="RadioOuter" Background="Transparent" BorderBrush="#FFF4E9DC"
+                                  Name="RadioOuter" Background="Transparent"
+                                  BorderBrush="{DynamicResource Common_BG_grayColor}"
                                   BorderThickness="1" CornerRadius="20" />
                                 <Border
                                   Name="RadioMark" Margin="3" Background="#FFF6AA00"
@@ -514,7 +522,8 @@
                         <!--  Text element  -->
                         <TextBlock
                           Name="RadioContent" Margin="10,0,0,0" FontFamily="Segoe UI"
-                          FontSize="14" Foreground="#FFF4E9DC">
+                          FontSize="14"
+                          Foreground="{DynamicResource Common_BG_grayColor}">
                             <ContentPresenter />
                         </TextBlock>
                     </BulletDecorator>
@@ -570,7 +579,7 @@
     </Style>
     <Style TargetType="{x:Type ScrollBar}">
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
-        <Setter Property="Foreground" Value="#FF756550" />
+        <Setter Property="Foreground" Value="{StaticResource expanderBG_Color}" />
         <Setter Property="Background" Value="#FFB3B3B3" />
         <Setter Property="Width" Value="18" />
         <Setter Property="Template">
@@ -942,7 +951,7 @@
         </Setter>
     </Style>
     <Style x:Key="comboboxSetting" TargetType="{x:Type ComboBox}">
-        <Setter Property="Foreground" Value="#F3E8DB" />
+        <Setter Property="Foreground" Value="#FFF3E8DB" />
         <Setter Property="Height" Value="24" />
         <Setter Property="Template">
             <Setter.Value>
@@ -959,7 +968,7 @@
                                         <Border
                                           Grid.Column="1" x:Name="Border" Background="#353531"
                                           BorderThickness="0" />
-                                        <Border Grid.Column="0" Background="#756550" BorderThickness="0" />
+                                        <Border Grid.Column="0" Background="{DynamicResource combobox_defaultBGColor}" BorderThickness="0" />
                                         <Path
                                           Grid.Column="1" x:Name="Arrow" Width="10"
                                           Height="10" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -989,7 +998,7 @@
                               MinWidth="{TemplateBinding ActualWidth}"
                               MaxHeight="{TemplateBinding MaxDropDownHeight}"
                               SnapsToDevicePixels="True">
-                                <Border x:Name="DropDownBorder" Background="#756550" />
+                                <Border x:Name="DropDownBorder" Background="{DynamicResource combobox_defaultBGColor}" />
                                 <ScrollViewer SnapsToDevicePixels="True">
                                     <StackPanel IsItemsHost="True" />
                                 </ScrollViewer>
@@ -1005,12 +1014,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-                    <Border x:Name="Border" Background="#756550">
+                    <Border x:Name="Border" Background="{DynamicResource combobox_defaultBGColor}">
                         <ContentPresenter Margin="3" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="#3B3127" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource combobox_isMouseOverItem}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

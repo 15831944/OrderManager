@@ -45,7 +45,7 @@
             </Style>
             <Style x:Key="OkButton" TargetType="{x:Type Button}">
                 <Setter Property="Background" Value="#FF756450" />
-                <Setter Property="Foreground" Value="#FFF4E9DC" />
+                <Setter Property="Foreground" Value="{DynamicResource Common_BG_grayColor}" />
                 <Setter Property="FontWeight" Value="Bold" />
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="Template">

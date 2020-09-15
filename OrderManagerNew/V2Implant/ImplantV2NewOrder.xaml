@@ -225,8 +225,8 @@
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
             <Style x:Key="OkButton" TargetType="{x:Type Button}">
-                <Setter Property="Background" Value="#FF756550" />
-                <Setter Property="Foreground" Value="#FFF4E9DC" />
+                <Setter Property="Background" Value="{StaticResource expanderBG_Color}" />
+                <Setter Property="Foreground" Value="{DynamicResource Common_BG_grayColor}" />
                 <Setter Property="FontWeight" Value="Bold" />
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="Template">
@@ -245,8 +245,8 @@
                 </Style.Triggers>
             </Style>
             <Style x:Key="CancelButton" TargetType="{x:Type Button}">
-                <Setter Property="Background" Value="#FF756550" />
-                <Setter Property="Foreground" Value="#FFF4E9DC" />
+                <Setter Property="Background" Value="{StaticResource expanderBG_Color}" />
+                <Setter Property="Foreground" Value="{DynamicResource Common_BG_grayColor}" />
                 <Setter Property="FontWeight" Value="Bold" />
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="Template">
@@ -279,7 +279,8 @@
         <DockPanel>
             <!--  Title Bar Area  -->
             <Border
-              Name="border" Height="30" Background="#FFE08A1E"
+              Name="border" Height="30"
+              Background="{DynamicResource Common_OrangeTitleBar}"
               DockPanel.Dock="Top">
 
                 <Grid>
@@ -904,18 +905,18 @@
                                     </GroupBox.Header>
 
                                     <StackPanel>
-                                        <Grid Height="130" Margin="3">
+                                        <Grid Height="180" Margin="3">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="50" />
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="26" />
-                                                <RowDefinition Height="26" />
-                                                <RowDefinition Height="26" />
-                                                <RowDefinition Height="26" />
-                                                <RowDefinition Height="26" />
+                                                <RowDefinition Height="36" />
+                                                <RowDefinition Height="36" />
+                                                <RowDefinition Height="36" />
+                                                <RowDefinition Height="36" />
+                                                <RowDefinition Height="36" />
                                                 <RowDefinition />
                                             </Grid.RowDefinitions>
 
@@ -942,14 +943,14 @@
                                             <ComboBox
                                               Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
                                               x:Name="comboImplantBrand" Margin="3" SelectionChanged="ComboImplantBrand_SelectionChanged"
-                                              Style="{x:Null}" />
+                                              Style="{DynamicResource comboboxSetting}" />
                                             <ComboBox
                                               Grid.Row="1" Grid.Column="2" x:Name="comboImplantModel"
                                               Margin="3" SelectionChanged="ComboImplantModel_SelectionChanged" Visibility="Hidden" />
                                             <ComboBox
                                               Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                                               x:Name="comboImplantSystem" Margin="3" SelectionChanged="ComboImplantModel_SelectionChanged"
-                                              Style="{x:Null}" />
+                                              Style="{DynamicResource comboboxSetting}" />
                                             <ComboBox
                                               Grid.Row="2" Grid.Column="2" x:Name="comboImplantMaterial"
                                               Margin="3" SelectionChanged="ComboImplantMaterial_SelectionChanged" Visibility="Hidden" />
@@ -979,7 +980,7 @@
                                         <ComboBox
                                           Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
                                           x:Name="comboSurgicalKit" Margin="3"
-                                          Style="{x:Null}" />
+                                          Style="{DynamicResource comboboxSetting}" />
 
                                         <ScrollViewer Height="75" Margin="7,4,7,0" VerticalScrollBarVisibility="Auto">
                                             <TextBox

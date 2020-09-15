@@ -59,7 +59,7 @@
             <Button
               Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"
               x:Name="button_openCAD" Width="36" Height="36"
-              Click="Click_buttn_event"
+              Click="Click_buttn_event" SnapsToDevicePixels="True"
               Style="{DynamicResource Button_withImage}"
               ToolTip="{local1:LocExtension Open_EZCAD}">
                 <Button.Background>
