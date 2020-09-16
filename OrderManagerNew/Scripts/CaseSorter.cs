@@ -176,7 +176,7 @@ namespace OrderManagerNew
             array[right] = tmpCase;
         }
         /// <summary>
-        /// ImplantPlanning專案排序(依創建日期)
+        /// PrintIn ImplantPlanning專案排序(依創建日期)
         /// </summary>
         /// <param name="array">專案陣列</param>
         /// <param name="left">輸入0</param>

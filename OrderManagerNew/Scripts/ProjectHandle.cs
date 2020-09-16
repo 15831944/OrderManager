@@ -167,7 +167,7 @@ namespace OrderManagerNew
         }
 
         /// <summary>
-        /// 讀取ImplantPlanning專案
+        /// 讀取PrintIn ImplantPlanning專案
         /// </summary>
         public void LoadImplantProjV2()
         {
@@ -187,10 +187,10 @@ namespace OrderManagerNew
             Caselist_ImplantOuterCase = new List<ImplantOuterInformation>();
             
             DirectoryInfo dInfo = new DirectoryInfo(implant_projectDirectory);
-            // C:\IntewareData\Implant\2020130102946\202001301037_final_mi\LinkStation\ManufacturingDir\(Guide生出來的物件)
+            // C:\PrintIn3D Data\Implant\2020130102946\202001301037_final_mi\LinkStation\ManufacturingDir\(Guide生出來的物件)
             foreach (DirectoryInfo folder in dInfo.GetDirectories())
             {
-                // 這層是C:\IntewareData\Implant\
+                // 這層是C:\PrintIn3D Data\Implant\
                 
                 string XmlPath = folder.FullName + @"\" + folder.ToString() + ".xml";
                 if (File.Exists(XmlPath) == false)
@@ -207,7 +207,7 @@ namespace OrderManagerNew
         }
 
         /// <summary>
-        /// 讀取OrthoAnalysis專案
+        /// 讀取PrintIn Aligner專案
         /// </summary>
         public void LoadOrthoProj()
         {
@@ -226,10 +226,10 @@ namespace OrderManagerNew
             //Ortho外部清單
             Caselist_OrthoOuterCase = new List<OrthoOuterInformation>();
             DirectoryInfo dInfo = new DirectoryInfo(ortho_projectDirectory);
-            // C:\IntewareData\OrthoAnalysisV3\OrthoData\Test_1216\2019-12-16-1543\Test_1216.xml
+            // C:\PrintIn3D Data\PrintIn AlignerV3\OrthoData\Test_1216\2019-12-16-1543\Test_1216.xml
             foreach(DirectoryInfo folder in dInfo.GetDirectories())
             {
-                // 這層是C:\IntewareData\OrthoAnalysisV3\OrthoData\folder\
+                // 這層是C:\PrintIn3D Data\PrintIn AlignerV3\OrthoData\folder\
                 string OuterXmlPath = folder.FullName + @"\PatientInfo.xml";
                 if (File.Exists(OuterXmlPath) == false)
                     continue;

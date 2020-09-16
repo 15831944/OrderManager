@@ -47,7 +47,7 @@ namespace OrderManagerNew
                     break;
                 case _softwareID.Ortho:
                     {
-                        label_title.Content = "OrthoAnalysis's " + TranslationSource.Instance["ReleaseNote"];
+                        label_title.Content = "PrintIn Aligner's " + TranslationSource.Instance["ReleaseNote"];
                         DocUrl = UrlOrthoLog;
                         Bgworker = new BackgroundWorker();
                         Bgworker.DoWork += new DoWorkEventHandler(DoWork_Download);

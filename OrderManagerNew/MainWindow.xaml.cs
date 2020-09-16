@@ -94,7 +94,7 @@ namespace OrderManagerNew
                 {
                     //我的文件資料夾路徑
                     string MyDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    Properties.Settings.Default.Log_filePath = MyDocumentsPath + @"\Inteware OrderManager\";
+                    Properties.Settings.Default.Log_filePath = MyDocumentsPath + @"\PrintIn Order\";
                     if (Directory.Exists(Properties.Settings.Default.Log_filePath) == false)
                     {
                         Directory.CreateDirectory(Properties.Settings.Default.Log_filePath);
@@ -414,9 +414,9 @@ namespace OrderManagerNew
                 double LimitSize = UpdateFunc.readyInstallSoftwareInfo.softwareSize;
                 string exeName = Path.GetFileName(e.FullPath).ToLower();
 
-                if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.EZCAD && File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\EZCAD.exe") == true)
+                if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.EZCAD && File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\PrintIn DentDesign.exe") == true)
                 {
-                    Properties.Settings.Default.cad_exePath += @"Bin\EZCAD.exe";
+                    Properties.Settings.Default.cad_exePath += @"Bin\PrintIn DentDesign.exe";
                     Properties.Settings.Default.Save();
                     FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
                     if(verInfo.FileVersion != null)
@@ -448,9 +448,9 @@ namespace OrderManagerNew
                         }
                     }
                 }
-                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Implant && File.Exists(Properties.Settings.Default.implant_exePath + @"ImplantPlanning.exe") == true)
+                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Implant && File.Exists(Properties.Settings.Default.implant_exePath + @"PrintIn ImplantPlanning.exe") == true)
                 {
-                    Properties.Settings.Default.implant_exePath += @"ImplantPlanning.exe";
+                    Properties.Settings.Default.implant_exePath += @"PrintIn ImplantPlanning.exe";
                     Properties.Settings.Default.Save();
                     FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.implant_exePath);
                     if(verInfo.FileVersion != null)
@@ -482,9 +482,9 @@ namespace OrderManagerNew
                         }
                     }
                 }
-                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Ortho && File.Exists(Properties.Settings.Default.ortho_exePath + @"OrthoAnalysis.exe") == true)
+                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Ortho && File.Exists(Properties.Settings.Default.ortho_exePath + @"PrintIn Aligner.exe") == true)
                 {
-                    Properties.Settings.Default.ortho_exePath += @"OrthoAnalysis.exe";
+                    Properties.Settings.Default.ortho_exePath += @"PrintIn Aligner.exe";
                     Properties.Settings.Default.Save();
                     FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.ortho_exePath);
                     if(verInfo.FileVersion != null)
@@ -516,9 +516,9 @@ namespace OrderManagerNew
                         }
                     }
                 }
-                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Tray && File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\EZCAD.tray.exe") == true)
+                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Tray && File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\PrintIn Tray.exe") == true)
                 {
-                    Properties.Settings.Default.tray_exePath += @"Bin\EZCAD.tray.exe";
+                    Properties.Settings.Default.tray_exePath += @"Bin\PrintIn Tray.exe";
                     Properties.Settings.Default.Save();
                     FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.tray_exePath);
                     if(verInfo.FileVersion != null)
@@ -550,9 +550,9 @@ namespace OrderManagerNew
                         }
                     }
                 }
-                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Splint && File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\EZCAD.splint.exe") == true)
+                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Splint && File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\PrintIn Splint.exe") == true)
                 {
-                    Properties.Settings.Default.splint_exePath += @"Bin\EZCAD.splint.exe";
+                    Properties.Settings.Default.splint_exePath += @"Bin\PrintIn Splint.exe";
                     Properties.Settings.Default.Save();
                     FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.splint_exePath);
                     if(verInfo.FileVersion != null)
@@ -584,9 +584,9 @@ namespace OrderManagerNew
                         }
                     }
                 }
-                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Guide && File.Exists(Properties.Settings.Default.guide_exePath + @"Bin\EZCAD.guide.exe") == true)
+                else if (UpdateFunc.readyInstallSoftwareInfo.softwareID == (int)_softwareID.Guide && File.Exists(Properties.Settings.Default.guide_exePath + @"Bin\PrintIn Guide.exe") == true)
                 {
-                    Properties.Settings.Default.guide_exePath += @"Bin\EZCAD.guide.exe";
+                    Properties.Settings.Default.guide_exePath += @"Bin\PrintIn Guide.exe";
                     Properties.Settings.Default.Save();
                     FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.guide_exePath);
                     if(verInfo.FileVersion != null)
@@ -622,7 +622,7 @@ namespace OrderManagerNew
                 if (Path.GetExtension(exeName).ToLower() == ".exe")
                 {
                     Console.WriteLine(exeName);
-                    if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("dentdesign.exe") != -1 || exeName.IndexOf("ezcad.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("orthoanalysis.exe") != -1
+                    if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("dentdesign.exe") != -1 || exeName.IndexOf("ezcad.exe") != -1 || exeName.IndexOf("PrintIn ImplantPlanning.exe") != -1 || exeName.IndexOf("PrintIn Aligner.exe") != -1
                     || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1)
                 {
                     DialogBeforeDownload.SetPropertiesSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
@@ -676,7 +676,7 @@ namespace OrderManagerNew
         {
             bool HaveDeleted = false;
             string exeName = Path.GetFileName(e.FullPath).ToLower();
-                if (HaveDeleted == false && (exeName.IndexOf("cad.exe") != -1 || exeName.IndexOf("implantplanning.exe") != -1 || exeName.IndexOf("orthoanalysis.exe") != -1
+                if (HaveDeleted == false && (exeName.IndexOf("cad.exe") != -1 || exeName.IndexOf("PrintIn ImplantPlanning.exe") != -1 || exeName.IndexOf("PrintIn Aligner.exe") != -1
                     || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1))
                 {
                 this.Dispatcher.Invoke((Action)(() =>
@@ -1165,7 +1165,8 @@ namespace OrderManagerNew
                     case "cad_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn DentDesign?", TranslationSource.Instance["Uninstall"],
+                                MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.cad_exePath) == ".exe")
@@ -1256,9 +1257,9 @@ namespace OrderManagerNew
                     case "implant_webIntro":
                         {
                             if (Properties.Settings.Default.sysLanguage == "zh-TW")
-                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/07/ImplantPlanning_User-Guide-V2.1_20214.pdf", "");
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/07/PrintIn ImplantPlanning_User-Guide-V2.1_20214.pdf", "");
                             else
-                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/07/ImplantPlanning_User-Guide-V2.1_20214.pdf", "");
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/07/PrintIn ImplantPlanning_User-Guide-V2.1_20214.pdf", "");
                             break;
                         }
                     case "implant_demo":
@@ -1272,7 +1273,7 @@ namespace OrderManagerNew
                     case "implant_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "ImplantPlanning?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn ImplantPlanning?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.implant_exePath) == ".exe")
@@ -1348,9 +1349,9 @@ namespace OrderManagerNew
                     case "ortho_webIntro":
                         {
                             if (Properties.Settings.Default.sysLanguage == "zh-TW")
-                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/09/OrthoAnalysis_軟體使用手册-v3.1_20508.pdf", "");
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/09/PrintIn Aligner_軟體使用手册-v3.1_20508.pdf", "");
                             else
-                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/09/OrthoAnalysis_User-Guide-v3.1_20409.pdf", "");
+                                OrderManagerFunc.RunCommandLine("https://www.inteware.com.tw/wp-content/uploads/2020/09/PrintIn Aligner_User-Guide-v3.1_20409.pdf", "");
                             break;
                         }
                     case "ortho_demo":
@@ -1364,7 +1365,7 @@ namespace OrderManagerNew
                     case "ortho_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "OrthoAnalysis?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn Aligner?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.ortho_exePath) == ".exe")
@@ -1456,7 +1457,7 @@ namespace OrderManagerNew
                     case "tray_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.tray?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn Tray?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.tray_exePath) == ".exe")
@@ -1548,7 +1549,7 @@ namespace OrderManagerNew
                     case "splint_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.splint?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn Splint?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.splint_exePath) == ".exe")
@@ -1636,7 +1637,7 @@ namespace OrderManagerNew
                     case "guide_unInstall":
                         {
                             Inteware_Messagebox Msg = new Inteware_Messagebox();
-                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "EZCAD.guide?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            Msg.ShowMessage(TranslationSource.Instance["AreyousureUninstall"] + "PrintIn Guide?", TranslationSource.Instance["Uninstall"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                             if (Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                             {
                                 if (Path.GetExtension(Properties.Settings.Default.guide_exePath) == ".exe")
@@ -2577,9 +2578,9 @@ namespace OrderManagerNew
                 {
                     case "progressbar_EZCAD_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\EZCAD.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\PrintIn DentDesign.exe") == true)
                             {
-                                Properties.Settings.Default.cad_exePath += @"Bin\EZCAD.exe";
+                                Properties.Settings.Default.cad_exePath += @"Bin\PrintIn DentDesign.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
                                 bool isOldVer = false;
@@ -2608,9 +2609,9 @@ namespace OrderManagerNew
                         }
                     case "progressbar_Implant_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.implant_exePath + @"ImplantPlanning.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.implant_exePath + @"PrintIn ImplantPlanning.exe") == true)
                             {
-                                Properties.Settings.Default.implant_exePath += @"ImplantPlanning.exe";
+                                Properties.Settings.Default.implant_exePath += @"PrintIn ImplantPlanning.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.implant_exePath);
                                 bool isOldVer = false;
@@ -2639,9 +2640,9 @@ namespace OrderManagerNew
                         }
                     case "progressbar_Ortho_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.ortho_exePath + @"OrthoAnalysis.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.ortho_exePath + @"PrintIn Aligner.exe") == true)
                             {
-                                Properties.Settings.Default.ortho_exePath += @"OrthoAnalysis.exe";
+                                Properties.Settings.Default.ortho_exePath += @"PrintIn Aligner.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.ortho_exePath);
                                 bool isOldVer = false;
@@ -2670,9 +2671,9 @@ namespace OrderManagerNew
                         }
                     case "progressbar_Tray_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\EZCAD.tray.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\PrintIn Tray.exe") == true)
                             {
-                                Properties.Settings.Default.tray_exePath += @"Bin\EZCAD.tray.exe";
+                                Properties.Settings.Default.tray_exePath += @"Bin\PrintIn Tray.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.tray_exePath);
                                 bool isOldVer = false;
@@ -2701,9 +2702,9 @@ namespace OrderManagerNew
                         }
                     case "progressbar_Splint_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.splint_exePath + @"Bin\EZCAD.splint.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.splint_exePath + @"Bin\PrintIn Splint.exe") == true)
                             {
-                                Properties.Settings.Default.splint_exePath += @"Bin\EZCAD.splint.exe";
+                                Properties.Settings.Default.splint_exePath += @"Bin\PrintIn Splint.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.splint_exePath);
                                 bool isOldVer = false;
@@ -2732,9 +2733,9 @@ namespace OrderManagerNew
                         }
                     case "progressbar_Guide_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.guide_exePath + @"Bin\EZCAD.guide.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.guide_exePath + @"Bin\PrintIn Guide.exe") == true)
                             {
-                                Properties.Settings.Default.guide_exePath += @"Bin\EZCAD.guide.exe";
+                                Properties.Settings.Default.guide_exePath += @"Bin\PrintIn Guide.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.guide_exePath);
                                 bool isOldVer = false;
@@ -2772,9 +2773,9 @@ namespace OrderManagerNew
                 {
                     case "mask2_EZCAD_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\EZCAD.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.cad_exePath + @"Bin\PrintIn DentDesign.exe") == true)
                             {
-                                Properties.Settings.Default.cad_exePath += @"Bin\EZCAD.exe";
+                                Properties.Settings.Default.cad_exePath += @"Bin\PrintIn DentDesign.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.cad_exePath);
                                 bool isOldVer = false;
@@ -2803,9 +2804,9 @@ namespace OrderManagerNew
                         }
                     case "mask2_Implant_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.implant_exePath + @"ImplantPlanning.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.implant_exePath + @"PrintIn ImplantPlanning.exe") == true)
                             {
-                                Properties.Settings.Default.implant_exePath += @"ImplantPlanning.exe";
+                                Properties.Settings.Default.implant_exePath += @"PrintIn ImplantPlanning.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.implant_exePath);
                                 bool isOldVer = false;
@@ -2834,9 +2835,9 @@ namespace OrderManagerNew
                         }
                     case "mask2_Ortho_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.ortho_exePath + @"OrthoAnalysis.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.ortho_exePath + @"PrintIn Aligner.exe") == true)
                             {
-                                Properties.Settings.Default.ortho_exePath += @"OrthoAnalysis.exe";
+                                Properties.Settings.Default.ortho_exePath += @"PrintIn Aligner.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.ortho_exePath);
                                 bool isOldVer = false;
@@ -2865,9 +2866,9 @@ namespace OrderManagerNew
                         }
                     case "mask2_Tray_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\EZCAD.tray.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.tray_exePath + @"Bin\PrintIn Tray.exe") == true)
                             {
-                                Properties.Settings.Default.tray_exePath += @"Bin\EZCAD.tray.exe";
+                                Properties.Settings.Default.tray_exePath += @"Bin\PrintIn Tray.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.tray_exePath);
                                 bool isOldVer = false;
@@ -2896,9 +2897,9 @@ namespace OrderManagerNew
                         }
                     case "mask2_Splint_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.splint_exePath + @"Bin\EZCAD.splint.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.splint_exePath + @"Bin\PrintIn Splint.exe") == true)
                             {
-                                Properties.Settings.Default.splint_exePath += @"Bin\EZCAD.splint.exe";
+                                Properties.Settings.Default.splint_exePath += @"Bin\PrintIn Splint.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.splint_exePath);
                                 bool isOldVer = false;
@@ -2927,9 +2928,9 @@ namespace OrderManagerNew
                         }
                     case "mask2_Guide_Installing":
                         {
-                            if (File.Exists(Properties.Settings.Default.guide_exePath + @"Bin\EZCAD.guide.exe") == true)
+                            if (File.Exists(Properties.Settings.Default.guide_exePath + @"Bin\PrintIn Guide.exe") == true)
                             {
-                                Properties.Settings.Default.guide_exePath += @"Bin\EZCAD.guide.exe";
+                                Properties.Settings.Default.guide_exePath += @"Bin\PrintIn Guide.exe";
                                 Properties.Settings.Default.Save();
                                 FileVersionInfo verInfo = FileVersionInfo.GetVersionInfo(Properties.Settings.Default.guide_exePath);
                                 bool isOldVer = false;

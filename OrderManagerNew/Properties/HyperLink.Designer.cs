@@ -25,7 +25,7 @@ namespace OrderManagerNew.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://www.facebook.com/messages/t/191158537741700")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.facebook.com/messages/t/484154545409477")]
         public string ContactInteware {
             get {
                 return ((string)(this["ContactInteware"]));

@@ -102,7 +102,7 @@ namespace OrderManagerNew.Local_UserControls
                 DirectoryInfo dInfo2 = new DirectoryInfo(orthoInfo.CaseDirectoryPath);
                 foreach (DirectoryInfo folder2 in dInfo2.GetDirectories())
                 {
-                    // 這層是C:\IntewareData\OrthoAnalysisV3\OrthoData\Test_1216\folder2\
+                    // 這層是C:\PrintIn3D Data\PrintIn AlignerV3\OrthoData\Test_1216\folder2\
                     string SmallXmlPath = folder2.FullName + @"\" + (orthoInfo.PatientID + "_" + orthoInfo.PatientName) + ".xml";
                     if (File.Exists(SmallXmlPath) == false)
                         continue;

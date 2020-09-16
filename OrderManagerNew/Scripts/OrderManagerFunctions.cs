@@ -428,55 +428,55 @@ namespace OrderManagerNew
                             DiskName = d.Name
                         };
 
-                        if (File.Exists(cad_exePath) == false && File.Exists(d.Name + @"IntewareInc\EZCAD\Bin\EZCAD.exe") == true)
+                        if (File.Exists(cad_exePath) == false && File.Exists(d.Name + @"PrintIn3D\PrintIn DentDesign\Bin\PrintIn DentDesign.exe") == true)
                         {
                             if (Properties.Settings.Default.cad_exePath == "")
-                                Properties.Settings.Default.cad_exePath = d.Name + @"IntewareInc\EZCAD\Bin\EZCAD.exe";
+                                Properties.Settings.Default.cad_exePath = d.Name + @"PrintIn3D\PrintIn DentDesign\Bin\PrintIn DentDesign.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(implant_exePath) == false && File.Exists(d.Name + @"IntewareInc\ImplantPlanning\ImplantPlanning.exe") == true)
+                        if (File.Exists(implant_exePath) == false && File.Exists(d.Name + @"PrintIn3D\PrintIn ImplantPlanning\PrintIn ImplantPlanning.exe") == true)
                         {
                             if (Properties.Settings.Default.implant_exePath == "")
-                                Properties.Settings.Default.implant_exePath = d.Name + @"IntewareInc\ImplantPlanning\ImplantPlanning.exe";
+                                Properties.Settings.Default.implant_exePath = d.Name + @"PrintIn3D\PrintIn ImplantPlanning\PrintIn ImplantPlanning.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(ortho_exePath) == false && File.Exists(d.Name + @"IntewareInc\OrthoAnalysis\OrthoAnalysis.exe") == true)
+                        if (File.Exists(ortho_exePath) == false && File.Exists(d.Name + @"PrintIn3D\PrintIn Aligner\PrintIn Aligner.exe") == true)
                         {
                             if (Properties.Settings.Default.ortho_exePath == "")
-                                Properties.Settings.Default.ortho_exePath = d.Name + @"IntewareInc\OrthoAnalysis\OrthoAnalysis.exe";
+                                Properties.Settings.Default.ortho_exePath = d.Name + @"PrintIn3D\PrintIn Aligner\PrintIn Aligner.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(tray_exePath) == false && File.Exists(d.Name + @"IntewareInc\EZCAD tray\Bin\EZCAD.tray.exe") == true)
+                        if (File.Exists(tray_exePath) == false && File.Exists(d.Name + @"PrintIn3D\PrintIn Tray\Bin\PrintIn Tray.exe") == true)
                         {
                             if (Properties.Settings.Default.tray_exePath == "")
-                                Properties.Settings.Default.tray_exePath = d.Name + @"IntewareInc\EZCAD tray\Bin\EZCAD.tray.exe";
+                                Properties.Settings.Default.tray_exePath = d.Name + @"PrintIn3D\PrintIn Tray\Bin\PrintIn Tray.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(splint_exePath) == false && File.Exists(d.Name + @"IntewareInc\EZCAD splint\Bin\EZCAD.splint.exe") == true)
+                        if (File.Exists(splint_exePath) == false && File.Exists(d.Name + @"PrintIn3D\PrintIn Splint\Bin\PrintIn Splint.exe") == true)
                         {
                             if (Properties.Settings.Default.splint_exePath == "")
-                                Properties.Settings.Default.splint_exePath = d.Name + @"IntewareInc\EZCAD splint\Bin\EZCAD.splint.exe";
+                                Properties.Settings.Default.splint_exePath = d.Name + @"PrintIn3D\PrintIn Splint\Bin\PrintIn Splint.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0.0);
                             diskInfo.SoftwareCount++;
                         }
-                        if (File.Exists(guide_exePath) == false && File.Exists(d.Name + @"IntewareInc\EZCAD guide\Bin\EZCAD.guide.exe") == true)
+                        if (File.Exists(guide_exePath) == false && File.Exists(d.Name + @"PrintIn3D\PrintIn Guide\Bin\PrintIn Guide.exe") == true)
                         {
                             if (Properties.Settings.Default.guide_exePath == "")
-                                Properties.Settings.Default.guide_exePath = d.Name + @"IntewareInc\EZCAD guide\Bin\EZCAD.guide.exe";
+                                Properties.Settings.Default.guide_exePath = d.Name + @"PrintIn3D\PrintIn Guide\Bin\PrintIn Guide.exe";
 
                             if (classfrom == (int)_classFrom.MainWindow)
                                 SoftwareLogoShowEvent((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0.0);
@@ -631,9 +631,9 @@ namespace OrderManagerNew
                                 {
                                     try
                                     {
-                                        if (Directory.Exists(d.Name + @"IntewareData\Implant\") == true)
+                                        if (Directory.Exists(d.Name + @"PrintIn3D Data\Implant\") == true)
                                         {
-                                            Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
+                                            Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\Implant\";
                                             foundImplantPath = true;
                                             break;
                                         }
@@ -650,8 +650,8 @@ namespace OrderManagerNew
                                     {
                                         if (Properties.OrderManagerProps.Default.mostsoftwareDisk != "")
                                         {
-                                            Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\Implant\");
-                                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\Implant\";
+                                            Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\");
+                                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\";
                                             goto createtosysDirectorySuccess;
                                         }
                                         else
@@ -671,13 +671,13 @@ namespace OrderManagerNew
                                         {
                                             if (d.Name == @"C:\")
                                             {
-                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
+                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\Implant\";
                                                 chosen = true;
                                                 break;
                                             }
                                             if (d.Name == @"D:\")
                                             {
-                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
+                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\Implant\";
                                                 chosen = true;
                                                 break;
                                             }
@@ -694,8 +694,8 @@ namespace OrderManagerNew
                                         {
                                             try
                                             {
-                                                Directory.CreateDirectory(d.Name + @"IntewareData\Implant\");
-                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"IntewareData\Implant\";
+                                                Directory.CreateDirectory(d.Name + @"PrintIn3D Data\Implant\");
+                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\Implant\";
                                                 break;
                                             }
                                             catch (Exception ex)
@@ -709,18 +709,18 @@ namespace OrderManagerNew
                             }
                             catch (Exception ex)
                             {
-                                Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\Implant\";
+                                Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\";
                                 if (Directory.Exists(Properties.OrderManagerProps.Default.implant_projectDirectory) == false)
-                                    Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\Implant\");
+                                    Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\");
 
                                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_implant", ex.Message);
                             }
                         }
                         else
                         {
-                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\Implant\";
+                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\";
                             if (Directory.Exists(Properties.OrderManagerProps.Default.implant_projectDirectory) == false)
-                                Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareData\Implant\");
+                                Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\");
                         }
                         log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "implant_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.implant_projectDirectory + "\"");
                         break;

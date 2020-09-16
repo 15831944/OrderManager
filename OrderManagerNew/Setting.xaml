@@ -83,18 +83,18 @@
                       Fill="{DynamicResource background_WhiteCaseTable}" />
 
                     <Label Grid.Row="0" Grid.Column="0" Content="EZCAD" />
-                    <Label Grid.Row="1" Grid.Column="0" Content="ImplantPlanning" />
-                    <Label Grid.Row="2" Grid.Column="0" Content="OrthoAnalysis" />
-                    <Label Grid.Row="3" Grid.Column="0" Content="EZCAD.Tray" />
-                    <Label Grid.Row="4" Grid.Column="0" Content="EZCAD.Splint" />
-                    <Label Grid.Row="5" Grid.Column="0" Content="EZCAD.Guide" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="PrintIn ImplantPlanning" />
+                    <Label Grid.Row="2" Grid.Column="0" Content="PrintIn Aligner" />
+                    <Label Grid.Row="3" Grid.Column="0" Content="PrintIn Tray" />
+                    <Label Grid.Row="4" Grid.Column="0" Content="PrintIn Splint" />
+                    <Label Grid.Row="5" Grid.Column="0" Content="PrintIn Guide" />
                     <Label Grid.Row="6" Grid.Column="0" Content="{local:LocExtension Downloadpath}" />
                     <Label Grid.Row="7" Grid.Column="0" Content="{local:LocExtension SysLog}" />
 
                     <TextBox
                       Grid.Row="0" Grid.Column="1" x:Name="textbox_EZCAD"
                       Style="{DynamicResource Setting_textbox}"
-                      Text="C:\IntewareInc\EZCAD\Bin\EZCAD.exe" />
+                      Text="C:\PrintIn3D\EZCAD\Bin\EZCAD.exe" />
                     <TextBox
                       Grid.Row="1" Grid.Column="1" x:Name="textbox_Implant"
                       Style="{DynamicResource Setting_textbox}" />

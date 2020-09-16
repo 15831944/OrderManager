@@ -475,7 +475,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Contact Inteware 的當地語系化字串。
+        ///   查詢類似 Contact PrintIn3D 的當地語系化字串。
         /// </summary>
         internal static string Contect {
             get {
@@ -1852,7 +1852,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 New version of OrderManager is available , please go to setting Page to update 的當地語系化字串。
+        ///   查詢類似 New version of PrintIn Order is available , please go to setting Page to update 的當地語系化字串。
         /// </summary>
         internal static string omCanUpdate {
             get {
@@ -1861,7 +1861,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Latest OrderManager Version 的當地語系化字串。
+        ///   查詢類似 Latest PrintIn Order Version 的當地語系化字串。
         /// </summary>
         internal static string OMLatestVer {
             get {
@@ -1870,7 +1870,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 OrderManager Version 的當地語系化字串。
+        ///   查詢類似 PrintIn Order Version 的當地語系化字串。
         /// </summary>
         internal static string OMVer {
             get {
@@ -1879,7 +1879,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open EZCAD 的當地語系化字串。
+        ///   查詢類似 Open PrintIn DentDesign 的當地語系化字串。
         /// </summary>
         internal static string Open_EZCAD {
             get {
@@ -1888,7 +1888,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open EZCAD.guide 的當地語系化字串。
+        ///   查詢類似 Open PrintIn Guide 的當地語系化字串。
         /// </summary>
         internal static string Open_Guide {
             get {
@@ -1906,7 +1906,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open OrthoAnalysis 的當地語系化字串。
+        ///   查詢類似 Open PrintIn Aligner 的當地語系化字串。
         /// </summary>
         internal static string Open_Ortho {
             get {
@@ -1915,7 +1915,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open EZCAD.splint 的當地語系化字串。
+        ///   查詢類似 Open PrintIn Splint 的當地語系化字串。
         /// </summary>
         internal static string Open_Splint {
             get {
@@ -1924,7 +1924,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Open EZCAD.tray 的當地語系化字串。
+        ///   查詢類似 Open PrintIn Tray 的當地語系化字串。
         /// </summary>
         internal static string Open_Tray {
             get {

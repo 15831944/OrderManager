@@ -70,7 +70,7 @@ namespace UIDialogs.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Contact Inteware 的當地語系化字串。
+        ///   查詢類似 Contact PrintIn3D 的當地語系化字串。
         /// </summary>
         internal static string Contact {
             get {

@@ -190,16 +190,16 @@
     <value>建新工單</value>
   </data>
   <data name="Open_EZCAD" xml:space="preserve">
-    <value>開啟 EZCAD</value>
+    <value>PrintIn DentDesign</value>
   </data>
   <data name="Open_Ortho" xml:space="preserve">
-    <value>開啟 OrthoAnalysis</value>
+    <value>開啟 PrintIn Aligner</value>
   </data>
   <data name="Open_Tray" xml:space="preserve">
-    <value>開啟 EZCAD.tray</value>
+    <value>開啟 PrintIn Tray</value>
   </data>
   <data name="Open_Splint" xml:space="preserve">
-    <value>開啟 EZCAD.splint</value>
+    <value>開啟 PrintIn Splint</value>
   </data>
   <data name="DemoCase" xml:space="preserve">
     <value>範例檔案</value>
@@ -907,7 +907,7 @@
     <value>開啟 ImplantPlanning</value>
   </data>
   <data name="Open_Guide" xml:space="preserve">
-    <value>開啟 EZCAD.guide</value>
+    <value>開啟 PrintIn Guide</value>
   </data>
   <data name="GuideModelDir" xml:space="preserve">
     <value>導板模型資料夾</value>
@@ -1018,7 +1018,7 @@
     <value>請在植牙齒位設定植體產品</value>
   </data>
   <data name="OMVer" xml:space="preserve">
-    <value>OrderManager 軟體版本</value>
+    <value>PrintIn Order 軟體版本</value>
   </data>
   <data name="CheckVer" xml:space="preserve">
     <value>檢查軟體版本</value>
@@ -1033,10 +1033,10 @@
     <value>軟體日誌檔</value>
   </data>
   <data name="OMLatestVer" xml:space="preserve">
-    <value>OrderManager 最新版本</value>
+    <value>PrintIn Order 最新版本</value>
   </data>
   <data name="omCanUpdate" xml:space="preserve">
-    <value>OrderManager新版本可供下載，請至設定頁面進行更新</value>
+    <value>PrintIn Order新版本可供下載，請至設定頁面進行更新</value>
   </data>
   <data name="Updating" xml:space="preserve">
     <value>更新中...</value>

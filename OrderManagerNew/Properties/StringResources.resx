@@ -187,7 +187,7 @@
     <comment>TableFunction</comment>
   </data>
   <data name="Contect" xml:space="preserve">
-    <value>Contact Inteware</value>
+    <value>Contact PrintIn3D</value>
     <comment>TitleBar</comment>
   </data>
   <data name="Maximize" xml:space="preserve">
@@ -211,19 +211,19 @@
     <comment>TableFunction</comment>
   </data>
   <data name="Open_EZCAD" xml:space="preserve">
-    <value>Open EZCAD</value>
+    <value>Open PrintIn DentDesign</value>
     <comment>TableFunction</comment>
   </data>
   <data name="Open_Ortho" xml:space="preserve">
-    <value>Open OrthoAnalysis</value>
+    <value>Open PrintIn Aligner</value>
     <comment>TableFunction</comment>
   </data>
   <data name="Open_Tray" xml:space="preserve">
-    <value>Open EZCAD.tray</value>
+    <value>Open PrintIn Tray</value>
     <comment>TableFunction</comment>
   </data>
   <data name="Open_Splint" xml:space="preserve">
-    <value>Open EZCAD.splint</value>
+    <value>Open PrintIn Splint</value>
     <comment>TableFunction</comment>
   </data>
   <data name="DemoCase" xml:space="preserve">
@@ -678,7 +678,7 @@
     <comment>Detail_TraySplint</comment>
   </data>
   <data name="SurgicalGT" xml:space="preserve">
-    <value>Surgical guideType</value>
+    <value>Surgical guide</value>
     <comment>Detail_Implant</comment>
   </data>
   <data name="SurgicalKit" xml:space="preserve">
@@ -1175,7 +1175,7 @@
     <comment>TableFunction</comment>
   </data>
   <data name="Open_Guide" xml:space="preserve">
-    <value>Open EZCAD.guide</value>
+    <value>Open PrintIn Guide</value>
     <comment>TableFunction</comment>
   </data>
   <data name="GuideModelDir" xml:space="preserve">
@@ -1323,7 +1323,7 @@
     <comment>Message</comment>
   </data>
   <data name="OMVer" xml:space="preserve">
-    <value>OrderManager Version</value>
+    <value>PrintIn Order Version</value>
     <comment>Setting</comment>
   </data>
   <data name="CheckVer" xml:space="preserve">
@@ -1339,11 +1339,11 @@
     <comment>Setting</comment>
   </data>
   <data name="OMLatestVer" xml:space="preserve">
-    <value>Latest OrderManager Version</value>
+    <value>Latest PrintIn Order Version</value>
     <comment>Setting</comment>
   </data>
   <data name="omCanUpdate" xml:space="preserve">
-    <value>New version of OrderManager is available , please go to setting Page to update</value>
+    <value>New version of PrintIn Order is available , please go to setting Page to update</value>
     <comment>Setting</comment>
   </data>
   <data name="Updating" xml:space="preserve">

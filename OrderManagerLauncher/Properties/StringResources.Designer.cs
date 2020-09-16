@@ -79,7 +79,7 @@ namespace OrderManagerLauncher.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Checking OrderManager version... 的當地語系化字串。
+        ///   查詢類似 Checking PrintIn Order version... 的當地語系化字串。
         /// </summary>
         internal static string CheckVersion {
             get {
@@ -160,7 +160,7 @@ namespace OrderManagerLauncher.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Updating OrderManager... 的當地語系化字串。
+        ///   查詢類似 Updating PrintIn Order... 的當地語系化字串。
         /// </summary>
         internal static string Updating {
             get {
