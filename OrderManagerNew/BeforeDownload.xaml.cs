@@ -282,7 +282,10 @@ namespace OrderManagerNew
             if (currentSoftwareID == -1 || http_url == "")
                 return false;
 
-            string[] SoftwareNameArray = new string[6] { "EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD tray", "EZCAD splint", "EZCAD guide" };
+            OrderManagerFunctions omFunc = new OrderManagerFunctions();
+            string[] SoftwareNameArray = new string[6] { omFunc.GetSoftwareName(_softwareID.EZCAD),
+                omFunc.GetSoftwareName(_softwareID.Implant), omFunc.GetSoftwareName(_softwareID.Ortho),
+                omFunc.GetSoftwareName(_softwareID.Tray), omFunc.GetSoftwareName(_softwareID.Splint), omFunc.GetSoftwareName(_softwareID.Guide)};
             label_TitleBar.Content = TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             label_Header.Content = TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
             if(Properties.OrderManagerProps.Default.mostsoftwareDisk != "")

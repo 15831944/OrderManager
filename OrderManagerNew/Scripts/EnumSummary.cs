@@ -54,7 +54,7 @@ namespace OrderManagerNew
         Guide = 5,
         All
     }
-
+    
     /// <summary>
     /// 電腦容量單位
     /// </summary>

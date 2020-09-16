@@ -19,7 +19,7 @@ namespace OrderManagerLauncher
     /// </summary>
     public partial class Launcher : Window
     {
-        string HLXMLlink = @"https://inteware.com.tw//updateXML//Inteware_om.xml";//newOM.xml網址
+        string HLXMLlink = @"https://inteware.com.tw//updateXML//PrintIn_om.xml";//newOM.xml網址
         //string HLXMLlink = @"https://inteware.com.tw//updateXML//newOM_Developer.xml";//newOM_Developer.xml網址
         static public bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {   // 總是接受

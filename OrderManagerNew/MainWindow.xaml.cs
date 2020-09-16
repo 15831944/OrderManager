@@ -437,7 +437,7 @@ namespace OrderManagerNew
                             this.Dispatcher.Invoke((Action)(() =>
                             {
                                 Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
-                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.EZCAD]
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.EZCAD)
                                 + " " + TranslationSource.Instance["Successfully"];
                                 SnackBarShow(snackStr);
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -471,7 +471,7 @@ namespace OrderManagerNew
                             this.Dispatcher.Invoke((Action)(() =>
                             {
                                 Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0);
-                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Implant]
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Implant)
                                 + " " + TranslationSource.Instance["Successfully"];
                                 SnackBarShow(snackStr);
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -505,7 +505,7 @@ namespace OrderManagerNew
                             this.Dispatcher.Invoke((Action)(() =>
                             {
                                 Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0);
-                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Ortho]
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Ortho)
                                 + " " + TranslationSource.Instance["Successfully"];
                                 SnackBarShow(snackStr);
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -539,7 +539,7 @@ namespace OrderManagerNew
                             this.Dispatcher.Invoke((Action)(() =>
                             {
                                 Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0);
-                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Tray]
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Tray)
                                 + " " + TranslationSource.Instance["Successfully"];
                                 SnackBarShow(snackStr);
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -573,7 +573,7 @@ namespace OrderManagerNew
                             this.Dispatcher.Invoke((Action)(() =>
                             {
                                 Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0);
-                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Splint]
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Splint)
                                 + " " + TranslationSource.Instance["Successfully"];
                                 SnackBarShow(snackStr);
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -607,7 +607,7 @@ namespace OrderManagerNew
                             this.Dispatcher.Invoke((Action)(() =>
                             {
                                 Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0);
-                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Guide]
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Guide)
                                 + " " + TranslationSource.Instance["Successfully"];
                                 SnackBarShow(snackStr);
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -636,7 +636,7 @@ namespace OrderManagerNew
                                 watcher = new FileSystemWatcher();
                                 Thread.Sleep(2000);//2秒緩衝
                                 Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
-                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[UpdateFunc.readyInstallSoftwareInfo.softwareID]
+                                string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(UpdateFunc.readyInstallSoftwareInfo.softwareID)
                                 + " " + TranslationSource.Instance["Successfully"];
                                 SnackBarShow(snackStr);
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -656,7 +656,7 @@ namespace OrderManagerNew
                         watcher = new FileSystemWatcher();
                         Thread.Sleep(2000);//2秒緩衝
                         Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
-                        string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[UpdateFunc.readyInstallSoftwareInfo.softwareID] 
+                        string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(UpdateFunc.readyInstallSoftwareInfo.softwareID) 
                         + " " + TranslationSource.Instance["Successfully"];
                         SnackBarShow(snackStr);
                         OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -683,7 +683,7 @@ namespace OrderManagerNew
                 {
                     HaveDeleted = true;
                     SetAllSoftwareTableDownloadisEnable(true);
-                    string snackStr = TranslationSource.Instance["Uninstall"] + " " + OrderManagerFunc.SoftwareNameArray[UpdateFunc.readyUninstallSoftwareInfo.softwareID]
+                    string snackStr = TranslationSource.Instance["Uninstall"] + " " + OrderManagerFunc.GetSoftwareName(UpdateFunc.readyUninstallSoftwareInfo.softwareID)
                         + " " + TranslationSource.Instance["Successfully"];
                     SnackBarShow(snackStr);
                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -2596,7 +2596,7 @@ namespace OrderManagerNew
                                 if (isOldVer == false)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.EZCAD]
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.EZCAD)
                                     + " " + TranslationSource.Instance["Successfully"];
                                     SnackBarShow(snackStr);
                                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -2627,7 +2627,7 @@ namespace OrderManagerNew
                                 if (isOldVer == false)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Implant]
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Implant)
                                     + " " + TranslationSource.Instance["Successfully"];
                                     SnackBarShow(snackStr);
                                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -2658,7 +2658,7 @@ namespace OrderManagerNew
                                 if (isOldVer == false)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Ortho]
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Ortho)
                                     + " " + TranslationSource.Instance["Successfully"];
                                     SnackBarShow(snackStr);
                                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -2689,7 +2689,7 @@ namespace OrderManagerNew
                                 if (isOldVer == false)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Tray]
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Tray)
                                     + " " + TranslationSource.Instance["Successfully"];
                                     SnackBarShow(snackStr);
                                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -2720,7 +2720,7 @@ namespace OrderManagerNew
                                 if (isOldVer == false)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Splint]
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Splint)
                                     + " " + TranslationSource.Instance["Successfully"];
                                     SnackBarShow(snackStr);
                                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -2751,7 +2751,7 @@ namespace OrderManagerNew
                                 if (isOldVer == false)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Guide]
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Guide)
                                     + " " + TranslationSource.Instance["Successfully"];
                                     SnackBarShow(snackStr);
                                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -2791,7 +2791,7 @@ namespace OrderManagerNew
                                 if (isOldVer == false)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.EZCAD, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.EZCAD]
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.EZCAD)
                                     + " " + TranslationSource.Instance["Successfully"];
                                     SnackBarShow(snackStr);
                                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -2822,7 +2822,7 @@ namespace OrderManagerNew
                                 if (isOldVer == false)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Implant, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Implant]
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Implant)
                                     + " " + TranslationSource.Instance["Successfully"];
                                     SnackBarShow(snackStr);
                                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -2853,7 +2853,7 @@ namespace OrderManagerNew
                                 if (isOldVer == false)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Ortho, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Ortho]
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Ortho)
                                     + " " + TranslationSource.Instance["Successfully"];
                                     SnackBarShow(snackStr);
                                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -2884,7 +2884,7 @@ namespace OrderManagerNew
                                 if (isOldVer == false)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Tray, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Tray]
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Tray)
                                     + " " + TranslationSource.Instance["Successfully"];
                                     SnackBarShow(snackStr);
                                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -2915,7 +2915,7 @@ namespace OrderManagerNew
                                 if (isOldVer == false)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Splint, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Splint]
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Splint)
                                     + " " + TranslationSource.Instance["Successfully"];
                                     SnackBarShow(snackStr);
                                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
@@ -2946,7 +2946,7 @@ namespace OrderManagerNew
                                 if (isOldVer == false)
                                 {
                                     Handler_setSoftwareShow((int)_softwareID.Guide, (int)_softwareStatus.Installed, 0);
-                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.SoftwareNameArray[(int)_softwareID.Guide]
+                                    string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(_softwareID.Guide)
                                     + " " + TranslationSource.Instance["Successfully"];
                                     SnackBarShow(snackStr);
                                     OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
