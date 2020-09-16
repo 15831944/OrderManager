@@ -16,6 +16,7 @@ namespace OrderManagerNew
 {
     public class OrderManagerFunctions
     {
+        readonly string[] SoftwareNameArray = new string[6] { "EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD tray", "EZCAD splint", "EZCAD guide" };
         LogRecorder log;
         /// <summary>
         /// 委派到MainWindow.xaml.cs裡面的setSoftwareShow()
@@ -39,10 +40,6 @@ namespace OrderManagerNew
         /// <param name="message">顯示訊息</param>
         public delegate void updatefuncEventHandler_snackbar(string message);
         public event updatefuncEventHandler_snackbar Handler_snackbarShow;
-        /// <summary>
-        /// 單機軟體全名
-        /// </summary>
-        public string[] SoftwareNameArray = new string[6] { "EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD.tray", "EZCAD.splint", "EZCAD.guide" };
         BackgroundWorker OrderManagerFunc_BackgroundWorker;
         public OrderManagerFunctions()
         {
@@ -927,5 +924,30 @@ namespace OrderManagerNew
         {
             OrderManagerFunc_BackgroundWorker = new BackgroundWorker();
         }
+        /// <summary>
+        /// 取得軟體名稱
+        /// </summary>
+        /// <param name="softwareID">請參考 _SoftwareID</param>
+        /// <returns></returns>
+        public string GetSoftwareName(_softwareID softwareID)
+        {
+            if ((int)softwareID > 5 || (int)softwareID < 0)
+                return "";
+
+            return SoftwareNameArray[(int)softwareID];
+        }
+        /// <summary>
+        /// 取得軟體名稱
+        /// </summary>
+        /// <param name="softwareID">請參考 _SoftwareID</param>
+        /// <returns></returns>
+        public string GetSoftwareName(int softwareID)
+        {
+            if (softwareID > 5 || softwareID < 0)
+                return "";
+
+            return SoftwareNameArray[softwareID];
+        }
+
     }
 }
