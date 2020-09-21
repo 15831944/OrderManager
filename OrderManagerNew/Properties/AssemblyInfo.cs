@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PrintIn3D")]
 [assembly: AssemblyProduct("PrintIn Order")]
-[assembly: AssemblyCopyright("Inteware ©  2020")]
+[assembly: AssemblyCopyright("PrintIn3D ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

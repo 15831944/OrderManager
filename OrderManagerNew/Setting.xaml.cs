@@ -423,7 +423,7 @@ namespace OrderManagerNew
             Thread thread = new Thread(() =>
             {
             OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                omFunc.RunCommandLine("OrderManagerLauncher.exe", param);
+                omFunc.RunCommandLine("PrintIn Order Launcher.exe", param);
                 RefreshData(latch);
             });
             thread.Start();

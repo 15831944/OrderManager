@@ -105,11 +105,6 @@ namespace OrderManagerLauncher
                         else
                             JumpIntoOrderEXE(false);
                     }
-                    else if (argument == "-NeedUpdate")
-                    {
-                        Properties.Settings.Default.NeedUpdate = true;
-                        Properties.Settings.Default.Save();
-                    }
                     else if (argument == "-zhTW")
                     {
                         SetLanguage("zh-TW");
@@ -119,11 +114,6 @@ namespace OrderManagerLauncher
                         SetLanguage("en-US");
                     }
                 }
-            }
-
-            if (Properties.Settings.Default.NeedUpdate == false) //直接跳過檢查更新
-            {
-                JumpIntoOrderEXE(false);
             }
 
         }
@@ -229,12 +219,6 @@ namespace OrderManagerLauncher
                 DlgUpdateChk.ShowDialog();
                 if (DlgUpdateChk.DialogResult == true)   //進入更新
                 {
-                    if (DlgUpdateChk.NoAutoChk == true)
-                        Properties.Settings.Default.NeedUpdate = false;
-                    else
-                        Properties.Settings.Default.NeedUpdate = true;
-
-                    Properties.Settings.Default.Save();
                     RunCommandLine("PrintIn Order.exe", "-ExportProps");//匯出Properties
                     progressbar_update.IsIndeterminate = false;
                     label_describe.Content = TranslationSource.Instance["Downloading"];
@@ -248,12 +232,6 @@ namespace OrderManagerLauncher
                 }
                 else  //不更新
                 {
-                    if (DlgUpdateChk.NoAutoChk == true)
-                        Properties.Settings.Default.NeedUpdate = false;
-                    else
-                        Properties.Settings.Default.NeedUpdate = true;
-
-                    Properties.Settings.Default.Save();
                     JumpIntoOrderEXE(false);
                 }
             }
