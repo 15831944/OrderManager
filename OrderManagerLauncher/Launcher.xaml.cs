@@ -110,7 +110,14 @@ namespace OrderManagerLauncher
                         Properties.Settings.Default.NeedUpdate = true;
                         Properties.Settings.Default.Save();
                     }
-
+                    else if (argument == "-zhTW")
+                    {
+                        SetLanguage("zh-TW");
+                    }
+                    else if (argument == "-eng")
+                    {
+                        SetLanguage("en-US");
+                    }
                 }
             }
 
@@ -439,6 +446,18 @@ namespace OrderManagerLauncher
             latch.Wait();
             Thread.Sleep(5000);
             Environment.Exit(0);
+        }
+
+        /// <summary>
+        /// 設定語言
+        /// </summary>
+        /// <param name="lang">語言</param>
+        public void SetLanguage(string lang)
+        {
+            if(lang == "zh-TW")
+                LocalizationService.SetLanguage("zh-TW");
+            else
+                LocalizationService.SetLanguage("en-US");
         }
     }
 }

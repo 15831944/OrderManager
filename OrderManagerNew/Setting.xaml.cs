@@ -413,11 +413,17 @@ namespace OrderManagerNew
 
         private void MouseLeftButtonUp_checkVersion(object sender, RoutedEventArgs e)
         {
+            string param = "-eng";
+            if (Properties.Settings.Default.sysLanguage == "zh-TW")
+            {
+                param = "-zhTW";
+            }
+
             latch = new CountdownEvent(1);
             Thread thread = new Thread(() =>
             {
             OrderManagerFunctions omFunc = new OrderManagerFunctions();
-                omFunc.RunCommandLine("OrderManagerLauncher.exe", "-NeedUpdate");
+                omFunc.RunCommandLine("OrderManagerLauncher.exe", param);
                 RefreshData(latch);
             });
             thread.Start();
