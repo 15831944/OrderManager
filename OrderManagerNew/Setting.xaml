@@ -82,12 +82,12 @@
                       Grid.ColumnSpan="3"
                       Fill="{DynamicResource background_WhiteCaseTable}" />
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="EZCAD" />
-                    <Label Grid.Row="1" Grid.Column="0" Content="PrintIn ImplantPlanning" />
-                    <Label Grid.Row="2" Grid.Column="0" Content="PrintIn Aligner" />
-                    <Label Grid.Row="3" Grid.Column="0" Content="PrintIn Tray" />
-                    <Label Grid.Row="4" Grid.Column="0" Content="PrintIn Splint" />
-                    <Label Grid.Row="5" Grid.Column="0" Content="PrintIn Guide" />
+                    <Label Grid.Row="0" Grid.Column="0" Content="DentDesign" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="ImplantPlanning" />
+                    <Label Grid.Row="2" Grid.Column="0" Content="Aligner" />
+                    <Label Grid.Row="3" Grid.Column="0" Content="Tray" />
+                    <Label Grid.Row="4" Grid.Column="0" Content="Splint" />
+                    <Label Grid.Row="5" Grid.Column="0" Content="Guide" />
                     <Label Grid.Row="6" Grid.Column="0" Content="{local:LocExtension Downloadpath}" />
                     <Label Grid.Row="7" Grid.Column="0" Content="{local:LocExtension SysLog}" />
 
