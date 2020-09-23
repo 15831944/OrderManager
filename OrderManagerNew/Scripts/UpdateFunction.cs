@@ -438,6 +438,14 @@ namespace OrderManagerNew
                         }
                         break;
                     }
+                case (int)_softwareID.All:
+                    {
+                        for(int i= (int)_softwareID.EZCAD; i< (int)_softwareID.All; i++)
+                        {
+                            CheckSoftwareHaveNewVersion(i);
+                        }
+                        break;
+                    }
             }
         }
         /// <summary>

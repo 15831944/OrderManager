@@ -1223,7 +1223,7 @@
     <comment>Message</comment>
   </data>
   <data name="ReceivingDataNotResponding" xml:space="preserve">
-    <value>Receiving data not responding, try again later</value>
+    <value>Receiving data not responding, do you want to download manually?</value>
     <comment>Message</comment>
   </data>
   <data name="CannotGetexePath" xml:space="preserve">

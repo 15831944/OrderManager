@@ -943,7 +943,7 @@
     <value>接收資料中...</value>
   </data>
   <data name="ReceivingDataNotResponding" xml:space="preserve">
-    <value>無法接收資料，請梢候再重試</value>
+    <value>無法接收資料，是否手動安裝?</value>
   </data>
   <data name="CannotGetexePath" xml:space="preserve">
     <value>無法取得執行檔路徑</value>

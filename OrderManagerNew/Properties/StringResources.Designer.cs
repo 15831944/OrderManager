@@ -2275,7 +2275,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Receiving data not responding, try again later 的當地語系化字串。
+        ///   查詢類似 Receiving data not responding, do you want to download manually? 的當地語系化字串。
         /// </summary>
         internal static string ReceivingDataNotResponding {
             get {
@@ -2653,7 +2653,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Surgical guideType 的當地語系化字串。
+        ///   查詢類似 Surgical guide 的當地語系化字串。
         /// </summary>
         internal static string SurgicalGT {
             get {
