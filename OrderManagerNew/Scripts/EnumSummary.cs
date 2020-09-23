@@ -122,4 +122,11 @@ namespace OrderManagerNew
         EMAIL,
         USERNAME
     }
+
+    public enum _ReceiveDataStatus : int
+    {
+        OK = 0,
+        Error,
+        Cancel
+    }
 }

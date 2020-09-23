@@ -30,7 +30,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PingTime" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="LastSoftwareFilter" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">-1</Value>

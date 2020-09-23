@@ -1137,7 +1137,7 @@ namespace OrderManagerNew
                             DialogBeforeDownload = new BeforeDownload();
                             DialogBeforeDownload.SetHttpResponseOK += new BeforeDownload.beforedownloadEventHandler(Handler_ShowBeforeDownload);
                             DialogBeforeDownload.Handler_snackbarShow += new BeforeDownload.beforedownloadEventHandler_snackbar(SnackBarShow);
-                            SetAllSoftwareTableDownloadisEnable(false);
+                            
                             DialogBeforeDownload.GethttpResoponse(UpdateFunc.readyInstallSoftwareInfo.softwareDownloadLink, UpdateFunc.readyInstallSoftwareInfo.softwareID);
                             break;
                         }
@@ -2399,8 +2399,16 @@ namespace OrderManagerNew
         /// <summary>
         /// 開始軟體更新流程
         /// </summary>
-        private void Handler_SoftwareUpdate()
+        private void Handler_SoftwareUpdate(_ReceiveDataStatus Status)
         {
+            if (Status == _ReceiveDataStatus.Error || Status == _ReceiveDataStatus.Cancel)
+            {
+                Handler_setSoftwareShow(DialogBeforeDownload.currentSoftwareID, (int)_softwareStatus.Installed, 0);
+                UpdateFunc.CheckSoftwareHaveNewVersion(DialogBeforeDownload.currentSoftwareID);
+                SetAllSoftwareTableDownloadisEnable(true);
+                return;
+            }
+
             //先把原本的軟體exePath改成安裝路徑
             bool canUpdate = false;
             switch(CheckedSoftwareID)
@@ -2465,6 +2473,7 @@ namespace OrderManagerNew
             {
                 haveEXE = false;
                 SnackBarShow(TranslationSource.Instance["StartDownloading"]);
+                SetAllSoftwareTableDownloadisEnable(false);
                 UpdateFunc.StartDownloadSoftware();
             }
             else
@@ -2476,8 +2485,16 @@ namespace OrderManagerNew
         /// <summary>
         /// 從網上獲取下載資料成功就顯示BeforeDownload頁面
         /// </summary>
-        private void Handler_ShowBeforeDownload()
+        private void Handler_ShowBeforeDownload(_ReceiveDataStatus Status)
         {
+            if(Status == _ReceiveDataStatus.Error || Status == _ReceiveDataStatus.Cancel)
+            {
+                Handler_setSoftwareShow(DialogBeforeDownload.currentSoftwareID, (int)_softwareStatus.Installed, 0);
+                UpdateFunc.CheckSoftwareHaveNewVersion(DialogBeforeDownload.currentSoftwareID);
+                SetAllSoftwareTableDownloadisEnable(true);
+                return;
+            }
+
             haveEXE = false;
             bool DownloadStart = false;
             log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "Handler_ShowBeforeDownload()", "Start");
@@ -2501,7 +2518,10 @@ namespace OrderManagerNew
             }
 
             if (DownloadStart == true)
+            {
+                SetAllSoftwareTableDownloadisEnable(false);
                 UpdateFunc.StartDownloadSoftware();
+            }  
         }
         private void GoToSetting(int softwareID)
         {

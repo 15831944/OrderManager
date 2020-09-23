@@ -18,7 +18,7 @@ namespace OrderManagerNew
     public partial class BeforeDownload : Window
     {
         //委派到MainWindow.xaml.cs裡面的setSoftwareShow()
-        public delegate void beforedownloadEventHandler();
+        public delegate void beforedownloadEventHandler(_ReceiveDataStatus Status);
         public event beforedownloadEventHandler SetHttpResponseOK;
         //委派到MainWindow.xaml.cs裡面的SnackBarShow(string)
         public delegate void beforedownloadEventHandler_snackbar(string message);
@@ -36,7 +36,7 @@ namespace OrderManagerNew
         HttpWebResponse httpResponse;               //共用同一個WebResponse以便清除內部殘留資料
         string http_url;                            //下載網址
         Timer tmr;                                  //計時器(用在GetResponse)
-        int currentSoftwareID;                      //軟體ID
+        public int currentSoftwareID;                      //軟體ID
         LogRecorder Log;
 
         public BeforeDownload()
@@ -240,6 +240,7 @@ namespace OrderManagerNew
                 tmr.Stop();
                 Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload.xaml.cs_CompletedWork()_Error", e.Error.Message);
                 Handler_snackbarShow(TranslationSource.Instance["Error"]);   //錯誤
+                SetHttpResponseOK(_ReceiveDataStatus.Error);
             }
             else if (e.Cancelled)
             {
@@ -249,20 +250,17 @@ namespace OrderManagerNew
                 Msg.ShowMessage(TranslationSource.Instance["ReceivingDataNotResponding"], TranslationSource.Instance["Warning"], MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if(Msg.ReturnClickWhitchButton == (int)Inteware_Messagebox._ReturnButtonName.YES)
                 {
-                    if (Properties.Settings.Default.PingTime < 60)
-                    {
-                        //重試，加5秒接收時間
-                        Properties.Settings.Default.PingTime += 5;
-                        Properties.Settings.Default.Save();
-                    }
+                    OrderManagerFunctions omFunc = new OrderManagerFunctions();
+                    omFunc.RunCommandLine(http_url, "");
                 }
                 Handler_snackbarShow(TranslationSource.Instance["Cancel"]);    //取消(超過時間，也許再讓使用者可以自行增加秒數?)
+                SetHttpResponseOK(_ReceiveDataStatus.Cancel);
             }
             else
             {
                 tmr.Stop();
                 Log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "BeforeDownload.xaml.cs_CompletedWork()", "OK");
-                SetHttpResponseOK();
+                SetHttpResponseOK(_ReceiveDataStatus.OK);
             }
         }
         /// <summary>
