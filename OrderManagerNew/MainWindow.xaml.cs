@@ -3001,7 +3001,7 @@ namespace OrderManagerNew
                     {
                         if (Properties.Settings.Default.cad_exePath.Contains(".exe") == false)
                         {
-                            Properties.Settings.Default.cad_exePath += @"Bin\PrintIn DentDesign.exe";
+                            Properties.Settings.Default.cad_exePath += @"Bin\EZCAD.exe";
                         }
 
                         if (File.Exists(Properties.Settings.Default.cad_exePath) == true)
@@ -3014,7 +3014,7 @@ namespace OrderManagerNew
                     {
                         if (Properties.Settings.Default.implant_exePath.Contains(".exe") == false)
                         {
-                            Properties.Settings.Default.implant_exePath += @"PrintIn ImplantPlanning.exe";
+                            Properties.Settings.Default.implant_exePath += @"ImplantPlanning.exe";
                         }
 
                         if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
@@ -3027,7 +3027,7 @@ namespace OrderManagerNew
                     {
                         if (Properties.Settings.Default.guide_exePath.Contains(".exe") == false)
                         {
-                            Properties.Settings.Default.guide_exePath += @"Bin\PrintIn Guide.exe";
+                            Properties.Settings.Default.guide_exePath += @"Bin\EZCAD.guide.exe";
                         }
 
                         if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
@@ -3036,7 +3036,45 @@ namespace OrderManagerNew
                             Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.NotInstall, 0);
                         break;
                     }
-                    //TODO: Aligner Tray Splint要加
+                case (int)_softwareID.Tray:
+                    {
+                        if (Properties.Settings.Default.tray_exePath.Contains(".exe") == false)
+                        {
+                            Properties.Settings.Default.tray_exePath += @"Bin\EZCAD.tray.exe";
+                        }
+
+                        if (File.Exists(Properties.Settings.Default.tray_exePath) == true)
+                            Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.Installed, 0);
+                        else
+                            Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.NotInstall, 0);
+                        break;
+                    }
+                case (int)_softwareID.Splint:
+                    {
+                        if (Properties.Settings.Default.splint_exePath.Contains(".exe") == false)
+                        {
+                            Properties.Settings.Default.splint_exePath += @"Bin\EZCAD.splint.exe";
+                        }
+
+                        if (File.Exists(Properties.Settings.Default.splint_exePath) == true)
+                            Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.Installed, 0);
+                        else
+                            Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.NotInstall, 0);
+                        break;
+                    }
+                case (int)_softwareID.Ortho:
+                    {
+                        if (Properties.Settings.Default.ortho_exePath.Contains(".exe") == false)
+                        {
+                            Properties.Settings.Default.ortho_exePath += @"OrthoAnalysis.exe";
+                        }
+
+                        if (File.Exists(Properties.Settings.Default.ortho_exePath) == true)
+                            Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.Installed, 0);
+                        else
+                            Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.NotInstall, 0);
+                        break;
+                    }
             }
             UpdateFunc.CheckSoftwareHaveNewVersion(SoftwareID);
             SetAllSoftwareTableDownloadisEnable(true);
