@@ -197,7 +197,7 @@ namespace OrderManagerLauncher
             try
             {
                 FileVersionInfo verInfo;
-                verInfo = FileVersionInfo.GetVersionInfo("OrderManager.exe");
+                verInfo = FileVersionInfo.GetVersionInfo("Order Manager.exe");
                 if(omInfo.VersionFromWeb > new Version(verInfo.FileVersion))
                 {
                     GoUpdate = true;
@@ -235,7 +235,7 @@ namespace OrderManagerLauncher
                         Properties.Settings.Default.NeedUpdate = true;
 
                     Properties.Settings.Default.Save();
-                    RunCommandLine("OrderManager.exe", "-ExportProps");//匯出Properties
+                    RunCommandLine("Order Manager.exe", "-ExportProps");//匯出Properties
                     progressbar_update.IsIndeterminate = false;
                     label_describe.Content = TranslationSource.Instance["Downloading"];
                     BgWorker_Main = new BackgroundWorker();
@@ -439,7 +439,7 @@ namespace OrderManagerLauncher
             latch = new CountdownEvent(1);
             Thread thread = new Thread(() =>
             {
-                RunCommandLine("OrderManager.exe", "-VerChk");
+                RunCommandLine("Order Manager.exe", "-VerChk");
                 RefreshData(latch);
             });
             thread.Start();

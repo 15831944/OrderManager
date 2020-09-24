@@ -51,37 +51,37 @@ namespace OrderManagerNew
             {
                 case _softwareID.EZCAD:
                     {
-                        label_title.Content = omFunc.GetSoftwareName(_softwareID.EZCAD) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.EZCAD) + " " + TranslationSource.Instance["ReleaseNote"];
                         DocUrl = UrlCADLog;
                         break;
                     }
                 case _softwareID.Implant:
                     {
-                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Implant) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Implant) + " " + TranslationSource.Instance["ReleaseNote"];
                         DocUrl = UrlImplant;
                         break;
                     }
                 case _softwareID.Ortho:
                     {
-                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Ortho) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Ortho) + " " + TranslationSource.Instance["ReleaseNote"];
                         DocUrl = UrlOrthoLog;
                         break;
                     }
                 case _softwareID.Tray:
                     {
-                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Tray) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Tray) + " " + TranslationSource.Instance["ReleaseNote"];
                         DocUrl = UrlTrayLog;
                         break;
                     }
                 case _softwareID.Splint:
                     {
-                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Splint) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Splint) + " " + TranslationSource.Instance["ReleaseNote"];
                         DocUrl = UrlSplintLog;
                         break;
                     }
                 case _softwareID.Guide:
                     {
-                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Guide) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Guide) + " " + TranslationSource.Instance["ReleaseNote"];
                         DocUrl = UrlGuide;
                         break;
                     }

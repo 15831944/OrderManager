@@ -55,6 +55,9 @@ namespace OrderManagerNew
         public delegate void softwareUpdateStatusHandler(int SoftwareID, bool canUpdate, string SoftwareVersion);
         public event softwareUpdateStatusHandler SoftwareUpdateEvent;
 
+        public delegate void softwareDownloadCancelHandler(int SoftwareID);
+        public event softwareDownloadCancelHandler SoftwareDownloadCancelEvent;
+
         public delegate void omUpdateHandler();
         public event omUpdateHandler OMUpdateEvent;
         public List<SoftwareInfo> CloudSoftwareTotal { get; set; }  //軟體最新版清單
@@ -218,10 +221,12 @@ namespace OrderManagerNew
             if (e.Error != null)
             {
                 Handler_snackbarShow(TranslationSource.Instance["Download"] + TranslationSource.Instance["Error"]);
+                SoftwareDownloadCancelEvent(readyInstallSoftwareInfo.softwareID);
             }
             else if (e.Cancelled)
             {
                 Handler_snackbarShow(TranslationSource.Instance["Download"] + TranslationSource.Instance["Cancel"]);
+                SoftwareDownloadCancelEvent(readyInstallSoftwareInfo.softwareID);
             }
             else
             {
