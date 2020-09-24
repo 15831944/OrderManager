@@ -1734,6 +1734,7 @@ namespace OrderManagerNew
                                     cad_update.Content = TranslationSource.Instance["LatestVer"];
                                     cad_update.Visibility = Visibility.Visible;
                                     cad_update.IsEnabled = false;
+                                    OrderManagerFunc.CheckDllRequirement(_softwareID.EZCAD);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -1806,6 +1807,7 @@ namespace OrderManagerNew
                                     implant_update.Content = TranslationSource.Instance["LatestVer"];
                                     implant_update.Visibility = Visibility.Visible;
                                     implant_update.IsEnabled = false;
+                                    OrderManagerFunc.CheckDllRequirement(_softwareID.Implant);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -1876,6 +1878,7 @@ namespace OrderManagerNew
                                     ortho_update.Content = TranslationSource.Instance["LatestVer"];
                                     ortho_update.Visibility = Visibility.Visible;
                                     ortho_update.IsEnabled = false;
+                                    OrderManagerFunc.CheckDllRequirement(_softwareID.Ortho);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -1946,6 +1949,7 @@ namespace OrderManagerNew
                                     tray_update.Visibility = Visibility.Visible;
                                     tray_update.Content = TranslationSource.Instance["LatestVer"];
                                     tray_update.IsEnabled = false;
+                                    OrderManagerFunc.CheckDllRequirement(_softwareID.Tray);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -2016,6 +2020,7 @@ namespace OrderManagerNew
                                     splint_update.Content = TranslationSource.Instance["LatestVer"];
                                     splint_update.Visibility = Visibility.Visible;
                                     splint_update.IsEnabled = false;
+                                    OrderManagerFunc.CheckDllRequirement(_softwareID.Splint);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:
@@ -2084,6 +2089,7 @@ namespace OrderManagerNew
                                     guide_update.Content = TranslationSource.Instance["LatestVer"];
                                     guide_update.Visibility = Visibility.Visible;
                                     guide_update.IsEnabled = false;
+                                    OrderManagerFunc.CheckDllRequirement(_softwareID.Guide);
                                     break;
                                 }
                             case (int)_softwareStatus.Installing:

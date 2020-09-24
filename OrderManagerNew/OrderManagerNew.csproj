@@ -532,6 +532,12 @@
   <ItemGroup>
     <Resource Include="ordermanager.ico" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="SoftwareNeed\CAD\Ry4S.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
