@@ -85,6 +85,13 @@ namespace OrderManagerNew
         public MainWindow()
         {
             InitializeComponent();
+            Grid_TrayBtn.Visibility = Visibility.Hidden;
+            Grid_SplintBtn.Visibility = Visibility.Hidden;
+            Grid_OrthoBtn.Visibility = Visibility.Hidden;
+            SoftwareFilterOrtho.Visibility = Visibility.Collapsed;
+            SoftwareFilterTray.Visibility = Visibility.Collapsed;
+            SoftwareFilterSplint.Visibility = Visibility.Collapsed;
+
             CheckedSoftwareID = -1;
             isInstalling = false;
             updateimage_Setting.Visibility = Visibility.Hidden;

@@ -81,9 +81,9 @@ namespace OrderManagerNew
 
             textbox_EZCAD.Text = OriginalSet.Cad_exePath;
             textbox_Implant.Text = OriginalSet.Implant_exePath;
-            textbox_Ortho.Text = OriginalSet.Ortho_exePath;
-            textbox_Tray.Text = OriginalSet.Tray_exePath;
-            textbox_Splint.Text = OriginalSet.Splint_exePath;
+            //textbox_Ortho.Text = OriginalSet.Ortho_exePath;**************************************************************************
+            //textbox_Tray.Text = OriginalSet.Tray_exePath;
+            //textbox_Splint.Text = OriginalSet.Splint_exePath;
             textbox_Guide.Text = OriginalSet.Guide_exePath;
             textbox_Download.Text = OriginalSet.DownloadFolder;
             textbox_Log.Text = OriginalSet.LogFolder;
@@ -165,24 +165,24 @@ namespace OrderManagerNew
                             softwareID = (int)_softwareID.Implant;
                             break;
                         }
-                    case "Btn_Orthoprogram":
-                        {
-                            OriginalPath = textbox_Ortho.Text;
-                            softwareID = (int)_softwareID.Ortho;
-                            break;
-                        }
-                    case "Btn_Trayprogram":
-                        {
-                            OriginalPath = textbox_Tray.Text;
-                            softwareID = (int)_softwareID.Tray;
-                            break;
-                        }
-                    case "Btn_Splintprogram":
-                        {
-                            OriginalPath = textbox_Splint.Text;
-                            softwareID = (int)_softwareID.Splint;
-                            break;
-                        }
+                    //case "Btn_Orthoprogram":
+                    //    {
+                    //        OriginalPath = textbox_Ortho.Text;******************************************************************************************************************
+                    //        softwareID = (int)_softwareID.Ortho;
+                    //        break;
+                    //    }
+                    //case "Btn_Trayprogram":
+                    //    {
+                    //        OriginalPath = textbox_Tray.Text;
+                    //        softwareID = (int)_softwareID.Tray;
+                    //        break;
+                    //    }
+                    //case "Btn_Splintprogram":
+                    //    {
+                    //        OriginalPath = textbox_Splint.Text;
+                    //        softwareID = (int)_softwareID.Splint;
+                    //        break;
+                    //    }
                     case "Btn_Guideprogram":
                         {
                             OriginalPath = textbox_Guide.Text;
@@ -237,18 +237,18 @@ namespace OrderManagerNew
                                 Properties.Settings.Default.implant_exePath = Path.GetFullPath(textbox_Implant.Text);
                             else
                                 Properties.Settings.Default.implant_exePath = "";
-                            if (File.Exists(textbox_Ortho.Text) == true)
-                                Properties.Settings.Default.ortho_exePath = Path.GetFullPath(textbox_Ortho.Text);
-                            else
-                                Properties.Settings.Default.ortho_exePath = "";
-                            if (File.Exists(textbox_Tray.Text) == true)
-                                Properties.Settings.Default.tray_exePath = Path.GetFullPath(textbox_Tray.Text);
-                            else
-                                Properties.Settings.Default.tray_exePath = "";
-                            if (File.Exists(textbox_Splint.Text) == true)
-                                Properties.Settings.Default.splint_exePath = Path.GetFullPath(textbox_Splint.Text);
-                            else
-                                Properties.Settings.Default.splint_exePath = "";
+                            //if (File.Exists(textbox_Ortho.Text) == true)
+                            //    Properties.Settings.Default.ortho_exePath = Path.GetFullPath(textbox_Ortho.Text);*************************************************************************
+                            //else
+                            //    Properties.Settings.Default.ortho_exePath = "";
+                            //if (File.Exists(textbox_Tray.Text) == true)
+                            //    Properties.Settings.Default.tray_exePath = Path.GetFullPath(textbox_Tray.Text);
+                            //else
+                            //    Properties.Settings.Default.tray_exePath = "";
+                            //if (File.Exists(textbox_Splint.Text) == true)
+                            //    Properties.Settings.Default.splint_exePath = Path.GetFullPath(textbox_Splint.Text);
+                            //else
+                            //    Properties.Settings.Default.splint_exePath = "";
                             if (File.Exists(textbox_Guide.Text) == true)
                                 Properties.Settings.Default.guide_exePath = Path.GetFullPath(textbox_Guide.Text);
                             else
@@ -307,9 +307,9 @@ namespace OrderManagerNew
 
                             textbox_EZCAD.Text = Properties.Settings.Default.cad_exePath;
                             textbox_Implant.Text = Properties.Settings.Default.implant_exePath;
-                            textbox_Ortho.Text = Properties.Settings.Default.ortho_exePath;
-                            textbox_Tray.Text = Properties.Settings.Default.tray_exePath;
-                            textbox_Splint.Text = Properties.Settings.Default.splint_exePath;
+                            //textbox_Ortho.Text = Properties.Settings.Default.ortho_exePath;***********************************************************************
+                            //textbox_Tray.Text = Properties.Settings.Default.tray_exePath;
+                            //textbox_Splint.Text = Properties.Settings.Default.splint_exePath;
                             textbox_Guide.Text = Properties.Settings.Default.guide_exePath;
                             break;
                         }
@@ -378,24 +378,24 @@ namespace OrderManagerNew
                             textbox_Implant.Focus();
                             break;
                         }
-                    case (int)_softwareID.Ortho:
-                        {
-                            textbox_Ortho.Text = Dlg.FileName;
-                            textbox_Ortho.Focus();
-                            break;
-                        }
-                    case (int)_softwareID.Tray:
-                        {
-                            textbox_Tray.Text = Dlg.FileName;
-                            textbox_Tray.Focus();
-                            break;
-                        }
-                    case (int)_softwareID.Splint:
-                        {
-                            textbox_Splint.Text = Dlg.FileName;
-                            textbox_Splint.Focus();
-                            break;
-                        }
+                    //case (int)_softwareID.Ortho:
+                    //    {
+                    //        textbox_Ortho.Text = Dlg.FileName;*******************************************************************************************
+                    //        textbox_Ortho.Focus();
+                    //        break;
+                    //    }
+                    //case (int)_softwareID.Tray:
+                    //    {
+                    //        textbox_Tray.Text = Dlg.FileName;
+                    //        textbox_Tray.Focus();
+                    //        break;
+                    //    }
+                    //case (int)_softwareID.Splint:
+                    //    {
+                    //        textbox_Splint.Text = Dlg.FileName;
+                    //        textbox_Splint.Focus();
+                    //        break;
+                    //    }
                     case (int)_softwareID.Guide:
                         {
                             textbox_Guide.Text = Dlg.FileName;

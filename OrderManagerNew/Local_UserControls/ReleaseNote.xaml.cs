@@ -25,16 +25,24 @@ namespace OrderManagerNew
         private string DocUrl;
         private BackgroundWorker Bgworker;
         private String MainContent;
+        OrderManagerFunctions omFunc;
         public ReleaseNote()
         {
             InitializeComponent();
+            omFunc = new OrderManagerFunctions();
             MainContent = "";
             DocUrl = "";
         }
 
         public void SetCurrentSoftware(_softwareID SoftwareID)
         {
+            DocUrl = "";
+            string UrlCADLog = "https://www.dropbox.com/s/8zmukhnrjhsex6h/PrintIn%20DentDesign%20Release%20Notes.txt?dl=1";
+            string UrlImplant = "https://www.dropbox.com/s/g0sasguhlwshohh/PrintIn%20ImplantPlanning%20Release%20Notes.txt?dl=1";
+            string UrlGuide = "https://www.dropbox.com/s/vog3rlz9sdfyk56/PrintIn%20Guide%20Release%20Notes.txt?dl=1";
             string UrlOrthoLog = "https://www.dropbox.com/s/dkwbrhz4bk2w65v/OrthoAnalysis%20Release%20Note.txt?dl=1";
+            string UrlTrayLog = "";
+            string UrlSplintLog = "";
 
             label_loading.Visibility = Visibility.Visible;
             progressbar_loading.Visibility = Visibility.Visible;
@@ -42,27 +50,51 @@ namespace OrderManagerNew
             switch (SoftwareID)
             {
                 case _softwareID.EZCAD:
-                    break;
+                    {
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.EZCAD) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        DocUrl = UrlCADLog;
+                        break;
+                    }
                 case _softwareID.Implant:
-                    break;
+                    {
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Implant) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        DocUrl = UrlImplant;
+                        break;
+                    }
                 case _softwareID.Ortho:
                     {
-                        label_title.Content = "PrintIn Aligner's " + TranslationSource.Instance["ReleaseNote"];
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Ortho) + "'s " + TranslationSource.Instance["ReleaseNote"];
                         DocUrl = UrlOrthoLog;
-                        Bgworker = new BackgroundWorker();
-                        Bgworker.DoWork += new DoWorkEventHandler(DoWork_Download);
-                        Bgworker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_Download);
-                        Bgworker.WorkerReportsProgress = false;
-                        Bgworker.WorkerSupportsCancellation = false;
-                        Bgworker.RunWorkerAsync();
                         break;
                     }
                 case _softwareID.Tray:
-                    break;
+                    {
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Tray) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        DocUrl = UrlTrayLog;
+                        break;
+                    }
                 case _softwareID.Splint:
-                    break;
+                    {
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Splint) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        DocUrl = UrlSplintLog;
+                        break;
+                    }
                 case _softwareID.Guide:
-                    break;
+                    {
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Guide) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        DocUrl = UrlGuide;
+                        break;
+                    }
+            }
+
+            if(DocUrl != "")
+            {
+                Bgworker = new BackgroundWorker();
+                Bgworker.DoWork += new DoWorkEventHandler(DoWork_Download);
+                Bgworker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_Download);
+                Bgworker.WorkerReportsProgress = false;
+                Bgworker.WorkerSupportsCancellation = false;
+                Bgworker.RunWorkerAsync();
             }
         }
 

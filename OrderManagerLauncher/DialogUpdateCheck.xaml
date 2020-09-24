@@ -7,7 +7,7 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <SolidColorBrush x:Key="Common_OrangeTitleBar" Color="#FFE08A1E" />
+            <SolidColorBrush x:Key="Common_OrangeTitleBar" Color="#FF009688" />
             <DrawingImage x:Key="Close_normalDrawingImage">
                 <DrawingImage.Drawing>
                     <DrawingGroup ClipGeometry="M0,0 V40 H46 V0 H0 Z">
@@ -45,7 +45,7 @@
                         <DrawingGroup.Transform>
                             <TranslateTransform X="0.03" Y="0.01" />
                         </DrawingGroup.Transform>
-                        <GeometryDrawing Brush="#FFDD780B">
+                        <GeometryDrawing Brush="#FF00645B">
                             <GeometryDrawing.Geometry>
                                 <RectangleGeometry RadiusX="0" RadiusY="0" Rect="-0.03,-0.01,46,40" />
                             </GeometryDrawing.Geometry>
