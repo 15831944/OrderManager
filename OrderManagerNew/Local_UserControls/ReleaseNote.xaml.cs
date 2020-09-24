@@ -25,16 +25,24 @@ namespace OrderManagerNew
         private string DocUrl;
         private BackgroundWorker Bgworker;
         private String MainContent;
+        OrderManagerFunctions omFunc;
         public ReleaseNote()
         {
             InitializeComponent();
+            omFunc = new OrderManagerFunctions();
             MainContent = "";
             DocUrl = "";
         }
 
         public void SetCurrentSoftware(_softwareID SoftwareID)
         {
-            string UrlOrthoLog = "https://www.dropbox.com/s/dkwbrhz4bk2w65v/OrthoAnalysis%20Release%20Note.txt?dl=1";
+            DocUrl = "";
+            string UrlCADLog = "https://www.dropbox.com/s/ra9luek6imfh8po/EZCAD%20Release%20Notes.txt?dl=1";
+            string UrlImplant = "https://www.dropbox.com/s/qhw1jcsuzeofkrb/ImplantPlanning%20Release%20Notes.txt?dl=1";
+            string UrlGuide = "https://www.dropbox.com/s/hiaol85rxp7u1ns/EZCAD%20guide%20Release%20Notes.txt?dl=1";
+            string UrlOrthoLog = "https://www.dropbox.com/s/gx9rec4tw4n9fr8/OrthoAnalysis%20Release%20Notes.txt?dl=1";
+            string UrlTrayLog = "https://www.dropbox.com/s/bs7vohkc9nddcj6/EZCAD%20tray%20Release%20Notes.txt?dl=1";
+            string UrlSplintLog = "https://www.dropbox.com/s/fmk1h08ov3b9xpt/EZCAD%20splint%20Release%20Notes.txt?dl=1";
 
             label_loading.Visibility = Visibility.Visible;
             progressbar_loading.Visibility = Visibility.Visible;
@@ -42,27 +50,51 @@ namespace OrderManagerNew
             switch (SoftwareID)
             {
                 case _softwareID.EZCAD:
-                    break;
+                    {
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.EZCAD) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        DocUrl = UrlCADLog;
+                        break;
+                    }
                 case _softwareID.Implant:
-                    break;
+                    {
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Implant) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        DocUrl = UrlImplant;
+                        break;
+                    }
                 case _softwareID.Ortho:
                     {
-                        label_title.Content = "OrthoAnalysis's " + TranslationSource.Instance["ReleaseNote"];
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Ortho) + "'s " + TranslationSource.Instance["ReleaseNote"];
                         DocUrl = UrlOrthoLog;
-                        Bgworker = new BackgroundWorker();
-                        Bgworker.DoWork += new DoWorkEventHandler(DoWork_Download);
-                        Bgworker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_Download);
-                        Bgworker.WorkerReportsProgress = false;
-                        Bgworker.WorkerSupportsCancellation = false;
-                        Bgworker.RunWorkerAsync();
                         break;
                     }
                 case _softwareID.Tray:
-                    break;
+                    {
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Tray) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        DocUrl = UrlTrayLog;
+                        break;
+                    }
                 case _softwareID.Splint:
-                    break;
+                    {
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Splint) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        DocUrl = UrlSplintLog;
+                        break;
+                    }
                 case _softwareID.Guide:
-                    break;
+                    {
+                        label_title.Content = omFunc.GetSoftwareName(_softwareID.Guide) + "'s " + TranslationSource.Instance["ReleaseNote"];
+                        DocUrl = UrlGuide;
+                        break;
+                    }
+            }
+
+            if (DocUrl != "")
+            {
+                Bgworker = new BackgroundWorker();
+                Bgworker.DoWork += new DoWorkEventHandler(DoWork_Download);
+                Bgworker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompletedWork_Download);
+                Bgworker.WorkerReportsProgress = false;
+                Bgworker.WorkerSupportsCancellation = false;
+                Bgworker.RunWorkerAsync();
             }
         }
 

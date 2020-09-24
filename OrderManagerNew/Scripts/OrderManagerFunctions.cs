@@ -16,7 +16,7 @@ namespace OrderManagerNew
 {
     public class OrderManagerFunctions
     {
-        readonly string[] SoftwareNameArray = new string[6] { "PrintIn DentDesign", "PrintIn ImplantPlanning", "PrintIn Aligner", "PrintIn Tray", "PrintIn Splint", "PrintIn Guide" };
+        readonly string[] SoftwareNameArray = new string[6] { "EZCAD", "ImplantPlanning", "OrthoAnalysis", "EZCAD.tray", "EZCAD.splint", "EZCAD.guide" };
         readonly List<string> EZCAD_DllRequirement = new List<string>();
 
         LogRecorder log;
