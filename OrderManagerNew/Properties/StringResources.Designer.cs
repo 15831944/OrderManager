@@ -2338,7 +2338,7 @@ namespace OrderManagerNew.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 Release Note 的當地語系化字串。
+        ///   查詢類似 Release Notes 的當地語系化字串。
         /// </summary>
         internal static string ReleaseNote {
             get {

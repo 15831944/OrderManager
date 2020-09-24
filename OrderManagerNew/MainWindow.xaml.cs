@@ -80,8 +80,9 @@ namespace OrderManagerNew
         int CheckedSoftwareID;
         bool isInstalling;
         MaterialDesignThemes.Wpf.SnackbarMessageQueue MainsnackbarMessageQueue; //Snackbar
-#endregion
-        
+        FileSystemWatcher Watcher;
+        #endregion
+
         public MainWindow()
         {
             InitializeComponent();
@@ -184,6 +185,7 @@ namespace OrderManagerNew
                 UpdateFunc.Handler_snackbarShow += new UpdateFunction.updatefuncEventHandler_snackbar(SnackBarShow);
                 UpdateFunc.SoftwareUpdateEvent += new UpdateFunction.softwareUpdateStatusHandler(Handler_SetSoftwareUpdateButtonStatus);
                 UpdateFunc.OMUpdateEvent += new UpdateFunction.omUpdateHandler(Handler_SetOMUpate);
+                UpdateFunc.SoftwareDownloadCancelEvent += new UpdateFunction.softwareDownloadCancelHandler(Handler_DownloadCanceled);
             }
             catch(Exception ex)
             {
@@ -376,7 +378,7 @@ namespace OrderManagerNew
             if (watcherCommand == (int)_watcherCommand.Install)   //安裝中
             {
                 isInstalling = true;
-                FileSystemWatcher watcher = new FileSystemWatcher
+                Watcher = new FileSystemWatcher
                 {
                     Path = UpdateFunc.GetSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID),
 
@@ -386,14 +388,14 @@ namespace OrderManagerNew
                     //設定是否啟動元件，此部分必須要設定為 true，不然事件是不會被觸發的
                     EnableRaisingEvents = true
                 };
-                watcher.Created += new FileSystemEventHandler(Watcher_Installing_Changed);
-                watcher.Changed += new FileSystemEventHandler(Watcher_Installing_Changed);
+                Watcher.Created += new FileSystemEventHandler(Watcher_Installing_Changed);
+                Watcher.Changed += new FileSystemEventHandler(Watcher_Installing_Changed);
             }
             else if (watcherCommand == (int)_watcherCommand.Delete)
             {
                 if (SoftwareID == -1)
                     return;
-                FileSystemWatcher watcher = new FileSystemWatcher
+                Watcher = new FileSystemWatcher
                 {
                     //softwarePath是執行檔路徑，所以要抓資料夾用Path.GetDirectoryName()
                     Path = Path.GetDirectoryName(UpdateFunc.GetSoftwarePath(SoftwareID)),
@@ -404,7 +406,7 @@ namespace OrderManagerNew
                     EnableRaisingEvents = true
                 };
                 UpdateFunc.readyUninstallSoftwareInfo.softwareID = SoftwareID;
-                watcher.Deleted += new FileSystemEventHandler(Watcher_Deleting_Changed);
+                Watcher.Deleted += new FileSystemEventHandler(Watcher_Deleting_Changed);
             }
         }
 
@@ -415,9 +417,9 @@ namespace OrderManagerNew
         {
             if(sender is FileSystemWatcher)
             {
-                FileSystemWatcher watcher = sender as FileSystemWatcher;
+                Watcher = sender as FileSystemWatcher;
                 //DirectoryInfo info = new DirectoryInfo(watcher.Path);
-                double dirSize = (double)OrderManagerFunc.DirSize(new DirectoryInfo(watcher.Path));
+                double dirSize = (double)OrderManagerFunc.DirSize(new DirectoryInfo(Watcher.Path));
                 double LimitSize = UpdateFunc.readyInstallSoftwareInfo.softwareSize;
                 string exeName = Path.GetFileName(e.FullPath).ToLower();
 
@@ -450,7 +452,7 @@ namespace OrderManagerNew
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
                                 isInstalling = false;
                                 ChangeSoftwareFilter();
-                                watcher = new FileSystemWatcher();
+                                Watcher = new FileSystemWatcher();
                             }));
                         }
                     }
@@ -484,7 +486,7 @@ namespace OrderManagerNew
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
                                 isInstalling = false;
                                 ChangeSoftwareFilter();
-                                watcher = new FileSystemWatcher();
+                                Watcher = new FileSystemWatcher();
                             }));
                         }
                     }
@@ -518,7 +520,7 @@ namespace OrderManagerNew
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
                                 isInstalling = false;
                                 ChangeSoftwareFilter();
-                                watcher = new FileSystemWatcher();
+                                Watcher = new FileSystemWatcher();
                             }));
                         }
                     }
@@ -552,7 +554,7 @@ namespace OrderManagerNew
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
                                 isInstalling = false;
                                 ChangeSoftwareFilter();
-                                watcher = new FileSystemWatcher();
+                                Watcher = new FileSystemWatcher();
                             }));
                         }
                     }
@@ -586,7 +588,7 @@ namespace OrderManagerNew
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
                                 isInstalling = false;
                                 ChangeSoftwareFilter();
-                                watcher = new FileSystemWatcher();
+                                Watcher = new FileSystemWatcher();
                             }));
                         }
                     }
@@ -620,7 +622,7 @@ namespace OrderManagerNew
                                 OrderManagerFunc.AutoDetectEXE((int)_classFrom.MainWindow);
                                 isInstalling = false;
                                 ChangeSoftwareFilter();
-                                watcher = new FileSystemWatcher();
+                                Watcher = new FileSystemWatcher();
                             }));
                         }
                     }
@@ -640,7 +642,7 @@ namespace OrderManagerNew
                             this.Dispatcher.Invoke((Action)(() =>
                             {
                                 haveEXE = false;
-                                watcher = new FileSystemWatcher();
+                                Watcher = new FileSystemWatcher();
                                 Thread.Sleep(2000);//2秒緩衝
                                 Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
                                 string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(UpdateFunc.readyInstallSoftwareInfo.softwareID)
@@ -660,7 +662,7 @@ namespace OrderManagerNew
                     this.Dispatcher.Invoke((Action)(() =>
                     {
                         haveEXE = false;
-                        watcher = new FileSystemWatcher();
+                        Watcher = new FileSystemWatcher();
                         Thread.Sleep(2000);//2秒緩衝
                         Handler_setSoftwareShow(UpdateFunc.readyInstallSoftwareInfo.softwareID, (int)_softwareStatus.Installed, 0);
                         string snackStr = TranslationSource.Instance["Install"] + " " + OrderManagerFunc.GetSoftwareName(UpdateFunc.readyInstallSoftwareInfo.softwareID) 
@@ -683,7 +685,7 @@ namespace OrderManagerNew
         {
             bool HaveDeleted = false;
             string exeName = Path.GetFileName(e.FullPath).ToLower();
-                if (HaveDeleted == false && (exeName.IndexOf("cad.exe") != -1 || exeName.IndexOf("PrintIn ImplantPlanning.exe") != -1 || exeName.IndexOf("PrintIn Aligner.exe") != -1
+                if (HaveDeleted == false && (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("planning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
                     || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1))
                 {
                 this.Dispatcher.Invoke((Action)(() =>
@@ -2997,6 +2999,55 @@ namespace OrderManagerNew
         {
             updateimage_Setting.Visibility = Visibility.Visible;
             SnackBarShow(TranslationSource.Instance["omCanUpdate"]);
+        }
+
+        private void Handler_DownloadCanceled(int SoftwareID)
+        {
+            switch(SoftwareID)
+            {
+                case (int)_softwareID.EZCAD:
+                    {
+                        if (Properties.Settings.Default.cad_exePath.Contains(".exe") == false)
+                        {
+                            Properties.Settings.Default.cad_exePath += @"Bin\PrintIn DentDesign.exe";
+                        }
+
+                        if (File.Exists(Properties.Settings.Default.cad_exePath) == true)
+                            Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.Installed, 0);
+                        else
+                            Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.NotInstall, 0);
+                        break;
+                    }
+                case (int)_softwareID.Implant:
+                    {
+                        if (Properties.Settings.Default.implant_exePath.Contains(".exe") == false)
+                        {
+                            Properties.Settings.Default.implant_exePath += @"PrintIn ImplantPlanning.exe";
+                        }
+
+                        if (File.Exists(Properties.Settings.Default.implant_exePath) == true)
+                            Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.Installed, 0);
+                        else
+                            Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.NotInstall, 0);
+                        break;
+                    }
+                case (int)_softwareID.Guide:
+                    {
+                        if (Properties.Settings.Default.guide_exePath.Contains(".exe") == false)
+                        {
+                            Properties.Settings.Default.guide_exePath += @"Bin\PrintIn Guide.exe";
+                        }
+
+                        if (File.Exists(Properties.Settings.Default.guide_exePath) == true)
+                            Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.Installed, 0);
+                        else
+                            Handler_setSoftwareShow(SoftwareID, (int)_softwareStatus.NotInstall, 0);
+                        break;
+                    }
+                    //TODO: Aligner Tray Splint要加
+            }
+            UpdateFunc.CheckSoftwareHaveNewVersion(SoftwareID);
+            SetAllSoftwareTableDownloadisEnable(true);
         }
 #endregion
 
