@@ -187,10 +187,10 @@ namespace OrderManagerNew
             Caselist_ImplantOuterCase = new List<ImplantOuterInformation>();
             
             DirectoryInfo dInfo = new DirectoryInfo(implant_projectDirectory);
-            // C:\PrintIn3D Data\Implant\2020130102946\202001301037_final_mi\LinkStation\ManufacturingDir\(Guide生出來的物件)
+            // C:\PrintIn3D Data\PrintIn ImplantPlanning2020130102946\202001301037_final_mi\LinkStation\ManufacturingDir\(Guide生出來的物件)
             foreach (DirectoryInfo folder in dInfo.GetDirectories())
             {
-                // 這層是C:\PrintIn3D Data\Implant\
+                // 這層是C:\PrintIn3D Data\PrintIn ImplantPlanning
                 
                 string XmlPath = folder.FullName + @"\" + folder.ToString() + ".xml";
                 if (File.Exists(XmlPath) == false)

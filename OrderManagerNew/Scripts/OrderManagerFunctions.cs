@@ -634,9 +634,9 @@ namespace OrderManagerNew
                                 {
                                     try
                                     {
-                                        if (Directory.Exists(d.Name + @"PrintIn3D Data\Implant\") == true)
+                                        if (Directory.Exists(d.Name + @"PrintIn3D Data\PrintIn ImplantPlanning") == true)
                                         {
-                                            Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\Implant\";
+                                            Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\PrintIn ImplantPlanning";
                                             foundImplantPath = true;
                                             break;
                                         }
@@ -653,8 +653,8 @@ namespace OrderManagerNew
                                     {
                                         if (Properties.OrderManagerProps.Default.mostsoftwareDisk != "")
                                         {
-                                            Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\");
-                                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\";
+                                            Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\PrintIn ImplantPlanning");
+                                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\PrintIn ImplantPlanning";
                                             goto createtosysDirectorySuccess;
                                         }
                                         else
@@ -674,13 +674,13 @@ namespace OrderManagerNew
                                         {
                                             if (d.Name == @"C:\")
                                             {
-                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\Implant\";
+                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\PrintIn ImplantPlanning";
                                                 chosen = true;
                                                 break;
                                             }
                                             if (d.Name == @"D:\")
                                             {
-                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\Implant\";
+                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\PrintIn ImplantPlanning";
                                                 chosen = true;
                                                 break;
                                             }
@@ -697,8 +697,8 @@ namespace OrderManagerNew
                                         {
                                             try
                                             {
-                                                Directory.CreateDirectory(d.Name + @"PrintIn3D Data\Implant\");
-                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\Implant\";
+                                                Directory.CreateDirectory(d.Name + @"PrintIn3D Data\PrintIn ImplantPlanning");
+                                                Properties.OrderManagerProps.Default.implant_projectDirectory = d.Name + @"PrintIn3D Data\PrintIn ImplantPlanning";
                                                 break;
                                             }
                                             catch (Exception ex)
@@ -712,18 +712,18 @@ namespace OrderManagerNew
                             }
                             catch (Exception ex)
                             {
-                                Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\";
+                                Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\PrintIn ImplantPlanning";
                                 if (Directory.Exists(Properties.OrderManagerProps.Default.implant_projectDirectory) == false)
-                                    Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\");
+                                    Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\PrintIn ImplantPlanning");
 
                                 log.RecordLog(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "AutoDetectSoftwareProjectPath()_implant", ex.Message);
                             }
                         }
                         else
                         {
-                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\";
+                            Properties.OrderManagerProps.Default.implant_projectDirectory = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\PrintIn ImplantPlanning";
                             if (Directory.Exists(Properties.OrderManagerProps.Default.implant_projectDirectory) == false)
-                                Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\Implant\");
+                                Directory.CreateDirectory(Properties.OrderManagerProps.Default.mostsoftwareDisk + @"PrintIn3D Data\PrintIn ImplantPlanning");
                         }
                         log.RecordLogContinue(new StackTrace(true).GetFrame(0).GetFileLineNumber().ToString(), "implant_projectDirectory", "\t\"" + Properties.OrderManagerProps.Default.implant_projectDirectory + "\"");
                         break;

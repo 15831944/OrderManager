@@ -123,7 +123,7 @@ namespace OrderManagerNew.Local_UserControls
             {
                 foreach (string filename in Directory.GetFiles(implantInfo.CaseDirectoryPath))
                 {
-                    // 這層是C:\PrintIn3D Data\Implant\2020130102946\
+                    // 這層是C:\PrintIn3D Data\PrintIn ImplantPlanning2020130102946\
                     //找有幾個tii檔就等於有幾個Implant要給Guide的檔
                     if (Path.GetExtension(filename).ToLower() == ".tii")
                     {
