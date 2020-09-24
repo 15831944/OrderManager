@@ -17,6 +17,8 @@ namespace OrderManagerNew
     public class OrderManagerFunctions
     {
         readonly string[] SoftwareNameArray = new string[6] { "PrintIn DentDesign", "PrintIn ImplantPlanning", "PrintIn Aligner", "PrintIn Tray", "PrintIn Splint", "PrintIn Guide" };
+        readonly List<string> EZCAD_DllRequirement = new List<string>();
+
         LogRecorder log;
         /// <summary>
         /// 委派到MainWindow.xaml.cs裡面的setSoftwareShow()
@@ -44,6 +46,7 @@ namespace OrderManagerNew
         public OrderManagerFunctions()
         {
             log = new LogRecorder();
+            EZCAD_DllRequirement.Add(@"\Bin\Ry4S.dll");
         }
         class DiskSoftwareInfo
         {
@@ -948,5 +951,38 @@ namespace OrderManagerNew
             
             return SoftwareNameArray[softwareID];
         }
+        /// <summary>
+        /// 檢查軟體所需的檔案是否存在
+        /// </summary>
+        /// <param name="software"></param>
+        public void CheckDllRequirement(_softwareID software)
+        {
+            switch(software)
+            {
+                case _softwareID.EZCAD:
+                    {
+                        foreach (string item in EZCAD_DllRequirement)
+                        {
+                            if(File.Exists(Properties.Settings.Default.cad_exePath) == true)
+                            {
+                                string DirPath = GetUpLevelDirectory(Properties.Settings.Default.cad_exePath, 1);
+                                if (File.Exists(DirPath + item) == false)
+                                {
+                                    try
+                                    {
+                                        File.Copy(@"SoftwareNeed\CAD\" + Path.GetFileName(item), DirPath + item, true);
+                                    }
+                                    catch(Exception ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
+            }
+        }
+
     }
 }
