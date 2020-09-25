@@ -631,7 +631,7 @@ namespace OrderManagerNew
                 if (Path.GetExtension(exeName).ToLower() == ".exe")
                 {
                     Console.WriteLine(exeName);
-                    if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("dentdesign.exe") != -1 || exeName.IndexOf("ezcad.exe") != -1 || exeName.IndexOf("PrintIn ImplantPlanning.exe") != -1 || exeName.IndexOf("PrintIn Aligner.exe") != -1
+                    if (exeName.IndexOf("design.exe") != -1 || exeName.IndexOf("dentdesign.exe") != -1 || exeName.IndexOf("ezcad.exe") != -1 || exeName.IndexOf("planning.exe") != -1 || exeName.IndexOf("aligner.exe") != -1
                     || exeName.IndexOf("tray.exe") != -1 || exeName.IndexOf("splint.exe") != -1 || exeName.IndexOf("guide.exe") != -1)
                 {
                     DialogBeforeDownload.SetPropertiesSoftwarePath(UpdateFunc.readyInstallSoftwareInfo.softwareID, e.FullPath);
@@ -691,6 +691,7 @@ namespace OrderManagerNew
                 this.Dispatcher.Invoke((Action)(() =>
                 {
                     HaveDeleted = true;
+                    Watcher = new FileSystemWatcher();
                     SetAllSoftwareTableDownloadisEnable(true);
                     string snackStr = TranslationSource.Instance["Uninstall"] + " " + OrderManagerFunc.GetSoftwareName(UpdateFunc.readyUninstallSoftwareInfo.softwareID)
                         + " " + TranslationSource.Instance["Successfully"];

@@ -428,6 +428,7 @@ namespace OrderManagerNew
             });
             thread.Start();
             latch.Wait();
+            Thread.Sleep(2000);
             Environment.Exit(0);
         }
     }
