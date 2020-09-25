@@ -284,12 +284,12 @@ namespace OrderManagerNew
             string[] SoftwareNameArray = new string[6] { omFunc.GetSoftwareName(_softwareID.EZCAD),
                 omFunc.GetSoftwareName(_softwareID.Implant), omFunc.GetSoftwareName(_softwareID.Ortho),
                 omFunc.GetSoftwareName(_softwareID.Tray), omFunc.GetSoftwareName(_softwareID.Splint), omFunc.GetSoftwareName(_softwareID.Guide)};
-            label_TitleBar.Content = TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
-            label_Header.Content = TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID].Replace(" ", ".");
+            label_TitleBar.Content = TranslationSource.Instance["Install"] + "-" + SoftwareNameArray[currentSoftwareID];
+            label_Header.Content = TranslationSource.Instance["AboutToInstall"] + " " + SoftwareNameArray[currentSoftwareID];
             if(Properties.OrderManagerProps.Default.mostsoftwareDisk != "")
-                textbox_InstallPath.Text = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
+                textbox_InstallPath.Text = Properties.OrderManagerProps.Default.mostsoftwareDisk + @"IntewareInc\" + SoftwareNameArray[currentSoftwareID].Replace(".", " ") + @"\";
             else
-                textbox_InstallPath.Text = @"C:\IntewareInc\" + SoftwareNameArray[currentSoftwareID] + @"\";
+                textbox_InstallPath.Text = @"C:\IntewareInc\" + SoftwareNameArray[currentSoftwareID].Replace(".", " ") + @"\";
             jlabel_RequireSpace.Content += ":";
             jlabel_AvailableSpace.Content += ":";
             try

@@ -684,6 +684,7 @@ namespace OrderManagerNew
             this.Dispatcher.Invoke((Action)(() =>
             {
                 HaveDeleted = true;
+                Watcher = new FileSystemWatcher();
                 SetAllSoftwareTableDownloadisEnable(true);
                 string snackStr = TranslationSource.Instance["Uninstall"] + " " + OrderManagerFunc.GetSoftwareName(UpdateFunc.readyUninstallSoftwareInfo.softwareID)
                     + " " + TranslationSource.Instance["Successfully"];
